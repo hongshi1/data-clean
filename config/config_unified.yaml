@@ -1,0 +1,41 @@
+# 统一多模态冲突检测 Pipeline (v3, 调研对齐版)
+# 自定义算子(核心) + Data-Juicer内置算子(辅助清理)
+# 支持三种数据类型: radiology / medical / welding
+
+dataset_path: /Users/gexuancheng/Desktop/research2/data_clean/unified_input.jsonl
+work_dir: /Users/gexuancheng/Desktop/research2/data_clean/output_unified
+np: 1
+
+custom_operator_paths:
+  - /Users/gexuancheng/Desktop/research2/data_clean/src/operators/unified_operators.py
+
+stats_export_path: /Users/gexuancheng/Desktop/research2/data_clean/output_unified/pipeline_stats.json
+
+process:
+  # ===== Phase 0: 数据清理 (Data-Juicer内置算子) =====
+  - whitespace_normalization_mapper:
+  - fix_unicode_mapper:
+  - remove_repeat_sentences_mapper:
+
+  # ===== Phase 1: 信息抽取 (自定义算子, NER只提取不判断) =====
+  - info_extraction_mapper:
+      xrv_threshold: 0.5
+
+  # ===== Phase 2: 冲突检测 (自定义算子, VDC三段式+LLM直判) =====
+  - conflict_detection_filter:
+      ollama_url: http://localhost:11434/api/generate
+      model_name: qwen2:7b
+
+  # ===== Phase 3+4: NER解释 + 置信度 + 报告 (自定义算子) =====
+  - conflict_report_mapper:
+
+  # ===== 可选: 内置辅助算子 (取消注释启用) =====
+  # - image_text_similarity_filter:     # CLIP图文相似度(快速预筛)
+  #     hf_clip: openai/clip-vit-base-patch32
+  #     min_score: 0.1
+  # - llm_analysis_filter:              # LLM质量评分(辅助)
+  #     api_or_hf_model: qwen2:7b
+  #     api_endpoint: /chat/completions
+  # - document_minhash_deduplicator:    # 文档去重
+  # - text_length_filter:               # 过滤过短文本
+  #     min_len: 10
