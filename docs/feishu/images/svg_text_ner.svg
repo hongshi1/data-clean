@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" font-family="PingFang SC, Microsoft YaHei, sans-serif">
+  <rect width="960" height="460" fill="#fafbfc"/>
+  <text x="480" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#222">报告文字怎么读懂：四态标注过程</text>
+
+  <!-- 原始报告 -->
+  <rect x="60" y="50" width="840" height="55" rx="8" fill="#fff4e6" stroke="#e08a2b"/>
+  <text x="480" y="73" text-anchor="middle" font-size="13" font-weight="600" fill="#9a5a10">原始报告（医生写的自由文本）</text>
+  <text x="480" y="93" text-anchor="middle" font-size="12" fill="#555" font-family="monospace">"...No pleural effusion or pneumothorax. may represent focal consolidation..."</text>
+
+  <path d="M480,105 L480,130" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 1 -->
+  <rect x="60" y="135" width="840" height="60" rx="8" fill="#f0f7ff" stroke="#4a7fd6"/>
+  <text x="480" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#1f4e9e">第一步：在报告里逐个搜索疾病名称</text>
+  <text x="80" y="180" font-size="12" fill="#444">· "effusion"(胸腔积液) 找到了 ✓  · "pneumothorax"(气胸) 找到了 ✓  · "consolidation"(实变) 找到了 ✓  · "edema"(水肿) 没出现</text>
+
+  <path d="M480,195 L480,220" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <rect x="60" y="225" width="840" height="75" rx="8" fill="#fffbe6" stroke="#d4a017"/>
+  <text x="480" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#7a5a00">第二步：看每个疾病名前面有没有"否定词"或"不确定词"</text>
+  <text x="80" y="270" font-size="12" fill="#444">· "effusion" 前面是 "No pleural" → 命中否定词 "No" → 说明医生说"没有"胸腔积液</text>
+  <text x="80" y="288" font-size="12" fill="#444">· "consolidation" 前面是 "may represent focal" → 命中不确定词 "may represent" → 医生拿不准</text>
+
+  <path d="M480,300 L480,325" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: 四态结果 -->
+  <rect x="60" y="330" width="840" height="115" rx="8" fill="#f0fff4" stroke="#2ba85e"/>
+  <text x="480" y="353" text-anchor="middle" font-size="14" font-weight="700" fill="#1a6e3a">第三步：得到每个疾病的"状态标签"</text>
+  <rect x="90" y="365" width="170" height="30" rx="6" fill="#f8d7da" stroke="#c63a3a"/>
+  <text x="175" y="385" text-anchor="middle" font-size="12" fill="#7a1a1a" font-weight="600">否定：说"没有"</text>
+  <rect x="280" y="365" width="170" height="30" rx="6" fill="#fff3cd" stroke="#d4a017"/>
+  <text x="365" y="385" text-anchor="middle" font-size="12" fill="#7a5a00" font-weight="600">不确定：说"可能"</text>
+  <rect x="470" y="365" width="170" height="30" rx="6" fill="#d4edda" stroke="#2ba85e"/>
+  <text x="555" y="385" text-anchor="middle" font-size="12" fill="#1a6e3a" font-weight="600">肯定：说"有"</text>
+  <rect x="660" y="365" width="170" height="30" rx="6" fill="#e9ecef" stroke="#888"/>
+  <text x="745" y="385" text-anchor="middle" font-size="12" fill="#555" font-weight="600">未提及：没写</text>
+  <text x="480" y="420" text-anchor="middle" font-size="12" fill="#444">本例结果：胸腔积液=否定 · 气胸=否定 · 实变=不确定 · 水肿=未提及 · 肺不张=肯定</text>
+  <text x="480" y="438" text-anchor="middle" font-size="11" fill="#888">这四种状态后面要和AI看片子的结果逐一比对</text>
+</svg>

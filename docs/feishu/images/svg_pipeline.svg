@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="PingFang SC,Microsoft YaHei,sans-serif">
+  <defs><marker id="ar2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#666"/></marker></defs>
+  <rect width="1000" height="600" fill="#fafbfc"/>
+  <text x="500" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#222">五层混合Pipeline：从快速过滤到深度兜底</text>
+
+  <!-- 输入 -->
+  <rect x="370" y="50" width="260" height="45" rx="10" fill="#f0f0f0" stroke="#999" stroke-width="2"/>
+  <text x="500" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#333">输入：一对配对图文数据</text>
+
+  <path d="M500,95 L500,120" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+
+  <!-- Layer 1 -->
+  <rect x="150" y="125" width="700" height="55" rx="8" fill="#e8f5e9" stroke="#2ba85e" stroke-width="2"/>
+  <rect x="165" y="135" width="30" height="35" rx="4" fill="#2ba85e"/>
+  <text x="180" y="158" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1</text>
+  <text x="210" y="148" font-size="13" font-weight="700" fill="#1a6e3a">规则级 · 快速过滤</text>
+  <text x="210" y="166" font-size="11" fill="#555">三态冲突矩阵 + ngrex规则 + 知识库阈值 → 处理80%明确冲突（否定矛盾/内部矛盾/实体多余）</text>
+  <text x="800" y="158" font-size="11" fill="#2ba85e" font-weight="600">✓ 输出冲突报告</text>
+
+  <path d="M500,180 L500,205" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+  <text x="520" y="197" font-size="10" fill="#888" font-style="italic">未决样本(20%)</text>
+
+  <!-- Layer 2 -->
+  <rect x="150" y="210" width="700" height="55" rx="8" fill="#e8f1ff" stroke="#4a7fd6" stroke-width="2"/>
+  <rect x="165" y="220" width="30" height="35" rx="4" fill="#4a7fd6"/>
+  <text x="180" y="243" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">2</text>
+  <text x="210" y="233" font-size="13" font-weight="700" fill="#1f4e9e">语法级 · 结构化提取</text>
+  <text x="210" y="251" font-size="11" fill="#555">CCG句法解析 → 提取"属性-对象-关系"三元组 → 结构化比对（属性矛盾/关系矛盾/实体缺失）</text>
+  <text x="800" y="243" font-size="11" fill="#4a7fd6" font-weight="600">✓ 推理链可解释</text>
+
+  <path d="M500,265 L500,290" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+  <text x="520" y="282" font-size="10" fill="#888" font-style="italic">未决样本(15%)</text>
+
+  <!-- Layer 3 -->
+  <rect x="150" y="295" width="700" height="55" rx="8" fill="#fff4e6" stroke="#e08a2b" stroke-width="2"/>
+  <rect x="165" y="305" width="30" height="35" rx="4" fill="#e08a2b"/>
+  <text x="180" y="328" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">3</text>
+  <text x="210" y="318" font-size="13" font-weight="700" fill="#9a5a10">细粒度 · 定位诊断</text>
+  <text x="210" y="336" font-size="11" fill="#555">属性/关系/数量/空间逐单元验证 → 定位"哪里矛盾、什么类型"（属性矛盾/数量矛盾/空间矛盾）</text>
+  <text x="800" y="328" font-size="11" fill="#e08a2b" font-weight="600">✓ 冲突位置+类型</text>
+
+  <path d="M500,350 L500,375" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+  <text x="520" y="367" font-size="10" fill="#888" font-style="italic">未决样本(5%)</text>
+
+  <!-- Layer 4 -->
+  <rect x="150" y="380" width="700" height="55" rx="8" fill="#fff3cd" stroke="#d4a017" stroke-width="2"/>
+  <rect x="165" y="390" width="30" height="35" rx="4" fill="#d4a017"/>
+  <text x="180" y="413" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">4</text>
+  <text x="210" y="403" font-size="13" font-weight="700" fill="#7a5a00">语义级 · 语义验证</text>
+  <text x="210" y="421" font-size="11" fill="#555">视觉蕴含(VE) + 语义熵 → 判断整体语义是"蕴含/矛盾/中立"（语义矛盾/否定矛盾兜底）</text>
+  <text x="800" y="413" font-size="11" fill="#d4a017" font-weight="600">✓ 语义级判定</text>
+
+  <path d="M500,435 L500,460" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+  <text x="520" y="452" font-size="10" fill="#888" font-style="italic">未决样本(2%)</text>
+
+  <!-- Layer 5 -->
+  <rect x="150" y="465" width="700" height="55" rx="8" fill="#f8d7da" stroke="#c63a3a" stroke-width="2"/>
+  <rect x="165" y="475" width="30" height="35" rx="4" fill="#c63a3a"/>
+  <text x="180" y="498" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">5</text>
+  <text x="210" y="488" font-size="13" font-weight="700" fill="#7a1a1a">模型级 · 端到端兜底</text>
+  <text x="210" y="506" font-size="11" fill="#555">VDC / FAMDR / CheXagent → 端到端打分，处理前四层都未决的复杂语义冲突</text>
+  <text x="800" y="498" font-size="11" fill="#c63a3a" font-weight="600">✓ 最终判定</text>
+
+  <path d="M500,520 L500,545" stroke="#666" stroke-width="2" marker-end="url(#ar2)"/>
+
+  <!-- 输出 -->
+  <rect x="250" y="550" width="500" height="40" rx="10" fill="#e6fff0" stroke="#2ba85e" stroke-width="2"/>
+  <text x="500" y="575" text-anchor="middle" font-size="14" font-weight="700" fill="#1a6e3a">输出：完整冲突检测报告（冲突类型+位置+严重度+证据链+置信度）</text>
+</svg>

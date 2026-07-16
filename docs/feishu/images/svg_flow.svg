@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" font-family="PingFang SC, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="520" fill="#fafbfc"/>
+
+  <text x="500" y="32" text-anchor="middle" font-size="22" font-weight="700" fill="#222">图文不一致性检测：完整流程</text>
+  <text x="500" y="52" text-anchor="middle" font-size="13" fill="#888">一张胸片 + 一段报告 → 自动找出哪里对不上</text>
+
+  <!-- 输入 -->
+  <rect x="350" y="70" width="300" height="60" rx="12" fill="#f0f0f0" stroke="#999" stroke-width="2"/>
+  <text x="500" y="95" text-anchor="middle" font-size="15" font-weight="700" fill="#333">输入：一对配对数据</text>
+  <text x="500" y="115" text-anchor="middle" font-size="12" fill="#666">一张胸部X光片 + 一段放射科医生写的报告</text>
+
+  <!-- 分叉 -->
+  <path d="M420,130 L420,160" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M580,130 L580,160" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 左侧：图像分析 -->
+  <rect x="150" y="165" width="320" height="135" rx="12" fill="#e8f1ff" stroke="#4a7fd6" stroke-width="2"/>
+  <text x="310" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#1f4e9e">步骤①：AI看片子</text>
+  <text x="310" y="215" text-anchor="middle" font-size="12" fill="#444">用AI模型（TorchXRayVision）读取胸片</text>
+  <text x="310" y="233" text-anchor="middle" font-size="12" fill="#444">输出每种疾病的"出现概率"（0~1）</text>
+  <text x="310" y="251" text-anchor="middle" font-size="12" fill="#444">概率越高 = AI越确信片子上有这个病</text>
+  <rect x="200" y="265" width="220" height="26" rx="6" fill="#fff" stroke="#4a7fd6"/>
+  <text x="310" y="282" text-anchor="middle" font-size="11" fill="#1f4e9e" font-weight="600">例：胸腔积液概率=0.809 → 阳性</text>
+
+  <!-- 右侧：文本分析 -->
+  <rect x="550" y="165" width="320" height="135" rx="12" fill="#fff4e6" stroke="#e08a2b" stroke-width="2"/>
+  <text x="710" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#9a5a10">步骤②：读懂报告</text>
+  <text x="710" y="215" text-anchor="middle" font-size="12" fill="#444">用NLP工具（CheXpert Labeler）分析报告</text>
+  <text x="710" y="233" text-anchor="middle" font-size="12" fill="#444">判断每种疾病是"有/没有/可能/没提"</text>
+  <text x="710" y="251" text-anchor="middle" font-size="12" fill="#444">关键：要区分"No effusion"（没有）和"effusion"（有）</text>
+  <rect x="600" y="265" width="220" height="26" rx="6" fill="#fff" stroke="#e08a2b"/>
+  <text x="710" y="282" text-anchor="middle" font-size="11" fill="#9a5a10" font-weight="600">例：胸腔积液="No effusion" → 否定</text>
+
+  <!-- 汇聚 -->
+  <path d="M310,300 L310,330 L500,330 L500,355" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M710,300 L710,330 L500,330" stroke="#666" stroke-width="2" fill="none"/>
+
+  <!-- 步骤3：比对 -->
+  <rect x="250" y="360" width="500" height="65" rx="12" fill="#fff3cd" stroke="#d4a017" stroke-width="2"/>
+  <text x="500" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#7a5a00">步骤③：逐个疾病比对</text>
+  <text x="500" y="405" text-anchor="middle" font-size="12" fill="#555">AI说"有"(概率0.809) vs 报告说"没有"(No effusion) → 矛盾！记录为冲突</text>
+  <text x="500" y="420" text-anchor="middle" font-size="11" fill="#888">按AI确信度分严重度：≥0.7=高 / ≥0.55=中 / 其他=低</text>
+
+  <path d="M500,425 L500,455" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 输出 -->
+  <rect x="280" y="460" width="440" height="48" rx="10" fill="#e6fff0" stroke="#2ba85e" stroke-width="2"/>
+  <text x="500" y="483" text-anchor="middle" font-size="14" font-weight="700" fill="#1a6e3a">输出：不一致性检测报告</text>
+  <text x="500" y="500" text-anchor="middle" font-size="11" fill="#444">冲突类型 + 涉及疾病 + 严重度 + 证据（标注但不丢弃样本）</text>
+</svg>

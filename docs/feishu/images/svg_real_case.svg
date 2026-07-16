@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" font-family="PingFang SC, Microsoft YaHei, sans-serif">
+  <rect width="1000" height="500" fill="#fafbfc"/>
+  <text x="500" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#222">真实案例：一份胸片+报告的完整检测过程</text>
+
+  <!-- 左侧：输入 -->
+  <rect x="20" y="55" width="280" height="200" rx="10" fill="#f0f0f0" stroke="#999" stroke-width="2"/>
+  <text x="160" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#333">输入数据（真实）</text>
+  <rect x="40" y="88" width="240" height="70" rx="6" fill="#222"/>
+  <text x="160" y="120" text-anchor="middle" font-size="13" fill="#9cf">[ 胸部X光片 ]</text>
+  <text x="160" y="138" text-anchor="middle" font-size="10" fill="#888">NLMCXR真实数据</text>
+  <text x="40" y="178" font-size="11" fill="#555" font-weight="600">报告原文（摘录）：</text>
+  <text x="40" y="195" font-size="10" fill="#666" font-family="monospace">"...associated atelectasis</text>
+  <text x="40" y="210" font-size="10" fill="#666" font-family="monospace">may represent consolidation...</text>
+  <text x="40" y="225" font-size="10" fill="#666" font-family="monospace">No pleural effusion or</text>
+  <text x="40" y="240" font-size="10" fill="#666" font-family="monospace">pneumothorax..."</text>
+
+  <!-- 箭头 -->
+  <path d="M300,155 L340,155" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 中间上：AI看片结果 -->
+  <rect x="350" y="55" width="300" height="120" rx="10" fill="#e8f1ff" stroke="#4a7fd6" stroke-width="2"/>
+  <text x="500" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#1f4e9e">AI看片结果</text>
+  <text x="370" y="98" font-size="11" fill="#c63a3a" font-weight="600">胸腔积液 概率=0.809 → 有（高度确信）</text>
+  <text x="370" y="115" font-size="11" fill="#c63a3a" font-weight="600">水肿 概率=0.725 → 有</text>
+  <text x="370" y="132" font-size="11" fill="#c63a3a" font-weight="600">心脏肥大 概率=0.676 → 有</text>
+  <text x="370" y="149" font-size="11" fill="#c63a3a" font-weight="600">肺不张 概率=0.641 → 有</text>
+  <text x="370" y="166" font-size="11" fill="#d4a017" font-weight="600">气胸 概率=0.515 → 有（刚过线）</text>
+
+  <!-- 中间下：报告分析结果 -->
+  <rect x="350" y="185" width="300" height="70" rx="10" fill="#fff4e6" stroke="#e08a2b" stroke-width="2"/>
+  <text x="500" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="#9a5a10">报告分析结果</text>
+  <text x="370" y="228" font-size="11" fill="#7a1a1a">胸腔积液="No effusion" → 否定（没有）</text>
+  <text x="370" y="245" font-size="11" fill="#7a5a00">实变="may represent" → 不确定</text>
+
+  <!-- 箭头 -->
+  <path d="M650,155 L690,155" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M650,220 L690,220" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 右侧：检出冲突 -->
+  <rect x="700" y="55" width="280" height="200" rx="10" fill="#fff0f0" stroke="#c63a3a" stroke-width="2"/>
+  <text x="840" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#7a1a1a">检出 5 处不一致</text>
+  <rect x="715" y="88" width="250" height="24" rx="4" fill="#f8d7da" stroke="#c63a3a"/>
+  <text x="725" y="105" font-size="11" fill="#7a1a1a" font-weight="600">[高] 胸腔积液：AI 0.809 vs 报告"没有"</text>
+  <rect x="715" y="118" width="250" height="24" rx="4" fill="#ffe0b2" stroke="#e08a2b"/>
+  <text x="725" y="135" font-size="11" fill="#9a5a10">[中] 水肿：AI 0.725 vs 报告没提+称正常</text>
+  <rect x="715" y="148" width="250" height="24" rx="4" fill="#ffe0b2" stroke="#e08a2b"/>
+  <text x="725" y="165" font-size="11" fill="#9a5a10">[中] 心脏肥大：AI 0.676 vs 报告没提+正常</text>
+  <rect x="715" y="178" width="250" height="24" rx="4" fill="#fff3cd" stroke="#d4a017"/>
+  <text x="725" y="195" font-size="11" fill="#7a5a00">[低] 气胸：AI刚过线0.515 vs 报告否定</text>
+  <rect x="715" y="208" width="250" height="24" rx="4" fill="#ffe0b2" stroke="#e08a2b"/>
+  <text x="725" y="225" font-size="11" fill="#9a5a10">[中] 报告内部矛盾：正文有病+结论正常</text>
+  <text x="840" y="248" text-anchor="middle" font-size="10" fill="#888" font-style="italic">20份样本 → 17份有冲突 → 共62条</text>
+
+  <!-- 底部：统计 -->
+  <rect x="20" y="280" width="960" height="200" rx="10" fill="#fff" stroke="#ddd"/>
+  <text x="40" y="308" font-size="15" font-weight="700" fill="#333">20份真实样本的检测结果统计</text>
+  
+  <text x="40" y="335" font-size="13" font-weight="600" fill="#c63a3a">按冲突类型：</text>
+  <text x="180" y="335" font-size="12" fill="#555">AI见病灶但报告没提+称正常 = 42条（68%，最多）</text>
+  <text x="180" y="353" font-size="12" fill="#555">AI见病灶但报告说"没有" = 12条  ·  报告内部矛盾 = 4条  ·  其他 = 4条</text>
+
+  <text x="40" y="380" font-size="13" font-weight="600" fill="#e08a2b">按严重度：</text>
+  <text x="180" y="380" font-size="12" fill="#555">高 = 3条（全在AI概率≥0.786）  ·  中 = 50条  ·  低 = 9条</text>
+
+  <text x="40" y="407" font-size="13" font-weight="600" fill="#1a6e3a">按疾病：</text>
+  <text x="180" y="407" font-size="12" fill="#555">胸腔积液15 > 心脏肥大11 = 实变11 > 气胸10 > 水肿9 = 肺不张9</text>
+  <text x="180" y="425" font-size="11" fill="#888">胸腔积液冲突最多，与其AI准确率最高(AUC 0.92)一致——AI越准，检出的冲突越可信</text>
+
+  <text x="40" y="455" font-size="13" font-weight="600" fill="#7a5a00">关键发现：</text>
+  <text x="180" y="455" font-size="12" fill="#555">气胸14个"阳性"中13个概率在0.45~0.55之间（AI实际不确定），统一0.5阈值导致93%假阳性</text>
+  <text x="180" y="472" font-size="12" fill="#555">→ 需用逐病种最优阈值 + 边界带降级来解决</text>
+</svg>
