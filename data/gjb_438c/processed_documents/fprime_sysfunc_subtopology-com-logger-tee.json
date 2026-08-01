@@ -1,0 +1,80 @@
+{
+  "doc_name": "fprime_sysfunc_subtopology-com-logger-tee",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_subtopology-com-logger-tee.md",
+  "md_lines": 30,
+  "md_chars": 1532,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "ComLoggerTee Subtopology",
+  "section_count": 7,
+  "sections": [
+    {
+      "number": null,
+      "title": "ComLoggerTee Subtopology",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 187,
+      "text_preview": "- [F Prime ComLogger](https://github.com/nasa/fprime/blob/devel/Svc/ComLogger/README.md)\n- [F Prime ComSplitter](https://github.com/nasa/fprime/blob/devel/Svc/ComSplitter/ComSplitter.fpp)"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 352,
+      "text_preview": "The ComLoggerTee subtopology provides a simple tee (splitter) that duplicates outgoing communication data, sending it both to the normal transmission path and to a communication logger for on-board re"
+    },
+    {
+      "number": null,
+      "title": "Included Components",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 250,
+      "text_preview": "- **Communication Splitter** (passive) — Takes a single input communication buffer and replicates it to multiple outputs.\n- **Communication Logger** (active) — Writes communication buffers to files on"
+    },
+    {
+      "number": null,
+      "title": "Data Flow",
+      "level": 3,
+      "line_start": 18,
+      "text_length": 285,
+      "text_preview": "When inserted into the communication path, the splitter receives outgoing data, sends one copy onward to the normal transmission path, and sends another copy to the communication logger. The logger wr"
+    },
+    {
+      "number": null,
+      "title": "Configuration",
+      "level": 3,
+      "line_start": 22,
+      "text_length": 191,
+      "text_preview": "- Base IDs, queue sizes, stack sizes, and priorities are configurable via ComLoggerTeeConfig.\n- The communication logger's file path prefix and maximum file size are configured at setup time."
+    },
+    {
+      "number": null,
+      "title": "Required Inputs",
+      "level": 3,
+      "line_start": 27,
+      "text_length": 119,
+      "text_preview": "- Incoming communication data from the framing path.\n- Output connection onward to the communication adapter or driver."
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

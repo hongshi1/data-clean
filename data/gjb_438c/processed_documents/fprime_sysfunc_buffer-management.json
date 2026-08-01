@@ -1,0 +1,88 @@
+{
+  "doc_name": "fprime_sysfunc_buffer-management",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_buffer-management.md",
+  "md_lines": 43,
+  "md_chars": 3192,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Buffer Management Functionality",
+  "section_count": 8,
+  "sections": [
+    {
+      "number": null,
+      "title": "Buffer Management Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 605,
+      "text_preview": "- [Fw::Buffer SDD](https://github.com/nasa/fprime/blob/devel/Fw/Buffer/docs/sdd.md)\n- [F Prime BufferManager SDD](https://github.com/nasa/fprime/blob/devel/Svc/BufferManager/docs/sdd.md)\n- [F Prime Bu"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 397,
+      "text_preview": "Buffer management provides memory allocation, distribution, and lifecycle services for variable-size data buffers used throughout the system. Components that need temporary memory for communication da"
+    },
+    {
+      "number": null,
+      "title": "Buffer Allocation",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 716,
+      "text_preview": "Two buffer allocation strategies are available:\n\n- **Buffer Manager** — Implements a buffer pool with dynamically managed memory. The pool is configured at setup time with bin sizes and counts, allowi"
+    },
+    {
+      "number": null,
+      "title": "Buffer Accumulation",
+      "level": 3,
+      "line_start": 27,
+      "text_length": 460,
+      "text_preview": "The Buffer Accumulator accepts incoming buffers and queues them for later processing. This is useful when the data arrival rate may temporarily exceed the processing rate, or to pause buffer processin"
+    },
+    {
+      "number": null,
+      "title": "Buffer Replication",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 193,
+      "text_preview": "The Buffer Repeater takes an incoming buffer and replicates it to multiple output ports. This is useful when the same data needs to be consumed by multiple downstream components simultaneously."
+    },
+    {
+      "number": null,
+      "title": "Buffer Logging",
+      "level": 3,
+      "line_start": 35,
+      "text_length": 242,
+      "text_preview": "The Buffer Logger writes incoming buffers to files on the file system. It is typically connected in the communication path to record all transmitted or received data for post-analysis. Log files are r"
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 393,
+      "text_preview": "- If the Buffer Manager runs out of available buffers in the requested size bin, it returns an empty (invalid) buffer. The requesting component must check validity before use.\n- The Buffer Accumulator"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

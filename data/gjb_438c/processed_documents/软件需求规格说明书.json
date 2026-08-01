@@ -1,0 +1,2468 @@
+{
+  "doc_name": "软件需求规格说明书",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/软件需求规格说明书.pdf.md",
+  "md_lines": 1405,
+  "md_chars": 33645,
+  "language": "zh",
+  "is_gjb_format": true,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "COURSEHUB",
+  "section_count": 178,
+  "sections": [
+    {
+      "number": null,
+      "title": "COURSEHUB",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "软件需求规格说明书",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 1329,
+      "text_preview": "软件需求规格说明书  \n1 范围  \n1.1 标识  \n1.2 系统概述  \n1.3 文档概述  \n1.4 基线  \n2 引用文件  \n3 需求  \n3.1 所需的状态和方式  \n3.2 需求概述  \n3.2.1 目标  \n3.2.2 运行环境  \n3.2.3 用户的特点  \n3.2.4 关键点  \n3.2.5 约束条件  \n3.3 需求规格  \n3.3.1 软件系统总体功能/对象结构  \n3.3"
+    },
+    {
+      "number": "1",
+      "title": "1 范围",
+      "level": 2,
+      "line_start": 105,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 2,
+      "line_start": 107,
+      "text_length": 436,
+      "text_preview": "文档名称：软件需求规格说明书（Software Requirements Specification，SRS）\n\n项目名称：软课程管理平台\n\n课程名称：软件工程基础（北京航空航天大学 软件学院）\n\n文档编号：BUAA-SE-SRS-2025-02\n\n版本号：v1.0\n\n发行号：2025-04-19\n\n编写日期：2025年4月19日\n\n编写者：\n\n学生团队：杨佳宇轩 程宇繁 付东淏 唐皓涵 庄耿雄（"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 系统概述",
+      "level": 2,
+      "line_start": 143,
+      "text_length": 94,
+      "text_preview": "“软课程管理平台”是北京航空航天大学软件学院软件工程基础课程的大作业项目，旨在基于校内网络环境，为教师、助教和学生提供完整的在线教学管理与学习平台，并让学生团队实践需求分析与规格编写方法。"
+    },
+    {
+      "number": null,
+      "title": "项目背景与目标：",
+      "level": 2,
+      "line_start": 147,
+      "text_length": 97,
+      "text_preview": "随着校内混合教学需求增加，需要一套稳定、安全并与学校统一认证系统集成的课程管理与在线学习方案；\n\n本项目兼具教学与实践价值，学生团队负责从需求调研、分析到文档编写的全过程，实现 SRS 的产出。"
+    },
+    {
+      "number": null,
+      "title": "核心功能：",
+      "level": 2,
+      "line_start": 153,
+      "text_length": 283,
+      "text_preview": "1. 课程与班级管理：教师/助教可在平台上创建和管理课程、班级，学生注册并加入；布置作业和项目，跟踪提交与完成状态。\n\n2. 教学资料管理：支持 PPT、PDF、视频、代码等多格式资源的上传、分类存储、版本控制与在线预览；设置资源访问权限。\n\n3. 在线练习：基于题库的选择题、编程题在线答题；自动批改客观题，助教手动评阅主观题；实时反馈、错题重做与收藏。\n\n4. 学习记录与报告：展示学生学习轨迹、"
+    },
+    {
+      "number": null,
+      "title": "技术架构与运行环境：",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 304,
+      "text_preview": "前端：Vue 3 + Vite + Element Plus\n\n后端：Spring Boot 3.x（Java 17）、Maven 构建\n\n数据库：MySQL 8.0（InnoDB）\n\n部署环境：\n\n开发环境：IntelliJ IDEA、Node.js 18.x、npm 9.x、JDK 17\n\n测试环境：校内虚拟机（Ubuntu 20.04、Tomcat 10.0、MySQL 8.0）\n\n生产环境"
+    },
+    {
+      "number": null,
+      "title": "干系人：",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 98,
+      "text_preview": "需方/投资方：北京航空航天大学软件学院教务处\n\n主要用户：课程教师、助教与在校学生\n\n开发方：软件工程基础课程学生团队\n\n支持机构：北航信息化建设中心、第三方云存储服务（如 OSS），腾讯云服务器"
+    },
+    {
+      "number": null,
+      "title": "相关文档：",
+      "level": 2,
+      "line_start": 193,
+      "text_length": 85,
+      "text_preview": "《软件工程基础课程大作业项目说明书》\n\n《软课程管理平台需求描述文档》\n\nIEEE 830–1998 《软件需求规格说明》标准\n\n用户访谈纪要、竞品调研报告、原型设计文档"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 文档概述",
+      "level": 2,
+      "line_start": 203,
+      "text_length": 129,
+      "text_preview": "本《软件需求规格说明书》用于清晰、完整地定义“软课程管理平台”的功能与非功能需求，为设计、开发、测试和验收提供基线依据。\n\n用途：\n\n指导后续系统架构设计、数据库设计和前后端实现；\n\n作为测试用例编写与验收评审的依据；\n\n支持项目管理中的需求变更与版本控制。"
+    },
+    {
+      "number": null,
+      "title": "文档结构：",
+      "level": 2,
+      "line_start": 215,
+      "text_length": 51,
+      "text_preview": "1. 范围\n\n2. 总体描述\n\n3. 功能需求\n\n4. 非功能需求\n\n5. 接口需求\n\n6. 其他附录"
+    },
+    {
+      "number": null,
+      "title": "保密性：",
+      "level": 2,
+      "line_start": 229,
+      "text_length": 51,
+      "text_preview": "本文档为课程大作业内部资料，仅限项目组成员、课程教师及助教审阅；\n\n未经授权，不得私自对外公开或分享。"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 基线",
+      "level": 2,
+      "line_start": 235,
+      "text_length": 103,
+      "text_preview": "本需求规格说明书基于以下设计与调研基线编写：\n\n1. 教师下发的《软件工程基础课程大作业项目说明书》（版本1.0，2025-03-05）。\n\n2. IEEE 830–1998 《软件需求规格说明》标准规范。"
+    },
+    {
+      "number": "2",
+      "title": "2 引用文件",
+      "level": 2,
+      "line_start": 243,
+      "text_length": 856,
+      "text_preview": "以下文档作为本 SRS 编写与评审的依据，未公开发布的文档均由北航软件学院提供：\n\n<table><tr><td rowspan=1 colspan=1>文档编号</td><td rowspan=1 colspan=1>标题</td><td rowspan=1 colspan=1>版本</td><td rowspan=1 colspan=1>发行日期</td><td rowspan=1 colsp"
+    },
+    {
+      "number": "3",
+      "title": "3 需求",
+      "level": 2,
+      "line_start": 249,
+      "text_length": 48,
+      "text_preview": "本章描述构成软课程管理平台验收条件的功能和性能需求。每个需求均赋予唯一标识以支持测试和可追溯性。"
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 所需的状态和方式",
+      "level": 2,
+      "line_start": 253,
+      "text_length": 80,
+      "text_preview": "本系统仅在“正常运行”模式下工作。无需区分其他特殊模式——系统上线后持续提供教学与学习服务；维护模式或紧急应急由运维人员线下切换，并不直接影响CSCI功能需求。"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 需求概述",
+      "level": 2,
+      "line_start": 257,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 目标",
+      "level": 2,
+      "line_start": 259,
+      "text_length": 111,
+      "text_preview": "实时反馈，提升教学效率与学生自主学习体验。\n\n主要功能与数据流程：\n\n1. 教师发布课程→学生注册并加入→教师上传资料与布置任务→学生查看学习资料并提交→系统自动/手动评阅→成绩与报告生成\n\n2. 外部接口：邮件/通知服务"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 运行环境",
+      "level": 2,
+      "line_start": 269,
+      "text_length": 167,
+      "text_preview": "硬件环境：校园网内物理服务器（CPU Intel Xeon 8 cores、RAM 32 GB、磁盘2 TB SSD）、负载均衡器及备份存储设备。\n\n软件环境：\n\n操作系统：Windows；\n\nWeb 服务器：Nginx 1.18；\n\n应用容器：Spring Boot Jar 或 Tomcat 10；\n\n数据库：MySQL 8.0；"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 用户的特点",
+      "level": 2,
+      "line_start": 283,
+      "text_length": 101,
+      "text_preview": "教师：具备基本计算机操作能力，偏重内容组织与评阅；\n\n助教：参与题库管理与主观题评阅，需频繁使用练习管理模块；\n\n学生：网络原住民，对在线学习平台交互性、即时反馈有较高期望；希望资料检索与练习体验流畅。"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 关键点",
+      "level": 2,
+      "line_start": 291,
+      "text_length": 72,
+      "text_preview": "实时反馈：客观题自动批改与错题重做；\n\n高并发支持：峰值至少支持 200 并发用户；\n\n数据安全与隐私：HTTPS、数据库加密、权限细粒度控制。"
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 约束条件",
+      "level": 2,
+      "line_start": 299,
+      "text_length": 134,
+      "text_preview": "经费与资源：仅限校内虚拟机与物理服务器资源；\n\n开发期限：2025年4月开始开发，2025年5月完成测试；\n\n技术栈：前端 Vue3，后端 Spring Boot，数据库 MySQL；\n\n法律与政策：遵守《高等教育法》及学校信息化安全管理条例；不得使用国外敏感云服务。"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 需求规格",
+      "level": 2,
+      "line_start": 309,
+      "text_length": 36,
+      "text_preview": "本节详细说明系统各功能模块的对象结构与交互流程，以及全局开发与接口约定。"
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 软件系统总体功能/对象结构",
+      "level": 2,
+      "line_start": 313,
+      "text_length": 268,
+      "text_preview": "系统采用 MVC 架构，以模块化方式组织：\n\nModel（持久层）：\n\n实体类：User、Course、ClassGroup、Resource、Exercise、Submission、Report 等；\n\n关系：\n\nUser 与 ClassGroup：多对多；\n\nCourse 与 ClassGroup：一对多；\n\nResource 与 Course：多对一；\n\nExercise 与 Course："
+    },
+    {
+      "number": null,
+      "title": "View（前端 SPA）：",
+      "level": 2,
+      "line_start": 335,
+      "text_length": 214,
+      "text_preview": "基于 Vue 3 的单页面应用，路由分区：\n\n/login、/homepage、/register：用户注册登录与首页；\n\n/course/id：课程列表与详情；\n\n/class/id：班级成员与任务情况；\n\n/doTask：在线练习；\n\n/showCheckDetail：查看批改信息；\n\n/checkDetail：教师或助教批改信息；\n\n/home：信息总览，获取代办，课程，任务，错题；\n\n/p"
+    },
+    {
+      "number": null,
+      "title": "Controller（RESTful API 层）：",
+      "level": 2,
+      "line_start": 355,
+      "text_length": 271,
+      "text_preview": "按资源划分的接口路由：\n\n/user/reg、/user/login：注册、登录；\n\n/course/create：课程增删改查；\n\n/class/create、/class/addStu：班级管理、成员加入；\n\n/process/resource/add：上传资源；\n\n/check/get?exer\\_id=？&user\\_id=？：做题，查看批改信息；\n\n请求/响应格式：JSON，统一包装 {"
+    },
+    {
+      "number": null,
+      "title": "总体流程示意：",
+      "level": 2,
+      "line_start": 373,
+      "text_length": 249,
+      "text_preview": "1. 用户发起浏览器请求 → 前端路由匹配组件 → 调用后端 API → 后端\n\nController 触发 Service，DAO 操作数据库 → 返回 JSON → 前端渲染。\n\n2. 资源上传流程：前端 FormData 上传至 /api/resources/upload → 后端接收并存储至 OSS → 记录元数据 → 返回资源信息。\n\n3. 编程题评测流程：前端提交代码至 /api/ex"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 软件子系统功能/对象结构",
+      "level": 2,
+      "line_start": 383,
+      "text_length": 126,
+      "text_preview": "各子系统内部进一步细化：\n\n1. 用户管理子系统：\n\n对象：User、Role、Permission；\n\n关键流程：\n\n注册/登录 → 调用 CAS → 获取票据 → 生成本地 Token；\n\n角色授权 → Role-Permission 关联表管理；"
+    },
+    {
+      "number": null,
+      "title": "2. 课程管理子系统：",
+      "level": 2,
+      "line_start": 397,
+      "text_length": 131,
+      "text_preview": "对象：Course、ClassGroup、Enrollment；\n\n关键流程：\n\n教师创建 Course → DAO 保存；\n\n创建 ClassGroup → 自动生成代码 → 对应 Course；\n\n学生通过邀请码加入 → 写入 Enrollment 关联表；"
+    },
+    {
+      "number": null,
+      "title": "3. 资料管理子系统：",
+      "level": 2,
+      "line_start": 409,
+      "text_length": 70,
+      "text_preview": "对象：Resource、Version；\n\n关键流程：\n\n上传/版本更新 → 写入 OSS 和数据库；\n\n在线预览 → 调用第三方渲染服务；"
+    },
+    {
+      "number": null,
+      "title": "4. 练习管理子系统：",
+      "level": 2,
+      "line_start": 419,
+      "text_length": 148,
+      "text_preview": "对象：Exercise、Question、Submission、Evaluation；\n\n关键流程：\n\n教师发布 Exercise → 关联 Question 列表；\n\n学生作答 → Submission 写入；\n\n客观题自动评测 → 立即返回；编程题异步评测 → WebSocket 推送结果；"
+    },
+    {
+      "number": null,
+      "title": "5. 报告生成子系统：",
+      "level": 2,
+      "line_start": 431,
+      "text_length": 195,
+      "text_preview": "对象：ReportTemplate、ReportData；\n\n关键流程：\n\n查询数据 → 组装 ReportData → 调用 PDF/Excel 渲染组件 → 存储并生成下载链接；\n\n6. 系统管理子系统：\n\n对象：LogEntry、MonitorMetric；\n\n关键流程：\n\n定时采集监控指标 → 记录 MonitorMetric；\n\n管理员查询日志 → 分页返回 LogEntry；"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 描述约定",
+      "level": 2,
+      "line_start": 449,
+      "text_length": 283,
+      "text_preview": "为保证文档一致性与可读性，规定如下约定：\n\nUML 类图、时序图：遵循 UML 2.5 标准，图例见附录 C；\n\n接口文档：基于 OpenAPI 3.0 规范，统一生成 Swagger 文档；\n\n日志级别：ERROR、WARN、INFO、DEBUG；\n\n安全协议：所有 API 强制 HTTPS；\n\n前端组件命名：Vue 文件夹结构按功能划分，组件文件以 功能名称.组件类型.vue 命名；\n\n数据库"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 CSCI 能力需求",
+      "level": 2,
+      "line_start": 467,
+      "text_length": 86,
+      "text_preview": "本节将关键功能划分为若干“能力”，并针对每个能力制定细化需求，包括输入、处理、输出、性能与异常处理等。编号前缀采用 FR（功能需求）或 NFR（非功能需求），支持可追溯性。"
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 课程与班级管理能力",
+      "level": 2,
+      "line_start": 471,
+      "text_length": 321,
+      "text_preview": "能力描述：提供课程与班级的创建、维护、成员管理以及状态跟踪。\n\nFR-1: 创建课程\n\n输入：课程名称（字符串，1–64 字符）、课程代码（字符串，唯一）、教学大纲（文档）\n\n处理：校验名称唯一性，存储课程基本信息，生成课程 ID\n\n输出：课程 ID（UUID 格式）、确认消息\n\n性能：响应时间 ≤ 2s (95% 请求)\n\n错误处理：若名称或代码重复，返回错误码 400 与友好提示；若数据库写入"
+    },
+    {
+      "number": null,
+      "title": "FR-3: 创建班级",
+      "level": 2,
+      "line_start": 497,
+      "text_length": 78,
+      "text_preview": "输入：课程 ID、班级名称、班级代码（6 位字母数字）\n\n处理：校验课程存在、生成班级记录、绑定课程\n\n输出：班级 ID、邀请码\n\n性能：响应时间 ≤ 2s"
+    },
+    {
+      "number": null,
+      "title": "FR-4: 学生批量导入",
+      "level": 2,
+      "line_start": 507,
+      "text_length": 142,
+      "text_preview": "输入：班级 ID、CSV 文件（字段：学号、姓名、邮箱）\n\n处理：解析文件、验证字段格式、事务批量写入（最大 500 条）\n\n输出：导入结果报告（成功/失败条数、错误详情）\n\n性能：500 条记录完成导入 ≤ 10s\n\n错误处理：文件格式错误返回 400；单记录校验失败列出行号与原因"
+    },
+    {
+      "number": null,
+      "title": "FR-5: 学生加入班级",
+      "level": 2,
+      "line_start": 519,
+      "text_length": 90,
+      "text_preview": "输入：班级邀请码、学生身份令牌\n\n处理：校验邀请码有效性、校验学生身份、添加成员\n\n输出：学生-班级关系记录、成功提示\n\n异常情况：邀请码无效或过期返回 404；已加入返回 409"
+    },
+    {
+      "number": "3.4.2",
+      "title": "3.4.2 教学资料管理能力",
+      "level": 2,
+      "line_start": 529,
+      "text_length": 32,
+      "text_preview": "能力描述：支持多格式教学资源的上传、预览、下载、分类和版本控制。"
+    },
+    {
+      "number": null,
+      "title": "FR-6: 资源上传",
+      "level": 2,
+      "line_start": 533,
+      "text_length": 142,
+      "text_preview": "输入：文件（PPT/PDF/MP4/ZIP，≤ 500MB）、所属课程/章节、上传人 ID\n\n处理：校验文件类型与大小、病毒扫描、存储至对象存储、生成元数据\n\n输出：资源 ID、访问 URL\n\n性能：单文件上传完成 ≤ 5s\n\n异常：文件超限或不支持类型返回 415；存储失败 500"
+    },
+    {
+      "number": null,
+      "title": "FR-7: 在线预览与下载",
+      "level": 2,
+      "line_start": 545,
+      "text_length": 105,
+      "text_preview": "输入：资源 ID、用户角色令牌\n\n处理：权限检查、调用预览服务或下载接口\n\n输出：渲染后的文档视图或下载流\n\n性能：文档加载 ≤ 3s；视频缓冲首帧 ≤ 2s\n\n异常：无权限返回 403；资源不存在返回 404"
+    },
+    {
+      "number": null,
+      "title": "FR-8: 版本管理",
+      "level": 2,
+      "line_start": 557,
+      "text_length": 77,
+      "text_preview": "输入：资源 ID、更新文件\n\n处理：创建新版本记录、保留历史版本（最多 10 个）、更新元数据\n\n输出：版本号、资源历史列表\n\n异常：版本超限返回 409"
+    },
+    {
+      "number": "3.4.3",
+      "title": "3.4.3 在线练习能力",
+      "level": 2,
+      "line_start": 567,
+      "text_length": 36,
+      "text_preview": "能力描述：管理题库、发布练习、在线答题、自动与手动评阅、反馈与错题重做。"
+    },
+    {
+      "number": null,
+      "title": "FR-9: 题库管理",
+      "level": 2,
+      "line_start": 571,
+      "text_length": 81,
+      "text_preview": "输入：题目数据（类型、题干、选项/代码模板、答案）、题目分类\n\n处理：存储题目信息、关联分类、生成题目 ID\n\n输出：题目 ID 列表\n\n性能：单题创建 ≤ 1s"
+    },
+    {
+      "number": null,
+      "title": "FR-10: 发布练习",
+      "level": 2,
+      "line_start": 581,
+      "text_length": 69,
+      "text_preview": "输入：练习名称、题目 ID 列表、开放/截止时间、多次提交规则\n\n处理：校验时间逻辑、权限校验、写入练习记录\n\n输出：练习 ID、练习详情"
+    },
+    {
+      "number": null,
+      "title": "FR-11: 客观题自动批改",
+      "level": 2,
+      "line_start": 589,
+      "text_length": 83,
+      "text_preview": "输入：练习 ID、学生作答 JSON 包含题目 ID 与答案\n\n处理：对比答案、计算得分、写入成绩表\n\n输出：得分明细、正确率统计\n\n性能：批改 50 道题 ≤ 2s"
+    },
+    {
+      "number": null,
+      "title": "FR-13: 反馈与错题重做",
+      "level": 2,
+      "line_start": 599,
+      "text_length": 50,
+      "text_preview": "输入：学生 ID、题目 ID\n\n处理：查找第一次提交记录、提供解析与答案\n\n输出：错题列表与解析视图"
+    },
+    {
+      "number": "3.4.4",
+      "title": "3.4.4 学习记录与报告能力",
+      "level": 2,
+      "line_start": 607,
+      "text_length": 31,
+      "text_preview": "能力描述：记录并展示学生学习与练习数据，支持可视化查询与导出。"
+    },
+    {
+      "number": null,
+      "title": "FR-14: 学习轨迹查询",
+      "level": 2,
+      "line_start": 611,
+      "text_length": 69,
+      "text_preview": "输入：学生 ID、查询时间范围\n\n处理：聚合课程完成比例、章节进度、作业提交状态\n\n输出：轨迹报告（JSON）\n\n性能：单次查询 ≤ 3s"
+    },
+    {
+      "number": null,
+      "title": "FR-15: 报告导出",
+      "level": 2,
+      "line_start": 621,
+      "text_length": 64,
+      "text_preview": "输入：学生/班级 ID、格式（html）\n\n处理：渲染文档、写入文件存储\n\n输出：下载链接\n\n性能：50 条记录导出 ≤ 10s"
+    },
+    {
+      "number": "3.4.5",
+      "title": "3.4.5 用户与权限管理能力",
+      "level": 2,
+      "line_start": 631,
+      "text_length": 25,
+      "text_preview": "能力描述：基于角色的用户认证、授权与个人信息维护。"
+    },
+    {
+      "number": null,
+      "title": "FR-16: 角色登录",
+      "level": 2,
+      "line_start": 635,
+      "text_length": 52,
+      "text_preview": "输入：登录信息\n\n处理：加密后对比数据库密码，进行验证\n\n输出：平台会话令牌\n\n性能：登录完成 ≤ 1s"
+    },
+    {
+      "number": null,
+      "title": "FR-17: 角色权限校验",
+      "level": 2,
+      "line_start": 645,
+      "text_length": 75,
+      "text_preview": "输入：API 请求、用户令牌、目标资源\n\n处理：解析令牌、判断角色与资源访问控制列表\n\n输出：允许访问或拒绝（403）\n\n性能：校验过程 ≤ 50ms"
+    },
+    {
+      "number": null,
+      "title": "NFR-5: 系统可用性",
+      "level": 2,
+      "line_start": 655,
+      "text_length": 39,
+      "text_preview": "指标：全年平均可用性 ≥ 99.5%\n\n恢复：单次故障恢复时间 ≤ 30min"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 CSCI外部接口需求",
+      "level": 2,
+      "line_start": 661,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.5.1",
+      "title": "3.5.1 接口标识和接口图",
+      "level": 2,
+      "line_start": 663,
+      "text_length": 1689,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">接口标识符</td><td colspan=\"1\" rowspan=\"1\">接口类型</td><td colspan=\"1\" rowspan=\"1\">接口实体</td><td colspan=\"1\" rowspan=\"1\">描述</td></tr><tr><td colspan=\"1\" rowspan=\"1\">IF-00"
+    },
+    {
+      "number": "3.5.2",
+      "title": "3.5.2 IF-001（用户接口）",
+      "level": 2,
+      "line_start": 667,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 669,
+      "text_length": 53,
+      "text_preview": "登录凭证：\n\n类型：字符串（加密存储）\n\n格式：账号为学工号（8位数字），密码为6-16位含字母数字的组合"
+    },
+    {
+      "number": null,
+      "title": "角色类型：",
+      "level": 2,
+      "line_start": 677,
+      "text_length": 75,
+      "text_preview": "类型：字符串\n\n格式：包含“教师”，“学生”，“助教”中的一个\n\n个人信息：\n\n类型：字符串（姓名、学号、密码等）\n\n格式：纯文本，最大长度100字符"
+    },
+    {
+      "number": null,
+      "title": "班级代码：",
+      "level": 2,
+      "line_start": 689,
+      "text_length": 61,
+      "text_preview": "类型：字符串\n\n格式：6位字母数字混合，唯一标识班级\n\n课程代码：\n\n类型：字符串\n\n格式：6位字母数字混合，唯一标识课程"
+    },
+    {
+      "number": null,
+      "title": "资源上传：",
+      "level": 2,
+      "line_start": 701,
+      "text_length": 26,
+      "text_preview": "类型：文件（多种资源）\n\n大小限制：单文件≤50MB"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 707,
+      "text_length": 25,
+      "text_preview": "使用HTTPS协议加密传输，确保用户操作的安全性。"
+    },
+    {
+      "number": "3.5.3",
+      "title": "3.5.3 IF-002（软件接口）",
+      "level": 2,
+      "line_start": 711,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 713,
+      "text_length": 124,
+      "text_preview": "导入文件：\n\n类型：文件（CSV/XLSX）\n\n格式：CSV格式为逗号分隔，XLSX为Excel表格格式\n\n大小限制：单文件≤20MB\n\n导出报告：\n\n类型：文件（html）\n\n格式：html格式，包含练习报告、成绩等\n\n大小限制：单文件≤10MB"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 731,
+      "text_length": 31,
+      "text_preview": "使用HTTPS协议传输数据，支持异步操作（大文件上传/下载）。"
+    },
+    {
+      "number": "3.5.4",
+      "title": "3.5.4 IF-003（通信接口）",
+      "level": 2,
+      "line_start": 735,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 737,
+      "text_length": 51,
+      "text_preview": "请求数据：\n\n类型：JSON对象\n\n格式：包含用户请求参数，如课程ID、学生ID等\n\n最大长度：2MB"
+    },
+    {
+      "number": null,
+      "title": "响应数据：",
+      "level": 2,
+      "line_start": 747,
+      "text_length": 40,
+      "text_preview": "类型：JSON对象\n\n格式：返回处理结果、错误信息或查询结果\n\n最大长度：2MB"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 755,
+      "text_length": 76,
+      "text_preview": "使用RESTful API，传输数据采用JSON格式。支持GET、POST、PUT、\n\nDELETE请求。\n\n使用HTTPS协议加密传输，确保数据安全。"
+    },
+    {
+      "number": "3.5.5",
+      "title": "3.5.5 IF-004（硬件接口）",
+      "level": 2,
+      "line_start": 763,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 765,
+      "text_length": 108,
+      "text_preview": "浏览器兼容性：\n\n类型：字符串\n\n格式：支持Chrome、Firefox、Edge等现代浏览器\n\n移动端兼容性：\n\n类型：字符串\n\n格式：支持Android/iOS系统的移动设备浏览器（如Chrome、Safari）"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 779,
+      "text_length": 42,
+      "text_preview": "支持HTTP/HTTPS协议，适配所有主流浏览器，保证界面在不同设备上的响应式设计。"
+    },
+    {
+      "number": "3.5.6",
+      "title": "3.5.6 IF-005（用户注册/登录系统）",
+      "level": 2,
+      "line_start": 783,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 785,
+      "text_length": 132,
+      "text_preview": "学工号：\n\n类型：字符串\n\n格式：8位数字\n\n密码：\n\n类型：字符串（加密存储）\n\n格式：6-16位字母数字组合\n\n验证码：\n\n类型：字符串\n\n格式：6位数字验证码，用于验证登录或注册请求\n\n注册信息：\n\n类型：JSON对象\n\n格式：包括姓名、学号、角色类型等字段"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 811,
+      "text_length": 49,
+      "text_preview": "使用HTTPS协议进行加密传输，确保用户数据安全。\n\n注册过程中通过短信/邮件发送验证码进行验证。"
+    },
+    {
+      "number": "3.5.7",
+      "title": "3.5.7 IF-006（题库管理系统）",
+      "level": 2,
+      "line_start": 817,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 819,
+      "text_length": 54,
+      "text_preview": "题目内容：\n\n类型：字符串（文本）\n\n格式：包含题目叙述、选项（如选择题）、答案等\n\n最大长度：1000字符"
+    },
+    {
+      "number": null,
+      "title": "题目类型：",
+      "level": 2,
+      "line_start": 829,
+      "text_length": 29,
+      "text_preview": "类型：字符串\n\n格式：“选择题”，“编程题”，“判断题”等"
+    },
+    {
+      "number": null,
+      "title": "题目分值：",
+      "level": 2,
+      "line_start": 835,
+      "text_length": 16,
+      "text_preview": "类型：整数\n\n格式：1\\~100"
+    },
+    {
+      "number": null,
+      "title": "题库操作类型：",
+      "level": 2,
+      "line_start": 841,
+      "text_length": 24,
+      "text_preview": "类型：字符串\n\n格式：新增、删除、修改等操作类型"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 847,
+      "text_length": 32,
+      "text_preview": "使用HTTPS协议进行加密传输，支持JSON格式的题库操作请求。"
+    },
+    {
+      "number": "3.5.8",
+      "title": "3.5.8 IF-007（练习与反馈）",
+      "level": 2,
+      "line_start": 851,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 853,
+      "text_length": 47,
+      "text_preview": "题目提交：\n\n类型：JSON对象\n\n格式：包括学生的答案（选择题选项、编程代码等），问题ID等"
+    },
+    {
+      "number": null,
+      "title": "反馈报告：",
+      "level": 2,
+      "line_start": 861,
+      "text_length": 27,
+      "text_preview": "类型：JSON对象\n\n格式：包括得分、正确答案、解析等"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 867,
+      "text_length": 63,
+      "text_preview": "使用HTTPS协议进行加密传输，支持JSON格式的请求和响应数据。\n\n系统支持实时答题和提交，确保反馈信息在提交后能迅速返回。"
+    },
+    {
+      "number": "3.5.9",
+      "title": "3.5.9 IF-008（个人信息管理）",
+      "level": 2,
+      "line_start": 873,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据元素特性",
+      "level": 2,
+      "line_start": 875,
+      "text_length": 42,
+      "text_preview": "个人资料：\n\n类型：字符串（姓名、学号、邮箱等）\n\n格式：纯文本，最大长度100字符"
+    },
+    {
+      "number": null,
+      "title": "密码修改：",
+      "level": 2,
+      "line_start": 883,
+      "text_length": 38,
+      "text_preview": "类型：字符串（加密存储）\n\n格式：新密码、旧密码，均为6-16位字母数字组合"
+    },
+    {
+      "number": null,
+      "title": "通信方法",
+      "level": 2,
+      "line_start": 889,
+      "text_length": 22,
+      "text_preview": "使用HTTPS协议加密传输，确保数据安全性。"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 CSCI内部接口需求",
+      "level": 2,
+      "line_start": 893,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.6.1",
+      "title": "3.6.1 内部数据交换接口",
+      "level": 2,
+      "line_start": 895,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "目的：",
+      "level": 2,
+      "line_start": 897,
+      "text_length": 31,
+      "text_preview": "定义系统内部各组件和模块之间的数据交互要求，确保系统稳定运行。"
+    },
+    {
+      "number": null,
+      "title": "数据库接口",
+      "level": 2,
+      "line_start": 901,
+      "text_length": 80,
+      "text_preview": "所有数据的存储和读取操作通过数据库接口进行，遵循统一的CRUD（创建、读取、更新、删除）接口规范。\n\n所有的数据操作必须经过权限验证，确保数据的安全性和一致性。"
+    },
+    {
+      "number": null,
+      "title": "任务与成绩管理接口",
+      "level": 2,
+      "line_start": 907,
+      "text_length": 49,
+      "text_preview": "任务和成绩模块应与数据库中的任务记录、提交记录、成绩记录进行对接，保证任务评分和成绩管理的一致性。"
+    },
+    {
+      "number": null,
+      "title": "用户管理接口",
+      "level": 2,
+      "line_start": 911,
+      "text_length": 43,
+      "text_preview": "用户身份管理模块（学生、教师、助教等）与系统中每个模块交互，进行用户信息的管理和验证。"
+    },
+    {
+      "number": "3.6.2",
+      "title": "3.6.2 内部服务接口",
+      "level": 2,
+      "line_start": 915,
+      "text_length": 36,
+      "text_preview": "目的：\n\n定义系统内部服务之间的交互规范，确保模块之间的协作与数据同步。"
+    },
+    {
+      "number": null,
+      "title": "教师与学生信息同步接口",
+      "level": 2,
+      "line_start": 921,
+      "text_length": 43,
+      "text_preview": "教师与学生的个人信息、课程参与情况、成绩等信息通过内部接口进行同步，保证数据的一致性。"
+    },
+    {
+      "number": null,
+      "title": "文件存储接口",
+      "level": 2,
+      "line_start": 925,
+      "text_length": 47,
+      "text_preview": "系统文件存储模块应支持上传、下载课程相关资料的操作，并确保文件在存储系统中的一致性和可访问性。"
+    },
+    {
+      "number": "3.6.3",
+      "title": "3.6.3 系统状态与日志接口",
+      "level": 2,
+      "line_start": 929,
+      "text_length": 140,
+      "text_preview": "目的：\n\n提供系统状态和操作日志接口，便于后台管理和维护。\n\n日志管理接口\n\n系统生成操作日志，包括登录、任务提交、成绩查看等操作记录。日志接口应支持查询和分析操作。\n\n系统监控接口\n\n系统应提供状态监控接口，定期报告系统运行状态、性能、故障等信息，并能生成健康报告供管理员查看。"
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 CSCI内部数据需求",
+      "level": 2,
+      "line_start": 943,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 课程 (Courses)",
+      "level": 2,
+      "line_start": 945,
+      "text_length": 1452,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>I"
+    },
+    {
+      "number": null,
+      "title": "2. 教师 (Teachers)",
+      "level": 2,
+      "line_start": 949,
+      "text_length": 637,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">id</td><td c"
+    },
+    {
+      "number": null,
+      "title": "3. 学生 (Students)",
+      "level": 2,
+      "line_start": 953,
+      "text_length": 573,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>I"
+    },
+    {
+      "number": null,
+      "title": "4. 班级 (Classes)",
+      "level": 2,
+      "line_start": 957,
+      "text_length": 1019,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>classId</td><td rowspan=1 colspa"
+    },
+    {
+      "number": null,
+      "title": "5. 教学进度 (Teaching Progress)",
+      "level": 2,
+      "line_start": 961,
+      "text_length": 1020,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>I"
+    },
+    {
+      "number": null,
+      "title": "6. 资料 (Resources)",
+      "level": 2,
+      "line_start": 965,
+      "text_length": 577,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>I"
+    },
+    {
+      "number": null,
+      "title": "7. 任务 (Tasks)",
+      "level": 2,
+      "line_start": 969,
+      "text_length": 2052,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>I"
+    },
+    {
+      "number": null,
+      "title": "8. 题目 (Problems)",
+      "level": 2,
+      "line_start": 973,
+      "text_length": 1749,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">id</td><td c"
+    },
+    {
+      "number": null,
+      "title": "9. 题库 (Question Bank)",
+      "level": 2,
+      "line_start": 977,
+      "text_length": 438,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>tasks</td><td rowspan=1 colspan="
+    },
+    {
+      "number": null,
+      "title": "10. 回答 (Answers)",
+      "level": 2,
+      "line_start": 981,
+      "text_length": 439,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>problemId</td><td rowspan=1 cols"
+    },
+    {
+      "number": null,
+      "title": "11. 提交 (Submissions)",
+      "level": 2,
+      "line_start": 985,
+      "text_length": 586,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 cols"
+    },
+    {
+      "number": null,
+      "title": "12. 任务得分 (Task Scores)",
+      "level": 2,
+      "line_start": 989,
+      "text_length": 641,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">studentId</t"
+    },
+    {
+      "number": null,
+      "title": "13. 收藏 (Favorites)",
+      "level": 2,
+      "line_start": 993,
+      "text_length": 441,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 cols"
+    },
+    {
+      "number": null,
+      "title": "14. 错题 (Mistakes)",
+      "level": 2,
+      "line_start": 997,
+      "text_length": 441,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 cols"
+    },
+    {
+      "number": null,
+      "title": "15. 反馈 (Feedback)",
+      "level": 2,
+      "line_start": 1001,
+      "text_length": 580,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 cols"
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 适应性需求",
+      "level": 2,
+      "line_start": 1005,
+      "text_length": 59,
+      "text_preview": "运行参数配置：支持通过管理后台调整任务截止时间、评分规则等参数。\n\n多语言支持：预留接口支持中英文切换（需后续扩展）。"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 保密性需求",
+      "level": 2,
+      "line_start": 1011,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 安全措施",
+      "level": 2,
+      "line_start": 1013,
+      "text_length": 47,
+      "text_preview": "用户密码采用自定义incoder加密存储，禁止明文传输。\n\n敏感操作（如删除数据）需二次确认。"
+    },
+    {
+      "number": null,
+      "title": "2. 错误处理",
+      "level": 2,
+      "line_start": 1019,
+      "text_length": 31,
+      "text_preview": "系统异常时自动记录日志，前端提示“服务暂不可用，请稍后重试”。"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 保密性和私密性需求",
+      "level": 2,
+      "line_start": 1023,
+      "text_length": 65,
+      "text_preview": "数据访问控制：\n\n教师仅可管理所属课程，学生仅可访问已加入班级。\n\n审计日志：记录用户登录、资源修改、任务发布等操作，保留90天。"
+    },
+    {
+      "number": "3.11",
+      "title": "3.11 CSCI环境需求",
+      "level": 2,
+      "line_start": 1031,
+      "text_length": 110,
+      "text_preview": "操作系统：支持Linux/Windows Server。\n\n运行时环境：JDK 11+、Node.js 14+、MySQL 8.0+。\n\n浏览器兼容性：Chrome 80+、Firefox 75+、Safari 13+。"
+    },
+    {
+      "number": "3.12",
+      "title": "3.12 计算机资源需求",
+      "level": 2,
+      "line_start": 1039,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.12.1",
+      "title": "3.12.1 计算机硬件需求",
+      "level": 2,
+      "line_start": 1041,
+      "text_length": 56,
+      "text_preview": "服务器：4核CPU/8GB内存/200GB SSD（支持横向扩展）。\n\n客户端：1GB可用内存，支持主流浏览器。"
+    },
+    {
+      "number": "3.12.2",
+      "title": "3.12.2 计算机硬件资源利用需求",
+      "level": 2,
+      "line_start": 1047,
+      "text_length": 121,
+      "text_preview": "服务器资源：\n\nCPU：峰值利用率≤80%（4核CPU，支持500并发用户）。\n\n内存：占用≤6GB（含JVM堆内存4GB）。\n\n存储：\n\n数据库：每月增长≤10GB（按每学生每日提交1MB数据估算）。\n\n资源文件：预留200GB云存储空间。"
+    },
+    {
+      "number": null,
+      "title": "客户端资源：",
+      "level": 2,
+      "line_start": 1061,
+      "text_length": 75,
+      "text_preview": "浏览器内存：单页面占用≤200MB。\n\n网络带宽：\n\n上传：支持10用户同时上传100MB文件（需≥50Mbps带宽）。\n\n下载：平均响应时间≤2秒。"
+    },
+    {
+      "number": "3.12.3",
+      "title": "3.12.3 计算机软件需求",
+      "level": 2,
+      "line_start": 1071,
+      "text_length": 77,
+      "text_preview": "依赖组件：Spring Boot 2.7、React 18、Ant Design。\n\n第三方服务：阿里云OSS（资源存储）、SMTP邮件服务（通知功能）。"
+    },
+    {
+      "number": "3.12.4",
+      "title": "3.12.4 计算机通信需求",
+      "level": 2,
+      "line_start": 1077,
+      "text_length": 46,
+      "text_preview": "带宽：≥10Mbps，支持并发500用户。\n\n峰值处理：任务提交高峰期需支持每秒50次请求。"
+    },
+    {
+      "number": "3.13",
+      "title": "3.13 软件质量因素",
+      "level": 2,
+      "line_start": 1083,
+      "text_length": 85,
+      "text_preview": "可靠性：系统可用性≥99.9%，故障恢复时间≤30分钟。\n\n可维护性：模块化设计，支持通过API扩展功能。\n\n易用性：界面符合Ant Design规范，提供操作引导提示。"
+    },
+    {
+      "number": "3.14",
+      "title": "3.14 设计和实现的约束",
+      "level": 2,
+      "line_start": 1091,
+      "text_length": 162,
+      "text_preview": "技术栈：\n\n后端：Java + Spring Boot\n\n前端：React + TypeScript+Vue\n\n数据库：MySQL\n\n架构约束：\n\n采用微服务架构，课程管理、任务批改模块独立部署。\n\n遵循RESTful API设计规范。\n\n数据标准：日期格式统一为ISO 8601（YYYY-MM-DD HH:MM:SS）。"
+    },
+    {
+      "number": "3.15",
+      "title": "3.15 数据",
+      "level": 2,
+      "line_start": 1109,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "输入数据",
+      "level": 2,
+      "line_start": 1111,
+      "text_length": 825,
+      "text_preview": "1. 用户基础信息（ t\\_user 表）\n\n字段： username （学工号）、 password （加密存储）、 name （姓名）、identity （身份：0-教师，1-学生，2-助教）、 mail （邮箱）、birthday （生日）\n\n约束： username 唯一， identity 取值范围固定（0/1/2）\n\n单次批量导入上限：1000条（支持CSV/XLSX格式）\n\n2. 课"
+    },
+    {
+      "number": null,
+      "title": "输出数据",
+      "level": 2,
+      "line_start": 1147,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 用户操作结果",
+      "level": 2,
+      "line_start": 1149,
+      "text_length": 322,
+      "text_preview": "注册/登录状态反馈（JSON格式，含 status 和 message ）\n\n文件上传结果（成功返回 res\\_code ，失败返回错误码）\n\n2. 练习批改结果\n\n客观题自动评分（JSON格式，含score、 correct\\_answer 、 analysis ）\n\n主观题教师批改结果（含 score 、 comment 、 is\\_check 状态）\n\n3. 统计报表\n\n班级练习完成率报表（"
+    },
+    {
+      "number": null,
+      "title": "数据管理能力",
+      "level": 2,
+      "line_start": 1167,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "存储容量",
+      "level": 2,
+      "line_start": 1169,
+      "text_length": 86,
+      "text_preview": "用户表支持100万条记录（t\\_user）\n\n资源表支持1TB存储（ t\\_resource ）\n\n练习记录表支持500万条记录（ t\\_stu\\_prob\\_exer ）"
+    },
+    {
+      "number": null,
+      "title": "并发处理",
+      "level": 2,
+      "line_start": 1177,
+      "text_length": 65,
+      "text_preview": "支持500用户同时提交练习答案（峰值事务处理≥200 TPS）\n\n数据库事务隔离级别： READ\\_COMMITTED ，避免脏读"
+    },
+    {
+      "number": null,
+      "title": "数据一致性",
+      "level": 2,
+      "line_start": 1183,
+      "text_length": 81,
+      "text_preview": "使用乐观锁（ @Version 注解）处理并发更新冲突\n\n外键约束（如 t\\_class.course\\_id 关联 t\\_course.course\\_id ）"
+    },
+    {
+      "number": null,
+      "title": "备份与恢复",
+      "level": 2,
+      "line_start": 1189,
+      "text_length": 52,
+      "text_preview": "每日凌晨执行全量备份（保留7天）\n\n支持按 res\\_code 或 class\\_id 快速恢复特定数据"
+    },
+    {
+      "number": "3.16",
+      "title": "3.16 操作",
+      "level": 2,
+      "line_start": 1195,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "常规操作",
+      "level": 2,
+      "line_start": 1197,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 用户登录与角色切换",
+      "level": 2,
+      "line_start": 1199,
+      "text_length": 44,
+      "text_preview": "根据 t\\_user.identity 字段动态加载权限（如教师可管理课程，学生仅查看）"
+    },
+    {
+      "number": null,
+      "title": "2. 课程与班级管理",
+      "level": 2,
+      "line_start": 1203,
+      "text_length": 142,
+      "text_preview": "教师创建课程时自动生成 t\\_course 记录，并关联 t\\_user\\_course\\_class（ identity=0 ）\n\n学生通过班级邀请码（ t\\_class.class\\_id ）加入班级，写入t\\_user\\_course\\_class （ identity=1 ）"
+    },
+    {
+      "number": null,
+      "title": "3. 资源上传与版本控制",
+      "level": 2,
+      "line_start": 1209,
+      "text_length": 139,
+      "text_preview": "教师上传资源时：\n\n公共资源： t\\_resource.process\\_id=-1\n\n关联进度资源： t\\_resource.process\\_id 对应t\\_process.process\\_id\n\n版本更新时保留历史记录（ res\\_code 不变， date 字段更新）"
+    },
+    {
+      "number": null,
+      "title": "特殊操作",
+      "level": 2,
+      "line_start": 1219,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 紧急数据修复",
+      "level": 2,
+      "line_start": 1221,
+      "text_length": 126,
+      "text_preview": "管理员可直接操作数据库：\n\n重置密码： UPDATE t\\_user SET password=‘加密值’ WHEREusername=‘学工号’\n\n删除违规资源： DELETE FROM t\\_resource WHERE res\\_code=xxx"
+    },
+    {
+      "number": null,
+      "title": "2. 批量操作",
+      "level": 2,
+      "line_start": 1229,
+      "text_length": 105,
+      "text_preview": "批量导入学生名单：通过CSV文件写入 t\\_user 和 t\\_user\\_course\\_class 表\n\n批量导出班级成绩：生成 t\\_stu\\_prob\\_exer 中 prob\\_id=-1 的总分记录"
+    },
+    {
+      "number": null,
+      "title": "初始化与恢复操作",
+      "level": 2,
+      "line_start": 1235,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 系统首次部署",
+      "level": 2,
+      "line_start": 1237,
+      "text_length": 60,
+      "text_preview": "执行SQL脚本初始化表结构（含外键和索引）\n\n创建默认管理员账号（ identity=0 ，手动插入 t\\_user ）"
+    },
+    {
+      "number": null,
+      "title": "2. 数据恢复",
+      "level": 2,
+      "line_start": 1243,
+      "text_length": 75,
+      "text_preview": "从备份文件中恢复特定表（如 t\\_resource 按 res\\_code 恢复）\n\n事务回滚：通过 @Transactional 注解保证操作原子性"
+    },
+    {
+      "number": "3.17",
+      "title": "3.17 故障处理",
+      "level": 2,
+      "line_start": 1249,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "数据库连接失败",
+      "level": 2,
+      "line_start": 1251,
+      "text_length": 57,
+      "text_preview": "前端显示错误码DB\\_001，提示“数据库服务不可用，请稍后重试”\n\n后端自动重试机制：最大重试次数3次，间隔5秒"
+    },
+    {
+      "number": null,
+      "title": "并发冲突（乐观锁异常）",
+      "level": 2,
+      "line_start": 1257,
+      "text_length": 79,
+      "text_preview": "捕获 ObjectOptimisticLockingFailureException ，返回错误码LOCK\\_001\n\n提示用户“数据已被修改，请刷新后重试”"
+    },
+    {
+      "number": null,
+      "title": "文件上传中断",
+      "level": 2,
+      "line_start": 1263,
+      "text_length": 55,
+      "text_preview": "支持断点续传（基于 res\\_code 和 date 标识上传进度）\n\n网络中断后，用户可重新选择文件继续上传"
+    },
+    {
+      "number": null,
+      "title": "服务高可用",
+      "level": 2,
+      "line_start": 1269,
+      "text_length": 76,
+      "text_preview": "数据库主从架构：主库故障时自动切换至从库（基于\n\nt\\_user\\_course\\_class 读写分离）\n\n前端静态资源CDN缓存，确保资源访问可用性"
+    },
+    {
+      "number": "3.18",
+      "title": "3.18 算法说明",
+      "level": 2,
+      "line_start": 1277,
+      "text_length": 12,
+      "text_preview": "核心算法与计算逻辑描述："
+    },
+    {
+      "number": null,
+      "title": "1. 客观题自动批改算法",
+      "level": 2,
+      "line_start": 1281,
+      "text_length": 163,
+      "text_preview": "输入：学生答案（JSON， t\\_stu\\_prob\\_exer.submit ）、标准答案（ t\\_prob.answer ）\n\n处理：\n\n选择题/判断题：字符串精确匹配（区分大小写）\n\n简答题：老师或助教助管批改\n\n输出：得分（ score=正确题数/总题数×总分 ），写入t\\_stu\\_prob\\_exer.score"
+    },
+    {
+      "number": null,
+      "title": "2. 错题推荐算法",
+      "level": 2,
+      "line_start": 1293,
+      "text_length": 42,
+      "text_preview": "输入：学生历史错题（ t\\_wrong ）、题目来源（任务）\n\n输出：按获取顺序输出"
+    },
+    {
+      "number": null,
+      "title": "3. 班级成绩排名计算",
+      "level": 2,
+      "line_start": 1299,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "排名公式",
+      "level": 2,
+      "line_start": 1301,
+      "text_length": 288,
+      "text_preview": "班级成绩排名基于学生在任务中的总分（ t\\_stu\\_prob\\_exer.score ，其中prob\\_id = -1 表示任务总分记录），采用 标准分排名法，公式如下：\n\n排名 = RANK() OVER (ORDER BY total\\_score DESC)\n\n其中：\n\ntotal\\_score：学生在某班级所有任务中的总分（ SUM(score) WHEREclass\\_id = ? ）"
+    },
+    {
+      "number": "3.19",
+      "title": "3.19 有关人员需求",
+      "level": 2,
+      "line_start": 1315,
+      "text_length": 134,
+      "text_preview": "用户规模：支持500用户（教师、学生、助教）\n\n技能要求：\n\n教师需熟悉文件上传、练习发布（基于 t\\_exen 表操作）\n\n学生需掌握基础浏览器操作（在线答题、资源下载）\n\n培训材料：提供视频教程（覆盖 t\\_resource 资源管理、 t\\_exer 任务发布）"
+    },
+    {
+      "number": "3.20",
+      "title": "3.20 有关培训需求",
+      "level": 2,
+      "line_start": 1327,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "内置引导模块：",
+      "level": 2,
+      "line_start": 1329,
+      "text_length": 77,
+      "text_preview": "首次登录时，根据 identity 字段推送角色专属操作指引\n\n示例：教师端引导创建课程（ t\\_course ）、上传资源（ t\\_resource ）"
+    },
+    {
+      "number": null,
+      "title": "管理员培训：",
+      "level": 2,
+      "line_start": 1335,
+      "text_length": 64,
+      "text_preview": "数据库备份与恢复（基于 mysqldump 和 res\\_code 恢复）\n\n紧急操作规范（直接操作t\\_user表的权限管控）"
+    },
+    {
+      "number": "3.21",
+      "title": "3.21 有关后勤需求",
+      "level": 2,
+      "line_start": 1341,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "服务器部署：",
+      "level": 2,
+      "line_start": 1343,
+      "text_length": 91,
+      "text_preview": "使用腾讯云服务器平台部署\n\n自动伸缩组配置：根据t\\_stu\\_prob\\_exer的TPS动态调整实例数量\n\n维护窗口：每周四凌晨1:00-3:00，期间仅允许数据查询（禁止写入）"
+    },
+    {
+      "number": "3.22",
+      "title": "3.22 其他需求",
+      "level": 2,
+      "line_start": 1351,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "扩展性设计：",
+      "level": 2,
+      "line_start": 1353,
+      "text_length": 78,
+      "text_preview": "API支持OAuth 2.0协议，便于与学校认证系统（LDAP）集成\n\n国际化：字段 t\\_prob.description 支持多语言存储（JSON格式）"
+    },
+    {
+      "number": "3.23",
+      "title": "3.23 包装需求",
+      "level": 2,
+      "line_start": 1359,
+      "text_length": 89,
+      "text_preview": "交付介质：\n\n可执行代码：包含vue（前端）、Spring Boot（后端）、MySQL 8.0\n\n文档：部署指南（含 t\\_user 初始化脚本）、API文档（Swagger）"
+    },
+    {
+      "number": null,
+      "title": "安全规范：",
+      "level": 2,
+      "line_start": 1367,
+      "text_length": 38,
+      "text_preview": "镜像哈希值校验（SHA-256）\n\n数据库备份文件加密存储（AES-256）"
+    },
+    {
+      "number": "3.24",
+      "title": "3.24 需求的优先次序和关键程度",
+      "level": 2,
+      "line_start": 1373,
+      "text_length": 896,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>需求分类</td><td rowspan=1 colspan=1>优先级</td><td rowspan=1 colspan=1>关键程度</td><td rowspan=1 colspan=1>说明</td></tr><tr><td rowspan=1 colspan=1>用户权限控制</td><td rowspan=1 co"
+    },
+    {
+      "number": "4",
+      "title": "4 合格性规定",
+      "level": 2,
+      "line_start": 1377,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "对第3章需求的验证方法：",
+      "level": 2,
+      "line_start": 1379,
+      "text_length": 667,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>需求条目</td><td rowspan=1 colspan=1>验证方法</td><td rowspan=1 colspan=1>工具/指标</td></tr><tr><td rowspan=1 colspan=1>3.4.x 功能需求</td><td rowspan=1 colspan=1>接口测试</td><td rows"
+    },
+    {
+      "number": "5",
+      "title": "5 需求可追踪性",
+      "level": 2,
+      "line_start": 1383,
+      "text_length": 110,
+      "text_preview": "正向追踪：从SRS需求到数据库表字段（如“3.15.1 输入数据”对应t\\_user.username ）\n\n逆向追踪：从数据库索引设计（如 t\\_resource.res\\_code ）到“3.15.3 数据管理能力”"
+    },
+    {
+      "number": "6",
+      "title": "6 尚未解决的问题",
+      "level": 2,
+      "line_start": 1389,
+      "text_length": 24,
+      "text_preview": "第三方系统集成：LDAP认证接口的详细协议待确认"
+    },
+    {
+      "number": "7",
+      "title": "7 注解",
+      "level": 2,
+      "line_start": 1393,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "术语表",
+      "level": 2,
+      "line_start": 1395,
+      "text_length": 58,
+      "text_preview": "BLOB：二进制大对象，用于存储文件内容\n\nTPS：每秒事务处理量（Transactions Per Second）"
+    },
+    {
+      "number": null,
+      "title": "缩略语",
+      "level": 2,
+      "line_start": 1401,
+      "text_length": 70,
+      "text_preview": "CDN：内容分发网络（Content Delivery Network）\n\nOAuth：开放授权协议（Open Authorization）"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 19,
+  "tables": [
+    {
+      "index": 0,
+      "type": "reference",
+      "format": "html",
+      "headers": [
+        "文档编号",
+        "标题",
+        "版本",
+        "发行日期",
+        "来源"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "2 引用文件",
+      "raw_html": "<tr><td rowspan=1 colspan=1>文档编号</td><td rowspan=1 colspan=1>标题</td><td rowspan=1 colspan=1>版本</td><td rowspan=1 colspan=1>发行日期</td><td rowspan=1 colspan=1>来源</td></tr><tr><td rowspan=1 colspan=1>BUAA-SE-PRJ-2025-01</td><td rowspan=1 colspan=1>软件工程基础课程大作业项目说明书</td><td rowspan=1 colspan=1>1.0</td><td rowspan=1 colspan=1>2025-03-05</td><td rowspan=1 colspan=1>北航软件学院教务处</td></tr><tr><td rowspan=1 colspan=1>BUAA-SE-RD-2025-02</td><td rowspan=1 colspan=1>软课程管理平台需求描述文档</td><td rowspan=1 colspan=1>0.9<"
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "接口标识符",
+        "接口类型",
+        "接口实体",
+        "描述"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "3.5.1 接口标识和接口图",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">接口标识符</td><td colspan=\"1\" rowspan=\"1\">接口类型</td><td colspan=\"1\" rowspan=\"1\">接口实体</td><td colspan=\"1\" rowspan=\"1\">描述</td></tr><tr><td colspan=\"1\" rowspan=\"1\">IF-001</td><td colspan=\"1\" rowspan=\"1\">用户接口</td><td colspan=\"1\" rowspan=\"1\">教师/学生/助教</td><td colspan=\"1\" rowspan=\"1\">提供基于Web的交互界面，支持角色登录、课程管理、任务批改等功能。</td></tr><tr><td colspan=\"1\" rowspan=\"1\">IF-002</td><td colspan=\"1\" rowspan=\"1\">软件接口</td><td colspan=\"1\" rowspan=\"1\">本地文件系统</td><td colspan=\"1\" rowspan=\"1\">支持通过C"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "1. 课程 (Courses)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>课程编号</td><td rowspan=1 colspan=1>主键,自增</td></tr><tr><td rowspan=1 colspan=1>name</td><td rowspan=1 colspan=1>VARCHAR(255)</td><td rowspan=1 colspan=1>课程名称</td><td rowspan=1 colspan=1>非空</td></tr><tr><td rowspan=1 colspan=1>sy11abus</td><td rowspan=1 colspan=1>TEXT</td><td row"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "2. 教师 (Teachers)",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">id</td><td colspan=\"1\" rowspan=\"1\">INT</td><td colspan=\"1\" rowspan=\"1\">教师工号</td><td colspan=\"1\" rowspan=\"1\">主键</td></tr><tr><td colspan=\"1\" rowspan=\"1\">name</td><td colspan=\"1\" rowspan=\"1\">VARCHAR(255)</td><td colspan=\"1\" rowspan=\"1\">教师姓名</td><td colspan=\"1\" rowspan=\"1\">非空</td></tr><tr><td colspan=\"1\" rowspan=\"1\">cour"
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3. 学生 (Students)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>学生工号</td><td rowspan=1 colspan=1>主键</td></tr><tr><td rowspan=1 colspan=1>name</td><td rowspan=1 colspan=1>VARCHAR(255)</td><td rowspan=1 colspan=1>学生姓名</td><td rowspan=1 colspan=1>非空</td></tr><tr><td rowspan=1 colspan=1>courses</td><td rowspan=1 colspan=1>JSON</td><td rowspan"
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "4. 班级 (Classes)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>classId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>所属课程id</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>name</td><td rowspan=1 colspan=1>VARCHAR(255)</td><td rowspan=1 colspan=1>班级名称</td><td rowspan=1 colspan=1>非空</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td row"
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "5. 教学进度 (Teaching Progress)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>教学进度编号</td><td rowspan=1 colspan=1>主键</td></tr><tr><td rowspan=1 colspan=1>belongCourse</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>所属课程 id</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>belongclass</td><td rowspan=1 colspan=1>INT</td><"
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "6. 资料 (Resources)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>资料 id</td><td rowspan=1 colspan=1>主键</td></tr><tr><td rowspan=1 colspan=1>prev</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>上一个版本的id</td><td rowspan=1 colspan=1>外键,可空</td></tr><tr><td rowspan=1 colspan=1>type</td><td rowspan=1 colspan=1>VARCHAR(255)</td><td row"
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "7. 任务 (Tasks)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>id</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>任务编号</td><td rowspan=1 colspan=1>主键</td></tr><tr><td rowspan=1 colspan=1>isPublic</td><td rowspan=1 colspan=1>BOOLEAN</td><td rowspan=1 colspan=1>是否公开</td><td rowspan=1 colspan=1>非空</td></tr><tr><td rowspan=1 colspan=1>name</td><td rowspan=1 colspan=1>VARCHAR(255)</td><td row"
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "8. 题目 (Problems)",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">id</td><td colspan=\"1\" rowspan=\"1\">INT</td><td colspan=\"1\" rowspan=\"1\">题目编号</td><td colspan=\"1\" rowspan=\"1\">主键</td></tr><tr><td colspan=\"1\" rowspan=\"1\">isPublic</td><td colspan=\"1\" rowspan=\"1\">BOOLEAN</td><td colspan=\"1\" rowspan=\"1\">是否公开</td><td colspan=\"1\" rowspan=\"1\">非空</td></tr><tr><td colspan=\"1\" rowspan=\"1\">type<"
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "9. 题库 (Question Bank)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>tasks</td><td rowspan=1 colspan=1>JSON</td><td rowspan=1 colspan=1>任务id 列表</td><td rowspan=1 colspan=1>可空</td></tr><tr><td rowspan=1 colspan=1>problems</td><td rowspan=1 colspan=1>JSON</td><td rowspan=1 colspan=1>题目 id 列表</td><td rowspan=1 colspan=1>可空</td></tr>"
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "10. 回答 (Answers)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>problemId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>题目id</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>studentAns</td><td rowspan=1 colspan=1>TEXT</td><td rowspan=1 colspan=1>学生答案</td><td rowspan=1 colspan=1>非空</td></tr>"
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "11. 提交 (Submissions)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>学生学工号</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>taskId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>任务id</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>submitList</td><td rowspan=1 colspan=1>JSON</td><"
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "12. 任务得分 (Task Scores)",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">字段</td><td colspan=\"1\" rowspan=\"1\">类型</td><td colspan=\"1\" rowspan=\"1\">描述</td><td colspan=\"1\" rowspan=\"1\">约束</td></tr><tr><td colspan=\"1\" rowspan=\"1\">studentId</td><td colspan=\"1\" rowspan=\"1\">INT</td><td colspan=\"1\" rowspan=\"1\">学生学工号</td><td colspan=\"1\" rowspan=\"1\">外键，非空</td></tr><tr><td colspan=\"1\" rowspan=\"1\">taskId</td><td colspan=\"1\" rowspan=\"1\">INT</td><td colspan=\"1\" rowspan=\"1\">任务id</td><td colspan=\"1\" rowspan=\"1\">外键,非空</td></tr><tr><td colspan=\"1\" rowspan=\""
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "13. 收藏 (Favorites)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>学生学工号</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>problemId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>任务id</td><td rowspan=1 colspan=1>外键,非空</td></tr>"
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "14. 错题 (Mistakes)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>学生学工号</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>problemId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>任务id</td><td rowspan=1 colspan=1>外键,非空</td></tr>"
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "字段",
+        "类型",
+        "描述",
+        "约束"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "15. 反馈 (Feedback)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>字段</td><td rowspan=1 colspan=1>类型</td><td rowspan=1 colspan=1>描述</td><td rowspan=1 colspan=1>约束</td></tr><tr><td rowspan=1 colspan=1>studentId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>学生学工号</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>problemId</td><td rowspan=1 colspan=1>INT</td><td rowspan=1 colspan=1>任务id</td><td rowspan=1 colspan=1>外键,非空</td></tr><tr><td rowspan=1 colspan=1>info</td><td rowspan=1 colspan=1>TEXT</td><td "
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "需求分类",
+        "优先级",
+        "关键程度",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3.24 需求的优先次序和关键程度",
+      "raw_html": "<tr><td rowspan=1 colspan=1>需求分类</td><td rowspan=1 colspan=1>优先级</td><td rowspan=1 colspan=1>关键程度</td><td rowspan=1 colspan=1>说明</td></tr><tr><td rowspan=1 colspan=1>用户权限控制</td><td rowspan=1 colspan=1>高</td><td rowspan=1 colspan=1>关键</td><td rowspan=1 colspan=1>基于t_user.identity实现</td></tr><tr><td rowspan=1 colspan=1>资源版本管理</td><td rowspan=1 colspan=1>高</td><td rowspan=1 colspan=1>核心</td><td rowspan=1 colspan=1>依赖t_resource.res_code</td></tr><tr><td rowspan=1 colspan=1>自动批改功能</td><td rowspan=1 c"
+    },
+    {
+      "index": 18,
+      "type": "qualification",
+      "format": "html",
+      "headers": [
+        "需求条目",
+        "验证方法",
+        "工具/指标"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "对第3章需求的验证方法：",
+      "raw_html": "<tr><td rowspan=1 colspan=1>需求条目</td><td rowspan=1 colspan=1>验证方法</td><td rowspan=1 colspan=1>工具/指标</td></tr><tr><td rowspan=1 colspan=1>3.4.x 功能需求</td><td rowspan=1 colspan=1>接口测试</td><td rowspan=1 colspan=1>Postman （覆盖t_exen  t_resource操作)</td></tr><tr><td rowspan=1 colspan=1>3.5 外部接口</td><td rowspan=1 colspan=1>文档审查+模拟调用</td><td rowspan=1 colspan=1>Swagger UI + Mock Server</td></tr><tr><td rowspan=1 colspan=1>3.9 安全性需求</td><td rowspan=1 colspan=1>渗透测试</td><td rowspan=1 colspan=1>OWASP ZAP(检测S"
+    }
+  ],
+  "image_count": 23,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "e4494833f5d42489c281e26cec0cac3e46ea99f02c308c705a5b132df1037221.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e4494833f5d42489c281e26cec0cac3e46ea99f02c308c705a5b132df1037221.jpg",
+      "image_exists": true,
+      "image_size_kb": 73,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 2,
+      "image_file": "783435041f733f1000112ff0273b95c84b3c6d60ecf24cd5fd63a6c53a5d681b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/783435041f733f1000112ff0273b95c84b3c6d60ecf24cd5fd63a6c53a5d681b.jpg",
+      "image_exists": true,
+      "image_size_kb": 188,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 3,
+      "image_file": "d7ad7b06a4addcf5a0bc2d266f99df8eb5b8708da493f4a2b3b9a34cb51ca989.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/d7ad7b06a4addcf5a0bc2d266f99df8eb5b8708da493f4a2b3b9a34cb51ca989.jpg",
+      "image_exists": true,
+      "image_size_kb": 37,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 4,
+      "image_file": "0471adce44886fa4f38312ba697c502d6ead063474c5a1a3d98e2f3dc7ae1fbb.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/0471adce44886fa4f38312ba697c502d6ead063474c5a1a3d98e2f3dc7ae1fbb.jpg",
+      "image_exists": true,
+      "image_size_kb": 93,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 5,
+      "image_file": "f579e34c190c02963916b6bbbcd0f65acc65372531daf0a9a4085af5210beb54.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f579e34c190c02963916b6bbbcd0f65acc65372531daf0a9a4085af5210beb54.jpg",
+      "image_exists": true,
+      "image_size_kb": 16,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 6,
+      "image_file": "fb679a254bcf734d2d7d44c8d3d0a4a11a6e0fedd8b83778e77e7bdc44fb16b0.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/fb679a254bcf734d2d7d44c8d3d0a4a11a6e0fedd8b83778e77e7bdc44fb16b0.jpg",
+      "image_exists": true,
+      "image_size_kb": 26,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 7,
+      "image_file": "59aea164e2cdc4887dbb11607407d4ffdd03b9fb71d3739ea66442fa7e343a2f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/59aea164e2cdc4887dbb11607407d4ffdd03b9fb71d3739ea66442fa7e343a2f.jpg",
+      "image_exists": true,
+      "image_size_kb": 33,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 8,
+      "image_file": "085348ba38a8717e7ac06d02ca4e482f93e077cfef5655b2a7670d835eb2b1a5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/085348ba38a8717e7ac06d02ca4e482f93e077cfef5655b2a7670d835eb2b1a5.jpg",
+      "image_exists": true,
+      "image_size_kb": 65,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 9,
+      "image_file": "580e3142ffe13b9cb3d5b339639298c095fde6bd61c68f64922af86545050a64.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/580e3142ffe13b9cb3d5b339639298c095fde6bd61c68f64922af86545050a64.jpg",
+      "image_exists": true,
+      "image_size_kb": 63,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 10,
+      "image_file": "40857540cc17adf7d494abc6cf2a45a4f958dcf13db544787442be597179b341.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/40857540cc17adf7d494abc6cf2a45a4f958dcf13db544787442be597179b341.jpg",
+      "image_exists": true,
+      "image_size_kb": 35,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 11,
+      "image_file": "a368fb34b81ec1e4fe7a858e005638dfdcf4bcaab7f8b47a5b28d7010903386f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/a368fb34b81ec1e4fe7a858e005638dfdcf4bcaab7f8b47a5b28d7010903386f.jpg",
+      "image_exists": true,
+      "image_size_kb": 129,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 12,
+      "image_file": "b429aefef53e28706343b307be887386f23c81c42669a88a055a519255622163.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/b429aefef53e28706343b307be887386f23c81c42669a88a055a519255622163.jpg",
+      "image_exists": true,
+      "image_size_kb": 34,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 13,
+      "image_file": "82ab83376a326d08c79f0060f75f2ed037fcd11eed10a34c17c0e62a6120b091.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/82ab83376a326d08c79f0060f75f2ed037fcd11eed10a34c17c0e62a6120b091.jpg",
+      "image_exists": true,
+      "image_size_kb": 66,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 14,
+      "image_file": "5a9e4ade7ef55be164ee4baaca051a3a086a5f0debf01ccb3fc40421b9074444.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/5a9e4ade7ef55be164ee4baaca051a3a086a5f0debf01ccb3fc40421b9074444.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 15,
+      "image_file": "dfc3e3cb76bfb58fe3e29e5ee3218e03e0a0c3fa269fb3140b120adebdbe1e9d.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/dfc3e3cb76bfb58fe3e29e5ee3218e03e0a0c3fa269fb3140b120adebdbe1e9d.jpg",
+      "image_exists": true,
+      "image_size_kb": 25,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 16,
+      "image_file": "f311062d1feb3431a2f588600d93053fe1565702e7b9a68dd8490cd3ce75dc7a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f311062d1feb3431a2f588600d93053fe1565702e7b9a68dd8490cd3ce75dc7a.jpg",
+      "image_exists": true,
+      "image_size_kb": 36,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 17,
+      "image_file": "2aaebd16de4067e3abcad9a6d1f8a17c2c8e9ef8a61855c5950e30757e63c096.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/2aaebd16de4067e3abcad9a6d1f8a17c2c8e9ef8a61855c5950e30757e63c096.jpg",
+      "image_exists": true,
+      "image_size_kb": 18,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 18,
+      "image_file": "e9676e42409fba4072006c110f2ae87b16db50ff6df54d82bfe4c1f58d321bce.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e9676e42409fba4072006c110f2ae87b16db50ff6df54d82bfe4c1f58d321bce.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 19,
+      "image_file": "e9ef9da2a39421372fc722e73a7ff56b2a9436866552ef0307c77e45f724e6c0.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e9ef9da2a39421372fc722e73a7ff56b2a9436866552ef0307c77e45f724e6c0.jpg",
+      "image_exists": true,
+      "image_size_kb": 28,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 20,
+      "image_file": "093462a912a3ee28b1bb0609066100555c5e61fa440a85b243f051f75693f1cd.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/093462a912a3ee28b1bb0609066100555c5e61fa440a85b243f051f75693f1cd.jpg",
+      "image_exists": true,
+      "image_size_kb": 27,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 21,
+      "image_file": "f5dbc7d5e7bb4509332200dabeb038c8c17618b0d0d69a8a76f5924c96e54f4f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f5dbc7d5e7bb4509332200dabeb038c8c17618b0d0d69a8a76f5924c96e54f4f.jpg",
+      "image_exists": true,
+      "image_size_kb": 35,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 22,
+      "image_file": "3a1c3155e9faaa9543ed25517e621e42d2da2c2b061f260172809e0c584cb28a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/3a1c3155e9faaa9543ed25517e621e42d2da2c2b061f260172809e0c584cb28a.jpg",
+      "image_exists": true,
+      "image_size_kb": 68,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 23,
+      "image_file": "6684c2cbceeefc4d4a5e34af290196a4781e8d39d5d518dab881656583be19a4.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/6684c2cbceeefc4d4a5e34af290196a4781e8d39d5d518dab881656583be19a4.jpg",
+      "image_exists": true,
+      "image_size_kb": 70,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "e4494833f5d42489c281e26cec0cac3e46ea99f02c308c705a5b132df1037221.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e4494833f5d42489c281e26cec0cac3e46ea99f02c308c705a5b132df1037221.jpg",
+      "image_exists": true,
+      "image_size_kb": 73,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "783435041f733f1000112ff0273b95c84b3c6d60ecf24cd5fd63a6c53a5d681b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/783435041f733f1000112ff0273b95c84b3c6d60ecf24cd5fd63a6c53a5d681b.jpg",
+      "image_exists": true,
+      "image_size_kb": 188,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "d7ad7b06a4addcf5a0bc2d266f99df8eb5b8708da493f4a2b3b9a34cb51ca989.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/d7ad7b06a4addcf5a0bc2d266f99df8eb5b8708da493f4a2b3b9a34cb51ca989.jpg",
+      "image_exists": true,
+      "image_size_kb": 37,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "0471adce44886fa4f38312ba697c502d6ead063474c5a1a3d98e2f3dc7ae1fbb.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/0471adce44886fa4f38312ba697c502d6ead063474c5a1a3d98e2f3dc7ae1fbb.jpg",
+      "image_exists": true,
+      "image_size_kb": 93,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "f579e34c190c02963916b6bbbcd0f65acc65372531daf0a9a4085af5210beb54.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f579e34c190c02963916b6bbbcd0f65acc65372531daf0a9a4085af5210beb54.jpg",
+      "image_exists": true,
+      "image_size_kb": 16,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "fb679a254bcf734d2d7d44c8d3d0a4a11a6e0fedd8b83778e77e7bdc44fb16b0.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/fb679a254bcf734d2d7d44c8d3d0a4a11a6e0fedd8b83778e77e7bdc44fb16b0.jpg",
+      "image_exists": true,
+      "image_size_kb": 26,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "59aea164e2cdc4887dbb11607407d4ffdd03b9fb71d3739ea66442fa7e343a2f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/59aea164e2cdc4887dbb11607407d4ffdd03b9fb71d3739ea66442fa7e343a2f.jpg",
+      "image_exists": true,
+      "image_size_kb": 33,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "085348ba38a8717e7ac06d02ca4e482f93e077cfef5655b2a7670d835eb2b1a5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/085348ba38a8717e7ac06d02ca4e482f93e077cfef5655b2a7670d835eb2b1a5.jpg",
+      "image_exists": true,
+      "image_size_kb": 65,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "580e3142ffe13b9cb3d5b339639298c095fde6bd61c68f64922af86545050a64.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/580e3142ffe13b9cb3d5b339639298c095fde6bd61c68f64922af86545050a64.jpg",
+      "image_exists": true,
+      "image_size_kb": 63,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "40857540cc17adf7d494abc6cf2a45a4f958dcf13db544787442be597179b341.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/40857540cc17adf7d494abc6cf2a45a4f958dcf13db544787442be597179b341.jpg",
+      "image_exists": true,
+      "image_size_kb": 35,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "a368fb34b81ec1e4fe7a858e005638dfdcf4bcaab7f8b47a5b28d7010903386f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/a368fb34b81ec1e4fe7a858e005638dfdcf4bcaab7f8b47a5b28d7010903386f.jpg",
+      "image_exists": true,
+      "image_size_kb": 129,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "b429aefef53e28706343b307be887386f23c81c42669a88a055a519255622163.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/b429aefef53e28706343b307be887386f23c81c42669a88a055a519255622163.jpg",
+      "image_exists": true,
+      "image_size_kb": 34,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "82ab83376a326d08c79f0060f75f2ed037fcd11eed10a34c17c0e62a6120b091.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/82ab83376a326d08c79f0060f75f2ed037fcd11eed10a34c17c0e62a6120b091.jpg",
+      "image_exists": true,
+      "image_size_kb": 66,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "5a9e4ade7ef55be164ee4baaca051a3a086a5f0debf01ccb3fc40421b9074444.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/5a9e4ade7ef55be164ee4baaca051a3a086a5f0debf01ccb3fc40421b9074444.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "dfc3e3cb76bfb58fe3e29e5ee3218e03e0a0c3fa269fb3140b120adebdbe1e9d.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/dfc3e3cb76bfb58fe3e29e5ee3218e03e0a0c3fa269fb3140b120adebdbe1e9d.jpg",
+      "image_exists": true,
+      "image_size_kb": 25,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "f311062d1feb3431a2f588600d93053fe1565702e7b9a68dd8490cd3ce75dc7a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f311062d1feb3431a2f588600d93053fe1565702e7b9a68dd8490cd3ce75dc7a.jpg",
+      "image_exists": true,
+      "image_size_kb": 36,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "2aaebd16de4067e3abcad9a6d1f8a17c2c8e9ef8a61855c5950e30757e63c096.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/2aaebd16de4067e3abcad9a6d1f8a17c2c8e9ef8a61855c5950e30757e63c096.jpg",
+      "image_exists": true,
+      "image_size_kb": 18,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "e9676e42409fba4072006c110f2ae87b16db50ff6df54d82bfe4c1f58d321bce.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e9676e42409fba4072006c110f2ae87b16db50ff6df54d82bfe4c1f58d321bce.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "e9ef9da2a39421372fc722e73a7ff56b2a9436866552ef0307c77e45f724e6c0.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/e9ef9da2a39421372fc722e73a7ff56b2a9436866552ef0307c77e45f724e6c0.jpg",
+      "image_exists": true,
+      "image_size_kb": 28,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "093462a912a3ee28b1bb0609066100555c5e61fa440a85b243f051f75693f1cd.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/093462a912a3ee28b1bb0609066100555c5e61fa440a85b243f051f75693f1cd.jpg",
+      "image_exists": true,
+      "image_size_kb": 27,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "f5dbc7d5e7bb4509332200dabeb038c8c17618b0d0d69a8a76f5924c96e54f4f.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/f5dbc7d5e7bb4509332200dabeb038c8c17618b0d0d69a8a76f5924c96e54f4f.jpg",
+      "image_exists": true,
+      "image_size_kb": 35,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "3a1c3155e9faaa9543ed25517e621e42d2da2c2b061f260172809e0c584cb28a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/3a1c3155e9faaa9543ed25517e621e42d2da2c2b061f260172809e0c584cb28a.jpg",
+      "image_exists": true,
+      "image_size_kb": 68,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "6684c2cbceeefc4d4a5e34af290196a4781e8d39d5d518dab881656583be19a4.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo1_DeNeRATe-cool_BUAASoftware_resources/mineru_parsed/软件需求规格说明书.pdf/auto/images/6684c2cbceeefc4d4a5e34af290196a4781e8d39d5d518dab881656583be19a4.jpg",
+      "image_exists": true,
+      "image_size_kb": 70,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "doc_name": "fprime_sysfunc_health-monitoring",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_health-monitoring.md",
+  "md_lines": 45,
+  "md_chars": 2961,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Health Monitoring Functionality",
+  "section_count": 8,
+  "sections": [
+    {
+      "number": null,
+      "title": "Health Monitoring Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 276,
+      "text_preview": "- [F Prime Health SDD](https://github.com/nasa/fprime/blob/devel/Svc/Health/docs/sdd.md)\n- [F Prime Ping Port SDD](https://github.com/nasa/fprime/blob/devel/Svc/Ping/docs/sdd.md)\n- [F Prime WatchDog P"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 585,
+      "text_preview": "Health monitoring verifies that active components in the system are responsive and have not hung or stalled. The Health component periodically pings each monitored component and checks for a response "
+    },
+    {
+      "number": null,
+      "title": "Ping Mechanism",
+      "level": 3,
+      "line_start": 14,
+      "text_length": 725,
+      "text_preview": "The Health component uses a ping/response pattern to verify liveness:\n\n1. On each monitoring cycle, the Health component sends a ping with a unique key value to each monitored component via the Ping p"
+    },
+    {
+      "number": null,
+      "title": "Watchdog Stroking",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 318,
+      "text_preview": "The Health component optionally strokes a hardware watchdog timer on each monitoring cycle. If the Health component's own task hangs or the entire software system becomes unresponsive, the watchdog wi"
+    },
+    {
+      "number": null,
+      "title": "Commands",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 330,
+      "text_preview": "Health monitoring supports the following ground commands:\n\n- **Enable/Disable** — Globally enable or disable all health monitoring\n- **Per-Component Enable/Disable** — Enable or disable monitoring for"
+    },
+    {
+      "number": null,
+      "title": "Telemetry",
+      "level": 3,
+      "line_start": 37,
+      "text_length": 115,
+      "text_preview": "The Health component reports a count of ping timeouts as telemetry, providing visibility into system health trends."
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 41,
+      "text_length": 446,
+      "text_preview": "- If a monitored component is unresponsive beyond its warning threshold, a WARNING_HI event is logged.\n- If the component remains unresponsive past its fatal threshold, a FATAL event is issued, typica"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

@@ -1,0 +1,208 @@
+{
+  "doc_name": "SRS_需求规格说明书_V2.3",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/starriver_superbrain/SRS_需求规格说明书_V2.3.md",
+  "md_lines": 350,
+  "md_chars": 10096,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "需求规格说明书（SRS）_V2.3",
+  "section_count": 23,
+  "sections": [
+    {
+      "number": null,
+      "title": "需求规格说明书（SRS）_V2.3",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 791,
+      "text_preview": "> 更新公告（2025-08-22）\n> - 新增 REQ-CE-*（Cloud Evolution）、REQ-EMO-*（叙事记忆）、REQ-CON-*（意识核心）与 REQ-OBS-*（可观测矩阵）需求族：\n>   - REQ-CE-001：用户授权可视化与一键撤销；REQ-CE-002：最小化采集与可观测日志；REQ-CE-003：Memory Store v2（端云混合）。\n>   - R"
+    },
+    {
+      "number": null,
+      "title": "修订记录",
+      "level": 2,
+      "line_start": 22,
+      "text_length": 120,
+      "text_preview": "- 2025-08-20：创建初稿与目录骨架（星河）\n- 2025-08-21：v0.2 细化 - 补完功能/非功能需求、数据字典、接口契约（星河）\n- 2025-08-22：v0.3 增加多智能体（AGT）模块、用例、接口与NFR（星河）"
+    },
+    {
+      "number": null,
+      "title": "目录",
+      "level": 2,
+      "line_start": 27,
+      "text_length": 92,
+      "text_preview": "1. 引言\n2. 总体描述\n3. 功能需求\n4. 非功能需求与SLA\n5. 数据需求\n6. 接口需求\n7. 验收标准\n8. 优先级与发布计划\n9. 可追溯性矩阵\n10. 附录\n\n---"
+    },
+    {
+      "number": null,
+      "title": "1. 引言",
+      "level": 2,
+      "line_start": 41,
+      "text_length": 435,
+      "text_preview": "- 目的：明确 V2.3 版本范围、边界与验收标准，指导设计/开发/测试。\n- 范围：覆盖星河超脑 V2.3 所有新特性与变更项，重点为云端持续进化（CE）、叙事记忆册（EMO）与多智能体（AGT）。\n- 术语与缩写：\n  - CE：Cloud Evolution（云端持续进化）\n  - EMO：Emotional Memory Organization（叙事记忆册）\n  - AGT：Multi-"
+    },
+    {
+      "number": null,
+      "title": "2. 总体描述",
+      "level": 2,
+      "line_start": 54,
+      "text_length": 375,
+      "text_preview": "- 产品视角与目标：\n  - 核心价值：在保护隐私与安全前提下，通过云端持续进化与多智能体协作，提升个人AI助手能力与复杂任务解决力\n  - 设计哲学：安全>合规>数据完整性>用户价值>速度>美学\n  - 差异化：最小权限+可回滚+全程可审计的\"谨慎型\"云端学习与可追溯的多智能体编排\n- 目标用户与关键场景：\n  - 主要用户：对隐私敏感但希望AI助手持续改进、需要自动化研究与报告生成的个人用户\n"
+    },
+    {
+      "number": null,
+      "title": "3. 功能需求",
+      "level": 2,
+      "line_start": 68,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 模块清单",
+      "level": 3,
+      "line_start": 70,
+      "text_length": 1005,
+      "text_preview": "- **CE模块（云端持续进化）**：\n  - CE-001：用户授权管理（授权/撤销/查询状态）\n  - CE-002：数据采集与匿名化（最小化采集+去标识化）\n  - CE-003：云端同步与任务调度（StudyQueue + CloudSyncJob）\n  - CE-004：数据导出与删除（遗忘权+审计证明）\n\n- **EMO模块（叙事记忆册）**：\n  - EMO-001：叙事条目管理（创"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 用例规格",
+      "level": 3,
+      "line_start": 99,
+      "text_length": 2467,
+      "text_preview": "- **REQ-CE-001：用户授权可视化与一键撤销**\n  - 用例：UC-CE-001（授权管理）\n  - 功能：用户可清晰查看当前授权状态、已同步数据类型、撤销权限并确认删除\n  - 验收：授权页面响应≤500ms，撤销确认需双重确认，撤销后5分钟内云端停止新数据采集\n\n- **REQ-CE-002：最小化采集与可观测日志**\n  - 用例：UC-CE-002（数据采集）\n  - 功能：仅"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 业务规则与约束",
+      "level": 3,
+      "line_start": 175,
+      "text_length": 160,
+      "text_preview": "- 云端操作必须遵循\"预览→确认→执行→审计\"四步骤\n- 敏感数据（身份信息、密钥、生物特征）禁止上传云端\n- 用户撤销授权后24小时内必须完成云端数据删除\n- 所有数据同步支持影子回放与差异对比\n- 叙事条目默认仅本地存储，云端同步需独立授权\n- 多智能体预算上限与并发度需配置并受限流保护；超过阈值自动降级为单智能体"
+    },
+    {
+      "number": null,
+      "title": "4. 非功能需求与SLA",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 性能（P99、吞吐、延迟、容量）",
+      "level": 3,
+      "line_start": 185,
+      "text_length": 412,
+      "text_preview": "- **端到端响应时间**：\n  - 授权状态查询：P95≤300ms，P99≤500ms\n  - 数据同步：P95≤1.5s，P99≤3s\n  - 叙事条目检索：P95≤800ms，P99≤1.2s\n  - 意识状态切换：P95≤50ms，P99≤80ms（CON-001）\n  - 指标刷新周期：≤10s（OBS-002）\n  - 多智能体任务调度（AGT-001）：P95≤2s，P99≤5s；"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 可靠性与可用性（SLO/SLA/故障恢复）",
+      "level": 3,
+      "line_start": 204,
+      "text_length": 220,
+      "text_preview": "- **可用性目标**：\n  - 云端服务SLO：99.0%（月度）\n  - 数据同步成功率：≥99.0%\n  - 授权撤销RTO：≤5分钟\n  - 多智能体接口可用性：≥99.5%（预览期SLO）\n- **故障恢复**：\n  - 云端异常自动降级为本地模式\n  - 数据同步失败自动重试3次（1min/3min/5min间隔）\n  - 关键操作支持影子回放验证\n  - 多智能体：任务失败自动回退单"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 安全与合规（权限、审计、隐私）",
+      "level": 3,
+      "line_start": 216,
+      "text_length": 218,
+      "text_preview": "- **权限控制**：\n  - 默认最小权限原则\n  - 云端操作需双重确认\n  - 敏感操作记录操作者身份与时间戳\n- **审计要求**：\n  - 所有数据访问、同步、删除操作可审计\n  - 审计日志完整性校验（SHA-256哈希）\n  - 审计数据保留≥2年\n  - 多智能体：全链路 trace 与引用明细可追溯\n- **隐私保护**：\n  - 数据去标识化处理\n  - 可选差分隐私（ε≤1."
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 可运维与可观测性（日志/指标/链路）",
+      "level": 3,
+      "line_start": 231,
+      "text_length": 554,
+      "text_preview": "- **监控指标**：\n  - emo.entry.count / emo.entry.cloudsynced.count\n  - cloudsync.success.rate / cloudsync.latency.p95\n  - consent.active.count / consent.revocations.count\n  - audit.log.integrity.hash\n  - a"
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 可维护性与可扩展性",
+      "level": 3,
+      "line_start": 250,
+      "text_length": 217,
+      "text_preview": "- **代码质量**：\n  - 单元测试覆盖率≥80%\n  - 集成测试覆盖核心路径100%\n  - 静态代码分析0高危问题\n- **模块化设计**：\n  - CE与EMO模块解耦\n  - 支持插件化扩展\n  - API版本化管理\n  - 多智能体编排器与工作器解耦（Orchestrator-Worker 模式）\n- **升级兼容性**：\n  - 向后兼容≥2个小版本\n  - 数据库schema变"
+    },
+    {
+      "number": null,
+      "title": "5. 数据需求",
+      "level": 2,
+      "line_start": 265,
+      "text_length": 799,
+      "text_preview": "- 领域模型：见《领域模型与数据字典_V2.3》。\n- 数据字典：关键实体/字段/类型/约束/枚举：\n  - **Consent**：授权实体\n    - id（UUID），user_id（FK），consent_type（枚举），status（active/revoked），created_at，updated_at\n  - **CloudSyncJob**：同步任务\n    - id（UUID"
+    },
+    {
+      "number": null,
+      "title": "6. 接口需求",
+      "level": 2,
+      "line_start": 279,
+      "text_length": 847,
+      "text_preview": "- **对外 API**：\n  - 鉴权：Bearer Token，API Key轮换\n  - 限流：用户级1000req/min，IP级10000req/min\n  - 幂等：支持幂等键（Idempotency-Key header）\n  - 分页：cursor-based分页，max_limit=100\n  - 错误码：标准HTTP状态码+业务错误码（4位数字）\n  - /memory/exp"
+    },
+    {
+      "number": null,
+      "title": "7. 验收标准",
+      "level": 2,
+      "line_start": 303,
+      "text_length": 308,
+      "text_preview": "- **功能验收**：\n  - CE/EMO核心用例通过率100%\n  - 多智能体 UC-MA-001 端到端通过，包含并行搜索→综合→引用校验→结果导出\n  - 端到端测试关键路径覆盖率100%\n  - 用户授权→同步→撤销全链路可正常运行\n- **非功能验收**：\n  - 性能指标达标率≥95%\n  - AGT 接口 P95/P99、并发与可用性达成目标\n  - 安全扫描0高危、0中危漏洞\n"
+    },
+    {
+      "number": null,
+      "title": "8. 优先级与发布计划",
+      "level": 2,
+      "line_start": 320,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "8.1",
+      "title": "8.1 优先级分级（MoSCoW评分）",
+      "level": 3,
+      "line_start": 322,
+      "text_length": 357,
+      "text_preview": "- **Must Have (P0)**：\n  - REQ-CE-001（用户授权管理）\n  - REQ-CE-002（数据采集与匿名化）\n  - REQ-EMO-001（叙事记忆册基础功能）\n  - REQ-AGT-001（多智能体任务调度）\n  - REQ-AGT-003（任务结果获取与追溯）\n- **Should Have (P1)**：\n  - REQ-CE-003（Memory Stor"
+    },
+    {
+      "number": "8.2",
+      "title": "8.2 里程碑与版本切分",
+      "level": 3,
+      "line_start": 338,
+      "text_length": 162,
+      "text_preview": "- **M1（2025-09-15）**：完成CE授权管理与基础数据同步\n- **M2（2025-10-15）**：完成EMO叙事记忆册与情感分析\n- **M3（2025-11-15）**：完成端云混合记忆存储与高级功能；AGT PoC（研究报告自动化）\n- **Release（2025-12-01）**：V2.3正式发布"
+    },
+    {
+      "number": null,
+      "title": "9. 可追溯性矩阵",
+      "level": 2,
+      "line_start": 344,
+      "text_length": 35,
+      "text_preview": "- 需求→设计→用例→测试→发布：在《可追溯性矩阵_V2.3》中维护。"
+    },
+    {
+      "number": null,
+      "title": "10. 附录",
+      "level": 2,
+      "line_start": 347,
+      "text_length": 121,
+      "text_preview": "- 图像与图表命名：领域_主题_版本_日期.svg（示例：CE_AuthFlow_v2.3_20250821.svg）。\n- 变更控制：遵循《配置管理计划_V2.3》。\n- 风险评估：见《项目里程碑与风险计划》CE/EMO/AGT 风险台账。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

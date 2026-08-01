@@ -1,0 +1,235 @@
+{
+  "doc_name": "NGO-Volunteer-Management-Portal",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/ieee830/mahir1411_ngo-volunteer/NGO-Volunteer-Management-Portal.md",
+  "md_lines": 162,
+  "md_chars": 9998,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "NGO Volunteer Management Portal",
+  "section_count": 21,
+  "sections": [
+    {
+      "number": null,
+      "title": "NGO Volunteer Management Portal",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Software Requirements Specification (SRS)",
+      "level": 2,
+      "line_start": 2,
+      "text_length": 3,
+      "text_preview": "---"
+    },
+    {
+      "number": null,
+      "title": "1. Purpose",
+      "level": 2,
+      "line_start": 6,
+      "text_length": 295,
+      "text_preview": "This document specifies the functional and non-functional requirements for a web-based platform connecting NGOs (who host events and need volunteers) with individuals/students (who want to volunteer)."
+    },
+    {
+      "number": null,
+      "title": "2. Scope",
+      "level": 2,
+      "line_start": 12,
+      "text_length": 768,
+      "text_preview": "The system provides:\n- Self-service NGO registration with **immediate event-publishing rights** (no pre-approval gate)\n- Background NGO document verification that affects only a trust badge, not publi"
+    },
+    {
+      "number": null,
+      "title": "3. User Roles & Permissions",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 497,
+      "text_preview": "| Role | Permissions |\n|---|---|\n| **NGO** | Register, manage org profile, create/edit/cancel events immediately upon publishing, view & manage applicants, mark attendance, issue certificates |\n| **Vo"
+    },
+    {
+      "number": null,
+      "title": "4. Functional Requirements",
+      "level": 2,
+      "line_start": 39,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Authentication",
+      "level": 3,
+      "line_start": 41,
+      "text_length": 305,
+      "text_preview": "- FR-1: System shall support separate sign-up flows for NGO and Volunteer roles.\n- FR-2: System shall verify email via OTP/link before dashboard access.\n- FR-3: System shall support login with role au"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 NGO Profile & Verification",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 603,
+      "text_preview": "- FR-5: NGO sign-up shall require org name, email, phone, password, registration number, and upload of a registration certificate.\n- FR-6: NGO accounts shall be allowed to publish events **immediately"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 Event Management",
+      "level": 3,
+      "line_start": 53,
+      "text_length": 657,
+      "text_preview": "- FR-9: NGO shall be able to create an event with: title, description, category, date/time, duration, address, pincode, banner image, total volunteers needed, and role-wise volunteer breakdown.\n- FR-1"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 Volunteer Profile",
+      "level": 3,
+      "line_start": 60,
+      "text_length": 416,
+      "text_preview": "- FR-14: Volunteer sign-up shall require name, email, phone, password, pincode, skills/interests (multi-select), and availability.\n- FR-15: System shall geocode the volunteer's pincode to lat/lng for "
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 Search & Filtering",
+      "level": 3,
+      "line_start": 65,
+      "text_length": 555,
+      "text_preview": "- FR-17: System shall default to showing events within a **10km radius** of the volunteer's saved location.\n- FR-18: Volunteer shall be able to adjust the radius (e.g., 5/10/25/50km or custom slider)."
+    },
+    {
+      "number": "4.6",
+      "title": "4.6 Application Workflow",
+      "level": 3,
+      "line_start": 72,
+      "text_length": 477,
+      "text_preview": "- FR-22: Volunteer shall be able to apply to an event with an optional message.\n- FR-23: System shall decrement available spots only upon NGO acceptance, not on application submission.\n- FR-24: NGO sh"
+    },
+    {
+      "number": "4.7",
+      "title": "4.7 Communication",
+      "level": 3,
+      "line_start": 79,
+      "text_length": 355,
+      "text_preview": "- FR-27: System shall display NGO email and phone to any volunteer who has applied (or per NGO setting, to all viewers of the event).\n- FR-28: System shall display volunteer email and phone to the NGO"
+    },
+    {
+      "number": "4.8",
+      "title": "4.8 Post-Event",
+      "level": 3,
+      "line_start": 84,
+      "text_length": 318,
+      "text_preview": "- FR-30: NGO shall be able to mark attendance per accepted volunteer after the event date.\n- FR-31: System shall auto-generate a downloadable PDF certificate for volunteers marked as attended.\n- FR-32"
+    },
+    {
+      "number": "4.9",
+      "title": "4.9 Notifications",
+      "level": 3,
+      "line_start": 89,
+      "text_length": 271,
+      "text_preview": "- FR-33: System shall send email + in-app notifications for: new application (→NGO), application status change (→volunteer), event cancellation (→applicants), upcoming event reminder (→both), new matc"
+    },
+    {
+      "number": "4.10",
+      "title": "4.10 Admin (Background Moderation)",
+      "level": 3,
+      "line_start": 92,
+      "text_length": 344,
+      "text_preview": "- FR-34: Admin shall have a queue of NGO verification documents to approve/reject (affects badge only).\n- FR-35: Admin shall be able to view reported events/NGOs and take down listings violating polic"
+    },
+    {
+      "number": null,
+      "title": "5. Non-Functional Requirements",
+      "level": 2,
+      "line_start": 99,
+      "text_length": 943,
+      "text_preview": "| Category | Requirement |\n|---|---|\n| **Performance** | Event search with radius filter shall return results in <1.5s for up to ~50,000 events |\n| **Scalability** | Geo queries shall use indexed geo-"
+    },
+    {
+      "number": null,
+      "title": "6. Data Model (Entities)",
+      "level": 2,
+      "line_start": 113,
+      "text_length": 1099,
+      "text_preview": "**Users** — id, email, password_hash, role, phone, status, created_at\n\n**NGO_Profiles** — user_id, org_name, registration_number, verification_doc_url, verification_status (pending/verified/rejected),"
+    },
+    {
+      "number": null,
+      "title": "7. External Integrations",
+      "level": 2,
+      "line_start": 137,
+      "text_length": 398,
+      "text_preview": "| Need | Suggested Integration |\n|---|---|\n| Geocoding pincode → lat/lng | Google Geocoding API / India Post Pincode API |\n| Radius search | PostgreSQL + PostGIS (`ST_DWithin`) or MongoDB `$geoNear` |"
+    },
+    {
+      "number": null,
+      "title": "8. Acceptance Criteria (Sample)",
+      "level": 2,
+      "line_start": 149,
+      "text_length": 786,
+      "text_preview": "- AC-1: Given a verified or unverified NGO completes signup and email verification, when they submit the event creation form, the event must appear in volunteer search results within seconds, regardle"
+    },
+    {
+      "number": null,
+      "title": "9. Phased Delivery",
+      "level": 2,
+      "line_start": 158,
+      "text_length": 282,
+      "text_preview": "**Phase 1 (MVP):** Auth, profiles, event CRUD with geocoding, 10km radius search, apply/accept/reject, email/phone visibility, basic notifications.\n\n**Phase 2:** Certificates & impact stats, waitlist "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 3,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Role",
+        "Permissions"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3. User Roles & Permissions",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Category",
+        "Requirement"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "5. Non-Functional Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Need",
+        "Suggested Integration"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "7. External Integrations",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

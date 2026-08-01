@@ -1,0 +1,231 @@
+{
+  "doc_name": "fprime_Drv_LinuxUartDriver_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Drv_LinuxUartDriver_sdd.md",
+  "md_lines": 182,
+  "md_chars": 7967,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Drv::LinuxUartDriver",
+  "section_count": 18,
+  "sections": [
+    {
+      "number": null,
+      "title": "Drv::LinuxUartDriver",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 783,
+      "text_preview": "The LinuxUartDriver component provides a Linux-specific implementation of a UART (Universal Asynchronous Receiver-Transmitter) serial communication driver. It implements the byte stream driver model i"
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 11,
+      "text_length": 1029,
+      "text_preview": "| Name | Description | Validation |\n|---|---|---|\n| LINUX-UART-COMP-001 | The LinuxUartDriver component shall implement the Drv.ByteStreamDriver interface | inspection |\n| LINUX-UART-COMP-002 | The Li"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 24,
+      "text_length": 143,
+      "text_preview": "The LinuxUartDriver component implements the design specified by the [`Drv.ByteStreamDriver`](../../Interfaces/ByteStreamDriver.fpp) interface."
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Architecture",
+      "level": 3,
+      "line_start": 28,
+      "text_length": 622,
+      "text_preview": "The component consists of the following key elements:\n\n- **UART Configuration**: Handles device opening, baud rate, flow control, and parity settings using Linux termios API\n- **Send Handler**: Synchr"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Send Operation",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 278,
+      "text_preview": "When data is sent via the `send` input port:\n\n1. The component validates the file descriptor and buffer\n2. Data is written to the UART device using the Linux `write()` system call\n3. Bytes sent counte"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Receive Operation",
+      "level": 3,
+      "line_start": 48,
+      "text_length": 328,
+      "text_preview": "The receive operation runs in a separate thread:\n\n1. A buffer is allocated from the buffer manager\n2. The thread blocks on `read()` waiting for incoming data\n3. Received data is packaged in the buffer"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Threading Model",
+      "level": 3,
+      "line_start": 58,
+      "text_length": 308,
+      "text_preview": "The component uses a single dedicated thread for receive operations (`serialReadTaskEntry`). This thread:\n\n- Runs continuously until `quitReadThread()` is called\n- Allocates buffers for each receive o"
+    },
+    {
+      "number": null,
+      "title": "4. Usage",
+      "level": 2,
+      "line_start": 67,
+      "text_length": 388,
+      "text_preview": "The LinuxUartDriver must be configured with device parameters before use. The typical usage pattern is:\n\n1. **Open Device**: Configure the UART device with desired parameters\n2. **Start Receive Thread"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Configuration Example",
+      "level": 3,
+      "line_start": 76,
+      "text_length": 1150,
+      "text_preview": "The LinuxUartDriver should be instantiated in the FPP topology and configured using separate functions following F´ patterns:\n\n```cpp\n// Configuration function - called during topology setup\nvoid conf"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 Integration with Rate Groups",
+      "level": 3,
+      "line_start": 110,
+      "text_length": 135,
+      "text_preview": "The component includes a `run` input port for telemetry reporting that should be connected to a rate group in the FPP topology:\n\n```fpp"
+    },
+    {
+      "number": null,
+      "title": "In topology.fpp connections section",
+      "level": 1,
+      "line_start": 115,
+      "text_length": 24,
+      "text_preview": "connections RateGroups {"
+    },
+    {
+      "number": null,
+      "title": "Connect UART driver to rate group for telemetry",
+      "level": 1,
+      "line_start": 117,
+      "text_length": 54,
+      "text_preview": "rateGroup1Comp.RateGroupMemberOut[N] -> uart.run\n}\n```"
+    },
+    {
+      "number": null,
+      "title": "5. Configuration",
+      "level": 2,
+      "line_start": 122,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 Device Parameters",
+      "level": 3,
+      "line_start": 124,
+      "text_length": 561,
+      "text_preview": "| Parameter | Type | Description | Valid Values |\n|-----------|------|-------------|--------------|\n| device | const char* | Path to UART device | Linux device path (e.g., \"/dev/ttyUSB0\") |\n| baud | D"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 Baud Rate Options",
+      "level": 3,
+      "line_start": 134,
+      "text_length": 811,
+      "text_preview": "The component supports the following baud rates:\n\n| Enumeration | Numeric Value | Availability |\n|-------------|---------------|--------------|\n| BAUD_9600 | 9600 | All platforms |\n| BAUD_19200 | 1920"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 Thread Configuration",
+      "level": 3,
+      "line_start": 157,
+      "text_length": 353,
+      "text_preview": "The receive thread can be configured with:\n\n| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| priority | FwTaskPriorityType | TASK_PRIORITY_DEFAULT | Thread p"
+    },
+    {
+      "number": "5.4",
+      "title": "5.4 Events and Telemetry",
+      "level": 3,
+      "line_start": 167,
+      "text_length": 487,
+      "text_preview": "The component generates the following events:\n\n- **OpenError**: UART device open failures\n- **ConfigError**: UART configuration failures\n- **WriteError**: Data transmission errors\n- **ReadError**: Dat"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 4,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description",
+        "Validation"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "2. Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Parameter",
+        "Type",
+        "Description",
+        "Valid Values"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "5.1 Device Parameters",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Enumeration",
+        "Numeric Value",
+        "Availability"
+      ],
+      "row_count": 17,
+      "data_row_count": 16,
+      "is_empty": false,
+      "section": "5.2 Baud Rate Options",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Parameter",
+        "Type",
+        "Default",
+        "Description"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "5.3 Thread Configuration",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

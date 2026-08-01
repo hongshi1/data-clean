@@ -1,0 +1,922 @@
+{
+  "doc_name": "前端感知通信协议V1.0",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/通信协议/前端感知通信协议V1.0.md",
+  "md_lines": 992,
+  "md_chars": 55154,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "前端感知通信协议 V1.0",
+  "section_count": 60,
+  "sections": [
+    {
+      "number": null,
+      "title": "前端感知通信协议 V1.0",
+      "level": 1,
+      "line_start": 9,
+      "text_length": 3,
+      "text_preview": "---"
+    },
+    {
+      "number": "0",
+      "title": "0 协议设计思想与宏观架构",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "0.1",
+      "title": "0.1 系统角色",
+      "level": 3,
+      "line_start": 15,
+      "text_length": 217,
+      "text_preview": "本协议服务于**非对称主从架构**：\n\n- **SPS（Signal Processing System）**：信号处理系统，唯一的控制发起方（上位机/服务器）\n- **DACS（Data Acquisition & Control System）**：数据采集与控制系统，前端 FPGA 设备，仅响应控制并主动推送数据\n\n物理链路为 **10GbE 以太网（UDP/IPv4）**，每个 DACS "
+    },
+    {
+      "number": "0.2",
+      "title": "0.2 五平面分离与本文范围",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 744,
+      "text_preview": "协议采用平面分离设计，每个平面独立承载不同语义：\n\n| 平面 | 报文类型 | 方向 | 核心语义 | 可靠性策略 |\n|------|---------|------|---------|-----------|\n| **控制平面** | `0x01` 控制指令 + `0x02` 确认应答 | SPS → DACS | 波束安排周期下发（一个周期内所有波束参数集合） | CRC32C + 确认应"
+    },
+    {
+      "number": "0.2.1",
+      "title": "0.2.1 控制闭环重传与幂等（冻结）",
+      "level": 3,
+      "line_start": 38,
+      "text_length": 745,
+      "text_preview": "为确保控制平面在 UDP 之上具备可预期的工程行为，控制闭环的**超时、重传上限、退避、重复命令幂等**统一冻结如下。\n\n**重传参数（冻结）**：\n\n- `RTO_MS`：首次重传超时（从 SPS 首次发送该 Control 起计）\n- `MAX_RETRY`：最大重传次数（不含首次发送）\n- `BACKOFF`：指数退避：第 `k` 次重传等待时间 = `RTO_MS × 2^k`（`k` 从"
+    },
+    {
+      "number": "0.3",
+      "title": "0.3 核心设计原则",
+      "level": 3,
+      "line_start": 67,
+      "text_length": 675,
+      "text_preview": "1. **全小端序编码**：所有多字节字段采用小端序（Little-Endian），包括整数、浮点数、时间戳等\n2. **整数量化物理量**：协议层禁止浮点数，所有物理量使用整数编码并定义量化单位（见\"物理量量化表\"）\n3. **统一32字节通用报文头**：所有报文类型共享同一通用报文头，通过\"报文类型\"字段分发到不同处理流程\n4. **波束安排表下发**：控制平面以\"波束安排表\"为单位下发，每个"
+    },
+    {
+      "number": "0.4",
+      "title": "0.4 物理量量化表",
+      "level": 3,
+      "line_start": 80,
+      "text_length": 1172,
+      "text_preview": "| 物理量 | 量化单位 | 编码类型 | 量化精度 | 有效范围 | 典型应用字段 |\n|-------|---------|---------|---------|---------|-------------|\n| **角度（方位/俯仰）** | 0.0025° | `int16` | 千分之二点五度 | -65° ~ +65° | 天线方位指向、天线俯仰指向 |\n| **角度（姿态）** "
+    },
+    {
+      "number": "0.5",
+      "title": "0.5 波束安排周期与秒边界语义",
+      "level": 3,
+      "line_start": 111,
+      "text_length": 389,
+      "text_preview": "控制平面采用**波束安排周期**作为传输单位，通常为 1 秒。每个周期内，SPS 下发该周期内的所有波束参数集合给 DACS，而非实时下发单个波束。为实现多阵面的射频参数同步切换，秒边界语义冻结为“**前端执行侧物理秒边界 + 服务器侧软件秒边界事件**”双层模型：\n\n- **前端物理秒边界**：各 DACS 在前端执行侧感知 UTC 秒边界（由 PTP/GNSS 授时）并进行波束切换，精度目标为"
+    },
+    {
+      "number": "0.5.1",
+      "title": "0.5.1 索引体系与职责分层（冻结）",
+      "level": 3,
+      "line_start": 119,
+      "text_length": 554,
+      "text_preview": "为避免实现侧混淆，跨平面索引体系冻结如下：\n\n| 字段 | 所属平面 | 角色定位 | 说明 |\n|------|---------|---------|------|\n| `PpsSeq` | `0x05 PPS Notify` | 软件秒边界序号 | 表示服务器侧消费的边界事件序号，用于去重、乱序检测、失边界统计 |\n| `FrameCounter` | `0x01/0x02/0x03` | "
+    },
+    {
+      "number": "0.6",
+      "title": "0.6 数据流向与控制命令流",
+      "level": 3,
+      "line_start": 132,
+      "text_length": 147,
+      "text_preview": "明确定义控制命令流的方向：**信号处理系统（SPS）→ 数据采集控制系统（DACS）**。SPS作为控制发起方，下发控制指令至DACS；DACS接收并执行配置，通过确认应答反馈执行结果。与此同时，数据平面流向相反：DACS采集数据后通过回波数据上传至SPS，保证控制与数据的分层隔离与流向明确。"
+    },
+    {
+      "number": "0.7",
+      "title": "0.7 设备标识",
+      "level": 3,
+      "line_start": 136,
+      "text_length": 288,
+      "text_preview": "| 设备标识 | 角色 | IP 示例 |\n|---------|------|--------|\n| `0x01` | SPS 主控 | 10.0.1.100 |\n| `0x10` | DACS 广播（仅用于目标标识） | — |\n| `0x11` | DACS 阵面 01（前向） | 10.0.1.11 |\n| `0x12` | DACS 阵面 02（左侧） | 10.0.1.12 |\n| `"
+    },
+    {
+      "number": "0.8",
+      "title": "0.8 UDP 端口分配",
+      "level": 3,
+      "line_start": 148,
+      "text_length": 295,
+      "text_preview": "| 报文类型 | 方向 | 源端口 | 目标端口 |\n|---------|------|-------|---------|\n| 控制指令 (0x01) | SPS → DACS | 随机(>1024) | 8888 |\n| 确认应答 (0x02) | DACS → SPS | 8888 | 回复至控制指令源端口 |\n| 回波数据 (0x03) | DACS → SPS | 9999 | 999"
+    },
+    {
+      "number": "0.8.1",
+      "title": "0.8.1 同端口承载 Data/Heartbeat 的 QoS（冻结）",
+      "level": 4,
+      "line_start": 158,
+      "text_length": 426,
+      "text_preview": "当 `0x03(Data)` 与 `0x04(Heartbeat)` 复用 UDP/9999 时，为保证拥塞/洪峰下的可用性与可观测性，QoS 冻结如下：\n\n1. **DSCP 标记（冻结）**\n   - Heartbeat：发送端必须设置 `DSCP = CS6`。\n   - Data：发送端必须设置 `DSCP = CS0`。\n   - 若网络侧清除/重写 DSCP，则仍必须满足第 2/3 条"
+    },
+    {
+      "number": "0.9",
+      "title": "0.9 协议版本",
+      "level": 3,
+      "line_start": 172,
+      "text_length": 67,
+      "text_preview": "本手册对应 **协议版本 = `0x10`**（V1.0）。协议版本编码为 `uint8`，高4位=主版本，低4位=次版本。\n\n---"
+    },
+    {
+      "number": "1",
+      "title": "1 通用报文头 — 全部报文类型共用",
+      "level": 2,
+      "line_start": 178,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 包结构",
+      "level": 3,
+      "line_start": 180,
+      "text_length": 282,
+      "text_preview": "```\n┌──────────────────────────────────────────┐\n│  通用报文头 (固定 32 字节)                 │\n├──────────────────────────────────────────┤\n│  后续载荷 (按报文类型不同而不同)            │\n└─────────────────────────────────"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 字段表",
+      "level": 3,
+      "line_start": 192,
+      "text_length": 3177,
+      "text_preview": "| 偏移 | 字段名称 | 类型 | 字节数 | 说明 |\n|------|---------|------|-------|------|\n| **0** | **魔数（Magic）** | `uint32` | 4 | **含义**：帧首同步字（固定值）。<br/>**取值**：`0x55AA55AA`（固定）。<br/>**设计目的**：快速定位帧首；`0x55AA`交替位模式利于硬件对齐。"
+    },
+    {
+      "number": "1.2.1",
+      "title": "1.2.1 Timestamp 语义矩阵（冻结）",
+      "level": 3,
+      "line_start": 212,
+      "text_length": 544,
+      "text_preview": "> 说明：通用头 `Timestamp` 只有一种编码（Unix Epoch ms），但**不同 PacketType 语义不同**。实现端必须按下表解释。\n\n| PacketType | 报文名称 | Common Header.Timestamp 语义 | 允许为 0 | 0 的语义 |\n|---|---|---|---|---|\n| `0x01` | Control | **期望生效时刻**"
+    },
+    {
+      "number": "1.2.2",
+      "title": "1.2.2 CRC 策略矩阵（冻结）",
+      "level": 3,
+      "line_start": 224,
+      "text_length": 659,
+      "text_preview": "> 说明：V1.0 **移除通用头 CRC16**，但部分 PacketType 的载荷内含 CRC32C。为避免“覆盖范围/是否回包”误解，统一如下。\n\n| PacketType | 报文名称 | 是否含 CRC32C 字段 | CRC32C 位置 | CRC32C 覆盖范围（相对本报文载荷起始 Offset） | 校验失败处理 |\n|---|---|---|---|---|---|\n| `0x"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 时间同步专题：DACS 与 SPS（北斗/GNSS → PTP → 本地晶振）",
+      "level": 2,
+      "line_start": 238,
+      "text_length": 175,
+      "text_preview": "> **目标**：把“自动降级/恢复”做成**可判定、可观测、可回归**的机制，使 SPS 与 DACS 在联调与长期运行中能明确回答：\n> 1) 当前系统时间来自哪里？（北斗/GNSS / PTP / 本地晶振）\n> 2) 当前时间质量处于哪一档？（锁定/保持/自由运行）\n> 3) 何时、因何触发降级/恢复？以及是否影响“定时生效/时间戳”语义。"
+    },
+    {
+      "number": "1.3.1",
+      "title": "1.3.1 目的与边界",
+      "level": 3,
+      "line_start": 245,
+      "text_length": 522,
+      "text_preview": "**必须保证**：\n\n1. **控制定时生效的一致性**：当 DACS 处于“可授时”状态时，支持按 Common Header.Timestamp 在秒边界附近生效（见 Control 的“定时生效控制”）。\n2. **数据时间戳的可解释性**：Data/Heartbeat/CommonHeader.Timestamp 必须能解释为“该报文使用的时间坐标系下的 Unix Epoch ms”。\n3"
+    },
+    {
+      "number": "1.3.2",
+      "title": "1.3.2 时间来源与质量分级",
+      "level": 3,
+      "line_start": 260,
+      "text_length": 789,
+      "text_preview": "**时间来源（Time Coordinate Source）三档**：\n\n- **Level-1：北斗/GNSS**（优先）\n- **Level-2：PTP**（降级，网络授时；通常由 SPS/交换机提供授时体系）\n- **Level-3：本地晶振**（再次降级，自由运行/保持）\n\n**时间质量（Time Quality）三档**（与来源正交，来源不等于质量）：\n\n- **Q0：Locked**："
+    },
+    {
+      "number": "1.3.3",
+      "title": "1.3.3 正常工作流程（锁定后秒边界生效 / 软件秒边界事件 / 数据时间戳）",
+      "level": 3,
+      "line_start": 290,
+      "text_length": 488,
+      "text_preview": "1. **上电 → 授时锁定**：DACS 优先尝试北斗/GNSS 锁定；成功后进入 Q0。\n2. **前端秒边界生效**：当 SPS 下发 Control 且 Common Header.Timestamp 非 0 时，DACS 在前端执行侧目标秒边界（允许窗口内）应用配置并执行。\n3. **软件秒边界事件上送**：DACS 将本次边界事实通过 `0x05 PPS Notify` 上送 SPS；"
+    },
+    {
+      "number": "1.3.4",
+      "title": "1.3.4 自动降级 / 恢复规则（触发条件、滞回、最短保持）",
+      "level": 3,
+      "line_start": 300,
+      "text_length": 603,
+      "text_preview": "自动降级/恢复以**状态机**实现（可回归），并采用“触发持续时间 + 滞回 + 最短保持”避免抖动。\n\n**状态定义**：\n\n- `SRC_GNSS`：时间来源=北斗/GNSS\n- `SRC_PTP`：时间来源=PTP\n- `SRC_XO`：时间来源=本地晶振\n\n**触发条件（示例形式，门限可配置）**：\n\n- `SRC_GNSS → SRC_PTP`：GNSS 失锁持续 ≥ `T_GNSS_L"
+    },
+    {
+      "number": "1.3.5",
+      "title": "1.3.5 与控制/ACK/PPS Notify 的关系（定时生效允许条件、拒绝/降级行为、偏晚判定）",
+      "level": 3,
+      "line_start": 324,
+      "text_length": 728,
+      "text_preview": "**定时生效允许条件（建议做成硬约束）**：\n\n- 当时间质量处于 **Q0（Locked）**：允许执行 Common Header.Timestamp 指定的定时生效。\n- 当时间质量处于 **Q1（Holdover）**：可配置“允许/禁止定时生效”，**V1.0 默认=禁止**。若禁止，按“拒绝/降级行为”处理。\n- 当时间质量处于 **Q2（Freerun/Unknown）**：必须禁止"
+    },
+    {
+      "number": "1.3.6",
+      "title": "1.3.6 可观测性与验收（必须上报字段、日志点、联调检查步骤）",
+      "level": 3,
+      "line_start": 351,
+      "text_length": 1175,
+      "text_preview": "**必须上报/回显（用于观测与回归）**：\n\n1. Heartbeat：\n   - `SystemStatus_Alive`（含 PTP/GNSS 锁定位）\n   - `SystemStatus_State`（含 PTP/GNSS 状态枚举、可见星数等）\n   - `TimeCoordSource`（本次心跳/本机时间坐标来源：北斗/GNSS / PTP / 本地晶振）\n   - `TimeOff"
+    },
+    {
+      "number": "2",
+      "title": "2 Control Payload（控制载荷）— PacketType = 0x01",
+      "level": 2,
+      "line_start": 385,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 包结构",
+      "level": 3,
+      "line_start": 387,
+      "text_length": 1115,
+      "text_preview": "```\n┌──────────────────────────────────────────────────────────┐\n│  UDP Payload (32 + PayloadLen)                           │\n├──────────────────────────────────────────────────────────┤\n│  [0..31]   "
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 表头字段表",
+      "level": 3,
+      "line_start": 410,
+      "text_length": 1295,
+      "text_preview": "> Offset 基准：相对于 Control Payload 起始位置（UDP Payload Offset 32）\n\n| Offset | 字段名称 | 类型 | 字节数 | 量化单位 | 说明 |\n|--------|---------|------|-------|---------|------|\n| **0** | **周期计数（FrameCounter）** | `uint32` |"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 波束项字段表（每项 32 字节）",
+      "level": 3,
+      "line_start": 423,
+      "text_length": 7637,
+      "text_preview": "> Offset 基准：相对于表头末尾（UDP Payload Offset 32+12）；每项偏移递增 32\n\n波束项承载该周期内单个波束的完整工作参数，包括天线指向、信号配置、采样参数等。每个波束项对应一个独立的波束配置，支持波束间参数的灵活变化。\n\n| Offset | 字段名称 | 类型 | 字节数 | 量化单位 | 说明 |\n|--------|---------|------|----"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 CRC32C 校验字段",
+      "level": 3,
+      "line_start": 454,
+      "text_length": 529,
+      "text_preview": "> Offset 基准：相对于 Control Payload 起始位置（UDP Payload Offset 32+12+N×32）\n\n| Offset | 字段名称 | 类型 | 字节数 | 说明 |\n|--------|---------|------|-------|------|\n| **+0** | **CRC32C（CRC32C）** | `uint32` | 4 | **含义**："
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 PayloadLen 计算",
+      "level": 3,
+      "line_start": 462,
+      "text_length": 457,
+      "text_preview": "```\nPayloadLen = 表头 + 波束项总长 + CRC32C\n           = 12 + (秒周期安排波束总数 × 32) + 4\n           = 12 + (N × 32) + 4\n           = 16 + N × 32\n```\n\n**例子**：\n- 1 个波束：PayloadLen = 16 + 32 = 48 字节\n- 10 个波束：PayloadLe"
+    },
+    {
+      "number": "2.6",
+      "title": "2.6 字段更新特性",
+      "level": 3,
+      "line_start": 482,
+      "text_length": 470,
+      "text_preview": "新架构采用**波束项全参数配置**模式，取消了\"强不变/可变\"的二分设计。所有射频与天线参数均在波束项中独立配置，支持波束间的灵活参数差异。\n\n**设计优势**：\n\n| 特性 | 说明 |\n|------|------|\n| **波束级独立性** | 每个波束项携带完整参数（天线指向、信号配置、采样设置等），支持波束间参数变化 |\n| **周期级一致性** | 表头仅承载周期元数据（帧计数、波束总"
+    },
+    {
+      "number": "2.6.1",
+      "title": "2.6.1 运行规则冻结（搜索 / 跟踪 / 混合）",
+      "level": 3,
+      "line_start": 501,
+      "text_length": 237,
+      "text_preview": "为避免“协议能承载但系统规则未冻结”，V1.0 在运行层补充冻结如下：\n\n1. **搜索模式**：默认采用预生成固定扫描表周期轮转，不要求逐周期闭环重规划。\n2. **跟踪模式**：允许 SPS 基于上一逻辑周期处理结果生成下一逻辑周期表，但仍以“周期级定版”下发。\n3. **混合模式**：跟踪波束优先级高于搜索补盲波束；当资源冲突时，搜索波束应让位于跟踪波束。\n4. **热更新限制**：V1.0"
+    },
+    {
+      "number": "2.7",
+      "title": "2.7 Control 收发示例",
+      "level": 3,
+      "line_start": 510,
+      "text_length": 1024,
+      "text_preview": "**DACS 处理流程**：\n\n1. **接收与初步校验**\n   - 接收 Control 包（UDP 端口 8888）\n   - 验证 Magic Word (`0x55AA55AA`)\n   - 检查 DestID 是否匹配（或为广播地址 `0x10`）\n\n   > 广播补充（冻结）：当 `DestID=0x10` 时，所有通过上述基础校验的 DACS **都必须**分别回 `Schedul"
+    },
+    {
+      "number": "3",
+      "title": "3 ScheduleApplyAck Payload（周期应用结果回执载荷）— PacketType = 0x02",
+      "level": 2,
+      "line_start": 556,
+      "text_length": 167,
+      "text_preview": "ScheduleApplyAck 报文由 **DACS → SPS** 发送，用于对**上一秒下发的波束安排表（Control, PacketType=0x01）**的**应用与执行结果**进行回报。\nScheduleApplyAck 不再针对单条控制指令，而是以**“秒周期波束安排表”**为对象，形成稳定的秒级控制闭环。\n\n---"
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 包结构",
+      "level": 3,
+      "line_start": 563,
+      "text_length": 996,
+      "text_preview": "```\n┌──────────────────────────────────────────────┐\n│  UDP Payload                                 │\n├──────────────────────────────────────────────┤\n│  通用报文头 Common Header (32B)              │\n│    "
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 字段表（ScheduleApplyAck Payload）",
+      "level": 3,
+      "line_start": 591,
+      "text_length": 3344,
+      "text_preview": "> Offset 基准：相对于 ScheduleApplyAck Payload 起始位置（即 UDP Payload Offset = 32）\n\n| Offset | 字段名称          | 类型       | 字节数 | 说明                                                                                "
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 ErrorCode 来源矩阵（冻结）",
+      "level": 4,
+      "line_start": 607,
+      "text_length": 877,
+      "text_preview": "| ErrorCode | 名称 | 典型触发点（来源） | AckResult 约束 | ErrorDetail 语义（冻结） |\n|---|---|---|---|---|\n| `0x01` | Control CRC32C 失败 | Control 载荷 CRC32C 校验失败 | 必须 `NOT_APPLIED` | 固定填 `0` |\n| `0x03` | 参数校验失败 | 字段范围/组"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 特别说明（语义与时序冻结）",
+      "level": 3,
+      "line_start": 622,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 周期级应用结果回执原则（核心语义）",
+      "level": 4,
+      "line_start": 624,
+      "text_length": 188,
+      "text_preview": "* ScheduleApplyAck **只回报“上一秒下发的波束安排表”的应用结果**\n* 不对单个波束、不对单条参数、不对瞬时配置单独回执\n* 一个 ScheduleApplyAck ⇔ 一个帧计数 ⇔ 一个 1 秒周期\n\n该设计保证：\n\n* 控制平面节奏稳定（1 Hz）\n* FPGA/驱动侧无需维护细粒度回执状态\n* SPS 可基于帧计数形成确定性的控制闭环\n\n---"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 必须满足的控制—应答时序",
+      "level": 4,
+      "line_start": 638,
+      "text_length": 675,
+      "text_preview": "为保证 ScheduleApplyAck 语义成立，控制与执行需满足以下约束：\n\n1. **提前下发原则**\n   SPS 必须在周期 `T` 内，下发 **周期 `T+1`** 的波束安排表\n\n   **最晚提前量（冻结）**：`LeadTimeMs`。\n\n   - 定义：对目标秒边界 `B`（即 Control Common Header.`Timestamp` 指示的期望生效时刻），SPS "
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 ScheduleApplyAck 与通用报文头的一致性要求",
+      "level": 4,
+      "line_start": 663,
+      "text_length": 380,
+      "text_preview": "* **Common Header.SequenceNumber（冻结）**：ScheduleApplyAck 的序列号按 **DACS 发送端递增**（不回显 Control 序列号）\n* **ControlEpoch（冻结）**：必须回显对应 Control 的控制纪元（用于会话隔离）\n* **AckedSequenceNumber（冻结）**：必须回显被确认的 Control 报文 Comm"
+    },
+    {
+      "number": "3.3.4",
+      "title": "3.3.4 未收到有效 Control 的默认行为（冻结）",
+      "level": 4,
+      "line_start": 675,
+      "text_length": 343,
+      "text_preview": "当某个周期 `T` 未收到任何“有效 Control”（通过：通用头基础校验 + PayloadLen 一致性 + Control CRC32C + 参数校验）时：\n\n1. DACS **不得执行**该周期的波束安排（不得进入发射/采集调度）。\n2. DACS 在周期 `T+1` 必须回 `ScheduleApplyAck` 回执周期 `T`：`AckResult=NOT_APPLIED, Err"
+    },
+    {
+      "number": "3.3.5",
+      "title": "3.3.5 不可执行类错误：统一回 Ack + 全局限速/抑制（冻结）",
+      "level": 4,
+      "line_start": 685,
+      "text_length": 656,
+      "text_preview": "为消除“有的错误回包、有的错误静默”的不一致性，凡 **Control（0x01）已通过基础可识别检查**（至少满足：Magic/ProtocolVersion/PacketType/长度一致性/DestID 匹配，且可读取 `SourceID/ControlEpoch/SequenceNumber`）但因错误而**不可执行**的情形，处理统一冻结如下：\n\n1. **必须回 Ack（冻结）**\n "
+    },
+    {
+      "number": "3.3.6",
+      "title": "3.3.6 多阵面 Ack 聚合规则（冻结）",
+      "level": 4,
+      "line_start": 698,
+      "text_length": 434,
+      "text_preview": "当同一条 Control 以广播方式发往多个 DACS 阵面时，SPS 侧必须按 `(ControlEpoch, AckFrameCounter, AckedSequenceNumber, SourceID)` 聚合 `ScheduleApplyAck`，并以阵面为粒度判定结果：\n\n1. **单阵面成功**：仅表示对应 `SourceID` 阵面本周期应用成功，不得外推为“全阵面成功”。\n2. *"
+    },
+    {
+      "number": "4",
+      "title": "4 Data Specific Header（数据专用头）— PacketType = 0x03",
+      "level": 2,
+      "line_start": 707,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 包结构",
+      "level": 3,
+      "line_start": 709,
+      "text_length": 3371,
+      "text_preview": "数据平面（`0x03`）不携带应用层 CRC32C（见 `1.2.2 CRC 策略矩阵（冻结）`）。\n\n**版本边界说明（冻结）**：\n\n- 本文档定义的 `0x03 Data` 为 V1.0 正式数据面格式。\n- 历史上存在的“固定 5120B UDP 包 / 16 包每 PRT / 末包包尾”草案，仅作为历史背景，不再作为 V1.0 正式实现基线。\n- 若现场仍保留历史格式实现，必须在项目级联"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 重组资源与超时（冻结）",
+      "level": 4,
+      "line_start": 790,
+      "text_length": 308,
+      "text_preview": "为防止重组缓存失控、以及使“丢包补零”行为可回归，接收端（SPS）对每个重组键必须冻结如下参数与策略：\n\n- `MAX_REASM_BYTES_PER_KEY`：单重组键最大缓存字节数（含已收分片数据与元数据）。默认值（冻结）：`16 MiB`。\n- `MAX_TOTALFRAGS`：允许的最大 `TotalFrags`。默认值（冻结）：`256`。超出则丢弃该帧并计数。\n- `T_reasm`："
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 Specific Header 字段表",
+      "level": 3,
+      "line_start": 800,
+      "text_length": 2844,
+      "text_preview": "> Offset 基准：相对于 Common Header 结束位置（UDP Payload Offset 32）\n\n**设计说明**:Data 报文通过回显 Control 中的帧计数和波束编号,实现与控制平面的精确关联。CPI 计数由 DACS 根据 Control 下发的\"CPI 计数基数 + 波束编号\"计算得出,确保数据与控制命令的波束级一致性。所有字段采用 4 字节自然对齐,优化 DMA"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 Execution Snapshot 字段表 (重排)",
+      "level": 3,
+      "line_start": 821,
+      "text_length": 3284,
+      "text_preview": "> Offset 基准：相对于 Specific Header 结束位置（UDP Payload Offset 72）\n>\n> **总长度**：40 Bytes | **对齐**：4 Byte 自然对齐\n\n**设计目的**：记录 DACS 在产生本数据时的**实际执行参数快照**。SPS 可对比 Control 下发值与 Snapshot 实际值来验证配置是否精确生效（闭环一致性验证），也用于离线"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 RAW Payload 格式",
+      "level": 3,
+      "line_start": 850,
+      "text_length": 1592,
+      "text_preview": "> Offset 基准：UDP Payload Offset 72（非尾包）或 UDP Payload Offset 112（尾包）\n\n**数据类型与复数样点大小**：\n\n| DataType | I 分量 | Q 分量 | 复数大小 |\n|----------|-------|-------|---------|\n| `0x01` (Int16) | `int16` | `int16` | 4 "
+    },
+    {
+      "number": "5",
+      "title": "5 Heartbeat Payload（心跳载荷）— PacketType = 0x04",
+      "level": 2,
+      "line_start": 904,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 包结构",
+      "level": 3,
+      "line_start": 906,
+      "text_length": 564,
+      "text_preview": "```\n┌────────────────────────────────────────────────────┐\n│  UDP Payload (固定 80 Bytes = 32 + 48)              │\n├────────────────────────────────────────────────────┤\n│  [0..31]   Common Header (32B)"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 设计原则",
+      "level": 3,
+      "line_start": 921,
+      "text_length": 275,
+      "text_preview": "心跳部分重新聚焦于**真正的设备健康检查**，移除无用字段，节省带宽：\n\n| 项目 | 说明 |\n|------|------|\n| **取缔字段** | `LastTaskID`（任务管理已在控制指令中通过 CPI 计数基数实现）|\n| **移除扩展** | `Reserved_Extend`（不预留扩展空间，节省 24 字节带宽） |\n| **拆分 SystemStatus** | 从 64-"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 字段表",
+      "level": 3,
+      "line_start": 932,
+      "text_length": 4731,
+      "text_preview": "> Offset 基准：相对于 Heartbeat Payload 起始位置（UDP Payload Offset 32）\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **0** | **健康状态位图（SystemStatus_Alive）** | `uint32` | 4 |"
+    },
+    {
+      "number": "6",
+      "title": "6 校验算法参数速查",
+      "level": 2,
+      "line_start": 962,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 HCS（已移除）",
+      "level": 3,
+      "line_start": 964,
+      "text_length": 29,
+      "text_preview": "V1.0 起通用报文头不再包含 CRC16/HCS 字段。"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 CRC32C — CRC-32C (Castagnoli)",
+      "level": 3,
+      "line_start": 968,
+      "text_length": 595,
+      "text_preview": "| 参数 | 值 |\n|------|-----|\n| 多项式 | `0x1EDC6F41`（反射：`0x82F63B78`） |\n| 初始值 | `0xFFFFFFFF` |\n| 输入反射 | true |\n| 输出反射 | true |\n| 最终异或 | `0xFFFFFFFF` |\n| 线上字节序 | Little-Endian |\n\n**各报文 CRC32C 覆盖范围**：\n\n| 报文 |"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 FCS — CRC-32 (IEEE 802.3)",
+      "level": 3,
+      "line_start": 990,
+      "text_length": 53,
+      "text_preview": "由 NIC 硬件处理，协议层无感知。多项式 `0x04C11DB7`，FCS 失败时 NIC 静默丢弃帧。"
+    }
+  ],
+  "constraint_count": 7,
+  "constraints": [
+    {
+      "value": 2500.0,
+      "unit": "ms",
+      "operator": "=",
+      "sentence": "- `RTO_MS = 2500 ms`",
+      "section": "0.2.1 控制闭环重传与幂等（冻结）",
+      "section_number": "0.2.1",
+      "section_title": "0.2.1 控制闭环重传与幂等（冻结）",
+      "line_start": 38
+    },
+    {
+      "value": 20.0,
+      "unit": "dB",
+      "operator": "=",
+      "sentence": "- 手动增益控制 = 40 × 0.5 dB = 20 dB",
+      "section": "0.4 物理量量化表",
+      "section_number": "0.4",
+      "section_title": "0.4 物理量量化表",
+      "line_start": 80
+    },
+    {
+      "value": 5.0,
+      "unit": "ms",
+      "operator": "=",
+      "sentence": "- **默认值（冻结）**：`T_APPLY_WINDOW_MS = 5 ms`",
+      "section": "1.3.2 时间来源与质量分级",
+      "section_number": "1.3.2",
+      "section_title": "1.3.2 时间来源与质量分级",
+      "line_start": 260
+    },
+    {
+      "value": 200.0,
+      "unit": "ms",
+      "operator": "=",
+      "sentence": "- 默认值（冻结）：`LeadTimeMs = 200 ms`",
+      "section": "3.3.2 必须满足的控制—应答时序",
+      "section_number": "3.3.2",
+      "section_title": "3.3.2 必须满足的控制—应答时序",
+      "line_start": 638
+    },
+    {
+      "value": 800.0,
+      "unit": "ms",
+      "operator": "=",
+      "sentence": "- 默认值（冻结）：`HoldWindowMs = 800 ms`",
+      "section": "3.3.2 必须满足的控制—应答时序",
+      "section_number": "3.3.2",
+      "section_title": "3.3.2 必须满足的控制—应答时序",
+      "line_start": 638
+    },
+    {
+      "value": 10.0,
+      "unit": "A",
+      "operator": "=",
+      "sentence": "- **令牌桶参数（冻结）**：`rate = 10 Ack/s`，`burst = 20 Ack`。",
+      "section": "3.3.5 不可执行类错误：统一回 Ack + 全局限速/抑制（冻结）",
+      "section_number": "3.3.5",
+      "section_title": "3.3.5 不可执行类错误：统一回 Ack + 全局限速/抑制（冻结）",
+      "line_start": 685
+    },
+    {
+      "value": 20.0,
+      "unit": "A",
+      "operator": "=",
+      "sentence": "- **令牌桶参数（冻结）**：`rate = 10 Ack/s`，`burst = 20 Ack`。",
+      "section": "3.3.5 不可执行类错误：统一回 Ack + 全局限速/抑制（冻结）",
+      "section_number": "3.3.5",
+      "section_title": "3.3.5 不可执行类错误：统一回 Ack + 全局限速/抑制（冻结）",
+      "line_start": 685
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 21,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "平面",
+        "报文类型",
+        "方向",
+        "核心语义",
+        "可靠性策略"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "0.2 五平面分离与本文范围",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "物理量",
+        "量化单位",
+        "编码类型",
+        "量化精度",
+        "有效范围",
+        "典型应用字段"
+      ],
+      "row_count": 15,
+      "data_row_count": 14,
+      "is_empty": false,
+      "section": "0.4 物理量量化表",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "所属平面",
+        "角色定位",
+        "说明"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "0.5.1 索引体系与职责分层（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "设备标识",
+        "角色",
+        "IP 示例"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "0.7 设备标识",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文类型",
+        "方向",
+        "源端口",
+        "目标端口"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "0.8 UDP 端口分配",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "偏移",
+        "字段名称",
+        "类型",
+        "字节数",
+        "说明"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "1.2 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "PacketType",
+        "报文名称",
+        "Common Header.Timestamp 语义",
+        "允许为 0",
+        "0 的语义"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "1.2.1 Timestamp 语义矩阵（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "PacketType",
+        "报文名称",
+        "是否含 CRC32C 字段",
+        "CRC32C 位置",
+        "CRC32C 覆盖范围（相对本报文载荷起始 Offset）",
+        "校验失败处理"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "1.2.2 CRC 策略矩阵（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "类型",
+        "字节数",
+        "量化单位",
+        "说明"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.2 表头字段表",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "类型",
+        "字节数",
+        "量化单位",
+        "说明"
+      ],
+      "row_count": 21,
+      "data_row_count": 20,
+      "is_empty": false,
+      "section": "2.3 波束项字段表（每项 32 字节）",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "类型",
+        "字节数",
+        "说明"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "2.4 CRC32C 校验字段",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "特性",
+        "说明"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.6 字段更新特性",
+      "raw_html": null
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "类型",
+        "字节数",
+        "说明"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "3.2 字段表（ScheduleApplyAck Payload）",
+      "raw_html": null
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "ErrorCode",
+        "名称",
+        "典型触发点（来源）",
+        "AckResult 约束",
+        "ErrorDetail 语义（冻结）"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "3.2.1 ErrorCode 来源矩阵（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "4.2 Specific Header 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "Type",
+        "Bytes",
+        "量化单位",
+        "说明"
+      ],
+      "row_count": 16,
+      "data_row_count": 15,
+      "is_empty": false,
+      "section": "4.3 Execution Snapshot 字段表 (重排)",
+      "raw_html": null
+    },
+    {
+      "index": 16,
+      "type": "data_dictionary",
+      "format": "markdown",
+      "headers": [
+        "DataType",
+        "I 分量",
+        "Q 分量",
+        "复数大小"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "4.4 RAW Payload 格式",
+      "raw_html": null
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "项目",
+        "说明"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "5.2 设计原则",
+      "raw_html": null
+    },
+    {
+      "index": 18,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 16,
+      "data_row_count": 15,
+      "is_empty": false,
+      "section": "5.3 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "参数",
+        "值"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "6.2 CRC32C — CRC-32C (Castagnoli)",
+      "raw_html": null
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文",
+        "覆盖起止（Payload 内 Offset）",
+        "校验字段位置"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "6.2 CRC32C — CRC-32C (Castagnoli)",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

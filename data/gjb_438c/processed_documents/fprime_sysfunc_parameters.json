@@ -1,0 +1,80 @@
+{
+  "doc_name": "fprime_sysfunc_parameters",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_parameters.md",
+  "md_lines": 39,
+  "md_chars": 2357,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Parameter Management Functionality",
+  "section_count": 7,
+  "sections": [
+    {
+      "number": null,
+      "title": "Parameter Management Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 276,
+      "text_preview": "- [F Prime PrmDb SDD](https://github.com/nasa/fprime/blob/devel/Svc/PrmDb/docs/sdd.md)\n- [Fw::Prm SDD](https://github.com/nasa/fprime/blob/devel/Fw/Prm/docs/sdd.md)\n- [FPP User Guide — Parameters](htt"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 377,
+      "text_preview": "Parameter management provides persistent storage and retrieval of configuration values used by components throughout the system. Parameters are named values defined in FPP models that can be loaded fr"
+    },
+    {
+      "number": null,
+      "title": "Parameter Storage",
+      "level": 3,
+      "line_start": 14,
+      "text_length": 285,
+      "text_preview": "The Parameter Database stores parameter values in serialized form in an internal table, indexed by parameter ID. At startup, it loads a set of parameter values from a file on the file system. This fil"
+    },
+    {
+      "number": null,
+      "title": "Parameter Retrieval",
+      "level": 3,
+      "line_start": 18,
+      "text_length": 553,
+      "text_preview": "During initialization, components request their parameter values from the Parameter Database. The request specifies a parameter ID, and the response includes the serialized value along with a validity"
+    },
+    {
+      "number": null,
+      "title": "Parameter Updates",
+      "level": 3,
+      "line_start": 27,
+      "text_length": 433,
+      "text_preview": "Parameters can be updated during operation via ground command. The command specifies the component, parameter name, and new value. When a parameter is updated:\n\n1. The new value is sent to the Paramet"
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 36,
+      "text_length": 267,
+      "text_preview": "- If the parameter file is missing or corrupt at startup, the Parameter Database starts with an empty table and components fall back to their default values.\n- If a parameter value cannot be deseriali"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

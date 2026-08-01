@@ -1,0 +1,352 @@
+{
+  "doc_name": "2009 - model manager",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/2009 - model manager.pdf.md",
+  "md_lines": 501,
+  "md_chars": 21912,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Functional Requirements Specification",
+  "section_count": 27,
+  "sections": [
+    {
+      "number": null,
+      "title": "Functional Requirements Specification",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 7,
+      "text_preview": "for the"
+    },
+    {
+      "number": null,
+      "title": "Model Manager",
+      "level": 1,
+      "line_start": 5,
+      "text_length": 57,
+      "text_preview": "Version: 1.0\n\nPrepared by: Elena Schuler\n\nApril 7th, 2006"
+    },
+    {
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 623,
+      "text_preview": "1. Introduction........   \n1.1 Purpose   \n1.2 Document Conventions.   \n1.3 Intended Audience.   \n1.4 Project Scope. .2   \n1.5 References. .2   \n2. Overall Description... .2   \n2.1 Product Perspective."
+    },
+    {
+      "number": null,
+      "title": "Revision History",
+      "level": 2,
+      "line_start": 33,
+      "text_length": 423,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Reason For Changes</td><td rowspan=1 colspan=1>Version</td></tr><tr><td rowspan=1 colspan=1></td><t"
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 37,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 Purpose",
+      "level": 2,
+      "line_start": 39,
+      "text_length": 284,
+      "text_preview": "This document defines the functional or high-lever user requirements for the Model Manager software tool. It describes the main functionality of the tool from the user's perspective. This document wil"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 Document Conventions",
+      "level": 2,
+      "line_start": 43,
+      "text_length": 1103,
+      "text_preview": "“MM” - Model Manager\n\n“4DWX OTM” (short: OTM) - “4DWX On the Move”\n\n“model back end system” – a term describing configuration files, data input, scripts and executables that are needed to run model jo"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 Intended Audience",
+      "level": 2,
+      "line_start": 69,
+      "text_length": 191,
+      "text_preview": "The intended audience for this document is the users of the system (see 2.3), scientists and software engineers at RAL who will be developing the system, NSAP project sponsors and management."
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 Project Scope",
+      "level": 2,
+      "line_start": 73,
+      "text_length": 347,
+      "text_preview": "The Model Manager is a software tool that will allow the user to configure, schedule, run, monitor, and stop (and re-start /resume) model jobs. The primary goal of this project is to extend the curren"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 References",
+      "level": 2,
+      "line_start": 77,
+      "text_length": 128,
+      "text_preview": "[1] “4DWX on the Move (4DWX OTM)”,Scott Swerdlin, concept paper: http://sdg.rap.ucar.edu/wiki/index.php/Model\\_Manager#Documents"
+    },
+    {
+      "number": null,
+      "title": "2. Overall Description",
+      "level": 2,
+      "line_start": 81,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 Product Perspective",
+      "level": 2,
+      "line_start": 83,
+      "text_length": 645,
+      "text_preview": "With the increase in NSAP projects, staff and hardware, a more automated and procedural, and in some cases, easier way of setting up and running a model job has become necessary. The MM will provide t"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Product Features",
+      "level": 2,
+      "line_start": 91,
+      "text_length": 187,
+      "text_preview": "The main functions of the system are described in the diagram below. Users of the system will be able to:\n\n![](images/84d38d59ef5f4397750ff9a34ea9011e200d981f01ffec3981f85500093c06ea.jpg)"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 User Classes and Their Characteristics",
+      "level": 2,
+      "line_start": 97,
+      "text_length": 830,
+      "text_preview": "There are three main user classes of the system. First, scientists and software engineers at NSAP, who will be using the system for setting up and maintaining operational model runs. These are users w"
+    },
+    {
+      "number": null,
+      "title": "3. System Features",
+      "level": 2,
+      "line_start": 101,
+      "text_length": 1715,
+      "text_preview": "This chapter describes the use cases for the MM in more detail.\n\nThe MM will manage jobs on one or more clusters. Node allocation, management and utilization will be provided by the MM (SRS note: The "
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Set up and submit a model job",
+      "level": 2,
+      "line_start": 137,
+      "text_length": 298,
+      "text_preview": "This feature allows the user to set up and schedule a model job using the MM's Job-Setup module. Suppose the user is logged on to the system and has made the following choices “Submit a new job” -> “S"
+    },
+    {
+      "number": null,
+      "title": "Use Case “WeatherFDDA”: Setting up a real time or off-line FDDA job",
+      "level": 2,
+      "line_start": 141,
+      "text_length": 5888,
+      "text_preview": "The objective of this feature is to automate the set up of new real time and off-line FDDA jobs. This use case describes the set up of GMOD jobs, re-runs and case studies. At this point, RTFDDA ensemb"
+    },
+    {
+      "number": null,
+      "title": "Use Case “ClimoFDDA”: Setting up a ClimoFDDA job",
+      "level": 2,
+      "line_start": 241,
+      "text_length": 2434,
+      "text_preview": "The objective of this feature is to integrate the GCAT functionalities within the MM. Suppose the user is logged on to the system and has made the following choices “Submit a new job” -> “Set up a new"
+    },
+    {
+      "number": null,
+      "title": "Use Case “CAM”: Setting up a CAM job",
+      "level": 2,
+      "line_start": 311,
+      "text_length": 3,
+      "text_preview": "TBD"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Set up and submit a “post-processing” job",
+      "level": 2,
+      "line_start": 315,
+      "text_length": 1386,
+      "text_preview": "The objective of this feature is to provide the ability to only run “post-processing” on an existing model output file. It will also provide the post-processing part of the use case “WeatherFDDA” in 3"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Submit a 'By-hand' job",
+      "level": 2,
+      "line_start": 355,
+      "text_length": 874,
+      "text_preview": "The objective of this feature is to accommodate the current GMOD-framework. It will also give the user the ability to run customized jobs. In order to submit a custom job to the MM, the user must firs"
+    },
+    {
+      "number": null,
+      "title": "Action Sequence:",
+      "level": 2,
+      "line_start": 363,
+      "text_length": 40,
+      "text_preview": "1. User selects “Submit a 'By Hand' Job”"
+    },
+    {
+      "number": null,
+      "title": "2. User supplies:",
+      "level": 2,
+      "line_start": 367,
+      "text_length": 325,
+      "text_preview": "Mandatory:\n\n• job id (GMUAE, GWDPG,...)\n\n• location of the script (host:/full\\_path\\_to\\_script)\n\n• time when to run the script\n\n• estimated time of how long the script will run\n\n• name(s) of executab"
+    },
+    {
+      "number": null,
+      "title": "Optional:",
+      "level": 2,
+      "line_start": 387,
+      "text_length": 397,
+      "text_preview": "• frequency of how often the script should run\n\n• job type\n\n• any additional information\n\n3. User can save the job's settings. Job configurations can be saved to a file.\n\n4. User submits job.\n\n5. User"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Load a job configuration from a file and submit the job",
+      "level": 2,
+      "line_start": 403,
+      "text_length": 478,
+      "text_preview": "The objective of this feature is to provide the ability to load a job configuration into MM from a file. Suppose the user is logged on to the system and has made the following choice, “Submit a new jo"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Retrieve and run a previously saved job configuration",
+      "level": 2,
+      "line_start": 421,
+      "text_length": 725,
+      "text_preview": "The objective of this feature is to provide the ability to retrieve a previous job configuration and to re-run this job or change its settings and run it again.\n\nPrimary actor: Meteorologist, software"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 View scheduled, running and old jobs",
+      "level": 2,
+      "line_start": 451,
+      "text_length": 1580,
+      "text_preview": "The objective of this feature is to facilitate monitoring of running jobs, viewing the job queue and viewing jobs that ran in the past.\n\nPrimary actor: Meteorologist, software engineer\n\nGoal: Monitor "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Name",
+        "Date",
+        "Reason For Changes",
+        "Version"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": true,
+      "section": "Revision History",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Reason For Changes</td><td rowspan=1 colspan=1>Version</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr>"
+    }
+  ],
+  "image_count": 3,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "a6ea6fc53454b8744217ed4dd8d3075fada96343eb0b12d859f6b287f75634e1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/a6ea6fc53454b8744217ed4dd8d3075fada96343eb0b12d859f6b287f75634e1.jpg",
+      "image_exists": true,
+      "image_size_kb": 55,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "1.2 Document Conventions",
+      "context_before": "“RTFDDA job” - a GMOD job or a RTFDDA ensemble\n“off-line FDDA job” - a re-run of a previous RTFDDA cycle or a case study.\nUsing the above conventions, we can categorize model jobs for the MM that as follows:",
+      "context_after": "'”Post-processing' job” - a set of processes that take model output files as input, perform calculations or data conversions on the input and possibly produce output files in a different data format\n“",
+      "md_line": 63,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "1fbccbb9841ff7f6f4ec61246a52c5b482e47f1a9bcfedf53cf70692d5da5a36.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/1fbccbb9841ff7f6f4ec61246a52c5b482e47f1a9bcfedf53cf70692d5da5a36.jpg",
+      "image_exists": true,
+      "image_size_kb": 32,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "2.1 Product Perspective",
+      "context_before": "[1] “4DWX on the Move (4DWX OTM)”,Scott Swerdlin, concept paper: http://sdg.rap.ucar.edu/wiki/index.php/Model\\_Manager#Documents\nWith the increase in NSAP projects, staff and hardware, a more automated and procedural, and in some cases, easier way of setting up and running a model job has become nec",
+      "context_after": "The MM can run in conjunction with the MetVault, and it can also run as a stand-alone application with no knowledge about a MetVault. The MM will be accessible from a web-based GUI and a command line ",
+      "md_line": 87,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "84d38d59ef5f4397750ff9a34ea9011e200d981f01ffec3981f85500093c06ea.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/84d38d59ef5f4397750ff9a34ea9011e200d981f01ffec3981f85500093c06ea.jpg",
+      "image_exists": true,
+      "image_size_kb": 80,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "2.2 Product Features",
+      "context_before": "The MM can run in conjunction with the MetVault, and it can also run as a stand-alone application with no knowledge about a MetVault. The MM will be accessible from a web-based GUI and a command line tool.\nThe main functions of the system are described in the diagram below. Users of the system will ",
+      "context_after": "There are three main user classes of the system. First, scientists and software engineers at NSAP, who will be using the system for setting up and maintaining operational model runs. These are users w",
+      "md_line": 95,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "a6ea6fc53454b8744217ed4dd8d3075fada96343eb0b12d859f6b287f75634e1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/a6ea6fc53454b8744217ed4dd8d3075fada96343eb0b12d859f6b287f75634e1.jpg",
+      "image_exists": true,
+      "image_size_kb": 55,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "1.2 Document Conventions",
+      "context_before": "“RTFDDA job” - a GMOD job or a RTFDDA ensemble\n“off-line FDDA job” - a re-run of a previous RTFDDA cycle or a case study.\nUsing the above conventions, we can categorize model jobs for the MM that as follows:",
+      "context_after": "'”Post-processing' job” - a set of processes that take model output files as input, perform calculations or data conversions on the input and possibly produce output files in a different data format\n“",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "1fbccbb9841ff7f6f4ec61246a52c5b482e47f1a9bcfedf53cf70692d5da5a36.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/1fbccbb9841ff7f6f4ec61246a52c5b482e47f1a9bcfedf53cf70692d5da5a36.jpg",
+      "image_exists": true,
+      "image_size_kb": 32,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "2.1 Product Perspective",
+      "context_before": "[1] “4DWX on the Move (4DWX OTM)”,Scott Swerdlin, concept paper: http://sdg.rap.ucar.edu/wiki/index.php/Model\\_Manager#Documents\nWith the increase in NSAP projects, staff and hardware, a more automated and procedural, and in some cases, easier way of setting up and running a model job has become nec",
+      "context_after": "The MM can run in conjunction with the MetVault, and it can also run as a stand-alone application with no knowledge about a MetVault. The MM will be accessible from a web-based GUI and a command line ",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "84d38d59ef5f4397750ff9a34ea9011e200d981f01ffec3981f85500093c06ea.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_original/requirements/req/mineru_parsed/2009 - model manager.pdf/auto/images/84d38d59ef5f4397750ff9a34ea9011e200d981f01ffec3981f85500093c06ea.jpg",
+      "image_exists": true,
+      "image_size_kb": 80,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "2.2 Product Features",
+      "context_before": "The MM can run in conjunction with the MetVault, and it can also run as a stand-alone application with no knowledge about a MetVault. The MM will be accessible from a web-based GUI and a command line tool.\nThe main functions of the system are described in the diagram below. Users of the system will ",
+      "context_after": "There are three main user classes of the system. First, scientists and software engineers at NSAP, who will be using the system for setting up and maintaining operational model runs. These are users w",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

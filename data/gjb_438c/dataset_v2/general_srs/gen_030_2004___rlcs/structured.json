@@ -1,0 +1,1751 @@
+{
+  "doc_id": "gen_030",
+  "doc_name": "2004 - rlcs",
+  "sections": [
+    {
+      "number": null,
+      "title": "I-15 Reversible Lane Control System (I-15 RLCS) Application Software Requirements Specification",
+      "level": 1,
+      "line_start": 9,
+      "text_length": 59,
+      "text_preview": "\\*\\*\\* to be finalized by contractor \\*\\*\\*\n\nApril 21, 2004"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Modification History",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 183,
+      "text_preview": "After the baseline version of this document is approved, any changes made to the document must be approved in accordance with the provisions of the established Change Management Plan."
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 21,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "line_start": 23,
+      "text_length": 2811,
+      "text_preview": "1. INTRODUCTION ....   \n1.1. PURPOSE. .. 5   \n1.2. SCOPE. .. 5   \n1.2.1. Objectives .6   \n1.3. DEFINITIONS, ACRONYMS, AND ABBREVIATIONS .. .. 6   \n1.4. REFERENCES. .. 6   \n1.5. OVERVIEW .6   \n2. OVERA"
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 99,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.1. Purpose",
+      "level": 2,
+      "line_start": 101,
+      "text_length": 422,
+      "text_preview": "This document defines the application software requirements for the Interstate -15 Reversible Lane Control System (I-15 RLCS).\n\nThe RLCS application software (‘RLCS Application’) will meet all of the "
+    },
+    {
+      "number": null,
+      "title": "1.2. Scope",
+      "level": 2,
+      "line_start": 107,
+      "text_length": 564,
+      "text_preview": "The purpose of the (I-15 RLCS) is to open and close the reversible lanes for morning and evening peak traffic hours and any special events defined by operators of the system. The software developed fr"
+    },
+    {
+      "number": null,
+      "title": "1.2.1. Objectives",
+      "level": 2,
+      "line_start": 113,
+      "text_length": 126,
+      "text_preview": "The RLCS Application must support the objectives listed in Section 1.2 System Goals, in the System Requirements Specification."
+    },
+    {
+      "number": null,
+      "title": "1.3. Definitions, acronyms, and abbreviations",
+      "level": 2,
+      "line_start": 117,
+      "text_length": 57,
+      "text_preview": "See Appendix B for a list of terms used in this document."
+    },
+    {
+      "number": null,
+      "title": "1.4. References",
+      "level": 2,
+      "line_start": 121,
+      "text_length": 1518,
+      "text_preview": "The reference documents below were used to prepare this requirements document:\n\n<table><tr><td rowspan=1 colspan=1>Title</td><td rowspan=1 colspan=1>Prepared By</td><td rowspan=1 colspan=1>Date</td></"
+    },
+    {
+      "number": null,
+      "title": "1.5. Overview",
+      "level": 2,
+      "line_start": 131,
+      "text_length": 353,
+      "text_preview": "The remainder of this document is divided into two sections.\n\nSection 2 gives a high-level, user- and operationally-oriented view of the software.\n\nSection 3 provides the detailed requirements includi"
+    },
+    {
+      "number": null,
+      "title": "2. Overall description",
+      "level": 2,
+      "line_start": 141,
+      "text_length": 597,
+      "text_preview": "This section describes the general factors that affect the RLCS Application software requirements. This section does not state specific requirements, instead it provides a background for those require"
+    },
+    {
+      "number": null,
+      "title": "2.1. Product perspective",
+      "level": 2,
+      "line_start": 147,
+      "text_length": 134,
+      "text_preview": "This section describes how the RLCS Application software relates to other systems and software as well as how it functions internally."
+    },
+    {
+      "number": null,
+      "title": "2.1.1. External System Interfaces",
+      "level": 2,
+      "line_start": 151,
+      "text_length": 737,
+      "text_preview": "2.1.1.1. In addition to providing data to the system users and traffic operations management, the RLCS Application will provide data to other external systems via an external server data store accessi"
+    },
+    {
+      "number": null,
+      "title": "2.1.2. User Interface",
+      "level": 2,
+      "line_start": 166,
+      "text_length": 85,
+      "text_preview": "The user will operate the RLCS Application software using a graphical user interface."
+    },
+    {
+      "number": null,
+      "title": "2.1.3. Hardware Interfaces",
+      "level": 2,
+      "line_start": 170,
+      "text_length": 72,
+      "text_preview": "RLCS application will seamlessly interface and control hardware devices."
+    },
+    {
+      "number": null,
+      "title": "2.1.4. Software Interfaces",
+      "level": 2,
+      "line_start": 174,
+      "text_length": 221,
+      "text_preview": "This section discusses interfaces between the RLCS application and other software, which may include but are not limited to: Workstation O/S, Network O/S, Controller O/S, a database management system,"
+    },
+    {
+      "number": null,
+      "title": "2.1.5. Communications Interfaces",
+      "level": 2,
+      "line_start": 178,
+      "text_length": 750,
+      "text_preview": "The RLCS will provide access to system status data, to external systems through a firewall. This will be a one way data transfer to a computer outside of the RLCS network and making it available there"
+    },
+    {
+      "number": null,
+      "title": "2.1.6. Memory constraints",
+      "level": 2,
+      "line_start": 188,
+      "text_length": 214,
+      "text_preview": "The only memory constraints imposed on the software will depend on constraints associated with the intelligent controller selected for the system. For the 2070 controller, reference the TEES document "
+    },
+    {
+      "number": null,
+      "title": "2.1.7. Operations",
+      "level": 2,
+      "line_start": 192,
+      "text_length": 145,
+      "text_preview": "The RLCS Application will support the operations described in ‘Section 2.8 Operational Scenarios’ of the RLCS System Requirements Specification.."
+    },
+    {
+      "number": null,
+      "title": "2.1.8. Site Adaptation",
+      "level": 2,
+      "line_start": 196,
+      "text_length": 227,
+      "text_preview": "The RLCS Application will operate as a component of the RLCS System, for which physical adaptations are described in ‘Section 3.7 Physical’ of the System Requirements Specification\n\nI-15 RLCS Software"
+    },
+    {
+      "number": null,
+      "title": "2.2. Product functions",
+      "level": 2,
+      "line_start": 202,
+      "text_length": 514,
+      "text_preview": "The data flow diagram below shows the five major functions of the RCLCS Application : GUI, Process Control and Monitoring, Sequencing, Data Processing and Security, and Reporting.\n\n![](images/d6fae923"
+    },
+    {
+      "number": null,
+      "title": "2.3. User characteristics",
+      "level": 2,
+      "line_start": 215,
+      "text_length": 1923,
+      "text_preview": "Several classes of users will access the RLCS Application. A user is defined as anyone who has the ability to ‘log on’ to the RLCS. External entities such as ATMS and ValuePricing, which will retrieve"
+    },
+    {
+      "number": null,
+      "title": "2.4. Constraints",
+      "level": 2,
+      "line_start": 223,
+      "text_length": 3185,
+      "text_preview": "The following constraints were factors in the development of the detailed requirements for the RLCS Application:\n\na) Regulatory policies – There were no technical regulatory policies specifically cove"
+    },
+    {
+      "number": null,
+      "title": "2.5. Assumptions and dependencies",
+      "level": 2,
+      "line_start": 263,
+      "text_length": 449,
+      "text_preview": "The RLCS will benefit from the deployment of the Fiber Optic Network along I-15 Reversible Lane corridor to include the RLCS lanes. The communications between the FCU and DCU locations will continue t"
+    },
+    {
+      "number": null,
+      "title": "2.6. Apportioning of the requirements",
+      "level": 2,
+      "line_start": 271,
+      "text_length": 191,
+      "text_preview": "The RLCS software will not be apportioned, or split between multiple releases. The complete set of requirements will be included in one release.\n\nI-15 RLCS Software Requirements Specification"
+    },
+    {
+      "number": null,
+      "title": "3. Specific Requirements",
+      "level": 2,
+      "line_start": 277,
+      "text_length": 633,
+      "text_preview": "This section of the SRS contains the RLCS Application software requirements to a level of detail sufficient to enable designers to design the system, and acceptance testers to test that the system sat"
+    },
+    {
+      "number": null,
+      "title": "3.1. External Interface requirements",
+      "level": 2,
+      "line_start": 287,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "3.1.1. Hardware Interfaces",
+      "level": 2,
+      "line_start": 289,
+      "text_length": 534,
+      "text_preview": "Multiple field devices will interface with updated device input/output cards that in turn will interface with an intelligent controller. It is unknown at this time which particular controller will be "
+    },
+    {
+      "number": "3.1.1.1",
+      "title": "3.1.1.1 Field Device I/O Drivers",
+      "level": 2,
+      "line_start": 293,
+      "text_length": 109,
+      "text_preview": "The RLCS software shall send to and receive data from the field device I/O cards through I/O driver software."
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 297,
+      "text_length": 6186,
+      "text_preview": "The tables below show the description and locations of the field devices currently installed and to be installed at the facility. Appendix D contains a chart with I/O card pin configurations.\n<table><"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 306,
+      "text_length": 9669,
+      "text_preview": "RLCS Inputs to and outputs from the FCU and DCU Controllers\n<table><tr><td rowspan=1 colspan=1>Field Device</td><td rowspan=1 colspan=1>Device Sensors</td><td rowspan=1 colspan=1>InputsOrOutputs</td><"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 315,
+      "text_length": 6351,
+      "text_preview": "RLCS Inputs to and outputs from the FCU and DCU Controllers\n<table><tr><td rowspan=1 colspan=1>Field Device</td><td rowspan=1 colspan=1>Device Sensors</td><td rowspan=1 colspan=1>InputsOrOutputs</td><"
+    },
+    {
+      "number": null,
+      "title": "3.1.2. External System Interfaces",
+      "level": 2,
+      "line_start": 324,
+      "text_length": 437,
+      "text_preview": "All external systems shall retrieve RLCS status from a server outside the RLCS network. (outside a firewall). A single data file will include the following data elements:\n\n3.1.2.1. Status (e.g.: open "
+    },
+    {
+      "number": null,
+      "title": "3.1.3. Communications interfaces",
+      "level": 2,
+      "line_start": 336,
+      "text_length": 661,
+      "text_preview": "There are two external communications interfaces with the RLCS Application\n\n3.1.3.1. The first is a connection to a Department of Transportation ISSC resource (possibly a WAN connection) via a firewal"
+    },
+    {
+      "number": null,
+      "title": "3.2. Functional requirements",
+      "level": 2,
+      "line_start": 346,
+      "text_length": 356,
+      "text_preview": "This section describes the fundamental actions that must occur to accept inputs and produce outputs. It includes explanations of validity checks on inputs, [vendor must complete the validity check inf"
+    },
+    {
+      "number": null,
+      "title": "3.2.1. Graphical User Interface (GUI)",
+      "level": 2,
+      "line_start": 352,
+      "text_length": 990,
+      "text_preview": "The system shall have a Graphical User Interface (GUI) that allows the operator to view system status, issue commands to change device status, configure the system, export log data, and generate repor"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.2. Time Stamp, User, and Workstation ID Window",
+      "level": 2,
+      "line_start": 372,
+      "text_length": 190,
+      "text_preview": "The GUI shall indicate the current date and time, user’s name, and workstation location name. The GUI shall also show other users currently logged in the other units within the RLCS network."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.3. Control/Monitor Command Entry Screen",
+      "level": 2,
+      "line_start": 376,
+      "text_length": 270,
+      "text_preview": "3.2.1.3.1. The GUI shall provide an option that allows the system user to issue commands that monitor and control opening and closing events.\n\n3.2.1.3.2. Based on the user’s security level, the contro"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 382,
+      "text_length": 1736,
+      "text_preview": "3.2.1.3.3. The control option shall provide the user with the capability to set the operational status of failed devices.\n\n3.2.1.3.4. The RLCS software shall display information about active overrides"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.5. System Configuration Screen",
+      "level": 2,
+      "line_start": 412,
+      "text_length": 248,
+      "text_preview": "3.2.1.5.1. The GUI shall provide an option for “Configuration” that is only accessible by the RLCS Software user with System Administrative privileges. It shall display and allow modification of all d"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 416,
+      "text_length": 1231,
+      "text_preview": "When the system administrator modifies the database tables, the GUI shall analyze the data before storing in the database and notify the system administrator of any conflicting or redundant entries.\n\n"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.6. Display/Export System Information Logs",
+      "level": 2,
+      "line_start": 434,
+      "text_length": 664,
+      "text_preview": "The system shall display information logs and provide the capability to export the logs in common ASCII text for importing to commercial database, spreadsheet, or reporting programs. The following log"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.6.5. Operator Daily Diary Log",
+      "level": 2,
+      "line_start": 452,
+      "text_length": 318,
+      "text_preview": "3.2.1.6.5.1. The “Daily Diary” shall be a separate display that allows the user to enter free form text comments.\n\n3.2.1.6.5.2. The user should not be able to update log entries other than for their o"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.7. Single Device Status Screen",
+      "level": 2,
+      "line_start": 462,
+      "text_length": 131,
+      "text_preview": "The GUI shall provide the ability to display the status of one device at the detail level, showing all sensor data for that device."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.8. Device Category Status Screen",
+      "level": 2,
+      "line_start": 466,
+      "text_length": 260,
+      "text_preview": "The GUI shall provide the ability to display the current status of a category of devices at the detail level, showing all sensor data for all devices of the same category. A category is all devices of"
+    },
+    {
+      "number": null,
+      "title": "3.2.1.9. Report Screen",
+      "level": 2,
+      "line_start": 470,
+      "text_length": 912,
+      "text_preview": "The user shall be able to retrieve historic reports from the COTS reporting system based on date range and report name.\n\n3.2.1.9.1. Display/Modify parameters for the “Current Command Summary Report”\n\n"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 496,
+      "text_length": 225,
+      "text_preview": "3.2.1.9.12. Display/Modify parameters for the “Inventory Report”\n\n3.2.1.9.13. Display Report Results\n\n3.2.1.9.14. Display/Modify Printer Setup\n\n3.2.1.9.15. Display/Modify Report Schedule\n\n3.2.1.9.16. "
+    },
+    {
+      "number": null,
+      "title": "3.2.1.10. Emergency Notification Information Screen",
+      "level": 2,
+      "line_start": 508,
+      "text_length": 106,
+      "text_preview": "The system shall display the appropriate emergency contact information in the event of an alarm condition."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.11. Command Confirmation/Abort/Override Screen",
+      "level": 2,
+      "line_start": 512,
+      "text_length": 183,
+      "text_preview": "The GUI shall display a separate window requesting confirmation of the command upon receiving a command either from the user at the keyboard, or from a scheduled sequence of commands."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.12. Alarm Acknowledgment/Silencing Screen",
+      "level": 2,
+      "line_start": 516,
+      "text_length": 332,
+      "text_preview": "The GUI shall allow the operator to acknowledge an alarm and have the option to silence the audible portion of the alarm for a configurable number of seconds or permanently for that device only.\n\n3.2."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.14. Change System Mode",
+      "level": 2,
+      "line_start": 522,
+      "text_length": 74,
+      "text_preview": "the GUI shall provide a screen for authorized users to change system mode."
+    },
+    {
+      "number": null,
+      "title": "3.2.1.15. Help Screen",
+      "level": 2,
+      "line_start": 526,
+      "text_length": 149,
+      "text_preview": "The GUI shall provide a screen for describing system features, functions, database tables, and fields.\n\nI-15 RLCS Software Requirements Specification"
+    },
+    {
+      "number": null,
+      "title": "3.2.2. Process Monitoring and Control",
+      "level": 2,
+      "line_start": 532,
+      "text_length": 2616,
+      "text_preview": "The RLCS software will monitor the status of all field devices and will process requests for changing field device status.\n\nInput Entities (from list of entities and attributes in 3.4 Logical Database"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 554,
+      "text_length": 153,
+      "text_preview": "based on the user’s access level and authorized workstations.)\n\n3.2.2.4.4 The current status for all devices shall be maintained at each controller unit."
+    },
+    {
+      "number": "3.2.2.4.5",
+      "title": "3.2.2.4.5 Alarms",
+      "level": 2,
+      "line_start": 560,
+      "text_length": 1619,
+      "text_preview": "Check Device Status for Alarm Condition\n\nEach status received from device sensors shall be checked against alarm conditions for that device sensor and the status will be updated to indicate an alarm.\n"
+    },
+    {
+      "number": "3.2.2.4.9",
+      "title": "3.2.2.4.9 Process GUI Commands",
+      "level": 2,
+      "line_start": 598,
+      "text_length": 489,
+      "text_preview": "3.2.2.4.9.1 In order for a command to be processed from any workstation or controller, the MCU field device shall be in the “Auto” mode.\n\n3.2.2.4.9.2 The system operator shall be able to override any "
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 604,
+      "text_length": 165,
+      "text_preview": "command prior to the operator ‘overriding’ the device status.\n\n3.2.2.4.9.3 The process of overriding a device status shall not affect the status of any other device."
+    },
+    {
+      "number": "3.2.2.4.9.4",
+      "title": "3.2.2.4.9.4 Business Rules / Interlocks / Safety Screening",
+      "level": 2,
+      "line_start": 610,
+      "text_length": 1099,
+      "text_preview": "Each control command that is processed must be validated against the secured safety rules (stored in non-volatile memory) for the command. For example, if the operator issues a command to open the sou"
+    },
+    {
+      "number": "3.2.2.6",
+      "title": "3.2.2.6 Identify units and Initialize all Devices",
+      "level": 2,
+      "line_start": 622,
+      "text_length": 959,
+      "text_preview": "3.2.2.6.1 When each workstation and control unit (workstation or intelligent controller at the FCU or DCU) comes online, the system shall identify it and all its associated device sensors.\n\n3.2.2.6.2 "
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 630,
+      "text_length": 489,
+      "text_preview": "3.2.2.7 The RLCS software shall be designed to allow for future changes to the roadway without requiring programming effort. Updating non-volatile memory-based tables shall be sufficient to accommodat"
+    },
+    {
+      "number": "3.2.2.8",
+      "title": "3.2.2.8 Collect Log Data",
+      "level": 2,
+      "line_start": 634,
+      "text_length": 1288,
+      "text_preview": "The system shall generate log files as follows for reports:\n\n3.2.2.8.1 Device Command Log: Contains device commands issued with time stamp, operator ID, unit where the command was issued at and shall "
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 Sequencing",
+      "level": 2,
+      "line_start": 654,
+      "text_length": 1997,
+      "text_preview": "Input Entities (from list of entities and attributes in 3.4 Logical Database Requirements): Alarm Type, Command Level, Device, Device Alarm Criteria, Device Command, Device Command Macro, Device Comma"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 Data Processing and Security",
+      "level": 2,
+      "line_start": 682,
+      "text_length": 686,
+      "text_preview": "The RLCS shall store, process, and retrieve all data necessary to operate the application software as well as generate current and historical reports of system operations, and export system status dat"
+    },
+    {
+      "number": null,
+      "title": "Output Entities: All entities",
+      "level": 2,
+      "line_start": 690,
+      "text_length": 217,
+      "text_preview": "3.2.4.1 The RLCS application software shall update and read database tables to support system operations.\n\n3.2.4.2 The RLCS application software shall Update and read password and device rule data in "
+    },
+    {
+      "number": "3.2.4.3",
+      "title": "3.2.4.3 Update and read Security information",
+      "level": 2,
+      "line_start": 696,
+      "text_length": 1328,
+      "text_preview": "The Personnel Security Level entity stores information about the five attributes used to restrict access to the RLCS: Command Level, Device, Mode, Workstation, and System Functions.\n\n3.2.4.4 Command l"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 712,
+      "text_length": 2606,
+      "text_preview": "would not be completed if the device remained in an unknown state. This type of command changes the database value for the device only and does not send a device command to the field device.\n\n(5) Devi"
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 Reporting",
+      "level": 2,
+      "line_start": 736,
+      "text_length": 435,
+      "text_preview": "The system will use data exported from the RLCS database to create and format a variety of reports. A commercial off-the-shelf reporting tool shall be used for this function.\n\nInput Entities: All RLCS"
+    },
+    {
+      "number": "3.2.5.1",
+      "title": "3.2.5.1 Format Report for GUI Display",
+      "level": 2,
+      "line_start": 744,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.5.2",
+      "title": "3.2.5.2 Format Report for Print/Export Output",
+      "level": 2,
+      "line_start": 746,
+      "text_length": 1605,
+      "text_preview": "The following reports are representative of the reports to be produced by the system. Other reports could be produced from the data stored in the database.\n\n3.2.5.3 Create “Current Command Summary Rep"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Performance",
+      "level": 2,
+      "line_start": 776,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 External Interfaces",
+      "level": 2,
+      "line_start": 778,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 780,
+      "text_length": 807,
+      "text_preview": "3.3.1.1 The external server data store containing RLCS status for use by external systems shall be updated once per minute.\n\n3.3.1.2 The field device status information logging to the database shall b"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 User Interface (GUI)",
+      "level": 2,
+      "line_start": 792,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 794,
+      "text_length": 769,
+      "text_preview": "3.3.2.1 The RLCS shall support multiple users logged on, up to the limit of the number of users defined in the database.\n\n3.3.2.2 Not including device and network response times, requests from the GUI"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 Process Monitoring and Control",
+      "level": 2,
+      "line_start": 806,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 808,
+      "text_length": 164,
+      "text_preview": "3.3.3.1 The field units (controllers) shall continually monitor device status, controller status and the control system integrity and send the status to the central"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 812,
+      "text_length": 124,
+      "text_preview": "computer in the TMC every 2 seconds or less.\n\n3.3.3.2 The RLCS shall detect alarm conditions within 2 seconds of occurrence."
+    },
+    {
+      "number": "3.3.4",
+      "title": "3.3.4 Sequencing",
+      "level": 2,
+      "line_start": 818,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 820,
+      "text_length": 385,
+      "text_preview": "3.3.4.1 At a minimum of every 60 seconds, the system shall check the current date and time against a list of scheduled events for the current mode to determine if any event should be executed.\n\n3.3.4."
+    },
+    {
+      "number": "3.3.5",
+      "title": "3.3.5 Data Processing and Security",
+      "level": 2,
+      "line_start": 826,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 828,
+      "text_length": 416,
+      "text_preview": "The database retrieval and update response time shall not impact any other performance requirements such as the GUI response time or monitoring and control responses. In other words, the database perf"
+    },
+    {
+      "number": "3.3.6",
+      "title": "3.3.6 Reporting",
+      "level": 2,
+      "line_start": 832,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 834,
+      "text_length": 752,
+      "text_preview": "3.3.6.1 The operator shall be able to store and retrieve previously created report results from the RLCS for a minimum period of 60 days, but configurable for up to one year.\n\n3.3.6.2 The raw data use"
+    },
+    {
+      "number": "3.3.7",
+      "title": "3.3.7 Communications",
+      "level": 2,
+      "line_start": 845,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 847,
+      "text_length": 2538,
+      "text_preview": "3.3.7.1 RLCS system components will communicate via the private communications networks established by Department of Transportation District 11 prior to the development of the RLCS. Any operator or sy"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Logical Database Requirements",
+      "level": 2,
+      "line_start": 879,
+      "text_length": 8240,
+      "text_preview": "The RLCS database stores information needed to operate the RLCS as well as historical transaction data to generate reports of system operations.\n\nThe entities in the table below fulfill the functional"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 887,
+      "text_length": 403,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Minimum Attributes</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>(super mac"
+    },
+    {
+      "number": null,
+      "title": "Exhibit 3.3: I-15 RLCS Entities and Attributes",
+      "level": 2,
+      "line_start": 891,
+      "text_length": 144,
+      "text_preview": "See the Entity Relationship Diagram and Relationship Descriptions in Appendix C for more details.\n\nI-15 RLCS Software Requirements Specification"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Design Constraints",
+      "level": 2,
+      "line_start": 897,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.5.1",
+      "title": "3.5.1 Commercial Off-the-Shelf Software",
+      "level": 2,
+      "line_start": 899,
+      "text_length": 703,
+      "text_preview": "3.5.1.1 The data processing and security, and reporting functions of the RLCS application software shall be implemented with commercial off-the-shelf software.\n\n3.5.1.2 The data processing, security, "
+    },
+    {
+      "number": "3.5.2",
+      "title": "3.5.2 Security",
+      "level": 2,
+      "line_start": 917,
+      "text_length": 675,
+      "text_preview": "The RLCS shall incorporate a database to store, process, and retrieve all data necessary to secure the system from unauthorized use. The processing code at the FCU and DCU controllers shall be residen"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 RLCS Application Software Attributes",
+      "level": 2,
+      "line_start": 927,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.6.1",
+      "title": "3.6.1 Reliability",
+      "level": 2,
+      "line_start": 929,
+      "text_length": 2058,
+      "text_preview": "3.6.1.1 The RLCS must demonstrate the ability to function continuously without needing to be reset or rebooted due to an RLCS error for at least 30 consecutive days.\n\n3.6.1.2 Valid checksum algorithms"
+    },
+    {
+      "number": "3.6.2",
+      "title": "3.6.2 Availability",
+      "level": 2,
+      "line_start": 951,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 953,
+      "text_length": 390,
+      "text_preview": "The RLCS must be available 24/7, 365 days per year. The normal operating mode is Monday through Friday, between 5:00am and 8:00pm, but the system must be functional in order to stay in its closed stat"
+    },
+    {
+      "number": "3.6.3",
+      "title": "3.6.3 Maintainability",
+      "level": 2,
+      "line_start": 957,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Priority: Must have",
+      "level": 2,
+      "line_start": 959,
+      "text_length": 609,
+      "text_preview": "3.6.3.1 The RLCS shall support remote system administration and maintenance of the system.\n\n3.6.3.2 The RLCS shall utilize an open architecture that is modular and scaleable. The system will be scaled"
+    },
+    {
+      "number": null,
+      "title": "Appendixes A - Traceability Matrices",
+      "level": 2,
+      "line_start": 973,
+      "text_length": 3654,
+      "text_preview": "The original System Requirements Document – Version C produced by TransCore in December 1998, was the basis for this Software Requirements Specification. The two tables referenced in this appendix sho"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 1004,
+      "text_length": 371,
+      "text_preview": "![](images/9362e2e24a385f89ad6c41c20c8fd6acd9e8a79c773a0c0bbf0d2368804ab0be.jpg)\n\nI-15 Reversible Lane Control System: Process Monitoring and Control 3.2.2 Level 2 - Data Flow\n\nI-15 RLCS Software Requ"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 1016,
+      "text_length": 183,
+      "text_preview": "![](images/70cf53551498313e29e471f656333610a51f76faaec0963d4e0f4e9119f41ed5.jpg)\n\nI-15 Reversible Lane Control System Entity Relationship Diagram - Device and Command Related Entities"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 1022,
+      "text_length": 23922,
+      "text_preview": "![](images/8fc319b6d7b95bc8e8640f1155ec03f1639104971803b3d86b131cc2d96cba37.jpg)\n\nI-15 RLCS Software Requirements Specification\n<table><tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity "
+    },
+    {
+      "number": null,
+      "title": "Appendix E – Transportation Electrical Equipment Specification (TEES) for the 2070 Controller",
+      "level": 1,
+      "line_start": 1054,
+      "text_length": 179,
+      "text_preview": "This document can be found at the Department of Transportation web site at\n\nhttp://www.dot.ca.gov/hq/traffops/elecsys/2070/2070a.htm\n\nI-15 RLCS Software Requirements Specification"
+    },
+    {
+      "number": null,
+      "title": "Appendix F – Initial System Configuration Data for Operational Sequences and System Modes",
+      "level": 1,
+      "line_start": 1062,
+      "text_length": 207,
+      "text_preview": "This section describes the RLCS operational requirements which are critical to designing a safe control system. This section also lays down operational rules, which the software must implement and adh"
+    },
+    {
+      "number": null,
+      "title": "F.1 Open Entrances",
+      "level": 2,
+      "line_start": 1066,
+      "text_length": 1559,
+      "text_preview": "RLCS facility entrances allow vehicles to enter from the adjacent main lanes of I-15 or SR-163. Each entrance serves only one direction of travel (either Northbound, or Southbound). Each entrance is, "
+    },
+    {
+      "number": null,
+      "title": "F.2 Roadway Closure Device Status",
+      "level": 2,
+      "line_start": 1092,
+      "text_length": 423,
+      "text_preview": "The current status of all entrance closure devices in the system must be maintained at each control unit. The state of the closure devices shall be updated in all control units. The update frequency s"
+    },
+    {
+      "number": null,
+      "title": "F.3 Opening Sequences",
+      "level": 2,
+      "line_start": 1096,
+      "text_length": 1413,
+      "text_preview": "Opening sequences must open Entrance devices in the following order:\n\n1. Barrier Gate\n\nI-15 RLCS Software Requirements Specification\n\n2. Wrong Way Transverse Pop-ups If more than one bank, banks are o"
+    },
+    {
+      "number": null,
+      "title": "F.4 Closing Sequences",
+      "level": 2,
+      "line_start": 1124,
+      "text_length": 1033,
+      "text_preview": "Closing sequences must close Entrance devices in the following order:\n\n1. CMS\n\nCMS messages will be changed from “Open” to “Closed” beginning with the farthest upstream sign (furthest away from the en"
+    },
+    {
+      "number": null,
+      "title": "5. Wrong Way Transverse Pop-ups Wrong Way Transverse Pop-ups",
+      "level": 2,
+      "line_start": 1140,
+      "text_length": 176,
+      "text_preview": "If more than one bank, Wrong Way Transverse Pop-ups will be closed in the direction from the reversible lanes toward the freeway.\n\nI-15 RLCS Software Requirements Specification"
+    },
+    {
+      "number": null,
+      "title": "6. Barrier Gate",
+      "level": 2,
+      "line_start": 1146,
+      "text_length": 324,
+      "text_preview": "At any point in a closing sequence, the sequence shall be halted if either:\n\n1. A device fails to report completion of the current sequence step within the response time window allotted for the step, "
+    },
+    {
+      "number": null,
+      "title": "F.5 ‘Halted’ Opening and Closing Sequences",
+      "level": 2,
+      "line_start": 1154,
+      "text_length": 337,
+      "text_preview": "A ‘halted’ opening or closing sequence shall cause the system to enter a ‘hold’ state for a system specified time. If the offending device status can be corrected within the specified time period, the"
+    },
+    {
+      "number": null,
+      "title": "F.6 Multiple Entrances",
+      "level": 2,
+      "line_start": 1158,
+      "text_length": 383,
+      "text_preview": "If multiple entrances exist on the reversible lanes in the direction of travel being opened, the specific order in which those entrances are opened presents no ‘wrong way’ safety issues. Likewise, if "
+    },
+    {
+      "number": null,
+      "title": "F.7 Safety Screening of Commands",
+      "level": 2,
+      "line_start": 1162,
+      "text_length": 1539,
+      "text_preview": "Safety screening shall be done to determine if execution of a proposed command, if successful, would produce a valid reversible lanes configuration. If the screened command, including any subordinate "
+    },
+    {
+      "number": null,
+      "title": "F.8 Control System Integrity",
+      "level": 2,
+      "line_start": 1182,
+      "text_length": 377,
+      "text_preview": "Control Unit Non-Volatile Memory\n\nIn each FCU and DCU in the system, the following items shall be replicated from the central database server and maintained in non-volatile, non-removable memory:\n\nLog"
+    },
+    {
+      "number": null,
+      "title": "F.9 Control System Integrity Verification",
+      "level": 2,
+      "line_start": 1198,
+      "text_length": 2233,
+      "text_preview": "The system shall will employ a one-way hash function as an aid to encrypting and maintaining the integrity of the data and software in the field. The hash value returned by the function shall will be "
+    },
+    {
+      "number": null,
+      "title": "F.10 Access and Safety Characteristics of the I-15 Reversible Roadway The software must implement.",
+      "level": 2,
+      "line_start": 1218,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Characteristics Bearing on Security",
+      "level": 2,
+      "line_start": 1220,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Isolation –",
+      "level": 2,
+      "line_start": 1222,
+      "text_length": 379,
+      "text_preview": "System commands may be entered only at a control unit console following logon. Command pathways are hard-wired, and not shared with other devices or systems. The current state of the roadway may be tr"
+    },
+    {
+      "number": null,
+      "title": "2. Closure Device Status Circulation –",
+      "level": 2,
+      "line_start": 1226,
+      "text_length": 140,
+      "text_preview": "The current state of each roadway closure device and device status change is circulated to all control units in the system, every 2 seconds."
+    },
+    {
+      "number": null,
+      "title": "3. Command Forwarding –",
+      "level": 2,
+      "line_start": 1230,
+      "text_length": 205,
+      "text_preview": "Commands are only forwarded from superior units to inferior units. This prevents a lower level unit from changing the state of a device which is controlled by either a higher level unit, or by a peer "
+    },
+    {
+      "number": null,
+      "title": "4. Command Processing – 4. Command Processing –",
+      "level": 2,
+      "line_start": 1234,
+      "text_length": 128,
+      "text_preview": "Device control units utilize device feedback, coupled with strict response time windows for device opening and closing commands."
+    },
+    {
+      "number": null,
+      "title": "5. Uncertain status –",
+      "level": 2,
+      "line_start": 1238,
+      "text_length": 1289,
+      "text_preview": "Unknown, or improper closure device status anywhere in the system, will immediately terminate a ‘device opening’ command. Improper device status ‘may’ terminate a device closing command, or sequence.\n"
+    },
+    {
+      "number": null,
+      "title": "F.11 Normal Operations (Operator is logged on)",
+      "level": 2,
+      "line_start": 1247,
+      "text_length": 5691,
+      "text_preview": "The system must allow the following scheduled operations at a minimum during ‘normal’ operational mode:\n\nSequence #1: Goal State: Open South Bound (AM) / Initial State: Closed (PM) AM Opening South Bo"
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 1263,
+      "text_length": 362,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>7</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>WW-Lights</td><td rowspan=1 colspan=1>North End 15</td></tr><tr><td rowspan=1 colspan=1>8</td><td row"
+    },
+    {
+      "number": null,
+      "title": "F.12 Unattended Operations (No operator is logged on)",
+      "level": 2,
+      "line_start": 1269,
+      "text_length": 302,
+      "text_preview": "When no operator is logged on to the system, the status of all devices will continue to be monitored and displayed. If a scheduled operational sequence requires an operator to be logged on to confirm "
+    },
+    {
+      "number": null,
+      "title": "I-15 RLCS Software Requirements Specification",
+      "level": 2,
+      "line_start": 1273,
+      "text_length": 2029,
+      "text_preview": "Appendix G – Requirements Working Group\n<table><tr><td rowspan=1 colspan=1>Position</td><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Company/Department</td><td rowspan=1 colspan=1></td></t"
+    }
+  ],
+  "constraints_regex": [
+    {
+      "value": 30.0,
+      "unit": "seconds",
+      "operator": "shall",
+      "sentence": "tables. If everything is OK the start up process shall not exceed 30 seconds. The RLCS software shall then monitor all the dev",
+      "section": "3.2.2.6 Identify units and Initialize all Devices",
+      "section_number": "3.2.2.6",
+      "section_title": "3.2.2.6 Identify units and Initialize all Devices",
+      "line_start": 622
+    },
+    {
+      "value": 2.0,
+      "unit": "seconds",
+      "operator": "shall",
+      "sentence": "device status information logging to the database shall be 2 seconds, but can be configurable within the database to m",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 780
+    },
+    {
+      "value": 2.0,
+      "unit": "seconds",
+      "operator": "shall",
+      "sentence": "evice status information display update frequency shall be 2 seconds, but can be configurable within the database to m",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 780
+    },
+    {
+      "value": 2.0,
+      "unit": "seconds",
+      "operator": "shall",
+      "sentence": "e times, requests from the GUI for status updates shall not exceed 2 seconds to update the GUI display.",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 794
+    },
+    {
+      "value": 2.0,
+      "unit": "seconds",
+      "operator": "shall",
+      "sentence": "GUI for device status changes (control commands) shall not exceed 2 seconds.",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 794
+    },
+    {
+      "value": 328.0,
+      "unit": "kb",
+      "operator": "=",
+      "sentence": "and x 8bits/byte x 1k/1000= 205 x 200 x 8 x 1/1000= 328 kbits",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 847
+    },
+    {
+      "value": 164.0,
+      "unit": "kb",
+      "operator": "=",
+      "sentence": "nsfer this data in 2 seconds is: 328 kbits/2 sec. = 164 kbits/s At a 30 second polling interval, the transmi",
+      "section": "Priority: Must have",
+      "section_number": null,
+      "section_title": "Priority: Must have",
+      "line_start": 847
+    }
+  ],
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Title",
+        "Prepared By",
+        "Date"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "1.4. References",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Title</td><td rowspan=1 colspan=1>Prepared By</td><td rowspan=1 colspan=1>Date</td></tr><tr><td rowspan=1 colspan=1>I-15 Reversible Lane Control SystemExisting Systems Documentation Report</td><td rowspan=1 colspan=1>Caltrans</td><td rowspan=1 colspan=1>June, 1998</td></tr><tr><td rowspan=1 colspan=1>I-15 Reversible Lane Control SystemSystem Requirements Document – Version D</td><td rowspan=1 colspan=1>Caltrans</td><td rowspan=1 colspan=1>March, 2002</td></tr><tr><td "
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "User Class",
+        "Functions"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "2.3. User characteristics",
+      "raw_html": "<tr><td rowspan=1 colspan=1>User Class</td><td rowspan=1 colspan=1>Functions</td></tr><tr><td rowspan=1 colspan=1>Operator</td><td rowspan=1 colspan=1>Command control of the system during normal mode. Only one operator&#x27; may belogged onto the system at any given time. Authorized to change system mode.</td></tr><tr><td rowspan=1 colspan=1>Management</td><td rowspan=1 colspan=1>Reporting and status checking capabilities only</td></tr><tr><td rowspan=1 colspan=1>FieldMaintenanceStaff</td><td ro"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "FieldDevice",
+        "Description",
+        "FCU-S*",
+        "FCU-N*",
+        "Comments"
+      ],
+      "row_count": 23,
+      "data_row_count": 22,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=2 colspan=1>FieldDevice</td><td rowspan=2 colspan=1>Description</td><td rowspan=1 colspan=3>FCU-S*</td><td rowspan=1 colspan=2>FCU-N*</td><td rowspan=2 colspan=1>Comments</td></tr><tr><td rowspan=1 colspan=1>DCU 1</td><td rowspan=1 colspan=1>DCU 2</td><td rowspan=1 colspan=1>DCU 3</td><td rowspan=1 colspan=1>DCU 4</td><td rowspan=1 colspan=1>DCU 5</td></tr><tr><td rowspan=1 colspan=1>MCU</td><td rowspan=1 colspan=1>Manual Control Unit</td><td rowspan=1 colspan=1>1</td><td rowspan"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Field Device",
+        "Device Sensors",
+        "InputsOrOutputs",
+        "FCUS",
+        "FCU-NDCU",
+        "1",
+        "MCU1",
+        "DCU 2",
+        "MCU2",
+        "DCU3"
+      ],
+      "row_count": 19,
+      "data_row_count": 18,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Field Device</td><td rowspan=1 colspan=1>Device Sensors</td><td rowspan=1 colspan=1>InputsOrOutputs</td><td rowspan=1 colspan=1>FCUS</td><td rowspan=1 colspan=1>FCU-NDCU</td><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>MCU1</td><td rowspan=1 colspan=1>DCU 2</td><td rowspan=1 colspan=1>MCU2</td><td rowspan=1 colspan=1>DCU3</td><td rowspan=1 colspan=1>M CU3</td><td rowspan=1 colspan=1>DCUM4</td><td rowspan=1 colspan=1>CU 4</td><td rowspan=1 colspan=1>DCUMC5</td"
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Field Device",
+        "Device Sensors",
+        "InputsOrOutputs",
+        "FCU-S",
+        "FCU-N",
+        "DCU 1",
+        "DCU 2",
+        "DCU 3",
+        "DCU 4",
+        "DCU 5"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Field Device</td><td rowspan=1 colspan=1>Device Sensors</td><td rowspan=1 colspan=1>InputsOrOutputs</td><td rowspan=1 colspan=1>FCU-S</td><td rowspan=1 colspan=1>FCU-N</td><td rowspan=1 colspan=1>DCU 1</td><td rowspan=1 colspan=1>DCU 2</td><td rowspan=1 colspan=1>DCU 3</td><td rowspan=1 colspan=1>DCU 4</td><td rowspan=1 colspan=1>DCU 5</td><td rowspan=1 colspan=1>Total #ofSensors</td></tr><tr><td rowspan=1 colspan=1>FCUs</td><td rowspan=1 colspan=1>Watchdog Timer</td>"
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "# of Sensors*",
+        "Bytes per status command",
+        "Polling Interval",
+        "Transmission Rate (kbits/second)"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "Priority: Must have",
+      "raw_html": "<tr><td rowspan=1 colspan=1># of Sensors*</td><td rowspan=1 colspan=1>Bytes per status command</td><td rowspan=1 colspan=1>Polling Interval</td><td rowspan=1 colspan=1>Transmission Rate (kbits/second)</td></tr><tr><td rowspan=1 colspan=1>205</td><td rowspan=1 colspan=1>200</td><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>164</td></tr><tr><td rowspan=1 colspan=1>205</td><td rowspan=1 colspan=1>200</td><td rowspan=1 colspan=1>30</td><td rowspan=1 colspan=1>10.9</td></tr>"
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "# of Sensors",
+        "Bytes per controlcommand",
+        "# of control commandsper day",
+        "Total k bits for control commands"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Priority: Must have",
+      "raw_html": "<tr><td rowspan=1 colspan=1># of Sensors</td><td rowspan=1 colspan=1>Bytes per controlcommand</td><td rowspan=1 colspan=1># of control commandsper day</td><td rowspan=1 colspan=1>Total k bits for control commands</td></tr><tr><td rowspan=1 colspan=1>&lt;205</td><td rowspan=1 colspan=1>200</td><td rowspan=1 colspan=1>4</td><td rowspan=1 colspan=1>(200*205*4*8)/1000 = &lt; 1,312 k bits</td></tr>"
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "#",
+        "Entity Name",
+        "Minimum Attributes"
+      ],
+      "row_count": 40,
+      "data_row_count": 39,
+      "is_empty": false,
+      "section": "3.4 Logical Database Requirements",
+      "raw_html": "<tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Minimum Attributes</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>Agency</td><td rowspan=1 colspan=1>Agency ID, Agency Name, Contact, Address, Phone</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>Alarm Type</td><td rowspan=1 colspan=1>Alarm Type ID, Description (critical, warning)</td></tr><tr><td rowspan=1 colspan=1>3</td><td rowspan=1 colspan=1>Command Level"
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "#",
+        "Entity Name",
+        "Minimum Attributes"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Minimum Attributes</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>(super macro)</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>40</td><td rowspan=1 colspan=1>Workstations</td><td rowspan=1 colspan=1>Workstation ID, Name, Location, Make, Model</td></tr>"
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Term",
+        "Definition"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "Appendixes A - Traceability Matrices",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Term</td><td rowspan=1 colspan=1>Definition</td></tr><tr><td rowspan=1 colspan=1>DCU</td><td rowspan=1 colspan=1>Device Control Unit</td></tr><tr><td rowspan=1 colspan=1>Device Override</td><td rowspan=1 colspan=1>The capability of the system to allow an operatorwith the proper security to continue an operatingsequence through to the end even though anyintermediate step resulted in a device controlfailure, by allowing the operator to input a devicestatus thereby overr"
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "#",
+        "Entity Name",
+        "Relationships"
+      ],
+      "row_count": 19,
+      "data_row_count": 18,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Relationships</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>Agency</td><td rowspan=1 colspan=1>●  Each Agency may be referenced in one or more System OperationSchedules</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>Alarm Type</td><td rowspan=1 colspan=1>Each Alarm Type may be referenced in one or more Device AlarmCriteria</td></tr><tr><td rowspan=1 colspan=1"
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "#",
+        "Entity Name",
+        "Relationships"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Relationships</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Log entriesEach Personnel may be referenced in one or more System OperationCommand LogsEach Personnel may be referenced in one ore more Device CommandLogsEach Personnel may be referenced in one or more Problem WorkOrder Personnel</td></tr><tr><td rowspan=1 colspan=1>19</td><td rowspan=1 colsp"
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "#",
+        "Entity Name",
+        "Relationships"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Relationships</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>System Modes</td></tr><tr><td rowspan=1 colspan=1>35</td><td rowspan=1 colspan=1>System Operation CommandLog</td><td rowspan=1 colspan=1>●   Each System Operation Command Log entry is generated by oneSystem Operation Command Schedule executionEach System Operation Command Log entry references"
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "FCU - NORTH EXISTING HARDWAREINTERFACE"
+      ],
+      "row_count": 43,
+      "data_row_count": 42,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=4>FCU - NORTH EXISTING HARDWAREINTERFACE</td></tr><tr><td rowspan=1 colspan=1>EXISTINGINTERFACECARD</td><td rowspan=1 colspan=1>SIGNALVOLTAGE</td><td rowspan=1 colspan=1>SIGNAL TYPE</td><td rowspan=1 colspan=1>FIELD DEVICE/SENSOR</td></tr><tr><td rowspan=8 colspan=1>VME600</td><td rowspan=1 colspan=1>TXD A</td><td rowspan=5 colspan=1>RS 232 toLeased linemodem</td><td rowspan=8 colspan=1>TSU</td></tr><tr><td rowspan=1 colspan=1>RXD A</td></tr><tr><td rowspan=1 colspan=1>"
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "FCU - NORTH EXISTING HARDWAREINTERFACE"
+      ],
+      "row_count": 46,
+      "data_row_count": 45,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=4>FCU - NORTH EXISTING HARDWAREINTERFACE</td></tr><tr><td rowspan=16 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>TXD</td><td rowspan=8 colspan=1>Serial Input /Output to linedrivers</td><td rowspan=8 colspan=1>CMS 11</td></tr><tr><td rowspan=1 colspan=1>RXD</td></tr><tr><td rowspan=1 colspan=1>RTS</td></tr><tr><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>CTS</td></"
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "FCU - SOUTH EXISTING HARDWAREINTERFACE"
+      ],
+      "row_count": 45,
+      "data_row_count": 44,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=4>FCU - SOUTH EXISTING HARDWAREINTERFACE</td></tr><tr><td rowspan=1 colspan=1>EXISTINGINTERFACECARD</td><td rowspan=1 colspan=1>SIGNALVOLTAGE</td><td rowspan=1 colspan=1>SIGNAL TYPE</td><td rowspan=1 colspan=1>FIELD DEVICE/SENSOR</td></tr><tr><td rowspan=8 colspan=1>VME 600</td><td rowspan=1 colspan=1>TXD A</td><td rowspan=5 colspan=1>RS 232 toLeased linemodem</td><td rowspan=8 colspan=1>TSU</td></tr><tr><td rowspan=1 colspan=1>RXD A</td></tr><tr><td rowspan=1 colspan=1"
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "FCU - SOUTH EXISTING HARDWAREINTERFACE"
+      ],
+      "row_count": 51,
+      "data_row_count": 50,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=4>FCU - SOUTH EXISTING HARDWAREINTERFACE</td></tr><tr><td rowspan=4 colspan=1></td><td rowspan=1 colspan=1>RTS</td><td rowspan=4 colspan=1></td><td rowspan=4 colspan=1></td></tr><tr><td rowspan=1 colspan=1>CTS</td></tr><tr><td rowspan=1 colspan=1>SIG.GND</td></tr><tr><td rowspan=1 colspan=1>DCD</td></tr><tr><td rowspan=4 colspan=1>VME 400</td><td rowspan=1 colspan=1>TXDRXD</td><td rowspan=4 colspan=1>4-Wire SerialInput / Output</td><td rowspan=4 colspan=1>CMS 8</td></tr"
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Access Point",
+        "Control Ability"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "5. Uncertain status –",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Access Point</td><td rowspan=1 colspan=1>Control Ability</td></tr><tr><td rowspan=1 colspan=1>TMC</td><td rowspan=1 colspan=1>All RLCS Closure Devices</td></tr><tr><td rowspan=1 colspan=1>FCU South</td><td rowspan=1 colspan=1>All RLCS Closure Devices</td></tr><tr><td rowspan=1 colspan=1>DCU 1</td><td rowspan=1 colspan=1>NB 15 Entrance Wrong Way Devices and Gate</td></tr><tr><td rowspan=1 colspan=1>DCU 2</td><td rowspan=1 colspan=1>NB 163 Entrance Devices and Gate</td>"
+    },
+    {
+      "index": 18,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Step #",
+        "Operation",
+        "Device",
+        "Location"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "F.11 Normal Operations (Operator is logged on)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Step #</td><td rowspan=1 colspan=1>Operation</td><td rowspan=1 colspan=1>Device</td><td rowspan=1 colspan=1>Location</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Status check by Operator</td><td rowspan=1 colspan=1>All</td><td rowspan=1 colspan=1>All</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>Gate 1</td><td rowspan=1 colspan=1>Loc. 1 South End 15</td></tr><tr><td rowspan=1 colspan=1>2</td><"
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Step #",
+        "Operation",
+        "Device",
+        "Location"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "F.11 Normal Operations (Operator is logged on)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Step #</td><td rowspan=1 colspan=1>Operation</td><td rowspan=1 colspan=1>Device</td><td rowspan=1 colspan=1>Location</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Status check by Operator</td><td rowspan=1 colspan=1>All</td><td rowspan=1 colspan=1>All</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>CMS 9-12</td><td rowspan=1 colspan=1>North End 15</td></tr><tr><td rowspan=1 colspan=1>2</td><td ro"
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Step #",
+        "Status",
+        "Device",
+        "Location"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "F.11 Normal Operations (Operator is logged on)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Step #</td><td rowspan=1 colspan=1>Status</td><td rowspan=1 colspan=1>Device</td><td rowspan=1 colspan=1>Location</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Status check by Operator</td><td rowspan=1 colspan=1>All</td><td rowspan=1 colspan=1>All</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>Gate 5</td><td rowspan=1 colspan=1>Loc. 5 North End 15</td></tr><tr><td rowspan=1 colspan=1>2</td><td "
+    },
+    {
+      "index": 21,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Step #",
+        "Status",
+        "Device",
+        "Location"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "F.11 Normal Operations (Operator is logged on)",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Step #</td><td rowspan=1 colspan=1>Status</td><td rowspan=1 colspan=1>Device</td><td rowspan=1 colspan=1>Location</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Status check by Operator</td><td rowspan=1 colspan=1>All</td><td rowspan=1 colspan=1>All</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>CMS 1-4</td><td rowspan=1 colspan=1>South End 15</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspa"
+    },
+    {
+      "index": 22,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "7",
+        "CLOSE",
+        "WW-Lights",
+        "North End 15"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>7</td><td rowspan=1 colspan=1>CLOSE</td><td rowspan=1 colspan=1>WW-Lights</td><td rowspan=1 colspan=1>North End 15</td></tr><tr><td rowspan=1 colspan=1>8</td><td rowspan=1 colspan=1>OPEN</td><td rowspan=1 colspan=1>Gate 5</td><td rowspan=1 colspan=1>North End 15</td></tr>"
+    },
+    {
+      "index": 23,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Position",
+        "Name",
+        "Company/Department"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Position</td><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Company/Department</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>Stakeholder</td><td rowspan=1 colspan=1>Ross Cather</td><td rowspan=1 colspan=1>Department of Transportation – Chief ofTraffic Special Studies</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>Stakeholder</td><td rowspan=1 colspan=1>Lawrence Emerson</td><td rowspan=1 colspan=1>Department of Transport"
+    }
+  ],
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "bdb190ad6a4eb20ec66a5e04fe9aa763baa671bf31f9adc8cffaa8b36bf8b694.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/bdb190ad6a4eb20ec66a5e04fe9aa763baa671bf31f9adc8cffaa8b36bf8b694.jpg",
+      "image_exists": true,
+      "image_size_kb": 12,
+      "alt_text": null,
+      "caption": "Caltrans",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "",
+      "context_before": "RFP DOT-2040 Section VI.D",
+      "context_after": "Caltrans\nState of California Department of Transportation District 11",
+      "md_line": 3,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "f38ca08756d84e61e1bb44d7e94fdac64537c083f44d8f965f526afd6afbd391.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/f38ca08756d84e61e1bb44d7e94fdac64537c083f44d8f965f526afd6afbd391.jpg",
+      "image_exists": true,
+      "image_size_kb": 139,
+      "alt_text": null,
+      "caption": "Exhibit 2.3: External RLCS Application Interfaces",
+      "figure_number": null,
+      "image_type": "interface_diagram",
+      "section": "2.1.1. External System Interfaces",
+      "context_before": "2.1.1.2. The RLCS Application will also allow for remote access through a firewall via outside telecommunications networks by authorized users.\nI-15 RLCS Software Requirements Specification\nThe diagram below shows the flow of information to and from the different interfaces.",
+      "context_after": "Exhibit 2.3: External RLCS Application Interfaces\nI-15 RLCS Software Requirements Specification",
+      "md_line": 161,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "d6fae923956eb755097d2f830a134b7f545060d8987f6688b1b674204dc4d4d1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/d6fae923956eb755097d2f830a134b7f545060d8987f6688b1b674204dc4d4d1.jpg",
+      "image_exists": true,
+      "image_size_kb": 86,
+      "alt_text": null,
+      "caption": "I-15 Reversible Lane Control System Level 1 - Data Flow",
+      "figure_number": null,
+      "image_type": "flowchart",
+      "section": "2.2. Product functions",
+      "context_before": "The RLCS Application will operate as a component of the RLCS System, for which physical adaptations are described in ‘Section 3.7 Physical’ of the System Requirements Specification\nI-15 RLCS Software Requirements Specification\nThe data flow diagram below shows the five major functions of the RCLCS A",
+      "context_after": "LEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "md_line": 206,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "9d05aa0bb85f34cb61da8e145e99a13cf65804a04ec2faf4d283ed3cb0b176c2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/9d05aa0bb85f34cb61da8e145e99a13cf65804a04ec2faf4d283ed3cb0b176c2.jpg",
+      "image_exists": true,
+      "image_size_kb": 80,
+      "alt_text": null,
+      "caption": "I-15 Reversible Lane Control System Level 0 - Context Diagram",
+      "figure_number": null,
+      "image_type": "context_diagram",
+      "section": "Appendixes A - Traceability Matrices",
+      "context_before": "I-15 RLCS Software Requirements Specification\nAppendix C – Data Flow Diagrams, and Data Model\nI-15 RLCS Software Requirements Specification",
+      "context_after": "I-15 Reversible Lane Control System Level 0 - Context Diagram\nI-15 RLCS Software Requirements Specification",
+      "md_line": 994,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 5,
+      "image_file": "24e6f2e55b5d5275b2d3915cbf9755f9c7c97e4adcd40a3271737252cd790960.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/24e6f2e55b5d5275b2d3915cbf9755f9c7c97e4adcd40a3271737252cd790960.jpg",
+      "image_exists": true,
+      "image_size_kb": 85,
+      "alt_text": null,
+      "caption": "I-15 Reversible Lane Control System Level 1 - Data Flow",
+      "figure_number": null,
+      "image_type": "flowchart",
+      "section": "Appendixes A - Traceability Matrices",
+      "context_before": "I-15 RLCS Software Requirements Specification\nI-15 Reversible Lane Control System Level 0 - Context Diagram\nI-15 RLCS Software Requirements Specification",
+      "context_after": "LEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "md_line": 999,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 6,
+      "image_file": "9362e2e24a385f89ad6c41c20c8fd6acd9e8a79c773a0c0bbf0d2368804ab0be.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/9362e2e24a385f89ad6c41c20c8fd6acd9e8a79c773a0c0bbf0d2368804ab0be.jpg",
+      "image_exists": true,
+      "image_size_kb": 109,
+      "alt_text": null,
+      "caption": "I-15 RLCS Software Requirements Specification",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 RLCS Software Requirements Specification\nLEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "context_after": "I-15 Reversible Lane Control System: Process Monitoring and Control 3.2.2 Level 2 - Data Flow\nI-15 RLCS Software Requirements Specification",
+      "md_line": 1006,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 7,
+      "image_file": "cebc3830dd0895bd5cd597fe973849b3ebf73b223e9b1afe9a68cfa2e5188582.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/cebc3830dd0895bd5cd597fe973849b3ebf73b223e9b1afe9a68cfa2e5188582.jpg",
+      "image_exists": true,
+      "image_size_kb": 91,
+      "alt_text": null,
+      "caption": "Entity Relationship Diagram - Device and Command Related Entities",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 Reversible Lane Control System: Process Monitoring and Control 3.2.2 Level 2 - Data Flow\nI-15 RLCS Software Requirements Specification",
+      "context_after": "Entity Relationship Diagram - Device and Command Related Entities",
+      "md_line": 1012,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 8,
+      "image_file": "70cf53551498313e29e471f656333610a51f76faaec0963d4e0f4e9119f41ed5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/70cf53551498313e29e471f656333610a51f76faaec0963d4e0f4e9119f41ed5.jpg",
+      "image_exists": true,
+      "image_size_kb": 87,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 RLCS Software Requirements Specification\nEntity Relationship Diagram - Device and Command Related Entities",
+      "context_after": "I-15 Reversible Lane Control System Entity Relationship Diagram - Device and Command Related Entities",
+      "md_line": 1018,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 9,
+      "image_file": "8fc319b6d7b95bc8e8640f1155ec03f1639104971803b3d86b131cc2d96cba37.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/8fc319b6d7b95bc8e8640f1155ec03f1639104971803b3d86b131cc2d96cba37.jpg",
+      "image_exists": true,
+      "image_size_kb": 120,
+      "alt_text": null,
+      "caption": "I-15 RLCS Software Requirements Specification",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 Reversible Lane Control System Entity Relationship Diagram - Device and Command Related Entities",
+      "context_after": "I-15 RLCS Software Requirements Specification\n<table><tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Relationships</td></tr><tr><td rowspan=1 colspan=",
+      "md_line": 1024,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "bdb190ad6a4eb20ec66a5e04fe9aa763baa671bf31f9adc8cffaa8b36bf8b694.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/bdb190ad6a4eb20ec66a5e04fe9aa763baa671bf31f9adc8cffaa8b36bf8b694.jpg",
+      "image_exists": true,
+      "image_size_kb": 12,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "Caltrans",
+      "section": "",
+      "context_before": "RFP DOT-2040 Section VI.D",
+      "context_after": "Caltrans\nState of California Department of Transportation District 11",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "f38ca08756d84e61e1bb44d7e94fdac64537c083f44d8f965f526afd6afbd391.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/f38ca08756d84e61e1bb44d7e94fdac64537c083f44d8f965f526afd6afbd391.jpg",
+      "image_exists": true,
+      "image_size_kb": 139,
+      "image_type": "interface_diagram",
+      "figure_number": null,
+      "caption": "Exhibit 2.3: External RLCS Application Interfaces",
+      "section": "2.1.1. External System Interfaces",
+      "context_before": "2.1.1.2. The RLCS Application will also allow for remote access through a firewall via outside telecommunications networks by authorized users.\nI-15 RLCS Software Requirements Specification\nThe diagram below shows the flow of information to and from the different interfaces.",
+      "context_after": "Exhibit 2.3: External RLCS Application Interfaces\nI-15 RLCS Software Requirements Specification",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "d6fae923956eb755097d2f830a134b7f545060d8987f6688b1b674204dc4d4d1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/d6fae923956eb755097d2f830a134b7f545060d8987f6688b1b674204dc4d4d1.jpg",
+      "image_exists": true,
+      "image_size_kb": 86,
+      "image_type": "flowchart",
+      "figure_number": null,
+      "caption": "I-15 Reversible Lane Control System Level 1 - Data Flow",
+      "section": "2.2. Product functions",
+      "context_before": "The RLCS Application will operate as a component of the RLCS System, for which physical adaptations are described in ‘Section 3.7 Physical’ of the System Requirements Specification\nI-15 RLCS Software Requirements Specification\nThe data flow diagram below shows the five major functions of the RCLCS A",
+      "context_after": "LEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "9d05aa0bb85f34cb61da8e145e99a13cf65804a04ec2faf4d283ed3cb0b176c2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/9d05aa0bb85f34cb61da8e145e99a13cf65804a04ec2faf4d283ed3cb0b176c2.jpg",
+      "image_exists": true,
+      "image_size_kb": 80,
+      "image_type": "context_diagram",
+      "figure_number": null,
+      "caption": "I-15 Reversible Lane Control System Level 0 - Context Diagram",
+      "section": "Appendixes A - Traceability Matrices",
+      "context_before": "I-15 RLCS Software Requirements Specification\nAppendix C – Data Flow Diagrams, and Data Model\nI-15 RLCS Software Requirements Specification",
+      "context_after": "I-15 Reversible Lane Control System Level 0 - Context Diagram\nI-15 RLCS Software Requirements Specification",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "24e6f2e55b5d5275b2d3915cbf9755f9c7c97e4adcd40a3271737252cd790960.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/24e6f2e55b5d5275b2d3915cbf9755f9c7c97e4adcd40a3271737252cd790960.jpg",
+      "image_exists": true,
+      "image_size_kb": 85,
+      "image_type": "flowchart",
+      "figure_number": null,
+      "caption": "I-15 Reversible Lane Control System Level 1 - Data Flow",
+      "section": "Appendixes A - Traceability Matrices",
+      "context_before": "I-15 RLCS Software Requirements Specification\nI-15 Reversible Lane Control System Level 0 - Context Diagram\nI-15 RLCS Software Requirements Specification",
+      "context_after": "LEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "9362e2e24a385f89ad6c41c20c8fd6acd9e8a79c773a0c0bbf0d2368804ab0be.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/9362e2e24a385f89ad6c41c20c8fd6acd9e8a79c773a0c0bbf0d2368804ab0be.jpg",
+      "image_exists": true,
+      "image_size_kb": 109,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "I-15 RLCS Software Requirements Specification",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 RLCS Software Requirements Specification\nLEGEND Solid lines indicate data flows between functions. Dashed lines indicate control flows.\nI-15 Reversible Lane Control System Level 1 - Data Flow",
+      "context_after": "I-15 Reversible Lane Control System: Process Monitoring and Control 3.2.2 Level 2 - Data Flow\nI-15 RLCS Software Requirements Specification",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "cebc3830dd0895bd5cd597fe973849b3ebf73b223e9b1afe9a68cfa2e5188582.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/cebc3830dd0895bd5cd597fe973849b3ebf73b223e9b1afe9a68cfa2e5188582.jpg",
+      "image_exists": true,
+      "image_size_kb": 91,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "Entity Relationship Diagram - Device and Command Related Entities",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 Reversible Lane Control System: Process Monitoring and Control 3.2.2 Level 2 - Data Flow\nI-15 RLCS Software Requirements Specification",
+      "context_after": "Entity Relationship Diagram - Device and Command Related Entities",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "70cf53551498313e29e471f656333610a51f76faaec0963d4e0f4e9119f41ed5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/70cf53551498313e29e471f656333610a51f76faaec0963d4e0f4e9119f41ed5.jpg",
+      "image_exists": true,
+      "image_size_kb": 87,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 RLCS Software Requirements Specification\nEntity Relationship Diagram - Device and Command Related Entities",
+      "context_after": "I-15 Reversible Lane Control System Entity Relationship Diagram - Device and Command Related Entities",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "8fc319b6d7b95bc8e8640f1155ec03f1639104971803b3d86b131cc2d96cba37.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2004 - rlcs.pdf/auto/images/8fc319b6d7b95bc8e8640f1155ec03f1639104971803b3d86b131cc2d96cba37.jpg",
+      "image_exists": true,
+      "image_size_kb": 120,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "I-15 RLCS Software Requirements Specification",
+      "section": "I-15 RLCS Software Requirements Specification",
+      "context_before": "I-15 Reversible Lane Control System Entity Relationship Diagram - Device and Command Related Entities",
+      "context_after": "I-15 RLCS Software Requirements Specification\n<table><tr><td rowspan=1 colspan=1>#</td><td rowspan=1 colspan=1>Entity Name</td><td rowspan=1 colspan=1>Relationships</td></tr><tr><td rowspan=1 colspan=",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

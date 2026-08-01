@@ -1,0 +1,225 @@
+[
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [
+      "Registration module acts as an interface between police and citizens for complaint registration",
+      "Investigation module facilitates investigation process after initial entries are made during Registration",
+      "Prosecution module provides a platform to record entries of court interactions",
+      "Search module allows police to execute basic or advanced search on cases"
+    ],
+    "text_transitions": [
+      {
+        "from": "Registration",
+        "to": "Investigation",
+        "description": "after initial entries are made during Registration, police initiates the investigation process"
+      }
+    ],
+    "consistency_issues": [
+      {
+        "type": "extra_state_in_text",
+        "description": "Text mentions states/modules Registration, Investigation, Prosecution, and Search but no diagram is present to depict them"
+      },
+      {
+        "type": "missing_edge_in_diagram",
+        "description": "Text describes transition from Registration to Investigation (after initial entries/complaint initiation) but diagram has no such edge"
+      }
+    ],
+    "overall_consistent": false,
+    "file": "0000 - cctns.pdf",
+    "page": 4
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [
+      "System Down: any user is unable to perform any normal System function due to a failure in a component other than the workstation",
+      "Unplanned downtime: time period when the System is unavailable",
+      "System Restoration: restore the System with inline synchronization after software or hardware failure",
+      "Normal/Operational state: implied state when the System is not down",
+      "Provide adequate response times for commonly performed functions under standard and peak conditions",
+      "Perform a simple search within 5-8 seconds",
+      "Perform an advanced search (multiple search criteria) within 10-15 seconds",
+      "Retrieve and display a case accessed within the previous 2 months within 5-8 seconds",
+      "Retrieve and display a case not accessed within the previous 2 months within 20 seconds",
+      "Support scalability for use in small or large police stations with varying numbers of cases"
+    ],
+    "text_transitions": [
+      {
+        "from": "failure state (software or hardware failure)",
+        "to": "restored/operational state",
+        "description": "In the event of any software or hardware failure, it must be possible to restore the System (with inline synchronization) within no more than <xx> hours"
+      }
+    ],
+    "consistency_issues": [],
+    "overall_consistent": true,
+    "file": "0000 - cctns.pdf",
+    "page": 15
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [],
+    "text_transitions": [],
+    "consistency_issues": [],
+    "overall_consistent": true,
+    "file": "0000 - gamma j.pdf",
+    "page": 2
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [],
+    "text_transitions": [],
+    "consistency_issues": [
+      {
+        "type": "no_diagram_present",
+        "description": "The page contains no state diagram, flowchart, or process diagram to compare against the text."
+      }
+    ],
+    "overall_consistent": false,
+    "file": "0000 - gamma j.pdf",
+    "page": 6
+  },
+  {
+    "has_diagram": true,
+    "diagram_type": "none",
+    "diagram_nodes": [
+      {
+        "id": "1",
+        "label": "User Administration"
+      },
+      {
+        "id": "2",
+        "label": "System Maintainance"
+      },
+      {
+        "id": "3",
+        "label": "System Performance"
+      },
+      {
+        "id": "4",
+        "label": "Database Options"
+      },
+      {
+        "id": "5",
+        "label": "System Performance"
+      },
+      {
+        "id": "6",
+        "label": "Security Options"
+      }
+    ],
+    "diagram_edges": [],
+    "text_steps": [],
+    "text_transitions": [],
+    "consistency_issues": [
+      {
+        "type": "extra_state_in_diagram",
+        "description": "Diagram shows admin UI options (User Administration, System Maintainance, System Performance, Database Options, Security Options) that are not mentioned or described in the text"
+      },
+      {
+        "type": "extra_state_in_diagram",
+        "description": "Diagram title 'System Administrator' is only referenced in text as an e-mail recipient (CI-2), not as a role with the depicted functions"
+      }
+    ],
+    "overall_consistent": false,
+    "file": "0000 - gamma j.pdf",
+    "page": 20
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [],
+    "text_transitions": [],
+    "consistency_issues": [],
+    "overall_consistent": true,
+    "file": "0000 - gamma j.pdf",
+    "page": 23
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [],
+    "text_transitions": [],
+    "consistency_issues": [],
+    "overall_consistent": true,
+    "file": "0000 - gamma j.pdf",
+    "page": 24
+  },
+  {
+    "has_diagram": false,
+    "diagram_type": "none",
+    "diagram_nodes": [],
+    "diagram_edges": [],
+    "text_steps": [
+      "Customer clicks button or link to initiate registration",
+      "System prompts customer to fill out registration fields (first name, last name, billing address, shipping address, email, password)",
+      "Customer enters the requested fields",
+      "System validates the customer's information",
+      "System creates a new account for the Customer",
+      "System creates a session cookie",
+      "System displays an account home page to Customer",
+      "Alternative A1: System recognizes Customer's existing cookie",
+      "Alternative A2: Go to Step 7 (display account home page)"
+    ],
+    "text_transitions": [
+      {
+        "from": "Initiate Registration",
+        "to": "Prompt for Fields",
+        "description": "Customer clicks Register button/link"
+      },
+      {
+        "from": "Prompt for Fields",
+        "to": "Enter Fields",
+        "description": "Customer enters requested information"
+      },
+      {
+        "from": "Enter Fields",
+        "to": "Validate Information",
+        "description": "System validates input"
+      },
+      {
+        "from": "Validate Information",
+        "to": "Create Account",
+        "description": "Validation successful"
+      },
+      {
+        "from": "Create Account",
+        "to": "Create Session Cookie",
+        "description": "Account creation complete"
+      },
+      {
+        "from": "Create Session Cookie",
+        "to": "Display Home Page",
+        "description": "Session established"
+      },
+      {
+        "from": "Recognize Cookie",
+        "to": "Display Home Page",
+        "description": "Alternative flow skips to Step 7"
+      }
+    ],
+    "consistency_issues": [
+      {
+        "type": "no_diagram_present",
+        "description": "The page describes a procedural use-case flow (Register Customer) but contains no state diagram, flowchart, or process diagram to compare against the text."
+      }
+    ],
+    "overall_consistent": false,
+    "file": "0000 - gamma j.pdf",
+    "page": 26
+  }
+]

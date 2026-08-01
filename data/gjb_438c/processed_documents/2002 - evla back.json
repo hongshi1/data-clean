@@ -1,0 +1,768 @@
+{
+  "doc_name": "2002 - evla back",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2002 - evla back.pdf/auto/2002 - evla back.pdf.md",
+  "md_lines": 393,
+  "md_chars": 44385,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "SYSTEM REQUIREMENTS SPECIFICATION",
+  "section_count": 59,
+  "sections": [
+    {
+      "number": null,
+      "title": "SYSTEM REQUIREMENTS SPECIFICATION",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "EVLA Correlator Backend",
+      "level": 1,
+      "line_start": 3,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Project Document: A25251N0000",
+      "level": 2,
+      "line_start": 5,
+      "text_length": 137,
+      "text_preview": "Revision 2.0\n\nTom Morgan, May 10, 2002\n\nNational Radio Astronomy Observatory\n\nArray Operations Center\n\nP.O. Box O\n\nSocorro, NM 87801-0387"
+    },
+    {
+      "number": null,
+      "title": "Revision History",
+      "level": 2,
+      "line_start": 19,
+      "text_length": 950,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Version</td><td rowspan=1 colspan=1>Description</td><td rowspan=1 colspan=1>Author</td></tr><tr><td rowspan=1 colspan=1>26-Feb-2002<"
+    },
+    {
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "line_start": 23,
+      "text_length": 1911,
+      "text_preview": "1.1 Purpose .............................................................   \n1.3 Definitions, Acronyms, and Abbreviations.................................................   \n1.3.1 Definitions .   \n1.3"
+    },
+    {
+      "number": "1",
+      "title": "1 Introduction",
+      "level": 2,
+      "line_start": 74,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 Purpose",
+      "level": 2,
+      "line_start": 76,
+      "text_length": 905,
+      "text_preview": "The primary goal of this document is to provide a complete and accurate list of requirements for the EVLA Correlator Backend System. Upon completion, the document will act as a binding contract betwee"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 Scope",
+      "level": 2,
+      "line_start": 87,
+      "text_length": 881,
+      "text_preview": "The Correlator Backend System lies between the Correlator and the End-to-End Systems. It is the primary component of the real-time astronomical data processing capability (the processing pipeline) of "
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 Definitions, Acronyms, and Abbreviations",
+      "level": 2,
+      "line_start": 105,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.3.1",
+      "title": "1.3.1 Definitions",
+      "level": 2,
+      "line_start": 107,
+      "text_length": 1173,
+      "text_preview": "Administrator – An individual with unrestricted access to all aspects of the system.\n\nAuxiliary Data – All other (non-astronomical) data.\n\nData – Astronomical observational data.\n\nLag Set – A complete"
+    },
+    {
+      "number": "1.3.2",
+      "title": "1.3.2 Acronyms",
+      "level": 2,
+      "line_start": 131,
+      "text_length": 375,
+      "text_preview": "AOC –Array Operations Center\n\nCMIB – Correlator Monitor Interface Board\n\nCMCS – Correlator Monitor and Control System\n\ne2e – End-to-End System (archive)\n\nM&C – Monitor and Control System\n\nEVLA – The V"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 References",
+      "level": 2,
+      "line_start": 151,
+      "text_length": 681,
+      "text_preview": "1) ANSI/IEEE Std 830-1998, IEEE Recommended Practice for Software Requirements Specifications\n\n2) ANSI/IEEE Std 1233-1996, IEEE Guide for Developing System Requirements Specifications\n\n3) EVLA Memo No"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 Overview",
+      "level": 2,
+      "line_start": 171,
+      "text_length": 477,
+      "text_preview": "The remainder of this document contains a more detailed description of the Correlator Backend System as well as the requirements necessary to design and build the system. Section 2 provides a general "
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 Product Perspective",
+      "level": 2,
+      "line_start": 177,
+      "text_length": 922,
+      "text_preview": "The EVLA Correlator Backend System will be designed and implemented as a real-time data processing system. The system is expected to be implemented on a distributed memory cluster of connected process"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Product Functionality",
+      "level": 2,
+      "line_start": 181,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.2.1",
+      "title": "2.2.1 Data Input",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 746,
+      "text_preview": "Correlator lag data will be received directly from the Correlator Baseline Boards in the form of Lag Frames. The lag frames contain correlation lag values and all auxiliary parameters needed to assemb"
+    },
+    {
+      "number": "2.2.2",
+      "title": "2.2.2 Data Processing",
+      "level": 2,
+      "line_start": 191,
+      "text_length": 334,
+      "text_preview": "The Correlator lag frames will be assembled into time series, normalized, and when necessary time stamp adjusted. The time series will also be Fourier Transformed and other user selectable time and/or"
+    },
+    {
+      "number": "2.2.3",
+      "title": "2.2.3 Data Output",
+      "level": 2,
+      "line_start": 195,
+      "text_length": 473,
+      "text_preview": "Formatted spectra will be transferred to the End-to-End System. All pertinent meta-data will be contained in the formatted output. The fundamental unit of output is the minimum sub-band crosspower spe"
+    },
+    {
+      "number": "2.2.4",
+      "title": "2.2.4 Monitoring",
+      "level": 2,
+      "line_start": 201,
+      "text_length": 197,
+      "text_preview": "The Correlator Backend System will conduct a number of self-monitoring activities on application and system software as well as hardware systems to detect system failure and out of spec conditions."
+    },
+    {
+      "number": "2.2.5",
+      "title": "2.2.5 Recovery",
+      "level": 2,
+      "line_start": 205,
+      "text_length": 114,
+      "text_preview": "The ability to attempt recovery from failure and out of spec performance conditions will be built into the system."
+    },
+    {
+      "number": "2.2.6",
+      "title": "2.2.6 Control",
+      "level": 2,
+      "line_start": 209,
+      "text_length": 342,
+      "text_preview": "The system will provide control and auxiliary parameters to input, output, processing, monitor, recovery, and other functions and receive status and performance data from them. It will also communicat"
+    },
+    {
+      "number": null,
+      "title": "Figure 1: Correlator Backend System Main Functional Components Diagram",
+      "level": 2,
+      "line_start": 216,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 User characteristics",
+      "level": 2,
+      "line_start": 218,
+      "text_length": 164,
+      "text_preview": "All use of the Correlator Backend System will be indirect via the Monitor and Control System.   \nThe BE system will not directly produce any user interface screens."
+    },
+    {
+      "number": "2.3.1",
+      "title": "2.3.1 Array Operator",
+      "level": 2,
+      "line_start": 223,
+      "text_length": 129,
+      "text_preview": "The primary contact with array operations will be via status and error messages channeled through the Monitor and Control System."
+    },
+    {
+      "number": "2.3.2",
+      "title": "2.3.2 Engineers and Technicians",
+      "level": 2,
+      "line_start": 227,
+      "text_length": 445,
+      "text_preview": "The ability of the Backend System to achieve and maintain real-time processing will be vitally dependent upon reliable operation and rapid diagnosis and repair of faults in the hardware and software s"
+    },
+    {
+      "number": "2.3.3",
+      "title": "2.3.3 Astronomer/Scientist",
+      "level": 2,
+      "line_start": 231,
+      "text_length": 225,
+      "text_preview": "These individuals are primarily interested in the science that is obtained from the instrument. Their main interaction will be to select and provide parameters for any additional data processing beyon"
+    },
+    {
+      "number": "2.3.4",
+      "title": "2.3.4 Software Developer",
+      "level": 2,
+      "line_start": 235,
+      "text_length": 291,
+      "text_preview": "These individuals are responsible for developing the software and will interact with the system to ensure that it is functioning properly. The software developer requires remote access to the system s"
+    },
+    {
+      "number": "2.3.5",
+      "title": "2.3.5 Web User",
+      "level": 2,
+      "line_start": 239,
+      "text_length": 112,
+      "text_preview": "A few authorized individuals may be allowed access to parts of the system that are usually considered restricted"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 Constraints",
+      "level": 2,
+      "line_start": 243,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.4.1",
+      "title": "2.4.1 Criticality of the Application",
+      "level": 2,
+      "line_start": 245,
+      "text_length": 147,
+      "text_preview": "The Correlator Backend System is a critical component in the Astronomical data path. If it is unavailable, incoming astronomical data will be lost."
+    },
+    {
+      "number": "2.4.2",
+      "title": "2.4.2 Computer Hardware Limitations",
+      "level": 2,
+      "line_start": 249,
+      "text_length": 270,
+      "text_preview": "The ultimate throughput capability of the real-time data processing pipeline of the Backend System will be constrained by the computational performance limits of available computer hardware and the pr"
+    },
+    {
+      "number": "2.4.3",
+      "title": "2.4.3 Computer Software Limitations",
+      "level": 2,
+      "line_start": 253,
+      "text_length": 257,
+      "text_preview": "The ultimate throughput capability of the real-time data processing pipeline of the Backend System will be constrained by the efficiency of supporting software systems, data processing code and our ab"
+    },
+    {
+      "number": "2.4.4",
+      "title": "2.4.4 Communications Limitations",
+      "level": 2,
+      "line_start": 257,
+      "text_length": 138,
+      "text_preview": "The ability to realize and maintain real-time operations is critically dependent upon the performance levels of available network systems."
+    },
+    {
+      "number": "2.4.5",
+      "title": "2.4.5 Processing Limitations",
+      "level": 2,
+      "line_start": 261,
+      "text_length": 132,
+      "text_preview": "Operations performed shall be reversible. That is, the original raw uncorrected data must be recoverable from the processing output."
+    },
+    {
+      "number": "2.4.6",
+      "title": "2.4.6 Reliability",
+      "level": 2,
+      "line_start": 265,
+      "text_length": 210,
+      "text_preview": "The ability to maintain real-time operations over realistic extended periods of time is dependent on the mean time to failure of the hardware and software components of the computing and communication"
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 Assumptions",
+      "level": 2,
+      "line_start": 269,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.5.1",
+      "title": "2.5.1 Incoming Data Stream",
+      "level": 2,
+      "line_start": 271,
+      "text_length": 361,
+      "text_preview": "It is assumed that the Correlator will deliver suitably formatted network data packets to the input network of the Backend System. Lag frames will not necessarily arrive in Lag Set order. All lag fram"
+    },
+    {
+      "number": "2.5.2",
+      "title": "2.5.2 Auxiliary Data",
+      "level": 2,
+      "line_start": 275,
+      "text_length": 260,
+      "text_preview": "It is assumed that all auxiliary data needed for processing and formatting operations will be provided directly by the correlator or indirectly by the Monitor and Control System in a timely manner. Mu"
+    },
+    {
+      "number": "2.5.3",
+      "title": "2.5.3 Outgoing Data Stream",
+      "level": 2,
+      "line_start": 279,
+      "text_length": 298,
+      "text_preview": "It is assumed that the e2e System will be capable of accepting output data rates and volumes generated by the Backend System. Visibility data from different baselines could be processed by different B"
+    },
+    {
+      "number": "3",
+      "title": "3 Specific Requirements",
+      "level": 2,
+      "line_start": 283,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 External Interface Requirements",
+      "level": 2,
+      "line_start": 285,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Correlator to Backend Interface",
+      "level": 2,
+      "line_start": 287,
+      "text_length": 625,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.1.1.1</td><td rowspan=1 colspan=1>Lag Frames – The BE shall receive LTA or Speed Dump"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 Backend to/from Monitor and Control Interface",
+      "level": 2,
+      "line_start": 291,
+      "text_length": 1887,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Req. ID</td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.1.2.1</td><td rowspan=1 colspan=1>State Counts – The BE shall receive, via M&a"
+    },
+    {
+      "number": "3.1.3",
+      "title": "3.1.3 Backend to e2e Interface",
+      "level": 2,
+      "line_start": 295,
+      "text_length": 359,
+      "text_preview": "<table><tr><td>Req. ID</td><td>Description</td></tr><tr><td>3.1.3.1</td><td>Formatted Output – The BE shall deliver formatted final results to the e2e System. The BE shall produce all data needed by t"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Requirements",
+      "level": 2,
+      "line_start": 299,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 Information and data flows",
+      "level": 2,
+      "line_start": 301,
+      "text_length": 1064,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Req. ID</td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.2.1.1</td><td rowspan=1 colspan=1>Monitor and Control System – The BE shall ac"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 Process Descriptions",
+      "level": 2,
+      "line_start": 305,
+      "text_length": 9233,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">Req. ID</td><td colspan=\"1\" rowspan=\"1\">Description</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.2.1</td><td colspan=\"1\" rowspan=\"1\">Data Receive – The BE shall "
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 Data Construct Specifications",
+      "level": 2,
+      "line_start": 309,
+      "text_length": 2420,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">Req. ID</td><td colspan=\"1\" rowspan=\"1\">Description</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.3.1</td><td colspan=\"1\" rowspan=\"1\">Input Data Queue – a memory "
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Performance Requirements",
+      "level": 2,
+      "line_start": 313,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 General",
+      "level": 2,
+      "line_start": 315,
+      "text_length": 548,
+      "text_preview": "<table><tr><td>3.3.1.1</td><td>Data Integrity – the Backend System shall maintain input data fidelity and dynamic range across all processing, manipulation and I/O functions.</td></tr><tr><td>3.3.1.2<"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 Hardware",
+      "level": 2,
+      "line_start": 319,
+      "text_length": 1711,
+      "text_preview": "<table><tr><td colspan=\"2\">Req. ID Description</td></tr><tr><td>3.3.2.1</td><td>Input – The BE System shall be capable of accepting an aggregate data input stream from the Correlator of a minimum of 1"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 Software",
+      "level": 2,
+      "line_start": 323,
+      "text_length": 1365,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>3.3.3.1</td><td rowspan=1 colspan=1>Applications – all math/science application software shall take optimaladvantage of all language, compiler, and system computatio"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Reliability/Availability",
+      "level": 2,
+      "line_start": 327,
+      "text_length": 2510,
+      "text_preview": "<table><tr><td colspan=\"1\" rowspan=\"1\">3.4.1</td><td colspan=\"1\" rowspan=\"1\">Auto-correction – the Backend System shall be self-monitoring. It will becapable of detecting, reporting on and automatical"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Serviceability",
+      "level": 2,
+      "line_start": 331,
+      "text_length": 773,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>3.5.1</td><td rowspan=1 colspan=1>Hardware Accessibility – all system processing and interconnecthardware shall be readily accessible for maintenance, repair, replac"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 Maintainability",
+      "level": 2,
+      "line_start": 335,
+      "text_length": 387,
+      "text_preview": "<table><tr><td>3.6.1</td><td>Software tools – software tools and pre-built applications that do not have source code available shall come with a complete diagnostic package and customer support.</td><"
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 Scalability",
+      "level": 2,
+      "line_start": 339,
+      "text_length": 1117,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>3.7.1</td><td rowspan=1 colspan=1>Hardware – I/O, communications, and processing hardware shall beeasily expandable, reconfigureable, augmentable and replaceable to "
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 Security",
+      "level": 2,
+      "line_start": 343,
+      "text_length": 2744,
+      "text_preview": "The Backend System needs a robust security mechanism in place so that unauthorized users are not allowed access. Authorized users are expected to be restricted to software and hardware development, te"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 Installation and Upgrades",
+      "level": 2,
+      "line_start": 353,
+      "text_length": 806,
+      "text_preview": "<table><tr><td>3.9.1</td><td>necessarily at full capacity, on all unaffected resources during partial</td></tr><tr><td colspan=\"1\" rowspan=\"1\"></td><td colspan=\"1\" rowspan=\"1\">shutdowns for maintenanc"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 Documentation",
+      "level": 2,
+      "line_start": 357,
+      "text_length": 998,
+      "text_preview": "<table><tr><td>3.10.1</td><td>Hardware – complete and comprehensible hardware systems specifications and configuration information shall be readily available.</td></tr><tr><td>3.10.2</td><td>Software "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 17,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Date",
+        "Version",
+        "Description",
+        "Author"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "Revision History",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Version</td><td rowspan=1 colspan=1>Description</td><td rowspan=1 colspan=1>Author</td></tr><tr><td rowspan=1 colspan=1>26-Feb-2002</td><td rowspan=1 colspan=1>1.0</td><td rowspan=1 colspan=1>Initial draft</td><td rowspan=1 colspan=1>Tom Morgan</td></tr><tr><td rowspan=1 colspan=1>05-Mar-2002</td><td rowspan=1 colspan=1>1.1</td><td rowspan=1 colspan=1>Revised section 3.2.2</td><td rowspan=1 colspan=1>Tom Morgan</td></tr><tr><td rowspan"
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "3.1.1 Correlator to Backend Interface",
+      "raw_html": "<tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.1.1.1</td><td rowspan=1 colspan=1>Lag Frames – The BE shall receive LTA or Speed Dump Lag Frames fromthe Correlator. For a detailed description of the two dump formats seeReference 8, pages 69 to 71. This will most likely be in the form of one ormore frames per UDP/IP packet</td></tr><tr><td rowspan=1 colspan=1>3.1.1.2</td><td rowspan=1 colspan=1>Transfers – The transfer shall take place i"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 12,
+      "data_row_count": 11,
+      "is_empty": false,
+      "section": "3.1.2 Backend to/from Monitor and Control Interface",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Req. ID</td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.1.2.1</td><td rowspan=1 colspan=1>State Counts – The BE shall receive, via M&amp;C, State Count data producedby the Correlator.</td></tr><tr><td rowspan=1 colspan=1>3.1.2.2</td><td rowspan=1 colspan=1>Data Valid Counts -</td></tr><tr><td rowspan=1 colspan=1>3.1.2.3</td><td rowspan=1 colspan=1>Quantizer Power Measurement Data -</td></tr><tr><td rowspan=1 colspan=1>3.1.2.4</td><td row"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "3.1.3 Backend to e2e Interface",
+      "raw_html": "<tr><td>Req. ID</td><td>Description</td></tr><tr><td>3.1.3.1</td><td>Formatted Output – The BE shall deliver formatted final results to the e2e System. The BE shall produce all data needed by the e2e System for archiving and further processing. The output is currently expected to be in a form compatible with AIPS++ Measurement Sets.</td></tr>"
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "3.2.1 Information and data flows",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Req. ID</td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.2.1.1</td><td rowspan=1 colspan=1>Monitor and Control System – The BE shall acknowledge receipt of alldata received from M&amp;C.</td></tr><tr><td rowspan=1 colspan=1>3.2.1.2</td><td rowspan=1 colspan=1>Correlator System – The BE shall notify M&amp;C of any detectedinterruptions of data delivery from the Correlator.</td></tr><tr><td rowspan=1 colspan=1>3.2.1.3</td><td rowspan=1 cols"
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 36,
+      "data_row_count": 35,
+      "is_empty": false,
+      "section": "3.2.2 Process Descriptions",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">Req. ID</td><td colspan=\"1\" rowspan=\"1\">Description</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.2.1</td><td colspan=\"1\" rowspan=\"1\">Data Receive – The BE shall receive incoming data packets from theCorrelator to Backend network interface. This network is a part of the BESystem.</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.2.2</td><td colspan=\"1\" rowspan=\"1\">Verify Receive – The BE shall verify the successful receipt of incomingdata from the Correlator. This inclu"
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "3.2.3 Data Construct Specifications",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">Req. ID</td><td colspan=\"1\" rowspan=\"1\">Description</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.3.1</td><td colspan=\"1\" rowspan=\"1\">Input Data Queue – a memory buffer of lag frames. Data entry statusqueue to track each record in the buffer. The lag frames will contain allinformation necessary to properly assemble complete lag sets.</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.2.3.2</td><td colspan=\"1\" rowspan=\"1\">Output Data Queue – a memory buffer plus backup disk"
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.3.1.1",
+        "Data Integrity – the Backend System shall maintain input data fidelity and dynamic range across all processing, manipulation and I/O functions."
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "3.3.1 General",
+      "raw_html": "<tr><td>3.3.1.1</td><td>Data Integrity – the Backend System shall maintain input data fidelity and dynamic range across all processing, manipulation and I/O functions.</td></tr><tr><td>3.3.1.2</td><td>Error Handling – the system shall be capable of flagging and marking corrupted data segments and proceeding without interruption or effect on other data. This includes, but is not limited to, partial data, zero data, underflows, overflows, infinities, and NaN&#x27;s whether obtained on input or ari"
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID Description"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "3.3.2 Hardware",
+      "raw_html": "<tr><td colspan=\"2\">Req. ID Description</td></tr><tr><td>3.3.2.1</td><td>Input – The BE System shall be capable of accepting an aggregate data input stream from the Correlator of a minimum of 1.6 Gbytes/sec. This must be done simultaneously with the output stream, but not necessarily over the same interconnects. This is an initial deployment specification</td></tr><tr><td>3.3.2.2</td><td>and will be increased over time. Output – The BE System shall be capable of delivering an output data stream "
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.3.3.1",
+        "Applications – all math/science application software shall take optimaladvantage of all language, compiler, and system computational featuresand resources to reduce run times to the minimum practical level."
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.3.3 Software",
+      "raw_html": "<tr><td rowspan=1 colspan=1>3.3.3.1</td><td rowspan=1 colspan=1>Applications – all math/science application software shall take optimaladvantage of all language, compiler, and system computational featuresand resources to reduce run times to the minimum practical level.</td></tr><tr><td rowspan=1 colspan=1>3.3.3.2</td><td rowspan=1 colspan=1>Management – all management software functions shall take optimaladvantage of all language, compiler and system features and resources toreduce overheads to"
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.4.1",
+        "Auto-correction – the Backend System shall be self-monitoring. It will becapable of detecting, reporting on and automatically taking action toremedy or lessen the impact of, at a minimum, the following types ofabnormal conditions: processor hardware failure, operating system hangsor crashes, computational performance below minimum specifications,computational error rates above maximum specification, internalcommunications failures, and external (with the Correlator and E2E)communications disruptions."
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "3.4 Reliability/Availability",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">3.4.1</td><td colspan=\"1\" rowspan=\"1\">Auto-correction – the Backend System shall be self-monitoring. It will becapable of detecting, reporting on and automatically taking action toremedy or lessen the impact of, at a minimum, the following types ofabnormal conditions: processor hardware failure, operating system hangsor crashes, computational performance below minimum specifications,computational error rates above maximum specification, internalcommunications fail"
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.5.1",
+        "Hardware Accessibility – all system processing and interconnecthardware shall be readily accessible for maintenance, repair, replacementand/or reconfiguration."
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3.5 Serviceability",
+      "raw_html": "<tr><td rowspan=1 colspan=1>3.5.1</td><td rowspan=1 colspan=1>Hardware Accessibility – all system processing and interconnecthardware shall be readily accessible for maintenance, repair, replacementand/or reconfiguration.</td></tr><tr><td rowspan=1 colspan=1>3.5.2</td><td rowspan=1 colspan=1>Software Accessibility – all systems and application source code shall beavailable to or on the systems that execute it.</td></tr><tr><td rowspan=1 colspan=1>3.5.3</td><td rowspan=1 colspan=1>Debugging – all"
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.6.1",
+        "Software tools – software tools and pre-built applications that do not have source code available shall come with a complete diagnostic package and customer support."
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "3.6 Maintainability",
+      "raw_html": "<tr><td>3.6.1</td><td>Software tools – software tools and pre-built applications that do not have source code available shall come with a complete diagnostic package and customer support.</td></tr><tr><td>3.6.2</td><td>Operating Systems – operating system software shall either have source code available or come with sufficient diagnostics and customer support.</td></tr>"
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.7.1",
+        "Hardware – I/O, communications, and processing hardware shall beeasily expandable, reconfigureable, augmentable and replaceable to meetincreasing data transfer and processing demands imposed by EVLAscience, Correlator changes, and availability of new hardware."
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3.7 Scalability",
+      "raw_html": "<tr><td rowspan=1 colspan=1>3.7.1</td><td rowspan=1 colspan=1>Hardware – I/O, communications, and processing hardware shall beeasily expandable, reconfigureable, augmentable and replaceable to meetincreasing data transfer and processing demands imposed by EVLAscience, Correlator changes, and availability of new hardware.</td></tr><tr><td rowspan=1 colspan=1>3.7.2</td><td rowspan=1 colspan=1>Transparency – 3.7.1, above, shall be accomplished in manner that istransparent to processing, communicati"
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Req. ID",
+        "Description"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "3.8 Security",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Req. ID</td><td rowspan=1 colspan=1>Description</td></tr><tr><td rowspan=1 colspan=1>3.8.1</td><td rowspan=1 colspan=1>All users of the system shall login using some form of uniqueidentification. (e.g., username and password)</td></tr><tr><td rowspan=1 colspan=1>3.8.2</td><td rowspan=1 colspan=1>All login attempts shall be done in a secure manner. (e.g., encryptedpasswords)</td></tr><tr><td rowspan=1 colspan=1>3.8.3</td><td rowspan=1 colspan=1>A system administrator s"
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.9.1",
+        "necessarily at full capacity, on all unaffected resources during partial"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3.9 Installation and Upgrades",
+      "raw_html": "<tr><td>3.9.1</td><td>necessarily at full capacity, on all unaffected resources during partial</td></tr><tr><td colspan=\"1\" rowspan=\"1\"></td><td colspan=\"1\" rowspan=\"1\">shutdowns for maintenance, repair and/or upgrade.</td></tr><tr><td colspan=\"1\" rowspan=\"1\">3.9.2</td><td colspan=\"1\" rowspan=\"1\">Test Mode – the system shall be able to handle non-real-time operationsin a transparent fashion (i.e., as if real-time). Note: non-real-time refers toinput data from a source other than the Correlator ("
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "3.10.1",
+        "Hardware – complete and comprehensible hardware systems specifications and configuration information shall be readily available."
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "3.10 Documentation",
+      "raw_html": "<tr><td>3.10.1</td><td>Hardware – complete and comprehensible hardware systems specifications and configuration information shall be readily available.</td></tr><tr><td>3.10.2</td><td>Software Coding Practices— software system and application code shall be well documented and written in a generally familiar language or languages (preferably not more than two). Software shall be written in a style that is easily readable and using practices that allow for minimal confusion.</td></tr>"
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "b2a31ccc6e757c22ffb730b3daa071fdc95e0fc2daf10bca47dd7220797aba1e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2002 - evla back.pdf/auto/images/b2a31ccc6e757c22ffb730b3daa071fdc95e0fc2daf10bca47dd7220797aba1e.jpg",
+      "image_exists": true,
+      "image_size_kb": 57,
+      "alt_text": null,
+      "caption": "e2e System",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "2.2.6 Control",
+      "context_before": "The ability to attempt recovery from failure and out of spec performance conditions will be built into the system.\nThe system will provide control and auxiliary parameters to input, output, processing, monitor, recovery, and other functions and receive status and performance data from them. It will ",
+      "context_after": "e2e System",
+      "md_line": 213,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "b2a31ccc6e757c22ffb730b3daa071fdc95e0fc2daf10bca47dd7220797aba1e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2002 - evla back.pdf/auto/images/b2a31ccc6e757c22ffb730b3daa071fdc95e0fc2daf10bca47dd7220797aba1e.jpg",
+      "image_exists": true,
+      "image_size_kb": 57,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "e2e System",
+      "section": "2.2.6 Control",
+      "context_before": "The ability to attempt recovery from failure and out of spec performance conditions will be built into the system.\nThe system will provide control and auxiliary parameters to input, output, processing, monitor, recovery, and other functions and receive status and performance data from them. It will ",
+      "context_after": "e2e System",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

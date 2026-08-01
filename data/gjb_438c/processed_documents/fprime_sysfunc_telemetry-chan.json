@@ -1,0 +1,88 @@
+{
+  "doc_name": "fprime_sysfunc_telemetry-chan",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_telemetry-chan.md",
+  "md_lines": 37,
+  "md_chars": 2376,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Telemetry Channel Storage Functionality",
+  "section_count": 8,
+  "sections": [
+    {
+      "number": null,
+      "title": "Telemetry Channel Storage Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 200,
+      "text_preview": "- [F Prime TlmChan SDD](https://github.com/nasa/fprime/blob/devel/Svc/TlmChan/docs/sdd.md)\n- [FPP User Guide — Telemetry](https://nasa.github.io/fpp/fpp-users-guide.html#Defining-Components_Telemetry)"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 427,
+      "text_preview": "The Telemetry Channel component (TlmChan) provides channel-based telemetry storage and downlink. It stores the latest value of each telemetry channel written by components across the system and sends "
+    },
+    {
+      "number": null,
+      "title": "Channel Storage",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 514,
+      "text_preview": "Components write telemetry values through the framework's telemetry port. Each value includes a channel ID, a typed value, and a timestamp. The TlmChan component stores the most recent value for each "
+    },
+    {
+      "number": null,
+      "title": "Downlink Cycle",
+      "level": 3,
+      "line_start": 19,
+      "text_length": 331,
+      "text_preview": "When triggered by a scheduled port call (typically from a rate group), TlmChan iterates over its stored channels and sends each updated value as an individual telemetry packet. Each packet contains a "
+    },
+    {
+      "number": null,
+      "title": "Telemetry Update Policies",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 268,
+      "text_preview": "Telemetry channels can be configured with an update policy:\n\n- **Always** — The channel value is included in every downlink cycle regardless of whether it changed.\n- **On Change** — The channel value "
+    },
+    {
+      "number": null,
+      "title": "Telemetry Limits",
+      "level": 3,
+      "line_start": 30,
+      "text_length": 230,
+      "text_preview": "Telemetry channels with numeric types can specify limit ranges at three severity levels (red, orange, yellow), each with low and high thresholds. Limit checking is performed by the ground system based"
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 34,
+      "text_length": 210,
+      "text_preview": "- If the channel table is full, additional channels cannot be stored and a warning is issued.\n- If the send cycle takes longer than the scheduling period, channels may be stale by the time they are tr"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

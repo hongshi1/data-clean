@@ -1,0 +1,2512 @@
+{
+  "doc_name": "greenhand9347_商品网上交易系统_SRS",
+  "source_path": "data/gjb_438c/srs_collection/more_gjb/greenhand9347_商品网上交易系统_SRS.md",
+  "n_lines": 960,
+  "extract_date": "2026-07-28T23:42:12.980138",
+  "stats": {
+    "total_sections": 50,
+    "sections_sent": 37,
+    "sections_with_constraints": 28,
+    "sections_failed": 1,
+    "total_constraints": 249,
+    "by_type": {
+      "design": 166,
+      "temporal": 30,
+      "default": 3,
+      "conditional": 35,
+      "numerical": 15
+    }
+  },
+  "constraints": [
+    {
+      "type": "design",
+      "original": "后端框架：Spring Framework 5.3.20 + Spring MVC 5.3.20 + MyBatis 3.5.9",
+      "param": "后端框架",
+      "value": "Spring Framework 5.3.20 + Spring MVC 5.3.20 + MyBatis 3.5.9",
+      "unit": "",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "design",
+      "original": "前端框架：HTML5 + CSS3 + Javascript ES6",
+      "param": "前端框架",
+      "value": "HTML5 + CSS3 + Javascript ES6",
+      "unit": "",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "design",
+      "original": "数据库：MySQL 5.7",
+      "param": "数据库",
+      "value": "MySQL 5.7",
+      "unit": "",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "design",
+      "original": "服务器：Apache Tomcat 9.0.56",
+      "param": "服务器",
+      "value": "Apache Tomcat 9.0.56",
+      "unit": "",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "design",
+      "original": "运行环境：JDK 1.8",
+      "param": "运行环境",
+      "value": "JDK 1.8",
+      "unit": "",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "temporal",
+      "original": "系统 | 1.0.0 | 2025-03-20 | 初始版本",
+      "param": "系统发布日期",
+      "value": "2025-03-20",
+      "unit": "date",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "temporal",
+      "original": "文档 | v1.0 | 2025-04-25 | 基线版本",
+      "param": "文档发布日期",
+      "value": "2025-04-25",
+      "unit": "date",
+      "section_number": "1.1",
+      "section_title": "1.1 标识",
+      "line_start": 11
+    },
+    {
+      "type": "design",
+      "original": "基于 B2C 模式",
+      "param": "系统模式",
+      "value": "B2C",
+      "unit": "",
+      "section_number": "1.2",
+      "section_title": "1.2 系统概述",
+      "line_start": 36
+    },
+    {
+      "type": "design",
+      "original": "基于成熟稳定的 SSM（Spring + SpringMVC + MyBatis）框架开发",
+      "param": "开发框架",
+      "value": "SSM",
+      "unit": "",
+      "section_number": "1.2",
+      "section_title": "1.2 系统概述",
+      "line_start": 36
+    },
+    {
+      "type": "design",
+      "original": "运行于标准的服务器环境",
+      "param": "运行环境",
+      "value": "标准服务器",
+      "unit": "",
+      "section_number": "1.2",
+      "section_title": "1.2 系统概述",
+      "line_start": 36
+    },
+    {
+      "type": "design",
+      "original": "微服务架构设计规范（MSA-STD-001） | 系统架构 | 强制遵循",
+      "param": "系统架构标准",
+      "value": "MSA-STD-001",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "金融级分布式事务解决方案（TCC-IMP-GUIDE） | 交易模块 | 推荐实施",
+      "param": "交易模块解决方案",
+      "value": "TCC-IMP-GUIDE",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "阿里云技术兼容性清单（ALI-TECH-2023Q3） | 基础设施 | 环境依赖",
+      "param": "基础设施兼容性清单",
+      "value": "ALI-TECH-2023Q3",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "temporal",
+      "original": "软件开发合同 | 法律文件 | 终版签字件（2025-02-20）",
+      "param": "合同签字日期",
+      "value": "2025-02-20",
+      "unit": "日期",
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "质量保证计划 | QMS文件 | QAP-ECP-2025-V1.0",
+      "param": "质量保证计划版本",
+      "value": "QAP-ECP-2025-V1.0",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "配置管理计划 | CM文件 | CMP-0420-FINAL",
+      "param": "配置管理计划版本",
+      "value": "CMP-0420-FINAL",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "银联支付网关 | APIv3.1 | 已通过联调测试",
+      "param": "银联支付网关接口版本",
+      "value": "APIv3.1",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "顺丰物流系统 | WMS-2025 | 接口开发中",
+      "param": "顺丰物流系统接口版本",
+      "value": "WMS-2025",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "design",
+      "original": "国家企业信用公示系统 | 1.0.4 | 等待安全认证",
+      "param": "国家企业信用公示系统接口版本",
+      "value": "1.0.4",
+      "unit": null,
+      "section_number": "1.4",
+      "section_title": "1.4 基线",
+      "line_start": 52
+    },
+    {
+      "type": "default",
+      "original": "空闲：系统未被用户访问或未激活时的默认状态",
+      "param": "系统状态",
+      "value": "空闲",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "design",
+      "original": "空闲：...仅维持基础服务",
+      "param": "服务范围",
+      "value": "仅维持基础服务",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "temporal",
+      "original": "事后分析：订单完成后生成统计数据",
+      "param": "统计数据生成时机",
+      "value": "订单完成后",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "conditional",
+      "original": "降级：高并发或系统故障时关闭非核心功能",
+      "param": "降级触发条件",
+      "value": "高并发或系统故障",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "design",
+      "original": "降级：...关闭非核心功能（如关闭推荐引擎、商品留言等）",
+      "param": "降级操作内容",
+      "value": "关闭非核心功能",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "conditional",
+      "original": "紧急维护：系统完全不可用时，显示维护页面",
+      "param": "紧急维护触发条件",
+      "value": "系统完全不可用",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "design",
+      "original": "紧急维护：...保留未完成事务的恢复能力",
+      "param": "事务处理策略",
+      "value": "保留未完成事务的恢复能力",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "design",
+      "original": "移动优先：...压缩非必要资源",
+      "param": "资源处理策略",
+      "value": "压缩非必要资源",
+      "unit": null,
+      "section_number": "3.1",
+      "section_title": "3.1 所需的状态和方式",
+      "line_start": 88
+    },
+    {
+      "type": "design",
+      "original": "本系统是一个基于 B2C（Business to Customer）模式的商品网上交易系统",
+      "param": "系统业务模式",
+      "value": "B2C",
+      "unit": null,
+      "section_number": "3.2.1",
+      "section_title": "3.2.1 目标",
+      "line_start": 107
+    },
+    {
+      "type": "design",
+      "original": "本系统是一个独立产品",
+      "param": "产品独立性",
+      "value": "独立产品",
+      "unit": null,
+      "section_number": "3.2.1",
+      "section_title": "3.2.1 目标",
+      "line_start": 107
+    },
+    {
+      "type": "design",
+      "original": "硬件环境：需要服务器（用于部署应用）和标准用户计算机（用于浏览器访问）",
+      "param": "硬件环境",
+      "value": "服务器、标准用户计算机",
+      "unit": null,
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 117
+    },
+    {
+      "type": "design",
+      "original": "操作系统：Linux 或 Windows Server",
+      "param": "操作系统",
+      "value": "Linux 或 Windows Server",
+      "unit": null,
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 117
+    },
+    {
+      "type": "design",
+      "original": "Web 服务器：Apache Tomcat 9.0.56",
+      "param": "Web 服务器",
+      "value": "Apache Tomcat 9.0.56",
+      "unit": null,
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 117
+    },
+    {
+      "type": "design",
+      "original": "数据库：MySQL 5.7",
+      "param": "数据库",
+      "value": "MySQL 5.7",
+      "unit": null,
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 117
+    },
+    {
+      "type": "design",
+      "original": "运行时：JDK 1.8",
+      "param": "运行时",
+      "value": "JDK 1.8",
+      "unit": null,
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 117
+    },
+    {
+      "type": "design",
+      "original": "期望本系统的界面具有简洁易操作等特点",
+      "param": "界面特点",
+      "value": "简洁易操作",
+      "unit": null,
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 用户的特点",
+      "line_start": 126
+    },
+    {
+      "type": "design",
+      "original": "本系统基于 B2C 模式",
+      "param": "系统模式",
+      "value": "B2C",
+      "unit": null,
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 用户的特点",
+      "line_start": 126
+    },
+    {
+      "type": "conditional",
+      "original": "普通用户（买家）...仅具有浏览并购买商品的权限",
+      "param": "普通用户权限",
+      "value": "浏览并购买商品",
+      "unit": null,
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 用户的特点",
+      "line_start": 126
+    },
+    {
+      "type": "design",
+      "original": "管理员即卖家",
+      "param": "管理员身份",
+      "value": "卖家",
+      "unit": null,
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 用户的特点",
+      "line_start": 126
+    },
+    {
+      "type": "conditional",
+      "original": "需要具备相应的后台管理权限，同时具有获取用户行为分析数据等权限",
+      "param": "管理员权限",
+      "value": "后台管理, 获取用户行为分析数据",
+      "unit": null,
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 用户的特点",
+      "line_start": 126
+    },
+    {
+      "type": "conditional",
+      "original": "商品信息管理（管理员权限）",
+      "param": "商品信息管理权限",
+      "value": "管理员",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "商品搜索（支持模糊查询）",
+      "param": "搜索查询方式",
+      "value": "模糊查询",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "用户注册与登录（含手机验证）",
+      "param": "注册验证方式",
+      "value": "手机验证",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "numerical",
+      "original": "单一卖家",
+      "param": "卖家数量",
+      "value": "1",
+      "unit": "个",
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "numerical",
+      "original": "多个买家",
+      "param": "买家数量",
+      "value": ">1",
+      "unit": "个",
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "B2C 模式",
+      "param": "业务模式",
+      "value": "B2C",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "SSM 框架",
+      "param": "后端框架",
+      "value": "SSM",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "MySQL 数据库",
+      "param": "数据库类型",
+      "value": "MySQL",
+      "unit": null,
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 关键点",
+      "line_start": 131
+    },
+    {
+      "type": "design",
+      "original": "采用 SSM 框架开发。",
+      "param": "开发框架",
+      "value": "SSM",
+      "unit": null,
+      "section_number": "3.2.5",
+      "section_title": "3.2.5 约束条件",
+      "line_start": 137
+    },
+    {
+      "type": "conditional",
+      "original": "若参考开源项目，需遵循相应的开源协议（如 MIT 协议）。",
+      "param": "开源协议遵循",
+      "value": "相应的开源协议（如 MIT 协议）",
+      "unit": null,
+      "section_number": "3.2.5",
+      "section_title": "3.2.5 约束条件",
+      "line_start": 137
+    },
+    {
+      "type": "design",
+      "original": "数据处理需遵循 GDPR 与《个人信息保护法》要求。",
+      "param": "数据处理合规性",
+      "value": "GDPR, 个人信息保护法",
+      "unit": null,
+      "section_number": "3.2.5",
+      "section_title": "3.2.5 约束条件",
+      "line_start": 137
+    },
+    {
+      "type": "design",
+      "original": "需使用 IDEA 2024.3.3",
+      "param": "IDE",
+      "value": "IDEA 2024.3.3",
+      "unit": null,
+      "section_number": "3.2.5",
+      "section_title": "3.2.5 约束条件",
+      "line_start": 137
+    },
+    {
+      "type": "design",
+      "original": "需使用 Maven 3.9.9",
+      "param": "构建工具",
+      "value": "Maven 3.9.9",
+      "unit": null,
+      "section_number": "3.2.5",
+      "section_title": "3.2.5 约束条件",
+      "line_start": 137
+    },
+    {
+      "type": "design",
+      "original": "密码加密：使用MD5对密码进行加密存储。",
+      "param": "密码加密算法",
+      "value": "MD5",
+      "unit": null,
+      "section_number": "3.4.1",
+      "section_title": "3.4.1  用户管理能力",
+      "line_start": 193
+    },
+    {
+      "type": "conditional",
+      "original": "登录成功后，跳转回到主页面。",
+      "param": "登录成功跳转目标",
+      "value": "主页面",
+      "unit": null,
+      "section_number": "3.4.1",
+      "section_title": "3.4.1  用户管理能力",
+      "line_start": 193
+    },
+    {
+      "type": "design",
+      "original": "输入验证：手机号格式",
+      "param": "手机号验证规则",
+      "value": "格式验证",
+      "unit": null,
+      "section_number": "3.4.1",
+      "section_title": "3.4.1  用户管理能力",
+      "line_start": 193
+    },
+    {
+      "type": "design",
+      "original": "输入验证：验证码有效性",
+      "param": "验证码验证规则",
+      "value": "有效性验证",
+      "unit": null,
+      "section_number": "3.4.1",
+      "section_title": "3.4.1  用户管理能力",
+      "line_start": 193
+    },
+    {
+      "type": "design",
+      "original": "输入验证：密码长度及复杂度",
+      "param": "密码验证规则",
+      "value": "长度及复杂度验证",
+      "unit": null,
+      "section_number": "3.4.1",
+      "section_title": "3.4.1  用户管理能力",
+      "line_start": 193
+    },
+    {
+      "type": "design",
+      "original": "须支持Web浏览器、iOS/Android App、微信H5页面三种终端类型",
+      "param": "终端类型",
+      "value": "Web浏览器、iOS/Android App、微信H5页面",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "语言切换控件需常驻页面右上角",
+      "param": "语言切换控件位置",
+      "value": "页面右上角",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "支持中/英/日/韩/俄/法六种语言",
+      "param": "支持语言",
+      "value": "中/英/日/韩/俄/法",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "所有图片提供alt文本描述",
+      "param": "图片描述",
+      "value": "alt文本",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "键盘导航支持Tab键跳转焦点",
+      "param": "键盘导航",
+      "value": "Tab键跳转焦点",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "numerical",
+      "original": "对比度≥4.5:1（文本与背景）",
+      "param": "对比度",
+      "value": "4.5:1",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "支持部署在 AWS 和阿里云的云服务商环境",
+      "param": "云服务商",
+      "value": "AWS, 阿里云",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "对象存储接口需兼容S3协议",
+      "param": "对象存储接口协议",
+      "value": "S3协议",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "numerical",
+      "original": "支持动态扩容至PB级容量",
+      "param": "存储容量",
+      "value": "PB级",
+      "unit": "PB",
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "硬件负载均衡器需支持TCP/UDP四层转发",
+      "param": "负载均衡转发协议",
+      "value": "TCP/UDP四层",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "numerical",
+      "original": "最大并发连接数≥1M",
+      "param": "最大并发连接数",
+      "value": "1M",
+      "unit": "个",
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "支持支付宝/微信支付/Stripe/PayPal四类支付渠道",
+      "param": "支付渠道",
+      "value": "支付宝, 微信支付, Stripe, PayPal",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "敏感数据传输须符合用户支付信息、身份认证数据",
+      "param": "敏感数据传输范围",
+      "value": "用户支付信息、身份认证数据",
+      "unit": null,
+      "section_number": "3.5",
+      "section_title": "3.5 CSCI外部接口需求",
+      "line_start": 244
+    },
+    {
+      "type": "design",
+      "original": "数据库采用 MySQL 5.7",
+      "param": "数据库",
+      "value": "MySQL 5.7",
+      "unit": null,
+      "section_number": "3.7",
+      "section_title": "3.7 CSCI 内部数据需求",
+      "line_start": 267
+    },
+    {
+      "type": "design",
+      "original": "部署现场的经纬度坐标（WGS84 标准）",
+      "param": "经纬度坐标",
+      "value": "WGS84 标准",
+      "unit": null,
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "design",
+      "original": "时区配置（IANA 时区数据库标识符）",
+      "param": "时区配置",
+      "value": "IANA 时区数据库标识符",
+      "unit": null,
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "temporal",
+      "original": "热加载（≤5 秒生效延迟）",
+      "param": "热加载生效延迟",
+      "value": "≤5",
+      "unit": "秒",
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "design",
+      "original": "滚动重启（零停机更新）",
+      "param": "滚动重启",
+      "value": "零停机",
+      "unit": null,
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "design",
+      "original": "实时推送更新",
+      "param": "容错控制参数生效机制",
+      "value": "实时推送",
+      "unit": null,
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "design",
+      "original": "按节点粒度差异化配置",
+      "param": "观测性参数配置粒度",
+      "value": "节点粒度",
+      "unit": null,
+      "section_number": "",
+      "section_title": "**3.8 适应性需求**",
+      "line_start": 280
+    },
+    {
+      "type": "design",
+      "original": "操作系统：未指定，需支持 Java 运行环境和 MySQL、Tomcat 的部署。",
+      "param": "操作系统",
+      "value": "需支持 Java 运行环境和 MySQL、Tomcat 的部署",
+      "unit": null,
+      "section_number": "3.11",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 325
+    },
+    {
+      "type": "design",
+      "original": "运行环境：JDK 1.8。",
+      "param": "运行环境",
+      "value": "JDK 1.8",
+      "unit": null,
+      "section_number": "3.11",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 325
+    },
+    {
+      "type": "design",
+      "original": "Web 服务器：Apache Tomcat 9.0.56。",
+      "param": "Web 服务器",
+      "value": "Apache Tomcat 9.0.56",
+      "unit": null,
+      "section_number": "3.11",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 325
+    },
+    {
+      "type": "numerical",
+      "original": "至少一台",
+      "param": "服务器数量",
+      "value": ">= 1",
+      "unit": "台",
+      "section_number": "3.12.1",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 333
+    },
+    {
+      "type": "design",
+      "original": "支持 HTML5、CSS3、Javascript ES6",
+      "param": "客户端浏览器技术标准",
+      "value": "HTML5, CSS3, Javascript ES6",
+      "unit": "",
+      "section_number": "3.12.1",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 333
+    },
+    {
+      "type": "design",
+      "original": "标准 PC 或移动设备浏览器",
+      "param": "客户端设备类型",
+      "value": "PC 或 移动设备",
+      "unit": "",
+      "section_number": "3.12.1",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 333
+    },
+    {
+      "type": "design",
+      "original": "数据库管理系统：MySQL 5.7",
+      "param": "数据库管理系统",
+      "value": "MySQL 5.7",
+      "unit": null,
+      "section_number": "3.12.3",
+      "section_title": "3.12.3 计算机软件需求",
+      "line_start": 376
+    },
+    {
+      "type": "design",
+      "original": "开发框架/库：Spring Framework 5.3.20, Spring MVC 5.3.20, MyBatis 3.5.9",
+      "param": "开发框架/库",
+      "value": "Spring Framework 5.3.20",
+      "unit": null,
+      "section_number": "3.12.3",
+      "section_title": "3.12.3 计算机软件需求",
+      "line_start": 376
+    },
+    {
+      "type": "design",
+      "original": "开发框架/库：Spring Framework 5.3.20, Spring MVC 5.3.20, MyBatis 3.5.9",
+      "param": "开发框架/库",
+      "value": "Spring MVC 5.3.20",
+      "unit": null,
+      "section_number": "3.12.3",
+      "section_title": "3.12.3 计算机软件需求",
+      "line_start": 376
+    },
+    {
+      "type": "design",
+      "original": "开发框架/库：Spring Framework 5.3.20, Spring MVC 5.3.20, MyBatis 3.5.9",
+      "param": "开发框架/库",
+      "value": "MyBatis 3.5.9",
+      "unit": null,
+      "section_number": "3.12.3",
+      "section_title": "3.12.3 计算机软件需求",
+      "line_start": 376
+    },
+    {
+      "type": "design",
+      "original": "构建工具：Maven 3.9.9",
+      "param": "构建工具",
+      "value": "Maven 3.9.9",
+      "unit": null,
+      "section_number": "3.12.3",
+      "section_title": "3.12.3 计算机软件需求",
+      "line_start": 376
+    },
+    {
+      "type": "design",
+      "original": "系统的后端必须使用 SSM（Spring + SpringMVC + MyBatis）框架。",
+      "param": "后端框架",
+      "value": "SSM（Spring + SpringMVC + MyBatis）",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "前端部分必须使用 HTML5、CSS3 和 JavaScript ES6 技术进行开发。",
+      "param": "前端技术",
+      "value": "HTML5、CSS3、JavaScript ES6",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "本系统必须使用 MySQL 5.7 作为数据库管理系统。",
+      "param": "数据库管理系统",
+      "value": "MySQL 5.7",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "系统的开发和运行必须基于 JDK 1.8 环境",
+      "param": "开发运行环境",
+      "value": "JDK 1.8",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "系统必须部署在 Apache Tomcat 9.0.56 服务器上",
+      "param": "服务器",
+      "value": "Apache Tomcat 9.0.56",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "开发工具必须使用 IDEA 2024.3.3 和 Maven 3.9.9。",
+      "param": "开发工具",
+      "value": "IDEA 2024.3.3、Maven 3.9.9",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "本系统的开发将使用 Java 编程语言来编写后端逻辑。",
+      "param": "后端编程语言",
+      "value": "Java",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "前端开发将使用现代化的 JavaScript 技术栈，结合 Vue.js 或 React 框架...",
+      "param": "前端框架",
+      "value": "Vue.js 或 React",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "系统中所有的数据交换（如前后端通信）都应遵循 JSON 格式。",
+      "param": "数据交换格式",
+      "value": "JSON",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "系统采用模块化架构",
+      "param": "系统架构",
+      "value": "模块化架构",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "design",
+      "original": "数据库设计应遵循分层架构",
+      "param": "数据库架构",
+      "value": "分层架构",
+      "unit": null,
+      "section_number": "3.14",
+      "section_title": "3.14 设计和实现的约束",
+      "line_start": 420
+    },
+    {
+      "type": "temporal",
+      "original": "商品信息展示应快速响应，加载时间不超过3秒。",
+      "param": "加载时间",
+      "value": "3",
+      "unit": "秒",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "conditional",
+      "original": "用户完成购物车内容的确认后，可以生成订单并选择支付方式。",
+      "param": "生成订单",
+      "value": "购物车内容确认",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "default",
+      "original": "系统应初始化管理员账户，确保管理员可以登录并进行管理操作。",
+      "param": "管理员账户",
+      "value": "初始化",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "default",
+      "original": "数据库中应预先加载基础数据，如商品分类、支付方式、配送方式等。",
+      "param": "基础数据",
+      "value": "预先加载",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "design",
+      "original": "配置Web服务器（如Apache Tomcat）和应用服务器环境。",
+      "param": "Web服务器",
+      "value": "Apache Tomcat",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "design",
+      "original": "系统需支持多语言设置，提供中文和英文等语言版本的选择。",
+      "param": "支持语言",
+      "value": "中文、英文",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "design",
+      "original": "必须配置必要的第三方服务接口，如支付接口（支付宝、微信支付等）、短信接口。",
+      "param": "第三方服务接口",
+      "value": "支付接口、短信接口",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "temporal",
+      "original": "备份的频率可以根据业务的具体需求进行设置（如每日或每周备份）。",
+      "param": "备份频率",
+      "value": "每日或每周",
+      "unit": "次",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "conditional",
+      "original": "在系统出现故障或数据丢失的情况下，通过备份数据进行系统恢复。",
+      "param": "系统恢复触发条件",
+      "value": "系统故障或数据丢失",
+      "unit": "",
+      "section_number": "3.16",
+      "section_title": "3.16 操作",
+      "line_start": 478
+    },
+    {
+      "type": "temporal",
+      "original": "系统应能够在遇到这些问题时，及时采取措施并通知用户。",
+      "param": "故障响应时间",
+      "value": "及时",
+      "unit": null,
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "design",
+      "original": "重试网络请求，并提供重试次数的限制",
+      "param": "网络请求重试次数",
+      "value": "限制",
+      "unit": "次",
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "conditional",
+      "original": "如果数据库出现严重故障，启用备用数据库或进行数据库恢复。",
+      "param": "数据库严重故障",
+      "value": "启用备用数据库",
+      "unit": null,
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "temporal",
+      "original": "定期进行硬盘备份，防止数据丢失",
+      "param": "硬盘备份频率",
+      "value": "定期",
+      "unit": null,
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "temporal",
+      "original": "错误日志应存储在安全的位置，并定期归档。",
+      "param": "日志归档频率",
+      "value": "定期",
+      "unit": null,
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "conditional",
+      "original": "当出现严重错误或异常时，及时通过邮件、短信或其他方式通知管理员",
+      "param": "严重错误或异常",
+      "value": "通知管理员",
+      "unit": null,
+      "section_number": "3.17",
+      "section_title": "3.17 故障处理",
+      "line_start": 526
+    },
+    {
+      "type": "numerical",
+      "original": "系统支持的大规模用户数量将达到 10 万以上",
+      "param": "系统支持用户数量",
+      "value": "> 100000",
+      "unit": "人",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "numerical",
+      "original": "预期在高峰时段有上千名用户同时在线",
+      "param": "高峰时段同时在线用户数",
+      "value": "> 1000",
+      "unit": "人",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "numerical",
+      "original": "初期阶段，预计管理员人数为 5-10 人",
+      "param": "初期管理员人数",
+      "value": "5-10",
+      "unit": "人",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "numerical",
+      "original": "初期阶段，预计团队人员为 5 人",
+      "param": "初期开发维护团队人数",
+      "value": "5",
+      "unit": "人",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "temporal",
+      "original": "系统应提供实时反馈（如操作成功或失败的提示）",
+      "param": "关键操作反馈时间",
+      "value": "实时",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "conditional",
+      "original": "在发生操作错误时，系统应提供清晰的错误信息",
+      "param": "错误信息提示",
+      "value": "清晰、显眼",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "conditional",
+      "original": "对于重要操作（如删除商品、取消订单），应提供确认提示",
+      "param": "重要操作确认提示",
+      "value": "提供",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "界面设计应直观易懂",
+      "param": "界面设计风格",
+      "value": "直观易懂",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "颜色和字体的选择应符合用户的视觉习惯",
+      "param": "界面颜色字体",
+      "value": "符合用户视觉习惯",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "开发人员...至少具备中级开发经验",
+      "param": "开发人员经验要求",
+      "value": "中级及以上",
+      "unit": "级",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "精通 Java 编程语言",
+      "param": "编程语言",
+      "value": "Java",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "熟练使用 SSM 框架（Spring、SpringMVC、MyBatis）",
+      "param": "后端框架",
+      "value": "SSM (Spring, SpringMVC, MyBatis)",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "熟悉前端开发技术，包括 HTML、CSS、JavaScript（ES6 及以上版本）",
+      "param": "前端技术栈",
+      "value": "HTML, CSS, JavaScript (ES6+)",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "熟悉 MySQL 数据库",
+      "param": "数据库",
+      "value": "MySQL",
+      "unit": "无",
+      "section_number": "3.19",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 555
+    },
+    {
+      "type": "design",
+      "original": "系统设计强调易用性，界面直观，操作流程简单",
+      "param": "系统设计",
+      "value": "易用性/界面直观/操作流程简单",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "最终用户无需经过专门培训即可顺利使用",
+      "param": "用户培训需求",
+      "value": "无需专门培训",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "系统应提供简洁的用户引导",
+      "param": "用户引导",
+      "value": "简洁",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "conditional",
+      "original": "在首次登录时可以展示简单的引导教程",
+      "param": "引导教程展示时机",
+      "value": "首次登录",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "提供在线帮助文档和常见问题（FAQ）",
+      "param": "帮助资源",
+      "value": "在线帮助文档/FAQ",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "可以提供简短的视频教程",
+      "param": "视频教程",
+      "value": "简短",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "conditional",
+      "original": "为确保用户在遇到问题时能得到及时帮助，系统应设计反馈机制",
+      "param": "反馈机制触发条件",
+      "value": "用户遇到问题",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "最终用户无需参加专门的培训课程",
+      "param": "培训方式",
+      "value": "无需专门培训",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "提供详细的操作手册",
+      "param": "操作手册",
+      "value": "详细",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员需要接受关于后台管理系统功能的培训",
+      "param": "管理员培训内容",
+      "value": "后台管理系统功能",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员培训应包括如何处理订单...以及如何处理用户的售后服务请求...",
+      "param": "管理员培训内容",
+      "value": "订单处理/售后服务",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员应学习如何从后台提取平台数据，并进行业务分析",
+      "param": "管理员培训内容",
+      "value": "数据管理与报告分析",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员需要了解平台的安全政策...以及如何操作确保平台的安全性...",
+      "param": "管理员培训内容",
+      "value": "系统安全与数据保护",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "对新管理员进行集中培训",
+      "param": "管理员培训方式",
+      "value": "现场培训",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "提供详细的操作视频",
+      "param": "管理员培训资源",
+      "value": "操作视频",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员也可以通过线上培训平台...学习相关知识",
+      "param": "管理员培训方式",
+      "value": "线上培训",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "temporal",
+      "original": "定期组织管理员参与技术更新和新功能的培训",
+      "param": "培训更新频率",
+      "value": "定期",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员在接受培训后，可以进行操作测试",
+      "param": "培训评估方式",
+      "value": "操作测试",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "管理员培训后应有反馈机制",
+      "param": "培训反馈机制",
+      "value": "有",
+      "unit": null,
+      "section_number": "3.20",
+      "section_title": "3.20 有关培训需求",
+      "line_start": 601
+    },
+    {
+      "type": "design",
+      "original": "系统应支持自动化运维工具（如 Zabbix、Nagios 等）来进行服务器监控和告警",
+      "param": "支持的运维工具",
+      "value": "Zabbix, Nagios 等",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "系统需要定期对服务器进行检查和维护",
+      "param": "检查维护频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "服务器操作系统和相关软件需要定期更新",
+      "param": "软件更新频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "定期对数据库进行优化",
+      "param": "数据库优化频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "需要定期进行数据库备份",
+      "param": "数据库备份频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "numerical",
+      "original": "备份应保存在多地，避免单点故障造成数据丢失",
+      "param": "备份存储地点数量",
+      "value": "多地",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "定期对系统和数据进行备份",
+      "param": "系统备份频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "建立并定期测试灾难恢复计划",
+      "param": "灾难恢复计划测试频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "design",
+      "original": "需要部署系统监控工具",
+      "param": "监控工具",
+      "value": "部署",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "实时监控系统的运行状况",
+      "param": "监控延迟",
+      "value": "实时",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "design",
+      "original": "配置日志管理系统",
+      "param": "日志管理",
+      "value": "配置",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "定期检查系统日志",
+      "param": "日志检查频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "开发团队应定期发布软件版本更新",
+      "param": "版本发布频率",
+      "value": "定期",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "numerical",
+      "original": "每个新版本应通过严格的测试",
+      "param": "测试覆盖率",
+      "value": "每个",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "temporal",
+      "original": "开发团队应在最短的时间内提供补丁或修复方案",
+      "param": "补丁提供时间",
+      "value": "最短时间",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "当系统中发现 Bug 时，开发团队应在最短的时间内提供补丁或修复方案",
+      "param": "Bug处理",
+      "value": "提供补丁",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "Bug 修复应优先处理可能影响系统安全性或用户体验的重大问题",
+      "param": "Bug修复优先级",
+      "value": "优先处理",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "design",
+      "original": "开发团队应提供详细的技术文档",
+      "param": "技术文档",
+      "value": "提供",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "design",
+      "original": "提供 FAQ、常见问题解答和在线帮助",
+      "param": "帮助资料",
+      "value": "提供",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "design",
+      "original": "系统部署和升级应通过标准的自动化脚本或工具（如 Ansible、Chef、Puppet 等）完成",
+      "param": "部署方式",
+      "value": "自动化脚本或工具",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "在系统迁移或部署新服务器时，确保数据和配置文件的正确传输",
+      "param": "数据传输",
+      "value": "正确",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "系统迁移时应确保新环境与原环境的兼容性",
+      "param": "环境兼容性",
+      "value": "确保",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "发生系统故障或数据丢失时能够及时恢复",
+      "param": "系统恢复",
+      "value": "及时",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "conditional",
+      "original": "在重大故障发生时，能够迅速恢复系统功能",
+      "param": "灾难恢复",
+      "value": "迅速",
+      "unit": "",
+      "section_number": "3.21",
+      "section_title": "3.21 有关后勤需求",
+      "line_start": 639
+    },
+    {
+      "type": "numerical",
+      "original": "系统原则上只支持一个商家",
+      "param": "商家数量",
+      "value": "1",
+      "unit": "个",
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "numerical",
+      "original": "平台需要支持至少 500 个用户同时在线",
+      "param": "并发用户数",
+      "value": ">= 500",
+      "unit": "个",
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "numerical",
+      "original": "每秒可处理至少 1000 次请求",
+      "param": "请求处理量",
+      "value": ">= 1000",
+      "unit": "次/秒",
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "temporal",
+      "original": "系统应保证响应时间不超过 3",
+      "param": "响应时间",
+      "value": "<= 3",
+      "unit": "秒",
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "项目开发采用敏捷开发方法",
+      "param": "开发方法",
+      "value": "敏捷开发",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "所有用户的个人信息、支付信息等敏感数据必须进行加密存储和传输",
+      "param": "敏感数据处理方式",
+      "value": "加密存储和传输",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "系统应设计成可扩展的架构",
+      "param": "系统架构",
+      "value": "可扩展",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "采用负载均衡和冗余设计",
+      "param": "高可用性设计策略",
+      "value": "负载均衡和冗余",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "支持数据分片和分布式存储",
+      "param": "数据存储方式",
+      "value": "分片和分布式",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "系统设计时应考虑到未来的多商家支持需求",
+      "param": "多商家支持",
+      "value": "支持",
+      "unit": null,
+      "section_number": "3.22",
+      "section_title": "3.22 其他需求",
+      "line_start": 695
+    },
+    {
+      "type": "design",
+      "original": "系统将以 **WAR包**（Web Application Archive）格式进行交付。",
+      "param": "交付形式",
+      "value": "WAR包",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "WAR 包应通过Maven构建工具生成",
+      "param": "构建工具",
+      "value": "Maven",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "版本号应遵循语义化版本控制（例如，v1.0.0，v1.1.0 等）。",
+      "param": "版本控制规范",
+      "value": "语义化版本控制",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "交付的 WAR 包应采用明确的命名规则...命名规则可包括系统名称、版本号、构建日期等信息，如：UsedTradingPlatform_v1.0.0_20230425.war。",
+      "param": "文件命名规则",
+      "value": "SystemName_Version_Date.war",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "版本号应依据开发的阶段（如 alpha、beta、stable 等）进行标识。",
+      "param": "版本阶段标识",
+      "value": "alpha, beta, stable",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "每个交付的 WAR 包应附带相关的技术文档和操作手册",
+      "param": "交付文档",
+      "value": "技术文档和操作手册",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "WAR 包应能够直接部署到 **Apache Tomcat 9.0.56** 或更高版本的服务器中。",
+      "param": "Tomcat版本",
+      "value": ">= 9.0.56",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "部署时不应需要额外的手动操作或复杂的配置步骤。",
+      "param": "部署复杂度",
+      "value": "无额外手动操作或复杂配置",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "系统应能够通过 Tomcat 的管理界面进行部署或通过命令行脚本自动部署。",
+      "param": "部署方式",
+      "value": "Tomcat管理界面或命令行脚本",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "系统需确保与 Tomcat 服务器兼容，并在指定的 JDK 版本下运行（如 JDK 1.8）。",
+      "param": "JDK版本",
+      "value": "1.8",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "系统的数据库应与 MySQL 5.7 版本兼容",
+      "param": "MySQL版本",
+      "value": "5.7",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "WAR包：包含 Web 应用程序的所有文件",
+      "param": "WAR包内容",
+      "value": "所有文件",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "conditional",
+      "original": "如果系统需要特定的配置文件（如数据库配置、邮件服务器配置等），则这些文件应与 WAR 包一起提供",
+      "param": "配置文件交付",
+      "value": "与 WAR 包一起提供",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "交付的 WAR 包及相关文件应确保不包含敏感信息（如数据库密码、API 密钥等）。",
+      "param": "敏感信息包含",
+      "value": "无",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "敏感数据应进行加密处理或使用环境变量进行安全存储。",
+      "param": "敏感数据处理方式",
+      "value": "加密或环境变量",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "design",
+      "original": "交付的 WAR 包应附带哈希值（如 SHA",
+      "param": "完整性校验",
+      "value": "哈希值",
+      "unit": null,
+      "section_number": "3.23",
+      "section_title": "3.23 包装需求",
+      "line_start": 720
+    },
+    {
+      "type": "temporal",
+      "original": "必须在系统开发的初期阶段完成",
+      "param": "核心需求开发时间",
+      "value": "初期阶段",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "用户管理功能... 优先级：高",
+      "param": "用户管理功能优先级",
+      "value": "高",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "用户管理功能... 关键性：关键",
+      "param": "用户管理功能关键性",
+      "value": "关键",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "没有用户管理功能，平台无法正常运作",
+      "param": "平台运作状态",
+      "value": "无法正常运作",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "商品展示功能... 优先级：高",
+      "param": "商品展示功能优先级",
+      "value": "高",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "商品展示功能... 关键性：关键",
+      "param": "商品展示功能关键性",
+      "value": "关键",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "没有商品展示功能，平台无法提供用户所需的商品信息",
+      "param": "商品信息提供",
+      "value": "无法提供",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "搜索功能... 优先级：高",
+      "param": "搜索功能优先级",
+      "value": "高",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "搜索功能... 关键性：关键",
+      "param": "搜索功能关键性",
+      "value": "关键",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "没有搜索功能，用户将无法方便地找到想要购买的商品",
+      "param": "用户查找商品",
+      "value": "无法方便地找到",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "购物车功能... 优先级：高",
+      "param": "购物车功能优先级",
+      "value": "高",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "购物车功能... 关键性：关键",
+      "param": "购物车功能关键性",
+      "value": "关键",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "没有该功能，用户无法完成购买流程",
+      "param": "购买流程",
+      "value": "无法完成",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "下单和订单管理功能... 优先级：高",
+      "param": "下单和订单管理功能优先级",
+      "value": "高",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "下单和订单管理功能... 关键性：关键",
+      "param": "下单和订单管理功能关键性",
+      "value": "关键",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "缺少该功能会导致平台无法完成交易",
+      "param": "平台交易",
+      "value": "无法完成",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "temporal",
+      "original": "买家完成购物车操作后，可以创建订单",
+      "param": "创建订单时机",
+      "value": "完成购物车操作后",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "商品评价和留言功能... 优先级：中",
+      "param": "商品评价和留言功能优先级",
+      "value": "中",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "商品评价和留言功能... 关键性：重要",
+      "param": "商品评价和留言功能关键性",
+      "value": "重要",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "虽然不影响系统的基本交易功能，但影响用户的决策和购买行为",
+      "param": "用户决策和购买行为",
+      "value": "影响",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "用户反馈和支持功能... 优先级：中",
+      "param": "用户反馈和支持功能优先级",
+      "value": "中",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "用户反馈和支持功能... 关键性：重要",
+      "param": "用户反馈和支持功能关键性",
+      "value": "重要",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "促销和折扣功能... 优先级：中",
+      "param": "促销和折扣功能优先级",
+      "value": "中",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "促销和折扣功能... 关键性：重要",
+      "param": "促销和折扣功能关键性",
+      "value": "重要",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "多语言支持... 优先级：低",
+      "param": "多语言支持优先级",
+      "value": "低",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "多语言支持... 关键性：低",
+      "param": "多语言支持关键性",
+      "value": "低",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "系统支持多语言界面",
+      "param": "界面语言支持",
+      "value": "多语言",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "系统能够运行和提供服务的基础功能不依赖于该需求",
+      "param": "基础功能依赖",
+      "value": "不依赖",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "design",
+      "original": "系统个性化设置功能... 优先级：低",
+      "param": "系统个性化设置功能优先级",
+      "value": "低",
+      "unit": "",
+      "section_number": "3.24",
+      "section_title": "3.24 需求的优先次序和关键程度",
+      "line_start": 754
+    },
+    {
+      "type": "conditional",
+      "original": "可恢复错误：如数据库连接超时、网络请求失败等，系统应自动重试或采取补救措施。",
+      "param": "可恢复错误处理策略",
+      "value": "自动重试或补救措施",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "conditional",
+      "original": "不可恢复错误：如数据库崩溃、系统崩溃等，系统应立即报警，并进行人工干预。",
+      "param": "不可恢复错误处理策略",
+      "value": "立即报警并人工干预",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "temporal",
+      "original": "不可恢复错误...系统应立即报警",
+      "param": "报警响应时间",
+      "value": "立即",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "design",
+      "original": "使用日志框架（如 SLF4J 与 Logback）记录错误信息",
+      "param": "日志框架",
+      "value": "SLF4J 与 Logback",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "design",
+      "original": "使用监控工具（如 Prometheus 与 Alertmanager）实时监控系统状态",
+      "param": "监控工具",
+      "value": "Prometheus 与 Alertmanager",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "design",
+      "original": "设计自动恢复机制，如自动重启服务、切换备用服务器等",
+      "param": "自动恢复机制",
+      "value": "自动重启服务、切换备用服务器",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "temporal",
+      "original": "定期备份数据库和重要数据",
+      "param": "数据备份频率",
+      "value": "定期",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "design",
+      "original": "设计灾难恢复方案，如多活部署、数据异地备份等",
+      "param": "灾难恢复方案",
+      "value": "多活部署、数据异地备份",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "temporal",
+      "original": "定期进行灾难恢复演练",
+      "param": "演练频率",
+      "value": "定期",
+      "unit": null,
+      "section_number": "6.4",
+      "section_title": "6.4 详细的错误处理和系统恢复机制",
+      "line_start": 933
+    },
+    {
+      "type": "design",
+      "original": "使用 Spring 实现业务对象管理，使用 Spring MVC 负责请求的转发和视图管理，MyBatis 作为数据对象的持久化引擎。",
+      "param": "技术架构",
+      "value": "SSM (Spring + Spring MVC + MyBatis)",
+      "unit": null,
+      "section_number": "",
+      "section_title": "第 7 章 注解",
+      "line_start": 948
+    },
+    {
+      "type": "conditional",
+      "original": "被授权人在软件和软件的所有副本中都必须包含版权声明和许可声明。",
+      "param": "软件发布",
+      "value": "包含版权声明和许可声明",
+      "unit": null,
+      "section_number": "",
+      "section_title": "第 7 章 注解",
+      "line_start": 948
+    },
+    {
+      "type": "conditional",
+      "original": "对用户输入的手机号进行格式验证",
+      "param": "手机号",
+      "value": "格式验证",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "确保手机号的唯一性",
+      "param": "手机号",
+      "value": "唯一",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "系统需对密码进行加密存储",
+      "param": "密码存储",
+      "value": "加密",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "如密码字段使用 MD5 加密",
+      "param": "加密算法",
+      "value": "MD5",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "系统应能够进行模糊搜索",
+      "param": "搜索方式",
+      "value": "模糊搜索",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "temporal",
+      "original": "快速返回相关商品",
+      "param": "响应时间",
+      "value": "快速",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "conditional",
+      "original": "对商品信息进行格式验证，确保商品信息完整、合法",
+      "param": "商品信息",
+      "value": "完整、合法",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "temporal",
+      "original": "实时更新购物车内容",
+      "param": "更新延迟",
+      "value": "实时",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "conditional",
+      "original": "验证订单数据的完整性和合法性",
+      "param": "订单数据",
+      "value": "完整、合法",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "系统需对留言内容进行敏感词过滤",
+      "param": "留言内容",
+      "value": "敏感词过滤",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "分页展示",
+      "param": "列表展示",
+      "value": "分页",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    },
+    {
+      "type": "design",
+      "original": "订单数据应具备良好的事务处理能力",
+      "param": "数据处理",
+      "value": "事务处理",
+      "unit": null,
+      "section_number": "3.15",
+      "section_title": "3.15 数据",
+      "line_start": 443
+    }
+  ]
+}

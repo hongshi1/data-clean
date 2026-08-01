@@ -1,0 +1,207 @@
+{
+  "doc_name": "fprime_Fw_DataStructures_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Fw_DataStructures_sdd.md",
+  "md_lines": 161,
+  "md_chars": 5493,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Fw/DataStructures: Basic Data Structures",
+  "section_count": 14,
+  "sections": [
+    {
+      "number": null,
+      "title": "Fw/DataStructures: Basic Data Structures",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 987,
+      "text_preview": "`Fw/DataStructures` contains a library of basic data structures.\nAll the definitions in this directory are in the\nnamespace `Fw`.\n\nThe data structures defined here use the following concepts:\n\n* **siz"
+    },
+    {
+      "number": null,
+      "title": "1. Arrays",
+      "level": 2,
+      "line_start": 27,
+      "text_length": 517,
+      "text_preview": "An **array** _A_ stores _S_ elements for _S > 0_ at indices\n0, 1, ..., _S_ - 1.\nThe elements are stored in **backing memory** _M_.\nAn array provides bounds-checked access to the array elements\nstored "
+    },
+    {
+      "number": null,
+      "title": "2. Stacks",
+      "level": 2,
+      "line_start": 42,
+      "text_length": 104,
+      "text_preview": "A **stack** is a data structure that provides push and pop\noperations in last-in-first-out (LIFO) order."
+    },
+    {
+      "number": null,
+      "title": "2.1. Templates",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 338,
+      "text_preview": "`Fw/DataStructures` provides the following stack templates:\n\n|Name|Description|\n|----|-----------|\n|[`ExternalStack`](ExternalStack.md)|A stack with external memory for storing the stack items|\n|[`Sta"
+    },
+    {
+      "number": null,
+      "title": "2.2. Class Diagram",
+      "level": 3,
+      "line_start": 57,
+      "text_length": 258,
+      "text_preview": "```mermaid\nclassDiagram\n    SizedContainer <|-- StackBase\n    StackBase <|-- ExternalStack\n    StackBase <|-- Stack\n```\n\n`StackBase` is a derived class of [`SizedContainer`](SizedContainer.md),\nwhich "
+    },
+    {
+      "number": null,
+      "title": "3. FIFO Queues",
+      "level": 2,
+      "line_start": 69,
+      "text_length": 117,
+      "text_preview": "A **FIFO queue** is a data structure that\nprovides enqueue and dequeue operations in\nfirst-in-first-out (FIFO) order."
+    },
+    {
+      "number": null,
+      "title": "3.1. Templates",
+      "level": 3,
+      "line_start": 75,
+      "text_length": 619,
+      "text_preview": "`Fw/DataStructures` provides the following FIFO queue templates:\n\n|Name|Description|\n|----|-----------|\n|[`ExternalFifoQueue`](ExternalFifoQueue.md)|A FIFO queue with external memory for storing the q"
+    },
+    {
+      "number": null,
+      "title": "3.2. Class Diagram",
+      "level": 3,
+      "line_start": 91,
+      "text_length": 282,
+      "text_preview": "```mermaid\nclassDiagram\n    SizedContainer <|-- FifoQueueBase\n    FifoQueueBase <|-- ExternalFifoQueue\n    FifoQueueBase <|-- FifoQueue\n```\n\n`FifoQueueBase` is a derived class of [`SizedContainer`](Si"
+    },
+    {
+      "number": null,
+      "title": "4. Maps",
+      "level": 2,
+      "line_start": 103,
+      "text_length": 110,
+      "text_preview": "A **map** is a data structure that associates keys to values.\nIt provides insert, remove, and find operations."
+    },
+    {
+      "number": null,
+      "title": "4.1. Templates",
+      "level": 3,
+      "line_start": 108,
+      "text_length": 570,
+      "text_preview": "`Fw/DataStructures` provides the following map templates:\n\n|Name|Description|\n|----|-----------|\n|[`ArrayMap`](ArrayMap.md)|An array-based map with internal memory for storing the array|\n|[`ExternalAr"
+    },
+    {
+      "number": null,
+      "title": "4.2. Class Diagram",
+      "level": 3,
+      "line_start": 120,
+      "text_length": 330,
+      "text_preview": "```mermaid\nclassDiagram\n    SizedContainer <|-- MapBase\n    MapBase <|-- ArrayMap\n    MapBase <|-- ExternalArrayMap\n    MapBase <|-- ExternalRedBlackTreeMap\n    MapBase <|-- RedBlackTreeMap\n```\n\n`MapB"
+    },
+    {
+      "number": null,
+      "title": "5. Sets",
+      "level": 2,
+      "line_start": 134,
+      "text_length": 102,
+      "text_preview": "A **set** is a data structure that contains elements.\nIt provides insert, remove, and find operations."
+    },
+    {
+      "number": null,
+      "title": "5.1. Templates",
+      "level": 3,
+      "line_start": 139,
+      "text_length": 511,
+      "text_preview": "|Name|Description|\n|----|-----------|\n|[`ArraySet`](ArraySet.md)|An array-based set with internal memory for storing the array|\n|[`ExternalArraySet`](ExternalArraySet.md)|An array-based set with exter"
+    },
+    {
+      "number": null,
+      "title": "5.2. Class Diagram",
+      "level": 3,
+      "line_start": 149,
+      "text_length": 330,
+      "text_preview": "```mermaid\nclassDiagram\n    SizedContainer <|-- SetBase\n    SetBase <|-- ArraySet\n    SetBase <|-- ExternalArraySet\n    SetBase <|-- ExternalRedBlackTreeSet\n    SetBase <|-- RedBlackTreeSet\n```\n\n`SetB"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 5,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "1. Arrays",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "2.1. Templates",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3.1. Templates",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "4.1. Templates",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "5.1. Templates",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

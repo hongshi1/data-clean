@@ -1,0 +1,1343 @@
+{
+  "file": "2005 - pontis.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Pontis 5.0 Bridge Management System\nFunctional Requirements Specification v1.0\nfinal\nreport\nprepared for\nAmerican Association of State Highway and Transportation Officials\n(AASHTO)\nprepared by\nCambridge Systematics, Inc.\nFebruary 2005 www.camsys.com"
+    },
+    {
+      "page": 2,
+      "text": ""
+    },
+    {
+      "page": 3,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nTable of Contents\n1.0 Introduction.........................................................................................................1-1\n2.0 Project Drivers.....................................................................................................2-1\n2.1 Purpose of the Product..............................................................................2-1\n2.2 Stakeholders................................................................................................2-3\n2.3 Users of the Product...................................................................................2-4\n2.4 Project Constraints......................................................................................2-5\n2.5 Naming Conventions and Definitions.....................................................2-7\n2.6 Relevant Facts and Assumptions.............................................................2-7\n3.0 Use Cases..............................................................................................................3-1\n3.1 Browse Bridge & Project Data...................................................................3-1\n3.2 Bridge Inventory & Inspection.................................................................3-3\n3.3 Preservation Model Development...........................................................3-6\n3.4 Program Simulation...................................................................................3-8\n3.5 Project & Program Development............................................................3-10\n3.6 Data Management....................................................................................3-12\n3.7 System Administration............................................................................3-14\n4.0 Functional Requirements..................................................................................4-1\n4.1 Browse Data.................................................................................................4-1\n4.2 Bridge Inventory & Inspection.................................................................4-3\n4.3 Preservation Model development............................................................4-6\n4.4 Program Simulation...................................................................................4-7\n4.5 Project & Program Development..............................................................4-8\n4.6 Data Management......................................................................................4-9\n4.7 System Administration............................................................................4-11\n4.8 Data Requirements...................................................................................4-14\n5.0 Non-Functional Requirements.........................................................................5-1\n5.1 Look and Feel Requirements.....................................................................5-1\n5.2 Usability Requirements..............................................................................5-1\n5.3 Performance Requirements.......................................................................5-2\n5.4 Operational Requirements........................................................................5-6\n5.5 Installation and Deployment....................................................................5-7\n5.6 Maintainability and Portability Requirements.......................................5-7\nCambridge Systematics, Inc. i"
+    },
+    {
+      "page": 4,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n5.7 Security Requirements...............................................................................5-8\n5.8 Cultural and Political Requirements........................................................5-8\n5.9 Legal Requirements....................................................................................5-9\n6.0 Implementation Plan..........................................................................................6-1\n6.1 Overview......................................................................................................6-1\n6.2 Resource Requirements Analysis Approach..........................................6-2\n6.3 Alternative 1 – Dedicated Design and Release Approach....................6-3\n6.4 Alternative 2 – Phased Design and Release Approach.........................6-5\n6.5 Alternative 3 – Dedicated Design and Phased Approach.....................6-6\n6.6 Recommended Alternative........................................................................6-7\n6.7 Risk Analysis...............................................................................................6-9\n7.0 Project Issues.......................................................................................................7-1\n7.1 Open Issues..................................................................................................7-1\n7.2 Off-The-Shelf Solutions..............................................................................7-1\n7.3 New Problems.............................................................................................7-1\n7.4 Waiting Room.............................................................................................7-1\nAppendix A – COSMIC-FFP Overview..................................................................A-1\nAppendix B – Project Schedule................................................................................B-1\nB.1 Dedicated Design and Release.................................................................B-1\nB.2 Phased Design and Release......................................................................B-2\nB.3 Dedicated Design and Phased Release...................................................B-4\nii Cambridge Systematics, Inc."
+    },
+    {
+      "page": 5,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nDocument History\nDate Author Version/Status Description of Changes\n2/28/2005 CS (ARM, SJH, Version 1.0 Updated use case diagrams,\nWER, AAP) incorporated comments\nreceived from the\nBRIDGEWare Task Force,\nTAG and Virtis/Opis\ndevelopment team.\n2/10/2005 CS (ARM, SJH, DRAFT Version 0, rev. 6 Responded to comments\nWER, AAP) from SD, FL, CA, MT;\nrevised implementation\nplan, particularly option 2\n1/13/2005 CS (ARM, SJH, DRAFT Version 0, rev. 5 Added comments from C.\nWER, AAP) Laughlin, made minor\nspelling changes, revised\nimplementation plan.\n1/3/2005 CS (ARM, SJH, DRAFT Version 0, rev. 4 Added implementation\nWER, AAP) plan chapter\n12/13/2004 CS (ARM, SJH) with DRAFT Version 0, rev. 3 Incorporates comments on\nTAG comments functional requirements\nfrom Atlanta meeting\n12/6/2004 CS (ARM, SJH, DRAFT Version 0, rev. 2 Initial TAG comments from\nAAP, WER) with P. Jensen and C. Laughlin\nTAG comments incorporated, added use\ncase descriptions and UML\ndiagrams\n11/29/2004 CS (ARM, SJH, DRAFT Version 0, rev. 1 Initial draft of Pontis 5.0\nAAP, WER) functional requirements\nspecification\nCambridge Systematics, Inc. iii"
+    },
+    {
+      "page": 6,
+      "text": ""
+    },
+    {
+      "page": 7,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n1.0 Introduction\nThis report documents the functional requirements specification (FRS) for the\nnext generation of the Pontis Bridge Management System (BMS), referred to as\nPontis 5.0 throughout. These include the functional requirements, which\ndescribe the operations that users must perform using Pontis 5.0, the non-\nfunctional requirements, which describe the manner in which the software will\nbe designed, developed, and deployed, and the plan for implementation of\nPontis 5.0.\nThroughout this document, the terms “shall” and “will” are used to identify\nspecific functions and capabilities that Pontis 5.0 must provide (e.g., Pontis\ninspection interface shall provide the ability to perform data validation on\nNational Bridge Inventory items). The terms “may” and “might” are used to\nindicate functions and capabilities that may or may not be included in the final\nproduct (e.g., Pontis may provide a direct link to GIS software for map-based\nquerying). The status of these items will be resolved through future detailed\nsoftware design activity or through progress by other vendors in the\ndevelopment and deployment of Pontis add-in applications.\nNote that this document is not intended to describe the architecture or data\nmodel of Pontis 5.0, nor is it intended to describe the specific design or\nimplementation plan for any functional requirement. This information will\nappear in later Pontis 5.0 system design documents. Preliminary work has been\nperformed to outline the technical architecture for Pontis 5.0, and a Technical\nArchitecture Description (TAD) was developed in 2003.1 The TAD presents a\nfuture vision for the project, emphasizing a web application, an advanced\ndatabase architecture, maximum reuse of user reports and forms, and a flexible,\nextensible user interface.\nThis document, once approved in final form, indicates agreement between the\nAASHTO Pontis Task Force, on behalf of the Pontis licensing agencies, and\nCambridge Systematics, on the specific functions and capabilities that Pontis 5.0\nmust provide, providing a clear and specific scope of services for the software\ndesign and development effort. Any subsequent changes to the functional\nrequirements must be carefully reviewed and considered, because they may\nimpact the project schedule and/or or expand the scope of work beyond that\nwhich is covered by the design and development contract between AASHTO and\nthe software developer.\n1 Cambridge Systematics, Pontis Technical Architecture – A Future Vision, 2003\n(http://aashtoware.camsys.com/pontis/5_0/Design/Technical_Architecture_Descript\nion/Pontis_Future_Vision_04182003.pdf).\nCambridge Systematics, Inc. 1-1"
+    },
+    {
+      "page": 8,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nThis document follows the structure and outline of the Volere Requirements\nSpecification Template.2 This approach was identified in previous discussions\nand documents.3 Some sections of this template do not apply to Pontis 5.0, and\nhave therefore been marked as such in the text of this report, or omitted in their\nentirety.\nThe TAD provides a general architecture for the future version of Pontis. It does\nnot elaborate requirements for the new system in detail, although it does identify\nkey stakeholders and stakeholder concerns to be considered in the future Pontis\nversion. A specific requirements gathering effort is necessary before the design\nand implementation of Pontis 5.0 may commence.\nTo that end, the BRIDGEWare Task Force has designated the contractor,\nCambridge Systematics, to undertake a requirements gathering process with\nguidance and substantive input from a set of bridge management and\ninformation systems experts who will serve as a Technical Advisory Group\n(TAG). Cambridge Systematics and the TAG work within the framework of the\nVolere Requirements Process Model as the formal requirements development\nmethodology.\nIn the Volere methodology, there are several main phases:\n• Project Blastoff - Define the project scope, context, and participants, and\ninitiate the requirements process\n• Trawling For Knowledge - Collect information needed to write the\nrequirements document\n• Reporting - Compile the requirements and write the requirements document\n• Quality Gateway – (continuously) Review the requirements as they are\ndrafted for completeness, relevance, and viability\n• Prototyping and Scenario Modeling – (eventually) Develop low-fidelity\nand/or high-fidelity (HiFi) prototypes to better develop the requirements\n• Perform Requirements Gathering Effort Post-mortem (Retrospective Review)\n- review outcome of the requirements process following completion of the\nrequirements document\n• Take Stock Of The Requirements – Determine if the requirements are\ncomplete and internally consistent\nThese phases culminate in this requirements specification which can move\nforward to the formal software design phase.\n2 http://www.volere.co.uk\n3 Cambridge Systematics, Pontis 5.0 Blastoff Report, October 2004.\n1-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 9,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n2.0 Project Drivers\n2.1 PURPOSE OF THE PRODUCT\nPontis 5.0 will provide licensing agencies with an up-to-date tool for bridge\nmanagement, including data management, condition assessment, model\ndevelopment, needs analysis, reporting, and interaction with other agency\nsystems. Pontis 5.0 will be the next generation of the Pontis product, currently\ndeployed in more than 45 agencies in the U.S. and abroad. This product is\nintended to replace the existing Pontis 4.x product line with a next-generation\nsoftware application, utilizing state-of-the-art software development technology.\nPontis 5.0 will build on and preserve licensee investments of time and money in\nPontis 4.x implementation.\nThe next generation of Pontis eventually will offer the full functionality of the\ncurrently deployed Pontis 4.4. The baseline capabilities will be extended to\nprovide licensees the ability to access selected modules from a web browser as\nwell as a dedicated client application, depending on the particular BMS activity.\nA web version of Pontis will offer easier application setup, administration, and\nimplementation, and will provide a straightforward migration path for existing\nPontis 4.x users.\nPontis 5.0 will support a range of new functionality, including: import and\nexport of data in eXstensible Markup Language (XML) based on the TransXML\nschema being developed through National Cooperative Highway Research\nProgram (NCHRP) Project 20-64, XML Schemas for Exchange of Transportation\nData (TransXML); improved approaches to modeling bridge needs through\nincorporation of research results from NCHRP 12-67, Multiple-Objective\nOptimization for Bridge Management Systems; improved user interfaces for\nbridge-level analysis and project planning; and support for multiple asset types.\nFurther, Pontis 5.0 will provide seamless support to its licensees for potential\nchanges in the National Bridge Inventory (NBI) coding standards.\nThe development of Pontis 5.0 is driven in part by new functional requirements\nas well as by dramatic technology changes in the software development arena\nthat have overtaken the existing client/server application, particularly in the web\napplication development domain.\nSpecific Goals for Pontis 5.0\nThe goals for Pontis 5.0 are to provide the AASHTO member agencies and\nlicensees with:\n• A readily-accessible, robust repository for bridge information, including\ndata inventory, condition, needs, project plans, and accomplishments;\nCambridge Systematics, Inc. 2-1"
+    },
+    {
+      "page": 10,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• Technically correct capabilities to perform bridge management tasks of all\ntypes;\n• A technologically up-to-date development foundation;\n• Streamlined, simpler application and deployment mechanisms;\n• A flexible, customizable application which users can extend to solve agency-\nspecific bridge management tasks; and\n• Preservation of significant agency investments in BMS generally and Pontis\nspecifically, including expenditures of time, money, training and other\nagency resources.\nThe Technical Architecture Description (TAD) identifies additional goals and\nconcerns of a number of Pontis stakeholders, which are reflected in these\nsummary goals.4\nIn this context, the bold-faced terms appearing above are defined as follows:\nReadily accessible means that information stored in Pontis 5.0 should be\navailable to most users via Microsoft Internet Explorer from any computer via a\nnetwork or Internet connection; and the software enables users to access the\nmajority of data and capabilities without specialized technical skills or training.\nRobust means that: a) the repository is built on a commercial, high-quality\nrelational database management system (RDBMS); b) the information contained\nin the system is secure, with access limited to appropriate staff and agency-\ndesignated parties; c) information contained in the system can be backed up in a\nsecure location on a regular schedule; and d) the system is reliable and in\noperation at an acceptable levels of availability and performance. Pontis 4.4 and\n5.0 address item (a) and (d) but assign primary responsibility for (b) and (c) to\nlicensing agencies.\nTechnically correct capabilities means that the various analysis and calculation\nin Pontis 5.0 operate consistently and comparably with existing versions, and\nwhere there may be opportunities for improvements or innovation in technical\ncapabilities these are well-understood, well-defined, and verifiable in the\ndeployed application. As an example, continued proper calculation of NBI\nTranslator results will be part of achieving this goal.\nTechnologically up-to-date mandates the design and development of the next\ngeneration Pontis application using next generation tools, such as .NET, web\nservices, SOAP, XML, Model-View-Controller architecture, and others.\nStreamlined, simpler administration means that agencies will find it easier and\nfaster to install, deploy, and upgrade the application, and manage its operation.\n4 Cambridge Systematics, Pontis Technical Architecture – A Future Vision, 2003, pp. 5-6.\n2-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 11,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nPontis 5.0 must address this objective explicitly and must be significantly\nimproved over current version(s).\nFlexible, customizable means that the application provides innate mechanisms\nfor extending and adapting the database schema, foundation capabilities, and\nuser presentation elements such as forms and reports. This has been a key\nbenefit of the existing product. The future Pontis 5.0 product should be capable\nof adapting to changes in data requirements, reporting, standards, and other\ninfluencing factors.\nPreservation of agency investments means that the significant body of effort to\ndevelop staff expertise, data, reports, data forms, procedures, manuals, training\ncourses, and the multitude of other BMS-related agency products must be\nexplicitly acknowledged and preserved in Pontis 5.0 to the greatest extent\npossible. This goal also means providing a straightforward migration path for\nPontis and integrated BRIDGEWare databases when moving to Pontis 5.0.\nWe explicitly recognize that these priorities and needs may change over time,\nand that the functional requirements and technical design may necessarily adapt\nto accommodate these changes in priorities and needs.\n2.2 STAKEHOLDERS\nThe TAD identifies Pontis stakeholders in some detail, and these continue to be\napplicable. The TAD outlines issues of concern to each stakeholder class which\nform a basis for identifying constraints on the Pontis 5.0 functional requirements.\nThe stakeholders defined in the TAD include:\n• End users, grouped into:\n– power users, who typically would manage an agency’s Pontis database\nand/or make heavy use of its analytic/modeling capabilities;\n– routine users, such as bridge inspectors or staff data analysts, responsible\nfor primary data collection, quality reviews, and normal data reporting.\nThese are the predominant set of Pontis users; and\n– casual users, such as planning or programming staff using Pontis\ninventory data and analytical results.\n• Agencies: the governmental or other entities responsible for procuring and\noperating Pontis;\n• AASHTO: the software product’s owner;\n• Developers: those responsible for building and maintaining BRIDGEWare\ncomponents, including third party developers;\n• Integrators: those who integrate Pontis services or data with other tools and\nsystems; and\nCambridge Systematics, Inc. 2-3"
+    },
+    {
+      "page": 12,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• Deployers: those responsible for installing, configuring and customizing\nPontis for use.\nAll the stakeholders are still important, but for the requirements development\nphase, we are highlighting the most important stakeholders concerned with\nreviewing and approving requirements in this FRS. The table below identifies\nthe key front-line Pontis stakeholders and outlines their role with respect to the\nproduct.\nStakeholder Role with respect to Pontis 5.0\nPontis Users Day-to-day Pontis users, requirements initiation,\nrequirements review and comment.\nPontis Task Force Product quality and effectiveness, technical\ncorrectness, oversight and project requirements,\ndecision-making.\nPontis 5.0 Requirements Development of Pontis 5.0 requirements,\nTechnical Advisory architecture, and implementation plan.\nGroup (TAG)\nBRIDGEWare Integration BRIDGEWare impacts assessment, implementation\nTAG (formerly, Database plan review, schedule coordination, design and\nTAG) development technology coordination, database\ndesign coordination.\nAASHTO Product quality and effectiveness, overall project\nmanagement, marketing, licensing, revenue\ndevelopment.\nContractor Responsible for developing Pontis software.\n2.3 USERS OF THE PRODUCT\nPontis users are classified as described in the following paragraphs for the\npurposes of this requirements document.\n• Inspectors: inspectors may be agency staff inspecting bridges full or part-\ntime/seasonally, or consultants. Briefly, their responsibilities entail original\nbridge data collection, review, and database quantification. Their activities\nmay also include developing field work recommendations and\naccomplishment verification. These users may or may not be licensed\nengineers;\n• Bridge project planners: staff responsible for development, review,\napproval, and tracking of bridge work of all types, whether maintenance,\nimprovements, rehabilitation or replacement;\n• Bridge management engineers: staff responsible for multiple aspects of\nbridge management, concerned with inspection program accomplishment,\n2-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 13,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nprogram development and implementation, bridge policies, and other\noverarching concerns such as truck routing and permit review;\n• Bridge design/rating engineers: staff responsible for bridge design and\nrating, who may need information from Pontis when making engineering\ndecisions, and who may contribute structure design and capacity information\nto Pontis;\n• Highway information analysts: staff responsible for collection and\nmaintenance of various data of concern to bridge management such as\nroadway service levels, traffic, routing restrictions, etc;\n• Highway program planners: staff concerned with integration of project\nplans within highway corridors, and in particular, to acknowledge, review,\nand incorporate bridge project recommendations originating from bridge\nmanagement or other sources, and to provide feedback to bridge\nmanagement on project accomplishments; and\n• Other Pontis users: staff with interest in bridge information such as\nexecutives, public relations officers, engineering firms (primarily serving as\ninspection contractors), and other casual users of the system. These users\nmay or may not have an engineering background and are primarily\nconcerned with data review, performance measures identification and\ntracking, and summary inventory/condition reports.\nClearly some of these users fall into secondary and tertiary categories. Where\nthere is a conflict, the requirements of the key internal users must take priority\nover those of secondary users. The tertiary category of users may make use of\nPontis, but have no vested interest in the product. The requirements of these\nusers are of lowest priority.\n2.4 PROJECT CONSTRAINTS\nThis section describes constraints on the requirements and the eventual design of\nthe product. These constraints reflect a number of stakeholder concerns\nidentified in the TAD.\nDevelopment Technology Constraints\nPontis 5.0 will be developed using Microsoft technologies, as follows:\n• Pontis 5.0 will be a Microsoft .NET application consisting of a combination of\nstand-alone, thin client, and back-end server applications. There may be\nduplicative capabilities between the thin-client and the stand-alone\nimplementations. Providing a stand-alone field inspection application for\ndisconnected users as well as a web inspection interface is an example.\n• The thin client will be designed and tested for the latest version of Microsoft\nInternet Explorer, version to be determined during design.\nCambridge Systematics, Inc. 2-5"
+    },
+    {
+      "page": 14,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• The stand-alone application will require workstations with the .NET Runtime\nFramework installed and the Windows XP operating system. The specific\nversion will be determined during design. While the .NET Framework is\ndistributed as part of the Windows operating system and with .NET\napplications for end users, .NET server licenses likely will be needed as well,\nwhich may mean an expense for licensing agencies.\n• The server application will expect and rely on the .NET Framework and the\ncommon language runtime (CLR).\n• Microsoft Visual Studio .NET will be used as the primary development tool\nfor Pontis 5.0. The development languages will be heterogeneous and\ndetermined appropriately for the application context and therefore may\ninclude Visual Basic .NET, C#, ASP.NET scripting, or others as appropriate.\n• Pontis 5.0 will maximize the use of third-party code libraries, whether fee-\nlicensed or open-source, to minimize original development costs to the\ngreatest extent possible.\nGeneral Solution Constraints\n• The Pontis 5.0 thin-client will be designed so it can be made available to users\nvia agency internal network and over the Internet, as appropriate for\ndifferent application contexts, with final deployment arrangement\ndetermined by each licensee.\n• Pontis 5.0 will take full advantage of web display capabilities including, in\nparticular, screen real estate management to minimize scrolling, paging and\ntabbing.\n• The BRIDGEWare database design for Pontis 5.0 will be consistent with the\ndatabase design for Pontis 4.4. Changes are very likely to be necessary but\nproposed database changes will need to be reviewed and approved by the\nBRIDGEWare Database Technical Advisory Group (TAG) as part of the\nPontis 5.0 design approval process following the agreed database change\nprotocol.5\n• Pontis will support its existing relational databases (RDBMS) of Sybase\nAdaptive Server Anywhere, Oracle, and Microsoft SQL Server as the\ndatabase for its information repository. The versions of each vendor’s\nRDBMS will be determined as part of the software design and\n5 The BRIDGEWare Task Forces have established a specific protocol for requesting,\nreviewing, and approving any database changes. Each proposed change is described,\nprioritized, and assigned to an impact/threat category. Substantive justification must\nbe provided for every change, and no changes are permitted to the BRIDGEWare\ndatabase design without the consensus of the database Technical Advisory Group\n(TAG).\n2-6 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 15,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nimplementation plan. No additional database support is anticipated as of\nthis writing, but the design will adhere strictly to ANSI-SQL and\nODBC/JDBC/.NET standards in order to maximize the potential to support\nadditional databases in the future.\n• Pontis bridge information will integrate with a more general asset\nmanagement database structure which may incorporate other types of assets\nsuch as sign structures, high-mast towers, walls, pavements, or buildings.\n• Pontis 5.0 will be a GIS-aware application that must operate properly within\nan agency’s GIS technology whether ESRI, Intergraph, Open GIS, or others.\nPontis must observe industry standard protocols in this regard and avoid\nvendor specific implementation approaches.\nAnticipated Application Workplace Environments\nPontis 5.0 will be used both in field contexts, such as an open-air bridge\ninspection, where environmental factors (weather, sunlight) may influence\nprogram operation and no network connectivity may be assumed, as well as in a\ntypical agency office environment, which will impose no special restrictions or\nrequirements on the design or operation of the system.6\n2.5 NAMING CONVENTIONS AND DEFINITIONS\nThis document relies on transportation and information technology terms that\nare in common use and do not require detailed definitions. Where a conflict\narises, the current Pontis 4.x terminology will apply.7\nThe development of Pontis 5.0 will adhere to a separate software development\nstandards document which will itself incorporate naming conventions.\n2.6 RELEVANT FACTS AND ASSUMPTIONS\nThis section describes assumptions made by the project team as well as any\nknown external factors that affect and/or constrain the Pontis 5.0 system. A brief\ndiscussion is presented here. Where appropriate, the external factors may be\nelaborated further in separate memoranda or the detailed design.\n• Pontis 5.0 must not assume a uniform operating environment and must\naccommodate both disconnected and connected users.\n6 No special support for tablet or handheld computers is anticipated at present but\nsupporting this type of technology may well become a design constraint at some point.\n7 The reader is invited to review the Pontis 4.x User and Technical Manuals, and in\nparticular, the Glossary of Terms, as well as the Federal NBI coding guide for bridge\ninspection terminology.\nCambridge Systematics, Inc. 2-7"
+    },
+    {
+      "page": 16,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• Pontis 5.0 must maintain consistency with the existing deployed 4.x\napplication, which in effect serves to a great extent as a hi-fidelity (hi-fi)\nprototype for Pontis 5.0.\n• The Pontis 5.0 design must incorporate any Federal NBI changes that may\narise during the design and development period.\n• Pontis 5.0 must use technology that the member agencies of AASHTO can\ndeploy and support, hence, the general constraint identified earlier – that\nPontis 5.0 will be a Microsoft .NET application, utilizing industry standard\nRDBMS technologies.\n• The actual development strategy will minimize original coding in favor of\nutilizing third-part libraries, even at the expense of possibly foregoing some\nfunctionality that custom coding could provide. It should be understood\nclearly by reviewers that this sort of tradeoff of cost and functionality may\nwell retroactively influence the final Pontis 5.0 requirements8. This further\nimplies that some current Pontis 4.4 capabilities may be implemented very\ndifferently in a future version in order to take advantage of available\ncommercial and open-source code.\n• Pontis 5.0 will be designed as a deployed/installed application in agencies,\nand not designed as a hosted application, although it may well operate\nperfectly acceptably in a hosted configuration, such as a Citrix environment.\n• Pontis 5.0 American Disabilities Act (ADA) compliance9 constraints on the\nfunctional requirements will be determined by AASHTO in consultation with\nits member agencies. The level and approach for achieving compliance\nremains an open issue to be resolved10.\n• Pontis 5.0 will be a licensed product, which AASHTO will maintain\nownership over, and which will be deployed with license protection to\ncertain licensees such as consultants, international agencies, and academic\ninstitutions11.\n• Pontis 5.0 must interact effectively and properly with the other BRIDGEWare\nproducts.\n8 As of this version, no particular third-party software has been selected for use in Pontis\n5.0.\n9 Section 508 of the Rehabilitation Act: Accessibility in the Information Age can be found\nat http://www.usdoj.gov/crt/508/report2/web.htm\n10 No particular accommodation for ADA compliance is currently incorporated in the\nrequirements as of this revision.\n11 Copy protection is not enforced in Pontis 4.x for U.S. licensing agencies and it is\nassumed that policy will prevail for Pontis 5.0. The arrangement for licensing web\napplication users is to be determined at a later stage.\n2-8 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 17,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• Pontis 5.0 must provide two-way XML data exchange with TransXML\nschema once it is established.\n• The design of Pontis 5.0 will be informed by review of the results of NCHRP\nProject 12-67, Multiple-Objective Optimization for Bridge Management\nSystems. Additional funding may be required to modify the Pontis modeling\napproach to incorporate new approaches developed as part of this project.\nThe estimates in this document to not attempt to quantify such additional\nfunding requirements.\n• Pontis 5.0 must provide well-defined and documented access to selected\nproduct functionality and data for third-party developers.\n• The Pontis 5.0 business rules will be similar to those of Pontis 4.x.\n• Where a conflict arises between 5.0 requirements and 4.x behavior, or when a\n4.x feature is being abandoned or significantly reworked, this design decision\nwill be explicitly documented and justified. For example, the Pontis formula\nlanguage and support for Pontis 2.0 file exchange formats are very likely to\nbe discarded in Pontis 5.0. A conflict or concern may arise where there is an\nexplicitly identified improvement to the 4.x functional design, such as the\norganization and operation of the Select tool for selecting bridges on the\nPontis desktop in a Web deployed environment. An agreed procedure and\nprotocol will be needed to facilitate making a collective decision on these\nsorts of highly visible functional changes.\n• The Project Planning module will be redesigned and replaced.\nCambridge Systematics, Inc. 2-9"
+    },
+    {
+      "page": 18,
+      "text": ""
+    },
+    {
+      "page": 19,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n3.0 Use Cases\n3.1 BROWSE BRIDGE & PROJECT DATA\nPrimary Actor: All Pontis users\nScope: This scenario covers browsing through the bridge and project data.\nStakeholders: All Pontis users\nPrecondition: User is logged into Pontis and has the necessary permissions.\nUse Case 1: View Bridge Data\nDescription: The user uses the find, filter, and select capabilities in Pontis to\naccess the desired structure. A map-based query can be performed.\nSuccess End Conditions: User finds and selects the desired structure(s). User\nviews data for the selected structure(s).\nUse Case 2: View Project Data\nDescription: The user uses the find, filter, and select capabilities in Pontis to\naccess the desired project. A map-based query can be performed.\nSuccess End Condition: User finds and selects the desired project(s). User views\ndata for the selected project(s).\nCambridge Systematics, Inc. 3-1"
+    },
+    {
+      "page": 20,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 3: Select and View Reports\nDescription: The user selects a report to run against the Pontis database.\nSuccess End Condition: The selected report is generated and displayed on the\nscreen.\n3-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 21,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 4: Select and View Pontis Information Using Maps\nDescription: The user selects data (bridges and projects) from the Pontis database\nto generate a map display, or the user selects bridges or projects from a map and\nsees the supporting Pontis information.\nSuccess End Condition: The selected Pontis information displayed on the screen\nor a map is generated showing the Pontis information.\n3.2 BRIDGE INVENTORY & INSPECTION\nPrimary Actor: Routine user\nScope: This scenario covers entering/editing inventory and inspection data.\nStakeholders: Inspector\nPrecondition: User is logged into Pontis and has the necessary permissions.\nUse Case 5: Create/Edit Structures\nDescription: The user creates a new structure by copying an existing structure or\nmanually entering in data for the structure. The user can also modify inventory\ndata for an existing structure.\nSuccess End Condition: Data for the new structure and the modifications to the\nexisting structure are stored in the Pontis database.\nCambridge Systematics, Inc. 3-3"
+    },
+    {
+      "page": 22,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 6: Create/Edit Inspections\nDescription: The user creates a new inspection for a structure by copying the last\ninspection on the structure, or manually entering in data for the new inspection.\nThe user can also modify existing inspection data for the structure. When\nappropriate, results from multiple inspectors working together may be merged\nfor one structure to create a single combined or consolidated inspection.\nSuccess End Condition: Data for the new inspection and the modifications to the\nexisting inspections are stored in the Pontis database.\n3-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 23,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 7: Calculate Dependent/Derived Inspection Results\nDescription: The user calculates derived ratings (NBI condition ratings, structural\nrating, geometric rating, sufficiency rating, and SD/FO status) based on\ninspection data. Users may override any calculated NBI condition rating such as\ndeck, superstructure, substructure or culvert condition as necessary.\nSuccess End Condition: The dependent ratings are calculated and, if accepted by\nthe user, are stored in the Pontis database. Ratings for deck, superstructure, and\nsubstructure, or culvert, condition can be entered directly to override calculated\nresults.\nCambridge Systematics, Inc. 3-5"
+    },
+    {
+      "page": 24,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n3.3 PRESERVATION MODEL DEVELOPMENT\nPrimary Actor: Advanced user\nScope: This scenario covers the development of the element preservation policy.\nStakeholders: Engineering\nPrecondition: User is logged into Pontis and has the necessary permissions.\nUse Case 8: Develop Preservation Policy\nDescription: The user updates the deterioration probabilities and preservation\naction costs based on expert elicitation and/or inspection data. The costs and\nprobabilities are used to develop the optimal preservation policy.\nSuccess End Condition: Updated preservation policy data is stored and\ndisplayed.\n3-6 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 25,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 9: Perform Health Index Targeting\nDescription: The user runs the health index targeting process to determine the\nlong term cost of meeting an average health index target.\nSuccess End Condition: The results of the HI targeting process are displayed.\nCambridge Systematics, Inc. 3-7"
+    },
+    {
+      "page": 26,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n3.4 PROGRAM SIMULATION\nPrimary Actor: Advanced user\nScope: This scenario covers all the activities related to running a programming\nsimulation or a bridge simulation.\nStakeholders: Engineering/Planning\nPrecondition: User is logged into Pontis and has the necessary permissions to use\nand potentially modify the bridge inventory, inspection history, work\nrecommendations, and project planning data, as well as the necessary model\ninformation.\nUse Case 10: Configure Simulation Parameters\nDescription: The user specifies all settings for the simulation, including the\nimprovement model parameters, agency rules, the simulation time frame, and\nthe annual budget.\nSuccess End Condition: The simulation settings are stored under a scenario\nname.\nUse Case 11: Perform Program Simulation\nDescription: The user runs a program simulation for one or more structure(s)\nwith the specified settings in order to view network trends and generate bridge-\nlevel work recommendations.\nSuccess End Condition: The results of the program simulation are accurately\ngenerated and stored in the Pontis database.\n3-8 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 27,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 12: Perform Bridge Analysis\nDescription: The user performs a bridge analysis for a structure in order to view\nthe impact of one or more work items on the structure condition.\nSuccess End Condition: The results of the bridge analysis are accurately\ngenerated and stored in the Pontis database.\nCambridge Systematics, Inc. 3-9"
+    },
+    {
+      "page": 28,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n3.5 PROJECT & PROGRAM DEVELOPMENT\nPrimary Actor: Advanced user\nScope: This scenario covers all activities related to creating and editing projects\nand programs.\nStakeholders: Bridge Engineer/Planner/Projects Engineer\nPrecondition: User is logged into Pontis and has the necessary permissions.\nUse Case 13: Create/Edit Programs\nDescription: The user creates a new program and specifies the budget for the\nprogram by funding source. The user can also edit an existing program.\nSuccess End Condition: Data for the new program and the modifications to the\nexisting program are stored in the Pontis database.\n3-10 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 29,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 14: Create/Edit Projects\nDescription: The user creates a new project by selecting Pontis-generated work\nrecommendations, inspector work candidates, and user-specified work items, or\nedits data for an existing project. The user can also edit, split, or combine\nexisting projects. Project information can be imported from a file to create or\nupdate projects.\nSuccess End Condition: Data for the new project and the modifications to the\nexisting project are stored in the Pontis database.\nCambridge Systematics, Inc. 3-11"
+    },
+    {
+      "page": 30,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n3.6 DATA MANAGEMENT\nPrimary Actor: Inspector, routine and advanced users\nScope: Data Management\nStakeholders: Inspector, Routine and Advanced User\nPrecondition: User is logged into Pontis and has the necessary permissions.\nUse Case 15: Perform Data Validation\nDescription: Perform validation, cross-validation, and quality assurance tasks in\ncontext and display the result.\nSuccess End Condition: Invalid data items are listed as a result.\n3-12 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 31,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 16: Exchange Data\nDescription: Export Pontis data in various formats including NBI, PDI, and\nXML. Import the data from various sources into Pontis database. Import and\nexport data using the TransXML schema.\nSuccess End Condition: For the export operation, the specified data are written to\na specified format. For the import, the data are correctly read from the file\nand/or the existing data are updated, and new or modified data is saved to the\ndatabase.\nCambridge Systematics, Inc. 3-13"
+    },
+    {
+      "page": 32,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUse Case 17: Perform Data Archiving\nDescription: User selects data items (e.g. inventory, inspection and/or project\ndata for removed structures) to be archived.\nSuccess End Condition: Selected data items are archived.\nUse Case 18: BRIDGEWare Integration Support\nDescription: Perform database integration task with other BRIDGEWare\nproducts. Transfer load rating data from Virtis to Pontis.\nSuccess End Condition: BRIDGEWare databases are successfully integrated.\n3.7 SYSTEM ADMINISTRATION\nPrimary Actor: Power user\nScope: System Administration\nStakeholders: End users, Agency\nPrecondition: User has the necessary permissions.\nUse Case 19: Define and Manage User Roles.\nDescription: An administrator creates/edits user roles with different security\nsettings.\n3-14 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 33,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nSuccess End Condition: New user roles are added to the system or existing roles\nare modified.\nUse Case 20: Create New Users\nDescription: An administrator adds a new user to Pontis application and assigns\nhim/her to a role.\nSuccess End Condition: New users are added to the system with designated\nprivileges.\nUse Case 21: Perform User Authentication\nDescription: When a user logs into Pontis, it validates the user name and\npassword. Access to Pontis functionalities are controlled depending on the user\nrole.\nSuccess End Condition: Connect and run Pontis with designated privileges.\nUse Case 22: Configure Application Functionalities\nDescription: User can change the application configurations.\nSuccess End Condition: Modified configuration are updated correctly And\napplication operation changes immediately, or after restart, as appropriate, to\nreflect the new configuration settings.\nUse Case 23: Configure User-Interface Presentation\nDescription: User modifies the user interface items.\nSuccess End Condition: The changes are saved and applied correctly.\nUse Case 24: Administration Functionalities\nDescription: User manages the administration functionalities that affect\napplication operation.\nSuccess End Condition: The admin functionalities are executed as defined by the\nadministrator.\nCambridge Systematics, Inc. 3-15"
+    },
+    {
+      "page": 34,
+      "text": ""
+    },
+    {
+      "page": 35,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n4.0 Functional Requirements\nThis section of the report outlines the functional requirements for Pontis 5.0 – the\nspecific tasks and activities that the software enables, other functions needed to\nsupport the software, and the data that are required to support these\nrequirements. The requirements are organized loosely around a set of Pontis 5.0\nuse cases. Each requirement is numbered for convenience. Please note that the\n“may” requirements in version 0.2 of the FRS have been moved to Section 7.4 -\nWaiting Room - for future review and discussion.\nA separate database of requirements presents each of these narrative\nrequirements generally following the Volere Requirements template specification\nand may be reviewed in conjunction with this document. In the Pontis 5.0\nrequirements database, requirements that apply only to the thin-client or thick-\nclient implementations are tagged for clarity. Where appropriate, requirements\nthat involve configurable control of program behavior are noted. For example, it\nmay be that a user is not allowed multiple sessions of the application by agency\npolicy, hence the requirement has a configuration implication.\nThe numbering convention below is to first identify the use case e.g., UC-1 View\nBridge Data, then to document individual requirements within the use case e.g.,\n…\n1.3 The user shall be able to select structures by structure ID, district, county,\nadministrative area (geographic group), ownership, custodianship, functional class, NHS\nstatus, on/off system, inspector, bridge group, inspection due dates, and all or some\nenvironment and elements. The query shall be restricted depending on the user privilege.\n…\nRequirements surrounded by boxes are new or significantly updated\nrequirements for Pontis 5.0.\n4.1 BROWSE DATA\nUC-1 View Bridge Data\n1.1 The user shall be able to view the data stored in the Physical Inventory tables\nthrough the Pontis graphical user interface (GUI).\n1.2 The user shall be able to switch between predefined structure lists.\n1.3 The user shall be able to select structures by structure ID, district, county,\nadministrative area (geographic group), ownership, custodianship, functional\nclass, NHS status, on/off system, inspector, bridge group, inspection due\ndates, and all or some environment and elements. The query shall be\nrestricted depending on the user privilege.\nCambridge Systematics, Inc. 4-1"
+    },
+    {
+      "page": 36,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n1.4 The user shall be able to find structures based on the structure ID, structure\nname, feature intersected, facility carried, route number, LRS Inventory Route,\nKM/mile posts, structure types, design types and materials, and by searching\nthe notes fields. The query shall be restricted depending on the user privilege.\n1.5 The user shall be able to enter a WHERE clause of the SQL query in the Find\nand the Filter window and run a query against the bridges in the database.\nThe query will be verified by the application and SQL errors will be reported\nto the user for correction. This capability shall be an application privilege.\nBridge-level security of the user shall be applied automatically.\n1.6 The user shall be able to select a structure by directly typing in the structure\nID in GUI, with the display scrolling to that structure. Bridge-level security of\nthe user shall be applied automatically.\n1.7 The system shall display the data in the appropriate unit of measurement as\nconfigured for the application. This will be a permanent modal setting for the\napplication. This setting shall be configurable (as stipulated in Requirement\n22.1).\n1.8 The user shall be able to select bridges on a supported map display and\ngenerate a bridge list for use within Pontis, for example, to perform a\nsimulation analysis or to generate an inspection roster.\nUC-2 View Project Data\n2.1 The user shall be able to view the data stored in the Project Planning tables\nthrough the GUI.\n2.2 The user shall be able to switch between predefined project lists.\n2.3 The user shall be able to filter and select projects by structure ID, project ID,\nprogram, action type, project status, review status, treatment, program year,\nand project end date.\n2.4 The user shall be able to find projects by project ID, project name, project\nstatus, structure ID, and program.\n2.5 The user shall be able to filter and select work candidates by structure ID,\nproject ID, program, action type, project status, review status, treatment,\nprogram year, and project end date.\n2.6 The user shall be able to enter a WHERE clause of the SQL query in the Find\nand the Filter window and run a query against the projects in the database.\nThe query will be verified by the application and SQL errors will be reported\nto the user for correction. This capability shall be an application privilege.\nBridge-level security of the user shall be applied automatically.\n2.7 The user shall be able to select a project by directly typing in the project ID in\nthe GUI, with the display scrolling to that structure. Bridge or project level\nsecurity of the user shall be applied automatically.\n4-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 37,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n2.8 The user shall be able to select projects (work) on a supported map display\nand generate a project/bridge list for use within Pontis, for example, to\ndisplay results of a simulation analysis or to generate a STIP display.\nUC-3 Generate Predefined Reports\n3.1 The user shall be able to select and execute predefined reports to view bridge\ndata, project data, preservation model data, program simulation results, and\nconfiguration data. The existing Pontis reports shall form the basis for the\npredefined reports to be provided in Pontis 5.0.\n3.2 The user shall be able to create reports in a .NET compliant report generator\nother than InfoMaker and review these reports from within the Pontis GUI.\n3.3 The system shall provide the ability to integrate current selections with a\n.NET compliant report generator other than InfoMaker. AASHTO may\nprovide users with a list of suggested report generators to replace\nPowerBuilder/InfoMaker.\n3.4 The system shall provide the ability to incorporate PDF files into standard\nPontis reports.\n3.5 The system shall provide the ability to save reports in PDF, HTML, and XML\nformats.\nUC-4 Select and View Pontis Information Using Maps\n4.1 The system shall provide the ability to create any report that is bridge or\nproject based by selecting the relevant “driver” records from a map display.\n4.2 The system shall provide the ability to create or refresh a map display from a\nset of bridge or project records selected within the Pontis desktop.\n4.2 BRIDGE INVENTORY & INSPECTION\nUC-5 Create/Edit Structure\n5.1 The user shall be able to create a new structure with a user-defined bridge\nkey.\n5.2 The user shall be able to create a new structure by copying all data of an\nexisting structure.\n5.3 The user shall be able to create new structure(s) by importing from a\nsupported file type. The supported file types are to be determined, but will\ninclude at least PDI, NBI, and XML.\n5.4 The user shall be able to edit and remove existing structures.\nCambridge Systematics, Inc. 4-3"
+    },
+    {
+      "page": 38,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n5.5 The system shall provide the ability to mark a bridge with any of several\nstatus values (e.g. inactive/closed) and automatically filter displays to\nrecognize the status value (e.g. to automatically suppress inactive/closed\nstructures).\n5.6 The system shall support storage and management of information for bridges\nin a design or preconstruction state (functional requirement is related to 4.5\nabove)\n5.7 The user shall be able to renumber the bridge key identifier and have the\nchange made globally. This functionality shall be restricted depending on the\nuser privilege.\nUC-6 Create/Edit Inspection\n6.1 The user shall be able to create a new inspection.\n6.2 The user shall be able to create a new inspection by copying a previous\ninspection.\n6.3 The user shall be able to identify and select any previous inspection as the\nsource for the copy action. The selection can be made by combination of date,\ninspection type, inspector, or inspection control group.\n6.4 The system shall have a short-form interface (display only NBI and element\ndata, similar to SI&A sheet) for inspection data entry with specifics of design\nand functionality to be determined as part of the technical design.\n6.5 The user shall have the option to copy the notes from previous inspection\nwhen creating a new inspection.\n6.6 The user shall be able to create new inspection(s) by importing an PDI file.\n6.7 The user shall be able to add new elements to the structure.\n6.8 The user shall be able to edit all the NBI data\n6.9 Changes to calculated results such as Sufficiency Rating or NBI Appraisal\nRatings will be prohibited except for secured, privileged users.12\n6.10 The user shall be able to edit element inspection data.\n6.11 The user shall be able to edit the bridge inventory items excluding the\ndependent/derived values (i.e., the appraisal ratings that are calculated\nautomatically).\n6.12 The user shall be able to edit inspection and structure notes.\n12 These derived values are only calculated by the FHWA or State implementation of the\nEdit Update program and are not user-modified.\n4-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 39,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n6.13 The system shall be capable of storing notes in plain text and XML, and shall\nmaximize the notes field size. The user shall be capable of setting the size of\nthe notes field.\n6.14 The user shall be able to create and edit work recommendations. The system\nshall be capable of estimating quantity for bridge type work\nrecommendations.\n6.15 The user shall be able to enter and update inspection planning information\n(i.e., frequency of regular and special inspections and estimated resource\nrequirements).\n6.16 The user shall be able to link and manage multimedia files.\n6.17 The system shall provide an inspection scheduling tool.13\n6.18 The system shall provide the capability to “lock down” an inspection record\nonce signed and sealed to prevent deletion or modification.\n6.19 Privileged users shall be able to delete an existing inspection unless it is\n“locked down”.\n6.20 The user shall be able to sort the element data by unit number, environment,\nand quantity.\n6.21 The user shall be able to view all data from any two inspections, for a single\nbridge, in a tiled14 presentation for easy comparison. The presentation\n(view/report) shall clearly highlight the difference between two inspections.\n6.22 The system shall provide a configurable tracking mechanism to ensure that a\nset of screens and data fields have been reviewed and approved during the\ncourse of an inspection\nUC-7 Calculate Dependent/Derived Inspection Results\n7.1 The system shall be capable of calculating NBI condition ratings using the\nFHWA NBI Translator.\n7.2 The system shall be capable of calculating and storing bridge Sufficiency\nRating.\n7.3 The system shall be capable of calculating appraisal ratings.\n7.4 The system shall be capable of calculating Structurally Deficient/Functionally\nObsolete (SD/FO) status.\n13 Range of functionality is still to be determined. This requirement depends on\nconsensus on the scheduling capability.\n14 Side-by-side or top-bottom review panels\nCambridge Systematics, Inc. 4-5"
+    },
+    {
+      "page": 40,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n7.5 The ability of the user to update the calculated ratings and status in the\ndatabase shall be a controlled privilege. Agencies may optionally\nexclude/prohibit direct edits to the calculated inspection results such as the\nNBI translator output. The agency shall therefore be able to enforce strict use\nof calculated translator results for calculating NBI condition ratings.\n7.6 The system shall be capable of prompting users when the dependent fields for\nratings are changed and offer the user option to recalculate the ratings.\n7.7 The system administrator shall be able to configure the recalculation behavior\nof the derived data. The options shall include 1) do nothing, 2) alert user that\nrecalculation is required and give option to recalculate before update/save,\nand 3) recalculate silently with no confirmation prompt when user saves the\ninspection.\n7.8 The system shall eliminate any and all dependencies on workstation (user)\ncontrol/parameter files for program operation. For example, parameter\ninformation required by the NBI Translator (including information currently\nstored in ELEMENTS.PRN and ERRORS.LST) will be stored strictly within the\nPontis database rather than on individual user workstations.\n4.3 PRESERVATION MODEL DEVELOPMENT15\nUC-7 Develop Preservation Policy\n7.1 The system shall be capable of creating cost and deterioration elicitation\nrecords for Pontis users.\n7.2 The system shall be capable of updating the transition probabilities for\npreservation actions based on expert elicitations.\n7.3 The system shall be capable of updating preservation action costs based on\nexpert elicitations.\n7.4 The system shall be capable of updating transition probabilities for do-\nnothing actions based on historical inspection data.\n7.5 The user shall be able to edit the cost and deterioration models through the\nGUI and immediately see the impact on model recommendations.\n7.6 The system shall be capable of using the transition probabilities and\npreservation action costs to develop an optimal preservation policy as\ndetailed in the Pontis Technical Manual.\n15 Please refer to section 4.3 of the Pontis Technical Manual for more information on the\npreservation model in Pontis.\n4-6 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 41,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n7.7 The system shall be capable of recovering the model if the elicitation process\nfails.\n7.8 The system shall be capable of restoring the previous action costs, transition\nprobabilities, and preservation policy.\n7.9 The system shall be capable of supporting multiple cost and deterioration\nmodels.\n7.10 The system shall be capable of incorporating Health Index targets in a\npreservation (short-term) model.\n7.11 The system shall streamline the model generation process (i.e. remove any\nunnecessary prompts as currently implemented in version 4.x).\nUC-8 Perform Health Index Targeting\n8.1 The system shall be capable of determining the long-term cost of achieving an\naverage health index target for one or more structure(s), broken down by\nelements, element categories, for the entire structure.\nUC-9 Provide Preservation Model Dashboard\n9.1 The system shall provide a preservation model dashboard integrating the\ncapabilities described above. The exact functionality of the dashboard will be\ninformed by review of the results of NCHRP Project 12-67, Multiple-Objective\nOptimization for Bridge Management Systems.\n4.4 PROGRAM SIMULATION16\nUC-10 Configure Simulation Parameters\n10.1 The user shall be able to specify the characteristics of the simulation, including\nthe simulation timeframe, various thresholds for the simulation, the project\ntypes included in the simulation, the needs addressed, and the annual budget\nfor the simulation.\n10.2 The user shall be able to update the unit costs and the policy standards\ngoverning the improvement model.\n10.3 The user shall be able to modify the technical parameters governing the\nsimulation, including the parameters of the improvement model and the\nsimulation rules.\n16 Please refer to section 4.5 of the Pontis Technical Manual for more information on the\nprogram simulation in Pontis.\nCambridge Systematics, Inc. 4-7"
+    },
+    {
+      "page": 42,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n10.4 The user shall be able to select the structural elements to be included in the\nsimulation.\n10.5 The user shall be able to dynamically determine bridge subsets as part of the\nscenario settings.\nUC-11 Perform Program Simulation\n11.1 The system shall be capable of running a program simulation for a selected set\nof structures and storing the simulation results in the Pontis database.\nUC-12 Perform Bridge Analysis\n12.1 The user shall be able to choose from Pontis-generated work\nrecommendations, inspector work candidates, and user-defined work items to\ninclude in the bridge simulation for a structure.\n12.2 The system shall be capable of running bridge analysis for a single structure\nand storing the simulation results in the Pontis database.\n12.3 The system shall provide a Bridge Analysis Dashboard that will allow the\nuser to choose work items for a structure and the timing of the work, view the\nimpact of the work on the condition of the structure, assign the work\ncandidates to a project, and perform life-cycle cost analysis for the structure.\nThe exact functionality of the dashboard will be informed by review of the\nresults of NCHRP Project 12-67, Multiple-Objective Optimization for Bridge\nManagement Systems.\n4.5 PROJECT & PROGRAM DEVELOPMENT\nUC-13 Create/Edit Programs\n13.1 The user shall be able to create new programs by manually entering program\ninformation.\n13.2 The user shall be able to edit or delete existing programs.\nUC-14 Create/Edit Projects\n14.1 The user shall be able to create new projects by manually entering the project\ninformation.\n14.2 The user shall be able to edit or delete existing projects.\n14.3 The user shall be able assign Pontis-generated work recommendations,\ninspector work candidates, and user-specified work items to a project, or\nremove work items from a project.\n14.4 The user shall be able to split a project into multiple projects and combine\nmultiple projects into a master project.\n4-8 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 43,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n14.5 The user shall be able to edit the characteristics of multiple projects\nsimultaneously (batch update).\n14.6 The user shall be able to edit the data stored in the Project Planning tables\nthrough the GUI.\n14.7 The system shall be capable of tracking and linking funding levels and project\nbudgets. The system shall warn users if the project budget exceeds funding.\n14.8 The system shall be capable of grouping work candidates by different action\ntypes – bridge-level, element-level, and flexible-level actions.\n4.6 DATA MANAGEMENT\nUC-15 Perform Data Validation\n15.1 The system shall be capable of performing single-field and cross-field\nvalidation on NBI data items in batch mode.\n15.2 The system shall be capable of performing configurable input range checks\nusing the DATADICT table upon entering data.\n15.3 The system shall be capable of performing data validation tasks including\ncross field validation upon saving data.\n15.4 The system shall allow users to configure data validation rules. This shall be a\nprivileged operation.\n15.5 The system shall provide data review wizard for comparing incoming bridge\ndata with existing data. The errors will be highlighted for easy review.\n15.6 The system shall guarantee atomic database transactions to ensure maximum\ndata integrity, using standard .NET transaction management capabilities.\n15.7 The system shall maximize multi-user concurrency and conflict resolution in\nthe application using standard .NET session and transaction management\ncapabilities.\nUC-16 Exchange Data\n16.1 The user shall be able to exchange data in NBI format.\n16.2 The user shall be able to exchange data in PDI format as specified in the\nPontis Technical Manual.\nCambridge Systematics, Inc. 4-9"
+    },
+    {
+      "page": 44,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n16.3 The user shall be able to exchange data in XML format. The emerging\nTransXML schema specification17 shall be utilized once established and\naccepted.\n16.4 The user shall be able to exchange bridge inspection data in PDI format.\n16.5 The user shall be able to designate a recipient for checked-out bridges.\n16.6 The system shall store all export/import control information within the\ndatabase for central administration, eliminating any dependency on\nworkstation control files to manage export/import behavior.18\n16.7 The system shall strictly separate transient or volatile batch operation control\nrecords – e.g. bridge records to be included in a report – from more static\ncontrol record – e.g. currently checked-out bridges.19\nUC-17 Perform Data Archiving\n17.1 The user shall be able to archive data for existing and removed structures.\n17.2 A selection/filter capability shall be provided to restrict operations on active,\ninactive, or all structures during any data archiving activity.\n17.3 The system shall provide reporting mechanism for viewing archived data.\n17.4 The user shall be able to restore the archived data.\n17.5 The system shall use timestamps in the database to log when rows were last\nchanged.\nUC-18 BRIDGEWare Integration Support\n18.1 The system shall continue to provide existing application integration\ncapabilities with BRIDGEWare products.\n18.2 The system shall support concurrent storage in the database of planned,\nactive, and inactive structures, and potentially other status/lifecycle phase\nindicators, to facilitate BRIDGEWare integration.\n17 National Cooperative Highway Research Program (NCHRP) Project 20-64, XML\nSchemas for Exchange of Transportation Data\n18 For example, the existing export control files (NONBRDG.TXT, BRIDGES.TXT)\ndetermine the list of tables to be included in PDI export.\n19 The currently overloaded CICOCNTL table will have only the role of recording\nchecked-out and checked-in bridges in Pontis 5.0. A separate batch management\nmechanism will be used to manage bridge subsets for reporting, program simulation,\nand other volatile batch operations.\n4-10 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 45,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n4.7 SYSTEM ADMINISTRATION\nUC-19 Define and Manage User Roles\n19.1 The administrator shall be able to create and edit new application roles.\n19.2 The administrator shall be able to assign users to application roles.\n19.3 The system shall provide user interface for managing application roles.\n19.4 The administrator shall be able to assign application permissions to each user\nroles.\nUC-20 Manage Application Users\n20.1 The administrator shall be able to add new users to the system.\n20.2 The user shall be able to modify his or her basic account profile.\n20.3 The administrator shall be able to create bridge-level access filters.\n20.4 The administrator shall be able to assign bridge-level filters for each user.\n20.5 The administrator shall be able to remove users from the system or disable\naccess as appropriate.\nUC-21 Perform User Authentication\n21.1 The system shall be capable of validating user name and password during\nlog-in process.\n21.2 The system shall be capable of authorizing access to Pontis functionalities\ndepending on the user’s privileges during log-in process.\n21.3 The system shall be capable of tracking login and logout activity.\n21.4 The system shall be capable of running concurrent sessions for a user.\n21.5 The system shall be capable of supporting Windows Authentication\nmechanism for database access.20\n21.6 The system shall be capable of initiating a session without a login prompt.\nThis capability will provide support for an independent launch shell for\nPontis and will be configured by the system administrator.21\n20 The Windows Authentication capability is database vendor specific and only relevant\nto the client/server application components. Pontis 4.4 only supports this for Microsoft\nSQL Server 2000.\n21 This is similar to Florida DOT’s application launcher and consistent with the Single\nSign On capabilities currently used by many web portals.\nCambridge Systematics, Inc. 4-11"
+    },
+    {
+      "page": 46,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n21.7 The system shall be capable of integrating authentication and permissions\nwith BRIDGEWare22.\n21.8 The system shall be capable of operating with a single-sign-on authentication\nmechanism based on Active Directory Services or the LDAP standard.23\nUC-22 Configure Application Functionalities\n22.1 The administrator shall be able to configure the system units of measure in\neither English or metric mode. This will be a permanent setting for the\napplication and database.24\n22.2 The system shall be capable of storing the INI file configuration information in\nthe database or workstation registry as appropriate, eliminating dependency\non INI files for program operation.\n22.3 The system will accommodate XP directory security and file permissions\nwhen storing any configuration or session parameters.\n22.4 The administrator shall be able to edit the DATADICT table or its successor(s)\nthrough a GUI window.\n22.5 The administrator shall be able to add and configure pre-populated new\nstructure templates.\n22.6 The administrator shall be able to configure field-level security.\n22.7 The administrator shall be able to configure some fields as mandatory for user\ninput.\n22.8 The administrator shall be able to configure different levels of permission to\ncontrol editing of checked-out bridges.\n22.9 The system shall adhere to a .NET logging standard.\n22.10 The system shall adhere to a .NET exception handling standard.\n22.11 The administrator shall be able to configure the values in the dropdown lists\nin the system.\n22 Note that this requirement implies that corresponding development work will be\nperformed for Virtis/Opis. Where feasible, costs should be minimized by utilizing\nexisting functionality.\n23 It should be recognized that the Virtis/Opis application authentication/security\ncontrol approach may need to be revised to accomplish this capability globally in the\nAASHTO BRIDGEWare software suite.\n24 Data exchange operations will still support conversion, and the NBI tape will continue\nto be created in metric format only subject to NBIS reporting standards change at the\nFederal level.\n4-12 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 47,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n22.12 The administrator shall be able to create agency-specific elements, including\nelement definitions, condition states, actions, models and other related\ninformation.\n22.13 The administrator shall be able to configure definitions of element types,\nenvironments, materials, and categories.\n22.14 The administrator shall be able to add custom structure lists.\n22.15 The administrator shall be able to add custom project lists.\n22.16 The administrator shall be able to configure default values for various\nscenario parameters.\n22.17 The administrator shall be able to configure customizable options that affect\nsystem operations.\n22.18 The system shall validate all configuration options to verify proper program\noperation, including explicit identification of any potentially conflicting\nprogram options.\n22.19 Configuration option validation shall be supported by a built-in diagnostic\nreport.\nUC-23 Configure User-Interface Presentation\n23.1 The administrator shall be able to configure the labels of user interface items\nand screen displays.\n23.2 The system shall be capable of supporting internationalization using the\nstandard Windows/.NET internationalization support.\n23.3 The system shall be capable of showing all screens, menus, user interface\ncontrols, prompts, error messages and information notices in native language,\nwith some of these elements customizable.\nUC-24 Admin Functionalities\n24.1 The system shall provide an interface to communicate with an external service\nor third-party software. A set of standard interfaces25 will be defined for this\ncapability.\n24.2 The system shall provide application administrators with a secured tool for\noverriding bridge/project check-out status.\n24.3 The system shall provide application administrators with a secured tool for\nclearing batch processing tables used by the system for deadlock/lockout\nresolution.\n25 Web service and SOAP (Simple Object Access Protocol) will likely be used for these\ninterfaces\nCambridge Systematics, Inc. 4-13"
+    },
+    {
+      "page": 48,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n24.4 The system shall provide a fixed set of predefined, secured, administration\nreports to document users, user roles, application privileges, user login\nsessions, checked-out bridges, and other key information necessary to manage\napplication operation.\n4.8 DATA REQUIREMENTS\nA full, detailed data model for Pontis 5.0 will become part of the Pontis 5.0\nSystem Design and is beyond the scope of this document. The Pontis\n4.x/BRIDGEWare database design is assumed as the basis for these requirements\nexcept as indicated. The following is a list of basic table groupings as defined in\nthe Pontis Technical Manual.\n• Physical Inventory: This set of tables contains data related to an agency’s\nphysical bridge inventory. These include general inventory data, work\ncandidates recommendations, structures exchanged during the check-\nin/check-out process, multimedia document links, and optional agency-\nspecific inventory data.\n• Program Simulation: These tables store data related to the program\nsimulation process. They contain elicitation data, deterioration model\nupdating data, preservation policy, flexible action definitions, program\nsimulation inputs, and simulation results.\n• Project Planning: These tables contain information about programs and\nfunding sources, projects and their work items, agency-defined project data,\nand temporarily stored work items used to support the bridge analysis\nfunctionality.\n• Definition: Pontis system definitions are stored in these tables.\n• Application System: Application system tables store configuration data\nrequired for running Pontis. The tables contain system data including the\ndata dictionary, parameter, configurable options, data on users and their\nroles, formulas, and other system data. It is likely that extensive changes will\nbe made in these tables for Pontis 5.0, particularly to support auditing,\nlogging, versioning, user authentication and session management, and other\nnew capabilities.\n4-14 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 49,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n5.0 Non-Functional Requirements\n5.1 LOOK AND FEEL REQUIREMENTS\nThe EIM&DSS design will be informed by World Wide Web Consortium (W3C)\ndesign guidelines26 and conform to common industry practices for user\ninteraction behavior and user interface design. For the thin-client portion of\nPontis, the AASHTO standards for thin-client web-based applications software\nwill be followed.\nThe software, through its user interface, will clearly identify the product name\n(Pontis 5.0.x), the licensee, the connected user, and the organization that\ndeveloped the system (AASHTO). Additional session identification information\nwill be available on demand.27 The overall look and feel of the product will be\nthat of a professional and conservative application.\nPontis 5.0 will, at AASHTO’s direction, adopt any elements of the look and feel\nof other existing AASHTOWare/BRIDGEWare applications where appropriate.\nIn particular, UI conventions from Virtis/Opis will be reviewed to ensure that\nthe Pontis 5.0 does not differ markedly in appearance. AASHTO may designate\nsuch model applications and must provide the development team with access to\nfully-documented style sheets/UI layouts or demonstration software to support\nthis requirement.\nThere will be no support for individual personalization of the user interface\n(skins) other than the availability of certain features that are tied to a user role\n(e.g. not all users will have the ability to edit bridge data and thus will not see an\n“Edit On” button on the corresponding screen).\n5.2 USABILITY REQUIREMENTS\nPontis 5.0 will be designed to be as straightforward and intuitive as possible, and\nfamiliar to existing users. The user interface will provide effective navigation,\nvisual referencing, and task sequencing. Users will have access to on-line help\nthroughout the UI.\nThe application should look and feel consistent in the web and standalone\noperating environments, therefore it will conform to standard .NET standalone\n26 Word Wide Web Consortium, Web Content Accessibility Guidelines 2.0, November\n2004 (http://www.w3.org/TR/WCAG20/)..\n27 Pontis 4.x Help About and SysInfo windows provide examples.\nCambridge Systematics, Inc. 5-1"
+    },
+    {
+      "page": 50,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nand web application conventions with necessary accommodations for the\ndeployment environment only where these prove necessary and appropriate.\nAs a general goal, Pontis users should be comfortable operating and using the\nsoftware after two full days of training. Users who only wish to access and\ndisplay bridge information should be comfortable operating and using the\nsoftware after two hours of training. System administrators should be\ncomfortable operating and maintaining the software after user training and one\nfull day of system administration training.\nThe system developer shall consider supporting existing custom forms and\nreports developed in PowerBuilder 9. It shall decide on a development tool for\nusers so that they can continue to customize Pontis and extend its capability. For\nexample, custom forms and reports created with PowerBuilder 9 may be\nmigrated to a .NET application by using the Sybase DataWindow .NET\ntechnology which is available in PowerBuilder 10.\nIntegrating DataWindow .NET is likely a short-term strategy to ease migration of\nuser forms and reports to Pontis 5.0. A stated objective for Pontis 5.0 is\neliminating dependency on PowerBuilder. Ideally, the application should not\nrequire any particular vendor technology for report or form generation, such as\nInfoMaker/PowerBuilder, so a sunset plan must be developed to outline a\nstrategy to meet this objective. However, the application shall continue to\nprovide a plug-in capability to integrate third-party .NET data displays and\nreports in the user workspace.28\n5.3 PERFORMANCE REQUIREMENTS\nThis section describes general performance requirements for Pontis 5.0, including\nits capacity (the volume of all types of data that can be stored in the repository)\nand its speed (the time it takes to execute certain types of operations).\nSome factors that determine the ultimate performance of Pontis are outside the\ncontrol of this project, and rely instead on decisions and actions of each agency\nthat implements Pontis:\n• The capacity and speed of the commercial RDBMS product used for the data\nrepository;\n• The speed of the servers on which Pontis, the RDBMS, the analytical and\nother processing engines, and other information resources are installed;\n28 Plug-in reports and forms may continue to be based on PowerBuilder at the user’s\ndiscretion. The plug-in must be capable of handling this technology for the foreseeable\nfuture, but not solely dependent on it.\n5-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 51,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n• The effective speed and congestion levels on the network that connects the\nservers and client machines running the application; and\n• A standalone database engine will continue to be necessary. Performance\nobjectives for the standalone database should be comparable.\nSome of these factors may make it impossible to achieve the performance\nrequirements for Pontis 5.0 outlined in this section. However, based on our\nassessment of the existing condition of most agency systems and infrastructure,\nwe think this outcome is unlikely.\nThere are selected licensees, typically smaller agencies, who may have much\nlower powered computer resources, and their performance must be acceptable as\nwell, although not necessarily comparable to larger installations.\nCapacity\nThe Pontis 5.0 repository must be able to store the following quantities of\nbridges, work recommendations, scenarios, projects, and users at a minimum:\nEntity Capacity of Comments\nDatabase\nBridges 50,000 This number is approached by some\nlicensees already.\nInspections per 30\nbridge\nWork 50 per bridge Most bridges will have no\nRecommendations average recommendations at all, or a small\nnumber of them( 20 or fewer).\nScenarios 20 The number of scenarios that can be\nstored and displayed in Pontis\nconcurrently.\nProjects 50,000 The number of projects that can be\nstored and displayed in Pontis\nconcurrently.\nProject detail 150,000 A concomitant number of work items\nfor each project ay be expected,\nperhaps 15 per project\nRegistered Users 500 The number of users accessing key\nfunctions – running simulations,\nupdating models, etc. – is expected\nto be fewer than 5 on a routine basis.\nSimultaneous 25 (web), 10 These are transactional read-write\nusers. The purpose of this number is to\nCambridge Systematics, Inc. 5-3"
+    },
+    {
+      "page": 52,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nRead-Write Users (standalone) provide a design guideline for\nhardware specifications to be\ndeveloped later on in this project.\nPontis will not impose any particular\nlimitation on the number of\nsimultaneous users. Agency web\nservers may restrict the number of\nsimultaneous web sessions.\nSimultaneous 150 Report and data browsing users, for\nView-only Users all deployment environments\nBatch (offline 2 Users that will create the reports at off\nprocessing) peak hours and post the results to the\nwebsite. This could be higher if there\nis a time issues with the number of\nlong running reports being generated.\nSpeed\nThis section presents speed targets for specific system functions. The apparent\nspeed of many operations will be affected by network latency (delays due to\ntransmission of text and images from the Pontis application server to the client\ndesktop machine and web browser, or for standalone operations). The times\nindicated in the table represent user-experienced response times.\nThe target times indicated in the table represent 90% thresholds – that is, the\nperformance requirement specified here means that the indicated functions will\ntake less than the indicated length of time an average of 9 out of 10 times.\nOperation Target Comments\nTime\n(seconds)\nLogin/Logout 2 Depends primarily on database and\nnetwork performance\nRedisplay typical desktop 5-10 This value applies for displaying the\n(on startup, zoom, reselect, Pontis desktop selection (assuming\nor other change), assume presentation similar to Pontis 4.x)29\n250 bridges\nCreate a new bridge 3 For example, creating a new inspection\nrecord or a new structure.\n29 Localization has had a demonstrable impact on GUI performance. Pontis 5.0 may\nrework this to improve screen display speed and will address localization properly as\nan architectural issue/constraint.\n5-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 53,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nExport 50 bridges 30 About 2 bridges per second, varies with\ntype of export file and scope of\nexported information.\nImport 50 bridges 30 About 2 bridges per second, likely\nslower than export, varies with type of\nimport file and scope of imported\ninformation.\nRetrieve and display single < 2 Will take longer if digital photographs,\nbridge (inspection) detail plan data, or other no-native content\nare being accessed.\nRetrieve and display single < 2\nproject detail\nValidate 50 bridges for NBI 10 Better than 3 bridges per second.\nedit check\nGenerate a formatted 10-20 Will vary substantially by report type.\nreport\nSave a report data to disk 5 Will vary by report type and data\nvolume\nSave/update 2\nmiscellaneous updates,\nconfiguration and model\nparameters\nRun simulation for 100 < 30 Will vary by simulation time frame\nbridges\nUpdate cost/deterioration <= ½ hour Will vary by number of bridges and\nmodels whether history is used.\nReliability and Availability\nPontis 5.0 is not strictly a transactional application or mission-critical for most\ncapabilities. In light of this, the application shall be available for use 18 hours per\nday, 353 days per year, reserving 6 hours per day and one day per month for\nroutine agency network and infrastructure maintenance. During normal times of\noperation, Pontis shall achieve 98 percent up time.\nBecause Pontis 5.0 is not a mission-critical application, there will be no attempt to\ndesign or construct the system for uninterrupted operation. Agencies may\nchoose to implement database transaction logging, mirroring, or switchover to\nbackup servers in the event of a hardware or network failure, but support for\nthese decisions or implementation are beyond the scope of Pontis 5.0 effort.\nProcedures and equipment for backups (database and software) and disaster\nrecovery are also outside the scope of this effort.\nCambridge Systematics, Inc. 5-5"
+    },
+    {
+      "page": 54,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n5.4 OPERATIONAL REQUIREMENTS\nThis section outlines the minimal requirements for effectively operating Pontis\n5.0. The requirements for both thin-client and thick-client applications are\ndiscussed. Specific items are to be determined.\nThe Pontis application server (ASP.NET) software will run on a server located\nwithin a (presumably) secure facility at each agency. Because it is an ASP.NET\napplication, the end users can vary in location depending on the network\naccessibility of the server. The Pontis database, and any other databases to be\naccessed from Pontis may be co-located on the same server machine, but at a\nminimum must be accessible from the Pontis application server via standard\ndatabase communication and connection protocols.\nThe server machine will run Windows Server 2003 or, given technology\nevolution, a descendant target server environment identified in the\nimplementation plan. The server machine must have all necessary software to\nrun an ASP.NET application. This specifically includes, but may not be limited\nto, IIS30, the .NET Framework and ASP.NET. Other web servers, appliances, and\nadd-in technologies may also be necessary depending on the final application\ndesign.\nBack-end server stored procedures and server-side functions will be supported\nand may be assumed to be usable in the technical design of Pontis 5.0. This will\nrequire implementation of the triggers in native DBMS procedural code. This\nimplies that it is very likely that the server-side code will vary for each target\nDBMS, even if the interfaces remain identical, increasing the development and\ntesting effort with the significant benefit of assigning processing to the\nappropriate application tier(s).\nPontis 5.0 will be designed to be used with Internet Explorer; it may work\ncorrectly with other browsers but this cannot be guaranteed. Given the\npredominance of IE in the browser market, it does not appear to be necessary to\nconsider support for other browsers, although this may need to be reconsidered\nif external customers are running the application(s) and need to employ different\nbrowser technology such as Netscape or Mozilla FireFox.\nStandalone capabilities will require a workstation running the latest .NET\nFramework, presumably Windows XP Professional (SP2) or its successor. Some\ncapabilities may require a network connection. The workstation’s hardware\nrequirements will be similar to those of the existing Pontis 4.4 application. There\n30The TAG should strongly consider the need to support HTTP/www servers other than\nIIS. Apache and its variants are the most widely-used web servers on the net and a rich\nplatform to exploit open source capabilities. However, many agencies rely on IIS, so\nthis technology consideration must be resolved as part of the design. Other\nAASHTOWare products (Trans*port) already vary from the IIS standard.\n5-6 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 55,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nwill continue to be a standalone/runtime database engine provided with the\napplication for offline work. The offline database is assumed to be Sybase\nAdaptive Server Anywhere release 9 or above.\n5.5 INSTALLATION AND DEPLOYMENT\nFor a thick-client portion of Pontis, an installer program will be provided to\ninstall Pontis on the user’s computer. The user shall be able to remove Pontis by\nusing the Windows Add/Remove Programs capability. When necessary, the\nSQL scripts will be provided to upgrade a previous version of Pontis database to\na new version and apply any patches. The system may be capable of supporting\nautomatic upgrades and maintenance fixes using the push technology.\nPontis 5.0 shall be able to coexist with earlier versions of Pontis on the same\ncomputer.\n5.6 MAINTAINABILITY AND PORTABILITY\nREQUIREMENTS\nPontis 5.0 shall comply with AASHTO application development standards based\non the published recommendations of the AASHTO Technical Applications and\nArchitecture (TA&A) subcommittee.\nThe latest released versions of Microsoft tools including Visual Studio .NET,\nASP.NET, .NET Framework, and databases such as Microsoft SQL Server will be\nused. The actual versions, the database release version in particular, will be\ndetermined as part of the implementation plan and put under configuration\nmanagement.\nAll source code written by the contractor will be provided to AASHTO, and\nreasonable effort will be made to develop clearly documented source code which\ncan be maintained after contract by other than the original developers.\nAll modules developed in Pontis 5.0 will support automatic testing except as\nexplicitly distinguished in the technical design. Every module will be delivered\nwith a testing driver module.\nNo commitment regarding the portability of the code is made other than that\nimplied by the use of standard Microsoft .NET tools and well-documented third-\nparty application libraries or frameworks.\nPontis 5.0 in production is intended to be supported through complete and\nsufficient on-line help and documentation and equivalent printed\ndocumentation, with occasional additional assistance provided through the\nPontis Support Center. Pontis 5.0 will also continue to provide field-level help\nwhere applicable. As with the existing Pontis 4.x product, it is assumed that\nsupport will be provided by telephone, via e-mail, and through an on-line issues\ntracking system.\nCambridge Systematics, Inc. 5-7"
+    },
+    {
+      "page": 56,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n5.7 SECURITY REQUIREMENTS\nPontis 5.0 security is a mix of database security and application security. Overall\nsecurity is provided by the database and the Pontis 5.0 user authentication\nmechanisms with more refined security over program capabilities - e.g. create a\nbridge - being addressed by the application.\nIt is assumed that authentication will utilize a single sign-on (SSO) approach and\napplication security will be declaratively managed through database or directory\nentries, rather than hard-wired into the application. This mechanism may have\nimplications for BRIDGEWare/AASHTOWare generally and will need to be\ncoordinated with the other AASHTO products31.\nDatabase security will need to be insured for the Pontis data stored in the\nRDBMS; most likely this will be done by using a specific username/password\ncombination and running as particular database roles for each database\nconnection. This security structure should be similar to the existing security\napproach in Pontis 4.x. For web clients, care will be taken to insure that\nconnection information is not accessible from application pages (e.g.,\nuserid/password embedded in HTML form variables).\nThe application level security controls will be consistent with current Pontis 4.x\nprocedures, except more comprehensive; no exceptional controls are required. A\nspecific requirement addresses field-level data security.\nFor normal users, the configurability of the system via the interface will be\nlimited to changing the parameters used to perform the various analyses and\nmodeling functions. Access to all other configuration parameters, such as\nmodule access, will be restricted to Pontis super users or application\nadministrators.\nThere are no specific privacy or immunity (antivirus) requirements for Pontis 5.0\nidentified at this time.\n5.8 CULTURAL AND POLITICAL REQUIREMENTS\nAs there are no evident cultural or political application requirements for Pontis\n5.0, this section of the Functional Requirements document does not apply for the\nmost part. However, the product likely will be designed for\nagency/international localization from the ground up with respect to user\ninterface elements, reports, messages, and other application attributes where\nnative language support is necessary. This capability will be usable by all\n31 Single sign-on technology is an issue that SCOJD and TAA should address for all\nAASHTOWare products. It appears that Kerberos is the most common basis, and\nMicrosoft uses Kerberos for its Active Directory Services. Kerberos is also well\nsupported by database vendors.\n5-8 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 57,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nlicensing agencies as desired, on an optional basis, to customize the appearance\nof the product to suit their internal standards. This capability will be analogous\nto the localization capability of Pontis 4.4 but more comprehensive in scope.\n5.9 LEGAL REQUIREMENTS\nThe system shall be capable of exporting the NBI data in the specified NBI\nformat as outlined in the NBI guideline. The system shall be capable supporting\nthe future NBI coding guide changes.\nCambridge Systematics, Inc. 5-9"
+    },
+    {
+      "page": 58,
+      "text": ""
+    },
+    {
+      "page": 59,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n6.0 Implementation Plan\n6.1 OVERVIEW\nIn order to develop an approximation of the total effort involved and create the\ndevelopment plan necessary for project planning, three implementation\nalternatives have been identified for consideration by the BRIDGEWare Task\nForce. These alternatives are quite different from each other, particularly in\nterms of schedule and user impacts. The alternatives are specified in terms of\neffort, schedule, and deliverables.\nDevelopment effort is estimated as outlined in section 6.2. The estimating\napproach provides a standardized mechanism for estimating the complexity of\nthe effort involved in providing a component of Pontis 5.0, which can be\ntransformed into development hours or cost. Based on the estimate of\ndevelopment effort, three alternative development approaches have been\nprepared. The schedules for Pontis 5.0 are intrinsically linked to the product’s\nrevenue cycles which are directly related to subscribership. Hence, the schedules\nshown for the alternatives reflect available monies and assume no solicitation\neffort will be undertaken.\nThe three alternatives proposed for consideration are:\n1. Dedicated Design and Release, where the entire Pontis 5.0 product is\ndesigned, developed, tested, and delivered as a single multi-year effort, with\nan explicit cutover to the new version at a future point in time. There are no\ninterim releases or initial products in this alternative;\n2. Phased Design and Release, where components of Pontis 5.0 are designed,\ndeveloped, tested, and delivered on a flow basis as a multi-year effort, with\ninitial efforts focused on delivering a web based inspection module; and\n3. Dedicated Design and Phased Release, which varies from the second\nalternative by explicitly calling out a dedicated design task that will start and\nconclude before incremental phased development of Pontis 5.0 components\ncommences.\nEach of these alternatives is discussed below, with a summary, an outline of\ndriving assumptions, an outline of major development tasks, resources, and\nschedule, and a revenue analysis.\nNote that each alternative assumes that the Pontis and Virtis/Opis contractors\nwill coordinate throughout the design of Pontis 5.0 and that the Virtis/Opis\ncontractor will be funded outside of the Pontis effort to review Pontis design\ndocuments.\nCambridge Systematics, Inc. 6-1"
+    },
+    {
+      "page": 60,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n6.2 RESOURCE REQUIREMENTS ANALYSIS APPROACH\nThe functional size of Pontis 5.0 has been estimated using the Common Software\nMeasurement International Consortium Full Function Points (COSMIC-FFP)\nmethod.32 The COSMIC-FFP size scale is based exclusively on Functional User\nRequirements, defined as “the user practices and procedures that the software\nmust perform to fulfill the users’ needs.” Functional user requirements exclude\nquality requirements and any technical requirements. The COSMIC-FFP method\nis designed to work for “data-rich” and “real-time” software, and it provides the\nconcepts of software layers and tiers to help differentiate functional user\nrequirements allocated at different levels of functional abstraction. More\ninformation on this methodology can be found in Appendix A.\nThe COSMIC-FFP method results in an estimate of Cosmic function size units\n(CFSU). This estimate is multiplied by an adjustment factor reflecting\napplication complexity to obtain “Adjusted CFSU,” and it may then be scaled as\nappropriate to yield an estimate in terms of hours or development cost. The cost\nestimate for Pontis is presented in Table 6.1. Costs were calibrated by comparing\nactual development costs to CFSU estimates for recent Pontis efforts. Note that\nthe COSMIC-FFP method is not capable of providing an estimate of the cost of\ndeveloping the basic application framework and C++ wrappers, so these items\nwere estimated separately based on expert judgment.\nNote that the estimates provided below are for the development costs only and\ndo not include the cost of design or testing. Design costs are anticipated to be 25\npercent of the development costs, with an additional $25,000 for each design\ndocument produced. Testing each release is expected to cost $55,000.\n32 A. Abran, J. Desharnais, S. Oligny, D. St-Pierre and C. Symons, COSMIC-FFP\nMeasurement Manual, version 2.2, 2003.\n6-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 61,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nTable 6.1. Estimated Resource Requirements for Pontis 5.0\nDevelopment\nModule CFSU Complexity Adjusted Estimated\nMultiplier CFSU Development\nCost\nInspection 268 1.5 402 $520,000\nProject Planning 159 1.5 238.5 $310,000\nProgram Simulation 252 1 252 $330,000\nPreservation 80 1 80 $105,000\nResults 28 1 28 $35,000\nGateway 84 1 84 $110,000\nConfiguration 237 1 237 $310,000\nDeveloping .NET - - - $100,000\nwrappers for C++ DLL's\nDeveloping basic - - - $250,000\nframework for Pontis 5.0\nTotal 1108 1084.5 $2,070,000\n6.3 ALTERNATIVE 1 – DEDICATED DESIGN AND\nRELEASE APPROACH\nOverview\nThe dedicated design and release approach is a strategic option focused on\ndelivering a complete product to end users at a single point in time, when a\nwholesale cutover will be performed by agencies to deploy Pontis 5.0. The key\ncharacteristics of this plan are fewer, larger tasks, a significant initial design\neffort, fewer interim deliverables, a dedicated testing phase, and a single release,\nresulting in an intense, focused deployment effort for licensing agencies.\nDriving Assumptions\nThe driving assumptions behind this approach are:\n1. Agencies do not want multiple deployment efforts in order to establish\nPontis 5.0 in production, given costs in hardware, training, staff time, and\nimplementation assistance;\nCambridge Systematics, Inc. 6-3"
+    },
+    {
+      "page": 62,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n2. A single large project with a complete deliverable package is more focused\nthan a phased effort with numerous design, develop, and release cycles,\nallowing a dedicated, continuous development team effort;\n3. Changes in technology will be relatively stable (e.g. the development\nframework will not change radically over time, and importantly the work\ndone early in the development effort will not need to be revisited later, and\npossibly overhauled or significantly reworked, in response to a technology\nchange33);\n4. The entire design and development effort can be contracted out as a package\nwith a fixed price;\n5. The effort can be broken down by contract period to accommodate revenue\ncycles, if necessary; and\n6. Pontis 4.x will continue to be maintained throughout the development period\nuntil all capabilities are delivered, and at least 2 interim releases may be\nneeded to address interim functional needs in the user base.\nKey Deliverables\nThe key deliverables for this approach are:\n• Prototypes: Three software prototypes will be developed and demonstrated\nto the client as part of the software design.\n• Design Document: The system requirements and software design decisions\nwill be documented in a detailed design document.\n• Pontis 5.0 Alpha Release: This version of the software will incorporate all\nthe functionality outlined in the design document, and will be used for\ninternal testing by CS developers.\n• Pontis 5.0 Beta Release: This version of the software will be released to\nPontis users for Beta testing.\n• Pontis 5.0 Final Release: The final version of the software will be released to\nPontis users no later than December 2009.\nSchedule\nThe tasks and schedule for this alternative are presented in Appendix B. The cost\nestimate is summarized in Section 6.6.\n33 This stable technology assumption was a key factor in the Virtis/Opis decision to focus\non a COM-based approach, and it has been proven correct until very recently when\n.NET has emerged to replace COM.\n6-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 63,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n6.4 ALTERNATIVE 2 – PHASED DESIGN AND RELEASE\nAPPROACH\nOverview\nThe phased design and release approach delivers significant components of\nPontis 5.0 serially over time with rolling cycles of design, development, testing,\nand deployment, highlighted by an initial focus on developing the web\ninspection component. This approach features multiple, less elaborate releases,\nwith more user feedback contributing to the design of later components. It\nstresses initial development of a stable framework for the product which persists\nthrough the several development cycles. There is no “massive” release, but there\nmay be significant impacts from multiple database upgrades, functionality\nreleases, or technology upgrades.\nDriving Assumptions\nThe driving assumptions behind this approach are:\n1. Agencies already need some of the projected components/capabilities of\nPontis 5.0 earlier, particularly, the web inspection capabilities and want them\nexpedited;\n2. Agencies can accommodate serial, increment releases within their own IT\nplanning schedules;\n3. It is generally desirable to show results to the users earlier;\n4. Phased development may be somewhat less technology dependent in that\nnew technology capabilities (e.g. a new .NET Framework or web\ndevelopment paradigm) can be accommodated as the project progresses and\nreleases components;\n5. Smaller, more focused releases may offer additional flexibility and\nresponsiveness to user feedback;\n6. Pontis 5.0 components are discrete and may be broken out into modular\nreleases;\n7. There may be less risk in modular releases, in that a change of\ndirection/emphasis/schedule in response to external factors may be more\npossible;\n8. Design reviews are less complicated and more easily accommodated in busy\nmanagement schedules;\n9. Smaller releases may map better into product revenue and contracting cycles;\n10. Pontis 4.x will continue to provide significant BMS functionality for users\nuntil Pontis 5.0 capabilities are delivered; and\nCambridge Systematics, Inc. 6-5"
+    },
+    {
+      "page": 64,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n11. Pontis 4.x will continue to be maintained throughout the development period\nuntil all capabilities are delivered, but no significant interim releases are\nanticipated.\nKey Deliverables\nThe key deliverables for this approach are:\n• Design Documents: The system requirements and software design decisions\nwill be documented in three design documents – one for each version of\nPontis.\n• Pontis 5.0 Release: This version of Pontis will incorporate the core\nfunctionality of the software, as well as the functionality of the Inspection\nmodule, and it will be available no later than March 2007.\n• Pontis 5.1 Release: This version of the software will incorporate the\nfunctionality of the Project Planning and Gateway modules, and it will be\navailable no later than March 2008.\n• Pontis 5.2 Release: This version of the software will incorporate the\nfunctionality of the Preservation, Programming, Configuration, and Results\nmodules, and it will be available no later than April 2010.\nSchedule\nThe tasks and schedule for this alternative are presented in Appendix B. The cost\nestimate is summarized in Section 6.6.\n6.5 ALTERNATIVE 3 – DEDICATED DESIGN AND\nPHASED APPROACH\nOverview\nThis alternative differs from Alternative 2 by emphasizing a dedicated design\neffort followed by phased development of Pontis 5.0 over time. The\ndevelopment does not start until the design is completed and approved. This\nalternative does emphasize significant prototyping efforts intended to ”prove\nout” and demonstrate design concepts, which serve to communicate key design\nconcepts and shape expectations about the future product. There are multiple\nrelease cycles in this alternative, similar to Alternative 2.\nDriving Assumptions\nThe driving assumptions behind this approach are:\n1. A dedicated design effort allows for adequate user input and feedback prior\nto development;\n6-6 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 65,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n2. As with Alternative 2, phased development may be somewhat less\ntechnology dependent in that new technology capabilities (e.g. a new .NET\nFramework or web development paradigm) can be accommodated as the\nproject progresses and releases components;\n3. A phased, multiple release, development process can be accommodated by\nagencies, as assumed in Alternative 2;\n4. Revenue cycles are a driving factor, and all the development work must fit\ninto current projections;\n5. Pontis 4.x will continue to provide significant BMS functionality for users\nuntil Pontis 5.0 capabilities are delivered; and\n6. Pontis 4.x will continue to be maintained throughout the development period\nuntil all capabilities are delivered, but no significant interim releases are\nanticipated.\nKey Deliverables\n• Prototypes: Three software prototypes will be developed and demonstrated\nto the client as part of the software design.\n• Design Document: The system requirements and software design decisions\nwill be documented in a detailed design document .\n• Pontis 5.0 Release: This version of Pontis will incorporate the core\nfunctionality of the software, as well as the functionality of the Inspection\nmodule, and it will be available no later than June 2007.\n• Pontis 5.1 Release: This version of the software will incorporate the\nfunctionality of the Project Planning and Gateway modules, and it will be\navailable no later than June 2008.\n• Pontis 5.2 Release: This version of the software will incorporate the\nfunctionality of the Preservation, Programming, Configuration, and Results\nmodules, and it will be available no later than June 2010.\nSchedule\nThe tasks and schedule for this alternative are presented in Appendix B. The cost\nestimate is summarized in Section 6.6.\n6.6 RECOMMENDED ALTERNATIVE\nThe expenditure by fiscal year for the three alternatives are presented in Table\n6.2, and the delivery dates for each module are presented in Table 6.3.\nCambridge Systematics, Inc. 6-7"
+    },
+    {
+      "page": 66,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nTable 6.2 Annual Expenditure By Development Approach\nApproach Annual Expenditure (‘000s)\nFY05-06 FY06-07 FY07-08 FY08-09 FY09-10 Total\nDedicated Design and $550 $597 $655 $653 $220 $2,675\nRelease\nPhased Design and $592 $809 $585 $500 $341 $2,828\nRelease\nDedicated Design and $550 $925 $475 $468 $367 $2,785\nPhased Release\nTable 6.3 Deliverable Dates By Development Approach\nDeliverables Dedicated Design Phased Design Dedicated Design\nand Release and Release and Phased\nRelease\nPrototypes Jun-06 NA Jun-06\nCore Functionality Dec-09 Mar-07 Jun-07\nInspection Module Dec-09 Mar-07 Jun-07\nProject Planning Dec-09 Mar-08 Jun-08\nModule\nGateway Module Dec-09 Mar-08 Jun-08\nProgram Simulation Dec-09 Apr-10 Jun-10\nModule\nPreservation Module Dec-09 Apr-10 Jun-10\nResults Module Dec-09 Apr-10 Jun-10\nWe recommend that AASHTO proceed with Alternative 3 (dedicated design and\nphased release). This project development strategy aligns well with available\nrevenue cycles, allows a formal design review and adjustments, makes\nsignificant Pontis 5.0 components such as a web inspection module available\nrelatively quickly after design is confirmed and approved. Further, this\nalternative provides positive feedback on user expectations, and allows\nadjustments to incorporate technology evolution during the development period.\n6-8 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 67,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n6.7 RISK ANALYSIS\nThe following are the major risks associated with the Pontis 5.0 development\neffort:\n• Requirement Creep: There is a risk that system requirements will grow\nsignificantly beyond those conceived while developing the development cost\nestimate. This risk can be managed by developing a requirements document\nprior to starting the development effort.\n• Obsolescence: There is a risk that the .NET standard will become obsolete\nduring the product development cycle, or very soon after the new version of\nPontis is released. This risk can be mitigated by adopting a phased approach\nto the design and/or the development effort.\n• Development Cost: There is a risk that the actual cost of the development\neffort will significantly exceed the estimates.\n• Development Schedule: There is a risk that the development effort will take\nsignificantly longer than scheduled. This may affect the license base if states\ndecide to develop their own system or move to another system.\n• Resource Risk: There is a risk that the developer will not have sufficient\nresources to complete the development, either because of staff turnover or\nbecause of a lack of technical expertise.\n• Changes to the NBI: There is a risk that the changes to the NBI planned by\nthe FHWA will significantly affect the development schedule or increase the\ncost of the development effort.\n• Agency Custom Forms: There is a risk that the approach taken to providing\nagency forms will not support easy migration from Pontis 4.x to Pontis 5.0.\n• Maintaining Pontis 4.x: There is a risk that the cost to maintain Pontis 4.x\nwill exceed budgeted amounts. This could happen if there are changes to\nPowerBuilder or Sybase that require major revisions to Pontis 4.x during the\nPontis 5.x development cycle. This risk can be partially mitigated through a\nfixed price maintenance approach.\n• User Satisfaction: There is a risk that the final product may not meet user\nexpectations, either because it does not meet their requirements or because it\ndoes not conform to their technology standards. This risk can be managed\nthrough the use of prototypes in the design phase and by following a phased\ndevelopment schedule.\nCambridge Systematics, Inc. 6-9"
+    },
+    {
+      "page": 68,
+      "text": ""
+    },
+    {
+      "page": 69,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n7.0 Project Issues\n7.1 OPEN ISSUES\nThere are no open issues as of this FRS version.\n7.2 OFF-THE-SHELF SOLUTIONS\nNo review has been performed and consequently no commercial off-the-shelf\nsolutions (COTS) have been identified as yet to fulfill special requirements in this\ndocument. Specific functionality in Pontis 5.0 may be provided by off-the-shelf\nsolutions such as Sybase DataWindow .NET. COTS software may be in the\npublic domain or licensed for a fee by AASHTO. Further COTS review will be\nconducted as part of the detailed design phase.\nA standalone database engine will be required for off-line/standalone operation.\nIt is assumed this will be the Sybase Adaptive Server Anywhere product, release\n9 or above.\n7.3 NEW PROBLEMS\nNo new problems have been identified as of this FRS version.\n7.4 WAITING ROOM\nAs of Revision 0.3, the “may” requirements from Section 4.0 - Functional\nRequirements - have been moved to this section.\nUC-1 View Bridge Data\nThe system may be configurable by the application administrator to provide\nadditional standard criteria for filtering, finding, and selecting structures.\n(possible issues when upgrading the software-updating custom configurations)\nThe system may provide a two-way interface with a GIS map application to\ndisplay bridge and project records on a map.\nUC-2 View Project Data\nThe system may be configurable by the application administrator to provide\nadditional standard criteria for filtering, finding, and selecting projects/work\nitems.\nDatabase enhancement: Federal aid common code number field may be added\nto the PROJECTS table.\nCambridge Systematics, Inc. 7-1"
+    },
+    {
+      "page": 70,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nUC-4 Create/Edit Structure\nThe user may be able to create a new structure using a step-by-step wizard with\npre-defined data requirements.\nThe user may be able to create a new structure using pre-defined templates.\nUC- 5 Create/Edit Inspection\nThe user may be able to create a new inspection using a step-by-step wizard.\nThe user may be able to query on the notes field from the GUI.\nThe system may provide the capability to affix an electronic signature to any\nrecord in the system to “lock down” the record.34\nThe system may be capable of transferring multimedia files to and from a server\nto a local hard drive.\nThe system may provide the capability to communicate/link with an EDMS\n(electronic document management system).\nThe system may provide the ability to combine multiple inspections.\nUC-7 Develop Preservation Policy\nThe system may be capable of incorporating user cost considerations in the short-\nterm and long-term model for deck elements.\nUC-8 Health Index Targeting\nThe system may be capable of running parametric simulations (i.e. series of\nsimulations with varying budget levels).\nThe system may be capable of running multiple scenarios to generate results sets\nused in cross-scenario reporting.\nUC-13 Create/Edit Programs\nThe user may be able to create new programs using a program wizard.\nUC-14 Create/Edit Projects\nThe user may be able to create new projects using a project wizard.\n34 This requirements document does not attempt to address the issue of state law and\nagency policy with regard to electronic signatures by licensed professionals. From the\napplication point of view, the capability will be generic and follow available open\nsource standards for affixing electronic signatures.\n7-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 71,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nThe system may provide an interface for route management and/or corridor\nanalysis. Projects may be defined by geography, mile point limits, and other\ncriteria.\nUC-16 Exchange Data\nThe system may provide capability to translate contract bid items to cost data\nused in the preservation cost model.\nThe system may provide a specification for exchanging data with a Maintenance\nManagement System, which will likely involve development of an XML schema\nfor this purpose.\nUC-17 Perform Data Archiving\nThe system may provide field-level change logging.\nUC-20 Create/Edit Users\nThe user may be able to send a request for a new user account. This requirement\napplies to the thin-client platform.\nUC-22 Configure Application Functionalities\nThe administrator may be able to configure the search and filter criteria for\nviewing data.\nThe administrator may be able to configure the level of GUI and application disk\nlogging.\nUC-24 Admin Functionalities\nThe system may provide messaging capability to notify users when a key event\n(such as creating new bridges or deleting bridges) occurs.\nCambridge Systematics, Inc. 7-3"
+    },
+    {
+      "page": 72,
+      "text": ""
+    },
+    {
+      "page": 73,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nAppendix A – COSMIC-FFP\nOverview\nIn the COSMIC-FFP method, the software to be measured is broken down into\n“functional process types,” defined as “an elementary component of a set of\nFunctional User Requirements (FUR) comprising a unique cohesive and\nindependently executable set of data movement types.”\nFigure A.1. Generic Flow of Data Attributes from a Functional Perspective35\nFunctional process types are broken down into four data movement types –\nEntry, Exit, Read, and Write. Each data movement is assumed to include certain\ndata manipulations (e.g. data validation). Entries and Exits cross the boundary\nbetween the software being measured and its users (who may be any person or a\ndifferent software layer or other piece of software). A Read moves data from\n35 A. Abran, J. Desharnais, S. Oligny, D. St-Pierre and C. Symons, COSMIC-FFP\nMeasurement Manual, version 2.2, 2003.\nCambridge Systematics, Inc. A-1"
+    },
+    {
+      "page": 74,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n“persistent storage” into the software being measured, while a Write makes data\n“persistent,” meaning that the data lasts beyond the life of the functional\nprocess. Each instance of data movement equals one COSMIC Functional Size\nUnit (CFSU). The size of a functional process is the sum of its data movements,\nand the size of a piece of software is the sum of the sizes of all of its functional\nprocesses.\nMeasuring Pontis 5.0\nPurpose of Measurement\nThe purpose of measurement is to measure the size of FUR of Pontis 5.0 as they\nevolve as input to cost estimating and to the measurement of productivity.\nScope of Measurement\nThe scope of measurement is Pontis 5.0, including work-output obtained by\nusing existing re-usable code.\nMeasurement Viewpoint\nThe end-user measurement viewpoint allows a functional size to be measured of\nbusiness application software as specified in the Functional User Requirement.\nFigure A.2. Application Software Seen From the End User’s Perspective36\n36 A. Abran, J. Desharnais, S. Oligny, D. St-Pierre and C. Symons, COSMIC-FFP\nMeasurement Manual, version 2.2, 2003.\nB-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 75,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nMeasuring Mathematical Algorithms\nCOSMIC-FFP is not suited for measuring complex mathematical algorithms,\nwhich are a large, integral part of Pontis. To account for this limitation, the\nmeasurer is allowed to assign locally-determined functional size to the\nexceptional functionality.\nBelow is an example of COSMIC-FFP analysis on the Multimedia use case. The\nsize of the Multimedia functionality is 29 CFSU.\nFigure A.3. COSMIC-FFP Analysis of Multimedia Tab Functionality\nCambridge Systematics, Inc. A-3"
+    },
+    {
+      "page": 76,
+      "text": ""
+    },
+    {
+      "page": 77,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\nAppendix B – Project Schedule\nB.1 DEDICATED DESIGN AND RELEASE\nThe key tasks in the dedicated design and release approach are listed in Table B-\n1. A Gant chart showing the project schedule is presented in Figure B-1.\nTable B-1. Dedicated Design and Release Tasks\nTask ID Name Duration Start Finish\n1.0 Pontis 5.0 Design\n1.1 Detailed Design 260 07/01/2005 06/29/2006\n1.2 Prototype 1 Development 120 09/01/2005 02/15/2006\n1.3 Demo Prototype 1 0 02/15/2006 02/15/2006\n1.4 Prototype 2 Development 120 11/01/2005 04/17/2006\n1.5 Demo Prototype 2 0 04/17/2006 04/17/2006\n1.6 Prototype 3 Development 120 01/02/2006 06/16/2006\n1.7 Demo Prototype 3 0 06/16/2006 06/16/2006\n1.8 Pontis 5.0 Design Document 0 06/30/2006 06/30/2006\n2.0 Pontis 5.0 Development\n2.1 Core Module Development 848 07/03/2006 09/30/2009\n2.2 Inspection Module Development 848 07/03/2006 09/30/2009\n2.3 Project Module Development 848 07/03/2006 09/30/2009\n2.4 Programming Module 848 07/03/2006 09/30/2009\nDevelopment\n2.5 Configuration Module 848 07/03/2006 09/30/2009\nDevelopment\n2.6 Preservation Module 848 07/03/2006 09/30/2009\nDevelopment\n2.7 Gateway Module Development 848 07/03/2006 09/30/2009\n2.8 Results Module Development 848 07/03/2006 09/30/2009\n2.9 Pontis 5.0 Alpha Release 0 02/02/2009 02/02/2009\n2.10 Pontis 5.0 Beta Release 0 06/30/2009 06/30/2009\n3.0 Pontis 5.0 Release\n3.1 Pontis 5.0 Testing 120 07/01/2009 12/14/2009\n3.2 Pontis 5.0 Final Release 0 12/31/2009 12/31/2009\nCambridge Systematics, Inc. B-1"
+    },
+    {
+      "page": 78,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n22000055 22000066 22000077 22000088 22000099\nTTaasskkss\n11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44\n55..00 DDeessiiggnn\nPPrroottoottyyppee 11\nPPrroottoottyyppee 22\nPPrroottoottyyppee 33\n55..00 DDeevveellooppmmeenntt\n55..00 TTeessttiinngg\nFigure B-1. Dedicated Design and Release Schedule\nB.2 PHASED DESIGN AND RELEASE\nThe key tasks in the phased design and release approach are listed in Table B-2.\nA Gant chart showing the project schedule is presented in Figure B-2.\nTable B-2. Phased Design and Release Tasks\nTask ID Name Duration Start Finish\n1.0 Pontis 5.0 Design\n1.1 Core Module Detailed Design 120 07/01/2005 12/15/2005\n1.2 Inspection Module Detailed 120 07/01/2005 12/15/2005\nDesign\n1.3 Pontis 5.0 Design Document 0 12/30/2005 12/30/2005\n2.0 Pontis 5.0 Development\n2.1 Core Module Development 240 01/02/2006 12/01/2006\n2.2 Inspection Module Development 240 01/02/2006 12/01/2006\n2.3 Pontis 5.0 Alpha Release 0 06/30/2006 06/30/2006\n2.4 Pontis 5.0 Beta Release 0 09/29/2006 09/29/2006\n3.0 Pontis 5.0 Release\n3.1 Pontis 5.0 Testing 120 10/02/2006 03/16/2007\n3.2 Pontis 5.0 Final Release 0 03/30/2007 03/30/2007\n4.0 Pontis 5.1 Design\nB-2 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 79,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n4.1 Project Planning Module Detailed 120 07/03/2006 12/15/2006\nDesign\n4.2 Gateway Module Detailed 120 07/03/2006 12/15/2006\nDesign\n4.3 Pontis 5.1 Design Document 0 12/29/2006 12/29/2006\n5.0 Pontis 5.1 Development\n5.1 Project Planning Module 240 01/01/2007 11/30/2007\nDevelopment\n5.2 Gateway Module Development 240 01/01/2007 11/30/2007\n5.3 Pontis 5.1 Alpha Release 0 06/29/2007 06/29/2007\n5.4 Pontis 5.1 Beta Release 0 09/28/2007 09/28/2007\n6.0 Pontis 5.1 Release\n6.1 Pontis 5.1 Testing 120 10/01/2007 03/14/2008\n6.2 Pontis 5.1 Final Release 0 03/31/2008 03/31/2008\n7.0 Pontis 5.2 Design\n7.1 Preservation Module Detailed 260 07/02/2007 06/27/2008\nDesign\n7.2 Programming Module Detailed 260 07/02/2007 06/27/2008\nDesign\n7.3 Configuration Module Detailed 260 07/02/2007 06/27/2008\nDesign\n7.4 Results Module Detailed Design 260 07/02/2007 06/27/2008\n7.5 Pontis 5.2 Design Document 0 06/30/2008 06/30/2008\n8.0 Pontis 5.2 Development\n8.1 Preservation Module 260 07/02/2007 06/27/2008\nDevelopment\n8.2 Programming Module 260 07/02/2007 06/27/2008\nDevelopment\n8.3 Configuration Module 260 07/02/2007 06/27/2008\nDevelopment\n8.4 Results Module Development 260 07/02/2007 06/27/2008\n8.5 Pontis 5.2 Alpha Release 0 06/30/2008 06/30/2008\n8.6 Pontis 5.2 Beta Release 260 07/02/2007 06/27/2008\n9.0 Pontis 5.2 Release\n9.1 Pontis 5.2 Testing 120 10/30/2009 04/15/2010\n9.2 Pontis 5.2 Final Release 0 04/30/2010 04/30/2010\nCambridge Systematics, Inc. B-3"
+    },
+    {
+      "page": 80,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n22000055 22000066 22000077 22000088 22000099 22001100\nTTaasskk\n11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44\n55..00 DDeessiiggnn\n55..00 DDeevveellooppmmeenntt\n55..00 TTeessttiinngg\n55..11 DDeessiiggnn\n55..11 DDeevveellooppmmeenntt\n55..11 TTeessttiinngg\n55..22 DDeessiiggnn\n55..22 DDeevveellooppmmeenntt\n55..22 TTeessttiinngg\nFigure B-2. Phased Design and Release Schedule\nB.3 DEDICATED DESIGN AND PHASED RELEASE\nThe key tasks in the dedicated design and phased release approach are listed in\nTable B-3. A Gant chart showing the project schedule is presented in Figure B-3.\nTable B-3. Dedicated Design and Phased Release Tasks\nTask ID Name Duration Start Finish\n1.0 Pontis 5.0 Design\n1.1 Detailed Design 240 07/01/2005 06/01/2006\n1.2 Prototype 1 Development 120 09/01/2005 02/15/2006\n1.3 Demo Prototype 1 0 02/15/2006 02/15/2006\n1.4 Prototype 2 Development 120 11/01/2005 04/17/2006\n1.5 Demo Prototype 2 0 04/17/2006 04/17/2006\n1.6 Prototype 3 Development 120 01/02/2006 06/16/2006\n1.7 Demo Prototype 3 0 06/16/2006 06/16/2006\n1.8 Pontis 5.0 Design Document 0 06/30/2006 06/30/2006\n2.0 Pontis 5.0 Development\n2.1 Core Module Development 195 07/03/2006 03/30/2007\n2.2 Inspection Module Development 195 07/03/2006 03/30/2007\n2.3 Pontis 5.0 Alpha Release 0 11/01/2006 11/01/2006\nB-4 Cambridge Systematics, Inc."
+    },
+    {
+      "page": 81,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n2.4 Pontis 5.0 Beta Release 0 02/01/2007 02/01/2007\n3.0 Pontis 5.0 Release\n3.1 Pontis 5.0 Testing 107 02/01/2007 06/29/2007\n3.2 Pontis 5.0 Final Release 0 06/29/2007 06/29/2007\n4.0 Pontis 5.1 Development\n4.1 Project Planning Module 196 07/02/2007 03/31/2008\nDevelopment\n4.2 Gateway Module Development 196 07/02/2007 03/31/2008\n4.3 Pontis 5.1 Alpha Release 0 11/01/2007 11/01/2007\n4.4 Pontis 5.1 Beta Release 0 02/01/2008 02/01/2008\n5.0 Pontis 5.1 Release\n5.1 Pontis 5.1 Testing 107 02/01/2008 06/16/2008\n5.2 Pontis 5.1 Final Release 0 06/30/2008 06/30/2008\n6.0 Pontis 5.2 Development\n6.1 Preservation Module 457 07/01/2008 03/31/2010\nDevelopment\n6.2 Programming Module 457 07/01/2008 03/31/2010\nDevelopment\n6.3 Configuration Module 457 07/01/2008 03/31/2010\nDevelopment\n6.4 Results Module Development 457 07/01/2008 03/31/2010\n6.5 Pontis 5.2 Alpha Release 0 011/01/2009 11/01/2009\n6.6 Pontis 5.2 Beta Release 0 02/01/2010 02/01/2010\n7.0 Pontis 5.2 Release\n7.1 Pontis 5.2 Testing 108 02/01/2010 06/17/2010\n7.2 Pontis 5.2 Final Release 0 06/30/2010 06/30/2010\nCambridge Systematics, Inc. B-5"
+    },
+    {
+      "page": 82,
+      "text": "Pontis 5.0\nFunctional Requirements Specification v1.0\n22000055 22000066 22000077 22000088 22000099 22001100\nTTaasskkss\n11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44 11 22 33 44\n55..00 DDeessiiggnn\nPPrroottoottyyppee 11\nPPrroottoottyyppee 22\nPPrroottoottyyppee 33\n55..00 DDeevveellooppmmeenntt\n55..00 TTeessttiinngg\n55..11 DDeevveellooppmmeenntt\n55..11 TTeessttiinngg\n55..22 DDeevveellooppmmeenntt\n55..22 TTeessttiinngg\nFigure B-3. Dedicated Design and Phased Release Schedule\nB-6 Cambridge Systematics, Inc."
+    }
+  ],
+  "tables": [
+    {
+      "page": 1,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 3,
+      "data": [
+        [
+          null,
+          "final\nreport\nprepared for\nAmerican Association of State Highway and Transportation Officials\n(AASHTO)\nprepared by\nCambridge Systematics, Inc.",
+          null
+        ],
+        [
+          "",
+          "",
+          ""
+        ],
+        [
+          null,
+          null,
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 5,
+      "table_idx": 0,
+      "rows": 8,
+      "cols": 12,
+      "data": [
+        [
+          "",
+          "Date",
+          "",
+          "",
+          "Author",
+          "",
+          "",
+          "Version/Status",
+          "",
+          "",
+          "Description of Changes",
+          ""
+        ],
+        [
+          "2/28/2005",
+          null,
+          null,
+          "CS (ARM, SJH,\nWER, AAP)",
+          null,
+          null,
+          "Version 1.0",
+          null,
+          null,
+          "Updated use case diagrams,\nincorporated comments\nreceived from the\nBRIDGEWare Task Force,\nTAG and Virtis/Opis\ndevelopment team.",
+          null,
+          null
+        ],
+        [
+          "2/10/2005",
+          null,
+          null,
+          "CS (ARM, SJH,\nWER, AAP)",
+          null,
+          null,
+          "DRAFT Version 0, rev. 6",
+          null,
+          null,
+          "Responded to comments\nfrom SD, FL, CA, MT;\nrevised implementation\nplan, particularly option 2",
+          null,
+          null
+        ],
+        [
+          "1/13/2005",
+          null,
+          null,
+          "CS (ARM, SJH,\nWER, AAP)",
+          null,
+          null,
+          "DRAFT Version 0, rev. 5",
+          null,
+          null,
+          "Added comments from C.\nLaughlin, made minor\nspelling changes, revised\nimplementation plan.",
+          null,
+          null
+        ],
+        [
+          "1/3/2005",
+          null,
+          null,
+          "CS (ARM, SJH,\nWER, AAP)",
+          null,
+          null,
+          "DRAFT Version 0, rev. 4",
+          null,
+          null,
+          "Added implementation\nplan chapter",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 77,
+      "table_idx": 0,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "1.0",
+          "",
+          "",
+          "Pontis 5.0 Design",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 77,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "2.0",
+          "",
+          "",
+          "Pontis 5.0 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 77,
+      "table_idx": 2,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "3.0",
+          "",
+          "",
+          "Pontis 5.0 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 78,
+      "table_idx": 0,
+      "rows": 20,
+      "cols": 23,
+      "data": [
+        [
+          "TTaasskkss",
+          "22000055",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "22000066",
+          null,
+          null,
+          null,
+          "22000077",
+          null,
+          null,
+          null,
+          "22000088",
+          null,
+          null,
+          null,
+          "22000099",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          "11",
+          "22",
+          "33",
+          null,
+          "44",
+          null,
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44"
+        ],
+        [
+          "55..00 DDeessiiggnn",
+          "",
+          "",
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 78,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "1.0",
+          "",
+          "",
+          "Pontis 5.0 Design",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 78,
+      "table_idx": 2,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "2.0",
+          "",
+          "",
+          "Pontis 5.0 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 78,
+      "table_idx": 3,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "3.0",
+          "",
+          "",
+          "Pontis 5.0 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 78,
+      "table_idx": 4,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "4.0",
+          "",
+          "",
+          "Pontis 5.1 Design",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 79,
+      "table_idx": 0,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "5.0",
+          "",
+          "",
+          "Pontis 5.1 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 79,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "6.0",
+          "",
+          "",
+          "Pontis 5.1 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 79,
+      "table_idx": 2,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "7.0",
+          "",
+          "",
+          "Pontis 5.2 Design",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 79,
+      "table_idx": 3,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "8.0",
+          "",
+          "",
+          "Pontis 5.2 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 79,
+      "table_idx": 4,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "9.0",
+          "",
+          "",
+          "Pontis 5.2 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 80,
+      "table_idx": 0,
+      "rows": 29,
+      "cols": 26,
+      "data": [
+        [
+          "TTaasskk",
+          "22000055",
+          null,
+          null,
+          null,
+          "22000066",
+          null,
+          null,
+          null,
+          "22000077",
+          null,
+          null,
+          null,
+          "22000088",
+          null,
+          null,
+          null,
+          "22000099",
+          null,
+          null,
+          null,
+          null,
+          "22001100",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          null,
+          "11",
+          "22",
+          "33",
+          "44"
+        ],
+        [
+          "55..00 DDeessiiggnn",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          null,
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 80,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 14,
+      "data": [
+        [
+          "",
+          "1.0",
+          "",
+          "",
+          "Pontis 5.0 Design",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 80,
+      "table_idx": 2,
+      "rows": 1,
+      "cols": 14,
+      "data": [
+        [
+          "",
+          "2.0",
+          "",
+          "",
+          "Pontis 5.0 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 81,
+      "table_idx": 0,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "3.0",
+          "",
+          "",
+          "Pontis 5.0 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 81,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "4.0",
+          "",
+          "",
+          "Pontis 5.1 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 81,
+      "table_idx": 2,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "5.0",
+          "",
+          "",
+          "Pontis 5.1 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 81,
+      "table_idx": 3,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "6.0",
+          "",
+          "",
+          "Pontis 5.2 Development",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 81,
+      "table_idx": 4,
+      "rows": 1,
+      "cols": 15,
+      "data": [
+        [
+          "",
+          "7.0",
+          "",
+          "",
+          "Pontis 5.2 Release",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 82,
+      "table_idx": 0,
+      "rows": 32,
+      "cols": 27,
+      "data": [
+        [
+          "TTaasskkss",
+          "22000055",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "22000066",
+          null,
+          null,
+          null,
+          "22000077",
+          null,
+          null,
+          null,
+          "22000088",
+          null,
+          null,
+          null,
+          "22000099",
+          null,
+          null,
+          null,
+          "22001100",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          "11",
+          "22",
+          "33",
+          null,
+          "44",
+          null,
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44",
+          "11",
+          "22",
+          "33",
+          "44"
+        ],
+        [
+          "55..00 DDeessiiggnn",
+          "",
+          "",
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

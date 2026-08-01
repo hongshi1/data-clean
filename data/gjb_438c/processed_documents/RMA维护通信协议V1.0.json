@@ -1,0 +1,912 @@
+{
+  "doc_name": "RMA维护通信协议V1.0",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/通信协议/RMA维护通信协议V1.0.md",
+  "md_lines": 562,
+  "md_chars": 30827,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "RMA维护通信协议 V1.0",
+  "section_count": 46,
+  "sections": [
+    {
+      "number": null,
+      "title": "RMA维护通信协议 V1.0",
+      "level": 1,
+      "line_start": 9,
+      "text_length": 3,
+      "text_preview": "---"
+    },
+    {
+      "number": "0",
+      "title": "0 协议设计思想与宏观架构",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "0.1",
+      "title": "0.1 系统角色",
+      "level": 3,
+      "line_start": 15,
+      "text_length": 217,
+      "text_preview": "本协议服务于**非对称主从架构**：\n\n- **SPS（Signal Processing System）**：信号处理系统，唯一的控制发起方（上位机/服务器）\n- **DACS（Data Acquisition & Control System）**：数据采集与控制系统，前端 FPGA 设备，仅响应控制并主动推送数据\n\n物理链路为 **10GbE 以太网（UDP/IPv4）**，每个 DACS "
+    },
+    {
+      "number": "0.2",
+      "title": "0.2 五平面分离与本文范围",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 667,
+      "text_preview": "系统整体协议采用平面分离设计，每个平面独立承载不同语义：\n\n| 平面 | 报文类型 | 方向 | 核心语义 | 可靠性策略 |\n|------|---------|------|---------|-----------|\n| **控制平面** | `0x01` 控制指令 + `0x02` 确认应答 | SPS → DACS | 波束安排周期下发（一个周期内所有波束参数集合） | CRC32C +"
+    },
+    {
+      "number": "0.3",
+      "title": "0.3 核心设计原则",
+      "level": 3,
+      "line_start": 38,
+      "text_length": 290,
+      "text_preview": "1. **全小端序编码**：所有多字节字段采用小端序（Little-Endian），包括整数、浮点数、时间戳等\n2. **协议层禁止浮点数**：维护面字段全部使用整数编码\n3. **统一32字节通用报文头**：所有报文类型共享同一通用报文头，通过\"报文类型\"字段分发到不同处理流程\n4. **校验策略**：移除通用头部 CRC16；维护载荷仍以 CRC32C 作为主要完整性校验\n5. **四字节自然"
+    },
+    {
+      "number": "0.4",
+      "title": "0.4 设备标识",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 358,
+      "text_preview": "| 设备标识 | 角色 | IP 示例 |\n|---------|------|--------|\n| `0x00` | DACS 未开通态（UNPROVISIONED，仅允许作为 RMA/0xFF 的源标识） | 10.1.0.10 |\n| `0x01` | SPS 主控 | 10.0.1.100 |\n| `0x10` | DACS 广播（仅用于目标标识） | — |\n| `0x11` | DA"
+    },
+    {
+      "number": "0.5",
+      "title": "0.5 UDP 端口分配",
+      "level": 3,
+      "line_start": 60,
+      "text_length": 106,
+      "text_preview": "| 报文类型 | 方向 | 源端口 | 目标端口 |\n|---------|------|-------|---------|\n| 远程维护 (0xFF) | SPS ↔ DACS | 7777 | 7777 |"
+    },
+    {
+      "number": "0.6",
+      "title": "0.6 协议版本",
+      "level": 3,
+      "line_start": 66,
+      "text_length": 67,
+      "text_preview": "本手册对应 **协议版本 = `0x10`**（V1.0）。协议版本编码为 `uint8`，高4位=主版本，低4位=次版本。\n\n---"
+    },
+    {
+      "number": "1",
+      "title": "1 通用报文头 — RMA 报文共用",
+      "level": 2,
+      "line_start": 72,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 包结构",
+      "level": 3,
+      "line_start": 74,
+      "text_length": 293,
+      "text_preview": "```\n┌──────────────────────────────────────────┐\n│  通用报文头 (固定 32 字节)                 │\n├──────────────────────────────────────────┤\n│  后续载荷 (RMA Payload)                  │\n└──────────────────────────"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 字段表",
+      "level": 3,
+      "line_start": 86,
+      "text_length": 2506,
+      "text_preview": "| 偏移 | 字段名称 | 类型 | 字节数 | 说明 |\n|------|---------|------|-------|------|\n| **0** | **魔数（Magic）** | `uint32` | 4 | **含义**：帧首同步字（固定值）。<br/>**取值**：`0x55AA55AA`（固定）。<br/>**设计目的**：快速定位帧首；`0x55AA`交替位模式利于硬件对齐。"
+    },
+    {
+      "number": "1.2.1",
+      "title": "1.2.1 Timestamp 语义矩阵（冻结）",
+      "level": 3,
+      "line_start": 106,
+      "text_length": 212,
+      "text_preview": "> 说明：通用头 `Timestamp` 只有一种编码（Unix Epoch ms），但本文档只定义维护平面的解释方式。\n\n| PacketType | 报文名称 | Common Header.Timestamp 语义 | 允许为 0 | 0 的语义 |\n|---|---|---|---|---|\n| `0xFF` | RMA | **请求/响应发生时刻** | 允许 | `0` 表示“时间不可"
+    },
+    {
+      "number": "1.2.2",
+      "title": "1.2.2 CRC 策略矩阵（冻结）",
+      "level": 3,
+      "line_start": 114,
+      "text_length": 264,
+      "text_preview": "> 说明：V1.0 **移除通用头 CRC16**，维护平面载荷内含 CRC32C。\n\n| PacketType | 报文名称 | 是否含 CRC32C 字段 | CRC32C 位置 | CRC32C 覆盖范围（相对本报文载荷起始 Offset） | 校验失败处理 |\n|---|---|---|---|---|---|\n| `0xFF` | RMA | 是 | RMA Payload 末尾 4B "
+    },
+    {
+      "number": "2",
+      "title": "2 RMA Header 与核心命令（维护平面）— PacketType = 0xFF",
+      "level": 2,
+      "line_start": 124,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 包结构",
+      "level": 3,
+      "line_start": 126,
+      "text_length": 859,
+      "text_preview": "```\n┌──────────────────────────────────────────────────────────┐\n│  UDP Payload (Total: 32 + RMA_Payload_Size)              │\n├──────────────────────────────────────────────────────────┤\n│  [0..31]   "
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 校验流程说明（三层保障）",
+      "level": 3,
+      "line_start": 145,
+      "text_length": 529,
+      "text_preview": "固件升级流程采用\"**单块校验 + 立即存储 + 最终完整性校验**\"的三层保障模式：\n\n| 阶段 | 操作 | 触发点 | 失败处理 |\n|------|------|--------|----------|\n| **TRANSFER（传输）** | 接收 Chunk → 验证 `ChunkCRC32C` → 通过则立即写入 Flash | 每接收一个 Chunk | `ERR_CHUNK_CR"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 RMA Header 字段表",
+      "level": 3,
+      "line_start": 158,
+      "text_length": 2319,
+      "text_preview": "> Offset 基准：相对于 Common Header 结束位置（UDP Payload Offset 32）\n\n**RMA Header 固定长度 = 16 字节**（不额外保留扩展字段；满足 4 字节对齐）\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **0** | *"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 START_SESSION (0x01) 请求",
+      "level": 3,
+      "line_start": 176,
+      "text_length": 799,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 12 (Body) + 4 (CRC32C) = 32 字节**\n\n> Offset 基准：相对于 RMA Payload 起始位置（即 RMA Header 起始，UDP Payload Offset 32）\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|"
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 START_SESSION_ACK (0x81) 响应",
+      "level": 3,
+      "line_start": 189,
+      "text_length": 1112,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 24 (Body) + 4 (CRC32C) = 44 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.6",
+      "title": "2.6 PREPARE_UPGRADE (0x10) 请求",
+      "level": 3,
+      "line_start": 205,
+      "text_length": 1824,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 20 (Body) + 4 (CRC32C) = 40 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **固件大小（FirmwareSize）** | `uint64` | 8 |"
+    },
+    {
+      "number": "2.7",
+      "title": "2.7 PREPARE_ACK (0x90) 响应",
+      "level": 3,
+      "line_start": 220,
+      "text_length": 702,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 16 (Body) + 4 (CRC32C) = 36 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.8",
+      "title": "2.8 WRITE_CHUNK (0x12) 请求",
+      "level": 3,
+      "line_start": 232,
+      "text_length": 1613,
+      "text_preview": "**PayloadLen 变长 = 16 (RMA Header) + 24 (BodyFixed) + N (ChunkData) + M (Padding) + 4 (CRC32C)**\n\n其中：\n- `N = ChunkLength`\n- `M = (4 - (N mod 4)) mod 4`（补齐到最近的 4 的倍数；全 0；不计入 ChunkLength）\n\n| Offset | Fie"
+    },
+    {
+      "number": "2.9",
+      "title": "2.9 WRITE_CHUNK_ACK (0x92) 响应",
+      "level": 3,
+      "line_start": 252,
+      "text_length": 1125,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 20 (Body) + 4 (CRC32C) = 40 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.10",
+      "title": "2.10 COMMIT_FIRMWARE (0x13) 请求",
+      "level": 3,
+      "line_start": 267,
+      "text_length": 463,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 4 (Body) + 4 (CRC32C) = 24 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **校验模式（VerifyMode）** | `uint8` | 1 | **含"
+    },
+    {
+      "number": "2.11",
+      "title": "2.11 COMMIT_ACK (0x93) 响应",
+      "level": 3,
+      "line_start": 277,
+      "text_length": 785,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 16 (Body) + 4 (CRC32C) = 36 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.12",
+      "title": "2.12 ACTIVATE_FIRMWARE (0x14) 请求",
+      "level": 3,
+      "line_start": 290,
+      "text_length": 346,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 4 (Body) + 4 (CRC32C) = 24 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **激活延迟（ActivateDelay）** | `uint32` | 4 |"
+    },
+    {
+      "number": "2.13",
+      "title": "2.13 ACTIVATE_ACK (0x94) 响应",
+      "level": 3,
+      "line_start": 299,
+      "text_length": 635,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 8 (Body) + 4 (CRC32C) = 28 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含义"
+    },
+    {
+      "number": "2.14",
+      "title": "2.14 QUERY_STATUS (0x03) 请求",
+      "level": 3,
+      "line_start": 311,
+      "text_length": 322,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 4 (Body) + 4 (CRC32C) = 24 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **查询标志（QueryFlags）** | `uint32` | 4 | **"
+    },
+    {
+      "number": "2.15",
+      "title": "2.15 STATUS_REPLY (0x83) 响应",
+      "level": 3,
+      "line_start": 320,
+      "text_length": 1425,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 36 (Body) + 4 (CRC32C) = 56 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **当前阶段（CurrentPhase）** | `uint8` | 1 | "
+    },
+    {
+      "number": "2.16",
+      "title": "2.16 开通模式（Provisioning Mode）— 基准建立与网络/逻辑ID写入（RMA 扩展 CmdType=0x20~0x23）",
+      "level": 3,
+      "line_start": 342,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.16.1",
+      "title": "2.16.1 适用范围与目标",
+      "level": 4,
+      "line_start": 344,
+      "text_length": 244,
+      "text_preview": "开通模式用于解决“出厂设备网络参数相同，安装现场需逐台写入运行态 IP 与逻辑 SourceID”的工程矛盾：\n\n- **承载平面**：仅使用维护平面 RMA（PacketType=`0xFF`，UDP 端口 7777），不新增 PacketType/端口\n- **写入目标**：运行态 IP/Netmask/Gateway 与运行态 SourceID（示例：`0x11/0x12/0x13`）\n- "
+    },
+    {
+      "number": "2.16.2",
+      "title": "2.16.2 未开通态标识与接收规则（关键约束）",
+      "level": 4,
+      "line_start": 352,
+      "text_length": 317,
+      "text_preview": "- 未开通态 DACS：`SourceID = 0x00`（仅允许出现在 `PacketType=0xFF (RMA)`；其它 PacketType 出现必须丢弃）\n- SPS → 未开通态 DACS 发送 RMA：推荐 `DestID = 0x10`（DACS 逻辑广播目标）\n- 未开通态 DACS 的接收规则（用于开通阶段）：\n   - 当 `PacketType=0xFF` 且 `DestI"
+    },
+    {
+      "number": "2.16.3",
+      "title": "2.16.3 开通流程（现场闭环）",
+      "level": 4,
+      "line_start": 362,
+      "text_length": 705,
+      "text_preview": "1. 物理上仅连接 1 台待开通 DACS 至 SPS 对应 10GbE 口\n2. SPS 侧需确保可达出厂默认地址（部署细节如临时 secondary IP/临时路由不写入 ICD）\n3. SPS → DACS（出厂 IP）发送 `START_SESSION (0x01)` 建立会话（获取 SessionID/Token）\n4. SPS → DACS 发送 `PROV_QUERY_IDENTIT"
+    },
+    {
+      "number": "2.17",
+      "title": "2.17 PROV_QUERY_IDENTITY (0x20) 请求",
+      "level": 3,
+      "line_start": 378,
+      "text_length": 257,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 0 (Body) + 4 (CRC32C) = 20 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **CRC32C（CRC32C）** | `uint32` | 4 | **含义"
+    },
+    {
+      "number": "2.18",
+      "title": "2.18 PROV_IDENTITY_REPLY (0xA0) 响应",
+      "level": 3,
+      "line_start": 386,
+      "text_length": 1159,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 32 (Body) + 4 (CRC32C) = 52 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **当前源标识（CurrentSourceID）** | `uint8` | "
+    },
+    {
+      "number": "2.19",
+      "title": "2.19 PROV_STAGE_CONFIG (0x21) 请求（写入待生效配置）",
+      "level": 3,
+      "line_start": 406,
+      "text_length": 1089,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 32 (Body) + 4 (CRC32C) = 52 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **新源标识（NewSourceID）** | `uint8` | 1 | *"
+    },
+    {
+      "number": "2.20",
+      "title": "2.20 PROV_STAGE_ACK (0xA1) 响应",
+      "level": 3,
+      "line_start": 423,
+      "text_length": 592,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 16 (Body) + 4 (CRC32C) = 36 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.21",
+      "title": "2.21 PROV_COMMIT_APPLY (0x22) 请求（提交并应用）",
+      "level": 3,
+      "line_start": 437,
+      "text_length": 632,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 16 (Body) + 4 (CRC32C) = 36 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **期望StagedCRC32C（ExpectedStagedCRC32C）*"
+    },
+    {
+      "number": "2.22",
+      "title": "2.22 PROV_COMMIT_ACK (0xA2) 响应",
+      "level": 3,
+      "line_start": 449,
+      "text_length": 560,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 16 (Body) + 4 (CRC32C) = 36 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **错误码（ErrorCode）** | `uint16` | 2 | **含"
+    },
+    {
+      "number": "2.23",
+      "title": "2.23 PROV_VERIFY (0x23) 请求（新 IP 上验收）",
+      "level": 3,
+      "line_start": 463,
+      "text_length": 281,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 0 (Body) + 4 (CRC32C) = 20 字节**\n\n> 发送约束：SPS 必须在**新 IP**上发送本请求，且 `DestID` 必须等于目标运行态 `NewSourceID`。\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-"
+    },
+    {
+      "number": "2.24",
+      "title": "2.24 PROV_VERIFY_REPLY (0xA3) 响应（新 IP 上返回）",
+      "level": 3,
+      "line_start": 473,
+      "text_length": 929,
+      "text_preview": "**PayloadLen 固定 = 16 (RMA Header) + 32 (Body) + 4 (CRC32C) = 52 字节**\n\n| Offset | Field | Type | Bytes | 说明 |\n|--------|-------|------|-------|------|\n| **16** | **生效源标识（ActiveSourceID）** | `uint8` | 1"
+    },
+    {
+      "number": "3",
+      "title": "3 RMA 错误码速查",
+      "level": 2,
+      "line_start": 492,
+      "text_length": 2146,
+      "text_preview": "| 范围 | 分类 | 错误码 | 名称 | 说明 |\n|------|------|-------|------|------|\n| `0x00` | — | `0x00` | ERR_NONE | 无错误 |\n| `0x10-0x1F` | Protocol | `0x10` | ERR_INVALID_PHASE | 当前阶段不允许此命令 |\n| | | `0x11` | ERR_PHASE"
+    },
+    {
+      "number": "4",
+      "title": "4 校验算法参数速查",
+      "level": 2,
+      "line_start": 535,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 HCS（已移除）",
+      "level": 3,
+      "line_start": 537,
+      "text_length": 29,
+      "text_preview": "V1.0 起通用报文头不再包含 CRC16/HCS 字段。"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 CRC32C — CRC-32C (Castagnoli)",
+      "level": 3,
+      "line_start": 541,
+      "text_length": 447,
+      "text_preview": "| 参数 | 值 |\n|------|-----|\n| 多项式 | `0x1EDC6F41`（反射：`0x82F63B78`） |\n| 初始值 | `0xFFFFFFFF` |\n| 输入反射 | true |\n| 输出反射 | true |\n| 最终异或 | `0xFFFFFFFF` |\n| 线上字节序 | Little-Endian |\n\n**各报文 CRC32C 覆盖范围**：\n\n| 报文 |"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 FCS — CRC-32 (IEEE 802.3)",
+      "level": 3,
+      "line_start": 560,
+      "text_length": 53,
+      "text_preview": "由 NIC 硬件处理，协议层无感知。多项式 `0x04C11DB7`，FCS 失败时 NIC 静默丢弃帧。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 31,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "平面",
+        "报文类型",
+        "方向",
+        "核心语义",
+        "可靠性策略"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "0.2 五平面分离与本文范围",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "设备标识",
+        "角色",
+        "IP 示例"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "0.4 设备标识",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文类型",
+        "方向",
+        "源端口",
+        "目标端口"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "0.5 UDP 端口分配",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "偏移",
+        "字段名称",
+        "类型",
+        "字节数",
+        "说明"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "1.2 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "PacketType",
+        "报文名称",
+        "Common Header.Timestamp 语义",
+        "允许为 0",
+        "0 的语义"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "1.2.1 Timestamp 语义矩阵（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "PacketType",
+        "报文名称",
+        "是否含 CRC32C 字段",
+        "CRC32C 位置",
+        "CRC32C 覆盖范围（相对本报文载荷起始 Offset）",
+        "校验失败处理"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "1.2.2 CRC 策略矩阵（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "阶段",
+        "操作",
+        "触发点",
+        "失败处理"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.2 校验流程说明（三层保障）",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.3 RMA Header 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.4 START_SESSION (0x01) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "2.5 START_SESSION_ACK (0x81) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "2.6 PREPARE_UPGRADE (0x10) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.7 PREPARE_ACK (0x90) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "2.8 WRITE_CHUNK (0x12) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "2.9 WRITE_CHUNK_ACK (0x92) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "2.10 COMMIT_FIRMWARE (0x13) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "2.11 COMMIT_ACK (0x93) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "2.12 ACTIVATE_FIRMWARE (0x14) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.13 ACTIVATE_ACK (0x94) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 18,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "2.14 QUERY_STATUS (0x03) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "2.15 STATUS_REPLY (0x83) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "2.17 PROV_QUERY_IDENTITY (0x20) 请求",
+      "raw_html": null
+    },
+    {
+      "index": 21,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 12,
+      "data_row_count": 11,
+      "is_empty": false,
+      "section": "2.18 PROV_IDENTITY_REPLY (0xA0) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 22,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "2.19 PROV_STAGE_CONFIG (0x21) 请求（写入待生效配置）",
+      "raw_html": null
+    },
+    {
+      "index": 23,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.20 PROV_STAGE_ACK (0xA1) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 24,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.21 PROV_COMMIT_APPLY (0x22) 请求（提交并应用）",
+      "raw_html": null
+    },
+    {
+      "index": 25,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.22 PROV_COMMIT_ACK (0xA2) 响应",
+      "raw_html": null
+    },
+    {
+      "index": 26,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "2.23 PROV_VERIFY (0x23) 请求（新 IP 上验收）",
+      "raw_html": null
+    },
+    {
+      "index": 27,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "Field",
+        "Type",
+        "Bytes",
+        "说明"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "2.24 PROV_VERIFY_REPLY (0xA3) 响应（新 IP 上返回）",
+      "raw_html": null
+    },
+    {
+      "index": 28,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "范围",
+        "分类",
+        "错误码",
+        "名称",
+        "说明"
+      ],
+      "row_count": 30,
+      "data_row_count": 29,
+      "is_empty": false,
+      "section": "3 RMA 错误码速查",
+      "raw_html": null
+    },
+    {
+      "index": 29,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "参数",
+        "值"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "4.2 CRC32C — CRC-32C (Castagnoli)",
+      "raw_html": null
+    },
+    {
+      "index": 30,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文",
+        "覆盖起止（Payload 内 Offset）",
+        "校验字段位置"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "4.2 CRC32C — CRC-32C (Castagnoli)",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

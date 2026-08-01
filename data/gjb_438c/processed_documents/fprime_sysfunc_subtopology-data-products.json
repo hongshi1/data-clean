@@ -1,0 +1,80 @@
+{
+  "doc_name": "fprime_sysfunc_subtopology-data-products",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_subtopology-data-products.md",
+  "md_lines": 43,
+  "md_chars": 2548,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Data Products Subtopology",
+  "section_count": 7,
+  "sections": [
+    {
+      "number": null,
+      "title": "Data Products Subtopology",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 358,
+      "text_preview": "- [F Prime DpManager SDD](https://github.com/nasa/fprime/blob/devel/Svc/DpManager/docs/sdd.md)\n- [F Prime DpWriter SDD](https://github.com/nasa/fprime/blob/devel/Svc/DpWriter/docs/sdd.md)\n- [F Prime D"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 11,
+      "text_length": 316,
+      "text_preview": "The Data Products subtopology packages the complete data product lifecycle — buffer allocation, data writing, and catalog-driven downlink — as a reusable building block. It provides the infrastructure"
+    },
+    {
+      "number": null,
+      "title": "Included Components",
+      "level": 3,
+      "line_start": 15,
+      "text_length": 734,
+      "text_preview": "- **Data Product Manager** (active) — Allocates buffers for data product containers in response to requests from producer components. Supports both synchronous (get) and asynchronous (request/response"
+    },
+    {
+      "number": null,
+      "title": "Internal Wiring",
+      "level": 3,
+      "line_start": 22,
+      "text_length": 330,
+      "text_preview": "Within the subtopology:\n\n1. The Data Product Manager requests buffers from the Buffer Manager.\n2. Filled buffers are sent from the Manager to the Writer.\n3. The Writer deallocates buffers back to the "
+    },
+    {
+      "number": null,
+      "title": "External Interfaces",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 400,
+      "text_preview": "The subtopology exposes ports for:\n\n- **Product get/request/send** — Ports for producer components to request, receive, and send data product buffers.\n- **File downlink** — Output port for the Catalog"
+    },
+    {
+      "number": null,
+      "title": "Configuration",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 251,
+      "text_preview": "- Data product directory paths and state file location are configured at setup time.\n- Base IDs, queue sizes, stack sizes, and priorities via DataProductsConfig.\n- Buffer Manager bin sizes and counts "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

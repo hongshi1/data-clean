@@ -1,0 +1,345 @@
+{
+  "doc_name": "BUAA06_数据库设计",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/buaa_06group_companions/BUAA06_数据库设计.md",
+  "md_lines": 144,
+  "md_chars": 3737,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "数据库设计",
+  "section_count": 13,
+  "sections": [
+    {
+      "number": null,
+      "title": "数据库设计",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 93,
+      "text_preview": "[TOC]\n\n> `identity` 规范\n>\n> | 教师 | 学生 | 助教 |\n> | ---- | ---- | ---- |\n> | 0    | 1    | 2    |"
+    },
+    {
+      "number": null,
+      "title": "`t_user`：用户",
+      "level": 3,
+      "line_start": 11,
+      "text_length": 342,
+      "text_preview": "包含教师/助教/学生\n\n`username`：账号（学工号）\n\n`name`：姓名\n\n`identity`：教师/学生\n\n| user_id | username     | password     | name         | mail         | birthday | identity |\n| ------- | ------------ | ------------ | ---"
+    },
+    {
+      "number": null,
+      "title": "`t_course`：课程",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 306,
+      "text_preview": "`syllabus`：课程大纲\n\n`assMethod`：考核方式\n\n`score`：学分\n\n`time`：学时\n\n| course_id | name         | creator_id | syllabus | assMethod    | score | time |\n| --------- | ------------ | ---------- | -------- | ------"
+    },
+    {
+      "number": null,
+      "title": "`t_class`：班级",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 207,
+      "text_preview": "`class_code` 为创建之后生成的班级统一格式的 id, 用于学生搜索加入\n\n| class_id | name         | course_id | class_code   |\n| -------- | ------------ | --------- | ------------ |\n| INT      | VARCHAR(255) | INT       | VARCHAR"
+    },
+    {
+      "number": null,
+      "title": "`t_process`：进度",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 173,
+      "text_preview": "| process_id | name         | course_id | class_id | time |\n| ---------- | ------------ | --------- |-------- | ---- |\n| INT        | VARCHAR(255) | INT       | INT | DATE |"
+    },
+    {
+      "number": null,
+      "title": "`t_resource`：资源",
+      "level": 3,
+      "line_start": 53,
+      "text_length": 426,
+      "text_preview": "【课程共有资源表】`process_id`：为 `-1` 时，为公共资源, 对于上传时为公共资源的资源, 存储两份, 一份在进度, 一份在公共区\n\n`type`：取文件的后缀，若没有后缀，默认为 `txt`\n\n`res_id`：主键，唯一\n\n`res_code`：同一项资源，支持历史更新，更新前后该值不变，通过 `date` 查看最新的\n\n|res_id| res_code | name | pr"
+    },
+    {
+      "number": null,
+      "title": "`t_exer`：任务（练习）",
+      "level": 3,
+      "line_start": 67,
+      "text_length": 493,
+      "text_preview": "【新建任务后存在于题库中的任务模板】`class_id & course_id`：为 `-1` 时，表示该项存在题库中，作为模板\n\n`problems`：`JSON` 存取 `prob_id` 列表\n\n`is_public`：是否在题库中公开，可被克隆\n\n`is_multi`：是否允许多次提交\n\n| exer_id | class_id | course_id | creator_id | beg"
+    },
+    {
+      "number": null,
+      "title": "`t_prob`：题目",
+      "level": 3,
+      "line_start": 81,
+      "text_length": 411,
+      "text_preview": "`type` 为 题目类型：选择题；判断题；简答题；编程题\n\n`description`：题目\n\n`content`：选项\n\n`answer`：答案（如 `A`）\n\n`analysis`：详细解析\n\n| prob_id | is_public | type | creator_id | create_time | description | content | answer | analysis "
+    },
+    {
+      "number": null,
+      "title": "`t_user_course_class`：用户-课程-班级表",
+      "level": 3,
+      "line_start": 97,
+      "text_length": 303,
+      "text_preview": "【课程班级表】`user_id`：用户 `id` 为 `-1` 时代表课程-班级关系，可查询课程对应的所有班级\n\n【未分配班级时老师/助教 - 课程表】`class_id`：班级 `id` 为 `-1` 时代表老师和助教进入课程之后还没有分配班级\n\n注: 对于助教, 被老师通过课程邀请进入后复制一份，后端取数据的时候记得去重\t\n\n| user_id | course_id | class_id |"
+    },
+    {
+      "number": null,
+      "title": "`t_stu_prob_exer`：学生-题目-任务表",
+      "level": 3,
+      "line_start": 109,
+      "text_length": 471,
+      "text_preview": "【任务与题目的标准分表】`stu_id`：学生 `id` 为 `-1` 时代表标准得分分配\n\n【学生对应任务的总分表】`prob_id`：题目 `id` 为 `-1` 时学生任务总分\n\n`submit`：学生作答\n\n`is_finish`：学生是否完成该任务\n\n`is_check`：学生的该任务是否已被批改\n\n`index`：题目在任务中的题号\n\n| stu_id | prob_id | exer"
+    },
+    {
+      "number": null,
+      "title": "`t_wrong`：错题表",
+      "level": 3,
+      "line_start": 127,
+      "text_length": 78,
+      "text_preview": "| stu_id | prob_id |exer_id|\n| ------ | ------- |---|\n| INT    | INT     |INT|"
+    },
+    {
+      "number": null,
+      "title": "`t_collect`：收藏表",
+      "level": 3,
+      "line_start": 133,
+      "text_length": 62,
+      "text_preview": "| stu_id | prob_id |\n| ------ | ------- |\n| INT    | INT     |"
+    },
+    {
+      "number": null,
+      "title": "`t_tag`：标签表",
+      "level": 3,
+      "line_start": 139,
+      "text_length": 77,
+      "text_preview": "| tag_id | name         |\n| ------ | ------------ |\n| INT    | VARCHAR(255) |"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 12,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "user_id",
+        "username",
+        "password",
+        "name",
+        "mail",
+        "birthday",
+        "identity"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_user`：用户",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "course_id",
+        "name",
+        "creator_id",
+        "syllabus",
+        "assMethod",
+        "score",
+        "time"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_course`：课程",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "class_id",
+        "name",
+        "course_id",
+        "class_code"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_class`：班级",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "process_id",
+        "name",
+        "course_id",
+        "class_id",
+        "time"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_process`：进度",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "res_id",
+        "res_code",
+        "name",
+        "process_id",
+        "course_id",
+        "class_id",
+        "type",
+        "url",
+        "date",
+        "tags"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_resource`：资源",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "exer_id",
+        "class_id",
+        "course_id",
+        "creator_id",
+        "begin_time",
+        "end_time",
+        "is_public",
+        "name",
+        "is_multi",
+        "score"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_exer`：任务（练习）",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "prob_id",
+        "is_public",
+        "type",
+        "creator_id",
+        "create_time",
+        "description",
+        "content",
+        "answer",
+        "analysis"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_prob`：题目",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "user_id",
+        "course_id",
+        "class_id",
+        "identity"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_user_course_class`：用户-课程-班级表",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "stu_id",
+        "prob_id",
+        "exer_id",
+        "score",
+        "comment",
+        "submit",
+        "is_finish",
+        "is_check",
+        "idx"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_stu_prob_exer`：学生-题目-任务表",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "stu_id",
+        "prob_id",
+        "exer_id"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_wrong`：错题表",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "stu_id",
+        "prob_id"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_collect`：收藏表",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "tag_id",
+        "name"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "`t_tag`：标签表",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

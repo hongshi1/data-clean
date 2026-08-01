@@ -1,0 +1,1193 @@
+{
+  "version": "2.0",
+  "description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+  "param_dictionary": {
+    "response_time": {
+      "canonical_en": "response time",
+      "canonical_cn": "响应时间",
+      "synonyms_en": [
+        "response time",
+        "response latency",
+        "reaction time",
+        "reply time",
+        "turnaround time",
+        "latency",
+        "end-to-end delay",
+        "round trip time",
+        "RTT",
+        "RTT",
+        "latency budget"
+      ],
+      "synonyms_cn": [
+        "响应时间",
+        "反应时间",
+        "应答时间",
+        "回复时间",
+        "时延",
+        "延迟",
+        "端到端时延",
+        "往返时延"
+      ],
+      "default_unit": "ms",
+      "category": "performance",
+      "value_range": {
+        "min": 0.001,
+        "max": 600,
+        "unit_hint": "time"
+      }
+    },
+    "throughput": {
+      "canonical_en": "throughput",
+      "canonical_cn": "吞吐量",
+      "synonyms_en": [
+        "throughput",
+        "data rate",
+        "transfer rate",
+        "bandwidth",
+        "payload rate",
+        "message rate",
+        "transaction rate",
+        "capacity",
+        "data throughput"
+      ],
+      "synonyms_cn": [
+        "吞吐量",
+        "吞吐率",
+        "数据率",
+        "传输率",
+        "带宽",
+        "报文率",
+        "事务率"
+      ],
+      "default_unit": "Mbps",
+      "category": "performance",
+      "value_range": {
+        "min": 0.001,
+        "max": 100000,
+        "unit_hint": "data_rate"
+      }
+    },
+    "availability": {
+      "canonical_en": "availability",
+      "canonical_cn": "可用性",
+      "synonyms_en": [
+        "availability",
+        "uptime",
+        "reliability",
+        "MTBF",
+        "mean time between failures",
+        "MTBF",
+        "MTTR",
+        "operational availability",
+        "Ao",
+        "service continuity"
+      ],
+      "synonyms_cn": [
+        "可用性",
+        "可用度",
+        "正常运行时间",
+        "可靠性",
+        "平均故障间隔时间"
+      ],
+      "default_unit": "%",
+      "category": "reliability",
+      "value_range": {
+        "min": 0,
+        "max": 100,
+        "unit_hint": "percentage"
+      }
+    },
+    "processing_time": {
+      "canonical_en": "processing time",
+      "canonical_cn": "处理时间",
+      "synonyms_en": [
+        "processing time",
+        "execution time",
+        "computation time",
+        "compute time",
+        "calculation time"
+      ],
+      "synonyms_cn": [
+        "处理时间",
+        "执行时间",
+        "计算时间",
+        "运算时间"
+      ],
+      "default_unit": "ms",
+      "category": "performance",
+      "value_range": {
+        "min": 0.001,
+        "max": 3600,
+        "unit_hint": "time"
+      }
+    },
+    "startup_time": {
+      "canonical_en": "startup time",
+      "canonical_cn": "启动时间",
+      "synonyms_en": [
+        "startup time",
+        "boot time",
+        "initialization time",
+        "warm-up time",
+        "start-up time"
+      ],
+      "synonyms_cn": [
+        "启动时间",
+        "开机时间",
+        "初始化时间",
+        "预热时间"
+      ],
+      "default_unit": "s",
+      "category": "performance",
+      "value_range": {
+        "min": 0.1,
+        "max": 600,
+        "unit_hint": "time"
+      }
+    },
+    "timeout": {
+      "canonical_en": "timeout",
+      "canonical_cn": "超时时间",
+      "synonyms_en": [
+        "timeout",
+        "timeout period",
+        "time-out",
+        "expiration time",
+        "retry interval"
+      ],
+      "synonyms_cn": [
+        "超时时间",
+        "超时",
+        "超时周期",
+        "重试间隔"
+      ],
+      "default_unit": "s",
+      "category": "performance",
+      "value_range": {
+        "min": 0.1,
+        "max": 86400,
+        "unit_hint": "time"
+      }
+    },
+    "error_rate": {
+      "canonical_en": "error rate",
+      "canonical_cn": "误码率",
+      "synonyms_en": [
+        "error rate",
+        "bit error rate",
+        "BER",
+        "packet loss rate",
+        "failure rate",
+        "defect rate",
+        "BER"
+      ],
+      "synonyms_cn": [
+        "误码率",
+        "错误率",
+        "差错率",
+        "丢包率",
+        "故障率",
+        "缺陷率"
+      ],
+      "default_unit": "%",
+      "category": "reliability",
+      "value_range": {
+        "min": 0,
+        "max": 100,
+        "unit_hint": "percentage"
+      }
+    },
+    "memory_size": {
+      "canonical_en": "memory size",
+      "canonical_cn": "内存容量",
+      "synonyms_en": [
+        "memory size",
+        "memory capacity",
+        "RAM",
+        "storage capacity",
+        "buffer size",
+        "cache size",
+        "RAM",
+        "main memory",
+        "SDRAM",
+        "flash memory"
+      ],
+      "synonyms_cn": [
+        "内存容量",
+        "存储容量",
+        "缓冲区大小",
+        "缓存大小"
+      ],
+      "default_unit": "MB",
+      "category": "resource",
+      "value_range": {
+        "min": 1,
+        "max": 10000000,
+        "unit_hint": "storage"
+      }
+    },
+    "clock_frequency": {
+      "canonical_en": "clock frequency",
+      "canonical_cn": "时钟频率",
+      "synonyms_en": [
+        "clock frequency",
+        "clock speed",
+        "processor speed",
+        "CPU frequency",
+        "operating frequency",
+        "sample rate",
+        "sampling rate",
+        "refresh rate"
+      ],
+      "synonyms_cn": [
+        "时钟频率",
+        "主频",
+        "处理器频率",
+        "采样率",
+        "刷新率"
+      ],
+      "default_unit": "MHz",
+      "category": "resource",
+      "value_range": {
+        "min": 1,
+        "max": 10000000000,
+        "unit_hint": "frequency"
+      }
+    },
+    "voltage": {
+      "canonical_en": "voltage",
+      "canonical_cn": "电压",
+      "synonyms_en": [
+        "voltage",
+        "operating voltage",
+        "supply voltage",
+        "input voltage",
+        "power supply"
+      ],
+      "synonyms_cn": [
+        "电压",
+        "工作电压",
+        "供电电压",
+        "输入电压"
+      ],
+      "default_unit": "V",
+      "category": "electrical",
+      "value_range": {
+        "min": 0.001,
+        "max": 100000,
+        "unit_hint": "voltage"
+      }
+    },
+    "power_consumption": {
+      "canonical_en": "power consumption",
+      "canonical_cn": "功耗",
+      "synonyms_en": [
+        "power consumption",
+        "power dissipation",
+        "energy consumption",
+        "power draw"
+      ],
+      "synonyms_cn": [
+        "功耗",
+        "功率消耗",
+        "能耗"
+      ],
+      "default_unit": "W",
+      "category": "electrical",
+      "value_range": {
+        "min": 0.001,
+        "max": 100000,
+        "unit_hint": "power"
+      }
+    },
+    "temperature": {
+      "canonical_en": "temperature",
+      "canonical_cn": "温度",
+      "synonyms_en": [
+        "temperature",
+        "operating temperature",
+        "ambient temperature",
+        "storage temperature",
+        "junction temperature"
+      ],
+      "synonyms_cn": [
+        "温度",
+        "工作温度",
+        "环境温度",
+        "存储温度"
+      ],
+      "default_unit": "℃",
+      "category": "environmental",
+      "value_range": {
+        "min": -273,
+        "max": 3000,
+        "unit_hint": "temperature"
+      }
+    },
+    "call_setup_time": {
+      "canonical_en": "call setup time",
+      "canonical_cn": "呼叫建立时间",
+      "synonyms_en": [
+        "call setup time",
+        "call set-up time",
+        "connection setup time",
+        "session setup time"
+      ],
+      "synonyms_cn": [
+        "呼叫建立时间",
+        "连接建立时间",
+        "会话建立时间"
+      ],
+      "default_unit": "s",
+      "category": "performance",
+      "value_range": {
+        "min": 0.001,
+        "max": 120,
+        "unit_hint": "time"
+      }
+    },
+    "concurrent_users": {
+      "canonical_en": "concurrent users",
+      "canonical_cn": "并发用户数",
+      "synonyms_en": [
+        "concurrent users",
+        "simultaneous users",
+        "concurrent sessions",
+        "concurrent connections"
+      ],
+      "synonyms_cn": [
+        "并发用户数",
+        "同时在线用户数",
+        "并发会话数",
+        "并发连接数"
+      ],
+      "default_unit": "",
+      "category": "capacity",
+      "value_range": {
+        "min": 1,
+        "max": 10000000,
+        "unit_hint": "count"
+      }
+    },
+    "data_retention": {
+      "canonical_en": "data retention",
+      "canonical_cn": "数据保留时间",
+      "synonyms_en": [
+        "data retention",
+        "retention period",
+        "storage duration",
+        "data lifetime"
+      ],
+      "synonyms_cn": [
+        "数据保留时间",
+        "保留周期",
+        "存储期限"
+      ],
+      "default_unit": "s",
+      "category": "data",
+      "value_range": {
+        "min": 1,
+        "max": 315360000,
+        "unit_hint": "time"
+      }
+    },
+    "bit_rate": {
+      "canonical_en": "bit rate",
+      "canonical_cn": "比特率",
+      "synonyms_en": [
+        "bit rate",
+        "bitrate",
+        "data rate",
+        "line rate",
+        "symbol rate",
+        "baud rate"
+      ],
+      "synonyms_cn": [
+        "比特率",
+        "波特率",
+        "符号率"
+      ],
+      "default_unit": "bps",
+      "category": "performance",
+      "value_range": {
+        "min": 1,
+        "max": 10000000000,
+        "unit_hint": "data_rate"
+      }
+    },
+    "downtime": {
+      "canonical_en": "downtime",
+      "canonical_cn": "停机时间",
+      "synonyms_en": [
+        "downtime",
+        "outage time",
+        "offline time",
+        "unplanned downtime",
+        "maintenance downtime"
+      ],
+      "synonyms_cn": [
+        "停机时间",
+        "宕机时间",
+        "故障时间"
+      ],
+      "default_unit": "s",
+      "category": "reliability",
+      "value_range": {
+        "min": 0,
+        "max": 31536000,
+        "unit_hint": "time"
+      }
+    },
+    "jitter": {
+      "canonical_en": "jitter",
+      "canonical_cn": "抖动",
+      "synonyms_en": [
+        "jitter",
+        "timing jitter",
+        "phase jitter",
+        "clock jitter",
+        "packet jitter"
+      ],
+      "synonyms_cn": [
+        "抖动",
+        "时间抖动",
+        "相位抖动"
+      ],
+      "default_unit": "ms",
+      "category": "performance",
+      "value_range": {
+        "min": 0,
+        "max": 10000,
+        "unit_hint": "time"
+      }
+    },
+    "duty_cycle": {
+      "canonical_en": "duty cycle",
+      "canonical_cn": "占空比",
+      "synonyms_en": [
+        "duty cycle",
+        "duty ratio"
+      ],
+      "synonyms_cn": [
+        "占空比",
+        "占空度"
+      ],
+      "default_unit": "%",
+      "category": "electrical",
+      "value_range": {
+        "min": 0,
+        "max": 100,
+        "unit_hint": "percentage"
+      }
+    },
+    "coverage": {
+      "canonical_en": "coverage",
+      "canonical_cn": "覆盖率",
+      "synonyms_en": [
+        "coverage",
+        "coverage area",
+        "coverage probability",
+        "coverage level",
+        "signal coverage"
+      ],
+      "synonyms_cn": [
+        "覆盖率",
+        "覆盖范围",
+        "覆盖概率"
+      ],
+      "default_unit": "%",
+      "category": "performance",
+      "value_range": {
+        "min": 0,
+        "max": 100,
+        "unit_hint": "percentage"
+      }
+    },
+    "recovery_time": {
+      "canonical_en": "recovery time",
+      "canonical_cn": "恢复时间",
+      "synonyms_en": [
+        "recovery time",
+        "recovery",
+        "restart time",
+        "failover time",
+        "switchover time"
+      ],
+      "synonyms_cn": [
+        "恢复时间",
+        "重启时间",
+        "故障切换时间"
+      ],
+      "default_unit": "s",
+      "category": "reliability",
+      "value_range": {
+        "min": 0.001,
+        "max": 86400,
+        "unit_hint": "time"
+      }
+    },
+    "resolution": {
+      "canonical_en": "resolution",
+      "canonical_cn": "分辨率",
+      "synonyms_en": [
+        "resolution",
+        "display resolution",
+        "screen resolution",
+        "spatial resolution",
+        "temporal resolution"
+      ],
+      "synonyms_cn": [
+        "分辨率",
+        "解析度"
+      ],
+      "default_unit": "pixels",
+      "category": "performance",
+      "value_range": {
+        "min": 1,
+        "max": 100000,
+        "unit_hint": "storage"
+      }
+    },
+    "sampling_rate": {
+      "canonical_en": "sampling rate",
+      "canonical_cn": "采样率",
+      "synonyms_en": [
+        "sampling rate",
+        "sample rate",
+        "sampling frequency"
+      ],
+      "synonyms_cn": [
+        "采样率",
+        "取样率"
+      ],
+      "default_unit": "Hz",
+      "category": "performance",
+      "value_range": {
+        "min": 1,
+        "max": 1000000000,
+        "unit_hint": "frequency"
+      }
+    }
+  },
+  "interface_dictionary": {
+    "RS232": {
+      "canonical": "RS232",
+      "variants": [
+        "RS232",
+        "RS-232",
+        "RS 232",
+        "EIA-232",
+        "EIA232"
+      ],
+      "type": "serial",
+      "mutex_with": [
+        "RS422",
+        "RS485"
+      ]
+    },
+    "RS422": {
+      "canonical": "RS422",
+      "variants": [
+        "RS422",
+        "RS-422",
+        "RS 422"
+      ],
+      "type": "serial",
+      "mutex_with": [
+        "RS232"
+      ]
+    },
+    "RS485": {
+      "canonical": "RS485",
+      "variants": [
+        "RS485",
+        "RS-485",
+        "RS 485"
+      ],
+      "type": "serial",
+      "mutex_with": [
+        "RS232"
+      ]
+    },
+    "UART": {
+      "canonical": "UART",
+      "variants": [
+        "UART",
+        "Universal Asynchronous Receiver Transmitter"
+      ],
+      "type": "serial",
+      "mutex_with": []
+    },
+    "CAN": {
+      "canonical": "CAN",
+      "variants": [
+        "CAN bus",
+        "CANbus",
+        "CAN-bus",
+        "CAN protocol",
+        "Controller Area Network",
+        "CANopen"
+      ],
+      "type": "bus",
+      "mutex_with": [],
+      "context_required": true,
+      "context_keywords": [
+        "bus",
+        "protocol",
+        "frame",
+        "message",
+        "controller",
+        "network",
+        "interface",
+        "driver",
+        "transceiver",
+        "arbitration"
+      ]
+    },
+    "MIL_STD_1553": {
+      "canonical": "MIL-STD-1553",
+      "variants": [
+        "MIL-STD-1553",
+        "MIL-STD 1553",
+        "MIL-STD-1553B",
+        "1553B",
+        "1553"
+      ],
+      "type": "bus",
+      "mutex_with": []
+    },
+    "SPI": {
+      "canonical": "SPI",
+      "variants": [
+        "SPI",
+        "Serial Peripheral Interface"
+      ],
+      "type": "serial",
+      "mutex_with": []
+    },
+    "I2C": {
+      "canonical": "I2C",
+      "variants": [
+        "I2C",
+        "IIC",
+        "Inter-Integrated Circuit"
+      ],
+      "type": "serial",
+      "mutex_with": []
+    },
+    "USB": {
+      "canonical": "USB",
+      "variants": [
+        "USB",
+        "Universal Serial Bus"
+      ],
+      "type": "serial",
+      "mutex_with": []
+    },
+    "Ethernet": {
+      "canonical": "Ethernet",
+      "variants": [
+        "Ethernet",
+        "IEEE 802.3",
+        "LAN"
+      ],
+      "type": "network",
+      "mutex_with": []
+    },
+    "TCP": {
+      "canonical": "TCP",
+      "variants": [
+        "TCP",
+        "Transmission Control Protocol"
+      ],
+      "type": "protocol",
+      "mutex_with": [
+        "UDP"
+      ]
+    },
+    "UDP": {
+      "canonical": "UDP",
+      "variants": [
+        "UDP",
+        "User Datagram Protocol"
+      ],
+      "type": "protocol",
+      "mutex_with": [
+        "TCP"
+      ]
+    },
+    "HTTP": {
+      "canonical": "HTTP",
+      "variants": [
+        "HTTP",
+        "Hypertext Transfer Protocol"
+      ],
+      "type": "protocol",
+      "mutex_with": [],
+      "context_exclude": [
+        "http://",
+        "https://"
+      ]
+    }
+  },
+  "unit_dictionary": {
+    "time": {
+      "units": [
+        "ms",
+        "msec",
+        "millisecond",
+        "s",
+        "sec",
+        "second",
+        "min",
+        "minute",
+        "hour",
+        "h",
+        "us",
+        "µs",
+        "microsecond",
+        "ns",
+        "nanosecond"
+      ],
+      "canonical": "s",
+      "conversions": {
+        "ns": 1e-09,
+        "us": 1e-06,
+        "µs": 1e-06,
+        "ms": 0.001,
+        "msec": 0.001,
+        "s": 1,
+        "sec": 1,
+        "min": 60,
+        "minute": 60,
+        "hour": 3600,
+        "h": 3600
+      }
+    },
+    "frequency": {
+      "units": [
+        "Hz",
+        "hertz",
+        "kHz",
+        "kilohertz",
+        "MHz",
+        "megahertz",
+        "GHz",
+        "gigahertz"
+      ],
+      "canonical": "Hz",
+      "conversions": {
+        "Hz": 1,
+        "hertz": 1,
+        "kHz": 1000,
+        "kilohertz": 1000,
+        "MHz": 1000000,
+        "megahertz": 1000000,
+        "GHz": 1000000000,
+        "gigahertz": 1000000000
+      }
+    },
+    "data_rate": {
+      "units": [
+        "bps",
+        "kbps",
+        "Mbps",
+        "Gbps",
+        "Bps",
+        "KB/s",
+        "MB/s",
+        "GB/s"
+      ],
+      "canonical": "bps",
+      "conversions": {
+        "bps": 1,
+        "kbps": 1000,
+        "Mbps": 1000000,
+        "Gbps": 1000000000,
+        "Bps": 8,
+        "KB/s": 8000,
+        "MB/s": 8000000,
+        "GB/s": 8000000000
+      }
+    },
+    "storage": {
+      "units": [
+        "byte",
+        "bytes",
+        "B",
+        "KB",
+        "kB",
+        "MB",
+        "GB",
+        "TB",
+        "bit",
+        "bits",
+        "Kb",
+        "Mb",
+        "Gb"
+      ],
+      "canonical": "byte",
+      "conversions": {
+        "bit": 0.125,
+        "bits": 0.125,
+        "byte": 1,
+        "bytes": 1,
+        "B": 1,
+        "KB": 1024,
+        "kB": 1024,
+        "MB": 1048576,
+        "GB": 1073741824,
+        "TB": 1099511627776,
+        "Kb": 128,
+        "Mb": 131072,
+        "Gb": 134217728
+      }
+    },
+    "percentage": {
+      "units": [
+        "%",
+        "percent"
+      ],
+      "canonical": "%",
+      "conversions": {
+        "%": 1,
+        "percent": 1
+      }
+    },
+    "voltage": {
+      "units": [
+        "V",
+        "volt",
+        "mV",
+        "kV"
+      ],
+      "canonical": "V",
+      "conversions": {
+        "mV": 0.001,
+        "V": 1,
+        "volt": 1,
+        "kV": 1000
+      }
+    },
+    "power": {
+      "units": [
+        "W",
+        "watt",
+        "mW",
+        "kW"
+      ],
+      "canonical": "W",
+      "conversions": {
+        "mW": 0.001,
+        "W": 1,
+        "watt": 1,
+        "kW": 1000
+      }
+    },
+    "temperature": {
+      "units": [
+        "℃",
+        "°C",
+        "C",
+        "K",
+        "F",
+        "°F"
+      ],
+      "canonical": "℃",
+      "conversions": {
+        "℃": 1,
+        "°C": 1,
+        "C": 1,
+        "K": -272.15,
+        "F": -17.2222,
+        "°F": -17.2222
+      }
+    },
+    "current": {
+      "units": [
+        "A",
+        "ampere",
+        "mA",
+        "kA"
+      ],
+      "canonical": "A",
+      "conversions": {
+        "mA": 0.001,
+        "A": 1,
+        "ampere": 1,
+        "kA": 1000
+      }
+    },
+    "ratio": {
+      "units": [
+        "ppm",
+        "dB",
+        "dBm"
+      ],
+      "canonical": "ppm",
+      "conversions": {
+        "ppm": 1,
+        "dB": 1,
+        "dBm": 1
+      }
+    }
+  },
+  "operator_dictionary": {
+    "operators": {
+      "<=": {
+        "canonical": "<=",
+        "synonyms": [
+          "≤",
+          "<=",
+          "less than or equal",
+          "not exceed",
+          "not greater than",
+          "at most",
+          "maximum",
+          "max"
+        ]
+      },
+      ">=": {
+        "canonical": ">=",
+        "synonyms": [
+          "≥",
+          ">=",
+          "greater than or equal",
+          "not less than",
+          "at least",
+          "minimum",
+          "min"
+        ]
+      },
+      "<": {
+        "canonical": "<",
+        "synonyms": [
+          "<",
+          "less than",
+          "below",
+          "under"
+        ]
+      },
+      ">": {
+        "canonical": ">",
+        "synonyms": [
+          ">",
+          "greater than",
+          "above",
+          "exceed",
+          "exceeds"
+        ]
+      },
+      "=": {
+        "canonical": "=",
+        "synonyms": [
+          "=",
+          "equal to",
+          "is",
+          "shall be"
+        ]
+      },
+      "~": {
+        "canonical": "~",
+        "synonyms": [
+          "~",
+          "≈",
+          "approximately",
+          "about",
+          "around",
+          "nominal"
+        ]
+      }
+    }
+  },
+  "section_template": {
+    "standard": "IEEE 830 / GJB 438C",
+    "required_sections": [
+      {
+        "number": "1",
+        "keywords": [
+          "introduction",
+          "引言",
+          "概述"
+        ],
+        "required": true
+      },
+      {
+        "number": "2",
+        "keywords": [
+          "overall description",
+          "总体描述",
+          "general description",
+          "系统概述"
+        ],
+        "required": true
+      },
+      {
+        "number": "3",
+        "keywords": [
+          "requirement",
+          "需求",
+          "functional requirement",
+          "功能需求",
+          "specific requirement"
+        ],
+        "required": true
+      },
+      {
+        "number": "4",
+        "keywords": [
+          "interface",
+          "接口",
+          "external interface",
+          "外部接口"
+        ],
+        "required": false
+      },
+      {
+        "number": "5",
+        "keywords": [
+          "performance",
+          "性能",
+          "performance requirement",
+          "性能需求"
+        ],
+        "required": false
+      },
+      {
+        "number": "6",
+        "keywords": [
+          "design",
+          "设计",
+          "design constraint",
+          "设计约束"
+        ],
+        "required": false
+      },
+      {
+        "number": "7",
+        "keywords": [
+          "data",
+          "数据",
+          "data dictionary",
+          "数据字典"
+        ],
+        "required": false
+      }
+    ]
+  },
+  "conflict_rules": {
+    "L2_semantic": {
+      "same_param_diff_value": {
+        "description": "同名参数在不同位置出现不同值",
+        "severity": "HIGH",
+        "exempt_patterns": [
+          "threshold",
+          "objective",
+          "minimum acceptable",
+          "goal",
+          "target"
+        ]
+      },
+      "mutex_interfaces": {
+        "description": "文档同时声明互斥接口类型",
+        "severity": "LOW",
+        "pairs": [
+          [
+            "RS232",
+            "RS422"
+          ],
+          [
+            "RS232",
+            "RS485"
+          ],
+          [
+            "TCP",
+            "UDP"
+          ]
+        ]
+      },
+      "cross_unit_inconsistency": {
+        "description": "同名参数用不同单位且换算后不等",
+        "severity": "MEDIUM"
+      }
+    },
+    "L3_logic": {
+      "constraint_ratio": {
+        "description": "同名参数约束值差异过大",
+        "high_ratio": 10,
+        "medium_ratio": 2
+      },
+      "physics_constraint": {
+        "description": "频率×时间超过物理极限",
+        "threshold": 1000000000.0
+      },
+      "temporal_cycle": {
+        "description": "时序约束形成环依赖",
+        "severity": "HIGH"
+      }
+    }
+  },
+  "table_schemas": {
+    "performance_table": {
+      "header_patterns": [
+        "metric",
+        "requirement",
+        "指标",
+        "要求",
+        "parameter",
+        "参数",
+        "value",
+        "值",
+        "spec",
+        "specification"
+      ],
+      "expected_columns": [
+        "metric_name",
+        "requirement_value",
+        "unit",
+        "verification_method"
+      ]
+    },
+    "interface_table": {
+      "header_patterns": [
+        "interface",
+        "接口",
+        "port",
+        "端口",
+        "protocol",
+        "协议",
+        "signal",
+        "信号"
+      ],
+      "expected_columns": [
+        "interface_id",
+        "interface_type",
+        "signal_name",
+        "direction",
+        "protocol",
+        "data_rate"
+      ]
+    },
+    "data_dictionary": {
+      "header_patterns": [
+        "name",
+        "名称",
+        "parameter",
+        "参数",
+        "item",
+        "项",
+        "field",
+        "字段"
+      ],
+      "expected_columns": [
+        "id",
+        "name",
+        "abbreviation",
+        "data_type",
+        "value_range",
+        "unit",
+        "description"
+      ]
+    }
+  }
+}

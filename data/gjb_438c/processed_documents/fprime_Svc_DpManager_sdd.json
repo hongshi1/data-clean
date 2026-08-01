@@ -1,0 +1,444 @@
+{
+  "doc_name": "fprime_Svc_DpManager_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_DpManager_sdd.md",
+  "md_lines": 251,
+  "md_chars": 9244,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::DpManager (Active Component)",
+  "section_count": 29,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::DpManager (Active Component)",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 998,
+      "text_preview": "`Svc::DpManager` is an active component for managing data products.\nIt does the following:\n\n1. Receive requests for buffers to hold data products.\n\n   1.  When a client component synchronously request"
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 1538,
+      "text_preview": "Requirement | Description | Rationale | Verification Method\n----------- | ----------- | ----------| -------------------\nSVC-DPMANAGER-001 | `Svc::DpManager` shall provide an array of ports for synchro"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 38,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "3.1. Component Diagram",
+      "level": 3,
+      "line_start": 40,
+      "text_length": 83,
+      "text_preview": "The diagram below shows the `DpManager` component.\n\n![DpManager](img/DpManager.png)"
+    },
+    {
+      "number": null,
+      "title": "3.2. Ports",
+      "level": 3,
+      "line_start": 46,
+      "text_length": 1240,
+      "text_preview": "`DpManager` has the following ports:\n\n| Kind | Name | Port Type | Usage |\n|------|------|-----------|-------|\n| `async input` | `schedIn` | `Svc.Sched` | Schedule in port |\n| `sync input` | `productGe"
+    },
+    {
+      "number": null,
+      "title": "3.3. State",
+      "level": 3,
+      "line_start": 64,
+      "text_length": 320,
+      "text_preview": "`DpManager` maintains the following state:\n\n1. `numSuccessfulAllocations (U32)`: The number of successful buffer\n   allocations.\n\n1. `numFailedAllocations (U32)`: The number of failed buffer allocatio"
+    },
+    {
+      "number": null,
+      "title": "3.4. Compile-Time Setup",
+      "level": 3,
+      "line_start": 77,
+      "text_length": 193,
+      "text_preview": "The configuration constant [`DpManagerNumPorts`](../../../default/config/AcConstants.fpp)\nspecifies the number of ports for\nrequesting data product buffers and for sending filled data products."
+    },
+    {
+      "number": null,
+      "title": "3.5. Runtime Setup",
+      "level": 3,
+      "line_start": 83,
+      "text_length": 37,
+      "text_preview": "No special runtime setup is required."
+    },
+    {
+      "number": null,
+      "title": "3.6. Port Handlers",
+      "level": 3,
+      "line_start": 87,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "3.6.1. schedIn",
+      "level": 4,
+      "line_start": 89,
+      "text_length": 69,
+      "text_preview": "The handler for this port sends out the state variables as telemetry."
+    },
+    {
+      "number": null,
+      "title": "3.6.2. productGetIn",
+      "level": 4,
+      "line_start": 93,
+      "text_length": 236,
+      "text_preview": "This handler receives a port number `portNum`, a container ID `id`, a requested\nbuffer size `size`, and a mutable reference to a buffer `B`.\nIt does the following:\n\n1. Set `status = getBuffer(portNum,"
+    },
+    {
+      "number": null,
+      "title": "3.6.3. productRequestIn",
+      "level": 4,
+      "line_start": 103,
+      "text_length": 306,
+      "text_preview": "This handler receives a port number `portNum`, a container ID `id` and a\nrequested buffer size `size`.\nIt does the following:\n\n1. Initialize a local variable `B` with an invalid buffer.\n\n1. Set `statu"
+    },
+    {
+      "number": null,
+      "title": "3.6.4. productSendIn",
+      "level": 4,
+      "line_start": 115,
+      "text_length": 206,
+      "text_preview": "This handler receives a port number `portNum`, a data product ID `I` and a\nbuffer `B`.\nIt does the following:\n\n1. Update `numDataProducts` and `numBytes`.\n\n1. Send `B` on port `portNum` of `productSen"
+    },
+    {
+      "number": null,
+      "title": "3.7. Helper Methods",
+      "level": 3,
+      "line_start": 125,
+      "text_length": 24,
+      "text_preview": "<a name=\"getBuffer\"></a>"
+    },
+    {
+      "number": null,
+      "title": "3.7.1. getBuffer",
+      "level": 4,
+      "line_start": 128,
+      "text_length": 482,
+      "text_preview": "This function receives a port number `portNum`, a container ID `id`, a\nrequested buffer size `size`, and a mutable reference to a buffer `B`.\nIt does the following:\n\n1. Set `status = FAILURE`.\n\n1. Set"
+    },
+    {
+      "number": null,
+      "title": "4. Ground Interface",
+      "level": 2,
+      "line_start": 146,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "4.1. Commands",
+      "level": 3,
+      "line_start": 148,
+      "text_length": 121,
+      "text_preview": "| Kind | Name | Description |\n|------|------|-------------|\n| `async` | `CLEAR_EVENT_THROTTLE` | Clear event throttling |"
+    },
+    {
+      "number": null,
+      "title": "4.2. Telemetry",
+      "level": 3,
+      "line_start": 154,
+      "text_length": 331,
+      "text_preview": "| Name | Type | Description |\n|------|------|-------------|\n| `NumSuccessfulAllocations` | `U32` | The number of successful buffer allocations |\n| `NumFailedAllocations` | `U32` | The number of failed"
+    },
+    {
+      "number": null,
+      "title": "4.3. Events",
+      "level": 3,
+      "line_start": 163,
+      "text_length": 140,
+      "text_preview": "| Name | Severity | Description |\n|------|----------|-------------|\n| `BufferAllocationFailed` | `warning high` | Buffer allocation failed |"
+    },
+    {
+      "number": null,
+      "title": "5. Example Uses",
+      "level": 2,
+      "line_start": 169,
+      "text_length": 27,
+      "text_preview": "<a name=\"top-diagrams\"></a>"
+    },
+    {
+      "number": null,
+      "title": "5.1. Topology Diagrams",
+      "level": 3,
+      "line_start": 172,
+      "text_length": 862,
+      "text_preview": "The following topology diagrams show how to connect `Svc::DpManager`\nto a client component, a buffer manager, and a data product writer.\nThe diagrams use the following instances:\n\n* `bufferManager`: A"
+    },
+    {
+      "number": null,
+      "title": "5.1.1. Synchronously Getting Data Product Buffers",
+      "level": 4,
+      "line_start": 195,
+      "text_length": 37,
+      "text_preview": "![Buffer Get](img/top/buffer-get.png)"
+    },
+    {
+      "number": null,
+      "title": "5.1.2. Asynchronously Requesting Data Product Buffers",
+      "level": 4,
+      "line_start": 199,
+      "text_length": 45,
+      "text_preview": "![Buffer Request](img/top/buffer-request.png)"
+    },
+    {
+      "number": null,
+      "title": "5.1.3. Sending Data Products",
+      "level": 4,
+      "line_start": 204,
+      "text_length": 41,
+      "text_preview": "![Product Send](img/top/product-send.png)"
+    },
+    {
+      "number": null,
+      "title": "5.2. Sequence Diagrams",
+      "level": 3,
+      "line_start": 208,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "5.2.1. Synchronously Getting a Data Product Buffer",
+      "level": 4,
+      "line_start": 210,
+      "text_length": 327,
+      "text_preview": "```mermaid\nsequenceDiagram\n    activate producer\n    producer->>dpManager: Request buffer [productGetIn]\n    dpManager->>bufferManager: Request buffer B [bufferGetOut]\n    bufferManager-->>dpManager: "
+    },
+    {
+      "number": null,
+      "title": "5.2.2. Asynchronously Requesting a Data Product Buffer",
+      "level": 4,
+      "line_start": 223,
+      "text_length": 340,
+      "text_preview": "```mermaid\nsequenceDiagram\n    activate producer\n    activate dpManager\n    producer-)dpManager: Request buffer [productRequestIn]\n    dpManager->>bufferManager: Request buffer B [bufferGetOut]\n    bu"
+    },
+    {
+      "number": null,
+      "title": "5.2.3. Sending a Data Product",
+      "level": 4,
+      "line_start": 237,
+      "text_length": 355,
+      "text_preview": "```mermaid\nsequenceDiagram\n    activate producer\n    activate dpManager\n    activate dpWriter\n    producer-)dpManager: Send buffer B [productSendIn]\n    dpManager-)dpWriter: Send B [productSendOut]\n  "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 4,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Kind",
+        "Name",
+        "Port Type",
+        "Usage"
+      ],
+      "row_count": 12,
+      "data_row_count": 11,
+      "is_empty": false,
+      "section": "3.2. Ports",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Kind",
+        "Name",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "4.1. Commands",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Type",
+        "Description"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "4.2. Telemetry",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Severity",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "4.3. Events",
+      "raw_html": null
+    }
+  ],
+  "image_count": 4,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "DpManager.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/DpManager.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "DpManager",
+      "caption": "`DpManager` has the following ports:",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.1. Component Diagram",
+      "context_before": "SVC-DPMANAGER-003 | `Svc::DpManager` shall receive data product buffers and forward them for further processing. | This requirement provides a pass-through capability for sending data product buffers to downstream components. `Svc::DpManager` receives data product input on a port of type  `Fw::DpSen",
+      "context_after": "`DpManager` has the following ports:",
+      "md_line": 44,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "buffer-get.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/buffer-get.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Buffer Get",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "5.1.1. Synchronously Getting Data Product Buffers",
+      "context_before": "e.g., port one or port two.\nThat way you can use one `DpManager` instance to support multiple sets of\nconnections.",
+      "context_after": null,
+      "md_line": 197,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "buffer-request.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/buffer-request.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Buffer Request",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "5.1.2. Asynchronously Requesting Data Product Buffers",
+      "context_before": "That way you can use one `DpManager` instance to support multiple sets of\nconnections.",
+      "context_after": null,
+      "md_line": 201,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "product-send.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/product-send.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Product Send",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "5.1.3. Sending Data Products",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 206,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "DpManager.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/DpManager.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "`DpManager` has the following ports:",
+      "section": "3.1. Component Diagram",
+      "context_before": "SVC-DPMANAGER-003 | `Svc::DpManager` shall receive data product buffers and forward them for further processing. | This requirement provides a pass-through capability for sending data product buffers to downstream components. `Svc::DpManager` receives data product input on a port of type  `Fw::DpSen",
+      "context_after": "`DpManager` has the following ports:",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "buffer-get.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/buffer-get.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "5.1.1. Synchronously Getting Data Product Buffers",
+      "context_before": "e.g., port one or port two.\nThat way you can use one `DpManager` instance to support multiple sets of\nconnections.",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "buffer-request.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/buffer-request.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "5.1.2. Asynchronously Requesting Data Product Buffers",
+      "context_before": "That way you can use one `DpManager` instance to support multiple sets of\nconnections.",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "product-send.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/top/product-send.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "5.1.3. Sending Data Products",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

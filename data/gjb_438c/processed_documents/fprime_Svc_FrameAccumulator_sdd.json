@@ -1,0 +1,146 @@
+{
+  "doc_name": "fprime_Svc_FrameAccumulator_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_FrameAccumulator_sdd.md",
+  "md_lines": 96,
+  "md_chars": 6463,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "Svc::FrameAccumulator",
+  "section_count": 9,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::FrameAccumulator",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 454,
+      "text_preview": "The `Svc::FrameAccumulator` component accumulates a stream of data (sequence of [Fw::Buffer](../../../Fw/Buffer/docs/sdd.md) objects) to extract full frames from.\n\nThe `Svc::FrameAccumulator` accepts "
+    },
+    {
+      "number": null,
+      "title": "Internals",
+      "level": 2,
+      "line_start": 7,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Overview and configuration",
+      "level": 3,
+      "line_start": 9,
+      "text_length": 570,
+      "text_preview": "The `Svc::FrameAccumulator` accumulates the [Fw::Buffer](../../../Fw/Buffer/docs/sdd.md) objects into a circular buffer ([Utils::CircularBuffer](../../../Utils/Types/CircularBuffer.hpp)). \n\nThe compon"
+    },
+    {
+      "number": null,
+      "title": "Frame detection",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 2481,
+      "text_preview": "The `Svc::FrameAccumulator` receives `Fw::Buffer` objects on its `dataIn` input port. These buffers are accumulated in a `Utils::CircularBuffer`. Every time a new buffer is accumulated into the circul"
+    },
+    {
+      "number": null,
+      "title": "Cleanup",
+      "level": 3,
+      "line_start": 55,
+      "text_length": 225,
+      "text_preview": "The `cleanup()` method must be called to deallocate the memory used by the `Svc::FrameAccumulator` component safely before shutdown. This method deallocates the circular buffer that was set up during "
+    },
+    {
+      "number": null,
+      "title": "Usage Examples",
+      "level": 2,
+      "line_start": 60,
+      "text_length": 348,
+      "text_preview": "The `Svc::FrameAccumulator` component is used in the uplink stack of many reference F´ application such as [the tutorials source code](https://github.com/fprime-community#tutorials). The below diagram"
+    },
+    {
+      "number": null,
+      "title": "Class Diagram",
+      "level": 2,
+      "line_start": 66,
+      "text_length": 478,
+      "text_preview": "```mermaid\nclassDiagram\n    class FrameAccumulator~PassiveComponent~ {\n        + void configure(FrameDetector& detector, FwEnumStoreType allocationId, Fw::MemAllocator& allocator, FwSizeType store_siz"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 78,
+      "text_length": 980,
+      "text_preview": "Requirement | Description | Rationale | Verification Method\n----------- | ----------- | ----------| -------------------\nSVC-FRAME-ACCUMULATOR-001 | `Svc::FrameAccumulator` shall accumulate a sequence "
+    },
+    {
+      "number": null,
+      "title": "Port Descriptions",
+      "level": 2,
+      "line_start": 87,
+      "text_length": 730,
+      "text_preview": "| Kind | Name | Type | Description |\n|---|---|---|---|\n| `guarded input` | dataIn | `Svc.ComDataWithContext` | Receives a stream of byte buffers from a [Communication Adapter](../../Interfaces/docs/sd"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Kind",
+        "Name",
+        "Type",
+        "Description"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "Port Descriptions",
+      "raw_html": null
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "deframer_uplink_stack.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/../../FprimeDeframer/docs/img/deframer_uplink_stack.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "./img/deframer_uplink_stack.png",
+      "caption": "```mermaid",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "Usage Examples",
+      "context_before": "The `cleanup()` method must be called to deallocate the memory used by the `Svc::FrameAccumulator` component safely before shutdown. This method deallocates the circular buffer that was set up during the `configure()` method.\nThe `Svc::FrameAccumulator` component is used in the uplink stack of many ",
+      "context_after": "```mermaid\nclassDiagram",
+      "md_line": 64,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "deframer_uplink_stack.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/../../FprimeDeframer/docs/img/deframer_uplink_stack.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "```mermaid",
+      "section": "Usage Examples",
+      "context_before": "The `cleanup()` method must be called to deallocate the memory used by the `Svc::FrameAccumulator` component safely before shutdown. This method deallocates the circular buffer that was set up during the `configure()` method.\nThe `Svc::FrameAccumulator` component is used in the uplink stack of many ",
+      "context_after": "```mermaid\nclassDiagram",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

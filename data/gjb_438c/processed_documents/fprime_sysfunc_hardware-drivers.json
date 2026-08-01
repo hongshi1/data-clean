@@ -1,0 +1,112 @@
+{
+  "doc_name": "fprime_sysfunc_hardware-drivers",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_hardware-drivers.md",
+  "md_lines": 74,
+  "md_chars": 5094,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Hardware Driver Functionality",
+  "section_count": 11,
+  "sections": [
+    {
+      "number": null,
+      "title": "Hardware Driver Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 1208,
+      "text_preview": "- [F Prime ByteStreamDriverModel SDD](https://github.com/nasa/fprime/blob/devel/Drv/ByteStreamDriverModel/docs/sdd.md)\n- [F Prime ByteStreamBufferAdapter SDD](https://github.com/nasa/fprime/blob/devel"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 19,
+      "text_length": 717,
+      "text_preview": "The driver layer provides hardware abstraction components that bridge the flight software's port-based communication model to physical hardware interfaces. Drivers implement standardized FPP interface"
+    },
+    {
+      "number": null,
+      "title": "Byte Stream Driver Model",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 679,
+      "text_preview": "The byte stream model defines a generic interface for drivers that operate with bidirectional byte streams. It provides:\n\n- **Send** — An input port for transmitting data through the driver. The calle"
+    },
+    {
+      "number": null,
+      "title": "Byte Stream Buffer Adapters",
+      "level": 3,
+      "line_start": 37,
+      "text_length": 435,
+      "text_preview": "Buffer adapters bridge the communication stack's buffer-based interface to the byte stream driver model. They handle buffer lifecycle management (allocation and deallocation) between the communication"
+    },
+    {
+      "number": null,
+      "title": "Network Drivers",
+      "level": 3,
+      "line_start": 44,
+      "text_length": 633,
+      "text_preview": "F Prime provides network communication drivers that implement the byte stream model:\n\n- **TCP Client** — Connects to a remote TCP server and provides bidirectional byte stream communication. Includes "
+    },
+    {
+      "number": null,
+      "title": "Serial Communication",
+      "level": 3,
+      "line_start": 54,
+      "text_length": 215,
+      "text_preview": "The Linux UART Driver provides byte stream access to serial ports on Linux systems. It implements the byte stream driver model, allowing it to be used interchangeably with network drivers in the commu"
+    },
+    {
+      "number": null,
+      "title": "GPIO",
+      "level": 3,
+      "line_start": 58,
+      "text_length": 211,
+      "text_preview": "The GPIO interface provides read, write, and interrupt signaling for individual General Purpose Input/Output pins. The Linux GPIO Driver implements this interface using the Linux GPIO character device"
+    },
+    {
+      "number": null,
+      "title": "I2C",
+      "level": 3,
+      "line_start": 62,
+      "text_length": 212,
+      "text_preview": "The I2C interface provides read, write, and combined write-then-read operations for Inter-Integrated Circuit bus communication. The Linux I2C Driver implements this interface using the Linux I2C devic"
+    },
+    {
+      "number": null,
+      "title": "SPI",
+      "level": 3,
+      "line_start": 66,
+      "text_length": 188,
+      "text_preview": "The SPI interface provides read and write operations for Serial Peripheral Interface bus communication. The Linux SPI Driver implements this interface using the Linux SPI device interface."
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 70,
+      "text_length": 360,
+      "text_preview": "- Network drivers report connection failures and reconnect automatically when configured to do so.\n- Byte stream send failures return appropriate status codes; the caller is responsible for retry or e"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

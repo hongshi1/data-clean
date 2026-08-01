@@ -1,0 +1,96 @@
+{
+  "doc_name": "fprime_sysfunc_rate-group-scheduling",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_rate-group-scheduling.md",
+  "md_lines": 53,
+  "md_chars": 4307,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Rate Group Scheduling Functionality",
+  "section_count": 9,
+  "sections": [
+    {
+      "number": null,
+      "title": "Rate Group Scheduling Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 551,
+      "text_preview": "- [F Prime RateGroupDriver SDD](https://github.com/nasa/fprime/blob/devel/Svc/RateGroupDriver/docs/sdd.md)\n- [F Prime ActiveRateGroup SDD](https://github.com/nasa/fprime/blob/devel/Svc/ActiveRateGroup"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 12,
+      "text_length": 689,
+      "text_preview": "Rate group scheduling provides periodic execution of components at defined rates. A system clock source generates a primary tick, which is divided down to drive multiple rate groups at different frequ"
+    },
+    {
+      "number": null,
+      "title": "Clock Division",
+      "level": 3,
+      "line_start": 18,
+      "text_length": 436,
+      "text_preview": "The Rate Group Driver receives a primary system tick and divides it to produce outputs at different rates. For example, a 1 Hz tick can be divided to produce 1 Hz, 0.5 Hz, and 0.25 Hz outputs. The div"
+    },
+    {
+      "number": null,
+      "title": "Rate Group Execution",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 1013,
+      "text_preview": "Rate groups invoke their member components in sequence, passing a context value that indicates the call order. Three variants are available:\n\n- **Active Rate Group** — Has its own thread. The input cy"
+    },
+    {
+      "number": null,
+      "title": "Phased Scheduling",
+      "level": 3,
+      "line_start": 34,
+      "text_length": 491,
+      "text_preview": "The Active Phaser provides a more sophisticated scheduling model where each cycle is divided into a configurable number of ticks, and individual port calls are mapped to specific windows of ticks with"
+    },
+    {
+      "number": null,
+      "title": "Overrun Detection",
+      "level": 3,
+      "line_start": 38,
+      "text_length": 350,
+      "text_preview": "The Active Rate Group detects overruns (also called slips) — when a new cycle begins before the previous cycle has completed. When an overrun is detected, a warning event is issued. This indicates tha"
+    },
+    {
+      "number": null,
+      "title": "Configuration",
+      "level": 3,
+      "line_start": 42,
+      "text_length": 335,
+      "text_preview": "- The number of rate group member output ports is configurable at compile time.\n- The division ratios for the Rate Group Driver are specified at construction.\n- Context values passed to member compone"
+    },
+    {
+      "number": null,
+      "title": "Telemetry",
+      "level": 3,
+      "line_start": 49,
+      "text_length": 233,
+      "text_preview": "Rate groups report the maximum execution time observed for their cycle, allowing operators to monitor timing margins.\n\nThe cycle source that drives rate group scheduling is described in the [Time Serv"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

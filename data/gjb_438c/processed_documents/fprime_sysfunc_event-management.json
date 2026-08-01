@@ -1,0 +1,88 @@
+{
+  "doc_name": "fprime_sysfunc_event-management",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_event-management.md",
+  "md_lines": 51,
+  "md_chars": 3501,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Event Management Functionality",
+  "section_count": 8,
+  "sections": [
+    {
+      "number": null,
+      "title": "Event Management Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 438,
+      "text_preview": "- [F Prime EventManager SDD](https://github.com/nasa/fprime/blob/devel/Svc/EventManager/docs/sdd.md)\n- [F Prime ActiveTextLogger SDD](https://github.com/nasa/fprime/blob/devel/Svc/ActiveTextLogger/doc"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 11,
+      "text_length": 411,
+      "text_preview": "Event management collects time-tagged log entries from components across the system, packages them for downlink, and optionally logs human-readable text to the console. Events are the primary mechanis"
+    },
+    {
+      "number": null,
+      "title": "Event Collection and Distribution",
+      "level": 3,
+      "line_start": 15,
+      "text_length": 332,
+      "text_preview": "The Event Manager is an active component that receives events from all components in the system. Events arrive as serialized data containing the event ID, severity, timestamp, and arguments. The Event"
+    },
+    {
+      "number": null,
+      "title": "Event Severity Levels",
+      "level": 3,
+      "line_start": 19,
+      "text_length": 610,
+      "text_preview": "Events are categorized by severity to support filtering and prioritization:\n\n- **FATAL** — A condition rendering the software unable to continue. Issuing a FATAL event triggers the fatal handler (see "
+    },
+    {
+      "number": null,
+      "title": "Event Throttling",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 476,
+      "text_preview": "Events can be configured with throttle limits to prevent log flooding when a condition triggers the same event repeatedly. Throttling is configured on the individual component that emits the event. Tw"
+    },
+    {
+      "number": null,
+      "title": "Text Logging",
+      "level": 3,
+      "line_start": 38,
+      "text_length": 530,
+      "text_preview": "In addition to binary event distribution for downlink, F Prime supports human-readable text logging to the console. Two text logging components are available:\n\n- **Active Text Logger** — Has its own t"
+    },
+    {
+      "number": null,
+      "title": "Fatal Event Handling",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 496,
+      "text_preview": "Fatal events receive special handling through a dedicated path. When a fatal event is issued, the Event Manager announces it via a fatal announcement port. This is connected to a fatal handler compone"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

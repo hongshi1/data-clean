@@ -1,0 +1,683 @@
+{
+  "doc_name": "2000 - Barrel",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/2000 - Barrel.pdf.md",
+  "md_lines": 437,
+  "md_chars": 25211,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Barrel LVL1 Muon Trigger Coincidence Matrix ASIC: User Requirement Document",
+  "section_count": 52,
+  "sections": [
+    {
+      "number": null,
+      "title": "Barrel LVL1 Muon Trigger Coincidence Matrix ASIC: User Requirement Document",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 93,
+      "text_preview": "Authors:, E. Petrolo, A. Salamon, R. Vari, S. Veneziano Keywords:ATLAS, Level-1, Barrel, ASIC"
+    },
+    {
+      "number": null,
+      "title": "Abstract",
+      "level": 2,
+      "line_start": 5,
+      "text_length": 350,
+      "text_preview": "The Coincidence Matrix ASIC is the building block ofthe ATLAS barrel LVL1 Muon Trigger system and ofthe RPC readout. This documents describes its requirements and will be used during the design and im"
+    },
+    {
+      "number": null,
+      "title": "Table of contents",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 1166,
+      "text_preview": "• Capability requirements (PE)\n\n• General requirements (GE)\n\n• Requirements on the readout blocks (RE)\n\n• Requirements on the trigger blocks (TB)\n\n• requirements on external systems connected to the C"
+    },
+    {
+      "number": null,
+      "title": "Notes on things to be added",
+      "level": 2,
+      "line_start": 34,
+      "text_length": 189,
+      "text_preview": "Is it required to check for BCID number coming from TTCRx? Currently CMA has its own internal counter. All BCR and general reset policy has to be understood. Reference to RD27 Demonstrator."
+    },
+    {
+      "number": "1",
+      "title": "1 Introduction",
+      "level": 2,
+      "line_start": 38,
+      "text_length": 305,
+      "text_preview": "This document contains a very brief introduction of the functionality of the Coincidence Matrix (CM), a trigger and readout ASIC used in the ATLAS Muon spectrometer. Main topics are general requiremen"
+    },
+    {
+      "number": null,
+      "title": "1.1Purpouse of the document",
+      "level": 2,
+      "line_start": 42,
+      "text_length": 357,
+      "text_preview": "This document will be used to produce the specifications and during the design of the Coincidence Matrix. It shall be used also to produce the high level simulation code of the Atlas LVL1 Muon trigger"
+    },
+    {
+      "number": null,
+      "title": "1.2Scope of the hardware",
+      "level": 2,
+      "line_start": 46,
+      "text_length": 324,
+      "text_preview": "The final product of the design process, of which this document is part, is the production, test and installation of about 4000 CMAs, from readout and LVL1 triggering of the ATLAS muon barrel RPC cham"
+    },
+    {
+      "number": null,
+      "title": "1.3Definitions and acronyms",
+      "level": 2,
+      "line_start": 50,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "BC",
+      "level": 2,
+      "line_start": 52,
+      "text_length": 14,
+      "text_preview": "Bunch crossing"
+    },
+    {
+      "number": null,
+      "title": "BCID",
+      "level": 2,
+      "line_start": 56,
+      "text_length": 256,
+      "text_preview": "Bunch crossing Identifier. Number that defines the bunch crossing at which an event occurred. \"Potential\" bunch crossings are numbered 0 to 3563 per LHC orbit, starting with the first following the LH"
+    },
+    {
+      "number": null,
+      "title": "BCR",
+      "level": 2,
+      "line_start": 60,
+      "text_length": 36,
+      "text_preview": "Binch crossing counter reset signal."
+    },
+    {
+      "number": null,
+      "title": "CMA",
+      "level": 2,
+      "line_start": 64,
+      "text_length": 23,
+      "text_preview": "Coincidence Matrix ASIC"
+    },
+    {
+      "number": null,
+      "title": "DAQ",
+      "level": 2,
+      "line_start": 68,
+      "text_length": 23,
+      "text_preview": "Data Acquisition system"
+    },
+    {
+      "number": null,
+      "title": "Derandomizer",
+      "level": 2,
+      "line_start": 72,
+      "text_length": 94,
+      "text_preview": "place where the data corresponding to a Level 1 trigger accept are stored before being readout"
+    },
+    {
+      "number": null,
+      "title": "ECR",
+      "level": 2,
+      "line_start": 76,
+      "text_length": 97,
+      "text_preview": "Event Counter Reset signal. Signal broadcast by the TTC system to reset the event counter (L1ID)."
+    },
+    {
+      "number": null,
+      "title": "FE",
+      "level": 2,
+      "line_start": 80,
+      "text_length": 9,
+      "text_preview": "Front End"
+    },
+    {
+      "number": null,
+      "title": "Level-1 Buffer",
+      "level": 2,
+      "line_start": 84,
+      "text_length": 247,
+      "text_preview": "Buffer included in the FE electronics which retains the data until the L1A is received L1ID\n\nLVL1 trigger accept Identifier, A 24 bit L1ID is provided from the TTCrx with each LVL1A signal. In conjunc"
+    },
+    {
+      "number": null,
+      "title": "L1MT",
+      "level": 2,
+      "line_start": 90,
+      "text_length": 28,
+      "text_preview": "level-1 Muon Trigger System."
+    },
+    {
+      "number": null,
+      "title": "LVL1, LVL2",
+      "level": 2,
+      "line_start": 94,
+      "text_length": 69,
+      "text_preview": "Abbreviations for level-1 level-2 and for associated trigger systems."
+    },
+    {
+      "number": null,
+      "title": "L1A",
+      "level": 2,
+      "line_start": 98,
+      "text_length": 117,
+      "text_preview": "LVL1 trigger Accept signal produced by the Central Trigger Processor (CTP) when an event has met the design criteria."
+    },
+    {
+      "number": null,
+      "title": "PAD",
+      "level": 2,
+      "line_start": 102,
+      "text_length": 148,
+      "text_preview": "part of the LVL1 Barrel Muon trigger, which resides on the trigger chambers, whose function is to collect trigger and readout data from 4 or 8 CMAs."
+    },
+    {
+      "number": null,
+      "title": "Raw Data",
+      "level": 2,
+      "line_start": 106,
+      "text_length": 46,
+      "text_preview": "Data provided by the FE electronics to the CMA"
+    },
+    {
+      "number": null,
+      "title": "SEE",
+      "level": 2,
+      "line_start": 110,
+      "text_length": 52,
+      "text_preview": "Single Event Effects, induced by ionizing radiation."
+    },
+    {
+      "number": null,
+      "title": "TTC",
+      "level": 2,
+      "line_start": 114,
+      "text_length": 323,
+      "text_preview": "Standard system which allows the distribution of timing, trigger and Control signals, using the technology developped in RD12 and described in the TTCdoc. The system delivers standard signals such as "
+    },
+    {
+      "number": null,
+      "title": "TTCrx",
+      "level": 2,
+      "line_start": 118,
+      "text_length": 17,
+      "text_preview": "TTC receiver ASIC"
+    },
+    {
+      "number": null,
+      "title": "TTCdoc",
+      "level": 2,
+      "line_start": 122,
+      "text_length": 60,
+      "text_preview": "Documentation available in http://www.cern.ch/TTC/intro.html"
+    },
+    {
+      "number": null,
+      "title": "1.4References",
+      "level": 2,
+      "line_start": 126,
+      "text_length": 538,
+      "text_preview": "Changes on any of these documents could imply a complete revision of this URD:\n\n[1] The LVL1 Muon Trigger URD v 1.4\n\n[2] Trigger and DAQ Interfaces with front-end systems: requirement document, versio"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 Document overview",
+      "level": 2,
+      "line_start": 142,
+      "text_length": 315,
+      "text_preview": "The document contains the CMA requirements organized as follows:\n\n• Capability requirements (PE)\n\n• General requirements (GE)\n\n• Requirements on the readout blocks (RE)\n\n• Requirements on the trigger "
+    },
+    {
+      "number": null,
+      "title": "2General description",
+      "level": 2,
+      "line_start": 158,
+      "text_length": 453,
+      "text_preview": "A complete description of the trigger chamber layout and partitioning (layer, doublet, station, PAD, sector) and a description of the L1MT (functionality of CM boards, PAD boards, Sector boards, reado"
+    },
+    {
+      "number": null,
+      "title": "2.1Perspective",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 283,
+      "text_preview": "The CMA is part of the LVL1 trigger and of the RPC readout systems. It interacts with various other trigger components and detector sub-systems, as indicated in Figure 2.\n\n![](images/d5ca297a0e0268713"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 General capabilities",
+      "level": 2,
+      "line_start": 172,
+      "text_length": 351,
+      "text_preview": "The CMA has to perform the local readout and Low-Pt and High-Pt LVL1 trigger algorithms for the RPC trigger chambers. The trigger algorithm is explained in the LVL1 TDR and shown in Figure 3:\n\n![](ima"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 General constraints",
+      "level": 2,
+      "line_start": 179,
+      "text_length": 733,
+      "text_preview": "The CMA shall be mounted on the PAD boards, on-detector.\n\nThe serial configuration bus shall be I2C or JTAG, derived from the CAN node output. These two control bus standards are used also by other de"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 User characteristics",
+      "level": 2,
+      "line_start": 191,
+      "text_length": 51,
+      "text_preview": "Characteristics of users and maintenance personnel."
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 Operational environment",
+      "level": 2,
+      "line_start": 195,
+      "text_length": 440,
+      "text_preview": "Radiation dose expectedis less than 1 krad and 10<sup>10</sup> n/cm<sup>2</sup> (1MeV equivalent), in ten years of operation, with a safety factor of 5. Limitation on power consumption is no longer st"
+    },
+    {
+      "number": "2.6",
+      "title": "2.6 Assumptions and dependencies",
+      "level": 2,
+      "line_start": 201,
+      "text_length": 66,
+      "text_preview": "List of assumptions that the specific requirements are based upon."
+    },
+    {
+      "number": "3",
+      "title": "3 Specific requirements",
+      "level": 2,
+      "line_start": 205,
+      "text_length": 183,
+      "text_preview": "The specific requirements are labelled as follows:\n\nNeed: Essential, Non-Essential:1,2,3\n\nPriority: 1, 2, 3, Suspended\n\nStability: Stable, Unstable\n\n(Source: Reference, Person, Group)"
+    },
+    {
+      "number": null,
+      "title": "3.1Capability requirements",
+      "level": 2,
+      "line_start": 217,
+      "text_length": 132,
+      "text_preview": "CMA\\_PE\\_1 Essential, 1, Stable\n\nThe CMA shall be able to process digital signals from RPC chambers FE or from a CMA trigger output."
+    },
+    {
+      "number": null,
+      "title": "CMA\\_PE\\_2 Essential, 1, Stable",
+      "level": 2,
+      "line_start": 223,
+      "text_length": 217,
+      "text_preview": "The CMA shall be programmable and able to perform the low-pt or the high-pt algorithms. The low-pt algorithm shall use information from two doublets, while the high-pt will use one doublet plus one CM"
+    },
+    {
+      "number": null,
+      "title": "CMA\\_PE\\_3 Essential, 1, Stable",
+      "level": 2,
+      "line_start": 227,
+      "text_length": 114,
+      "text_preview": "The CMA shall perform one trigger algorithm (low-pt or high-pt), for three independent programmable Pt thresholds."
+    },
+    {
+      "number": null,
+      "title": "CMA\\_PE\\_4 Essential, 1, Stable",
+      "level": 2,
+      "line_start": 231,
+      "text_length": 158,
+      "text_preview": "The latency of the CMA trigger pipeline shall be as short as possible and shall not exceed 2 BC periods, measured from signal input to trigger output buffers."
+    },
+    {
+      "number": null,
+      "title": "CMA\\_PE\\_5Essential, 1, Stable CMA PE 5Essential, 1, Stable",
+      "level": 2,
+      "line_start": 235,
+      "text_length": 693,
+      "text_preview": "The trigger latency of the CMA shall be fixed, not depending on the amount of incoming data.\n\nCMA\\_PE\\_6Essential, 1, Stable\n\nThe CMA shall be able to perform the data readout of RPC chambers\n\nCMA\\_PE"
+    },
+    {
+      "number": null,
+      "title": "CMA\\_PE\\_10 Essential, 1, Stable",
+      "level": 2,
+      "line_start": 261,
+      "text_length": 154,
+      "text_preview": "The CMA shall be able to flag internal malfunction, due for example to SEUs, on dedicated output lines.\n\nNote 1: a PLL unlock signal is a tipical example."
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Constraints requirements",
+      "level": 2,
+      "line_start": 267,
+      "text_length": 1305,
+      "text_preview": "CMA\\_GE\\_1 Essential, 2, Unstable\n\nthe maximum power dissipation of the CMA per input channel shall not exceed 5 mW (1W total).\n\nNote 1: max power value has to be checked against cooling system tests."
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Requirements on the Readout Blocks",
+      "level": 2,
+      "line_start": 295,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "CMA\\_RO\\_1 Essential, 1, Unstable",
+      "level": 2,
+      "line_start": 297,
+      "text_length": 2273,
+      "text_preview": "The CMA shall retain in “pipeline” memories, during the latency of the LVL1 trigger, information required to monitor the device during standard operation. Information to be readout from the CMA includ"
+    },
+    {
+      "number": null,
+      "title": "CMA\\_RO\\_6 Essential, 1, Unstable",
+      "level": 2,
+      "line_start": 323,
+      "text_length": 547,
+      "text_preview": "In the operation described in CMA\\_RO\\_1, it must be possible to send information for several consecutive bunch crossings around the triggered one, the extent of the time frame shall be programmable u"
+    },
+    {
+      "number": null,
+      "title": "CMA\\_RO\\_7 Essential, 1, Stable",
+      "level": 2,
+      "line_start": 327,
+      "text_length": 2906,
+      "text_preview": "the CMA shall be able to accept two different LVL1\\_A which are separated by a minimum interval of 3 BCs, i.e. two consecutive LVL1\\_A will be separated by a time inter-\n\nval of at least 2 BC periods."
+    },
+    {
+      "number": "3.1.3",
+      "title": "3.1.3 Requirements on the Trigger Blocks",
+      "level": 2,
+      "line_start": 353,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "CMA\\_TB\\_1",
+      "level": 2,
+      "line_start": 355,
+      "text_length": 274,
+      "text_preview": "The CMA coincidence logic shall be composed of a set of identical cells arranged in a Coincidence Matrix. The details of the basic cell, similar to the demonstrator ASIC are shown in Figure 4.\n\n![](im"
+    },
+    {
+      "number": null,
+      "title": "Figure 4 Coincidence Matrix cell",
+      "level": 2,
+      "line_start": 361,
+      "text_length": 6166,
+      "text_preview": "CMA\\_TB\\_2 Essential, 1, Unstable\n\nThe CMA shall be able to capture signals from the FE discriminators of 12 ns width Note 1: voltage levels shall be 3.3V CMOS\n\nCMA\\_TB\\_3 Essential, 1, Unstable\n\nThe "
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 Requirements to the design process and tools used",
+      "level": 2,
+      "line_start": 427,
+      "text_length": 723,
+      "text_preview": "CMA\\_DE\\_1 Essential, 1, Stable The Very large scale Integration Hardware Description Language (VHDL) will be used for simulation and synthesis. Note 1: this requirement should be adopted by the rest "
+    },
+    {
+      "number": null,
+      "title": "CMA\\_DE\\_4 Non-essential, 2, Unstable",
+      "level": 2,
+      "line_start": 435,
+      "text_length": 260,
+      "text_preview": "An high level programming language with details of the CMA (or more generally for all the component parts of the LVL1 Barrel Muon trigger system), shall be made available from the CMA developers for t"
+    }
+  ],
+  "constraint_count": 4,
+  "constraints": [
+    {
+      "value": 3.3,
+      "unit": "V",
+      "operator": "shall",
+      "sentence": "Main voltage on the PAD board shall be 3.3 V and signal levels are assumed 3.3V CMOS. Radiatio",
+      "section": "2.3 General constraints",
+      "section_number": "2.3",
+      "section_title": "2.3 General constraints",
+      "line_start": 179
+    },
+    {
+      "value": 5.0,
+      "unit": "mW",
+      "operator": "shall",
+      "sentence": "um power dissipation of the CMA per input channel shall not exceed 5 mW (1W total).",
+      "section": "3.2 Constraints requirements",
+      "section_number": "3.2",
+      "section_title": "3.2 Constraints requirements",
+      "line_start": 267
+    },
+    {
+      "value": 1.0,
+      "unit": "ms",
+      "operator": "shall",
+      "sentence": "he PAD board; the latency in trasferring the data shall not exceed 1 ms. Note 1; upper limit on the latency to be discuss",
+      "section": "CMA\\_RO\\_7 Essential, 1, Stable",
+      "section_number": null,
+      "section_title": "CMA\\_RO\\_7 Essential, 1, Stable",
+      "line_start": 327
+    },
+    {
+      "value": 3.3,
+      "unit": "V",
+      "operator": "shall",
+      "sentence": "criminators of 12 ns width Note 1: voltage levels shall be 3.3V CMOS",
+      "section": "Figure 4 Coincidence Matrix cell",
+      "section_number": null,
+      "section_title": "Figure 4 Coincidence Matrix cell",
+      "line_start": 361
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "1. Document Title:"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "Table of contents",
+      "raw_html": "<tr><td colspan=\"3\">1. Document Title:</td></tr><tr><td colspan=\"3\">2. Document Reference Number</td><td>CMA URD</td></tr><tr><td>4. Issue</td><td>5. Revision</td><td>6. Date</td><td>7. Reason for change</td></tr><tr><td>0</td><td>1</td><td>18 Nov 97</td><td>Birth.</td></tr><tr><td>0</td><td>2</td><td>22 May 98</td><td>New introduction and chapter organization</td></tr><tr><td>0</td><td>3</td><td>31 Aug 98</td><td>Minor modifications to take into account the 100MeV background.</td></tr><tr><td>0"
+    }
+  ],
+  "image_count": 6,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "90e6b8ec1d084c79500131e5f66850cf0d4736eadabbb236626c031d717fe4bc.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/90e6b8ec1d084c79500131e5f66850cf0d4736eadabbb236626c031d717fe4bc.jpg",
+      "image_exists": true,
+      "image_size_kb": 40,
+      "alt_text": null,
+      "caption": "Figure 1 LVL1 Muon Barrel trigger architecture",
+      "figure_number": 1,
+      "image_type": "architecture_diagram",
+      "section": "2General description",
+      "context_before": "• requirements on external systems connected to the CM (EX)\n• requirements on the design process (DE)\nA complete description of the trigger chamber layout and partitioning (layer, doublet, station, PAD, sector) and a description of the L1MT (functionality of CM boards, PAD boards, Sector boards, rea",
+      "context_after": "Figure 1 LVL1 Muon Barrel trigger architecture\nThe CMA is part of the LVL1 trigger and of the RPC readout systems. It interacts with various other trigger components and detector sub-systems, as indic",
+      "md_line": 162,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "d5ca297a0e0268713012af993f27c4e9639c069967ca88a0e0ae71186b93be49.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/d5ca297a0e0268713012af993f27c4e9639c069967ca88a0e0ae71186b93be49.jpg",
+      "image_exists": true,
+      "image_size_kb": 46,
+      "alt_text": null,
+      "caption": "Figure 2 CMA context diagram",
+      "figure_number": 2,
+      "image_type": "context_diagram",
+      "section": "2.1Perspective",
+      "context_before": "A complete description of the trigger chamber layout and partitioning (layer, doublet, station, PAD, sector) and a description of the L1MT (functionality of CM boards, PAD boards, Sector boards, readout and trigger links, Muon Interface to CTP) can be found in the LVL1 TDR [2], and an updated versio",
+      "context_after": "Figure 2 CMA context diagram\nThe CMA has to perform the local readout and Low-Pt and High-Pt LVL1 trigger algorithms for the RPC trigger chambers. The trigger algorithm is explained in the LVL1 TDR an",
+      "md_line": 169,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "81e550660292e976432391e205436d15bbca2c719329770ebfa7074d8c009688.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/81e550660292e976432391e205436d15bbca2c719329770ebfa7074d8c009688.jpg",
+      "image_exists": true,
+      "image_size_kb": 77,
+      "alt_text": null,
+      "caption": "Figure 3 Trigger algorithm and connections between Low-Pt and High-Pt CMAs.",
+      "figure_number": 3,
+      "image_type": "interface_diagram",
+      "section": "2.2 General capabilities",
+      "context_before": "The CMA is part of the LVL1 trigger and of the RPC readout systems. It interacts with various other trigger components and detector sub-systems, as indicated in Figure 2.\nFigure 2 CMA context diagram\nThe CMA has to perform the local readout and Low-Pt and High-Pt LVL1 trigger algorithms for the RPC ",
+      "context_after": "Figure 3 Trigger algorithm and connections between Low-Pt and High-Pt CMAs.\nThe CMA shall be mounted on the PAD boards, on-detector.",
+      "md_line": 176,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "1072b987aa91e3a1772764fbcd5c64a50627368d131eb4bee1a7dda6f4880a10.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/1072b987aa91e3a1772764fbcd5c64a50627368d131eb4bee1a7dda6f4880a10.jpg",
+      "image_exists": true,
+      "image_size_kb": 40,
+      "alt_text": null,
+      "caption": "CMA\\_TB\\_2 Essential, 1, Unstable",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "CMA\\_TB\\_1",
+      "context_before": "CMA\\_RO\\_17 Essential, 1, Unstable the CMA will be able to receive an external transmit off signal (XOFF), to control the readout data flow.\nThe CMA coincidence logic shall be composed of a set of identical cells arranged in a Coincidence Matrix. The details of the basic cell, similar to the demonst",
+      "context_after": "CMA\\_TB\\_2 Essential, 1, Unstable",
+      "md_line": 359,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 5,
+      "image_file": "ce4df05215c5c2fece6109a31c61316fcc9661c252fd0270eff0627489ab1f90.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/ce4df05215c5c2fece6109a31c61316fcc9661c252fd0270eff0627489ab1f90.jpg",
+      "image_exists": true,
+      "image_size_kb": 45,
+      "alt_text": null,
+      "caption": "Figure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 strips wide.",
+      "figure_number": 5,
+      "image_type": "figure",
+      "section": "Figure 4 Coincidence Matrix cell",
+      "context_before": "CMA\\_TB\\_4 Essential, 1, Unstable The CMA shall be programmable to be able to stretch groups of signals at the input of the Coincidence blocks in the 6 ns - 25 ns range, in steps of 1/8 of the BC period. Note 1: to be defined size of groups which have a common shaping time, maybe octets. Note 2: in ",
+      "context_after": "Figure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 strips wide.\nlayers(see Figure 5 ).",
+      "md_line": 383,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 6,
+      "image_file": "2a32af2cdff4c732d4d503deeb8e54431dc30b9a6213be9ad64805495d31a7ec.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/2a32af2cdff4c732d4d503deeb8e54431dc30b9a6213be9ad64805495d31a7ec.jpg",
+      "image_exists": true,
+      "image_size_kb": 88,
+      "alt_text": null,
+      "caption": "Figure 6 Preprocessing algorithm on the I and J doublets",
+      "figure_number": 6,
+      "image_type": "figure",
+      "section": "Figure 4 Coincidence Matrix cell",
+      "context_before": "CMA\\_TB\\_6 Essential, 1, Unstable The CMA shall be contain local coincidence logic (Preprocessing) within a doublet. The Preprocessing will take into account local bending and misalignement between\nFigure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 s",
+      "context_after": "Figure 6 Preprocessing algorithm on the I and J doublets\nCMA\\_TB\\_7 Essential, 1, Unstable the CMA shall provide the Pt value of the muon candidate, if any, passing the highest Pt threshold.",
+      "md_line": 388,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "90e6b8ec1d084c79500131e5f66850cf0d4736eadabbb236626c031d717fe4bc.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/90e6b8ec1d084c79500131e5f66850cf0d4736eadabbb236626c031d717fe4bc.jpg",
+      "image_exists": true,
+      "image_size_kb": 40,
+      "image_type": "architecture_diagram",
+      "figure_number": 1,
+      "caption": "Figure 1 LVL1 Muon Barrel trigger architecture",
+      "section": "2General description",
+      "context_before": "• requirements on external systems connected to the CM (EX)\n• requirements on the design process (DE)\nA complete description of the trigger chamber layout and partitioning (layer, doublet, station, PAD, sector) and a description of the L1MT (functionality of CM boards, PAD boards, Sector boards, rea",
+      "context_after": "Figure 1 LVL1 Muon Barrel trigger architecture\nThe CMA is part of the LVL1 trigger and of the RPC readout systems. It interacts with various other trigger components and detector sub-systems, as indic",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "d5ca297a0e0268713012af993f27c4e9639c069967ca88a0e0ae71186b93be49.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/d5ca297a0e0268713012af993f27c4e9639c069967ca88a0e0ae71186b93be49.jpg",
+      "image_exists": true,
+      "image_size_kb": 46,
+      "image_type": "context_diagram",
+      "figure_number": 2,
+      "caption": "Figure 2 CMA context diagram",
+      "section": "2.1Perspective",
+      "context_before": "A complete description of the trigger chamber layout and partitioning (layer, doublet, station, PAD, sector) and a description of the L1MT (functionality of CM boards, PAD boards, Sector boards, readout and trigger links, Muon Interface to CTP) can be found in the LVL1 TDR [2], and an updated versio",
+      "context_after": "Figure 2 CMA context diagram\nThe CMA has to perform the local readout and Low-Pt and High-Pt LVL1 trigger algorithms for the RPC trigger chambers. The trigger algorithm is explained in the LVL1 TDR an",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "81e550660292e976432391e205436d15bbca2c719329770ebfa7074d8c009688.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/81e550660292e976432391e205436d15bbca2c719329770ebfa7074d8c009688.jpg",
+      "image_exists": true,
+      "image_size_kb": 77,
+      "image_type": "interface_diagram",
+      "figure_number": 3,
+      "caption": "Figure 3 Trigger algorithm and connections between Low-Pt and High-Pt CMAs.",
+      "section": "2.2 General capabilities",
+      "context_before": "The CMA is part of the LVL1 trigger and of the RPC readout systems. It interacts with various other trigger components and detector sub-systems, as indicated in Figure 2.\nFigure 2 CMA context diagram\nThe CMA has to perform the local readout and Low-Pt and High-Pt LVL1 trigger algorithms for the RPC ",
+      "context_after": "Figure 3 Trigger algorithm and connections between Low-Pt and High-Pt CMAs.\nThe CMA shall be mounted on the PAD boards, on-detector.",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "1072b987aa91e3a1772764fbcd5c64a50627368d131eb4bee1a7dda6f4880a10.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/1072b987aa91e3a1772764fbcd5c64a50627368d131eb4bee1a7dda6f4880a10.jpg",
+      "image_exists": true,
+      "image_size_kb": 40,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "CMA\\_TB\\_2 Essential, 1, Unstable",
+      "section": "CMA\\_TB\\_1",
+      "context_before": "CMA\\_RO\\_17 Essential, 1, Unstable the CMA will be able to receive an external transmit off signal (XOFF), to control the readout data flow.\nThe CMA coincidence logic shall be composed of a set of identical cells arranged in a Coincidence Matrix. The details of the basic cell, similar to the demonst",
+      "context_after": "CMA\\_TB\\_2 Essential, 1, Unstable",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "ce4df05215c5c2fece6109a31c61316fcc9661c252fd0270eff0627489ab1f90.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/ce4df05215c5c2fece6109a31c61316fcc9661c252fd0270eff0627489ab1f90.jpg",
+      "image_exists": true,
+      "image_size_kb": 45,
+      "image_type": "figure",
+      "figure_number": 5,
+      "caption": "Figure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 strips wide.",
+      "section": "Figure 4 Coincidence Matrix cell",
+      "context_before": "CMA\\_TB\\_4 Essential, 1, Unstable The CMA shall be programmable to be able to stretch groups of signals at the input of the Coincidence blocks in the 6 ns - 25 ns range, in steps of 1/8 of the BC period. Note 1: to be defined size of groups which have a common shaping time, maybe octets. Note 2: in ",
+      "context_after": "Figure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 strips wide.\nlayers(see Figure 5 ).",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "2a32af2cdff4c732d4d503deeb8e54431dc30b9a6213be9ad64805495d31a7ec.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2000 - Barrel.pdf/auto/images/2a32af2cdff4c732d4d503deeb8e54431dc30b9a6213be9ad64805495d31a7ec.jpg",
+      "image_exists": true,
+      "image_size_kb": 88,
+      "image_type": "figure",
+      "figure_number": 6,
+      "caption": "Figure 6 Preprocessing algorithm on the I and J doublets",
+      "section": "Figure 4 Coincidence Matrix cell",
+      "context_before": "CMA\\_TB\\_6 Essential, 1, Unstable The CMA shall be contain local coincidence logic (Preprocessing) within a doublet. The Preprocessing will take into account local bending and misalignement between\nFigure 5 The preporocessing implements a declustering algorithm able to find cluster centers up to 5 s",
+      "context_after": "Figure 6 Preprocessing algorithm on the I and J doublets\nCMA\\_TB\\_7 Essential, 1, Unstable the CMA shall provide the Pt value of the muon candidate, if any, passing the highest Pt threshold.",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

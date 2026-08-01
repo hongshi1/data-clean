@@ -1,0 +1,1050 @@
+{
+  "doc_name": "服务器环境基线",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/通信协议/服务器环境基线.md",
+  "md_lines": 785,
+  "md_chars": 28806,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "defense",
+  "title": "服务器环境基线文档 (V2.1)",
+  "section_count": 74,
+  "sections": [
+    {
+      "number": null,
+      "title": "服务器环境基线文档 (V2.1)",
+      "level": 1,
+      "line_start": 9,
+      "text_length": 493,
+      "text_preview": "> [!IMPORTANT] 部署环境约束 (Deployment Constraints)\n> - **架构**: ARM64 (aarch64)，严禁混入 x86_64 二进制包。\n> - **任务/管理分离**: 数据面固定在 **NUMA Node 1 / CPU 16-31**，管理面固定在 **CPU 0-15**。\n> - **内核隔离**: 已通过 GRUB 参数 `isolcpu"
+    },
+    {
+      "number": null,
+      "title": "目录",
+      "level": 2,
+      "line_start": 19,
+      "text_length": 1815,
+      "text_preview": "- [文档使用说明](#文档使用说明)\n- [快速核查清单](#快速核查清单)\n- [第一部分：硬件基础设施 (Hardware Infrastructure)](#第一部分硬件基础设施-hardware-infrastructure)\n  - [1.1 系统概览 (System Summary)](#11-系统概览-system-summary)\n  - [1.2 计算资源 (CPU)](#12"
+    },
+    {
+      "number": null,
+      "title": "文档使用说明",
+      "level": 2,
+      "line_start": 59,
+      "text_length": 111,
+      "text_preview": "- 第一至第四部分记录当前生效的环境基线，用于部署、核查和运维。\n- 附录 A 保留历史审计和版本演进信息，用于问题追溯；不替代当前基线。\n- 现场快速核查时，优先查看下方“快速核查清单”，需要修改参数时再跳转到第四部分。"
+    },
+    {
+      "number": null,
+      "title": "快速核查清单",
+      "level": 2,
+      "line_start": 65,
+      "text_length": 628,
+      "text_preview": "| **核查项** | **当前基线** |\n| --- | --- |\n| 架构 | `aarch64 / ARM64` |\n| CPU / NUMA | 32 核，`Node 0 = CPU 0-15`，`Node 1 = CPU 16-31` |\n| 内存 | 64 GB DDR5，ECC 开启 |\n| 存储 | `NVMe + /data (md0 RAID10 + XFS)`，`[UUU"
+    },
+    {
+      "number": null,
+      "title": "第一部分：硬件基础设施 (Hardware Infrastructure)",
+      "level": 2,
+      "line_start": 80,
+      "text_length": 35,
+      "text_preview": "本章节记录了服务器的核心硬件配置，包括计算、存储、网络及系统架构信息。"
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 系统概览 (System Summary)",
+      "level": 3,
+      "line_start": 84,
+      "text_length": 527,
+      "text_preview": "该服务器基于 **ARM64 (aarch64)** 架构，由 **HCG** 厂商生产，定位于高性能国产化计算平台。\n\n| **项目**    | **详细参数**                          | **备注**                   |\n| --------- | --------------------------------- | ------------"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 计算资源 (CPU)",
+      "level": 3,
+      "line_start": 97,
+      "text_length": 649,
+      "text_preview": "服务器搭载一颗国产 **飞腾 (Phytium)** 高性能处理器，采用多核多节点架构。\n\n- **核心规格**：\n    - **型号名称**：Phytium S5000C B-EN32-C\n    - **核心数量**：32 核心 (单插槽，每个核 1 线程)\n    - **主频范围**：50.0 MHz - 2300.0 MHz\n- **缓存体系 (Cache)**：\n    - **L1"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 内存系统 (Memory)",
+      "level": 3,
+      "line_start": 123,
+      "text_length": 481,
+      "text_preview": "系统当前配置 **64GB** 高速 DDR5 内存，具备纠错能力。\n\n- **总量统计**：\n    - **物理内存**：62 GiB (实际可用约 64GB)\n    - **交换分区 (Swap)**：8.0 GiB (当前占用 0B)\n- **插槽详情**：\n    - **类型**：DDR5 Synchronous Registered (Buffered)\n    - **插槽分布*"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 存储系统 (Storage)",
+      "level": 3,
+      "line_start": 141,
+      "text_length": 56,
+      "text_preview": "存储架构采用 **NVMe 固态硬盘（系统盘）+ 机械硬盘 RAID 10（数据盘）** 的高性能与高可靠组合。"
+    },
+    {
+      "number": "1.4.1",
+      "title": "1.4.1 物理磁盘列表",
+      "level": 4,
+      "line_start": 145,
+      "text_length": 397,
+      "text_preview": "|**设备路径**|**媒介类型**|**容量**|**型号/序列号**|**用途**|\n|---|---|---|---|---|\n|`/dev/nvme0n1`|NVMe SSD|2.0 TB|SanDisk Extreme 2TB X3N|系统与引导|\n|`/dev/sda`|HDD (7200rpm)|20.0 TB|Seagate ST20000DM001|RAID 10 成员|\n|`/"
+    },
+    {
+      "number": "1.4.2",
+      "title": "1.4.2 逻辑卷与 RAID 配置",
+      "level": 4,
+      "line_start": 155,
+      "text_length": 384,
+      "text_preview": "- **数据阵列 (Software RAID 10)**：\n    - **设备**：`/dev/md0`\n    - **容量**：36.4 T / 37.0 TB 文件系统可用空间\n    - **文件系统**：XFS\n    - **挂载点**：`/data`\n    - **状态**：`[UUUU]` (全部在线)，`raid10 near=2`，`512K chunks`，内部 bit"
+    },
+    {
+      "number": "1.4.3",
+      "title": "1.4.3 文件系统与队列参数基线",
+      "level": 4,
+      "line_start": 169,
+      "text_length": 539,
+      "text_preview": "|**层级**|**关键参数**|**现场值 / 说明**|\n|---|---|---|\n|`/dev/md0`|RAID 布局|`raid10 near=2`，4 盘在线，Chunk Size = `512K`|\n|`/data` XFS|条带对齐|`sectsz=4096`，`bsize=4096`，`sunit=128 blks (512K)`，`swidth=256 blks (1 MiB"
+    },
+    {
+      "number": "1.4.4",
+      "title": "1.4.4 写入性能实测与录制基线",
+      "level": 4,
+      "line_start": 180,
+      "text_length": 637,
+      "text_preview": "- **核查时间**：2026-03-26\n- **测试方法**：使用 `dd` 进行顺序直写（`oflag=direct conv=fdatasync`），写完立即删除临时文件；现场未安装 `fio`\n\n|**目标路径**|**底层介质**|**测试文件大小**|**实测顺序写入**|**用途判定**|\n|---|---|---|---|---|\n|`/data/.codex_dd_test.b"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 网络与外设 (Network & Peripherals)",
+      "level": 3,
+      "line_start": 197,
+      "text_length": 53,
+      "text_preview": "本服务器配置了高性能网络子系统，包含国产千兆网卡与 Intel 万兆光纤网卡的组合，支持多种硬件加速特性。"
+    },
+    {
+      "number": "1.5.1",
+      "title": "1.5.1 网卡硬件架构",
+      "level": 4,
+      "line_start": 201,
+      "text_length": 288,
+      "text_preview": "服务器共计拥有 **8 个物理网口**，分布在两块 PCIe 网卡控制器上：\n\n|**控制器名称**|**制造商**|**规格**|**对应接口名称**|**驱动**|\n|---|---|---|---|---|\n|**WX1860A4**|北京网讯 (Wangxun)|4 × 1GbE (电口)|`enP1s24f0` ~ `f3`|`ngbe`|\n|**Intel X710**|Intel C"
+    },
+    {
+      "number": "1.5.2",
+      "title": "1.5.2 数据面/管理面基线与 IRQ 亲和性",
+      "level": 4,
+      "line_start": 210,
+      "text_length": 579,
+      "text_preview": "> **架构要点**：为确保信号处理主干道的“确定性”，系统采用**物理分布与逻辑迁移**相结合的策略。\n\n- **数据面光口**：`receiver0` / `receiver1` / `receiver2` / `receiver3`\n    - 旧命名分别为 `enP1s25f0` / `enP1s25f1` / `enP1s25f2` / `enP1s25f3`。\n    - 物理位于 *"
+    },
+    {
+      "number": "1.5.3",
+      "title": "1.5.3 网络调优与持久化",
+      "level": 4,
+      "line_start": 226,
+      "text_length": 436,
+      "text_preview": "- **环形缓冲区 (Ring Buffer)**：\n    - Intel X710 四个光口均要求 `RX/TX ring = 4096`（已达硬件上限）。\n    - **加固说明**：已完成 RX/TX 队列扩容，消除了缓冲区不足导致的 `rx_dropped` 丢包隐患。\n- **硬件加速特性 (Offloading)**：\n    - **已开启**：`rx-checksumming`"
+    },
+    {
+      "number": "1.5.4",
+      "title": "1.5.4 IP、链路与命名状态",
+      "level": 4,
+      "line_start": 236,
+      "text_length": 1001,
+      "text_preview": "- **当前管理网口**：`enP1s24f0` (北京网讯千兆电口)。\n- **管理口 IP**：`192.168.31.234/24` (通过 DHCP 获取)。\n- **默认网关**：`192.168.31.1`。\n- **命名约定说明**：服务器当前已将 Intel X710 四个 10G 光口真实重命名为 `receiver0` ~ `receiver3`；旧命名 `enP1s25f0`"
+    },
+    {
+      "number": "1.5.5",
+      "title": "1.5.5 图形与显示",
+      "level": 4,
+      "line_start": 256,
+      "text_length": 117,
+      "text_preview": "- **控制器**：ASPEED Graphics Family [1a03:2000] (rev 41)。\n- **说明**：集成在基板管理控制器 (BMC) 中的基本显示芯片，不支持 GPU 加速计算，仅用于控制台管理。\n\n---"
+    },
+    {
+      "number": "1.6",
+      "title": "1.6 加速器与 AI 基础设施 (Accelerator & AI Stack)",
+      "level": 3,
+      "line_start": 263,
+      "text_length": 57,
+      "text_preview": "本服务器集成了国产高性能 AI 加速芯片，采用驱动级兼容 CUDA 的技术路线，为深度学习与科学计算提供硬件支撑。"
+    },
+    {
+      "number": "1.6.1",
+      "title": "1.6.1 硬件规格 (GPU/Accelerator)",
+      "level": 4,
+      "line_start": 267,
+      "text_length": 171,
+      "text_preview": "- **设备名称**：Iluvatar MR-V100 (天数智芯 智铠系列)\n- **总线 ID**：`0001:01:00.0` (PCIe x16, 16GT/s)\n- **NUMA 亲和性**：绑定在 **NUMA Node 1**\n- **说明**：当前位置与万兆网卡同属 Node 1，符合高吞吐信号处理的“同节点数据交换”原则。"
+    },
+    {
+      "number": "1.6.2",
+      "title": "1.6.2 驱动与运行时环境 (Driver & Runtime)",
+      "level": 4,
+      "line_start": 274,
+      "text_length": 291,
+      "text_preview": "系统已安装天数智芯 CoreX 软件包，其核心逻辑是通过二进制兼容与符号映射实现对 CUDA 生态的承接。\n\n|**组件**|**版本/路径**|**关键备注**|\n|---|---|---|\n|**驱动版本**|4.3.8|内核模块: `iluvatar`, `mdev`, `vfio`|\n|**软件栈版本**|CoreX 4.3.8|安装路径: `/usr/local/corex/`|\n|**"
+    },
+    {
+      "number": "1.6.3",
+      "title": "1.6.3 符号链接与兼容性库 (Compatibility Libraries)",
+      "level": 4,
+      "line_start": 285,
+      "text_length": 443,
+      "text_preview": "该设备在 `/usr/local/corex/lib64/` 目录下通过动态库劫持技术映射了大量的标准 CUDA 库，确保原 x86/CUDA 源码经由 `clang` 编译后可直接运行。\n\n- **核心库文件清单**：\n    - **深度学习**：`libcudnn.so.7` (约 1GB), `libcuinfer.so.7` (约 2GB)\n    - **数学运算**：`libcubl"
+    },
+    {
+      "number": "1.6.4",
+      "title": "1.6.4 开发工具链探测",
+      "level": 4,
+      "line_start": 297,
+      "text_length": 191,
+      "text_preview": "- **关键头文件**：`/usr/local/corex/include` 下已包含全套 `cuda.h`, `cublas_v2.h`, `cudnn.h` 等。\n- **缺失组件告警**：命令行暂未找到 `ixcc` (天数智芯专有编译器命令)。目前的编译工作流主要依赖 `/usr/local/corex/bin/clang++` 配合特定的 Target 指令。\n\n---"
+    },
+    {
+      "number": "1.7",
+      "title": "1.7 硬件架构综合审计",
+      "level": 3,
+      "line_start": 304,
+      "text_length": 553,
+      "text_preview": "> **[核心架构] 任务平面与管理平面物理隔离表**\n>\n> 硬件基线已调整为“纯净任务节点”模式，确保信号处理不受系统底噪干扰。\n\n|**资源名称**|**物理位置**|**职责归属**|**建议绑定核心**|**访存代价**|\n|---|---|---|---|---|\n|**Intel 10G NIC**|**Node 1**|**数据采集**|CPU 16-31|**本地访问 (数据面专"
+    },
+    {
+      "number": null,
+      "title": "第二部分：操作系统与内核环境 (OS & Kernel)",
+      "level": 2,
+      "line_start": 322,
+      "text_length": 36,
+      "text_preview": "本章节记录了操作系统的发行版本、内核规格、安全基线及系统级资源限制配置。"
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 系统版本与内核 (Distribution & Kernel)",
+      "level": 3,
+      "line_start": 326,
+      "text_length": 609,
+      "text_preview": "服务器运行国产自主指令集优化后的银河麒麟高级服务器操作系统。\n\n|**项目**|**详细参数**|**备注**|\n|---|---|---|\n|**发行版本**|Kylin Linux Advanced Server V10 (GFB)|银河麒麟 V10|\n|**内核版本**|4.19.90-52.23.v2207.gfb08.ky10.aarch64|SMP 架构内核|\n|**系统语言**|zh"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 安全配置基线 (Security Baseline)",
+      "level": 3,
+      "line_start": 350,
+      "text_length": 486,
+      "text_preview": "系统的安全防护机制当前处于“混合”状态，需关注防火墙对业务端口的影响。\n\n- **SELinux (Security-Enhanced Linux)**：\n    - **状态**：`Disabled` (已禁用)\n    - **影响**：降低了应用部署时的权限策略复杂度，但在公网暴露环境下需依赖其他安全手段。\n- **Firewalld (动态防火墙)**：\n    - **状态**：`Act"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 资源限制 (Resource Limits - ulimit)",
+      "level": 3,
+      "line_start": 371,
+      "text_length": 358,
+      "text_preview": "当前系统的用户级资源配置多为默认值，高并发场景下可能存在瓶颈。\n\n|**资源类型**|**配置参数**|**潜在风险/影响**|\n|---|---|---|\n|**最大文件打开数 (open files)**|**65535**|已通过修改 `/etc/security/limits.conf` 实现软硬限制同步提升，消除了雷达原始数据高速录制时的句柄瓶颈。|\n|**最大用户进程数 (max us"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 网络环境与服务 (Network & Services)",
+      "level": 3,
+      "line_start": 384,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.4.1",
+      "title": "2.4.1 网络基础配置",
+      "level": 4,
+      "line_start": 386,
+      "text_length": 348,
+      "text_preview": "- **DNS 解析**：\n    - 当前由 NetworkManager 生成，指向网关 `192.168.31.1`。\n- **时间同步 (NTP)**：\n    - **服务状态**：`chronyd` 已激活。\n    - **同步状态**：`System clock synchronized: no`（外部 NTP 服务器不可达，已启用 Orphan Mode）。\n    - **授时"
+    },
+    {
+      "number": "2.4.2",
+      "title": "2.4.2 网络栈与持久化 sysctl",
+      "level": 4,
+      "line_start": 396,
+      "text_length": 881,
+      "text_preview": "当前持久化文件：\n\n- `/etc/sysctl.d/90-qdgz300.conf`\n- `qdgz300-sysctl.service`（在麒麟默认 `kylin.conf` 覆盖后重新应用 QDGZ300 参数）\n\n| **参数** | **基线值** | **作用** |\n| --- | --- | --- |\n| `net.core.rmem_default` | `67108864` "
+    },
+    {
+      "number": "2.4.3",
+      "title": "2.4.3 关键 systemd 服务基线",
+      "level": 4,
+      "line_start": 421,
+      "text_length": 554,
+      "text_preview": "| **服务名** | **状态** | **职责** |\n| --- | --- | --- |\n| `qdgz300-sysctl.service` | enabled / active (exited) | 在麒麟默认 `kylin.conf` 覆盖后重新应用 QDGZ300 网络栈参数 |\n| `nic-optimization.service` | enabled / active (e"
+    },
+    {
+      "number": "2.4.4",
+      "title": "2.4.4 关键监听端口 (Active Ports)",
+      "level": 4,
+      "line_start": 433,
+      "text_length": 311,
+      "text_preview": "|**协议**|**端口**|**服务进程**|**监听范围**|**备注**|\n|---|---|---|---|---|\n|TCP|22|sshd|0.0.0.0|远程管理端口|\n|TCP|8080|receiver_app (metrics)|0.0.0.0|监控指标端口|\n|TCP|7897|sshd|127.0.0.1|SSH 隧道或转发|\n|UDP|323|chronyd|127.0."
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 软件仓库与包管理 (YUM/DNF)",
+      "level": 3,
+      "line_start": 445,
+      "text_length": 110,
+      "text_preview": "系统配置了银河麒麟官方的软件仓库，可直接通过 `yum` 安装国产化适配包。\n\n- **ks10-adv-os**: 核心操作系统基础包。\n- **ks10-adv-updates**: 安全补丁与软件更新包。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "第三部分：开发工具链与运行时栈 (Dev Stack & Runtime)",
+      "level": 2,
+      "line_start": 454,
+      "text_length": 47,
+      "text_preview": "本章节记录了支持 AArch64 架构及天数智芯（Iluvatar）加速器的开发环境配置基线。"
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 核心编译工具链 (Core Toolchain)",
+      "level": 3,
+      "line_start": 458,
+      "text_length": 343,
+      "text_preview": "系统配置了适配 ARM64 原生开发及国产 GPU 交叉编译的工具集合。\n\n|**组件**|**基线版本**|**关键属性 / 配置路径**|**备注**|\n|---|---|---|---|\n|**编译器 (Clang++)**|18.1.8|`/usr/local/corex/bin/clang++`|支持 Iluvatar 算子下发|\n|**构建系统 (CMake)**|3.16.5|`/u"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 加速卡开发环境 (AI/GPU Stack)",
+      "level": 3,
+      "line_start": 471,
+      "text_length": 48,
+      "text_preview": "基于 **天数智芯 CoreX** 软件栈，实现对雷达信号处理算法（如 FFT）的硬件加速支持。"
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 软件栈规格",
+      "level": 4,
+      "line_start": 475,
+      "text_length": 150,
+      "text_preview": "- **SDK 版本**：CoreX 4.3.8\n- **生态兼容性**：提供 CUDA 10.2 API 兼容层，支持原位迁移基于 CUDA 的信号处理代码。\n- **数学算子库**：已内置 `libcufft.so` (10.1.2.89)，支持 `cufftPlan1d` 等标准频域变换接口。"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 硬件访问配置与持久化",
+      "level": 4,
+      "line_start": 481,
+      "text_length": 481,
+      "text_preview": "为确保加速卡在系统重启及容器启动前可用，系统已配置自动节点创建服务。\n\n- **管理服务**：`iluvatar-node-init.service` (Systemd)\n    - **修复动作**：修正了 `oneshot` 服务类型下非法的 `Restart=` 参数配置，解决了服务启动被拒的问题。\n    - **权限控制**：确认为设备节点 `/dev/ix0` 和 `/dev/ixct"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 容器化基础设施 (Docker)",
+      "level": 3,
+      "line_start": 496,
+      "text_length": 45,
+      "text_preview": "针对国产内核与 AArch64 架构深度优化的 Docker 运行环境，已完成生产级配置。"
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 版本与架构",
+      "level": 4,
+      "line_start": 500,
+      "text_length": 80,
+      "text_preview": "- **Docker Engine**：18.09.0 (EulerVersion: 18.09.0.206)\n- **架构支持**：`linux/arm64`"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 关键守护进程配置 (`/etc/docker/daemon.json`)",
+      "level": 4,
+      "line_start": 505,
+      "text_length": 289,
+      "text_preview": "为确保与银河麒麟内核行为一致并保护系统分区空间，已实施以下基线：\n\n|**配置项**|**基线参数**|**审计逻辑**|\n|---|---|---|\n|**Cgroup Driver**|`systemd`|**[强制]** 与麒麟内核资源管理机制完全对齐。|\n|**Log Driver**|`json-file`|限制日志文件大小。|\n|**Log Max-size**|`100m`|防止雷达"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 运行时依赖与环境审计 (Runtime Audit)",
+      "level": 3,
+      "line_start": 518,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 驱动状态",
+      "level": 4,
+      "line_start": 520,
+      "text_length": 60,
+      "text_preview": "- 内核模块 `iluvatar`, `mdev`, `vfio` 已正确加载。\n- 主设备号 `240` 已动态分配。"
+    },
+    {
+      "number": "3.4.2",
+      "title": "3.4.2 性能拓扑建议 (Affinity)",
+      "level": 4,
+      "line_start": 525,
+      "text_length": 212,
+      "text_preview": "> **[核心原则] 基于任务/管理分离的绑定策略：**\n>\n> 1. **任务岛隔离**：所有实时信号处理进程及天数智芯算子下发任务必须绑定在 **Node 1 (CPU 16-31)**。\n>\n> 2. **底噪卸载**：所有非实时任务（包括磁盘录制、1G 网卡中断处理、系统监控、日志守护进程）必须通过配置绑定在 **Node 0 (CPU 0-15)**，确保 Node 1 核心始终处于“算"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 receiver_app 运行基线",
+      "level": 3,
+      "line_start": 535,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.5.1",
+      "title": "3.5.1 启动命令",
+      "level": 4,
+      "line_start": 537,
+      "text_length": 106,
+      "text_preview": "```bash\nnumactl --cpunodebind=1 --membind=1 ./build_release/receiver_app --config config/receiver.yaml\n```"
+    },
+    {
+      "number": "3.5.2",
+      "title": "3.5.2 线程结构基线",
+      "level": 4,
+      "line_start": 543,
+      "text_length": 98,
+      "text_preview": "- **主线程**：Node 1 调度域\n- **metrics 线程**：管理面 CPU 0-15，监听 `0.0.0.0:8080`\n- **阵面接收线程**：固定到 CPU 16/17/18"
+    },
+    {
+      "number": "3.5.3",
+      "title": "3.5.3 当前真实三阵面接收基线",
+      "level": 4,
+      "line_start": 549,
+      "text_length": 334,
+      "text_preview": "- **阵面 1**：`receiver0 -> enP1s25f0 -> 172.20.11.100:9999`\n- **阵面 2**：`receiver1 -> enP1s25f1 -> 172.20.12.100:9999`\n- **阵面 3**：`receiver2 -> enP1s25f2 -> 172.20.13.100:9999`\n- **预留 / 待接链路**：`receiver3"
+    },
+    {
+      "number": "3.5.4",
+      "title": "3.5.4 当前代码侧调试指标",
+      "level": 4,
+      "line_start": 559,
+      "text_length": 460,
+      "text_preview": "已纳入 receiver metrics 的关键指标：\n\n- `receiver_socket_packets_received_total`\n- `receiver_socket_bytes_received_total`\n- `receiver_socket_receive_batches_total`\n- `receiver_socket_source_filtered_total`\n- `"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 环境变量与持久化配置 (Environment Persistence)",
+      "level": 3,
+      "line_start": 577,
+      "text_length": 457,
+      "text_preview": "> **修订说明**：已完成 `devuser` 用户环境的持久化配置，确保编译工具链与动态库路径在登录时自动加载。\n\n- **配置文件**：`~/.bashrc`\n- **生效范围**：仅限 `devuser` 用户。\n- **配置内容审计**：\n    - `PATH`：已注入 `/usr/local/corex/bin`，确保 `clang++` 等工具可直接调用。\n    - `LD_LI"
+    },
+    {
+      "number": null,
+      "title": "第四部分：配置位置与核查命令汇总",
+      "level": 2,
+      "line_start": 594,
+      "text_length": 40,
+      "text_preview": "本章节只保留当前生效基线对应的持久化位置、修改方式和核查命令，作为运维快速参考。"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 内核启动参数",
+      "level": 3,
+      "line_start": 598,
+      "text_length": 736,
+      "text_preview": "| **参数** | **当前值** | **作用** | **配置文件位置** | **修改方法** | **验证命令** |\n| --- | --- | --- | --- | --- | --- |\n| `isolcpus` | `16-31` | 数据面核心从调度器摘除 | `/etc/grub2-efi.cfg` | 编辑 GRUB 内核命令行后 `grub2-mkconfig` | `"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 sysctl 网络栈参数",
+      "level": 3,
+      "line_start": 609,
+      "text_length": 815,
+      "text_preview": "| **参数** | **基线值** | **配置文件位置** | **修改方法** | **验证命令** |\n| --- | --- | --- | --- | --- |\n| `net.core.rmem_default` | `67108864` | `/etc/sysctl.d/90-qdgz300.conf` | 编辑文件后重启 `qdgz300-sysctl.service` | `s"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 systemd 服务单元",
+      "level": 3,
+      "line_start": 621,
+      "text_length": 953,
+      "text_preview": "| **服务名** | **单元文件位置** | **依赖脚本** | **启用/修改方法** | **验证命令** |\n| --- | --- | --- | --- | --- |\n| `nic-optimization.service` | `/etc/systemd/system/nic-optimization.service` | `/usr/local/bin/nic-tuning."
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 网卡与网络配置",
+      "level": 3,
+      "line_start": 631,
+      "text_length": 1156,
+      "text_preview": "| **配置项** | **配置位置/方法** | **关键参数** | **验证命令** |\n| --- | --- | --- | --- |\n| 管理口 IP (DHCP) | NetworkManager `enP1s24f0` 连接 | `192.168.31.234/24` | `ip addr show enP1s24f0` |\n| 数据面 IP (`receiver0`) | Ne"
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 CPU 调频策略",
+      "level": 3,
+      "line_start": 645,
+      "text_length": 244,
+      "text_preview": "| **配置项** | **配置位置** | **关键参数** | **验证命令** |\n| --- | --- | --- | --- |\n| 数据面 governor | `/usr/local/bin/cpu-performance.sh` → `cpu-performance.service` | CPU 16-31 → `performance` | `cat /sys/devices/"
+    },
+    {
+      "number": "4.6",
+      "title": "4.6 资源限制",
+      "level": 3,
+      "line_start": 651,
+      "text_length": 222,
+      "text_preview": "| **配置项** | **配置位置** | **基线值** | **验证命令** |\n| --- | --- | --- | --- |\n| open files (soft) | `/etc/security/limits.conf` | `65535` | `ulimit -n` |\n| open files (hard) | `/etc/security/limits.conf` | `6"
+    },
+    {
+      "number": "4.7",
+      "title": "4.7 时钟同步",
+      "level": 3,
+      "line_start": 658,
+      "text_length": 234,
+      "text_preview": "| **配置项** | **配置位置** | **关键参数** | **验证命令** |\n| --- | --- | --- | --- |\n| NTP 服务 | `/etc/chrony.conf` | `server 192.168.0.1 iburst` + `local stratum 10` | `chronyc tracking` |\n| 时区 | 系统级 | `Asia/Shangh"
+    },
+    {
+      "number": "4.8",
+      "title": "4.8 GPU/加速卡",
+      "level": 3,
+      "line_start": 665,
+      "text_length": 459,
+      "text_preview": "| **配置项** | **配置位置** | **关键参数** | **验证命令** |\n| --- | --- | --- | --- |\n| 设备节点创建 | `/usr/local/bin/init-iluvatar-nodes.sh` → `iluvatar-node-init.service` | `/dev/ix0`, `/dev/ixctl` (mode 666) | `ls -la"
+    },
+    {
+      "number": "4.9",
+      "title": "4.9 Docker 守护进程",
+      "level": 3,
+      "line_start": 673,
+      "text_length": 350,
+      "text_preview": "| **配置项** | **配置位置** | **基线值** | **验证命令** |\n| --- | --- | --- | --- |\n| Cgroup Driver | `/etc/docker/daemon.json` | `systemd` | `docker info \\| grep Cgroup` |\n| Log Max-size | `/etc/docker/daemon.json"
+    },
+    {
+      "number": "4.10",
+      "title": "4.10 安全基线",
+      "level": 3,
+      "line_start": 681,
+      "text_length": 206,
+      "text_preview": "| **配置项** | **配置位置** | **当前状态** | **验证命令** |\n| --- | --- | --- | --- |\n| SELinux | `/etc/selinux/config` | `Disabled` | `sestatus` |\n| firewalld | systemd | `Active` | `systemctl is-active firewalld` "
+    },
+    {
+      "number": null,
+      "title": "附录 A：变更记录与历史审计 (Appendix A)",
+      "level": 2,
+      "line_start": 690,
+      "text_length": 41,
+      "text_preview": "本附录保留历史审计与版本演进信息，用于问题追溯；当前生效配置以第一至第四部分为准。"
+    },
+    {
+      "number": null,
+      "title": "A.1 历史审计事项",
+      "level": 3,
+      "line_start": 694,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "A.1.1 存储与资源限制修复 (Resource Limits Patch)",
+      "level": 4,
+      "line_start": 696,
+      "text_length": 232,
+      "text_preview": "- **审计发现**：此前 `/etc/security/limits.conf` 存在书写偏差（`hard nofile 6553`），导致硬限制未达标。\n- **修复动作**：通过 `sed` 指令完成了物理修复。\n- **最终状态**：\n    - `soft nofile 65535`\n    - `hard nofile 65535`\n- **运行时验证**：执行 `ulimit -n`"
+    },
+    {
+      "number": null,
+      "title": "A.1.2 时钟同步策略调整 (Time Sync Redesign)",
+      "level": 4,
+      "line_start": 705,
+      "text_length": 338,
+      "text_preview": "- **异常识别**：通过 `nmap` 探测发现，网关 `192.168.0.1` 的 **123/UDP (NTP)** 端口处于 `closed` 状态，导致原定同步方案失效。\n- **应急方案**：\n    - 已启用 **Orphan Mode (孤立模式)**：修改 `/etc/chrony.conf`，取消 `local stratum 10` 的注释。\n    - **效果**：`"
+    },
+    {
+      "number": null,
+      "title": "A.1.3 CoreX SDK 深度审计",
+      "level": 4,
+      "line_start": 713,
+      "text_length": 352,
+      "text_preview": "- **物理路径**：`/usr/local/corex` 软链接至 `/usr/local/corex-4.3.8/`。\n- **核心算子库规格验证**：\n    - `libcufft.so.10.1.2.89`: **412 MiB** (频域处理核心)\n    - `libcublas.so.10.2.3.254`: **133 MiB** (矩阵运算核心)\n    - `libcusol"
+    },
+    {
+      "number": null,
+      "title": "A.1.4 万兆网卡性能验证",
+      "level": 4,
+      "line_start": 722,
+      "text_length": 152,
+      "text_preview": "- **环形缓冲区 (Ring Buffer)**：通过 `ethtool -g` 验证。\n    - **RX/TX 预设最大值**：$4096$\n    - **RX/TX 当前设置值**：**$4096$** (已达硬件性能上限)\n- **结论**：网络驱动层已完成面向持续数据采集场景的冗余配置。"
+    },
+    {
+      "number": null,
+      "title": "A.2 版本演进记录",
+      "level": 3,
+      "line_start": 729,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "A.2.1 V2.0 新增持久化项",
+      "level": 4,
+      "line_start": 731,
+      "text_length": 766,
+      "text_preview": "- **新增 `nic-optimization.service`**：\n    - 放行 `9999/udp`\n    - 将 Intel X710 四口 ring buffer 固定到 `4096`\n    - 将 X710 IRQ 固定到 `16-31`\n    - 将管理口 IRQ 固定到 `0-15`\n    - 脚本实体：`/usr/local/bin/nic-tuning.sh`\n-"
+    },
+    {
+      "number": null,
+      "title": "A.2.2 V2.1 主要修改 (2026-03-24)",
+      "level": 4,
+      "line_start": 754,
+      "text_length": 503,
+      "text_preview": "1. 将 Intel X710 四个 10G 光口的服务器真实设备名统一改为 `receiver0` ~ `receiver3`。\n2. 保留旧命名映射作为历史记录：`receiver0 <- enP1s25f0`，`receiver1 <- enP1s25f1`，`receiver2 <- enP1s25f2`，`receiver3 <- enP1s25f3`。\n3. 根据 `ssh kds` "
+    },
+    {
+      "number": null,
+      "title": "A.2.3 V2.1 现场验证结论 (2026-03-24)",
+      "level": 4,
+      "line_start": 763,
+      "text_length": 750,
+      "text_preview": "1. `nic-optimization.service` 已启用并正常执行（`enabled / active (exited)`）。\n2. `cpu-performance.service` 已启用并正常执行（`enabled / active (exited)`）。\n3. `qdgz300-sysctl.service` 已启用并正常执行（`enabled / active (exited)"
+    },
+    {
+      "number": null,
+      "title": "A.2.4 V2.1 存储补充验证 (2026-03-26)",
+      "level": 4,
+      "line_start": 778,
+      "text_length": 175,
+      "text_preview": "1. `/data` 确认为 `md0 RAID10 + XFS`，`raid10 near=2`，`512K chunks`，状态 `[UUUU]`。\n2. `/data` 顺序直写实测约 `374 MB/s`。\n3. NVMe 根盘顺序直写实测约 `1.4 GB/s`。\n4. 当前文档已将存储实测值和录制基线固化到第 `1.4` 节。\n\n---"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 27,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**核查项**",
+        "**当前基线**"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "快速核查清单",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**项目**",
+        "**详细参数**",
+        "**备注**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "1.1 系统概览 (System Summary)",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**设备路径**",
+        "**媒介类型**",
+        "**容量**",
+        "**型号/序列号**",
+        "**用途**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "1.4.1 物理磁盘列表",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**层级**",
+        "**关键参数**",
+        "**现场值 / 说明**"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "1.4.3 文件系统与队列参数基线",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**目标路径**",
+        "**底层介质**",
+        "**测试文件大小**",
+        "**实测顺序写入**",
+        "**用途判定**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "1.4.4 写入性能实测与录制基线",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**控制器名称**",
+        "**制造商**",
+        "**规格**",
+        "**对应接口名称**",
+        "**驱动**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "1.5.1 网卡硬件架构",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**网口设备**",
+        "**旧命名**",
+        "**IP 地址**",
+        "**端口**",
+        "**CPU 亲和性**",
+        "**NM 连接名**",
+        "**链路状态 / 备注**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "1.5.4 IP、链路与命名状态",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**组件**",
+        "**版本/路径**",
+        "**关键备注**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "1.6.2 驱动与运行时环境 (Driver & Runtime)",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**资源名称**",
+        "**物理位置**",
+        "**职责归属**",
+        "**建议绑定核心**",
+        "**访存代价**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "1.7 硬件架构综合审计",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**项目**",
+        "**详细参数**",
+        "**备注**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.1 系统版本与内核 (Distribution & Kernel)",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**资源类型**",
+        "**配置参数**",
+        "**潜在风险/影响**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2.3 资源限制 (Resource Limits - ulimit)",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**参数**",
+        "**基线值**",
+        "**作用**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.4.2 网络栈与持久化 sysctl",
+      "raw_html": null
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**服务名**",
+        "**状态**",
+        "**职责**"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "2.4.3 关键 systemd 服务基线",
+      "raw_html": null
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**协议**",
+        "**端口**",
+        "**服务进程**",
+        "**监听范围**",
+        "**备注**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.4.4 关键监听端口 (Active Ports)",
+      "raw_html": null
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**组件**",
+        "**基线版本**",
+        "**关键属性 / 配置路径**",
+        "**备注**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.1 核心编译工具链 (Core Toolchain)",
+      "raw_html": null
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**基线参数**",
+        "**审计逻辑**"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.3.2 关键守护进程配置 (`/etc/docker/daemon.json`)",
+      "raw_html": null
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**变量名**",
+        "**当前有效值**",
+        "**验证状态**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "3.6 环境变量与持久化配置 (Environment Persistence)",
+      "raw_html": null
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**参数**",
+        "**当前值**",
+        "**作用**",
+        "**配置文件位置**",
+        "**修改方法**",
+        "**验证命令**"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "4.1 内核启动参数",
+      "raw_html": null
+    },
+    {
+      "index": 18,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**参数**",
+        "**基线值**",
+        "**配置文件位置**",
+        "**修改方法**",
+        "**验证命令**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "4.2 sysctl 网络栈参数",
+      "raw_html": null
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**服务名**",
+        "**单元文件位置**",
+        "**依赖脚本**",
+        "**启用/修改方法**",
+        "**验证命令**"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "4.3 systemd 服务单元",
+      "raw_html": null
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置/方法**",
+        "**关键参数**",
+        "**验证命令**"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "4.4 网卡与网络配置",
+      "raw_html": null
+    },
+    {
+      "index": 21,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**关键参数**",
+        "**验证命令**"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "4.5 CPU 调频策略",
+      "raw_html": null
+    },
+    {
+      "index": 22,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**基线值**",
+        "**验证命令**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "4.6 资源限制",
+      "raw_html": null
+    },
+    {
+      "index": 23,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**关键参数**",
+        "**验证命令**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "4.7 时钟同步",
+      "raw_html": null
+    },
+    {
+      "index": 24,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**关键参数**",
+        "**验证命令**"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "4.8 GPU/加速卡",
+      "raw_html": null
+    },
+    {
+      "index": 25,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**基线值**",
+        "**验证命令**"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "4.9 Docker 守护进程",
+      "raw_html": null
+    },
+    {
+      "index": 26,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "**配置项**",
+        "**配置位置**",
+        "**当前状态**",
+        "**验证命令**"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "4.10 安全基线",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

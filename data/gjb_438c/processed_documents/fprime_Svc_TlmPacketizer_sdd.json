@@ -1,0 +1,512 @@
+{
+  "doc_name": "fprime_Svc_TlmPacketizer_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_TlmPacketizer_sdd.md",
+  "md_lines": 305,
+  "md_chars": 21196,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::TlmPacketizer Component",
+  "section_count": 51,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::TlmPacketizer Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 1556,
+      "text_preview": "The `Svc::TlmPacketizer` Component is used to store telemetry values written by other components. The values are stored in serialized form. TlmPacketizer stores telemetry in defined packets, which it "
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 784,
+      "text_preview": "The requirements for `Svc::TlmPacketizer` are as follows:\n\n| Requirement | Description | Verification Method |\n|---|---|---|\n| TPK-001 | The `Svc::TlmPacketizer` component shall provide an interface t"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 27,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Context",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Component Diagram",
+      "level": 4,
+      "line_start": 31,
+      "text_length": 149,
+      "text_preview": "The `Svc::TlmPacketizer` component has the following component diagram:\n\n![Svc::TlmPacketizer Diagram](img/TlmPacketizerBDD.jpg \"Svc::TlmPacketizer\")"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 Ports",
+      "level": 4,
+      "line_start": 37,
+      "text_length": 676,
+      "text_preview": "The `Svc::TlmPacketizer` component uses the following port types:\n\nPort Data Type | Name | Direction | Kind | Usage\n-------------- | ---- | --------- | ---- | -----\n[`Svc::Sched`](../../Sched/docs/sdd"
+    },
+    {
+      "number": "3.1.3",
+      "title": "3.1.3 Terminology",
+      "level": 4,
+      "line_start": 48,
+      "text_length": 1072,
+      "text_preview": "This SDD and component use the following terminology:\n\n1. Telemetry Point: An emitted telemetry value.\n2. Telemetry Channel: A tagged type, identifier, and timestamp for emitting telemetry points.\n3. "
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Description",
+      "level": 4,
+      "line_start": 63,
+      "text_length": 2101,
+      "text_preview": "The `Svc::TlmPacketizer` component has an input port `TlmRecv` that receives channel updates from other components in the system. These calls from the other components are made by the component implem"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Scenarios",
+      "level": 3,
+      "line_start": 73,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 Configuring Telemetry Group Rates Per Port at Runtime",
+      "level": 4,
+      "line_start": 75,
+      "text_length": 1774,
+      "text_preview": "The `Svc::TlmPacketizer` is configurable to have multiple `PktSend` group outputs using the fpp constant, `MAX_CONFIGURABLE_TLMPACKETIZER_GROUP`. Doing so allows each packet group have different confi"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 Switching Telemetry Sections",
+      "level": 4,
+      "line_start": 93,
+      "text_length": 1253,
+      "text_preview": "`Svc::TlmPacketizer` also has a configurable constant `TelemetrySection::NUM_SECTIONS` that allows separately streamed outputs of packets of the same group. This is useful for downstream components th"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 State",
+      "level": 3,
+      "line_start": 104,
+      "text_length": 43,
+      "text_preview": "`Svc::TlmPacketizer` has no state machines."
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Algorithms",
+      "level": 3,
+      "line_start": 108,
+      "text_length": 815,
+      "text_preview": "In order to speed up lookups for storing and reading telemetry channels, a simple hash function is used to select a location in an array of hash table slots.\nA configuration value in `TlmPacketizerImp"
+    },
+    {
+      "number": null,
+      "title": "4. Configuration",
+      "level": 2,
+      "line_start": 113,
+      "text_length": 1025,
+      "text_preview": "The `Svc::TlmPacketizer` component has the following configuration parameters:\n\n- `MAX_PACKETIZER_PACKETS` (TlmPacketizerCfg.hpp): Maximum allowed packets\n- `MAX_PACKETIZER_CHANNELS` (TlmPacketizerCfg"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Sizing",
+      "level": 3,
+      "line_start": 126,
+      "text_length": 1979,
+      "text_preview": "Overall memory usage of the `Svc::TlmPacketizer` is determined by the following configuration parameters: `MAX_PACKETIZER_PACKETS`, `MAX_PACKETIZER_CHANNELS`, and `TLMPACKETIZER_MAX_MISSING_TLM_CHECK`"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 Output Port Mapping",
+      "level": 3,
+      "line_start": 146,
+      "text_length": 780,
+      "text_preview": "The value of `TELEMETRY_SEND_PORT_MAPPING` maps each section/group pair to an output port index. It must be a constant array of type `FwIndexType[NUM_SECTIONS][MAX_CONFIGURABLE_TLMPACKETIZER_GROUPS]`."
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 Default Output Rate Limits",
+      "level": 3,
+      "line_start": 159,
+      "text_length": 755,
+      "text_preview": "Default rate limits for each section/group pair is set by the `TELEMETRY_SECTION_DEFAULTS` constant. It must be a constant array of type `TlmPacketizer::SectionGroupConfig[NUM_SECTIONS][MAX_CONFIGURAB"
+    },
+    {
+      "number": null,
+      "title": "REALTIME section",
+      "level": 1,
+      "line_start": 167,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 169,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 171,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 2",
+      "level": 1,
+      "line_start": 173,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 3",
+      "level": 1,
+      "line_start": 175,
+      "text_length": 136,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n        ],"
+    },
+    {
+      "number": null,
+      "title": "RECORDED section",
+      "level": 1,
+      "line_start": 178,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 180,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 182,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 2",
+      "level": 1,
+      "line_start": 184,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 3",
+      "level": 1,
+      "line_start": 186,
+      "text_length": 145,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n        ]\n    ]\n```"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 Sample Configuration: Realtime and Recorded Sections with a Single Output Port for Each",
+      "level": 3,
+      "line_start": 192,
+      "text_length": 825,
+      "text_preview": "This section will show configuration for 2 sections (LIVE, RECORDED) each outputting all groups to a dedicated output port. Four groups are allowed (0, 1, 2, 3).\n\n```py\nenum TelemetrySection {\n    @ F"
+    },
+    {
+      "number": null,
+      "title": "LIVE section",
+      "level": 1,
+      "line_start": 217,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 219,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 221,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 2",
+      "level": 1,
+      "line_start": 223,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 3",
+      "level": 1,
+      "line_start": 225,
+      "text_length": 132,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n    ],"
+    },
+    {
+      "number": null,
+      "title": "RECORDED section",
+      "level": 1,
+      "line_start": 228,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 230,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 232,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 2",
+      "level": 1,
+      "line_start": 234,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 3",
+      "level": 1,
+      "line_start": 236,
+      "text_length": 137,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n    ]\n]\n```"
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 Sample Configuration: Dedicated Output Port for Each Group in Each Section",
+      "level": 3,
+      "line_start": 242,
+      "text_length": 909,
+      "text_preview": "This section will show configuration for 3 sections (LIVE, RECORDED, EXTRA) each outputting 2 groups (0, 1) to a dedicated output port. This results in 6 total output ports. This one will require that"
+    },
+    {
+      "number": null,
+      "title": "LIVE section",
+      "level": 1,
+      "line_start": 270,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 272,
+      "text_length": 139,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN_OR_EVERY_MAX, min = 3, max = 10 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 274,
+      "text_length": 146,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN_OR_EVERY_MAX, min = 3, max = 10 },\n    ],"
+    },
+    {
+      "number": null,
+      "title": "RECORDED section",
+      "level": 1,
+      "line_start": 277,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 279,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 281,
+      "text_length": 132,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n    ],"
+    },
+    {
+      "number": null,
+      "title": "EXTRA section",
+      "level": 1,
+      "line_start": 284,
+      "text_length": 1,
+      "text_preview": "["
+    },
+    {
+      "number": null,
+      "title": "Group 0",
+      "level": 1,
+      "line_start": 286,
+      "text_length": 125,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },"
+    },
+    {
+      "number": null,
+      "title": "Group 1",
+      "level": 1,
+      "line_start": 288,
+      "text_length": 137,
+      "text_preview": "{ enabled = Fw.Enabled.ENABLED, forceEnabled = Fw.Enabled.DISABLED, rateLogic =  RateLogic.ON_CHANGE_MIN, min = 0, max = 0 },\n    ]\n]\n```"
+    },
+    {
+      "number": null,
+      "title": "5. Unit Testing",
+      "level": 2,
+      "line_start": 294,
+      "text_length": 58,
+      "text_preview": "To see unit test coverage run fprime-util check --coverage"
+    },
+    {
+      "number": null,
+      "title": "7. Change Log",
+      "level": 2,
+      "line_start": 298,
+      "text_length": 196,
+      "text_preview": "Date | Description\n---- | -----------\n12/14/2017 | Initial version\n01/23/2026 | Added group level rate logic\n02/23/2026 | Added section/group mapping logic\n03/30/2026 | Added configuration section"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "qualification",
+      "format": "markdown",
+      "headers": [
+        "Requirement",
+        "Description",
+        "Verification Method"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "2. Requirements",
+      "raw_html": null
+    }
+  ],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "TlmPacketizerBDD.jpg \"Svc::TlmPacketizer\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/TlmPacketizerBDD.jpg \"Svc::TlmPacketizer\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Svc::TlmPacketizer Diagram",
+      "caption": "The `Svc::TlmPacketizer` component uses the following port types:",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The `Svc::TlmPacketizer` component has the following component diagram:",
+      "context_after": "The `Svc::TlmPacketizer` component uses the following port types:",
+      "md_line": 35,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "TlmPacketizerPacketStructureComposition.png \"Section structure composition\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/TlmPacketizerPacketStructureComposition.png \"Section structure composition\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Packet section structure composition",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.1.3 Terminology",
+      "context_before": "5. Telemetry Section: A resampling of telemetry groups. Each Section typically is destined for a different destination (e.g. realtime downlink vs store & forward)\n6. Output Port: The port used to write telemetry packets. The output port index is determined by the section and group of the packet.\nThe",
+      "context_after": "The `Svc::TlmPacketizer` component has an input port `TlmRecv` that receives channel updates from other components in the system. These calls from the other components are made by the component implem",
+      "md_line": 61,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "TlmPacketizerBDD.jpg \"Svc::TlmPacketizer\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/TlmPacketizerBDD.jpg \"Svc::TlmPacketizer\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "The `Svc::TlmPacketizer` component uses the following port types:",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The `Svc::TlmPacketizer` component has the following component diagram:",
+      "context_after": "The `Svc::TlmPacketizer` component uses the following port types:",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "TlmPacketizerPacketStructureComposition.png \"Section structure composition\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/TlmPacketizerPacketStructureComposition.png \"Section structure composition\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.1.3 Terminology",
+      "context_before": "5. Telemetry Section: A resampling of telemetry groups. Each Section typically is destined for a different destination (e.g. realtime downlink vs store & forward)\n6. Output Port: The port used to write telemetry packets. The output port index is determined by the section and group of the packet.\nThe",
+      "context_after": "The `Svc::TlmPacketizer` component has an input port `TlmRecv` that receives channel updates from other components in the system. These calls from the other components are made by the component implem",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

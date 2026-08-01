@@ -1,0 +1,433 @@
+{
+  "file": "2007 - puget sound.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Software Engineering\nMoodle\nSoftware Requirements Specification\nFor Puget Sound Enhancements\nVersion 1.0"
+    },
+    {
+      "page": 2,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nRevision History\nDate Version Description Author\n10/15/2007 1.0 Document created Ed Altorfer\nSection 4 updated with Walker’s Walker Lindley\n10/23/2007 1.1\nchanges Edited by Ed Altorfer\nSections 1 and 2 updated with more\n10/24/2007 1.2 Ed Altorfer\ncontent\nChris Haller\n10/25/2007 1.3 Section 3 updated with Chris’s changes\nEdited by Ed Altorfer\nIncorporated modifications to sections\n2, 3, and 4 that make the requirements All\n11/2/2007 1.4\nmore specific and clarify our use of Edited by Ed Altorfer\nMoodle\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 2\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 3,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 3\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 4,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nTable of Contents\n1. Introduction 6\n1.1 Purpose 6\n1.2 Scope 6\n1.3 Definitions, Acronyms and Abbreviations 6\n1.3.1 Actor 6\n1.3.2 Course Administrator 6\n1.3.3 Courseware System 6\n1.3.4 System 6\n1.4 References 6\n1.4.1 Moodle Requirements Brainstorming.pdf 6\n1.5 Overview 7\n2. Overall Description 7\n2.1 Assumptions 7\n2.2 Product Characteristics 7\n2.3 User Characteristics 7\n2.3.1 Students 7\n2.3.2 Professors 7\n2.3.3 System Administrators 8\n2.4 Stakeholder Needs 8\n3. Specific Requirements 8\n3.1 Multiple File Transfer 8\n3.1.1 The system must allow for multiple file upload to be configured on a per-page basis. 9\n3.2 Audio Recording 9\n3.2.1 The system must allow actors to organize their voice clips into a portfolio. 9\n3.2.2 The system must allow actors to download their voice clips in a flexible format. 9\n3.2.3 The system must store audio clips in a format conducive to speech. 9\n3.2.4 The system must allow actors to delete recorded clips. 10\n3.3 Web Feeds 10\n3.3.1 The system must allow web feeds to be turned on or off on a per-page basis. 10\n3.4 Search 10\n3.4.1 An actor must be able to search through pages in a course. 10\n3.4.2 The system must display a search box on every page after an actor has logged in. 11\n3.5 Gradebook 11\n3.5.1 A course administrator must be able to grade an assignment. 11\n3.5.2 The system should display grade information to the appropriate actor. 11\n3.5.3 The system should maintain a grade history. 11\n3.6 Social Networking Applications 12\n3.6.1 The system must provide a wiki where actors can collaboratively create networks of\ndocuments. 12\n3.6.2 The system must provide a blog engine. 12\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 4\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 5,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\n3.7 Notifications 12\n3.7.1 The system must provide both e-mail and SMS notifications for pages. 12\n4. General System Functional Requirements 12\n4.1 Usability 12\n4.1.1 As far as possible, the system should provide a simple, responsive interface. 12\n4.2 Reliability 13\n4.2.1 The system must be backed up on a configurable schedule. 13\n4.2.2 The system should be available 24 hours a day, 7 days a week. 13\n4.3 Performance 13\n4.3.1 The system should support at least 1000 concurrent users. 13\n4.4 Supportability 13\n4.5 Design Constraints 14\n4.6 On-line User Documentation and Help System Requirements 14\n4.7 Interfaces 14\n4.7.1 User Interfaces 14\n4.7.2 Hardware Interfaces 14\n4.7.3 Software Interfaces 14\n4.7.4 Communications Interfaces 14\n4.8 Licensing Requirements 14\n4.9 Applicable Standards 14\n5. Supporting Information 14\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 5\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 6,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nSoftware Requirements Specification\n1. Introduction\n1.1 Purpose\nThe purpose of this document is to capture, in natural language and at a functional level, the description\nand requirements of a new courseware system for the University of Puget Sound’s educational needs.\nThis is a functional description of those features required to address current instructional and\neducational requirements. Each requirement is accompanies by a short discussion, designed to add the\nbackground and framework necessary to explain the functionality. It also describes nonfunctional\nrequirements and other factors necessary to provide a complete and comprehensive description of the\nrequirements for the software.\n1.2 Scope\nThis documents deals with the immediate requirements for the development of core functionality\ncurrently unavailable in Moodle, the existing courseware system candidate (version TODO: Version of\nMoodle). The University’s enhancements to Moodle will embody several small redesigns for consistency\nwith other university practices. Additionally, the enhancements will take the opportunity to redesign the\nuser interface to reflect a more natural flow of data.\nThese requirements are based on the assumptions that Moodle will be adopted at the University of\nPuget Sound and that any enhancements to the system will utilize the existing APIs made available by\nMoodle.\n1.3 Definitions, Acronyms and Abbreviations\n1.3.1 Actor\nActor is synonymous with user and is used to describe users who are performing actions in use\ncases.\n1.3.2 Course Administrator\nCourse administrator is an actor who is acting as a professor or system administrator and who\nhas the ability to manage courses and course pages.\n1.3.3 Courseware System\nCourseware system is a piece of software meant to help facilitate electronic classroom\nmanagement and provide for electronic grading, assignment submission, discussion, and other\nlearning tools.\n1.3.4 System\nSystem refers to the existing courseware system, a new courseware system, or any\nmodifications being made to Moodle while it is being considered as a replacement for the\nexisting courseware system.\n1.4 References\n1.4.1 Moodle Requirements Brainstorming.pdf\nThis document was generated as a foundation for this document and contains the results of\nstakeholder interviews. This document does not make any further reference to the\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 6\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 7,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nrequirements brainstorming document.\n1.5 Overview\nThis is a working document and, as such, is subject to change. In its initial form, it is incomplete by\ndefinition, and will require continuing refinement. Requirements may be modified and additional\nrequirements may be added as development progresses and the system description becomes more\ndistilled.\nThis document also forms the basis for continuing discussions with stakeholders and sponsors, to\nenhance and further describe those requirements to be included in future enhancements to Moodle.\nThis information will serve as a framework for the current definition and future evolution of the\nUniversity of Puget Sound’s courseware system.\n2. Overall Description\n2.1 Assumptions\nThe University of Puget Sound is currently seeking a new courseware system and is investigating\nMoodle as an option. We are making an assumption that Moodle is of interest to the University\nas a viable choice to replace Blackboard.\nThe goal of this document, and our work, however, is to determine what any courseware system\nwould need to qualify as a viable solution for the University. We also intend to apply this\ndocument to Moodle to determine whether we can implement some of the features that\nMoodle lacks and our stakeholders find to be important. By no means is the University\nnecessarily going to choose Moodle as a courseware system, but we want to use the platform to\nhave a new learning experience and contribute back to a real product nonetheless.\n2.2 Product Characteristics\nMoodle is courseware system that managers courses, assignments, wiki pages, forums, etc. Our\ngoal is to refine parts of Moodle to provide functionality that improves the overall learning\nexperience of students at the University and helps professors to make students aware of new\nways of presenting material.\nAt present, the University does not believe that Blackboard is providing the functionality that\nstudents and faculty need to encourage learning. Our stakeholder feedback was gathered to\nhelp us determine the requirements of a replacement courseware system and provide analysis\nof the feature set in other available solutions.\n2.3 User Characteristics\n2.3.1 Students\nStudents are the primary consumers of a courseware system. They are accessing information\nposted by professors, uploading assignments and project files, and discussing concepts.\n2.3.2 Professors\nProfessors are the primary content administrators of a courseware system. They are uploading\nfiles, links, and multimedia, and grading assignments in addition to creating new places for\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 7\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 8,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nstudents to discuss and collaborate.\n2.3.3 System Administrators\nSystem administrators are primarily responsible for maintaining the courseware system. They\ncontribute minimally to the courses themselves, but spend more time modifying the system’s\nconfiguration and making appropriate updates.\n2.4 Stakeholder Needs\nIn order to determine what enhancements needed to be made to Moodle, we interviewed\nsystem stakeholders (e.g., professors and students) to determine what, if anything, is lacking in\nour existing courseware solution. Our requirements and supplementary requirements are based\non that feedback which is summarized in Moodle Requirements Brainstorming.pdf (referenced\nin section 1.4.1).\n3. Specific Requirements\nThe priorities defined below reflect the requirements of the development team. The goal was to define\nthose requirements that describe the core functionality required to support and facilitate diverse\nmethods of teaching at the University of Puget Sound.\nRequirements have been categorized according to the following definitions:\nPriority 1 (Core): Core functionality currently existing in Moodle/Blackboard.\nPriority 2: Functionality not explicitly available today, but considered critical to implementing a\ncourseware system at the University.\nPriority 3: Just barely outside the parameters of Priority 2; considered very important to supplement\ncritical functionality\nPriority 4: Outside the parameters of Priority 2; considered valuable as a supplement to other\nfunctionality, but not critical\nThe initial production release of the University of Puget Sound’s enhancements to Moodle will deliver\nthe Priority 1 (Core) and Priority 2 set of requirements, along with such Priority 3 requirements as can be\ndeveloped within the project timeframe and budget constraints.\n3.1 Multiple File Transfer\nThe system must be able to capture and manage files where appropriate.\nOne of the fundamental tasks of the system is to allow actors to upload and manage files on\ncertain pages of the system. These might include assignment submission pages, forum pages,\nwiki pages, and announcement pages. An actor in the role of course administrator should be\nable to optionally upload multiple files where he or she finds that such as feature would be\nuseful—such as on a devoted project page.\nFor this requirement, page refers to any distinct upload point (e.g., an assignment, a wiki page, a\nforum post, etc.).\nPriority: 2\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 8\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 9,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\n3.1.1 The system must allow for multiple file upload to be configured on a per-page basis.\nActors in the capacity of course administrator or professor should be able to enable multiple file\nuploads on a page of his or her choosing. For collaborative projects, it becomes important for\nactors to be able to upload more than one file to a given page, especially in the case of an\nassignment submission where the assignment might include multiple parts. Such a construct\nshould be offered to the actor during a page’s creation and editing stages.\n3.2 Audio Recording\nThe system must be able to capture and organize voice clips that can be used where\nappropriate.\nOne of the shortcomings of the current courseware system is that the foreign language\ndepartment is unable to capture and track voice clips—recorded by students—for oral\nhomework over the course of a student’s education.\nPriority: 2\n3.2.1 The system must allow actors to organize their voice clips into a portfolio.\nEqual and finite drive space needs to be allotted to each actor in the role of professor or\nadministrator to allow for the storing of voice clips recorded and submitted by all actors in the\nroles of students. Actors in the role of professor or system administrator should be allowed to\npartition this space for actors in the roles of students. This can be done one of two ways: 1) the\nactor can be allowed to preview the voice clip before it is archived and determine whether or\nnot he or she would like that clip to be archived, or 2) a newly created voice clip can be\nautomatically archived. The first option would allow the actor to throw out an audio clip that is\ndeemed to be unsuitable or inappropriate for an assignment without having to take it out of an\narchive of voice clips. The actor should have the option to have the voice clip be archived after a\npreview has taken place. The second option would automatically archive a voice clip once\nsubmitted but would require that the actor interact with the archived file. Thus, if the actor\nchooses to delete the file, it would need to be deleted from the archive of voice clips.\nMaintaining an archive of voice clips makes it possible for comparisons to be made between\nclips to determine whether an actor is improving his or her language skills over multiple courses.\nThe actor should be able to optionally attach one of his or her archived items to any page where\nuploads are permitted.\nThe term archive used above may also be referred to as a portfolio.\n3.2.2 The system must allow actors to download their voice clips in a flexible format.\nVoice clips should be optionally downloadable in a format such as MPEG Audio (mp3) format,\nsince it is widely supported across different web browsers and operating systems. Voice clips\nshould be downloadable for archival purposes or for the purpose of presenting them to other\nactors.\n3.2.3 The system must store audio clips in a format conducive to speech.\nVoice clips should be stored in a format optimized for speech since this feature is meant to\ncatalog voice recordings. Recordings should only be converted to MPEG Audio (mp3) format\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 9\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 10,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nwhen they are being downloaded; a separate viewer should be provided in a cross-platform\nlanguage for listening to clips in Moodle.\n3.2.4 The system must allow actors to delete recorded clips.\nSince voice clips should be stored in a portfolio for each actor during his or her existence in the\ncourse management system, he or she should be able to examine his or her portfolio to select\nand delete clips if he or she chooses to. This allows him or her to manage archived voice clips\nand to create a cohesive portfolio that actors in the role of professor can use to judge\nimprovement over time.\n3.3 Web Feeds\nThe system must be able to display web feeds, such as RSS 2.0 feeds, for all pages of the course\nmanagement system where elements such as forum posts, assignment postings,\nannouncements, wiki alterations and other blocks of information that an actor may view are\nadded. Actors in the role of course administrators should have the ability to determine which of\nthese components have feeds and to whom these feeds should pertain.\nIf actors are unable to be notified in some way of new content in Moodle, they are unable to\nefficiently keep track of a course’s current affairs. For this requirement, page refers to any\ndistinct block (e.g., assignments, wikis, forum threads, etc.).\nPriority: 1\n3.3.1 The system must allow web feeds to be turned on or off on a per-page basis.\nActors in the course administrator role may not feel the need to provide web feeds for every\npage in their course. During the creation and editing of a page, that actor should be able to\ntoggle web feed availability.\n3.4 Search\nThe system must be able to use search functionality as a way to navigate Moodle pages instead\nof using hierarchical links.\nMoodle can be difficult to navigate and requires too many clicks to be efficiently used. Too many\nsteps to complete basic actions—such as submitting an assignment—lead to frustration on the\npart of the actor. A search utility enables actors to find what they are looking for quickly in\naddition to having a hierarchical approach to finding functions of the course management\nsystem. For this requirement, page refers to any distinct page, such as an assignment, a wiki\npage, or a forum post.\nPriority: 2\n3.4.1 An actor must be able to search through pages in a course.\nActors should be able to search for pages at the course level, since most actors will be searching\nfor material in a given course. The search feature should be present in two ways.\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 10\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 11,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nFirst, it should be present in the form of a search box and a “Search” button on the top or\nbottom of every page. More information on this topic is given in sub-section 3.4.2 below.\nSecond, a single page should be dedicated specifically to the task of searching the course\nmanagement system. In addition to the basic search field, this page should allow an actor to\nfilter out certain results (such as forum posts or grades, etc.) and search specific sections (or\ncomponents) of the course management system. Results should appear in categories (e.g.,\nAssignments, Wiki Pages, Forum Posts, etc.) based on relevance. In this case, relevance is\ndetermined by results that having the highest number terms matching the search terms. When\nthe actor clicks a search result link, they should be taken to the page corresponding to the\nsearch result.\nIn addition, the search page described above might allow for the possibility of searching the\nworld wide web using a standard search engine such as Google.\n3.4.2 The system must display a search box on every page after an actor has logged in.\nActors should be able to search from any page. If the actor is hierarchically outside of a\nparticular course, each of his or her courses should be searched and results should be grouped\nby course. If the actor is hierarchically inside of a course, that course should be searched with an\noption to search all courses.\n3.5 Gradebook\nThe system must allow actors in the capacity of course administrator to post grades associated\nwith assignments for a particular actor in the capacity of student. Actors in the role of professor\nmay want to optionally grade assignments online since they are being submitted electronically\nby actors in the role of student.\nPriority: 1\n3.5.1 A course administrator must be able to grade an assignment.\nCourse administrators should be able to post grades for an assignment based on the ratio of\npoints earned to points possible. The course administrator should also be able to attach\nfeedback in the form of text or an attachment (as described above). Time stamps should be\nattached to the last time the grade was modified so that actors may examine when particular\ngrades were submitted and how an actor in the role of student has improved or lessened his\nperformance in the course.\n3.5.2 The system should display grade information to the appropriate actor.\nThe system should display grade information such as the grade for each assignment, averages,\nand overall grade to the actor to whom the grades belong. No other actor should be able to\nview another’s grades except an actor in the role of course administrator for the course to\nwhich the grades belong.\n3.5.3 The system should maintain a grade history.\nThe system should maintain a history of grades for a particular assignment if the course\nadministrator changes them. This way, another actor can review the grade information if their\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 11\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 12,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nscore on an assignment has changed and they wish to dispute it. Course administrators can also\ntrack how they have changed a score over time using the timestamps associated with each\nchange to the gradebook.\n3.6 Social Networking Applications\nThe social, collaborative components of Moodle are not very robust. There are better, freely-\navailable solutions which should be integrated into Moodle to provide the best functionality\npossible for all actors without having to use 3rd party services.\nPriority: 3\n3.6.1 The system must provide a wiki where actors can collaboratively create networks of documents.\nA freely available wiki should provide a simple markup language that actors can use to style their\ninput, as well as link to other pages in the wiki. More importantly, having the wiki inside Moodle\nreduces confusion and allows for the integration of notifications and logins.\n3.6.2 The system must provide a blog engine.\nA freely available blog engine should provide all modern blog functionality, such as tagging,\ndrafting, and comments. These blogs should share authentication and notification with Moodle.\n3.7 Notifications\nCurrently, there is no system that allows actors to receive SMS or email notifications of changes\nto Moodle pages (such as assignments or announcements).\nPriority: 3\n3.7.1 The system must provide both e-mail and SMS notifications for pages.\nFor this requirement, page refers to any distinct page (e.g., an assignment, a wiki page, a forum\npost, etc.). When a page is created, the actor in the role of course administrator should be able\nto toggle whether notifications are turned on. By default, they should be turned on for\nannouncements. If notifications are turned off, actors in the capacity of student should be able\nto subscribe to notifications.\nStudents should be able to select in their preferences whether notifications are sent to their\nmobile telephone (via SMS) or e-mail account. They should also be able to manage their\nnotification subscriptions (for example, remove themselves from notifications).\n4. General System Functional Requirements\n4.1 Usability\n4.1.1 As far as possible, the system should provide a simple, responsive interface.\nAlthough any courseware solution may be composed of diverse systems, applications, and\nprocesses, the underlying architecture should be transparent to the administrators. The system\nshould be configurable from a single source at a central administrative position, and should\nprovide a central, easy-to-use interface that will allow administrators to configure the user\ninterface and features in a way that reduces page clutter.\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 12\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 13,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nA system will be considered to meet this requirement if it has a single administrative interface\nrather than individual links for editing each page. Furthermore, this interface must allow\nadministrators to easily change themes and other setting that affect page layout across the\nentire courseware system.\nPriority: 3\n4.2 Reliability\n4.2.1 The system must be backed up on a configurable schedule.\nBack-up requirements will need to be determined, based on individual components of the\nsystem. The system should be backed up with a frequency that ensures system and course data\nis protected. Since assignments will be submitted via the system, it should be backed up on a\nnightly basis, with options for weekly, off-site backup when necessary.\nThe system must have the ability and capacity to restore back-up data within six hours so that\nthe system is never offline for an inordinate period of time.\nPriority: 2\n4.2.2 The system should be available 24 hours a day, 7 days a week.\nThis statement provides a general sense of system availability. It is not intended to demand the\nsystem maintain reliability, or to require the system to be highly available. It should not exclude\nmaintenance windows, or scheduled downtime. It is only intended to convey the expectation\nthat our customers should have access to the system during off-hours as well as business hours.\n99% up-time should be considered sufficient to meet this requirement.\nPriority: 1\n4.3 Performance\n4.3.1 The system should support at least 1000 concurrent users.\nThis statement provides a general sense of reliability when the system is under load. It is\nimportant that a substantial number of actors be able to access the system at the same time,\nsince a courseware system is important to the courses that employ it. The times when the\nsystem will be under the most stress are likely during midterm and finals weeks. Therefore, it\nmust be able to handle at least 1,000 concurrent users.\nPriority: 1\n4.4 Supportability\n4.4.1 The system must be maintainable without substantial modification.\nDue to limited staff in the Office of Information Services, it is important that the system be\nmostly self-sustaining. This will reduce the number of FTE hours spent maintaining the system\nand simplify maintenance tasks.\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 13\nHaller, Stefan Moluf, 2007"
+    },
+    {
+      "page": 14,
+      "text": "Moodle Version: 1.4\nSoftware Requirements Specification Date: 10/25/2007\nPriority: 3\n4.5 Design Constraints\n4.6 On-line User Documentation and Help System Requirements\n4.6.1 Relevant, online documentation for users should be available on each page.\nUsers must have easy access to help while interacting with the system. Adequate user\ndocumentation should be provided to minimize the number of calls to the Help Desk about\nproblems with the system. Modifications should be reported via the main page to inform actors\nof unexpected changes. This electronic documentation should be supplemented with phone and\non-site support provided by the Office of Information Services.\nPriority: 3\n4.6.2 System administrators must have access to comprehensive, searchable documentation.\nA comprehensive database of maintenance tasks and help files should be compiled to make the\ncourseware system easier to maintain from an IT staff point-of-view. Search results should be\ndisplayed based on relevance.\nThis documentation must cover all procedures necessary for regular maintenance with links to\nadditional information, all common errors, and links or documentation for advanced\ntroubleshooting.\nPriority: 3\n4.7 Interfaces\n4.7.1 User Interfaces\n4.7.2 Hardware Interfaces\n4.7.3 Software Interfaces\n4.7.4 Communications Interfaces\n4.8 Licensing Requirements\n4.9 Applicable Standards\n5. Supporting Information\nConfidential  Ed Altorfer, Walker Lindley, Chris Page 14\nHaller, Stefan Moluf, 2007"
+    }
+  ],
+  "tables": [
+    {
+      "page": 2,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 2,
+      "table_idx": 1,
+      "rows": 49,
+      "cols": 12,
+      "data": [
+        [
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null
+        ],
+        [
+          "",
+          "Date",
+          "",
+          "",
+          "Version",
+          "",
+          "",
+          "Description",
+          "",
+          "",
+          "Author",
+          ""
+        ],
+        [
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null
+        ],
+        [
+          "",
+          "10/15/2007",
+          "",
+          "",
+          "1.0",
+          "",
+          "",
+          "Document created",
+          "",
+          "",
+          "Ed Altorfer",
+          ""
+        ],
+        [
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "Walker Lindley\nEdited by Ed Altorfer",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 3,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 3,
+      "table_idx": 1,
+      "rows": 2,
+      "cols": 10,
+      "data": [
+        [
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          "",
+          null,
+          null,
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 5,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 6,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 7,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 8,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 9,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 10,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 11,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 12,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 13,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "page": 14,
+      "table_idx": 0,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "Moodle",
+          "Version: 1.4"
+        ],
+        [
+          "Software Requirements Specification",
+          "Date: 10/25/2007"
+        ],
+        [
+          "",
+          null
+        ]
+      ]
+    }
+  ]
+}

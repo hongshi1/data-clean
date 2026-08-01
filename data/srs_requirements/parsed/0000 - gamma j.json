@@ -1,0 +1,354 @@
+{
+  "file": "0000 - gamma j.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Software Requirements\nSpecification (SRS)\nGroup Name GAMMA-J\nGroup Project Subtitle GAMMA-J Web Store\nTeam Members:\nAshwini Chavate\nMinesh Dhyani\nGlenn Hollander\nAvishek Shrestha\nJose Tellez\nMarc Weber\n1"
+    },
+    {
+      "page": 2,
+      "text": "Table of Contents\n1. Introduction ...................................................................................................................................... 4\n1.1 Purpose ....................................................................................................................................... 4\n1.2 Document Conventions .......................................................................................................... 4\n1.3 Intended Audience, Reading Suggestions ......................................................................... 4\n1.4 Project Scope ............................................................................................................................ 4\n1.5 References ................................................................................................................................. 4\n2. Overall Description .......................................................................................................................... 5\n2.1 Product Perspective ................................................................................................................. 5\n2.2 Product Features....................................................................................................................... 5\n2.3 User Classes ................................................................................................................................ 6\n2.4 Operating Environment ........................................................................................................... 6\n2.5 Design and Implementation Constraints ............................................................................. 6\n2.6 User Documentation ................................................................................................................ 6\n2.7 Assumptions and Dependencies .......................................................................................... 6\n3. System Features ............................................................................................................................... 7\n3.1 Customer Accounts ................................................................................................................. 7\n3.1.1 Description And Priority .................................................................................................... 7\n3.1.2 Stimulus/Response Sequences ....................................................................................... 7\n3.1.3 Functional Requirements ................................................................................................. 7\n4. External Interface Requirements .................................................................................................. 9\n4.1 User Interfaces ........................................................................................................................... 9\nLogin Screen ................................................................................................................................ 9\nManage products (System Admin) ...................................................................................... 10\nAdd screen (System Admin) .................................................................................................. 11\nDelete screen (System Admin) .............................................................................................. 12\nUpdate screen (System Admin) ............................................................................................ 13\nCustomer screen ...................................................................................................................... 14\nShopping cart screen (customer) ......................................................................................... 15\nLogin Screen for Customer ..................................................................................................... 16\nOrder Summary (customer) .................................................................................................... 17\nConfirmation of Order ............................................................................................................. 18\nCheck Order Status of Order ................................................................................................. 19\nMaintain System Administration ............................................................................................ 20\nHardware Interfaces ................................................................................................................ 20\nSoftware Interfaces .................................................................................................................. 20\nSI-1: WebOrder Browser Interface ......................................................................................... 20\n4.4 Communications Interfaces ............................................................................................ 20\n5. Quality Attribute Requirements .................................................................................................. 21\n5.1 Performance Requirements ................................................................................................. 21\n5.2 Safety Requirements .............................................................................................................. 21\n5.3 Security Requirements ........................................................................................................... 21\n5.4 Availability Requirements ...................................................................................................... 21\n5.5 Efficiency Requirements ........................................................................................................ 21\n5.6 Usability Requirements ........................................................................................................... 21\n5.7 Maintainability Requirements ............................................................................................... 22\n5.8 Portability Requirements........................................................................................................ 22\n5.9 Testability Requirements ........................................................................................................ 22\n6. Other Requirements ...................................................................................................................... 22\nAppendix A: Glossary ....................................................................................................................... 23\nAppendix B: Use Cases ..................................................................................................................... 26\n2\nGAMMA-J Web Store"
+    },
+    {
+      "page": 3,
+      "text": "Appendix C: Analysis Models .......................................................................................................... 41\nAppendix D: Issues List ...................................................................................................................... 42\n3. System does not support customer order analysis.Appendix E: Data Dictionary........ 42\nAppendix E: Data Dictionary .......................................................................................................... 43\n3\nGAMMA-J Web Store"
+    },
+    {
+      "page": 4,
+      "text": "1. Introduction\n1.1 Purpose\nThis is the Software Requirements Specification for GAMMA-J’s Web Store. This Web Store\nis designed to allow new online store owners a quick and easy means to setup and\nperform sales and other core business over the internet. This document will outline all of\nthe functions, capabilities and requirements for Version 1 of GAMMA-J’s Web Store.\nVersion 1 is planned for implementation on a “plug and play” USB Key. Future versions\nwill be based on other network appliances.\n1.2 Document Conventions\nNone\n1.3 Intended Audience, Reading Suggestions\nThis document is intended to flush out the requirements by the customer GAMMA-J. The\ncustomer can review this document to ensure their needs along with the needs of their\nuser’s are being met in their new Web Store program. The development team will also\nuse this document for guidance on overall design and implementation of the Web Store\nsystem. The test and verification team can reference this to ensure the requirements are\nbeing meet for the customer. Finally, the tech writer will use this to assist with user\ndocumentation. This document is designed to be review from beginning to end;\nhowever, readers who are new to technical documentation may want to refer to\nAppendix E: Data Dictionary first.\n1.4 Project Scope\nAccording to GAMMA-J’s Functional Needs Statement this Web Store will:\n• Manage customer accounts\n• Manage an online store inventory\n• Manage a customer’s “Shopping Cart”\n• Confirm Orders\n• Have an unambiguous interface to assist in browsing the categories and products\n• Use Secure Socket Layer (SSL) for security\n• Have an availability of 99.999%\n• Allow an optional mirror site for reliability and backups\n• Feature interface for future software enhancement via “Plug-ins”\nThe initial inventory will be 100 items. Expandable with unique codes, the owners can\npurchase to expand the inventory. The minimum total inventory will be 20,000 items.\nSince this will be a “Plug and Play device”, no software installation will be necessary. This\nsoftware will contain all of the basic needs to manage an online store. Advanced needs\ncan be added in the future via “plug-ins.” More detail on the functionality of the Web\nStore can be found in part 3. System Features and in the function Needs statement.\n1.5 References\n4\nGAMMA-J Web Store"
+    },
+    {
+      "page": 5,
+      "text": "This document draws insight from the Web Store System Overview, Functional Needs\nStatement, and Stakeholder Goals List.\n2. Overall Description\n2.1 Product Perspective\nWeb Store is a new system designed for users new to the online E-commerce. This will be\na plug and play device with its own CPU and operating system. The Web Store will be a\nquick and easy means to setup and operate an online Web Store. The Figure 2.1 is a\ncontext diagram showing external system interfaces.\n2.2 Product Features\nAccount Management (AM) (High Priority): AM allows users to create, edit, and view\naccounts information. It also allows the user to login/out of the system.\nSearch Engine (SE) (Medium Priority): SE is the tool that assists the user in finding a specific\nitem in the database. It can receive search criteria, find search criteria, and return the\nresults of the search.\nProduct Management (PM) (High Priority): PM allows sales personnel to manage the\nproduct line shown on the web site.\n5\nGAMMA-J Web Store"
+    },
+    {
+      "page": 6,
+      "text": "Shopping Cart (SC) (Medium Priority): SC is temporary storage for customers shopping on\nthe web. Items from the inventory can be reserved in a virtual cart until the customer\ndecides to purchase them.\nPurchasing and Payment (PP) (High Priority): PP is used to approve and transfer payment\nfrom buyers when purchasing items in the cart.\n2.3 User Classes\nSystem Administrator: Is generally the owner that takes care of maintenance for the\nWeb Store system. The administrator will be in charge of assigning privileges of accounts.\nSuggested more than one individual can have administrator privilege to ensure\nadvisability. Full documentation will be provided to the Administrator to assist with this\nprocess.\nSales Personnel: Is generally the owner of the Web Store tasked with updating inventory\nand product line descriptions. Once added, sales personnel can add, delete and\nchange descriptions, pictures, prices, and when ready flag items for customers to buy.\nCustomer: A customer is an individual wishing to purchase inventory from GAMMA-J’s\nWeb Store. The Web store will have a variety of clientele depending upon the inventory\nloaded on the Key. When creating a new account on Web Store it will default as a\ncustomer account. Later if the account needs to be upgraded the administrator can\naccomplish this via the administrator interface.\n2.4 Operating Environment\nOE-1: Web Store shall operate with the following internet browsers: Microsoft Internet\nExplorer version 6 and 7, Netscape Communicator Version 4 and 5.\nOE-2: Web Store shall operate on an Intel based system with Slackware Linux 2.6 and\nApache Web Server. The operating system is designed by the Yoggie Corporation.\nAlthough maintenance documentation will be supplied and the operating system will be\ntested, the developers of this Web Store are not responsible for the functionality of the\noperating system.\nOE-3: The system shall use SQL based database to store inventory information.\nOE-4: USB interface and divers are provided by Yoggie Corporation.\n2.5 Design and Implementation Constraints\nCO-1: Must use a SQL based database. SQL standard is the most widely used database\nformat. Restricting to SQL allows easy of use and compatibility for Web Store.\nCO-2: Compatibility is only tested and verified for Microsoft Internet Explorer version 6 and\n7, Netscape Communicator Version 4 and 5. Other versions may not be 100%\ncompatible. Also other browsers such as Mozilla or Firefox may not be 100% compatible.\n2.6 User Documentation\nUD-1: Shall install online help for users via the web interface\nUD-2: Shall deliver Operations and Maintenance manual, Users Guide book, and\nInstallation Instructions for the Administrator.\n2.7 Assumptions and Dependencies\n6\nGAMMA-J Web Store"
+    },
+    {
+      "page": 7,
+      "text": "AD-1: Assume the delivery of development, test and evaluate samples of the USB system\nfrom Yoggie.\nAD-2: Assume Yoggie will freeze the baseline of the USB system after delivery.\n3. System Features\n3.1 Customer Accounts\n3.1.1 Description And Priority\nCustomers will be able to create accounts to store their profiles, contact information,\npurchase history, and confirm orders. This is a high priority system feature. Security\nmethods will ensure that customer accounts remain confidential and resistant to\ntampering.\n3.1.2 Stimulus/Response Sequences\n· Web Browser initiates request to Web Server via HTTPS\n· Web Server parses request\n· Web Server submits request to Service\n· Service picks up request\n· Service runs task\n· Service returns results\n· Web Server checks for completion\n· Web Server returns results to Web Browser\n· Web Browser displays results\n3.1.3 Functional Requirements\nCustomers will be able to create accounts to store their customer profiles, configure\ncontact information, view their purchase history, and confirm orders. Customers will be\nable to register, log in, and log out of their accounts. Furthermore, Customer profiles will\nalso include payment information, such as the ability to store credit card information,\nand address information.\n3.2 Inventory Management\n3.2.1 Description And Priority\nInventory management will allow for the placement of products into multi-tiered\ncategories. This is a medium priority system feature.\n3.2.2 Stimulus/Response Sequences\nSame as 3.1.2\n3.2.3 Functional Requirements\nProducts will be stored in multi-tiered categories; a category can contain sub categories\nor products. The inventory management will allow for administrators to update the\ncategories, the products placed in categories, and the specific product details.\n3.3 Shopping Cart\n3.3.1 Description And Priority\nCustomers will be able to add and store products for purchase within the shopping cart.\nThis feature is a medium priority system feature.\n7\nGAMMA-J Web Store"
+    },
+    {
+      "page": 8,
+      "text": "3.3.2 Stimulus/Response Sequences\nSame as 3.1.2\n3.3.3 Functional Requirements\nCustomers will also be able to add products into the shopping cart. The shopping cart\nwill clearly display the number of items in the cart, along with the total cost. The customer\nwill also be able to add to or remove products from the shopping cart prior to checkout\nand order confirmation.\n3.4 Order Confirmation\n3.4.1 Description And Priority\nOrder confirmation will allow the customer to review their order after checkout prior to\nconfirmation. This is a medium priority system feature.\n3.4.2 Stimulus/Response Sequences\nSame as 3.1.2\n3.4.3 Functional Requirements\nCustomers will be able to confirm the order after checkout. If the order is incorrect, the\ncustomer will be able to revise and update their order. The customer will then receive a\nconfirmation email with the specific order details.\n3.5 Interface\n3.5.1 Description And Priority\nThe interface will be presented to the customer in a web browser. The interface must\nremain consistent among various web browsers and be intuitive to the customer. This is a\nmedium priority system feature.\n3.5.2 Stimulus/Response Sequences\nSame as 3.1.2\n3.5.3 Functional Requirements\nCustomers will be presented with an unambiguous interface to assist in browsing the\ncategories and products. Customers will be able to search for products matching their\nsearch criteria. The interface will be compatible with all major web browsers such as\nInternet Explorer, Mozilla Navigator, Mozilla Firefox, Opera, and Safari.\n3.6 Plug-in API\n3.6.1 Description And Priority\nThe system will feature an API to allow customers to build custom plug-ins to be able to\nmeet their needs. This is a high priority system feature as it ensures the flexibility of the\nsystem to be tailored to specific needs.\n3.6.2 Stimulus/Response Sequences\n· Web Browser initiates request to Web Server via HTTPS\n· Web Server parses request\n· Web Server submits request to API Service\n· API Service picks up request\n· API Service submits request to Plug-in\n· Plug-in picks up request\n· Plug-in runs tasks\n8\nGAMMA-J Web Store"
+    },
+    {
+      "page": 9,
+      "text": "· Plug-in returns results\n· API Service validates results\n· API Service returns results\n· Web Server checks for completion\n· Web Server returns results to Web Browser\n· Web Browser displays results\n3.6.3 Functional Requirements\nThe system will implement an Application Interface to allow for various plug-ins to interact\nwith the system. The plug-in API will be well documented and specifications will be\nprovided to plug-in developers.\n4. External Interface Requirements\n4.1 User Interfaces\nLogin Screen\n9\nGAMMA-J Web Store"
+    },
+    {
+      "page": 10,
+      "text": "Manage products (System Admin)\n10\nGAMMA-J Web Store"
+    },
+    {
+      "page": 11,
+      "text": "Add screen (System Admin)\n11\nGAMMA-J Web Store"
+    },
+    {
+      "page": 12,
+      "text": "Delete screen (System Admin)\n12\nGAMMA-J Web Store"
+    },
+    {
+      "page": 13,
+      "text": "Update screen (System Admin)\n13\nGAMMA-J Web Store"
+    },
+    {
+      "page": 14,
+      "text": "Customer screen\n14\nGAMMA-J Web Store"
+    },
+    {
+      "page": 15,
+      "text": "Shopping cart screen (customer)\n15\nGAMMA-J Web Store"
+    },
+    {
+      "page": 16,
+      "text": "Login Screen for Customer\n16\nGAMMA-J Web Store"
+    },
+    {
+      "page": 17,
+      "text": "Order Summary (customer)\nAUTOMECHANICS DOOR LOCKS HAND TOOLS POWER TOOLS COMPRESSORS MY ACCOUNT ORDER STATUS HELP\n1. Shopping Cart 2. Payment and 3. Order\n>>> Order Summary >>> Confirmation>>>\nNo of Items : 1\nPicture Description Unit Price Quantity Shipping Price Total\nPicture 1 This item has all the features $ 34.00 1 $ 5.99 $39.99\nAccount Details\nShipping address: 1234 Main Street\nTustin, CA -92782\nCredit Card No.: XXXX XXXX XXXX 1234\nName on Credit Card: John Doe\nCredit Card Expiry date: 02/99\nConfirm Order\n17\nGAMMA-J Web Store"
+    },
+    {
+      "page": 18,
+      "text": "Confirmation of Order\n18\nGAMMA-J Web Store"
+    },
+    {
+      "page": 19,
+      "text": "Check Order Status of Order\n19\nGAMMA-J Web Store"
+    },
+    {
+      "page": 20,
+      "text": "Maintain System Administration\nHardware Interfaces\nHI-1: USB key from Yoggie\nSoftware Interfaces\nSI-1: WebOrder Browser Interface\nSI-1.1: The order database of WebOrder will communicate with the account system\nthrough a programmatic interface for the billing operations.\nSI-1.2: Through programmatic interface, WebOrder will transmit information of items\nordered by customers to the Inventory management system.\nSI-1.3: Plug-ins interface\n4.4 Communications Interfaces\nCI-1: The WebOrder system shall send an e-mail confirmation to the customer that the\nitems they ordered will be delivered to the shipping address along with tracking number.\nCI-2: The WebOrder system shall send an e-mail to System Administrator regarding any\ntechnical queries from customers or sales people.\n20\nGAMMA-J Web Store"
+    },
+    {
+      "page": 21,
+      "text": "5. Quality Attribute Requirements\n5.1 Performance Requirements\n· Upon the USB being plugged in the system shall be able to be deployed and\noperational in less than 1 minute.\n· The system shall be able to handle 1000 customers logged in concurrently at the\nsame time.\n· The system shall be able to retrieve 200 products per second.\n· The system shall be able to add product to shopping cart in less than 2ms.\n· The system shall be able to search for a specified product in less than 1 second.\n· The system shall be able to email customer and vendor in less than 1 second.\n· The system shall be able to validate credit card in less than 2 seconds.\n· The system shall be able to acquire shipping charges in less than 2 seconds.\n· The system shall be able to restore 1000 records per second.\n5.2 Safety Requirements\n· The system will do periodic backups through a live internet connection.\n5.3 Security Requirements\n· The system shall validate credit cards against fraud.\n· The system shall encrypt all sensitive information via https.\n· The system shall encrypt all customer data in database.\n· The system shall auto detect IP DOS attacks and block IP automatically.\n· The system shall detect consecutive failed login attempts.\n· The system shall be protected by open source firewall called Firestarter.\nhttp://www.fs-security.com/\n5.4 Availability Requirements\n· The system shall have an availability of 99.99%.\n5.5 Efficiency Requirements\n· The system shall perform searches via Dijkstra's shortest path algorithm.\n· For returning customers, the system shall validate 'existing' credit card in system\nafter each log in.\n· The system shall automatically compress image files that are too large in size.\n· The system will employ on demand asynchronous loading for faster execution of\npages.\n· The system shall validate email address existence.\n5.6 Usability Requirements\n21\nGAMMA-J Web Store"
+    },
+    {
+      "page": 22,
+      "text": "· The system shall be easy to use\n· The system shall be easy to learn\n· The system shall utilize help bubbles to assist managers, customers, and\nadministrators\n· The system shall employ easy to locate buttons\n· The system shall prompt customer with friend easy to read error messages.\n· The system shall utilize consistent symbols and colors for clear notifications.\n5.7 Maintainability Requirements\n· The system shall utilize interchangeable plugins.\n· The system shall be easily updatable for fixes and patches.\n· The system shall create logs of all changes, updates, or fixes that are done to the\nsite.\n· The system shall be easy to upgrade.\n5.8 Portability Requirements\n· The system shall be extremely portable via the usb drive.\n· The system shall be easy to migrate or backed up via another usb drive.\n5.9 Testability Requirements\n· The system should be able to run under debug mode.\n· The system should be able to run test credit card transactions.\n· The system should be able to run test shipping orders.\n· The system should be able to create test environment of weborder system.\n6. Other Requirements\n· The system hardware shall be fixed and patched via an internet connection.\n· Yoggie shall coordinate on future enhancement and features with our\norganization.\n· The system shall adhere to the following hardware requirements:\n· 4GB Flash ram chip\n· 128MB SDRAM\n· Intel XScale PXA270 520-MHz chipset\n· OS: Apache web server\n· Database: MySQL\n22\nGAMMA-J Web Store"
+    },
+    {
+      "page": 23,
+      "text": "Appendix A: Glossary\nPlug and play: Plug and play is a computer feature that allows the addition of a new\ndevice, normally a peripheral, without requiring reconfiguration or manual installation of\ndevice drivers.\nSDRAM: Short for Synchronous DRAM, a type of DRAM that can run at much higher clock\nspeeds than conventional memory. SDRAM actually synchronizes itself with the CPU's bus\nand is capable of running at 133 MHz, about three times faster than conventional FPM\nRAM, and about twice as fast EDO DRAM and BEDO DRAM. SDRAM is replacing EDO\nDRAM in many newer computers.\nActor: A person playing a specific role, a software system, or a hardware device that\ninteracts with a system to achieve a useful goal.\nAlternative course: A path through a use case that leads to success, but involves a\nvariation from the normal course in the specifics of the task or of the actor’s interaction\nwith the system.\nAssumption: A statement that is believed to be true in the absence of proof or definitive\nknowledge.\nBusiness requirement: A high- level business objective of the organization that builds a\nproduct or of a customer who procures it.\nBusiness rule: A policy, guideline, standard, or regulation that defines or constrains some\naspect of the business.\nCluster Server: Servers work together as one machine to provide increase availability of\napplications.\nConstraint: A restriction that is imposed on the choices available to the developer for the\ndesign and construction of a product.\nContext diagram: An analysis model that depicts a system at a high level of abstraction.\nCustomer: A project stakeholder, who requests, pays for, selects, specifies, uses, or\nreceives the output generated by a product.\n23\nGAMMA-J Web Store"
+    },
+    {
+      "page": 24,
+      "text": "Data Dictionary: A collection of definitions for the data elements, structures, and\nattributes those are important to the problem domain.\nData flow diagram: An analysis model that depicts the processes, data collections,\nterminators, and flows among them that characterize the behavior of a business process\nor of a software system.\nDocumentation Writers: Writers are able to take technical complexities and turn them\ninto simple, understandable text. They will expertly produce the documentation products\nneeded such as user manuals, Installation guides.\nDevelopers: One who programs computers or designs the system to match the\nrequirements of a system analyst.\nFeature: A set of logically related functional requirements that provides a capability to\nthe user and enables the satisfaction of a business objective.\nFlowchart: A model that shows the processing steps and decision points in the logic of a\nprocess or of a program, similar to that of an activity diagram.\nFunctional requirements: A statement of a piece of required functionality or a behavior\nthat a system will exhibit under specific conditions.\nIEEE: The Institute of Electrical and Electronics Engineers.\nNonfunctional requirements: A description of a property or characteristic that the system\nshould exhibit.\nOut of stock: Entire order will be delayed until all of the ordered items are in stock.\nPost condition: A condition that describes the state of the system after a use case is\nsuccessfully completed.\nPre condition: A condition that must be satisfied or a state the system must be in before a\nuse case may begin.\nProcess: A sequence of activities performed for a given purpose. A process description is\na documented definition of those activities.\nProject Manager: A project manager is a professional in the field of project\nmanagement. They have the responsibility of planning and execution of any project.\n24\nGAMMA-J Web Store"
+    },
+    {
+      "page": 25,
+      "text": "Quality attribute: A kind of nonfunctional requirement that describe a quality or property\nof a system.\nRAID: In computing, Redundant Array of Independent Drives is an umbrella term for\ncomputer data storage schemes that divide and / or replicate data among multiple\nhard drives.\nRequirement: A statement of a customer need or objective or of a condition or\ncapability that a product must possess to satisfy such a need or objective.\nScenario: A description of a specific interaction between a user and a system to\naccomplish some goal. An instance of usage of the system.\nSecure Socket Layer: A protocol developed for the browsers for transmitting private\ndocuments via the internet.\nSoftware requirement specification (SRS): A collection of functional and non functional\nrequirements for software product.\n25\nGAMMA-J Web Store"
+    },
+    {
+      "page": 26,
+      "text": "Appendix B: Use Cases\nCustomer Use Cases\nRegister Customer\nGoal:\nRegister a new customer account with the system.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer must be able to access the web order system via a web browser with HTTPS.\nTriggers:\nCustomer clicks button or link to \"Register\"\nBasic Scenario:\n1. Customer first clicks on the button or link to initiate registration process.\n2. System prompts the customer to fill out his/her first name, last name, billing address,\nshipping address, email address, and their password.\n3. Customer enters fields.\n4. System validates the customer's information.\n5. System creates a new account for the Customer.\n6. System creates a session cookie.\n7. System displays an account home page to Customer.\nAlternative Scenario:\nA1. System recognizes Customer's cookie.\nA2. Go to Step 7 (Basic Scenario).\nPostconditions:\nThe Customer registers and creates a new customer account with the system.\nLogin Customer\nGoal:\nLogin to a customer account with the system.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer account must already be registered.\nTriggers:\nCustomer clicks button or link to \"Login\"\nBasic Scenario:\n26\nGAMMA-J Web Store"
+    },
+    {
+      "page": 27,
+      "text": "1. Customer clicks on the button or link to initiate the login process.\n2. System prompts the customer for his/her email and password.\n3. System verifies the information.\n4. System creates session cookie.\n5. System displays account home page to the Customer\nAlternative Scenario:\nA1. System recognizes the Customer's cookie\nA2. Go to Step 5 (Basic Scenario).\nB1. Customer enters incorrect login information.\nB2. System prompts the Customer to resend login details to the email account.\nB3. Customer confirms.\nB4. System sends an email to the registered email address.\nB5. Go to Step 1 (Basic Scenario).\nPostconditions:\nThe Customer is logged into the system.\nEdit Customer Details\nGoal:\nEdit the customer account details.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer must be logged-in on the system.\nTriggers:\nCustomer clicks on the button or link to \"Edit Account\"\nBasic Scenario:\n1. Customer clicks the button or link to initiate the process to edit the account.\n2. System displays the account home page to the Customer.\n3. Customer clicks the button or link in order to edit the account details.\n4. System verifies the changes.\n5. System stores new account information.\nAlternative Scenario:\nNone\nPostcoditions:\nThe Customer has changed the account details.\nLogout Customer\nGoal:\nLogout the customer account on the system.\nActors:\n27\nGAMMA-J Web Store"
+    },
+    {
+      "page": 28,
+      "text": "Customer\nWeborder System\nPreconditions:\nCustomer must be logged-in on the system.\nTriggers:\nCustomer clicks on the button or link to \"Logout\"\nBasic Scenario:\n1. Customer clicks the button or link in order to initiate logout process.\n2. System terminates the session cookie.\n3. System displays the home page.\nAlternative Scenario:\nNone\nPostconditions:\nThe Customer is logged out of the system.\nAdd Item To Cart\nGoal:\nCustomer adds item(s) in the cart\nActors:\nCustomer\nSystem\nPreconditions:\nThe customer must be logged-in on the system.\nTriggers:\nCustomer clicks the button or link to \"Add To Cart\".\nBasic Scenario:\n1. Customer clicks the button or link in order to add to the cart with specified quantity.\n2. System adds the item(s) to the cart.\n3. System prompts the Customer to edit the quantity or remove the item from cart.\n4. Customer confirms the items in the cart.\n5. System stores cookie with cart details.\n6. Customer returns to product listings.\nAlternative Scenario:\nA1. Customer terminates the web browser window after adding item(s) to cart.\nA2. Customer returns to weborder interface.\nA3. System recognizes cookie and goes to step 6 (Basic Scenario) with existing items in\ncart.\nPostconditions:\nThe Customer has added item(s) to the shopping cart.\n28\nGAMMA-J Web Store"
+    },
+    {
+      "page": 29,
+      "text": "Checkout An Order\nGoal:\nCustomer places and confirms an order for the checkout process.\nActors:\nCustomer\nWeborder System\nPreconditions:\n1. Customer must be logged-in on the system.\n2. Customer must have item(s) in the shopping cart.\nTriggers:\nCustomer clicks button or link to \"Ckeckout\"\nBasic Scenario:\n1. Customer clicks the button or link to initiate the checkout process.\n2. System calculates order of items in the shopping cart.\n3. System appends cookie with flag for checkout process.\n4. System presents the customer with the account details and payment methods.\n5. Customer confirms account details and payment methods.\n6. Customer confirms order.\n7. System stores order confirmation and order details.\n8. System sends email confirmation to the Customer.\n9. System appends cookie with flag for completed checkout process.\nAlternative Scenario:\nA1. Customer terminates order web browser during order the checkout process.\nA2. Customer returns to weborder interface.\nA3. System recognizes cookie and goes to step 4 (Basic Scenario).\nPostconditions:\nThe Customer has placed and confirmed an order.\nAdministrator Use Cases\nLogin Administrator\nGoal:\nLogin to an Administrator account with the system.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator account must already be registered.\nTriggers:\nAdministrator clicks button or link to \"Login\"\n29\nGAMMA-J Web Store"
+    },
+    {
+      "page": 30,
+      "text": "Basic Scenario:\n1. Administrator clicks button or link to initiate login process.\n2. System prompts the Administrator for email and password.\n3. System verifies information.\n4. System creates session cookie.\n5. System displays account home page to Administrator\nAlternative Scenario:\nA1. System recognizes Administrator 's cookie\nA2. Go to Step 5 (Basic Scenario).\nB1. Administrator enters incorrect login information.\nB2. System prompts Administrator to resend login details to email account.\nB3. Administrator confirms.\nB4. System sends email to registered email address.\nB5. Go to Step 1 (Basic Scenario).\nPostconditions:\nThe Administrator is logged into the system.\nLogout Administrator\nGoal:\nLogout the Administrator account on the system.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator must be logged-in on the system.\nTriggers:\nAdministrator clicks button or link to \"Logout\"\nBasic Scenario:\n1. Administrator clicks button or link to initiate logout process.\n2. System terminates the session cookie.\n3. System displays home page.\nAlternative Scenario:\nNone\nPostconditions:\nThe Administrator is logged out of the system.\nAdd User\nGoal:\nRegister a new customer, sales person, or administrator account with the system.\nActors:\n30\nGAMMA-J Web Store"
+    },
+    {
+      "page": 31,
+      "text": "Administrator\nWeborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks button or link to \"Add Users\"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate Add user process.\n2. System prompts the Administrator to fill out first name, last name, username, email\naddress, password, and privileges of the user.\n3. System validates new user information.\n4. System creates a new account for the new user with desired privileges.\n5. System displays account home page to Administrator.\nPostconditions:\nA new customer account is created within the system.\nRemove User\nGoal:\nRemove a user from the system.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks button or link to “Remove User\"\nBasic Scenario:\n1. Administrator clicks button or link to initiate the remove user process.\n2. System prompts the Administrator to select a user by searching or viewing a list of users.\n3. System displays user information.\n4. System confirms deletion of selected user.\n5. System displays account home page to Administrator.\nPostconditions:\nAn account has been deleted within the system.\nChange User Properties\nGoal:\nAlter properties such as passwords and privileges of the user.\nActors:\nAdministrator\n31\nGAMMA-J Web Store"
+    },
+    {
+      "page": 32,
+      "text": "Weborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks button or link to “Change User Properties\"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate change user properties process.\n2. System prompts the Administrator to select a user by searching or viewing a list of users.\n3. System displays the user information.\n4. System alters the user properties.\n5. System displays the account home page to Administrator.\nPostconditions:\nAn account has been altered within the system.\nInstall Plug-ins\nGoal:\nInstall a new plug-in to the application.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks the button or link to \"Install Plug-ins \"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate Plug-in installation process.\n2. System prompts the Administrator to upload the Plug-in module.\n3. System installs plug-in and validates changes.\n4. System displays plug-in options to the Administrator.\nPostconditions:\nA new plug-in is installed in the application.\nRemove Plug-ins\nGoal:\nRemove a plug-in from the application.\nActors:\nAdministrator\nWeborder System\n32\nGAMMA-J Web Store"
+    },
+    {
+      "page": 33,
+      "text": "Preconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks the button or link to \"Install Plug-ins \"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate Plug-in deletion process.\n2. System prompts the Administrator to select the desired Plug-in module.\n3. System removes the plug-in and validates changes.\nPostconditions:\nA plug-in is removed from the application.\nManage Plug-in Options\nGoal:\nMake changes to an installed plug-in.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nAdministrator clicks button or link to \"Manage Plug-ins \"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate Plug-in Options process.\n2. System prompts the Administrator to select the desired Plug-in module.\n3. System displays all plug-in options to the Administrator.\n4. System confirms changes with the Administrator.\nPostconditions:\nA plug-in’s options have successfully been changed.\nInstall patch process\nGoal:\nInstall patches or software updates to the web store.\nActors:\nAdministrator\nWeborder System\nPreconditions:\nAdministrator must be able to access the weborder system via a web browser with HTTPS.\n33\nGAMMA-J Web Store"
+    },
+    {
+      "page": 34,
+      "text": "Triggers:\nAdministrator clicks the button or link to \"Install Patch\"\nBasic Scenario:\n1. Administrator clicks the button or link to initiate Patching process.\n2. System prompts the Administrator to upload the patch.\n3. System automatically installs patches and reinitializes software.\n4. System confirms that patch has been successfully installed.\nPostconditions:\nThe web store was successfully updated.\nSales Person Use Cases\nLogin Sales Person\nGoal:\nLogin to an account with the system.\nActors:\nSales Person\nWeborder System\nPreconditions:\nSales Person account must already be registered.\nTriggers:\nSales Person clicks button or link to \"Login\"\nBasic Scenario:\n1. Sales Person clicks the button or link to initiate login process.\n2. System prompts the Sales Person for email and password.\n3. System verifies the information.\n4. System creates session cookie.\n5. System displays the account home page to Sales Person\nAlternative Scenario:\nA1. System recognizes Sales Person's cookie\nA2. Go to Step 5 (Basic Scenario).\nB1. Sales Person enters incorrect login information.\nB2. System prompts the Sales Person to resend login details to email account.\nB3. Sales Person confirms.\nB4. System sends email to registered email address.\nB5. Go to Step 1 (Basic Scenario).\nPostconditions:\nThe Sales Person is logged into the system.\nLogout Sales Person\n34\nGAMMA-J Web Store"
+    },
+    {
+      "page": 35,
+      "text": "Goal:\nLogout the Sales Person account on the system.\nActors:\nSales Person\nWeborder System\nPreconditions:\nSales Person must be logged-in on the system.\nTriggers:\nSales Person clicks the button or link to \"Logout\"\nBasic Scenario:\n1. Sales Person clicks the button or link to initiate logout process.\n2. System terminates the session cookie.\n3. System displays home page.\nAlternative Scenario:\nNone\nPostconditions:\nThe Sales Person is logged out of the system.\nAdd Product\nGoal:\nAdd a product to the system.\nActors:\nSales Person\nWeborder System\nPreconditions:\nSales Person must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nSales Person clicks the button or link to \"Add Product\"\nBasic Scenario:\n1. Sales Person clicks the button or link to initiate Add Product process.\n2. System prompts the Sales Person to fill out product name, product id, product\ndescription, product price, upload a product image, number of items in inventory, and\navailability of product.\n3. System validates the new product information.\n4. System creates a new product page for the new product.\n5. System displays the newly created product page.\nPostconditions:\nA new product is created within the system.\nRemove Product\n35\nGAMMA-J Web Store"
+    },
+    {
+      "page": 36,
+      "text": "Goal:\nRemove a product from the system.\nActors:\nSales Person\nWeborder System\nPreconditions:\nSales Person must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nSales Person clicks the button or link to \"Remove Product\"\nBasic Scenario:\n1. Sales Person clicks the button or link to initiate Remove Product process.\n2. System prompts the Sales Person to select a product by searching or viewing a list of\nproducts.\n3. System validates the product information.\n4. System removes the product page and product information from the system.\n5. System displays the newly created product page.\nPostconditions:\nA product is deleted from the system.\nUpdate Product Attributes\nGoal:\nUpdate Product attributes within the system.\nActors:\nSales Person\nWeborder System\nPreconditions:\nSales Person must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nSales Person clicks the button or link to \"Update Product Attributes\"\nBasic Scenario:\n1. Sales Person clicks the button or link to initiate Update Product Attributes process.\n2. System prompts the Sales Person to select a product by searching or viewing a list of\nproducts.\n3. System displays all of the product attributes and allows Sales Person to update the\nproduct name, product id, product description, product price, update the product\nimage, product availability, and/or the number of items in the inventory.\n4. System validates the product information.\n5. System updates the product page and product information within the system.\n6. System displays the newly updated product page.\n36\nGAMMA-J Web Store"
+    },
+    {
+      "page": 37,
+      "text": "Postconditions:\nThe product attributes have been changed.\nRegister Customer\nGoal:\nRegister a new customer account with the system.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer must be able to access the weborder system via a web browser with HTTPS.\nTriggers:\nCustomer clicks the button or link to \"Register\"\nBasic Scenario:\n1. Customer clicks the button or link to initiate registration process.\n2. System prompts the customer to fill out first name, last name, billing address, shipping\naddress, email address, and password.\n3. Customer enters fields.\n4. System validates customer's information.\n5. System creates a new account for the Customer.\n6. System creates session cookie.\n7. System displays account home page to Customer.\nAlternative Scenario:\nA1. System recognizes Customer's cookie.\nA2. Go to Step 7 (Basic Scenario).\nPostconditions:\nThe Customer registers and creates a new customer account with the system.\nLogin Customer\nGoal:\nLogin to a customer account with the system.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer account must already be registered.\nTriggers:\nCustomer clicks the button or link to \"Login\"\nBasic Scenario:\n1. Customer clicks the button or link to initiate login process.\n37\nGAMMA-J Web Store"
+    },
+    {
+      "page": 38,
+      "text": "2. System prompts the customer for email and password.\n3. System verifies the information.\n4. System creates session cookie.\n5. System displays account home page to Customer\nAlternative Scenario:\nA1. System recognizes Customer's cookie\nA2. Go to Step 5 (Basic Scenario).\nB1. Customer enters incorrect login information.\nB2. System prompts Customer to resend login details to email account.\nB3. Customer confirms.\nB4. System sends email to registered email address.\nB5. Go to Step 1 (Basic Scenario).\nPostconditions:\nThe Customer is logged into the system.\nEdit Customer Details\nGoal:\nEdit the customer account details.\nActors:\nCustomer\nWeborder System\nPreconditions:\nCustomer must be logged-in on the system.\nTriggers:\nCustomer clicks button or link to \"Edit Account\"\nBasic Scenario:\n1. Customer clicks button or link to initiate the process to edit the account.\n2. System displays account home page to Customer.\n3. Customer clicks button or link to edit the account details.\n4. System verifies the changes.\n5. System stores new account information.\nAlternative Scenario:\nNone\nPostcoditions:\nThe Customer has changed the account details.\nLogout Customer\nGoal:\nLogout the customer account on the system.\nActors:\nCustomer\n38\nGAMMA-J Web Store"
+    },
+    {
+      "page": 39,
+      "text": "Weborder System\nPreconditions:\nCustomer must be logged-in on the system.\nTriggers:\nCustomer clicks button or link to \"Logout\"\nBasic Scenario:\n1. Customer clicks button or link to initiate logout process.\n2. System terminates the session cookie.\n3. System displays home page.\nAlternative Scenario:\nNone\nPostconditions:\nThe Customer is logged out of the system.\nAdd Item To Cart\nGoal:\nCustomer adds item(s) in the cart\nActors:\nCustomer\nSystem\nPreconditions:\nThe customer must be logged-in on the system.\nTriggers:\nCustomer clicks button or link to \"Add To Cart\".\nBasic Scenario:\n1. Customer clicks the button or link to add to the cart with specified quantity.\n2. System adds the item(s) to the cart.\n3. System prompt Customer to edit quantity or remove item from cart.\n4. Customer confirms items in cart.\n5. System stores cookie with cart details.\n6. Customer returns to product listings.\nAlternative Scenario:\nA1. Customer terminates the web browser window after adding item(s) to cart.\nA2. Customer returns to weborder interface.\nA3. System recognizes cookie and goes to step 6 (Basic Scenario) with existing items in\ncart.\nPostconditions:\nThe Customer has added item(s) to the shopping cart.\nCheckout An Order\n39\nGAMMA-J Web Store"
+    },
+    {
+      "page": 40,
+      "text": "Goal:\nCustomer places and confirms an order for the checkout process.\nActors:\nCustomer\nWeborder System\nPreconditions:\n1. Customer must be logged-in on the system.\n2. Customer must have item(s) in the shopping cart.\nTriggers:\nCustomer clicks button or link to \"Ckeckout\"\nBasic Scenario:\n1. Customer clicks the button or link to initiate the checkout process.\n2. System calculates order of items in the shopping cart.\n3. System appends cookie with flag for checkout process.\n4. System presents customer with account details and payment methods.\n5. Customer confirms account details and payment methods.\n6. Customer confirms order.\n7. System stores order confirmation and order details.\n8. System sends email confirmation to the Customer.\n9. System appends cookie with flag for completed checkout process.\nAlternative Scenario:\nA1. Customer terminates order web browser during order the checkout process.\nA2. Customer returns to weborder interface.\nA3. System recognizes cookie and goes to step 4 (Basic Scenario).\nPostconditions:\nThe Customer has placed and confirmed an order.\n40\nGAMMA-J Web Store"
+    },
+    {
+      "page": 41,
+      "text": "Appendix C: Analysis Models\n41\nGAMMA-J Web Store"
+    },
+    {
+      "page": 42,
+      "text": "Appendix D: Issues List\n1. Currently, telephonic orders are a significant source of business at Gamma-J\nwhich is both expensive and labor extensive. The organization has to figure out a way to\nhave a smooth transition of orders coming in through telephones to the new online\nordering system without loosing business to the competitor.\n2. Gamma-J depends mainly on Fed-Ex for its tracking number and transportation\nneeds to ship the orders. A separate module to generate the tracking numbers and\nhaving a transportation system will be considered in the future.\n3. System does not support customer order analysis.\n42\nGAMMA-J Web Store"
+    },
+    {
+      "page": 43,
+      "text": "Appendix E: Data Dictionary\nUser ID = * User ID of the employee /customer of Tool Co Company; minimum 4 to\nmaximum 10 characters (alphabetic or alphanumeric)*\nPassword = * Password of the employee /customer of Tool Co Company; minimum 4 to\nmaximum 10 characters (alphabetic or alphanumeric)*\nItem name = * Name of the selected item; maximum 50 character alphabetic string *\nItem ID = * ID that uniquely identified the selected item; a 7-digit system generated\nalphanumeric character*\nPrice = * Cost of a single unit of the selected item; in dollars and cents.*\nText description = * special description of the selected item; maximum 100 alphabetic\ncharacters *\nShipping price = * Cost for shipping the item to its destination; in dollars and cents *\nQuantity = * the number of units of each selected item that the customer is ordering;\ndefault = 1; maximum = quantity presently in inventory *\nTotal = * Cost of a single unit of the selected item * Number of units of that item selected;\nin dollars and cents *\nName = * Name of the customer; maximum 100 alphabetic characters *\nAddress = * Location of the customer *\nCity = * Name of the city for the above address; maximum 20 characters alphabetic\nstring*\nState = * Name of the state for the above city; maximum 20 characters alphabetic\nstring*\nZip code = * The postal code of the above address; 5 digit numeric string *\nE-mail ID = * E-mail address of the customer who is using the Web order system; 50\ncharacters alphanumeric *\nCredit Card No. = * Credit card number of the customer; 16 digit numeric string *\nShipping address = * Address where the item has to be shipped *\nCredit card expiry date = * The date on the credit card when it will get expired; format\nMM/YY *\nOrder No = * Unique confirmation number of the order to the customer; 9 characters\nalphanumeric *\nTracking No. = * Number to track the order; 20 characters alphanumeric*\n43\nGAMMA-J Web Store"
+    },
+    {
+      "page": 44,
+      "text": "Shipping date = * Date when the specified order is shipped; format MM/DD/YYYY*\nLocation = * Place where the item is kept in the warehouse in the form of (aisle, column,\nshelf)*\n44\nGAMMA-J Web Store"
+    }
+  ],
+  "tables": [
+    {
+      "page": 10,
+      "table_idx": 0,
+      "rows": 4,
+      "cols": 7,
+      "data": [
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 10,
+      "table_idx": 1,
+      "rows": 5,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          ""
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          null,
+          ""
+        ],
+        [
+          null,
+          ""
+        ],
+        [
+          null,
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 13,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 7,
+      "data": [
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 17,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 8,
+      "data": [
+        [
+          "AUTOMECHANICS",
+          "DOOR LOCKS",
+          "HAND TOOLS",
+          "POWER TOOLS",
+          "COMPRESSORS",
+          "MY ACCOUNT",
+          "ORDER STATUS",
+          "HELP"
+        ],
+        [
+          "1. Shopping Cart 2. Payment and 3. Order\n>>> Order Summary >>> Confirmation>>>\nNo of Items : 1\nPicture Description Unit Price Quantity Shipping Price Total\nPicture 1 This item has all the features $ 34.00 1 $ 5.99 $39.99\nAccount Details\nShipping address: 1234 Main Street\nTustin, CA -92782\nCredit Card No.: XXXX XXXX XXXX 1234\nName on Credit Card: John Doe\nCredit Card Expiry date: 02/99\nConfirm Order",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "page": 17,
+      "table_idx": 1,
+      "rows": 1,
+      "cols": 3,
+      "data": [
+        [
+          "1. Shopping Cart\n>>>",
+          "2. Payment and\nOrder Summary >>>",
+          "3. Order\nConfirmation>>>"
+        ]
+      ]
+    },
+    {
+      "page": 17,
+      "table_idx": 2,
+      "rows": 3,
+      "cols": 6,
+      "data": [
+        [
+          "No of Items : 1",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "Picture Description Unit Price Quantity Shipping Price Total",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "Picture 1",
+          "This item has all the features",
+          "$ 34.00",
+          "1",
+          "$ 5.99",
+          "$39.99"
+        ]
+      ]
+    }
+  ]
+}

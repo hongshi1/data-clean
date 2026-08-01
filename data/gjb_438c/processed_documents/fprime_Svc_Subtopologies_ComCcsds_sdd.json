@@ -1,0 +1,252 @@
+{
+  "doc_name": "fprime_Svc_Subtopologies_ComCcsds_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_Subtopologies_ComCcsds_sdd.md",
+  "md_lines": 169,
+  "md_chars": 10437,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "ComCcsds (CCSDS Framing) Subtopology — Software Design Document (SDD)",
+  "section_count": 21,
+  "sections": [
+    {
+      "number": null,
+      "title": "ComCcsds (CCSDS Framing) Subtopology — Software Design Document (SDD)",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 802,
+      "text_preview": "The **ComCcsds subtopologies** implement F´’s **CCSDS** communications stack for framing/deframing on the flight side. There are **two variants** in the same module:\n\n1. A variant that **supplies a `S"
+    },
+    {
+      "number": null,
+      "title": "1. Requirements",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 1411,
+      "text_preview": "| ID               | Description                                                                                                    | Validation |\n| ---------------- | --------------------------------"
+    },
+    {
+      "number": null,
+      "title": "2. Design & Core Functions",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 Instance Summary",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 1983,
+      "text_preview": "| Instance name         | Type (Svc/Drv)                  | Kind    | Purpose (core function)                                                                         |\n| --------------------- | ------"
+    },
+    {
+      "number": "2.1.1",
+      "title": "2.1.1 Layered Topologies",
+      "level": 3,
+      "line_start": 48,
+      "text_length": 1445,
+      "text_preview": "The module also exposes the two layers of the stack as importable topologies, allowing projects to compose\nalternative stacks (e.g., inserting an SDLS security layer between them) while reusing the sa"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Required Inputs for Operation",
+      "level": 3,
+      "line_start": 65,
+      "text_length": 681,
+      "text_preview": "* **Rate Groups:** Connect a rate group to **`comQueue.run`**. This is not required for the subtopology to function, but defines the rate at which ComQueue will send telemetry.\n* **Transport Endpoint:"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 Limitations",
+      "level": 3,
+      "line_start": 74,
+      "text_length": 107,
+      "text_preview": "These subtopologies focus on the **CCSDS framing and deframing setup** and does not provide wider CDH.\n\n---"
+    },
+    {
+      "number": null,
+      "title": "3. Usage",
+      "level": 2,
+      "line_start": 80,
+      "text_length": 125,
+      "text_preview": "Below are **two usage patterns**, one for each variant. Replace identifiers/ports with the **exact names in `ComCcsds.fpp`**."
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Variant A — ComCcsds **with** `Svc::ComStub` (expects a ByteStream driver)",
+      "level": 3,
+      "line_start": 84,
+      "text_length": 105,
+      "text_preview": "```fpp\ntopology Flight {\n  instance ComCcsds.Subtopology\n\ninstance comDriver: <ByteStreamDriverInterface>"
+    },
+    {
+      "number": null,
+      "title": "(A1) Schedule ComQueue telemetry downlink (optional)",
+      "level": 1,
+      "line_start": 92,
+      "text_length": 93,
+      "text_preview": "connections RateGroups {\n    rg.RateGroupMemberOut[0] -> ComCcsds.Subtopology.comQueueRun\n  }"
+    },
+    {
+      "number": null,
+      "title": "(A2) Wire ByteStream driver <-> ComStub supplied by the subtopology",
+      "level": 1,
+      "line_start": 97,
+      "text_length": 492,
+      "text_preview": "connections Link {\n    comDriver.$recv                                -> ComCcsds.Subtopology.drvReceiveIn\n    ComCcsds.Subtopology.drvReceiveReturnOut       -> comDriver.recvReturnIn\n    ComCcsds.Sub"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Variant B — ComCcsds **without** `Svc::ComStub`",
+      "level": 3,
+      "line_start": 110,
+      "text_length": 61,
+      "text_preview": "```fpp\ntopology Flight {\n  import ComCcsds.FramingSubtopology"
+    },
+    {
+      "number": null,
+      "title": "(B1) Provide your own ComInterface",
+      "level": 1,
+      "line_start": 116,
+      "text_length": 34,
+      "text_preview": "instance radio: <YourComInterface>"
+    },
+    {
+      "number": null,
+      "title": "(B2) Schedule ComQueue",
+      "level": 1,
+      "line_start": 119,
+      "text_length": 82,
+      "text_preview": "connections RateGroups {\n    rg.RateGroupMemberOut[0] -> ComCcsds.comQueue.run\n  }"
+    },
+    {
+      "number": null,
+      "title": "(B3) Wire your ComInterface between the driver and the ComCcsds framer/deframer",
+      "level": 1,
+      "line_start": 124,
+      "text_length": 18,
+      "text_preview": "connections Link {"
+    },
+    {
+      "number": null,
+      "title": "Downlink: framing layer -> your ComInterface",
+      "level": 1,
+      "line_start": 126,
+      "text_length": 236,
+      "text_preview": "ComCcsds.FramingSubtopology.dataOut       -> radio.dataIn\n    radio.dataReturnOut                       -> ComCcsds.FramingSubtopology.dataReturnIn\n    radio.comStatusOut                        -> Com"
+    },
+    {
+      "number": null,
+      "title": "Uplink: your ComInterface -> framing layer",
+      "level": 1,
+      "line_start": 131,
+      "text_length": 162,
+      "text_preview": "radio.dataOut                             -> ComCcsds.FramingSubtopology.dataIn\n    ComCcsds.FramingSubtopology.dataReturnOut -> radio.dataReturnIn\n  }\n}\n```\n\n---"
+    },
+    {
+      "number": null,
+      "title": "4. Configuration",
+      "level": 2,
+      "line_start": 140,
+      "text_length": 168,
+      "text_preview": "> Configure **only the instance properties** owned by the ComCcsds subtopologies. All knobs live under:\n> `Svc/Subtopologies/ComCcsds/ComCcsdsConfig/ComCcsdsConfig.fpp`"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Component properties (`ComCcsdsConfig.fpp`)",
+      "level": 3,
+      "line_start": 145,
+      "text_length": 377,
+      "text_preview": "* **Base ID** — Base identifier for the subtopologies; instance IDs are offset from this base.\n* **Queue sizes** — Depths for **`ComQueue`** and any other active/queued elements defined by the subtopo"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 Buffer Manager Bin Configuration",
+      "level": 3,
+      "line_start": 152,
+      "text_length": 90,
+      "text_preview": "`module BuffMgr` provides constants for the bins configured for `commsBufferManager`.\n\n---"
+    },
+    {
+      "number": null,
+      "title": "5. Traceability Matrix",
+      "level": 2,
+      "line_start": 158,
+      "text_length": 994,
+      "text_preview": "| Requirement ID   | Satisfied by (instance/type)                                                           |\n| ---------------- | ---------------------------------------------------------------------"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 4,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "ID",
+        "Description",
+        "Validation"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "1. Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Instance name",
+        "Type (Svc/Drv)",
+        "Kind",
+        "Purpose (core function)"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "2.1 Instance Summary",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Topology",
+        "Contents"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "2.1.1 Layered Topologies",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "qualification",
+      "format": "markdown",
+      "headers": [
+        "Requirement ID",
+        "Satisfied by (instance/type)"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "5. Traceability Matrix",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

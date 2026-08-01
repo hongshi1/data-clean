@@ -1,0 +1,197 @@
+{
+  "doc_name": "prd_srs",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/ieee830/AQSAMA_SayRat/prd_srs.md",
+  "md_lines": 124,
+  "md_chars": 8591,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Product Requirement Document (PRD) & Software Requirements Specification (SRS)",
+  "section_count": 16,
+  "sections": [
+    {
+      "number": null,
+      "title": "Product Requirement Document (PRD) & Software Requirements Specification (SRS)",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 357,
+      "text_preview": "**Project Codename:** SayRat<br>\n**License:** GPL-3.0-or-later<br>\n**Canonical Implementation Reference:** `AGENTS.md` is the authoritative source for the hardened technology stack, architectural mand"
+    },
+    {
+      "number": null,
+      "title": "Part 1 — Product Requirement Document (PRD)",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Product Vision & Problem Statement",
+      "level": 3,
+      "line_start": 11,
+      "text_length": 733,
+      "text_preview": "**Vision:** Build an open-source, ultra-lightweight keyboard launcher for desktop power users delivering instant invocation, near-zero input latency, and a sandboxed WebAssembly plugin ecosystem withi"
+    },
+    {
+      "number": null,
+      "title": "2. Target Audience & Use Cases",
+      "level": 3,
+      "line_start": 20,
+      "text_length": 466,
+      "text_preview": "**Primary Audience:** Linux power users, system administrators, minimalists, and developers using tiling window managers (Sway, Hyprland) or modern Wayland desktops.\n\n**Secondary Audience:** macOS and"
+    },
+    {
+      "number": null,
+      "title": "3. MVP Feature Set",
+      "level": 3,
+      "line_start": 32,
+      "text_length": 816,
+      "text_preview": "| Feature | Description |\n| :--- | :--- |\n| **Instant UI Rendering** | The launcher interface appears immediately on global hotkey press with no perceptible delay. |\n| **Fuzzy Finding Engine** | As-yo"
+    },
+    {
+      "number": null,
+      "title": "Part 2 — Software Requirements Specification (SRS)",
+      "level": 2,
+      "line_start": 44,
+      "text_length": 147,
+      "text_preview": "> **Language convention:** **shall / must** = binding requirement. **should** = strongly recommended default. **may** = permitted but not mandated."
+    },
+    {
+      "number": null,
+      "title": "4. Functional Requirements",
+      "level": 3,
+      "line_start": 48,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Daemon Process (`sayratd`)",
+      "level": 4,
+      "line_start": 50,
+      "text_length": 662,
+      "text_preview": "- **Lifecycle & State:** The daemon shall run as a background user service, bind to a local socket, and maintain full application state and plugin lifecycle across UI invocations.\n- **Asynchronous Ind"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 UI Client Process (`sayrat-ui`)",
+      "level": 4,
+      "line_start": 56,
+      "text_length": 613,
+      "text_preview": "- **View Rendering:** The client shall render the frameless, floating search interface using the Slint DSL.\n- **Input Capture:** The client shall capture keystrokes and forward them to the daemon via "
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 Inter-Process Communication (IPC)",
+      "level": 4,
+      "line_start": 63,
+      "text_length": 459,
+      "text_preview": "- **Transport:** Bidirectional communication shall use `interprocess` local sockets on Linux/macOS and Named Pipes on Windows.\n- **Serialization:** All payloads shall use `postcard` (primary) or `binc"
+    },
+    {
+      "number": null,
+      "title": "5. Non-Functional Requirements",
+      "level": 3,
+      "line_start": 69,
+      "text_length": 882,
+      "text_preview": "These targets are hard acceptance gates for the relevant implementation phases and become CI-enforced once the measurement jobs are introduced in Phase 5.\n\n| Metric | Target | Measured As |\n| :--- | :"
+    },
+    {
+      "number": null,
+      "title": "6. Architecture Edge Cases & Mandatory Mitigations",
+      "level": 3,
+      "line_start": 83,
+      "text_length": 175,
+      "text_preview": "The following mitigations address known platform limitations. They are mandatory implementation requirements — see `AGENTS.md` §4 for full implementation detail and rationale."
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 Slint VectorModel Bottleneck",
+      "level": 4,
+      "line_start": 87,
+      "text_length": 393,
+      "text_preview": "Replacing the `VectorModel` dataset can trigger broad `row_data_changed` notifications, causing frame drops on large result sets.\n\n**Required mitigation:** The daemon shall stream results in chunks of"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 Wasm Runtime Memory Bloat",
+      "level": 4,
+      "line_start": 93,
+      "text_length": 427,
+      "text_preview": "Default Wasmtime with Cranelift JIT compilation can allocate 30–50 MB on initialization, violating the daemon RSS budget.\n\n**Required mitigation:** The daemon shall configure `wasmtime` with a `Poolin"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 Wayland Visibility & Window Management",
+      "level": 4,
+      "line_start": 99,
+      "text_length": 572,
+      "text_preview": "Standard Wayland prevents regular application windows from grabbing keyboard focus globally and provides no cheap show/hide toggle; naive teardown/recreate adds perceptible latency.\n\n**Required mitiga"
+    },
+    {
+      "number": null,
+      "title": "7. Required Technology Stack",
+      "level": 3,
+      "line_start": 105,
+      "text_length": 1169,
+      "text_preview": "The crates below are required or approved by this project. See `AGENTS.md` §2 for the complete approved list, implementation constraints, crate addition policy, feature restrictions, and pre-approved "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 3,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Feature",
+        "Description"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3. MVP Feature Set",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Metric",
+        "Target",
+        "Measured As"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "5. Non-Functional Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Subsystem",
+        "Primary Crate(s)",
+        "Approved Fallback"
+      ],
+      "row_count": 15,
+      "data_row_count": 14,
+      "is_empty": false,
+      "section": "7. Required Technology Stack",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

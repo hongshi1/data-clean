@@ -1,0 +1,185 @@
+{
+  "doc_name": "fprime_Svc_FatalHandler_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_FatalHandler_sdd.md",
+  "md_lines": 72,
+  "md_chars": 1976,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::FatalHandler Component",
+  "section_count": 16,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::FatalHandler Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 94,
+      "text_preview": "The `Svc::FatalHandler` is responsible for handling FATAL event notifications from the system."
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 7,
+      "text_length": 423,
+      "text_preview": "The requirements for `Svc::FatalHandler` are as follows:\n\nRequirement | Description | Verification Method\n----------- | ----------- | -------------------\nFH-001 | The `Svc::FatalHandler` component sha"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Context",
+      "level": 3,
+      "line_start": 19,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Component Diagram",
+      "level": 4,
+      "line_start": 21,
+      "text_length": 78,
+      "text_preview": "The `Svc::FatalHandler` component has the following component diagram:\n\n> TODO"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 Ports",
+      "level": 4,
+      "line_start": 27,
+      "text_length": 264,
+      "text_preview": "The `Svc::FatalHandler` component uses the following port types:\n\nPort Data Type | Name | Direction | Kind | Usage\n-------------- | ---- | --------- | ---- | -----\n[`Svc::Fatal`](../../Fatal/docs/sdd."
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Description",
+      "level": 3,
+      "line_start": 35,
+      "text_length": 409,
+      "text_preview": "For Unix variants, it delays for one second before exiting with a segmentation fault. This allows time for the FATAL to propagate to the ground system so the user can see what event occurred and also "
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Scenarios",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 FATAL Notification",
+      "level": 4,
+      "line_start": 41,
+      "text_length": 112,
+      "text_preview": "The `Svc::FatalHandler` handles FATAL notifications:\n\n![FATAL Notification](../../Fatal/docs/img/FatalEvent.jpg)"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 State",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 42,
+      "text_preview": "`Svc::FatalHandler` has no state machines."
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Algorithms",
+      "level": 3,
+      "line_start": 51,
+      "text_length": 50,
+      "text_preview": "`Svc::FatalHandler` has no significant algorithms."
+    },
+    {
+      "number": null,
+      "title": "4. Dictionary",
+      "level": 2,
+      "line_start": 55,
+      "text_length": 3,
+      "text_preview": "TBD"
+    },
+    {
+      "number": null,
+      "title": "4. Module Checklists",
+      "level": 2,
+      "line_start": 59,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "5. Unit Testing",
+      "level": 2,
+      "line_start": 61,
+      "text_length": 58,
+      "text_preview": "To see unit test coverage run fprime-util check --coverage"
+    },
+    {
+      "number": null,
+      "title": "6. Change Log",
+      "level": 2,
+      "line_start": 65,
+      "text_length": 69,
+      "text_preview": "Date | Description\n---- | -----------\n9/26/2016 | Design review edits"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "FatalEvent.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/../../Fatal/docs/img/FatalEvent.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "FATAL Notification",
+      "caption": "`Svc::FatalHandler` has no state machines.",
+      "figure_number": null,
+      "image_type": "state_diagram",
+      "section": "3.3.1 FATAL Notification",
+      "context_before": "For Unix variants, it delays for one second before exiting with a segmentation fault. This allows time for the FATAL to propagate to the ground system so the user can see what event occurred and also generates a core for debugging (assuming ulimit is set correctly). For VxWorks, it suspends the call",
+      "context_after": "`Svc::FatalHandler` has no state machines.",
+      "md_line": 45,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "FatalEvent.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/../../Fatal/docs/img/FatalEvent.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "state_diagram",
+      "figure_number": null,
+      "caption": "`Svc::FatalHandler` has no state machines.",
+      "section": "3.3.1 FATAL Notification",
+      "context_before": "For Unix variants, it delays for one second before exiting with a segmentation fault. This allows time for the FATAL to propagate to the ground system so the user can see what event occurred and also generates a core for debugging (assuming ulimit is set correctly). For VxWorks, it suspends the call",
+      "context_after": "`Svc::FatalHandler` has no state machines.",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

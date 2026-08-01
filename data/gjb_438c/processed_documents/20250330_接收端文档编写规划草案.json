@@ -1,0 +1,184 @@
+{
+  "doc_name": "20250330_接收端文档编写规划草案",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/20250330_接收端文档编写规划草案.md",
+  "md_lines": 344,
+  "md_chars": 6441,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "先给结论",
+  "section_count": 20,
+  "sections": [
+    {
+      "number": null,
+      "title": "先给结论",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 427,
+      "text_preview": "**能开始设计，而且必须先设计以下 6 类文件，才会对接收模块形成稳定且正确的闭环：**\n\n1. **状态与边界语义文件**\n2. **错误模型与处置策略文件**\n3. **接收端对下游输出契约文件**\n4. **重组上下文与生命周期文件**\n5. **配置与运行控制文件**\n6. **观测/统计/事件文件**\n\n如果再具体一点，第一批最该落下来的不是 `.cpp`，而是这些“冻结接口和语义”的文"
+    },
+    {
+      "number": null,
+      "title": "为什么现在可以开始，而不是再等等",
+      "level": 2,
+      "line_start": 33,
+      "text_length": 401,
+      "text_preview": "因为你现在已经具备了详细设计的三个前提。\n\n第一，**职责边界已经够清楚**。接收端只负责数据面入口、协议解析、合法性校验、归属判定、最小必要重组、边界推进、异常标记、结构化输出；不负责信号处理算法、不负责控制面决策、不做猜测性修复。\n\n第二，**需求闭环已经够完整**。从 FR-001/002 的独立运行与解耦，到 FR-010~084 的接收、解析、归属、重组、边界、完整性、输出，再到 FR-"
+    },
+    {
+      "number": null,
+      "title": "哪些文件最值得先写",
+      "level": 2,
+      "line_start": 45,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1）`docs/m01_receiver/receiver_state_machine.md`",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 383,
+      "text_preview": "这是最优先的。\n\n**作用**\n把“业务逻辑”从代码里抽出来，明确：\n\n* 包进入后先走哪些判定\n* 哪些状态是单包级、PRT 级、CPI 级、波位级\n* 哪些事件推进边界\n* 何时提交、何时等待、何时截止、何时作废\n\n**必须覆盖**\n\n* `PacketState`\n* `PrtAssemblyState`\n* `CpiState`\n* `WaveSlotState`\n* 事件：`packet"
+    },
+    {
+      "number": null,
+      "title": "2）`docs/m01_receiver/receiver_error_model.md`",
+      "level": 3,
+      "line_start": 72,
+      "text_length": 576,
+      "text_preview": "这是错误处理闭环的核心文件。\n\n**作用**\n把“错误”从一句日志变成可执行模型。\n\n**建议内容**\n\n* 错误分类\n\n  * `InvalidPacket`\n  * `OutOfWindowPacket`\n  * `DuplicateFragment`\n  * `LateFragment`\n  * `IllegalTail`\n  * `CounterJump`\n  * `ContextPoll"
+    },
+    {
+      "number": null,
+      "title": "3）`include/qdgz300/m01_receiver/receiver_output_contract.h`",
+      "level": 3,
+      "line_start": 118,
+      "text_length": 583,
+      "text_preview": "这是和 M02 稳定解耦的关键。\n\n现状里已经明确写了：**M01 与 M02 的 `RawBlock` 结构与所有权模型尚未完全统一**。这不是小问题，这是目前最应该优先收敛的接口风险。\n\n**这个头文件必须冻结的内容**\n\n* 最小对外输出单元：冻结为 **CPI 级原始数据单元**\n* 输出对象结构\n\n  * `WaveSlotId`\n  * `CpiIndex`\n  * `PrtIndex"
+    },
+    {
+      "number": null,
+      "title": "4）`include/qdgz300/m01_receiver/receiver_reassembly_context.h`",
+      "level": 3,
+      "line_start": 154,
+      "text_length": 394,
+      "text_preview": "这是重组和异常隔离的骨架文件。\n\n**作用**\n把 `Reassembler` 当前“能拼”升级成“有明确业务上下文”。\n\n**建议定义**\n\n* `FragmentKey`\n* `ChannelAssemblyContext`\n* `PrtAssemblyContext`\n* `CpiContext`\n* `WaveSlotContext`\n* `ContextDeadline`\n* `Froz"
+    },
+    {
+      "number": null,
+      "title": "5）`include/qdgz300/m01_receiver/receiver_control_contract.h`",
+      "level": 3,
+      "line_start": 183,
+      "text_length": 400,
+      "text_preview": "这是生命周期与运行控制的文件。\n\n**作用**\n把“启动、停止、复位、切配置”从散乱的线程控制，变成可验证的模块生命周期。\n\n**至少要有**\n\n* `ReceiverRunState`\n\n  * `Created`\n  * `Initialized`\n  * `Running`\n  * `Stopping`\n  * `Stopped`\n  * `Faulted`\n* `StartOptions`"
+    },
+    {
+      "number": null,
+      "title": "6）`include/qdgz300/m01_receiver/receiver_metrics_events.h`",
+      "level": 3,
+      "line_start": 217,
+      "text_length": 353,
+      "text_preview": "这是可观测和验收闭环文件。\n\n**作用**\n把“统计和事件”从附属品变成契约。\n\n**建议冻结**\n\n* 计数器名\n* 标签维度\n* 事件枚举\n* 事件最小字段\n* 日志与事件的边界\n\n**至少包含**\n\n* socket 级：收包数、字节数、过滤数、接收错误\n* pipeline 级：解析成功、校验成功、非法包、归属失败、重复包\n* output 级：完整 PRT、不完整 PRT、丢弃 PRT、"
+    },
+    {
+      "number": null,
+      "title": "哪些文件现在不要急着写",
+      "level": 2,
+      "line_start": 244,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "不建议先写大段 `.cpp`",
+      "level": 3,
+      "line_start": 246,
+      "text_length": 23,
+      "text_preview": "原因很简单：语义没冻结前，代码只会把分歧固化。"
+    },
+    {
+      "number": null,
+      "title": "不建议先写“长期归档平台”设计",
+      "level": 3,
+      "line_start": 250,
+      "text_length": 28,
+      "text_preview": "接收端只负责开发调试阶段的旁路落盘，不负责长期归档平台。"
+    },
+    {
+      "number": null,
+      "title": "不建议先把问题引到 GPU 或系统编排",
+      "level": 3,
+      "line_start": 254,
+      "text_length": 37,
+      "text_preview": "接收端边界里明确不负责全系统 CPU/GPU 调度和系统级编排。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "我建议的第一批文件清单",
+      "level": 2,
+      "line_start": 260,
+      "text_length": 345,
+      "text_preview": "按“先稳定闭环、再写实现”的顺序：\n\n```text\ndocs/m01_receiver/\n  receiver_state_machine.md\n  receiver_error_model.md\n  receiver_acceptance_matrix.md\n\ninclude/qdgz300/m01_receiver/\n  receiver_output_contract.h\n  receiv"
+    },
+    {
+      "number": null,
+      "title": "各文件一句话定位",
+      "level": 3,
+      "line_start": 281,
+      "text_length": 421,
+      "text_preview": "* `receiver_state_machine.md`：冻结业务状态机和边界推进规则\n* `receiver_error_model.md`：冻结错误分类、作用域、处置策略\n* `receiver_acceptance_matrix.md`：把 FR 映射到测试与验收\n* `receiver_output_contract.h`：冻结 M01 -> M02 输出对象和所有权\n* `receiv"
+    },
+    {
+      "number": null,
+      "title": "真正能形成“稳定且正确闭环”的最小集合",
+      "level": 2,
+      "line_start": 295,
+      "text_length": 366,
+      "text_preview": "如果你只想先写最少文件，我建议只先写这 4 个：\n\n1. `receiver_state_machine.md`\n2. `receiver_error_model.md`\n3. `receiver_output_contract.h`\n4. `receiver_status_types.h`\n\n因为这 4 个分别解决四件事：\n\n* **状态机**：业务逻辑怎么走\n* **错误模型**：异常怎么处理"
+    },
+    {
+      "number": null,
+      "title": "还要直接指出两个当前风险",
+      "level": 2,
+      "line_start": 317,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "风险一：M01->M02 契约还没冻结",
+      "level": 3,
+      "line_start": 319,
+      "text_length": 68,
+      "text_preview": "这会导致你“接收端详细设计”写了半天，最后在 `RawBlock` 所有权、数据视图、异常标志和生命周期上返工。这个问题应排第一优先级。"
+    },
+    {
+      "number": null,
+      "title": "风险二：旁路落盘很容易污染主链路",
+      "level": 3,
+      "line_start": 323,
+      "text_length": 274,
+      "text_preview": "环境基线里已经明确：`receiver_app` 运行在 Node 1 / CPU 16-31，原始录制应采用 **NVMe 一级缓冲 + 后台异步转存 `/data`**，录制线程应放在 CPU 0-15 / Node 0，避免侵占数据面核心；同时 `/data` 机械盘阵列持续顺序写入基线约 `374 MB/s`，不适合作为高频连续采集的唯一直接落盘目标。\n\n这意味着：\n\n* 旁路写盘不能挂在"
+    },
+    {
+      "number": null,
+      "title": "建议下一步",
+      "level": 2,
+      "line_start": 335,
+      "text_length": 245,
+      "text_preview": "下一步最稳的做法，不是先改代码，而是先把这 4 个文件的目录和骨架定下来：\n\n```text\ndocs/m01_receiver/receiver_state_machine.md\ndocs/m01_receiver/receiver_error_model.md\ninclude/qdgz300/m01_receiver/receiver_output_contract.h\ninclude/qdg"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

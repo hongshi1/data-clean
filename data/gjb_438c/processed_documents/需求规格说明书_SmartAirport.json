@@ -1,0 +1,818 @@
+{
+  "doc_name": "需求规格说明书_SmartAirport",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/需求规格说明书_SmartAirport.md",
+  "md_lines": 553,
+  "md_chars": 7510,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "一．需求分析",
+  "section_count": 68,
+  "sections": [
+    {
+      "number": null,
+      "title": "一．需求分析",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "用户身份：",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 34,
+      "text_preview": "- 管理者\n- 航司\n- 旅客\n- 商家\n- 机场工作人员\n- 客服"
+    },
+    {
+      "number": null,
+      "title": "1、航司发布航班信息的用户故事：",
+      "level": 2,
+      "line_start": 12,
+      "text_length": 112,
+      "text_preview": "作为一名航司，我希望能够：\n\n- 在系统上发布航班信息，包括价格、起飞日期时间、航班号等\n- 由系统生成包括具体登机口信息的时刻表\n- 为旅客提供机票的查询和购买服务\n- 通过系统进行航班价格调整或取消操作\n- 及时通知旅客"
+    },
+    {
+      "number": null,
+      "title": "2、旅客查询机票信息的用户故事：",
+      "level": 2,
+      "line_start": 22,
+      "text_length": 96,
+      "text_preview": "作为一名旅客，我希望能够：\n\n- 在系统上查询订票信息是否成功、生成电子机票等\n- 得知具体的登机口和航站楼信息\n- 在临近起飞时收到起飞通知\n- 通过系统提供的行李跟踪功能查询行李位置和状态"
+    },
+    {
+      "number": null,
+      "title": "3、机场工作人员保修设备的用户故事：",
+      "level": 2,
+      "line_start": 31,
+      "text_length": 72,
+      "text_preview": "作为一名机场工作人员，我希望能够：\n\n- 在系统上报修设备和设施，上传相应的图片\n- 收到管理员的批准信息\n- 及时修复故障，维护机场的正常运营"
+    },
+    {
+      "number": null,
+      "title": "4、管理者管理机场的用户故事：",
+      "level": 2,
+      "line_start": 39,
+      "text_length": 89,
+      "text_preview": "作为一名机场管理者，我希望能够：\n\n- 获取机票的销售信息，以便在系统上打印财务报表、查看航班时刻表，批量导入航班信息\n- 获取来自工作人员的保修信息并处理，来维护机场的正常运行"
+    },
+    {
+      "number": null,
+      "title": "5、商家入驻机场的用户故事：",
+      "level": 2,
+      "line_start": 46,
+      "text_length": 75,
+      "text_preview": "作为一名商家，我希望能够：\n\n- 在系统上申请入驻机场系统\n- 在线上销售产品，发布我的产品信息\n- 获取货物需送达的登机口信息\n- 获取我的最大利益"
+    },
+    {
+      "number": null,
+      "title": "6、客服回答旅客问题的用户故事：",
+      "level": 2,
+      "line_start": 55,
+      "text_length": 50,
+      "text_preview": "作为一名客服，我希望能够：\n\n- 获取来自用户的询问信息\n- 实时在线回答\n- 为用户提供更好的体验"
+    },
+    {
+      "number": null,
+      "title": "7、旅客询问客服的用户故事：",
+      "level": 2,
+      "line_start": 63,
+      "text_length": 58,
+      "text_preview": "作为一名旅客，我希望能够：\n\n- 在线向客服询问问题\n- 解答我的疑惑\n  （可以在客服设置一下常见问题的标准回答）"
+    },
+    {
+      "number": null,
+      "title": "8、旅客预订停车位的用户故事：",
+      "level": 2,
+      "line_start": 71,
+      "text_length": 45,
+      "text_preview": "作为一名旅客，我希望能够：\n\n- 在系统上预订停车位\n- 在线支付费用\n- 停放我的车辆。"
+    },
+    {
+      "number": null,
+      "title": "二. 交互流程",
+      "level": 1,
+      "line_start": 79,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1、航司发布航班信息的用户故事交互流程",
+      "level": 2,
+      "line_start": 81,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 83,
+      "text_length": 212,
+      "text_preview": "{\n\n1. （用户）航司登录系统\n2. （系统）系统跳转到处理航班信息界面\n3. （用户）航司点击“查询”，查询管理员导入的可用航班\n4. （系统）系统从数据库中获取可用航班信息，列出航班信息\n5. （用户）航司输入航班信息，包括价格、起飞日期时间、航班号，点击“发布”按钮\n6. （系统）系统处理航班信息，将数据传输到数据库，生成时刻表，将这些发布的航班信息状态设置为已发布\n7. （用户）航司退出"
+    },
+    {
+      "number": null,
+      "title": "扩展流程",
+      "level": 3,
+      "line_start": 96,
+      "text_length": 140,
+      "text_preview": "（可选）3a、航司可以调整航班信息或者取消航班\n\n1. （用户）航司点击已有航班的“调整”按钮\n2. （系统）系统跳转到航班信息的修改界面\n3. （用户）航司修改航班信息，并点击“保存”按钮\n4. （系统）系统更新航司所修改的信息，生成新的时刻表，并更新数据库，同时发布通知给乘客"
+    },
+    {
+      "number": null,
+      "title": "2、旅客查询机票信息的用户故事交互流程",
+      "level": 2,
+      "line_start": 105,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 107,
+      "text_length": 163,
+      "text_preview": "{\n（用户）1.旅客登录系统\n（系统）2.系统跳转到主页\n（用户）3.旅客点击“订购机票”按钮\n（系统）4.系统跳转到订购机票页面，展示可以订购的飞机列表\n（用户）5.旅客选择所需要的机票，输入个人信息\n（系统）6.跳转到支付界面\n（用户）7.旅客支付机票费用\n（系统）8.系统将旅客购票信息更新到数据库中，并生成电子机票\n}"
+    },
+    {
+      "number": null,
+      "title": "扩展流程",
+      "level": 3,
+      "line_start": 120,
+      "text_length": 313,
+      "text_preview": "{\n（可选）2-6a、乘客接收起飞通知\n\n（系统）1.系统在航班临近起飞，向该航班的乘客发送信息\n（用户）2.乘客接收通知新消息\n\n（可选）2-6b、乘客选择查询机票是否订购成功\n（用户）1.乘客点击“订单查询”按钮\n（系统）2.系统跳转到订单查询界面\n（用户）3.用户输入自己电子车票的航班号\n（系统）4.系统接收用户输入的航班号，在数据库中查找对于航班，是否存在该乘客，返回该乘客的订票信息\n（用"
+    },
+    {
+      "number": null,
+      "title": "3、机场工作人员保修设备的用户故事交互流程",
+      "level": 2,
+      "line_start": 143,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 145,
+      "text_length": 108,
+      "text_preview": "{\n（用户）1.机场工作人员登录系统\n（系统）2.系统跳转到报修\n（用户）3.机场工作人员点击“创建”按钮，输入故障位置、原因、上传故障图片\n（系统）4.系统将故障数据传入数据库中，创建故障表单，显示故障审批状态\n}"
+    },
+    {
+      "number": null,
+      "title": "4、管理者管理机场的用户故事的交互流程：",
+      "level": 2,
+      "line_start": 154,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 156,
+      "text_length": 163,
+      "text_preview": "{\n（用户）1.管理员登录系统\n（系统）2.系统跳转到管理界面\n（用户）3.管理员点击“查询”按钮，查询所有信息\n（系统）4.系统从数据库中获取数据，按照航班号生成销售表，生成时刻表，生成财务报表\n（用户）5.管理员点击“导入”按钮，批量导入可用航班信息\n（系统）6.系统接收信息，存入数据库中，将航班信息状态设置为未发布\n}"
+    },
+    {
+      "number": null,
+      "title": "扩展流程",
+      "level": 3,
+      "line_start": 167,
+      "text_length": 137,
+      "text_preview": "2-6a. （可选）管理员选择处理报修事务\n\n（用户）1.管理员点击“处理事项”按钮\n（系统）2.系统跳转到事项处理界面，显示所有机场工作人员提交的故障表单\n（用户）3.管理员审批报修请求\n（系统）4.系统更新数据库中对应故障号的状态，并向申请的机场工作人员发送审批结束通知"
+    },
+    {
+      "number": null,
+      "title": "5、商家入驻机场的用户故事的交互流程：",
+      "level": 2,
+      "line_start": 176,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 178,
+      "text_length": 142,
+      "text_preview": "{\n（用户）1、商家登录系统\n（系统）2、系统跳转到系统主页（和旅客一样）\n（用户）3、商家点击“商家入驻”按钮\n（系统）4、系统跳转到商家入驻界面\n（用户）5、商家输入自己店铺信息，点击“提交”按钮提交信息\n（系统）6、系统接收商家的店铺信息，存到数据库中，状态设置为“未审核”\n}"
+    },
+    {
+      "number": null,
+      "title": "扩展流程",
+      "level": 3,
+      "line_start": 189,
+      "text_length": 102,
+      "text_preview": "{\n（可选）5a、商家可以选择处理订单\n（用户）1、商家点击“处理订单”按钮\n（系统）2、系统跳转到订单界面，显示已有订单，包括商品数量、需送达的登机口信息\n（用户）3、商家点击“接受”按钮，接受订单\n}"
+    },
+    {
+      "number": null,
+      "title": "6、客服回答旅客问题的用户故事交互流程：",
+      "level": 2,
+      "line_start": 198,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 200,
+      "text_length": 91,
+      "text_preview": "{\n（用户）1、客服登录系统\n（系统）2、系统跳转到客服服务界面，显示未处理消息列表\n（用户）3、客服点击未回复消息列表\n（系统）4、跳转到聊天界面\n（用户）5、客服开始在线聊天\n}"
+    },
+    {
+      "number": null,
+      "title": "7、旅客询问客服的用户故事的交互流程：",
+      "level": 2,
+      "line_start": 210,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 212,
+      "text_length": 84,
+      "text_preview": "{\n（用户）1、旅客登录系统\n（系统）2、系统跳转到主页\n（用户）3、旅客点击客服按钮\n（系统）4、系统跳转到聊天页面\n（用户）5、旅客开始在线聊天，向客服发送问题\n}"
+    },
+    {
+      "number": null,
+      "title": "8、旅客预订停车位的用户故事的交互流程：",
+      "level": 2,
+      "line_start": 222,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "基本流程",
+      "level": 3,
+      "line_start": 224,
+      "text_length": 155,
+      "text_preview": "{\n（用户）1、旅客登录系统\n（系统）2、系统跳转到主页\n（用户）3、旅客点击“预订停车位”按钮\n（系统）4、系统跳转到停车位预订界面，展示可用停车位时间段、价格、数量\n（用户）5、旅客点击想要的停车位，输入停车时间段\n（系统）6、系统接收旅客信息，跳转到支付界面\n（用户）7、旅客完成支付，预订停车位完成\n}"
+    },
+    {
+      "number": null,
+      "title": "三. 用例图",
+      "level": 1,
+      "line_start": 236,
+      "text_length": 14,
+      "text_preview": "![图](用例图.jpeg)"
+    },
+    {
+      "number": null,
+      "title": "四.系统顺序图",
+      "level": 1,
+      "line_start": 240,
+      "text_length": 89,
+      "text_preview": "![图](p2-1.jpg)\n![图](p2-2.jpg)\n![图](p2-3.jpg)\n![图](p2-4.jpg)\n![图](p2-5.jpg)\n![图](p2-6.jpg)"
+    },
+    {
+      "number": null,
+      "title": "五. 概念类图",
+      "level": 1,
+      "line_start": 249,
+      "text_length": 26,
+      "text_preview": "![图](Class%20Diagram1.jpg)"
+    },
+    {
+      "number": null,
+      "title": "六. 系统操作合约",
+      "level": 1,
+      "line_start": 253,
+      "text_length": 1203,
+      "text_preview": "**航司类 (Airline)** \n- 属性：\n  - name (航司名称)\n  - flights (航班列表)\n- 方法：\n  - login() (登录系统)\n  - publish_flight(flight_info) (发布航班信息)\n  - adjust_flight(flight_id, new_info) (调整航班信息)\n  - cancel_flight(flight_i"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 312,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 319,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "publish_flight(flight_info) (发布航班信息)",
+      "level": 1,
+      "line_start": 326,
+      "text_length": 75,
+      "text_preview": "- 操作签名：publish_flight(flight_info)\n- 交叉引用：导入航班信息\n- 前置条件：无\n- 后置条件：发送航班信息给管理员"
+    },
+    {
+      "number": null,
+      "title": "adjust_flight(flight_id, new_info) (调整航班信息)",
+      "level": 1,
+      "line_start": 333,
+      "text_length": 73,
+      "text_preview": "- 操作签名：adjust_flight(flight_id, new_info)\n- 交叉引用：操作航班信息\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "cancel_flight(flight_id) (取消航班)",
+      "level": 1,
+      "line_start": 340,
+      "text_length": 72,
+      "text_preview": "- 操作签名：cancel_flight(flight_id)\n- 交叉引用：操作航班信息\n- 前置条件：无\n- 后置条件：无\n\n**旅客类**"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 349,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 356,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "search_flights(criteria) (查询航班)",
+      "level": 1,
+      "line_start": 363,
+      "text_length": 67,
+      "text_preview": "- 操作签名：search_flights(criteria)\n- 交叉引用：查询\n- 前置条件：航班存在\n- 后置条件：输出航班信息"
+    },
+    {
+      "number": null,
+      "title": "book_flight(flight_id, passenger_info) (订购机票)",
+      "level": 1,
+      "line_start": 370,
+      "text_length": 89,
+      "text_preview": "- 操作签名：book_flight(flight_id, passenger_info)\n- 交叉引用：购买\n- 前置条件：该航班机票未售尽\n- 后置条件：预定航班列表增加信息"
+    },
+    {
+      "number": null,
+      "title": "receive_departure_notification() (接收起飞通知)",
+      "level": 1,
+      "line_start": 377,
+      "text_length": 73,
+      "text_preview": "- 操作签名：receive_departure_notification()\n- 交叉引用：通知\n- 前置条件：用户已购买机票\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "check_booking_status(booking_id) (查询订票状态)",
+      "level": 1,
+      "line_start": 384,
+      "text_length": 67,
+      "text_preview": "- 操作签名：check_booking_status(booking_id)\n- 交叉引用：查询\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "track_luggage(luggage_id) (行李跟踪)",
+      "level": 1,
+      "line_start": 391,
+      "text_length": 79,
+      "text_preview": "- 操作签名：track_luggage(luggage_id)\n- 交叉引用：查询\n- 前置条件：用户已购买机票\n- 后置条件：无\n\n**机场工作人员类**"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 400,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 407,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "submit_repair_request(repair_info) (提交报修请求)",
+      "level": 1,
+      "line_start": 414,
+      "text_length": 88,
+      "text_preview": "- 操作签名：submit_repair_request(repair_info)\n- 交叉引用：审批\n- 前置条件：无\n- 后置条件：发送信息给管理员审批\n\n**管理者类**"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 423,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 430,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "import_flights(flight_info_list) (批量导入航班信息)",
+      "level": 1,
+      "line_start": 437,
+      "text_length": 74,
+      "text_preview": "- 操作签名：import_flights(flight_info_list)\n- 交叉引用：发布航班信息\n- 前置条件：航班存在\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "view_sales_report() (查看销售报表)",
+      "level": 1,
+      "line_start": 444,
+      "text_length": 54,
+      "text_preview": "- 操作签名：view_sales_report()\n- 交叉引用：查询\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "view_timetable() (查看时刻表)",
+      "level": 1,
+      "line_start": 451,
+      "text_length": 51,
+      "text_preview": "- 操作签名：view_timetable()\n- 交叉引用：查询\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "view_financial_report() (查看财务报表)",
+      "level": 1,
+      "line_start": 458,
+      "text_length": 58,
+      "text_preview": "- 操作签名：view_financial_report()\n- 交叉引用：查询\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "handle_repair_request(repair_request_id) (处理报修请求)",
+      "level": 1,
+      "line_start": 465,
+      "text_length": 85,
+      "text_preview": "- 操作签名：handle_repair_request(repair_request_id)\n- 交叉引用：审批\n- 前置条件：获得报修请求\n- 后置条件：发送报修信息"
+    },
+    {
+      "number": null,
+      "title": "handle_store_application(application_id) (处理商家入驻申请)",
+      "level": 1,
+      "line_start": 472,
+      "text_length": 98,
+      "text_preview": "- 操作签名：handle_store_application(application_id)\n- 交叉引用：审批\n- 前置条件：获得商家入驻申请\n- 后置条件：发送商家入驻申请\n\n**商家类**"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 481,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 488,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "apply_for_store(store_info) (申请入驻机场)",
+      "level": 1,
+      "line_start": 495,
+      "text_length": 61,
+      "text_preview": "- 操作签名：apply_for_store(store_info)\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "add_product(product_info) (添加产品信息)",
+      "level": 1,
+      "line_start": 502,
+      "text_length": 67,
+      "text_preview": "- 操作签名：add_product(product_info)\n- 交叉引用：销售\n- 前置条件：无\n- 后置条件：产品列表更新信息"
+    },
+    {
+      "number": null,
+      "title": "process_order(order_id) (处理订单)",
+      "level": 1,
+      "line_start": 509,
+      "text_length": 72,
+      "text_preview": "- 操作签名：process_order(order_id)\n- 交叉引用：销售\n- 前置条件：无\n- 后置条件：订单列表更新\n\n**客服类**"
+    },
+    {
+      "number": null,
+      "title": "login",
+      "level": 1,
+      "line_start": 518,
+      "text_length": 45,
+      "text_preview": "- 操作签名：login()\n- 交叉引用：无\n- 前置条件：用户已注册\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "register",
+      "level": 1,
+      "line_start": 525,
+      "text_length": 44,
+      "text_preview": "- 操作签名：register()\n- 交叉引用：无\n- 前置条件：无\n- 后置条件：无"
+    },
+    {
+      "number": null,
+      "title": "answer_question(question) (回答旅客问题)",
+      "level": 1,
+      "line_start": 532,
+      "text_length": 74,
+      "text_preview": "- 操作签名：answer_question(question)\n- 交叉引用：询问客服\n- 前置条件：无\n- 后置条件：无\n\n**停车位预订类**"
+    },
+    {
+      "number": null,
+      "title": "book_parking_space(parking_space_id, time_range) (预订停车位)",
+      "level": 1,
+      "line_start": 541,
+      "text_length": 94,
+      "text_preview": "- 操作签名：book_parking_space(parking_space_id, time_range)\n- 交叉引用：购买\n- 前置条件：停车位有预留\n- 后置条件：更新停车位信息"
+    },
+    {
+      "number": null,
+      "title": "pay_for_reservation(reservation_id) (支付预订费用)",
+      "level": 1,
+      "line_start": 548,
+      "text_length": 80,
+      "text_preview": "- 操作签名：pay_for_reservation(reservation_id)\n- 交叉引用：购买\n- 前置条件：预定订单生效\n- 后置条件：更新支付状态"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 8,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "用例图.jpeg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/用例图.jpeg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "三. 用例图",
+      "context_before": "（系统）6、系统接收旅客信息，跳转到支付界面\n（用户）7、旅客完成支付，预订停车位完成\n}",
+      "context_after": null,
+      "md_line": 238,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "p2-1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-1.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": "（用户）7、旅客完成支付，预订停车位完成\n}",
+      "context_after": null,
+      "md_line": 242,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "p2-2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-2.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": "}",
+      "context_after": null,
+      "md_line": 243,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "p2-3.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-3.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 244,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 5,
+      "image_file": "p2-4.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-4.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 245,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 6,
+      "image_file": "p2-5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-5.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 246,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 7,
+      "image_file": "p2-6.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-6.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 247,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 8,
+      "image_file": "Class%20Diagram1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/Class%20Diagram1.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "图",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "五. 概念类图",
+      "context_before": null,
+      "context_after": "**航司类 (Airline)**\n- 属性：",
+      "md_line": 251,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "用例图.jpeg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/用例图.jpeg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "三. 用例图",
+      "context_before": "（系统）6、系统接收旅客信息，跳转到支付界面\n（用户）7、旅客完成支付，预订停车位完成\n}",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "p2-1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-1.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": "（用户）7、旅客完成支付，预订停车位完成\n}",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "p2-2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-2.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": "}",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "p2-3.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-3.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "p2-4.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-4.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "p2-5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-5.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "p2-6.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/p2-6.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "四.系统顺序图",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "Class%20Diagram1.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo6_QAQLeonard_SmartAirport/Class%20Diagram1.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "五. 概念类图",
+      "context_before": null,
+      "context_after": "**航司类 (Airline)**\n- 属性：",
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

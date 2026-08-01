@@ -1,0 +1,310 @@
+{
+  "doc_name": "接收端专题_数据包格式说明",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/接收端专题_数据包格式说明.md",
+  "md_lines": 252,
+  "md_chars": 3371,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "波位控制与 UDP 数据包格式说明",
+  "section_count": 32,
+  "sections": [
+    {
+      "number": null,
+      "title": "波位控制与 UDP 数据包格式说明",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 文档目的",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 106,
+      "text_preview": "本文档用于整理当前通信接口调试阶段的波位控制表与 UDP 数据包格式约定，形成结构清晰、内容一致、便于实现与联调的 Markdown 版本说明。\n\n本文档仅基于现有约定内容整理，不额外引入新的协议语义。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "2. 波位控制表",
+      "level": 2,
+      "line_start": 11,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 基本定义",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 23,
+      "text_preview": "波位控制表暂定长度为 **2048 字节**。"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 字段约定",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 58,
+      "text_preview": "- **包头**：`0x55AAFF00`\n- **CPI 计数**：2 字节\n- **其余内容**：先填充 `0`"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 说明",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 83,
+      "text_preview": "当前阶段，波位控制表结构较为简单，主要用于标识波位控制信息的起始以及携带 CPI 计数。除上述有效字段外，其余字节统一按 `0` 填充，便于后续扩展和联调。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "3. UDP 包格式",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 基本定义",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 127,
+      "text_preview": "单个 UDP 包暂定长度为 **5120 字节**。\n\n一个 PRT 需要发送：\n\n- `4 × 4 = 16` 个 UDP 包\n\n即：\n- 每个 PRT 的数据按 4 组发送；\n- 每组 4 个 UDP 包；\n- 合计 16 个 UDP 包。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "4. UDP 包内容组成",
+      "level": 2,
+      "line_start": 46,
+      "text_length": 32,
+      "text_preview": "UDP 包由以下两部分组成：\n\n- 包信息\n- 包数据\n\n---"
+    },
+    {
+      "number": null,
+      "title": "5. 包信息",
+      "level": 2,
+      "line_start": 55,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 包头",
+      "level": 3,
+      "line_start": 57,
+      "text_length": 21,
+      "text_preview": "- **包头**：`0x55AAFF03`"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 CPI 计数",
+      "level": 3,
+      "line_start": 61,
+      "text_length": 34,
+      "text_preview": "- **长度**：2 字节\n- **范围**：`0 ~ 65535`"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 PRT 计数",
+      "level": 3,
+      "line_start": 66,
+      "text_length": 13,
+      "text_preview": "- **长度**：2 字节"
+    },
+    {
+      "number": "5.4",
+      "title": "5.4 通道计数",
+      "level": 3,
+      "line_start": 70,
+      "text_length": 72,
+      "text_preview": "- **长度**：1 字节\n- **取值定义**：\n  - `0`：和\n  - `1`：俯仰差\n  - `2`：方位差\n  - `3`：匿隐通道"
+    },
+    {
+      "number": "5.5",
+      "title": "5.5 包计数",
+      "level": 3,
+      "line_start": 79,
+      "text_length": 91,
+      "text_preview": "- **长度**：1 字节\n- **范围**：`0 ~ 3`\n\n包计数字段表示**当前通道内的分包序号**，每个通道固定对应 4 个 UDP 包，因此取值范围固定为 `0 ~ 3`。"
+    },
+    {
+      "number": "5.6",
+      "title": "5.6 IQ 点数",
+      "level": 3,
+      "line_start": 86,
+      "text_length": 13,
+      "text_preview": "- **长度**：2 字节"
+    },
+    {
+      "number": "5.7",
+      "title": "5.7 包尾",
+      "level": 3,
+      "line_start": 90,
+      "text_length": 92,
+      "text_preview": "包尾规则如下：\n\n- 只有**当前波位的最后一个 PRT 的最后一个 UDP 包**携带有效包尾：`0x55AAFF30`\n- 其余 UDP 包的包尾统一填充 **4 字节 `0`**"
+    },
+    {
+      "number": "5.8",
+      "title": "5.8 包信息字段汇总",
+      "level": 3,
+      "line_start": 97,
+      "text_length": 306,
+      "text_preview": "| 字段名 | 长度 | 说明 |\n|---|---:|---|\n| 包头 | 4 字节 | 固定为 `0x55AAFF03` |\n| CPI 计数 | 2 字节 | 范围 `0~65535` |\n| PRT 计数 | 2 字节 | 当前 PRT 序号/计数 |\n| 通道计数 | 1 字节 | `0/1/2/3` 分别对应和、俯仰差、方位差、匿隐通道 |\n| 包计数 | 1 字节 | 范围 `0~"
+    },
+    {
+      "number": null,
+      "title": "6. 包数据",
+      "level": 2,
+      "line_start": 111,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 数据区大小",
+      "level": 3,
+      "line_start": 113,
+      "text_length": 109,
+      "text_preview": "单个 UDP 包总长度为 **5120 字节**。\n\n其中包信息占用 **16 字节**，因此数据区可用长度为：\n\n`5120 - 16 = 5104 字节`\n\n即：\n\n- **数据区域可用长度**：`5104 字节`"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 数据组织方式",
+      "level": 3,
+      "line_start": 125,
+      "text_length": 140,
+      "text_preview": "一个 PRT 的 16 个 UDP 包按通道顺序组织：\n\n- 第 1 个 4 包：和路数据\n- 第 2 个 4 包：俯仰数据\n- 第 3 个 4 包：方位数据\n- 最后 1 个 4 包：匿隐数据\n\n也就是说，每个通道对应 4 个 UDP 包，4 个通道共计 16 个 UDP 包。"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 单通道 4 包的数据承载示例",
+      "level": 3,
+      "line_start": 136,
+      "text_length": 121,
+      "text_preview": "示例约定如下：\n\n- 前 3 包 UDP 包各自包含 **1276 个 IQ**\n- 第 4 包 UDP 包包含 **912 个 IQ**\n- 剩余空间全部填充 `0`\n\n该示例用于说明一个通道内 4 个 UDP 包的数据装载方式。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "7. UDP 包字节布局示意",
+      "level": 2,
+      "line_start": 148,
+      "text_length": 191,
+      "text_preview": "根据原始表格内容，UDP 包前部字段布局如下：\n\n| 字节偏移 | 字段 |\n|---|---|\n| 0~3 | `0x55AAFF03` |\n| 4~5 | CPI 计数 |\n| 6~7 | PRT 计数 |\n| 8 | 通道计数 |\n| 9 | 包计数 |\n| 10~11 | IQ 点数 |\n| 12~15 | 包尾 |\n| 16~17 | I |\n| 18~19 | Q |"
+    },
+    {
+      "number": "7.1",
+      "title": "7.1 说明",
+      "level": 3,
+      "line_start": 164,
+      "text_length": 68,
+      "text_preview": "- 字节 `0~15` 为包信息区。\n- 字节 `16` 开始为 IQ 数据区。\n- IQ 数据按 `I`、`Q` 顺序排列。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "8. 实现约束汇总",
+      "level": 2,
+      "line_start": 172,
+      "text_length": 22,
+      "text_preview": "为便于开发与联调，现将关键约束统一整理如下："
+    },
+    {
+      "number": "8.1",
+      "title": "8.1 波位控制表约束",
+      "level": 3,
+      "line_start": 176,
+      "text_length": 98,
+      "text_preview": "1. 波位控制表长度固定为 **2048 字节**。\n2. 表头固定为 `0x55AAFF00`。\n3. CPI 计数字段长度为 **2 字节**。\n4. 除已定义字段外，其余内容全部填 `0`。"
+    },
+    {
+      "number": "8.2",
+      "title": "8.2 UDP 包约束",
+      "level": 3,
+      "line_start": 183,
+      "text_length": 462,
+      "text_preview": "1. 单个 UDP 包长度固定为 **5120 字节**。\n2. 一个 PRT 固定发送 **16 个 UDP 包**。\n3. 每个通道对应 **4 个 UDP 包**。\n4. 4 个通道顺序依次为：\n   - 和路\n   - 俯仰差\n   - 方位差\n   - 匿隐通道\n5. 包头固定为 `0x55AAFF03`。\n6. CPI 计数长度为 **2 字节**，范围 `0~65535`。\n7. P"
+    },
+    {
+      "number": null,
+      "title": "9. 通信接口调试说明",
+      "level": 2,
+      "line_start": 206,
+      "text_length": 194,
+      "text_preview": "当前内容对应原始记录中的“通信接口调试”部分，可作为接口联调时的数据构造与解析依据。\n\n建议发送端与接收端至少统一以下内容：\n\n- 波位控制表总长度\n- UDP 包总长度\n- 多字节字段统一按小端解析\n- 包头与包尾固定值\n- CPI / PRT / 通道 / 包计数字段长度与位置\n- IQ 点数字段含义\n- 最后一个有效包尾的判定规则\n- 非有效数据区统一填 `0` 的规则\n\n---"
+    },
+    {
+      "number": null,
+      "title": "10. 附：精简版协议摘要",
+      "level": 2,
+      "line_start": 223,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "10.1",
+      "title": "10.1 波位控制表",
+      "level": 3,
+      "line_start": 225,
+      "text_length": 59,
+      "text_preview": "- 长度：`2048` 字节\n- 包头：`0x55AAFF00`\n- CPI 计数：`2` 字节\n- 其他：填 `0`"
+    },
+    {
+      "number": "10.2",
+      "title": "10.2 UDP 包",
+      "level": 3,
+      "line_start": 232,
+      "text_length": 172,
+      "text_preview": "- 长度：`5120` 字节\n- 每个 PRT：`16` 个 UDP 包\n- 每通道：`4` 个 UDP 包\n- 通道顺序：和 / 俯仰差 / 方位差 / 匿隐\n- 包头：`0x55AAFF03`\n- 包尾：仅最后一个特定包为 `0x55AAFF30`，其余填 `0`\n- 数据区：`5104` 字节\n- IQ 数据起始偏移：`16`\n\n---"
+    },
+    {
+      "number": null,
+      "title": "11. 待后续明确项",
+      "level": 2,
+      "line_start": 245,
+      "text_length": 129,
+      "text_preview": "以下内容在原始记录中未展开定义，后续如进入正式协议阶段，建议继续补充：\n\n1. CPI 计数与 PRT 计数的递增规则\n2. IQ 数据的数据类型与量化格式\n3. 数据区填 `0` 时是否区分无效点与补齐区\n4. 波位切换与“最后一个有效包尾”之间的判定边界"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 2,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段名",
+        "长度",
+        "说明"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "5.8 包信息字段汇总",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字节偏移",
+        "字段"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "7. UDP 包字节布局示意",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

@@ -1,0 +1,191 @@
+{
+  "doc_name": "GJB438C-DocSkill-CONTRIBUTING",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/gjb_reference/GJB438C-DocSkill-CONTRIBUTING.md",
+  "md_lines": 180,
+  "md_chars": 3834,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": "438C",
+  "system_type": "unknown",
+  "title": "Contributing to GJB438C-DocSkill",
+  "section_count": 19,
+  "sections": [
+    {
+      "number": null,
+      "title": "Contributing to GJB438C-DocSkill",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 22,
+      "text_preview": "感谢你对本项目的关注！以下是参与贡献的指南。"
+    },
+    {
+      "number": null,
+      "title": "贡献方式",
+      "level": 2,
+      "line_start": 5,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "报告问题",
+      "level": 3,
+      "line_start": 7,
+      "text_length": 90,
+      "text_preview": "提交 Issue 时请包含：\n\n- 使用的 Skill（[10] / [11]）和触发方式\n- 输入的项目描述或 JSON 配置\n- 期望行为与实际行为\n- 控制台报错信息（如有）"
+    },
+    {
+      "number": null,
+      "title": "新增 438C 模板 Skill",
+      "level": 3,
+      "line_start": 16,
+      "text_length": 307,
+      "text_preview": "GJB 438C-2021 第五节规定共 **20 类文档**（5.1–5.20）。`GJB438C全套模版/438B-2009全套模板/` 是旧标准模板集（仅供参考）；`GJB438C全套模版/438C-2021全套模板/` 已按附录 A–T 搭建全套 20 份新标准模板（14 份由 438B 模板改造，6 份按附录全新搭建，详见 `GJB438C全套模版/README.md`）。当前已实现 S"
+    },
+    {
+      "number": null,
+      "title": "目录结构",
+      "level": 4,
+      "line_start": 20,
+      "text_length": 593,
+      "text_preview": "参照已有 Skill 建立目录：\n\n```\nskills/\n└── word-fillter-438c-XX/          # XX 为文档缩略语（如 srs、sdd）\n    ├── SKILL.md                   # Skill 定义（触发条件 + 工作流 + JSON 规则）\n    ├── documents/                 # .docx 模"
+    },
+    {
+      "number": null,
+      "title": "编写步骤",
+      "level": 4,
+      "line_start": 40,
+      "text_length": 1367,
+      "text_preview": "1. **准备 .docx 模板**\n\n   **三种来源**（按推荐顺序）：\n   - **直接复用现成的 438C-2021 模板**（首选）：从 `GJB438C全套模版/438C-2021全套模板/` 取对应 `.docx` 文件，本项目已按附录 A–T 搭建好 20 份模板骨架与占位文本。\n   - **以 438B 模板为起点**（备用）：从 `GJB438C全套模版/438B-200"
+    },
+    {
+      "number": null,
+      "title": "设计原则",
+      "level": 4,
+      "line_start": 96,
+      "text_length": 367,
+      "text_preview": "- **严格模式**：锚点或表头不匹配时必须报错，不做静默跳过\n- **只改内容**：脚本只修改 `content` 和 `rows`，不修改模板结构字段\n- **JSON 驱动**：所有填写内容通过 JSON 配置，脚本不硬编码业务逻辑\n\n- `外部型号+产品名称` 必须在模板中精确出现 2 次\n- `软件需求规格说明` 必须在封面区域精确出现 2 次\n- `产品型号-XXXX` 必须精确出现 "
+    },
+    {
+      "number": null,
+      "title": "已知约束",
+      "level": 3,
+      "line_start": 110,
+      "text_length": 60,
+      "text_preview": "- 目录不是静态文本，脚本只负责写入标题并标记字段更新；首次打开 Word 时应刷新目录\n- 这套实现是针对当前模板定制"
+    },
+    {
+      "number": null,
+      "title": "改进现有 Skill",
+      "level": 3,
+      "line_start": 115,
+      "text_length": 82,
+      "text_preview": "- 修复 `locator_rows` 匹配问题\n- 补充遗漏的章节或表格\n- 优化 AI 生成的 `generation_prompt`\n- 改进填写引擎的鲁棒性"
+    },
+    {
+      "number": null,
+      "title": "文档与博客",
+      "level": 3,
+      "line_start": 122,
+      "text_length": 45,
+      "text_preview": "- 修正 `blog/` 中的文档错误\n- 补充使用教程或最佳实践\n- 添加更多语言的说明"
+    },
+    {
+      "number": null,
+      "title": "开发环境",
+      "level": 2,
+      "line_start": 128,
+      "text_length": 7,
+      "text_preview": "```bash"
+    },
+    {
+      "number": null,
+      "title": "克隆仓库",
+      "level": 1,
+      "line_start": 131,
+      "text_length": 58,
+      "text_preview": "git clone https://github.com/CMoments/GJB438C-DocSkill.git"
+    },
+    {
+      "number": null,
+      "title": "安装 Python 依赖",
+      "level": 1,
+      "line_start": 134,
+      "text_length": 30,
+      "text_preview": "pip install python-docx>=1.1.0"
+    },
+    {
+      "number": null,
+      "title": "安装 Claude Code（如需调试 Skill 触发）",
+      "level": 1,
+      "line_start": 137,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "见 https://claude.ai/code",
+      "level": 1,
+      "line_start": 138,
+      "text_length": 3,
+      "text_preview": "```"
+    },
+    {
+      "number": null,
+      "title": "提交规范",
+      "level": 2,
+      "line_start": 141,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Commit Message",
+      "level": 3,
+      "line_start": 143,
+      "text_length": 285,
+      "text_preview": "```\n<type>: <description>\n```\n\ntype 取值：\n\n| type | 说明 |\n|:-----|:-----|\n| feat | 新增 Skill 或功能 |\n| fix | 修复锚点匹配、表格填充等 Bug |\n| docs | 文档或博客更新 |\n| refactor | 重构填写引擎，不改变输出 |\n| chore | 构建配置、依赖更新 |\n\n示例：\n\n```"
+    },
+    {
+      "number": null,
+      "title": "Pull Request",
+      "level": 3,
+      "line_start": 167,
+      "text_length": 172,
+      "text_preview": "1. Fork 本仓库\n2. 创建分支：`feat/skill-09`、`fix/08-locator` 等\n3. 确保本地测试通过（生成文档可正常打开且内容正确）\n4. PR 标题遵循 commit message 格式\n5. PR 描述中说明：\n   - 改动了什么\n   - 测试方式\n   - 附上生成的样例文件截图或 PDF（如适用）"
+    },
+    {
+      "number": null,
+      "title": "许可",
+      "level": 2,
+      "line_start": 178,
+      "text_length": 25,
+      "text_preview": "提交贡献即表示你同意将代码以 MIT 许可证发布。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "type",
+        "说明"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "Commit Message",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

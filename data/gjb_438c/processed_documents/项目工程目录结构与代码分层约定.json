@@ -1,0 +1,64 @@
+{
+  "doc_name": "项目工程目录结构与代码分层约定",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/其他/项目工程目录结构与代码分层约定.md",
+  "md_lines": 41,
+  "md_chars": 807,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "项目工程目录结构与代码分层约定",
+  "section_count": 5,
+  "sections": [
+    {
+      "number": null,
+      "title": "项目工程目录结构与代码分层约定",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 48,
+      "text_preview": "> 性质：规划视图。  \n> 用途：说明仓库期望的工程化组织方式，而不是直接等同于当前代码实况。"
+    },
+    {
+      "number": null,
+      "title": "1. 顶层目录职责",
+      "level": 2,
+      "line_start": 6,
+      "text_length": 309,
+      "text_preview": "```text\nqdgz300_backend/\n├── cmake/        # 工具链、查找模块、编译选项\n├── config/       # 运行配置\n├── data/         # 运行期数据落点\n├── deploy/       # 安装与服务资产\n├── docs/         # 文档体系\n├── include/      # 公共头与模块接口\n├── sc"
+    },
+    {
+      "number": null,
+      "title": "2. 目录治理规则",
+      "level": 2,
+      "line_start": 22,
+      "text_length": 108,
+      "text_preview": "- 顶层 `CMakeLists.txt` 只做模块编排。\n- 模块源码和编译定义尽量下沉到各自子目录。\n- 测试、部署、工具和运行时目录分离，不混入业务源码树。\n- 文档中的“规划视图”与“代码实况”必须分开描述。"
+    },
+    {
+      "number": null,
+      "title": "3. 当前模块分层",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 146,
+      "text_preview": "- `M01`：接收与协议处理\n- `M02`：信号处理\n- `M03`：数据处理与航迹\n- `M04`：网关与对外输出\n- `control / orchestrator / config / time / health / diagnostics / recorder`：控制面与基础设施"
+    },
+    {
+      "number": null,
+      "title": "4. 阅读建议",
+      "level": 2,
+      "line_start": 37,
+      "text_length": 114,
+      "text_preview": "- 想看“当前真实实现”：优先读 [M01 接收模块设计与现状](./M01接收模块设计与现状.md)\n- 想看“当前系统边界”：读 `docs/设计/系统架构/`\n- 想看“构建与部署入口”：读 `docs/设计/使用指南/`"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

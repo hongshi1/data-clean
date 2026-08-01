@@ -1,0 +1,145 @@
+{
+  "doc_name": "fprime_Svc_SeqDispatcher_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_SeqDispatcher_sdd.md",
+  "md_lines": 51,
+  "md_chars": 2426,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "components::SeqDispatcher",
+  "section_count": 9,
+  "sections": [
+    {
+      "number": null,
+      "title": "components::SeqDispatcher",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 211,
+      "text_preview": "Dispatches command sequences to available command sequencers, allowing the spacecraft controllers to run multiple sequences at once without having to manually manage which `CmdSequencer`s those sequen"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 3,
+      "line_start": 5,
+      "text_length": 252,
+      "text_preview": "* Call the `RUN` command just like you would call it on a `CmdSequencer`\n* If any connected `CmdSequencer` is available, it will route the sequence to the first one it finds\n* `RUN` can be made blocki"
+    },
+    {
+      "number": null,
+      "title": "State diagram",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 85,
+      "text_preview": "![State diagram of the SeqDispatcher](seq_dispatcher_model.png \"SeqDispatcher model\")"
+    },
+    {
+      "number": null,
+      "title": "Port Descriptions",
+      "level": 2,
+      "line_start": 13,
+      "text_length": 405,
+      "text_preview": "|Type| Name | Description |\n|async input|seqRunIn|Equivalent to the RUN cmd, dispatches a sequence to the first available sequencer|\n|output|seqRunOut|This is used by the SeqDispatcher to send sequenc"
+    },
+    {
+      "number": null,
+      "title": "Commands",
+      "level": 2,
+      "line_start": 20,
+      "text_length": 158,
+      "text_preview": "| Name | Description |\n|RUN|Dispatches a sequence to the first available sequencer|\n|LOG_STATUS|Logs via Events the state of each connected command sequencer|"
+    },
+    {
+      "number": null,
+      "title": "Events",
+      "level": 2,
+      "line_start": 25,
+      "text_length": 540,
+      "text_preview": "| Name | Description |\n|InvalidSequencer|The given sequencer index is invalid for an unspecified reason|\n|NoAvailableSequencers|There are no available sequencers to dispatch a sequence to|\n|UnknownSeq"
+    },
+    {
+      "number": null,
+      "title": "Telemetry",
+      "level": 2,
+      "line_start": 35,
+      "text_length": 326,
+      "text_preview": "| Name | Description |\n|dispatchedCount|Number of sequences dispatched|\n|errorCount|Number of sequences dispatched that returned an error. Note: if a sequence was run in non-blocking mode, even if the"
+    },
+    {
+      "number": null,
+      "title": "Unit Tests",
+      "level": 2,
+      "line_start": 41,
+      "text_length": 190,
+      "text_preview": "Add unit test descriptions in the chart below\n| Name | Description |\n|testDispatch|Tests the basic dispatch functionality of the `SeqDispatcher`|\n|testLogStatus|Tests the LOG_STATUS command|"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 47,
+      "text_length": 99,
+      "text_preview": "Add requirements in the chart below\n| Name | Description | Validation |\n|---|---|---|\n|---|---|---|"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description",
+        "Validation"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Requirements",
+      "raw_html": null
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "seq_dispatcher_model.png \"SeqDispatcher model\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/seq_dispatcher_model.png \"SeqDispatcher model\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "State diagram of the SeqDispatcher",
+      "caption": "|Type| Name | Description |",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "State diagram",
+      "context_before": "* Call the `RUN` command just like you would call it on a `CmdSequencer`\n* If any connected `CmdSequencer` is available, it will route the sequence to the first one it finds\n* `RUN` can be made blocking or non-blocking, just like `CmdSequencer`'s `RUN`",
+      "context_after": "|Type| Name | Description |\n|async input|seqRunIn|Equivalent to the RUN cmd, dispatches a sequence to the first available sequencer|",
+      "md_line": 11,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "seq_dispatcher_model.png \"SeqDispatcher model\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/seq_dispatcher_model.png \"SeqDispatcher model\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "|Type| Name | Description |",
+      "section": "State diagram",
+      "context_before": "* Call the `RUN` command just like you would call it on a `CmdSequencer`\n* If any connected `CmdSequencer` is available, it will route the sequence to the first one it finds\n* `RUN` can be made blocking or non-blocking, just like `CmdSequencer`'s `RUN`",
+      "context_after": "|Type| Name | Description |\n|async input|seqRunIn|Equivalent to the RUN cmd, dispatches a sequence to the first available sequencer|",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

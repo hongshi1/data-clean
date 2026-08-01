@@ -1,0 +1,2268 @@
+{
+  "doc_name": "软件需求规格说明书_饱了么",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo4_Chuanzhenqi_SoftwareEngineeringPracticeCourse/软件需求规格说明书_饱了么.md",
+  "md_lines": 983,
+  "md_chars": 22326,
+  "language": "zh",
+  "is_gjb_format": true,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "软件需求规格说明书",
+  "section_count": 68,
+  "sections": [
+    {
+      "number": null,
+      "title": "软件需求规格说明书",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 102,
+      "text_preview": "**项目名称**：饱了么 校园外卖下单平台\n**开发单位**：饕餮科技有限公司\n**文档版本**：v1.0\n**编写日期**：2026-03-08\n**文档状态**：草稿\n\n---\n\n[TOC]\n\n---"
+    },
+    {
+      "number": "1",
+      "title": "1 范围",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 197,
+      "text_preview": "| 项目 | 内容 |\n|------|------|\n| 系统名称 | 饱了么（BaoLeMe）校园外卖下单平台 |\n| 文档编号 | AISE-SRS-P3-001 |\n| 版本号 | v1.0 |\n| 发行日期 | 2026-03-08 |\n| 缩略词 | BLM、SRS |\n\n本文档适用于\"饱了么\"校园外卖下单平台软件系统（以下简称\"本系统\"或 BLM）的全部软件配置项（CSCI）。"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 系统概述",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 490,
+      "text_preview": "\"饱了么\"是由饕餮科技有限公司开发的一款**专注于校园场景的外卖下单平台**，秉持\"让校园生活更便捷\"的理念，面向高校师生、校内餐饮商家及校园配送骑手三类核心角色提供服务。\n\n系统覆盖以下核心业务链路：\n- **学生用户**：浏览/搜索店铺与商品 → 下单购买 → 实时追踪配送 → 评价\n- **商家**：创建/管理店铺与商品 → 接收订单 → 更新备餐状态 → 数据分析\n- **骑手**：抢单/"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 文档概述",
+      "level": 3,
+      "line_start": 46,
+      "text_length": 122,
+      "text_preview": "本文档为\"饱了么\"系统的软件需求规格说明书（SRS），用于：\n1. 定义系统功能需求、非功能需求、接口需求及约束条件；\n2. 为系统设计、开发与测试提供可追踪的基线；\n3. 作为验收测试的依据。\n\n本文档不涉及商业机密，内部传阅，请勿对外发布。"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 基线",
+      "level": 3,
+      "line_start": 55,
+      "text_length": 84,
+      "text_preview": "本文档基于以下输入编写：\n- 《项目3需求描述文档》（项目3.md，饕餮科技有限公司，2026年）\n- 参考系统：美团外卖、饿了么、校园食堂系统的公开产品功能\n\n---"
+    },
+    {
+      "number": "2",
+      "title": "2 引用文件",
+      "level": 2,
+      "line_start": 63,
+      "text_length": 258,
+      "text_preview": "| 编号 | 文档名称 | 版本 | 来源 |\n|------|---------|------|------|\n| [1] | 项目3需求描述文档 | v1.0 | 饕餮科技有限公司，项目3.md |\n| [2] | 美团外卖产品功能参考 | — | https://waimai.meituan.com/ |\n| [3] | 饿了么产品功能参考 | — | https://www.ele.me/"
+    },
+    {
+      "number": "3",
+      "title": "3 需求",
+      "level": 2,
+      "line_start": 74,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 所需的状态和方式",
+      "level": 3,
+      "line_start": 76,
+      "text_length": 267,
+      "text_preview": "本系统需在以下状态和方式下运行：\n\n| 状态/方式 | 描述 | 适用角色 |\n|-----------|------|----------|\n| **正常运行** | 系统全功能可用，用户可完整使用点餐、配送、管理功能 | 全部角色 |\n| **维护模式** | 系统暂停对外服务，仅管理员可登录进行数据维护 | 管理员 |\n| **降级运行** | 外部依赖（地图、支付）不可用时，核心下单流程仍"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 需求概述",
+      "level": 3,
+      "line_start": 89,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 目标",
+      "level": 4,
+      "line_start": 91,
+      "text_length": 1064,
+      "text_preview": "**现有问题**：校园内缺乏专属外卖平台，学生点餐依赖通用平台，存在配送范围不精准、校内地址支持差、商家与学生互动弱等问题。\n\n**本系统解决的问题**：\n- 为学生提供校园场景专属的便捷点餐入口\n- 为商家提供高效接单与销售数据分析工具\n- 为骑手提供智能派单与校内导航支持\n- 为平台管理员提供内容审核与治理工具\n\n**主要功能模块**：\n\n```\n┌──────────────────────"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 运行环境",
+      "level": 4,
+      "line_start": 129,
+      "text_length": 259,
+      "text_preview": "| 环境项 | 要求 |\n|--------|------|\n| **客户端** | iOS 13+、Android 8+、主流浏览器（Chrome 90+、Safari 14+） |\n| **服务端操作系统** | Linux（Ubuntu 20.04 LTS 或以上） |\n| **数据库** | 关系型数据库（MySQL 8.0+）+ 缓存（Redis 6.0+） |\n| **网络** | 校"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 用户的特点",
+      "level": 4,
+      "line_start": 139,
+      "text_length": 218,
+      "text_preview": "| 用户类型 | 特点 | 技术熟悉度 |\n|----------|------|-----------|\n| **学生用户** | 18-25岁大学生，熟悉移动互联网，追求效率与社交体验 | 高 |\n| **商家** | 校内餐饮从业者，年龄跨度大，使用平板/手机接单为主 | 中 |\n| **骑手** | 校内兼职学生或专职配送人员，需快速掌握操作 | 中 |\n| **管理员** | 平台运营人"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 关键点",
+      "level": 4,
+      "line_start": 148,
+      "text_length": 184,
+      "text_preview": "1. **实时性**：订单状态、配送位置需实时同步（WebSocket 或长轮询）\n2. **智能派单算法**：基于骑手位置、订单分布进行最优分配\n3. **地图集成**：骑手导航路径规划与用户实时定位追踪\n4. **高并发处理**：就餐高峰（11:00-13:00、17:00-19:00）并发订单量大\n5. **数据安全**：用户支付信息、个人信息需加密存储与传输"
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 约束条件",
+      "level": 4,
+      "line_start": 156,
+      "text_length": 248,
+      "text_preview": "| 约束类型 | 内容 |\n|----------|------|\n| **时间约束** | 按课程学期周期交付，分迭代开发 |\n| **技术约束** | 团队技术栈以 Java/Python 后端 + React/Vue 前端为主 |\n| **地域约束** | 初期仅服务于指定高校校园范围内 |\n| **合规约束** | 需符合《个人信息保护法》《网络安全法》相关规定；食品类平台需符合食品安全相"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 需求规格",
+      "level": 3,
+      "line_start": 168,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 软件系统总体功能/对象结构",
+      "level": 4,
+      "line_start": 170,
+      "text_length": 377,
+      "text_preview": "系统采用前后端分离 + 微服务架构，主要模块如下：\n\n```\n饱了么平台\n├── 用户服务（User Service）\n│   ├── 注册/登录/认证\n│   └── 个人中心\n├── 商品服务（Product Service）\n│   ├── 店铺管理\n│   └── 商品管理\n├── 订单服务（Order Service）\n│   ├── 购物车\n│   ├── 下单/支付\n│   └── "
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 软件子系统功能/对象结构",
+      "level": 4,
+      "line_start": 198,
+      "text_length": 251,
+      "text_preview": "**核心实体关系（ER概览）**：\n\n```\n用户(User) ──下单──> 订单(Order) ──包含──> 订单商品(OrderItem)\n商家(Merchant) ──发布──> 店铺(Shop) ──包含──> 商品(Product)\n订单(Order) ──分配──> 配送单(DeliveryTask) ──由──> 骑手(Rider)\n用户(User) ──持有──> 优惠券(Co"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 描述约定",
+      "level": 4,
+      "line_start": 210,
+      "text_length": 222,
+      "text_preview": "| 符号/约定 | 含义 |\n|-----------|------|\n| `FR-xxx` | 功能需求编号 |\n| `NFR-xxx` | 非功能需求编号 |\n| `IF-xxx` | 接口需求编号 |\n| `DR-xxx` | 数据需求编号 |\n| **[已确认]** | 需求已与需方确认 |\n| **[待确认]** | 需求存在歧义，待需方确认 |\n| N/A | 不适用 |\n| ≤ / "
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 CSCI能力需求",
+      "level": 3,
+      "line_start": 225,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 用户注册与登录",
+      "level": 4,
+      "line_start": 227,
+      "text_length": 474,
+      "text_preview": "**FR-001**：用户注册\n- **触发条件**：用户首次使用平台，点击\"注册\"按钮\n- **处理规则**：支持手机号+验证码注册；手机号格式校验（11位国内号码）；验证码60秒有效期，每日同号最多发送5次\n- **成功输出**：账号创建成功，自动登录，跳转主页\n- **异常处理**：手机号已注册提示\"该手机号已注册，请直接登录\"；验证码错误提示\"验证码错误，请重新输入\"\n- **验收标准**"
+    },
+    {
+      "number": "3.4.2",
+      "title": "3.4.2 主页与推荐",
+      "level": 4,
+      "line_start": 247,
+      "text_length": 407,
+      "text_preview": "**FR-010**：主页展示\n- **触发条件**：用户登录后进入主页\n- **处理规则**：展示推荐店铺列表（≥5家）和推荐商品列表（≥10个）；推荐逻辑基于用户历史浏览/购买记录和全平台热销数据\n- **成功输出**：主页加载完成，展示推荐内容\n- **异常处理**：新用户无历史数据时展示平台热销内容\n- **验收标准**：主页首屏加载时间 ≤ 3秒（4G 网络环境）\n- **状态**：[已"
+    },
+    {
+      "number": "3.4.3",
+      "title": "3.4.3 店铺浏览与筛选",
+      "level": 4,
+      "line_start": 267,
+      "text_length": 662,
+      "text_preview": "**FR-020**：店铺列表筛选\n- **触发条件**：用户进入店铺浏览页，使用筛选条件\n- **处理规则**：支持以下筛选维度（可多选）：\n  - 店铺类型（快餐、饮品、正餐、小吃等）\n  - 店铺位置（校区/楼栋）\n  - 店铺评分（4.5分以上、4.0分以上等）\n  - 价格区间（¥0-15、¥15-30、¥30+）\n  - 配送时间（30分钟内、45分钟内）\n- **成功输出**：按筛选"
+    },
+    {
+      "number": "3.4.4",
+      "title": "3.4.4 购物车与下单",
+      "level": 4,
+      "line_start": 300,
+      "text_length": 758,
+      "text_preview": "**FR-030**：购物车管理\n- **触发条件**：用户在商品详情页点击\"加入购物车\"\n- **处理规则**：购物车按店铺分组；不同店铺商品不可混合结算；支持修改数量（最小1，最大99）、删除单品、清空购物车\n- **成功输出**：购物车更新成功，展示最新商品列表和合计金额\n- **异常处理**：商品已下架时提示\"该商品已下架，请移除后继续\"\n- **验收标准**：购物车数据跨设备同步，操作响"
+    },
+    {
+      "number": "3.4.5",
+      "title": "3.4.5 个人中心",
+      "level": 4,
+      "line_start": 332,
+      "text_length": 551,
+      "text_preview": "**FR-040**：个人信息管理\n- **触发条件**：用户进入个人中心\n- **处理规则**：展示并支持编辑：昵称、头像、手机号（需验证）、配送地址列表（最多5个）\n- **验收标准**：信息修改后立即生效\n- **状态**：[已确认]\n\n**FR-041**：历史浏览记录\n- **触发条件**：用户在个人中心查看浏览记录\n- **处理规则**：按时间倒序展示最近浏览的店铺和商品，最多保留10"
+    },
+    {
+      "number": "3.4.6",
+      "title": "3.4.6 商家店铺管理",
+      "level": 4,
+      "line_start": 360,
+      "text_length": 906,
+      "text_preview": "**FR-050**：商家注册与资质提交\n- **触发条件**：商家申请入驻平台\n- **处理规则**：填写店铺信息（名称、类型、营业时间、位置、联系方式）、上传营业执照、食品经营许可证等资质文件；提交后进入审核流程\n- **成功输出**：审核通过后店铺上线\n- **异常处理**：资质不合格，审核驳回并注明原因\n- **验收标准**：审核响应时间由管理员操作，建议 ≤ 48小时（[待确认]）\n- "
+    },
+    {
+      "number": "3.4.7",
+      "title": "3.4.7 骑手配送",
+      "level": 4,
+      "line_start": 398,
+      "text_length": 755,
+      "text_preview": "**FR-060**：骑手注册与认证\n- **触发条件**：骑手申请加入配送平台\n- **处理规则**：提交实名信息（姓名、学号/身份证、联系方式）；审核通过后可接单\n- **验收标准**：审核时间 ≤ 24小时（[待确认]）\n- **状态**：[待确认]\n\n**FR-061**：智能派单\n- **触发条件**：骑手选择\"智能派单\"模式并上线\n- **处理规则**：系统根据骑手当前位置、当前承接订"
+    },
+    {
+      "number": "3.4.8",
+      "title": "3.4.8 管理员审核与管理",
+      "level": 4,
+      "line_start": 432,
+      "text_length": 714,
+      "text_preview": "**FR-070**：商家资质审核\n- **触发条件**：商家提交入驻申请\n- **处理规则**：管理员查看商家提交的资质文件，可选择：通过（店铺上线）或驳回（填写原因并通知商家）\n- **验收标准**：审核操作界面响应时间 ≤ 2秒\n- **状态**：[已确认]\n\n**FR-071**：菜品内容审核\n- **触发条件**：商家新增或修改商品\n- **处理规则**：[待确认] 商品是否需要管理员逐"
+    },
+    {
+      "number": "3.4.9",
+      "title": "3.4.9 额外功能（增值模块）",
+      "level": 4,
+      "line_start": 466,
+      "text_length": 598,
+      "text_preview": "**FR-080**：优惠券系统\n- **处理规则**：用户可通过签到、活动领取免费优惠券，或付费购买优惠券包；券分为：满减券（满X减Y）、折扣券、免配送费券；下单时系统自动筛选可用券并展示最优组合\n- **验收标准**：优惠券计算误差为零；券码唯一，不可重复使用\n- **状态**：[已确认]\n\n**FR-081**：拼单功能\n- **处理规则**：用户发起拼单，生成拼单链接/二维码（有效期30分"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 CSCI外部接口需求",
+      "level": 3,
+      "line_start": 490,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.5.1",
+      "title": "3.5.1 接口标识和接口图",
+      "level": 4,
+      "line_start": 492,
+      "text_length": 318,
+      "text_preview": "| 接口ID | 接口名称 | 本系统角色 | 外部实体 |\n|--------|---------|-----------|---------|\n| IF-001 | 用户移动端接口 | 服务提供方 | iOS/Android App |\n| IF-002 | Web 端接口 | 服务提供方 | 浏览器 |\n| IF-003 | 地图导航 API | 调用方 | 第三方地图服务（高德/百度） |"
+    },
+    {
+      "number": "3.5.2",
+      "title": "3.5.2 IF-001 用户移动端接口",
+      "level": 4,
+      "line_start": 503,
+      "text_length": 248,
+      "text_preview": "- **类型**：RESTful API + WebSocket（实时状态同步）\n- **协议**：HTTPS（REST），WSS（WebSocket）\n- **认证**：JWT Token，有效期7天，过期自动刷新\n- **数据格式**：JSON\n- **关键数据元素**：\n  - 用户Token（String，≤512字符）\n  - 订单ID（Long，唯一标识）\n  - 地理坐标（Doubl"
+    },
+    {
+      "number": "3.5.3",
+      "title": "3.5.3 IF-003 地图导航 API",
+      "level": 4,
+      "line_start": 515,
+      "text_length": 127,
+      "text_preview": "- **类型**：第三方 REST API\n- **用途**：骑手配送路径规划、用户实时位置追踪\n- **关键参数**：出发点经纬度、目的地经纬度\n- **响应时间要求**：≤ 2秒\n- **降级策略**：地图 API 不可用时，展示文字地址，不显示地图"
+    },
+    {
+      "number": "3.5.4",
+      "title": "3.5.4 IF-004 支付接口",
+      "level": 4,
+      "line_start": 523,
+      "text_length": 149,
+      "text_preview": "- **类型**：第三方支付 SDK\n- **支持渠道**：微信支付、支付宝\n- **数据安全**：支付金额由服务端计算，客户端不可篡改；使用支付平台提供的签名机制\n- **回调处理**：支付结果通过异步回调通知服务端，服务端需幂等处理\n- **超时策略**：15分钟未支付，订单自动关闭\n\n---"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 CSCI内部接口需求",
+      "level": 3,
+      "line_start": 533,
+      "text_length": 106,
+      "text_preview": "内部接口需求（各微服务间的 API 调用规范）留待架构设计阶段详细定义。基本约定：\n- 服务间通信使用 REST 或消息队列（MQ）\n- 服务间调用超时设置 ≤ 5秒\n- 所有内部接口需有熔断与重试机制\n\n---"
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 CSCI内部数据需求",
+      "level": 3,
+      "line_start": 542,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "核心数据实体",
+      "level": 4,
+      "line_start": 544,
+      "text_length": 1499,
+      "text_preview": "**DR-001 用户（User）**\n\n| 字段 | 类型 | 约束 |\n|------|------|------|\n| user_id | Long | 主键，自增 |\n| phone | String(11) | 唯一，非空，国内手机号格式 |\n| nickname | String(50) | 非空 |\n| avatar_url | String(255) | 可空 |\n| passwo"
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 适应性需求",
+      "level": 3,
+      "line_start": 604,
+      "text_length": 96,
+      "text_preview": "- 系统地理范围初期配置为指定高校校园坐标范围，后续可通过配置扩展至多校区\n- 配送费、起送价等运营参数通过配置文件管理，无需代码修改即可调整\n- 美食榜单更新周期可配置（默认每周）\n\n---"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 保密性需求",
+      "level": 3,
+      "line_start": 612,
+      "text_length": 92,
+      "text_preview": "- 支付环节需二次确认（密码/指纹/面容 ID），防止误操作\n- 骑手查看用户配送地址仅限配送期间，完成后隐藏精确地址\n- 管理员执行下架、删除评价等高风险操作需记录操作日志\n\n---"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 保密性和私密性需求",
+      "level": 3,
+      "line_start": 620,
+      "text_length": 261,
+      "text_preview": "**NFR-010 数据安全**\n- 用户密码使用 bcrypt（cost ≥ 12）加密存储，禁止明文存储\n- 用户手机号在非必要展示场景下脱敏（如：138****8888）\n- 所有网络传输使用 TLS 1.2+\n- 支付相关数据不在本系统持久化存储，由支付平台管理\n- 用户个人信息按《个人信息保护法》规定处理，不向第三方共享\n\n**NFR-011 权限控制**\n- 实现角色权限模型（RBAC"
+    },
+    {
+      "number": "3.11",
+      "title": "3.11 CSCI环境需求",
+      "level": 3,
+      "line_start": 635,
+      "text_length": 186,
+      "text_preview": "- **生产环境**：Linux 服务器，容器化部署（Docker + Kubernetes）\n- **开发/测试环境**：支持本地 Docker Compose 启动\n- **操作系统**：服务端 Linux（Ubuntu 20.04+）；客户端 iOS 13+ / Android 8+ / 主流浏览器\n- **时区**：系统统一使用 UTC+8（北京时间）\n\n---"
+    },
+    {
+      "number": "3.12",
+      "title": "3.12 计算机资源需求",
+      "level": 3,
+      "line_start": 644,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.12.1",
+      "title": "3.12.1 计算机硬件需求",
+      "level": 4,
+      "line_start": 646,
+      "text_length": 209,
+      "text_preview": "| 节点类型 | 最低配置 | 推荐配置 |\n|----------|---------|---------|\n| 应用服务器 | 4核 CPU、8GB RAM | 8核 CPU、16GB RAM |\n| 数据库服务器 | 4核 CPU、16GB RAM、500GB SSD | 8核 CPU、32GB RAM、1TB SSD |\n| 缓存服务器 | 2核 CPU、4GB RAM | 4核 CPU、"
+    },
+    {
+      "number": "3.12.2",
+      "title": "3.12.2 计算机硬件资源利用需求",
+      "level": 4,
+      "line_start": 654,
+      "text_length": 60,
+      "text_preview": "- 正常运行时，CPU 使用率 ≤ 70%\n- 高峰期（就餐时段）CPU 使用率 ≤ 90%\n- 内存使用率 ≤ 80%"
+    },
+    {
+      "number": "3.12.3",
+      "title": "3.12.3 计算机软件需求",
+      "level": 4,
+      "line_start": 660,
+      "text_length": 223,
+      "text_preview": "| 软件 | 版本要求 | 用途 |\n|------|---------|------|\n| Java / Python | JDK 17+ / Python 3.10+ | 后端运行时 |\n| MySQL | 8.0+ | 主数据库 |\n| Redis | 6.0+ | 缓存、会话、限流 |\n| Nginx | 1.20+ | 反向代理 |\n| Docker | 20.10+ | 容器化 |\n|"
+    },
+    {
+      "number": "3.12.4",
+      "title": "3.12.4 计算机通信需求",
+      "level": 4,
+      "line_start": 671,
+      "text_length": 118,
+      "text_preview": "- 服务端带宽：≥ 100Mbps\n- WebSocket 连接支持：系统需支持同时在线 10,000+ 长连接（高峰期估算）\n- 数据传输：REST API 平均响应体 ≤ 50KB；WebSocket 消息 ≤ 1KB/条\n\n---"
+    },
+    {
+      "number": "3.13",
+      "title": "3.13 软件质量因素",
+      "level": 3,
+      "line_start": 679,
+      "text_length": 365,
+      "text_preview": "**NFR-020 性能**\n- API 平均响应时间 ≤ 1秒（P95 ≤ 2秒）\n- 系统可支持并发用户数 ≥ 1,000（高峰时段）\n- 订单创建 TPS ≥ 100\n\n**NFR-021 可靠性**\n- 系统年可用性 ≥ 99.5%（约等于年停机时间 ≤ 43.8小时）\n- 关键数据（订单、支付）不丢失，数据库每日备份\n\n**NFR-022 可用性（易用性）**\n- 新用户首次完成下单流程"
+    },
+    {
+      "number": "3.14",
+      "title": "3.14 设计和实现的约束",
+      "level": 3,
+      "line_start": 704,
+      "text_length": 164,
+      "text_preview": "- 采用前后端分离架构，后端提供 RESTful API\n- 移动端 App 需同时支持 iOS 和 Android（可采用 React Native 或原生双端）\n- 数据库设计需考虑未来多校区扩展\n- 第三方地图和支付 API 接入需做适配层，便于切换供应商\n- 用户界面设计参考美团外卖交互规范，降低用户学习成本\n\n---"
+    },
+    {
+      "number": "3.15",
+      "title": "3.15 数据",
+      "level": 3,
+      "line_start": 714,
+      "text_length": 224,
+      "text_preview": "- **输入数据**：用户注册信息、商品/店铺信息、订单数据、评价数据、骑手位置坐标\n- **输出数据**：订单状态、配送位置、推荐商品、榜单数据、数据看板报表\n- **数据量估算**（初期，单校区）：\n\n| 数据类型 | 估算规模 |\n|---------|---------|\n| 注册用户 | ≤ 10,000 |\n| 店铺数量 | ≤ 200 |\n| 日均订单 | ≤ 5,000 |\n| 评"
+    },
+    {
+      "number": "3.16",
+      "title": "3.16 操作",
+      "level": 3,
+      "line_start": 729,
+      "text_length": 153,
+      "text_preview": "- **常规操作**：用户自助完成点餐、支付、追踪全流程；商家自助管理商品和订单\n- **特殊操作**：管理员审核、下架、强制取消订单等操作需记录操作日志\n- **初始化操作**：系统上线前导入基础店铺分类、校区地址数据、管理员账号\n- **恢复操作**：服务异常时自动重启；数据库故障切换至备库\n\n---"
+    },
+    {
+      "number": "3.17",
+      "title": "3.17 故障处理",
+      "level": 3,
+      "line_start": 738,
+      "text_length": 302,
+      "text_preview": "| 故障类型 | 错误信息 | 补救措施 |\n|---------|---------|---------|\n| 支付网关超时 | \"支付服务暂时不可用，请稍后重试\" | 订单保留15分钟，用户可重新发起支付 |\n| 地图 API 不可用 | \"当前无法显示地图，仅展示文字地址\" | 降级展示文字地址，不影响下单 |\n| 数据库连接失败 | \"系统繁忙，请稍后重试\" | 自动切换备库，告警运维人员"
+    },
+    {
+      "number": "3.18",
+      "title": "3.18 算法说明",
+      "level": 3,
+      "line_start": 750,
+      "text_length": 231,
+      "text_preview": "**智能派单算法（概况）**：\n- 输入：待分配订单集合、在线骑手集合（含位置、当前承接订单数）\n- 评分公式：`综合得分 = α × (1/距离) + β × (1/当前承接数) + γ × 骑手历史评分`\n- 权重 α、β、γ 为可配置参数，初始值待运营调优 [待确认]\n- 输出：为每个订单推荐得分最高的骑手\n\n**推荐算法（概况）**：\n- 新用户：基于全平台热销商品和新用户默认偏好\n- 老"
+    },
+    {
+      "number": "3.19",
+      "title": "3.19 有关人员需求",
+      "level": 3,
+      "line_start": 764,
+      "text_length": 211,
+      "text_preview": "| 角色 | 同时在线预估 | 操作频率 |\n|------|------------|---------|\n| 学生用户 | 高峰期 ≤ 3,000 | 高（就餐时段密集） |\n| 商家 | ≤ 200 | 中（就餐时段持续监控） |\n| 骑手 | ≤ 500 | 高（持续使用导航和状态更新） |\n| 管理员 | ≤ 10 | 低（按需操作） |\n\n系统需提供帮助中心（FAQ）和新手引导，降低用"
+    },
+    {
+      "number": "3.20",
+      "title": "3.20 有关培训需求",
+      "level": 3,
+      "line_start": 777,
+      "text_length": 101,
+      "text_preview": "- 面向学生用户：App 内置新手引导（首次使用时展示，可跳过）\n- 面向商家：提供商家操作手册（PDF）和视频教程\n- 面向骑手：骑手端内置操作引导\n- 面向管理员：提供后台管理操作培训文档\n\n---"
+    },
+    {
+      "number": "3.21",
+      "title": "3.21 有关后勤需求",
+      "level": 3,
+      "line_start": 786,
+      "text_length": 118,
+      "text_preview": "- 系统维护窗口建议选择凌晨 2:00-5:00（非就餐时段），维护前提前公告\n- 软件更新采用滚动发布（Rolling Update），尽量不影响在线用户\n- 数据库每日全量备份 + 实时 binlog 备份，备份保留30天\n\n---"
+    },
+    {
+      "number": "3.22",
+      "title": "3.22 其他需求",
+      "level": 3,
+      "line_start": 794,
+      "text_length": 221,
+      "text_preview": "**FR-090**：评价系统\n- 用户在订单完成后可对商品和配送进行评价（评分1-5星 + 文字 + 图片）\n- 评价后可见，不可修改（避免恶意刷评）\n- 商家可回复评价\n- **验收标准**：评价提交后5秒内可见；图片大小限制 ≤ 5MB/张，最多3张\n\n**FR-091**：消息通知\n- 订单状态变更（接单、取餐、送达）需推送 App 消息通知给用户\n- 新订单推送给商家（声音+弹窗+角标）"
+    },
+    {
+      "number": "3.23",
+      "title": "3.23 包装需求",
+      "level": 3,
+      "line_start": 809,
+      "text_length": 133,
+      "text_preview": "本系统为移动 App + Web 应用，无物理介质交付需求。交付物包括：\n- 移动端 App 安装包（iOS: .ipa，Android: .apk/.aab）\n- Web 前端静态资源包\n- 后端服务 Docker 镜像\n- 部署文档、用户手册、接口文档\n\n---"
+    },
+    {
+      "number": "3.24",
+      "title": "3.24 需求的优先次序和关键程度",
+      "level": 3,
+      "line_start": 819,
+      "text_length": 382,
+      "text_preview": "| 优先级 | 模块 | 需求范围 |\n|--------|------|---------|\n| **P0（必须，MVP）** | 用户注册/登录、店铺浏览、商品详情、购物车、下单支付、商家接单、骑手配送、订单追踪 | FR-001~FR-032, FR-050~FR-064 |\n| **P1（重要）** | 个人中心、评价系统、管理员审核与管理、数据看板 | FR-040~FR-043, FR"
+    },
+    {
+      "number": "4",
+      "title": "4 合格性规定",
+      "level": 2,
+      "line_start": 832,
+      "text_length": 657,
+      "text_preview": "| 需求编号 | 需求描述 | 合格性方法 |\n|---------|---------|-----------|\n| FR-001 | 用户注册 | 测试（自动化测试：边界值、异常分支） |\n| FR-002 | 用户登录 | 测试（功能测试 + 安全测试：暴力破解防护） |\n| FR-010 | 主页展示 | 演示（加载时间性能测试） |\n| FR-011 | 搜索功能 | 测试（响应时间测试"
+    },
+    {
+      "number": "5",
+      "title": "5 需求可追踪性",
+      "level": 2,
+      "line_start": 854,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "需求追踪矩阵（需求 → 设计模块 → 测试用例）",
+      "level": 3,
+      "line_start": 856,
+      "text_length": 811,
+      "text_preview": "| 需求编号 | 需求简述 | 设计模块 | 测试用例编号（待补充） |\n|---------|---------|---------|---------------------|\n| FR-001 | 用户注册 | 用户服务 - 注册模块 | TC-001 |\n| FR-002 | 用户登录 | 用户服务 - 认证模块 | TC-002 |\n| FR-010 | 主页推荐 | 商品服务 - 推荐"
+    },
+    {
+      "number": "6",
+      "title": "6 尚未解决的问题",
+      "level": 2,
+      "line_start": 880,
+      "text_length": 635,
+      "text_preview": "以下为撰写本 SRS 时发现的待确认问题，需与需方进一步确认：\n\n| 编号 | 问题描述 | 涉及需求 | 优先级 |\n|------|---------|---------|--------|\n| Q-001 | 商家审核时限：建议48小时内，是否有 SLA 要求？ | FR-050 | 高 |\n| Q-002 | 商家超时未接单（5分钟后）的处理策略：自动取消订单还是继续等待并提醒商家？ | "
+    },
+    {
+      "number": "7",
+      "title": "7 注解",
+      "level": 2,
+      "line_start": 899,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "术语与定义",
+      "level": 3,
+      "line_start": 901,
+      "text_length": 524,
+      "text_preview": "| 术语 | 定义 |\n|------|------|\n| CSCI | 计算机软件配置项（Computer Software Configuration Item） |\n| SRS | 软件需求规格说明书（Software Requirements Specification） |\n| MVP | 最小可行产品（Minimum Viable Product） |\n| RBAC | 基于角色的访问"
+    },
+    {
+      "number": null,
+      "title": "缩略词",
+      "level": 3,
+      "line_start": 919,
+      "text_length": 379,
+      "text_preview": "| 缩略词 | 全称 |\n|--------|------|\n| BLM | 饱了么（BaoLeMe） |\n| SRS | Software Requirements Specification |\n| FR | Functional Requirement，功能需求 |\n| NFR | Non-Functional Requirement，非功能需求 |\n| IF | Interface Req"
+    },
+    {
+      "number": null,
+      "title": "附录",
+      "level": 2,
+      "line_start": 936,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "附录 A：用例图（概览）",
+      "level": 3,
+      "line_start": 938,
+      "text_length": 1388,
+      "text_preview": "```\n                    ┌─────────────────────────────┐\n                    │         饱了么平台            │\n                    │                             │\n  学生用户 ─────────│── 浏览店铺/商品               │"
+    },
+    {
+      "number": null,
+      "title": "附录 B：需求范围说明",
+      "level": 3,
+      "line_start": 971,
+      "text_length": 187,
+      "text_preview": "**范围内（本期实现）**：\n- 上述所有 P0、P1、P2 级功能需求\n- 单校区运营支持\n- iOS + Android + Web 三端\n\n**范围外（本期不实现）**：\n- 多校区/多城市扩展\n- 商家财务对账与结算系统（仅记录订单金额，不做结算）\n- 直播带货、短视频内容\n- 第三方外部平台接入（如饿了么、美团开放平台对接）\n- 物流硬件设备集成（如智能快递柜）"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 139,
+  "llm_constraints": [
+    {
+      "type": "numerical",
+      "original": "iOS 13+",
+      "param": "iOS版本",
+      "operator": ">=",
+      "value": 13,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "Android 8+",
+      "param": "Android版本",
+      "operator": ">=",
+      "value": 8,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "主流浏览器",
+      "param": "浏览器类型",
+      "value": "主流浏览器",
+      "description": "客户端环境要求",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "Chrome 90+",
+      "param": "Chrome版本",
+      "operator": ">=",
+      "value": 90,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "Safari 14+",
+      "param": "Safari版本",
+      "operator": ">=",
+      "value": 14,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "Linux（Ubuntu 20.04 LTS 或以上）",
+      "param": "服务端操作系统",
+      "value": "Linux",
+      "description": "操作系统类型",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "Ubuntu 20.04 LTS 或以上",
+      "param": "Ubuntu版本",
+      "operator": ">=",
+      "value": 20.04,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "关系型数据库（MySQL 8.0+）",
+      "param": "数据库类型",
+      "value": "关系型数据库",
+      "description": "数据库选型",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "MySQL 8.0+",
+      "param": "MySQL版本",
+      "operator": ">=",
+      "value": 8.0,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "缓存（Redis 6.0+）",
+      "param": "缓存组件",
+      "value": "Redis",
+      "description": "缓存选型",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "Redis 6.0+",
+      "param": "Redis版本",
+      "operator": ">=",
+      "value": 6.0,
+      "unit": "版本",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "校园内网 + 公网",
+      "param": "网络环境",
+      "value": "校园内网 + 公网",
+      "description": "网络覆盖范围",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "支持 HTTPS",
+      "param": "网络协议",
+      "value": "HTTPS",
+      "description": "安全传输协议",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "design",
+      "original": "容器化部署",
+      "param": "部署方式",
+      "value": "容器化",
+      "description": "Docker/Kubernetes",
+      "section_title": "3.2.2 运行环境",
+      "line_start": 129
+    },
+    {
+      "type": "numerical",
+      "original": "手机号格式校验（11位国内号码）",
+      "param": "手机号位数",
+      "operator": "=",
+      "value": 11,
+      "unit": "位",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "numerical",
+      "original": "验证码60秒有效期",
+      "param": "验证码有效期",
+      "operator": "=",
+      "value": 60,
+      "unit": "秒",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "numerical",
+      "original": "每日同号最多发送5次",
+      "param": "每日同号发送次数",
+      "operator": "≤",
+      "value": 5,
+      "unit": "次",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "conditional",
+      "original": "连续5次验证码错误后锁定10分钟",
+      "param": "验证码错误次数",
+      "value": 5,
+      "unit": "次",
+      "condition": "连续验证码错误5次",
+      "action": "锁定10分钟",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "conditional",
+      "original": "密码错误5次后账号锁定30分钟",
+      "param": "密码错误次数",
+      "value": 5,
+      "unit": "次",
+      "condition": "密码错误5次",
+      "action": "账号锁定30分钟",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "numerical",
+      "original": "登录响应时间 ≤ 2秒",
+      "param": "登录响应时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "numerical",
+      "original": "Token 有效期 7 天",
+      "param": "Token有效期",
+      "operator": "=",
+      "value": 7,
+      "unit": "天",
+      "section_title": "3.4.1 用户注册与登录",
+      "line_start": 227
+    },
+    {
+      "type": "numerical",
+      "original": "筛选结果响应时间 ≤ 1秒",
+      "param": "筛选结果响应时间",
+      "operator": "≤",
+      "value": 1,
+      "unit": "秒",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "conditional",
+      "original": "无符合条件店铺时提示\"暂无符合条件的店铺\"",
+      "condition": "无符合条件店铺",
+      "action": "提示\"暂无符合条件的店铺\"",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "design",
+      "original": "热销商品（前5个）",
+      "param": "热销商品数量",
+      "value": 5,
+      "unit": "个",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "conditional",
+      "original": "店铺被下架时展示\"该店铺暂停营业\"",
+      "condition": "店铺被下架",
+      "action": "展示\"该店铺暂停营业\"",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "numerical",
+      "original": "详情页加载时间 ≤ 2秒",
+      "param": "店铺详情页加载时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "design",
+      "original": "每页10条",
+      "param": "评价每页条数",
+      "value": 10,
+      "unit": "条",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "conditional",
+      "original": "商品已下架时展示\"该商品已下架\"并推荐相似商品",
+      "condition": "商品已下架",
+      "action": "展示\"该商品已下架\"并推荐相似商品",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "numerical",
+      "original": "详情页加载时间 ≤ 2秒",
+      "param": "商品详情页加载时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.4.3 店铺浏览与筛选",
+      "line_start": 267
+    },
+    {
+      "type": "numerical",
+      "original": "支持修改数量（最小1，最大99）",
+      "param": "商品数量",
+      "operator": "≥",
+      "value": 1,
+      "unit": "件",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "支持修改数量（最小1，最大99）",
+      "param": "商品数量",
+      "operator": "≤",
+      "value": 99,
+      "unit": "件",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "操作响应时间 ≤ 1秒",
+      "param": "操作响应时间",
+      "operator": "≤",
+      "value": 1,
+      "unit": "秒",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "conditional",
+      "original": "支付超时（15分钟内未支付）自动取消订单",
+      "param": "支付时长",
+      "value": 15,
+      "unit": "分钟",
+      "condition": "支付时长 > 15分钟",
+      "action": "自动取消订单",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "下单到支付完成全流程 ≤ 60秒",
+      "param": "下单到支付完成全流程时长",
+      "operator": "≤",
+      "value": 60,
+      "unit": "秒",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "订单创建成功率 ≥ 99.9%",
+      "param": "订单创建成功率",
+      "operator": "≥",
+      "value": 99.9,
+      "unit": "%",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "每笔订单限催1次",
+      "param": "催单次数",
+      "operator": "≤",
+      "value": 1,
+      "unit": "次",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "位置更新间隔 ≤ 10秒",
+      "param": "位置更新间隔",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "状态更新延迟 ≤ 10秒",
+      "param": "状态更新延迟",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "地图渲染时间 ≤ 3秒",
+      "param": "地图渲染时间",
+      "operator": "≤",
+      "value": 3,
+      "unit": "秒",
+      "section_title": "3.4.4 购物车与下单",
+      "line_start": 300
+    },
+    {
+      "type": "numerical",
+      "original": "审核响应时间由管理员操作，建议 ≤ 48小时（[待确认]）",
+      "param": "审核响应时间",
+      "operator": "≤",
+      "value": 48,
+      "unit": "小时",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "design",
+      "original": "商品数量无上限",
+      "param": "商品数量上限",
+      "value": "无上限",
+      "unit": "个",
+      "description": "商品数量无上限",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "商品操作立即生效（用户侧同步延迟 ≤ 5秒）",
+      "param": "用户侧同步延迟",
+      "operator": "≤",
+      "value": 5,
+      "unit": "秒",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "促销价格计算误差为零",
+      "param": "促销价格计算误差",
+      "operator": "=",
+      "value": 0,
+      "unit": "元",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "conditional",
+      "original": "商家超时（5分钟内未接单）系统自动提醒",
+      "condition": "未接单时长 > 5分钟",
+      "action": "系统自动提醒",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "订单推送延迟 ≤ 5秒",
+      "param": "订单推送延迟",
+      "operator": "≤",
+      "value": 5,
+      "unit": "秒",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "热销商品排行（前10）",
+      "param": "热销商品排行数量",
+      "operator": "=",
+      "value": 10,
+      "unit": "个",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "数据更新频率 ≤ 1小时（非实时）",
+      "param": "数据更新频率",
+      "operator": "≤",
+      "value": 1,
+      "unit": "小时",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "图表渲染时间 ≤ 3秒",
+      "param": "图表渲染时间",
+      "operator": "≤",
+      "value": 3,
+      "unit": "秒",
+      "section_title": "3.4.6 商家店铺管理",
+      "line_start": 360
+    },
+    {
+      "type": "numerical",
+      "original": "审核时间 ≤ 24小时（[待确认]）",
+      "param": "审核时间",
+      "operator": "≤",
+      "value": 24,
+      "unit": "小时",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "派单算法响应时间 ≤ 3秒",
+      "param": "派单算法响应时间",
+      "operator": "≤",
+      "value": 3,
+      "unit": "秒",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "骑手接单后10秒内收到导航路线",
+      "param": "导航路线接收延迟",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "抢单操作响应时间 ≤ 1秒",
+      "param": "抢单操作响应时间",
+      "operator": "≤",
+      "value": 1,
+      "unit": "秒",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "并发抢单无重复分配",
+      "param": "重复分配次数",
+      "operator": "=",
+      "value": 0,
+      "unit": "次",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "状态推送延迟 ≤ 5秒",
+      "param": "状态推送延迟",
+      "operator": "≤",
+      "value": 5,
+      "unit": "秒",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "导航启动时间 ≤ 3秒",
+      "param": "导航启动时间",
+      "operator": "≤",
+      "value": 3,
+      "unit": "秒",
+      "section_title": "3.4.7 骑手配送",
+      "line_start": 398
+    },
+    {
+      "type": "numerical",
+      "original": "审核操作界面响应时间 ≤ 2秒",
+      "param": "审核操作界面响应时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.4.8 管理员审核与管理",
+      "line_start": 432
+    },
+    {
+      "type": "numerical",
+      "original": "下架操作生效时间 ≤ 10秒（用户侧立即不可见）",
+      "param": "下架操作生效时间",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "3.4.8 管理员审核与管理",
+      "line_start": 432
+    },
+    {
+      "type": "numerical",
+      "original": "订单列表支持分页，每页50条",
+      "param": "每页条数",
+      "operator": "=",
+      "value": 50,
+      "unit": "条",
+      "section_title": "3.4.8 管理员审核与管理",
+      "line_start": 432
+    },
+    {
+      "type": "numerical",
+      "original": "响应时间 ≤ 2秒",
+      "param": "响应时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.4.8 管理员审核与管理",
+      "line_start": 432
+    },
+    {
+      "type": "numerical",
+      "original": "删除操作生效时间 ≤ 10秒",
+      "param": "删除操作生效时间",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "3.4.8 管理员审核与管理",
+      "line_start": 432
+    },
+    {
+      "type": "numerical",
+      "original": "优惠券计算误差为零",
+      "param": "优惠券计算误差",
+      "operator": "=",
+      "value": 0,
+      "unit": null,
+      "section_title": "3.4.9 额外功能（增值模块）",
+      "line_start": 466
+    },
+    {
+      "type": "numerical",
+      "original": "生成拼单链接/二维码（有效期30分钟）",
+      "param": "拼单链接/二维码有效期",
+      "operator": "=",
+      "value": 30,
+      "unit": "分钟",
+      "section_title": "3.4.9 额外功能（增值模块）",
+      "line_start": 466
+    },
+    {
+      "type": "numerical",
+      "original": "分享链接有效期 ≥ 7天",
+      "param": "分享链接有效期",
+      "operator": "≥",
+      "value": 7,
+      "unit": "天",
+      "section_title": "3.4.9 额外功能（增值模块）",
+      "line_start": 466
+    },
+    {
+      "type": "temporal",
+      "original": "榜单每周一凌晨2:00自动更新",
+      "param": "榜单更新时间",
+      "phase": "每周一凌晨",
+      "value": "02:00",
+      "unit": "时",
+      "action": "自动更新",
+      "section_title": "3.4.9 额外功能（增值模块）",
+      "line_start": 466
+    },
+    {
+      "type": "numerical",
+      "original": "生成时间 ≤ 30分钟",
+      "param": "榜单生成时间",
+      "operator": "≤",
+      "value": 30,
+      "unit": "分钟",
+      "section_title": "3.4.9 额外功能（增值模块）",
+      "line_start": 466
+    },
+    {
+      "type": "numerical",
+      "original": "JWT Token，有效期7天",
+      "param": "JWT Token有效期",
+      "operator": "=",
+      "value": 7,
+      "unit": "天",
+      "section_title": "3.5.2 IF-001 用户移动端接口",
+      "line_start": 503
+    },
+    {
+      "type": "conditional",
+      "original": "过期自动刷新",
+      "param": "JWT Token",
+      "condition": "JWT Token过期",
+      "action": "自动刷新",
+      "section_title": "3.5.2 IF-001 用户移动端接口",
+      "line_start": 503
+    },
+    {
+      "type": "numerical",
+      "original": "用户Token（String，≤512字符）",
+      "param": "用户Token长度",
+      "operator": "≤",
+      "value": 512,
+      "unit": "字符",
+      "section_title": "3.5.2 IF-001 用户移动端接口",
+      "line_start": 503
+    },
+    {
+      "type": "numerical",
+      "original": "地理坐标（Double，精度6位小数）",
+      "param": "地理坐标精度",
+      "operator": "=",
+      "value": 6,
+      "unit": "位小数",
+      "section_title": "3.5.2 IF-001 用户移动端接口",
+      "line_start": 503
+    },
+    {
+      "type": "numerical",
+      "original": "响应时间要求：≤ 2秒",
+      "param": "响应时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.5.3 IF-003 地图导航 API",
+      "line_start": 515
+    },
+    {
+      "type": "conditional",
+      "original": "降级策略：地图 API 不可用时，展示文字地址，不显示地图",
+      "condition": "地图 API 不可用",
+      "action": "展示文字地址，不显示地图",
+      "section_title": "3.5.3 IF-003 地图导航 API",
+      "line_start": 515
+    },
+    {
+      "type": "design",
+      "original": "类型：第三方支付 SDK",
+      "param": "接口类型",
+      "value": "第三方支付 SDK",
+      "unit": "",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "design",
+      "original": "支持渠道：微信支付、支付宝",
+      "param": "支持渠道",
+      "value": "微信支付、支付宝",
+      "unit": "",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "design",
+      "original": "支付金额由服务端计算，客户端不可篡改",
+      "param": "金额计算方",
+      "value": "服务端",
+      "unit": "",
+      "description": "客户端不可篡改",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "design",
+      "original": "使用支付平台提供的签名机制",
+      "param": "签名机制",
+      "value": "支付平台提供",
+      "unit": "",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "design",
+      "original": "服务端需幂等处理",
+      "param": "回调处理方式",
+      "value": "幂等处理",
+      "unit": "",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "conditional",
+      "original": "15分钟未支付，订单自动关闭",
+      "param": "未支付时间",
+      "value": 15,
+      "unit": "分钟",
+      "condition": "未支付时间 >= 15分钟",
+      "action": "订单自动关闭",
+      "section_title": "3.5.4 IF-004 支付接口",
+      "line_start": 523
+    },
+    {
+      "type": "numerical",
+      "original": "服务间调用超时设置 ≤ 5秒",
+      "param": "服务间调用超时设置",
+      "operator": "≤",
+      "value": 5,
+      "unit": "秒",
+      "section_title": "3.6 CSCI内部接口需求",
+      "line_start": 533
+    },
+    {
+      "type": "numerical",
+      "original": "用户密码使用 bcrypt（cost ≥ 12）加密存储",
+      "param": "bcrypt cost",
+      "operator": "≥",
+      "value": 12,
+      "unit": "",
+      "section_title": "3.10 保密性和私密性需求",
+      "line_start": 620
+    },
+    {
+      "type": "conditional",
+      "original": "用户手机号在非必要展示场景下脱敏",
+      "condition": "非必要展示场景",
+      "action": "手机号脱敏",
+      "section_title": "3.10 保密性和私密性需求",
+      "line_start": 620
+    },
+    {
+      "type": "numerical",
+      "original": "所有网络传输使用 TLS 1.2+",
+      "param": "TLS版本",
+      "operator": "≥",
+      "value": 1.2,
+      "unit": "",
+      "section_title": "3.10 保密性和私密性需求",
+      "line_start": 620
+    },
+    {
+      "type": "conditional",
+      "original": "未登录用户只可浏览店铺和商品（不可下单）",
+      "condition": "用户未登录",
+      "action": "只可浏览店铺和商品（不可下单）",
+      "section_title": "3.10 保密性和私密性需求",
+      "line_start": 620
+    },
+    {
+      "type": "design",
+      "original": "生产环境：Linux 服务器，容器化部署（Docker + Kubernetes）",
+      "param": "生产环境操作系统",
+      "value": "Linux",
+      "description": "服务器操作系统",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "design",
+      "original": "生产环境：Linux 服务器，容器化部署（Docker + Kubernetes）",
+      "param": "生产环境部署方式",
+      "value": "容器化",
+      "description": "Docker + Kubernetes",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "design",
+      "original": "开发/测试环境：支持本地 Docker Compose 启动",
+      "param": "开发/测试环境启动方式",
+      "value": "Docker Compose",
+      "description": "支持本地启动",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "numerical",
+      "original": "服务端 Linux（Ubuntu 20.04+）",
+      "param": "服务端操作系统版本",
+      "operator": "≥",
+      "value": "20.04",
+      "unit": "版本",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "numerical",
+      "original": "客户端 iOS 13+",
+      "param": "客户端iOS版本",
+      "operator": "≥",
+      "value": "13",
+      "unit": "版本",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "numerical",
+      "original": "Android 8+",
+      "param": "客户端Android版本",
+      "operator": "≥",
+      "value": "8",
+      "unit": "版本",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "design",
+      "original": "主流浏览器",
+      "param": "客户端浏览器类型",
+      "value": "主流浏览器",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "design",
+      "original": "系统统一使用 UTC+8（北京时间）",
+      "param": "系统时区",
+      "value": "UTC+8",
+      "description": "北京时间",
+      "section_title": "3.11 CSCI环境需求",
+      "line_start": 635
+    },
+    {
+      "type": "numerical",
+      "original": "应用服务器最低配置4核 CPU",
+      "param": "应用服务器CPU核心数",
+      "operator": "≥",
+      "value": 4,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "应用服务器最低配置8GB RAM",
+      "param": "应用服务器内存",
+      "operator": "≥",
+      "value": 8,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "应用服务器推荐配置8核 CPU",
+      "param": "应用服务器CPU核心数",
+      "value": 8,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "应用服务器推荐配置16GB RAM",
+      "param": "应用服务器内存",
+      "value": 16,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "数据库服务器最低配置4核 CPU",
+      "param": "数据库服务器CPU核心数",
+      "operator": "≥",
+      "value": 4,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "数据库服务器最低配置16GB RAM",
+      "param": "数据库服务器内存",
+      "operator": "≥",
+      "value": 16,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "数据库服务器最低配置500GB SSD",
+      "param": "数据库服务器存储空间",
+      "operator": "≥",
+      "value": 500,
+      "unit": "GB",
+      "description": "SSD",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "数据库服务器推荐配置8核 CPU",
+      "param": "数据库服务器CPU核心数",
+      "value": 8,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "数据库服务器推荐配置32GB RAM",
+      "param": "数据库服务器内存",
+      "value": 32,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "数据库服务器推荐配置1TB SSD",
+      "param": "数据库服务器存储空间",
+      "value": 1,
+      "unit": "TB",
+      "description": "SSD",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "缓存服务器最低配置2核 CPU",
+      "param": "缓存服务器CPU核心数",
+      "operator": "≥",
+      "value": 2,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "缓存服务器最低配置4GB RAM",
+      "param": "缓存服务器内存",
+      "operator": "≥",
+      "value": 4,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "缓存服务器推荐配置4核 CPU",
+      "param": "缓存服务器CPU核心数",
+      "value": 4,
+      "unit": "核",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "design",
+      "original": "缓存服务器推荐配置8GB RAM",
+      "param": "缓存服务器内存",
+      "value": 8,
+      "unit": "GB",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 646
+    },
+    {
+      "type": "numerical",
+      "original": "正常运行时，CPU 使用率 ≤ 70%",
+      "param": "CPU 使用率",
+      "operator": "≤",
+      "value": 70,
+      "unit": "%",
+      "description": "正常运行时",
+      "section_title": "3.12.2 计算机硬件资源利用需求",
+      "line_start": 654
+    },
+    {
+      "type": "numerical",
+      "original": "高峰期（就餐时段）CPU 使用率 ≤ 90%",
+      "param": "CPU 使用率",
+      "operator": "≤",
+      "value": 90,
+      "unit": "%",
+      "description": "高峰期（就餐时段）",
+      "section_title": "3.12.2 计算机硬件资源利用需求",
+      "line_start": 654
+    },
+    {
+      "type": "numerical",
+      "original": "内存使用率 ≤ 80%",
+      "param": "内存使用率",
+      "operator": "≤",
+      "value": 80,
+      "unit": "%",
+      "section_title": "3.12.2 计算机硬件资源利用需求",
+      "line_start": 654
+    },
+    {
+      "type": "numerical",
+      "original": "服务端带宽：≥ 100Mbps",
+      "param": "服务端带宽",
+      "operator": "≥",
+      "value": 100,
+      "unit": "Mbps",
+      "section_title": "3.12.4 计算机通信需求",
+      "line_start": 671
+    },
+    {
+      "type": "numerical",
+      "original": "系统需支持同时在线 10,000+ 长连接（高峰期估算）",
+      "param": "同时在线长连接数",
+      "operator": "≥",
+      "value": 10000,
+      "unit": "个",
+      "section_title": "3.12.4 计算机通信需求",
+      "line_start": 671
+    },
+    {
+      "type": "numerical",
+      "original": "REST API 平均响应体 ≤ 50KB",
+      "param": "REST API 平均响应体",
+      "operator": "≤",
+      "value": 50,
+      "unit": "KB",
+      "section_title": "3.12.4 计算机通信需求",
+      "line_start": 671
+    },
+    {
+      "type": "numerical",
+      "original": "WebSocket 消息 ≤ 1KB/条",
+      "param": "WebSocket 消息大小",
+      "operator": "≤",
+      "value": 1,
+      "unit": "KB",
+      "section_title": "3.12.4 计算机通信需求",
+      "line_start": 671
+    },
+    {
+      "type": "numerical",
+      "original": "API 平均响应时间 ≤ 1秒（P95 ≤ 2秒）",
+      "param": "API 平均响应时间",
+      "operator": "≤",
+      "value": 1,
+      "unit": "秒",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "API 平均响应时间 ≤ 1秒（P95 ≤ 2秒）",
+      "param": "API 响应时间 P95",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "系统可支持并发用户数 ≥ 1,000（高峰时段）",
+      "param": "系统并发用户数",
+      "operator": "≥",
+      "value": 1000,
+      "unit": "人",
+      "description": "高峰时段",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "订单创建 TPS ≥ 100",
+      "param": "订单创建 TPS",
+      "operator": "≥",
+      "value": 100,
+      "unit": "TPS",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "系统年可用性 ≥ 99.5%（约等于年停机时间 ≤ 43.8小时）",
+      "param": "系统年可用性",
+      "operator": "≥",
+      "value": 99.5,
+      "unit": "%",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "系统年可用性 ≥ 99.5%（约等于年停机时间 ≤ 43.8小时）",
+      "param": "年停机时间",
+      "operator": "≤",
+      "value": 43.8,
+      "unit": "小时",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "关键数据（订单、支付）不丢失，数据库每日备份",
+      "param": "数据库备份频率",
+      "operator": "≥",
+      "value": 1,
+      "unit": "次/日",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "新用户首次完成下单流程时间 ≤ 5分钟（无需培训）",
+      "param": "新用户首次完成下单流程时间",
+      "operator": "≤",
+      "value": 5,
+      "unit": "分钟",
+      "description": "无需培训",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "关键操作步骤 ≤ 3次点击",
+      "param": "关键操作步骤",
+      "operator": "≤",
+      "value": 3,
+      "unit": "次点击",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "design",
+      "original": "代码按模块分层，单个方法行数 ≤ 100行",
+      "param": "代码架构",
+      "value": "分层",
+      "unit": "",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "代码按模块分层，单个方法行数 ≤ 100行",
+      "param": "单个方法行数",
+      "operator": "≤",
+      "value": 100,
+      "unit": "行",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "核心业务逻辑单元测试覆盖率 ≥ 60%",
+      "param": "核心业务逻辑单元测试覆盖率",
+      "operator": "≥",
+      "value": 60,
+      "unit": "%",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "design",
+      "original": "系统架构支持水平扩展，通过增加节点提升并发能力",
+      "param": "系统扩展方式",
+      "value": "水平扩展",
+      "unit": "",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "design",
+      "original": "支持未来接入更多高校（多租户架构准备）",
+      "param": "架构模式",
+      "value": "多租户",
+      "unit": "",
+      "section_title": "3.13 软件质量因素",
+      "line_start": 679
+    },
+    {
+      "type": "numerical",
+      "original": "注册用户 ≤ 10,000",
+      "param": "注册用户",
+      "operator": "≤",
+      "value": 10000,
+      "unit": "人",
+      "section_title": "3.15 数据",
+      "line_start": 714
+    },
+    {
+      "type": "numerical",
+      "original": "店铺数量 ≤ 200",
+      "param": "店铺数量",
+      "operator": "≤",
+      "value": 200,
+      "unit": "家",
+      "section_title": "3.15 数据",
+      "line_start": 714
+    },
+    {
+      "type": "numerical",
+      "original": "日均订单 ≤ 5,000",
+      "param": "日均订单",
+      "operator": "≤",
+      "value": 5000,
+      "unit": "单",
+      "section_title": "3.15 数据",
+      "line_start": 714
+    },
+    {
+      "type": "numerical",
+      "original": "评价数量 月增 ≤ 50,000",
+      "param": "评价数量",
+      "operator": "≤",
+      "value": 50000,
+      "unit": "条",
+      "description": "月增",
+      "section_title": "3.15 数据",
+      "line_start": 714
+    },
+    {
+      "type": "numerical",
+      "original": "学生用户高峰期 ≤ 3,000",
+      "param": "学生用户同时在线预估",
+      "operator": "≤",
+      "value": 3000,
+      "unit": "人",
+      "description": "高峰期限制",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 764
+    },
+    {
+      "type": "numerical",
+      "original": "商家 ≤ 200",
+      "param": "商家同时在线预估",
+      "operator": "≤",
+      "value": 200,
+      "unit": "人",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 764
+    },
+    {
+      "type": "numerical",
+      "original": "骑手 ≤ 500",
+      "param": "骑手同时在线预估",
+      "operator": "≤",
+      "value": 500,
+      "unit": "人",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 764
+    },
+    {
+      "type": "numerical",
+      "original": "管理员 ≤ 10",
+      "param": "管理员同时在线预估",
+      "operator": "≤",
+      "value": 10,
+      "unit": "人",
+      "section_title": "3.19 有关人员需求",
+      "line_start": 764
+    },
+    {
+      "type": "numerical",
+      "original": "WebSocket 消息延迟 ≤ 10秒",
+      "param": "WebSocket 消息延迟",
+      "operator": "≤",
+      "value": 10,
+      "unit": "秒",
+      "section_title": "4 合格性规定",
+      "line_start": 832
+    },
+    {
+      "type": "numerical",
+      "original": "1000并发",
+      "param": "并发数",
+      "value": 1000,
+      "unit": "并发",
+      "section_title": "4 合格性规定",
+      "line_start": 832
+    },
+    {
+      "type": "numerical",
+      "original": "P95 ≤ 2秒",
+      "param": "P95响应时间",
+      "operator": "≤",
+      "value": 2,
+      "unit": "秒",
+      "section_title": "4 合格性规定",
+      "line_start": 832
+    },
+    {
+      "type": "numerical",
+      "original": "单校区运营支持",
+      "param": "支持校区数量",
+      "operator": "=",
+      "value": 1,
+      "unit": "个",
+      "section_title": "附录 B：需求范围说明",
+      "line_start": 971
+    },
+    {
+      "type": "numerical",
+      "original": "iOS + Android + Web 三端",
+      "param": "支持终端数量",
+      "operator": "=",
+      "value": 3,
+      "unit": "端",
+      "section_title": "附录 B：需求范围说明",
+      "line_start": 971
+    },
+    {
+      "type": "conditional",
+      "original": "商家财务对账与结算系统（仅记录订单金额，不做结算）",
+      "condition": "记录订单金额",
+      "action": "不做结算",
+      "section_title": "附录 B：需求范围说明",
+      "line_start": 971
+    }
+  ],
+  "table_count": 23,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "项目",
+        "内容"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "1.1 标识",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "文档名称",
+        "版本",
+        "来源"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "2 引用文件",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "状态/方式",
+        "描述",
+        "适用角色"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.1 所需的状态和方式",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "环境项",
+        "要求"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3.2.2 运行环境",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "用户类型",
+        "特点",
+        "技术熟悉度"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.2.3 用户的特点",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "约束类型",
+        "内容"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3.2.5 约束条件",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "符号/约定",
+        "含义"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "3.3.3 描述约定",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "接口ID",
+        "接口名称",
+        "本系统角色",
+        "外部实体"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "3.5.1 接口标识和接口图",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "类型",
+        "约束"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "核心数据实体",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "类型",
+        "约束"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "核心数据实体",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "类型",
+        "约束"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "核心数据实体",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "类型",
+        "约束"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "核心数据实体",
+      "raw_html": null
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "节点类型",
+        "最低配置",
+        "推荐配置"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "3.12.1 计算机硬件需求",
+      "raw_html": null
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "软件",
+        "版本要求",
+        "用途"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "3.12.3 计算机软件需求",
+      "raw_html": null
+    },
+    {
+      "index": 14,
+      "type": "data_dictionary",
+      "format": "markdown",
+      "headers": [
+        "数据类型",
+        "估算规模"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.15 数据",
+      "raw_html": null
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "故障类型",
+        "错误信息",
+        "补救措施"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3.17 故障处理",
+      "raw_html": null
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "角色",
+        "同时在线预估",
+        "操作频率"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.19 有关人员需求",
+      "raw_html": null
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "优先级",
+        "模块",
+        "需求范围"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "3.24 需求的优先次序和关键程度",
+      "raw_html": null
+    },
+    {
+      "index": 18,
+      "type": "qualification",
+      "format": "markdown",
+      "headers": [
+        "需求编号",
+        "需求描述",
+        "合格性方法"
+      ],
+      "row_count": 16,
+      "data_row_count": 15,
+      "is_empty": false,
+      "section": "4 合格性规定",
+      "raw_html": null
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "需求编号",
+        "需求简述",
+        "设计模块",
+        "测试用例编号（待补充）"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "需求追踪矩阵（需求 → 设计模块 → 测试用例）",
+      "raw_html": null
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "问题描述",
+        "涉及需求",
+        "优先级"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "6 尚未解决的问题",
+      "raw_html": null
+    },
+    {
+      "index": 21,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "术语",
+        "定义"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "术语与定义",
+      "raw_html": null
+    },
+    {
+      "index": 22,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "缩略词",
+        "全称"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "缩略词",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

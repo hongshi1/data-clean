@@ -1,0 +1,3276 @@
+{
+  "doc_name": "IEEE2407_uc",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/IEEE2407_uc.pdf.md",
+  "md_lines": 2983,
+  "md_chars": 98673,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Executive Summary",
+  "section_count": 365,
+  "sections": [
+    {
+      "number": null,
+      "title": "Executive Summary",
+      "level": 2,
+      "line_start": 23,
+      "text_length": 448,
+      "text_preview": "This document outlines specific Use Cases for the IEEEP2407 standard group. The purpose of this document is to facilitate the development of a Reference Implementation of a Free/Open Source Software I"
+    },
+    {
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 2766,
+      "text_preview": "Executive Summary   \nTable of Contents .   \nTable of Tables..   \nTable of Figures   \nAcronyms and Definitions   \nVersion History   \nIntroduction.   \nObjective .   \nReference Implementation   \nDesign ."
+    },
+    {
+      "number": null,
+      "title": "Table of Tables",
+      "level": 2,
+      "line_start": 114,
+      "text_length": 113,
+      "text_preview": "Table 1: Acronyms and Definitions. . 5   \nTable 2: Use Case Nomenclature. . .. 8   \nTable 3: List of Actors. . 15"
+    },
+    {
+      "number": null,
+      "title": "Table of Figures",
+      "level": 2,
+      "line_start": 120,
+      "text_length": 290,
+      "text_preview": "Figure 1: UML Color Table. .. 9   \nFigure 2: Actors as Roles. . 15   \nFigure 3: Possible Artifacts on a UML Use Case Diagram.. . 100   \nFigure 4: Axis of Structured Analysis. 103   \nFigure 5: Adrian G"
+    },
+    {
+      "number": null,
+      "title": "Acronyms and Definitions",
+      "level": 2,
+      "line_start": 129,
+      "text_length": 5153,
+      "text_preview": "This section defines the acronyms and terms used throughout this document.\n\n<table><tr><td colspan=\"1\" rowspan=\"1\">Term</td><td colspan=\"1\" rowspan=\"1\">Meaning</td></tr><tr><td colspan=\"1\" rowspan=\"1\""
+    },
+    {
+      "number": null,
+      "title": "Version History",
+      "level": 2,
+      "line_start": 137,
+      "text_length": 669,
+      "text_preview": "Throughout the document the editor readily acknowledges all the comments, criticisms, and suggestions for improvement he has received. Any and all remaining errors are solely the editor’s fault.\n\n01: "
+    },
+    {
+      "number": null,
+      "title": "Introduction",
+      "level": 2,
+      "line_start": 161,
+      "text_length": 92,
+      "text_preview": "This section outlines the purpose of this document and explains the methodology used herein."
+    },
+    {
+      "number": null,
+      "title": "Objective",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 524,
+      "text_preview": "This document is part of the project to develop Personalized Health Informatics (“PHI”) standards, now labeled IEEEP2407. This document will serve as a repository to provide a high-level overview of w"
+    },
+    {
+      "number": null,
+      "title": "Reference Implementation",
+      "level": 2,
+      "line_start": 171,
+      "text_length": 156,
+      "text_preview": "These Use Cases will guide the team to design, develop, deploy, debug, and distribute a reference implementation of a PHI compliant system using 100% F/OSS."
+    },
+    {
+      "number": null,
+      "title": "Design",
+      "level": 2,
+      "line_start": 175,
+      "text_length": 483,
+      "text_preview": "The IEEEP2407 standard will be designed through direct and constant interaction with all stakeholders on a global basis. The use of this design methodology (free access to source code; all development"
+    },
+    {
+      "number": null,
+      "title": "Develop",
+      "level": 2,
+      "line_start": 181,
+      "text_length": 289,
+      "text_preview": "Work on the IEEEP2407 standard will be conducted in parallel with the development of a F/OSS “Reference Implementation” software package of the standard, and with the target end users providing direct"
+    },
+    {
+      "number": null,
+      "title": "Deploy",
+      "level": 2,
+      "line_start": 185,
+      "text_length": 318,
+      "text_preview": "Interested parties will be invited to download, install, and test the Reference Implementation software package at no cost. It is expected that individuals, institutions, and even government organizat"
+    },
+    {
+      "number": null,
+      "title": "Debug",
+      "level": 2,
+      "line_start": 189,
+      "text_length": 592,
+      "text_preview": "End-users and other stakeholders (health workers; physicians; etc.) are expected to actively “test-run” the deployments of Reference Implementation to make sure the software (and the underlying IEEEP2"
+    },
+    {
+      "number": null,
+      "title": "Distribute",
+      "level": 2,
+      "line_start": 195,
+      "text_length": 1269,
+      "text_preview": "The finished IEEEP2407 standard (as well as all the intermediate documents) will be freely available through the working group’s website at http://www.IEEE2407.org\n\nAlso, the entire source code of the"
+    },
+    {
+      "number": null,
+      "title": "Use Case Numbering Convention",
+      "level": 2,
+      "line_start": 211,
+      "text_length": 985,
+      "text_preview": "These are the conventions used to number each Use Case.\n\n<table><tr><td>UC_xyzz_aa</td><td></td></tr><tr><td rowspan=\"9\">X (Activity)</td><td>“1&quot;Create</td></tr><tr><td>&quot;2” Manage</td></tr><"
+    },
+    {
+      "number": null,
+      "title": "Color Table",
+      "level": 2,
+      "line_start": 219,
+      "text_length": 935,
+      "text_preview": "For completeness, these are the custom colors used in StarUML’s Use Case file.\n<table><tr><td rowspan=1 colspan=1>Function</td><td rowspan=1 colspan=1>Color scheme (using RGB values)</td></tr><tr><td "
+    },
+    {
+      "number": null,
+      "title": "Reference Implementation Overview",
+      "level": 2,
+      "line_start": 226,
+      "text_length": 1363,
+      "text_preview": "This section outlines a potential scenario for the Reference Implementation software system.\n\nOffer Consumer the ability to host and manage her Health Data in any participating Health Data Hosting Ser"
+    },
+    {
+      "number": null,
+      "title": "Distributed Consumer Health Data Demonstration Project",
+      "level": 2,
+      "line_start": 250,
+      "text_length": 264,
+      "text_preview": "![](images/f51be39dddb323a72c7074a9df4c6e8364524362a339a45074ad3b99e48e3adf.jpg)  \nRetailer's Branches  \nJose.Lacal@Motorola.com 09/28/2006\n\nFigure 2: Distributed Consumer health Data Demonstration Pr"
+    },
+    {
+      "number": null,
+      "title": "PHI Use Case Diagram",
+      "level": 2,
+      "line_start": 260,
+      "text_length": 192,
+      "text_preview": "![](images/69a7f18240c1359f004d4a95a45d77161fdf1fe9df3f6c35850c58cf221f3339.jpg)  \nIEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org\n\nFigure 1 – Use Case Diagram of PHI"
+    },
+    {
+      "number": null,
+      "title": "PHI\\_1 Use Case Diagram",
+      "level": 2,
+      "line_start": 267,
+      "text_length": 325,
+      "text_preview": "Detailed analysis of the process for creating Individual, Family, and Community profiles.\n\n![](images/e919dae74674df2636db2ff4216cec68f67fa8d111813dd42c610995bbc903d5.jpg)  \nFigure 2 – Use Case Diagra"
+    },
+    {
+      "number": null,
+      "title": "Actor and Role Specification",
+      "level": 2,
+      "line_start": 282,
+      "text_length": 129,
+      "text_preview": "This section presents detailed information about each actor, and about the different roles those actors could take in the system."
+    },
+    {
+      "number": null,
+      "title": "Actors are Different and Separate From Roles<sup>10</sup>",
+      "level": 2,
+      "line_start": 286,
+      "text_length": 1051,
+      "text_preview": "Mr Southerby as CEO needs access to management information. Fred Smith as Order Entry Clerk needs to enter orders. Sometimes Mr Southerby may need to enter an order when Fred isn't there. That doesn't"
+    },
+    {
+      "number": null,
+      "title": "List of Actors",
+      "level": 2,
+      "line_start": 295,
+      "text_length": 1009,
+      "text_preview": "Please notice: actors do not interact with the system. Roles do (see below).\n\n<table><tr><td rowspan=1 colspan=1>Actor</td><td rowspan=1 colspan=1>Definition</td></tr><tr><td rowspan=1 colspan=1>Careg"
+    },
+    {
+      "number": null,
+      "title": "R\\_Create",
+      "level": 2,
+      "line_start": 303,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Description",
+      "level": 2,
+      "line_start": 305,
+      "text_length": 835,
+      "text_preview": "Comment by Adrian Gropper [agropper@gmail.com] on 07/07/2006.\n\nIn the real-world, many encounters Create a new User from the institution's point of view. In a PHI-compliant world, the User would show "
+    },
+    {
+      "number": null,
+      "title": "Use Case Specifications",
+      "level": 2,
+      "line_start": 363,
+      "text_length": 14,
+      "text_preview": "This section.."
+    },
+    {
+      "number": null,
+      "title": "1101: Create Community Profile",
+      "level": 2,
+      "line_start": 367,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 369,
+      "text_length": 218,
+      "text_preview": "A “community” is defined as a group of families and individuals under the care of a single practitioner. For example: a nurse might be responsible to provide care to one or more individuals across one"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 373,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 377,
+      "text_length": 41,
+      "text_preview": "The caregiver creates a community profile"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 381,
+      "text_length": 469,
+      "text_preview": "Joao, the \"Ave Maria\" school principal in Morro do Borel, Tijuca at Rio de Janeiro, wants to make health accessible for the poor people of the neighborhood. He opens a communitary account in a nearby "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 385,
+      "text_length": 46,
+      "text_preview": "Specify the Create Community Profile use case."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 389,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 391,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 393,
+      "text_length": 680,
+      "text_preview": " 1. The caregiver selects \"Create Community Profile\".\n\n extension point: existing Community Profile\n\n 2. include (1101\\_1: Complete CareGiver Information)\n\n 3. include (1101\\_2: Fill out Health Ce"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 419,
+      "text_length": 356,
+      "text_preview": " 1. The first alternative flow begins at any time.\n\n 1.1. The caregiver cancels profile creation.\n\n 2. The second alternative flow begins after step 8. of the basic flow.\n\n 2.1. The caregiver reje"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 433,
+      "text_length": 46,
+      "text_preview": " The consumer must be logged on to the system"
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 437,
+      "text_length": 32,
+      "text_preview": " A community profile is created"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 441,
+      "text_length": 28,
+      "text_preview": " existing Community Profile"
+    },
+    {
+      "number": null,
+      "title": "1101\\_1:Complete CareGiver Information",
+      "level": 2,
+      "line_start": 445,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 447,
+      "text_length": 493,
+      "text_preview": "This use case will allow caregiver to answer few personal questions.\n\nSome questions to ask:   \nName/Surname   \nSex (M/F)   \nDate of Birth   \nRace   \nMarital Status   \nSocio-Economic Level   \nDiseases"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 468,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 472,
+      "text_length": 40,
+      "text_preview": "The caregiver answers personal questions"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 476,
+      "text_length": 237,
+      "text_preview": "Joao starts answering personnal questions, as well as forms concerning activity habits, diseases, dietary habits, etc. He realizes he will be the caregiver or community health advocate of many people "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 480,
+      "text_length": 84,
+      "text_preview": "Identify and specify all possible use cases necessary to create a community profile."
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 484,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 486,
+      "text_length": 479,
+      "text_preview": " 1. The system asks the caregiver personal questions.\n\n 2. The caregiver answers those personal questions.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields a"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 508,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 512,
+      "text_length": 127,
+      "text_preview": " 1. The caregiver has selected \"Create Community Profile\"\n\n 2. Is the first time the caregiver creates the community profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 518,
+      "text_length": 43,
+      "text_preview": " The caregiver answered personal questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 522,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1101\\_2: Fill Out Health Center Information",
+      "level": 2,
+      "line_start": 526,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 528,
+      "text_length": 286,
+      "text_preview": "This use case allow the caregiver to complete basic Health Center's information.\n\nSome questions to ask:\n\n\\- Location of the health center or communitarian schools (most health centers will be located"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 538,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 540,
+      "text_length": 58,
+      "text_preview": "The caregiver fills out the Health Center Information form"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 544,
+      "text_length": 269,
+      "text_preview": "Joao must also complete some Ave Maria's school information. He starts putting its location: 1820 Belo Horizonte St., Morro do Borel, Tijuca, Rio de Janeiro. Also he establishes the number of people t"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 550,
+      "text_length": 84,
+      "text_preview": "Identify and specify all possible use cases necessary to create a community profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 554,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 556,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 558,
+      "text_length": 487,
+      "text_preview": " 1. The system asks the caregiver for health center information.\n\n 2. The caregiver provides that information.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fiel"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 580,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 582,
+      "text_length": 128,
+      "text_preview": " 1. The caregiver has selected \"Create Community Profile\".\n\n 2. Is the first time the caregiver creates the community profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 588,
+      "text_length": 50,
+      "text_preview": " The health center information form is filled out"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 592,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1101\\_3: Complete Basic Demographic Information",
+      "level": 2,
+      "line_start": 594,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 596,
+      "text_length": 150,
+      "text_preview": "This use case will allow caregiver to complete basic demographic information on populations served, such as race/ethnicity, socio-economic level, etc."
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 600,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 604,
+      "text_length": 79,
+      "text_preview": "The caregiver completes basic demographic information on the population served."
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 608,
+      "text_length": 184,
+      "text_preview": "Joao, gives a quick reference of the demographic conditions on populations served. Latin and african american people will mostly be under his care, with extremely low income resources."
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 612,
+      "text_length": 84,
+      "text_preview": "Identify and specify all possible use cases necessary to create a community profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 616,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 618,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 620,
+      "text_length": 511,
+      "text_preview": " 1. The system asks the caregiver for basic demographic information on populations served.\n\n 2. The caregiver provides that information.\n\n 3. The system checks all mandatory fields are completed.\n\n"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 642,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 646,
+      "text_length": 128,
+      "text_preview": " 1. The caregiver has selected \"Create Community Profile\".\n\n 2. Is the first time the caregiver creates the community profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 652,
+      "text_length": 71,
+      "text_preview": " The basic demographic information on populations served is completed."
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 656,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1101\\_4: Specify Services",
+      "level": 2,
+      "line_start": 660,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 662,
+      "text_length": 506,
+      "text_preview": "This use case will allow caregiver to specify the different services the community center will provide.\n\nAn example could be Transportation Sevices that will promote access to health care.\n\nThe center"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 674,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 678,
+      "text_length": 56,
+      "text_preview": "The caregiver specifies the communitary center services."
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 682,
+      "text_length": 290,
+      "text_preview": "Joao writes the benefits and services the school will provide. There's a mini bus with a capacity for 20 people. There will be transportation to the school every Tuesday and Friday, as well as in any "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 686,
+      "text_length": 84,
+      "text_preview": "Identify and specify all possible use cases necessary to create a community profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 690,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 692,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 694,
+      "text_length": 518,
+      "text_preview": " 1. The system asks the caregiver for communitary center services specifications.\n\n 2. The caregiver provides that information.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If a"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 716,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 720,
+      "text_length": 128,
+      "text_preview": " 1. The caregiver has selected \"Create Community Profile\".\n\n 2. Is the first time the caregiver creates the community profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 726,
+      "text_length": 48,
+      "text_preview": " The communitary center services are specified."
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 730,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1101\\_5: Load Existing Community Profile",
+      "level": 2,
+      "line_start": 734,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 736,
+      "text_length": 566,
+      "text_preview": "This use case will allow caregiver to use her previous health databases.\n\nIf caregiver changes of datahosting service provider, she won't need to create all the community profile again (more tedious)."
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 744,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 748,
+      "text_length": 89,
+      "text_preview": "The caregiver loads the community profile from her previous DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 752,
+      "text_length": 458,
+      "text_preview": "Joao decides to change of DataHosting Service Provider. He realizes Citibank is the provider that reaches most of his expectations. So he goes to a nearby Citi branch and opens an account. One hour la"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 756,
+      "text_length": 84,
+      "text_preview": "Identify and specify all possible use cases necessary to create a community profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 760,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 762,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 764,
+      "text_length": 355,
+      "text_preview": " 1. The caregiver selects to use other datahosting service provider database to create a community profile.\n\n 2. The system asks the caregiver to enter the specific database.\n\n 3. The caregiver ent"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 774,
+      "text_length": 247,
+      "text_preview": " 1. The alternative flow begins after step 2. on the basic flow.\n\n 1.1. The caregiver enters an invalid DataHosting Service Provider database.\n\n 1.2. The system asks the caregiver to enter it again"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 784,
+      "text_length": 125,
+      "text_preview": " 1. The caregiver has selected \"Create Community Profile\".\n\n 2. The caregiver has changed her DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 790,
+      "text_length": 31,
+      "text_preview": " A community profile is loaded"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 794,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1201: Create Family Profile",
+      "level": 2,
+      "line_start": 798,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 800,
+      "text_length": 141,
+      "text_preview": "Define Family Unit\n\na.) Consumer for individual / family\n\nb.) Caregiver for individual / family\n\nc.) Community worker for individual / family"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 810,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 814,
+      "text_length": 32,
+      "text_preview": "The CMO creates a family profile"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 818,
+      "text_length": 684,
+      "text_preview": "Jane, mother of three young kids, tired of having her childs sick, decided to focus on keeping them healthy and preventing from illnesses. On the way to work, she drives up to a CitiBank and opens a H"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 824,
+      "text_length": 43,
+      "text_preview": "Specify the Create Family Profile use case."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 828,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 830,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 832,
+      "text_length": 528,
+      "text_preview": " 1. The CMO selects \"Create Family Profile\".\n\n extension point: existing Family Profile\n\n 2. include (1201\\_1: Complete CMO Information)\n\n 3. include (1201\\_2: Complete Home Information)\n\n 3. For"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 854,
+      "text_length": 332,
+      "text_preview": " 1. The first alternative flow begins at any time.\n\n 1.1. The CMO cancels profile creation.\n\n 2. The second alternative flow begins after step 5. of the basic flow.\n\n 2.1. The CMO rejects the comm"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 868,
+      "text_length": 46,
+      "text_preview": " The consumer must be logged on to the system"
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 872,
+      "text_length": 29,
+      "text_preview": " A family profile is created"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 876,
+      "text_length": 25,
+      "text_preview": " existing Family Profile"
+    },
+    {
+      "number": null,
+      "title": "1201\\_1: Complete CMO Information",
+      "level": 2,
+      "line_start": 880,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 882,
+      "text_length": 478,
+      "text_preview": "This use case will allow CMO (Chief Medical Officer) to answer some personal questions.\n\nSome questions to ask:   \nName/Surname   \nSex (M/F)   \nDate of Birth   \nRace   \nMarital Status   \nSocio-Economi"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 904,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 908,
+      "text_length": 42,
+      "text_preview": "The CMO completes her personal information"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 912,
+      "text_length": 233,
+      "text_preview": "Jane starts creating her personal profile, answers questions concerning dietary habits, socio-economic level, diseases, etc. She fills out the form as accurate and complete as possible 'cos she knows "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 916,
+      "text_length": 81,
+      "text_preview": "Identify and specify all possible use cases necessary to create a family profile."
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 920,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 922,
+      "text_length": 452,
+      "text_preview": " 1. The system asks the CMO for her personal information.\n\n 2. The CMO provides that information.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields are comple"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 944,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 948,
+      "text_length": 110,
+      "text_preview": " 1. The CMO has selected \"Create Family Profile\".\n\n 2. Is the first time the CMO creates her family profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 954,
+      "text_length": 43,
+      "text_preview": " The CMO personal information is completed"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 958,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1201\\_2: Complete Home Information",
+      "level": 2,
+      "line_start": 962,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 964,
+      "text_length": 239,
+      "text_preview": "This use case will allow CMO (Chief Medical Officer) to complete relevant home information such as:\n\n\\- Location\n\n\\- How many people live there ?\n\n\\- How many smokers ?\n\n\\- Home air quality ?\n\n\\- Who "
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 980,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 984,
+      "text_length": 34,
+      "text_preview": "The CMO completes home information"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 988,
+      "text_length": 338,
+      "text_preview": "Jane completes relevant home parameters such as Home Location: 124 Ocean Drive, South Beach, Florida. She answers some cooking habits questions: she cooks at home, mostly meat at lunch and vegetables "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 992,
+      "text_length": 81,
+      "text_preview": "Identify and specify all possible use cases necessary to create a family profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 996,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 998,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1000,
+      "text_length": 448,
+      "text_preview": " 1. The system asks the CMO for few home parameters.\n\n 2. The CMO provides that information.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields are completed\n\n"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1022,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1026,
+      "text_length": 110,
+      "text_preview": " 1. The CMO has selected \"Create Family Profile\".\n\n 2. Is the first time the CMO creates her family profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1032,
+      "text_length": 35,
+      "text_preview": " The home information is completed"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1036,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1201\\_3: Load Existing Family Profile",
+      "level": 2,
+      "line_start": 1040,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1042,
+      "text_length": 551,
+      "text_preview": "This use case will allow CMO to use her previous health databases.\n\nIf CMO changes of datahosting service provider, she won't need to create all her family profile again (more tedious). She will just "
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1050,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1054,
+      "text_length": 80,
+      "text_preview": "The CMO loads the family profile from her previous DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1058,
+      "text_length": 314,
+      "text_preview": "Jane changes her Data Hosting Service Provider. She opens a new account in other retailer. And then she simply loads her family profile she's already created with her previous provider into the new on"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1062,
+      "text_length": 81,
+      "text_preview": "Identify and specify all possible use cases necessary to create a family profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1066,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1068,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1070,
+      "text_length": 335,
+      "text_preview": " 1. The CMO selects to use other datahosting service provider database to create a family profile.\n\n 2. The system asks the CMO to select the specific database.\n\n 3. The CMO enters the details of h"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1080,
+      "text_length": 229,
+      "text_preview": " 1. The alternative flow begins after step 2. on the basic flow.\n\n 1.1. The CMO enters an invalid DataHosting Service Provider database.\n\n 1.2. The system asks the CMO to enter it again.\n\n 1.3. Th"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1090,
+      "text_length": 109,
+      "text_preview": " 1. The CMO has selected \"Create Family Profile\"\n\n 2. The CMO has changed her DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1096,
+      "text_length": 28,
+      "text_preview": " A family profile is loaded"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1100,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301: Create Individual Profile",
+      "level": 2,
+      "line_start": 1104,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1106,
+      "text_length": 503,
+      "text_preview": "These questions and branching logic are already available from Health Risk Assessment documents.\n\nThe end goal is to generate an XML-based profile that allows the system to conduct data mining based o"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1132,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1136,
+      "text_length": 42,
+      "text_preview": "The consumer creates an individual profile"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1140,
+      "text_length": 399,
+      "text_preview": "Mary, a single middle thirties woman, encouraged by her friend Jane who strongly recommended the PHI system, opens an Individual Health account at Citibank. She is instructed to enter her UID and pass"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1144,
+      "text_length": 47,
+      "text_preview": "Specify the Create Individual Profile use case."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1148,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1150,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1152,
+      "text_length": 768,
+      "text_preview": " 1. The consumer selects \"Create Individual Profile\".\n\n extension point: existing Individual Profile\n\n 2. include (1301\\_1: Answer Personal Questions)\n\n 3. include (1301\\_2: Generate Nutritional P"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1180,
+      "text_length": 343,
+      "text_preview": " 1. The first alternative flow begins at any time.\n\n 1.1. The consumer cancels profile creation.\n\n 2. The second alternative flow begins after step 10. of the basic flow.\n\n 2.1. The consumer rejec"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1194,
+      "text_length": 46,
+      "text_preview": " The consumer must be logged on to the system"
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1198,
+      "text_length": 34,
+      "text_preview": " An individual profile is created"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1202,
+      "text_length": 29,
+      "text_preview": " existing Individual Profile"
+    },
+    {
+      "number": null,
+      "title": "1301\\_10: Load Existing Individual Profile",
+      "level": 2,
+      "line_start": 1206,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1208,
+      "text_length": 550,
+      "text_preview": "This use case will allow consumer use her previous health databases.\n\nIf consumer changes of datahosting service provider, she won't need to create all her profile again (more tedious). She will just "
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1216,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1220,
+      "text_length": 89,
+      "text_preview": "The consumer loads the individual profile from her previous DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1224,
+      "text_length": 135,
+      "text_preview": "Mary moves to New York and wants to change her Data Hosting Service Provider. She now has the possibility to load her previous profile."
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1228,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1232,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1234,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1236,
+      "text_length": 355,
+      "text_preview": " 1. The consumer selects to use other datahosting service provider database to create an individual profile.\n\n 2. The system asks the consumer to select the specific database.\n\n 3. The consumer ent"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1246,
+      "text_length": 244,
+      "text_preview": " 1. The alternative flow begins after step 2. on the basic flow.\n\n 1.1. The consumer enters an invalid DataHosting Service Provider database.\n\n 1.2. The system asks the consumer to enter it again.\n"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1256,
+      "text_length": 123,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\"\n\n 2. The consumer has changed her DataHosting Service Provider."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1262,
+      "text_length": 34,
+      "text_preview": " An individual profile is loaded."
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1266,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_1: Answer Personal Questions",
+      "level": 2,
+      "line_start": 1270,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1272,
+      "text_length": 233,
+      "text_preview": "This use case will allow the consumer to answer few personal questions in order to create her individual profile\n\nQuestions to ask:\n\nName/Surname\n\nSex (M/F)\n\nDate of Birth\n\nRace\n\nMarital Status\n\nSocio"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1292,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1296,
+      "text_length": 39,
+      "text_preview": "The consumer answers personal questions"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1300,
+      "text_length": 177,
+      "text_preview": "Mary answers few personal questions to start creating her profile such as:\n\nName: Mary Joan\n\nSurname: Branaghu\n\nSex: Female\n\nDate of Birth: 2/2/1971\n\nSocial-Economic Level: High"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1314,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1318,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1320,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1322,
+      "text_length": 483,
+      "text_preview": " 1. The system asks the consumer personal questions.\n\n 2. The consumer answers those personal questions.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields are"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1344,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1348,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1354,
+      "text_length": 42,
+      "text_preview": " The consumer answered personal questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1358,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_2: Generate Nutritional Profile",
+      "level": 2,
+      "line_start": 1362,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1364,
+      "text_length": 864,
+      "text_preview": "This use case will allow consumer to answer some questions about her dietary habits as well as her physical condition.\n\nThe end goal is to create a Nutritional Profile for an Individual\n\nSome question"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1402,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1406,
+      "text_length": 60,
+      "text_preview": "The consumers answers questions about her physical condition"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1410,
+      "text_length": 287,
+      "text_preview": "Mary completes her dietary habits as well as physical condition. She smokes aproximately 30 cigarettes a day (quite a lot). She weights 42 kgm and her height is 1.75 m. She eats too much fast food, an"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1414,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1418,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1420,
+      "text_length": 550,
+      "text_preview": " 1. The system asks the consumer questions about her physical condition as well as nutrition habits.\n\n 2. The consumer answers those questions.\n\n 3. The system checks all mandatory fields are compl"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1442,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1446,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1452,
+      "text_length": 45,
+      "text_preview": " Consumer's nutritional profile is generated"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1456,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_3: Complete Activity Habits",
+      "level": 2,
+      "line_start": 1460,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1462,
+      "text_length": 400,
+      "text_preview": "This use case will allow consumer to answer some questions about her daily Physical Activities.\n\nQuestions to ask:\n\nSports? Which one?\n\nWalk rather than riding a car?\n\nActivities that keep you flexibl"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1480,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1484,
+      "text_length": 66,
+      "text_preview": "The consumer answers questions about her daily physical activities"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1488,
+      "text_length": 182,
+      "text_preview": "Mary completes her physical activities. Sports: tennis and golf. She usually walks 3 km per day. Every Tuesday she goes to yoga and on weekends she enoys keeping her garden beatiful."
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1492,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1496,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1498,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1500,
+      "text_length": 500,
+      "text_preview": " 1. The system asks the consumer questions about her activity habits.\n\n 2. The consumer answers those questions.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fi"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1522,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1526,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1532,
+      "text_length": 49,
+      "text_preview": " The consumer answered activity habits questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1536,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_4: Complete Previous Condition Information",
+      "level": 2,
+      "line_start": 1540,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1542,
+      "text_length": 290,
+      "text_preview": "This use case will allow consumer to specify her previous diseases.\n\nSome question to ask:\n\n\\- Diseases\n\n\\- Age at first diagnose\n\n\\- Treatment\n\n\\- Rehabilitation\n\n\\- Allergies\n\nThe system will use IC"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1560,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1564,
+      "text_length": 60,
+      "text_preview": "The consumer answers questions about her previous conditions"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1568,
+      "text_length": 368,
+      "text_preview": "Mary specifies her previous diseases and the age at first diagnose. When she was 14, she used to cough, had fever, shortness of breath, and chest pain. Physicians detected that she had pneumonia and g"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1572,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1576,
+      "text_length": 535,
+      "text_preview": "Flow of Events\n\nBasic Flow\n\n 1. The system asks the consumer questions about her previous conditions.\n\n 2. The consumer answers those questions.\n\n 3. The system checks all mandatory fields are comp"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1602,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1606,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1612,
+      "text_length": 52,
+      "text_preview": " The consumer answered previous condition questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1616,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_5: Complete Family Parameters",
+      "level": 2,
+      "line_start": 1620,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1622,
+      "text_length": 557,
+      "text_preview": "This use case will allow consumer to answer some questions about her family members health parameters.\n\nQuestions to ask:\n\nFamily Members:\n\n\\- Father (lives, if not specify cause of death)\n\n\\- Mother("
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1652,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1656,
+      "text_length": 47,
+      "text_preview": "The consumer answers questions about her family"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1660,
+      "text_length": 350,
+      "text_preview": "Mary also completes a form with her family members paramenters. As she is single, she only fills out the part of parents and grandparents.\n\nHer father passed away in 2004 from a lung cancer, he was a "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1666,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1670,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1672,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1674,
+      "text_length": 482,
+      "text_preview": " 1. The system asks the consumer questions about her family.\n\n 2. The consumer answers those questions.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields are "
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1696,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1700,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1706,
+      "text_length": 40,
+      "text_preview": " The consumer answered family questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1710,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_6: Complete Environmental Parameters",
+      "level": 2,
+      "line_start": 1714,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1716,
+      "text_length": 356,
+      "text_preview": "This use case will allow consumer to create her environmental profile.\n\nQuestions to ask:\n\n\\- Home Address\n\n\\- School / University Address\n\n\\- Workplace Address\n\n\\- Country/Region\n\nWith all these item"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1732,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1736,
+      "text_length": 52,
+      "text_preview": "The consumer answers questions about her environment"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1740,
+      "text_length": 218,
+      "text_preview": "Mary completes her home location as well as places she often visists. She lives in Richmond, Virginia. She works 8 hours per day at downtown. She is doing a Master in Businness Administration at Unive"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1744,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1748,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1750,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1752,
+      "text_length": 491,
+      "text_preview": " 1. The system asks the consumer questions about her environment.\n\n 2. The consumer answers those questions.\n\n 3. The system checks all mandatory fields are completed.\n\n 4. If all mandatory fields"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1774,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1778,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1784,
+      "text_length": 47,
+      "text_preview": " The consumer answered environmental questions"
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1788,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_7: Assign Permissions",
+      "level": 2,
+      "line_start": 1792,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1794,
+      "text_length": 289,
+      "text_preview": "This use case will allow consumer to establish the different permissions certain people will have to manage her individual profile.\n\nThere are read only, write only and read/write permissions.\n\nThe en"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1804,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1806,
+      "text_length": 65,
+      "text_preview": "The consumer assigns permissions to manage her individual profile"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1810,
+      "text_length": 190,
+      "text_preview": "She decides who will be able to see this information. Only she and physicians will have reading/writing access rigths. Her mother will be able to read the information but not editing option."
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1814,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1818,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1820,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1822,
+      "text_length": 524,
+      "text_preview": " 1. The system asks the consumer which person will have access to manage her individual profile.\n\n 2. The consumer completes the \"authorization\" form.\n\n 3. The system checks all mandatory fields ar"
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1844,
+      "text_length": 1,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1848,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1854,
+      "text_length": 42,
+      "text_preview": " An access control list (ACL) is created."
+    },
+    {
+      "number": null,
+      "title": "Extension Points",
+      "level": 2,
+      "line_start": 1858,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1301\\_8: Scan Records",
+      "level": 2,
+      "line_start": 1860,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1862,
+      "text_length": 330,
+      "text_preview": "This use case will allow consumer to scan documents alone or with the help of retailer's staff in order to digitalized her paper-based health records.\n\nThe consumer will be able to scan any document s"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1868,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1872,
+      "text_length": 42,
+      "text_preview": "The consumer scans her paper-based records"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1876,
+      "text_length": 248,
+      "text_preview": "During her life, Mary visited many hospitals and physicians from different states. She always keep with the prescriptions, x-rays, biopsies, etc. Nowadays, she can digitalize those paper-based records"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1880,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1884,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1886,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1888,
+      "text_length": 112,
+      "text_preview": " 1. The consumer scans her paper-based records.\n\n 2. The consumer uploads the scanned records into the system."
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1894,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1898,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1904,
+      "text_length": 87,
+      "text_preview": " Paper-based records are scanned and stored into the system.\n\nExtension Points\n\n None"
+    },
+    {
+      "number": null,
+      "title": "1301\\_9: Establish Alerting Mechanism",
+      "level": 2,
+      "line_start": 1912,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 1914,
+      "text_length": 255,
+      "text_preview": "This use case will allow consumer to decide how the system will send her the alerts.\n\nThose alerts could be:\n\n\\- Passively: only when Consumer logs in to Dashboard\n\n\\- Actively: to mobile devices (cel"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 1926,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 1930,
+      "text_length": 40,
+      "text_preview": "The consumer sets her alerting mechanism"
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 1934,
+      "text_length": 150,
+      "text_preview": "Mary specifies how she prefers to be contacted by the system. As she is not much at home, she decides the system sends the alerts to her mobile phone."
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 1938,
+      "text_length": 86,
+      "text_preview": "Identify and specify all possible use cases necessary to create an individual profile."
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 1942,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Flow of Events",
+      "level": 2,
+      "line_start": 1944,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Basic Flow",
+      "level": 2,
+      "line_start": 1946,
+      "text_length": 167,
+      "text_preview": " 1. The system asks the user about the alerting mechanism she prefers.\n\n 2. The consumer establishes the alerting mechanism she will receive (passively or actively)."
+    },
+    {
+      "number": null,
+      "title": "Alternative Flow",
+      "level": 2,
+      "line_start": 1952,
+      "text_length": 6,
+      "text_preview": " None"
+    },
+    {
+      "number": null,
+      "title": "Pre-Conditions",
+      "level": 2,
+      "line_start": 1956,
+      "text_length": 124,
+      "text_preview": " 1. The consumer has selected \"Create Individual Profile\".\n\n 2. Is the first time consumer creates her individual profile."
+    },
+    {
+      "number": null,
+      "title": "Post-Conditions",
+      "level": 2,
+      "line_start": 1962,
+      "text_length": 65,
+      "text_preview": " An alerting mechanism is established.\n\nExtension Points\n\n None"
+    },
+    {
+      "number": null,
+      "title": "2101: Manage Community Profile",
+      "level": 2,
+      "line_start": 1970,
+      "text_length": 216,
+      "text_preview": "Documentation\n\n\\* Add, delete, edit familes.\n\n\\* Manage ACLs.\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow\n\nPre-Conditions \n\nP"
+    },
+    {
+      "number": null,
+      "title": "2201: Manage Family Profile",
+      "level": 2,
+      "line_start": 1998,
+      "text_length": 220,
+      "text_preview": "Documentation\n\n\\* Add, delete, edit individuals.\n\n\\* Manage ACLs.\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow\n\nPre-Conditions "
+    },
+    {
+      "number": null,
+      "title": "2301: Manage Individual Profile",
+      "level": 2,
+      "line_start": 2026,
+      "text_length": 204,
+      "text_preview": "Documentation \\* Manage ACLs.\n\nSpecial Requirements \n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow\n\nPre-Conditions \n\nPost-Conditions \n\nExtension Po"
+    },
+    {
+      "number": null,
+      "title": "3101: Monitor Community Profile",
+      "level": 2,
+      "line_start": 2052,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2054,
+      "text_length": 297,
+      "text_preview": "\\* Results of Data Mining\n\n\\* Present dashboard\n\nRoles and Actors\n\n\\* Community Health Engineer (CHE) Monitors Community\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of "
+    },
+    {
+      "number": null,
+      "title": "3201: Monitor Family Profile",
+      "level": 2,
+      "line_start": 2086,
+      "text_length": 217,
+      "text_preview": "Documentation\n\n\\* Results of Data Mining\n\n\\* Present dashboard\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow\n\nPre-Conditions \n\n"
+    },
+    {
+      "number": null,
+      "title": "3301: Monitor Individual Profile",
+      "level": 2,
+      "line_start": 2114,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2116,
+      "text_length": 449,
+      "text_preview": "\\* Results of Data Mining\n\n\\* Present dashboard\n\nOnce a personal profile has been created for a target user\n\nThe end goal is for the system to provide the Guardian or caregiver actors with a complete "
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 2140,
+      "text_length": 151,
+      "text_preview": "Semantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow \n\nPre-Conditions \n\nPost-Conditions \n\nExtension Points"
+    },
+    {
+      "number": "4401",
+      "title": "4401 Upload Health Data",
+      "level": 2,
+      "line_start": 2162,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2164,
+      "text_length": 308,
+      "text_preview": "A Provider, once authorized by the Consumer, will be able to upload information into the Consumer's database using industry standards (CCR, HL7, others).\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequi"
+    },
+    {
+      "number": "4402",
+      "title": "4402 Query Health Data",
+      "level": 2,
+      "line_start": 2188,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2190,
+      "text_length": 368,
+      "text_preview": "A Provider, once authorized by the Consumer, will be able to access and query the Consumer's database.\n\nIt is crucial to understand that the Consumer will be solely responsible to grant access to her "
+    },
+    {
+      "number": null,
+      "title": "9301: Answer HRA Questionnaire",
+      "level": 2,
+      "line_start": 2214,
+      "text_length": 259,
+      "text_preview": "Documentation Health Risk Assessment Templates\n\nSources:\n\nhttp://www.mcare.org/include/template.cfm?ID=1009\n\nSpecial Requirements\n\nSemantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events Basic "
+    },
+    {
+      "number": null,
+      "title": "9902: Query ICD Database",
+      "level": 2,
+      "line_start": 2240,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2242,
+      "text_length": 977,
+      "text_preview": "This Use Case provides an interface to the ICD database.\n\nICD-9-CM\n\n[http://www.cdc.gov/nchs/about/otheract/icd9/abticd9.htm]\n\nThe International Classification of Diseases, Ninth Revision, Clinical Mo"
+    },
+    {
+      "number": null,
+      "title": "ICD-10",
+      "level": 2,
+      "line_start": 2264,
+      "text_length": 763,
+      "text_preview": "The Tenth Revision (ICD-10) differs from the Ninth Revision (ICD-9) in several ways although the overal content is similar: First, ICD-10 is printed in a three-volume set compared with ICD-9's two-vol"
+    },
+    {
+      "number": null,
+      "title": "9903: Generate Nutritional Profile",
+      "level": 2,
+      "line_start": 2292,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2294,
+      "text_length": 1602,
+      "text_preview": "This Use Case will allow User to create or edit a Nutritional Profile for an Individual.\n\nThe US Department of Agriculture provides freely-available data sources with the following information:\n\n\\* ND"
+    },
+    {
+      "number": null,
+      "title": "9904: Data Mine Published Research",
+      "level": 1,
+      "line_start": 2346,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2348,
+      "text_length": 241,
+      "text_preview": "Open Access Journals\n\nPLoS\n\nAvailable at http://www.plos.org/\n\nThe Public Library of Science (PLoS) is a nonprofit organization of scientists and physicians committed to making the world’s scientific "
+    },
+    {
+      "number": null,
+      "title": "Directory of Open Access Journals",
+      "level": 2,
+      "line_start": 2358,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Available at http://www.doaj.org/",
+      "level": 2,
+      "line_start": 2360,
+      "text_length": 1281,
+      "text_preview": "The Directory of Open Access Journals service covers free, full text, quality-controlled scientific and scholarly journals. The project aims to cover all subjects and languages. There are now 2,298 jo"
+    },
+    {
+      "number": null,
+      "title": "PubMed",
+      "level": 2,
+      "line_start": 2386,
+      "text_length": 2480,
+      "text_preview": "Available at http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?DB=pubmed\n\nPlease review the details of the Entrez Programming Utilities\n\nAvailable at http://eutils.ncbi.nlm.nih.gov/entrez/query/static/eut"
+    },
+    {
+      "number": null,
+      "title": "Cochrane reviews",
+      "level": 2,
+      "line_start": 2430,
+      "text_length": 1029,
+      "text_preview": "Cochrane reviews are based on the best available information about healthcare interventions. They explore the evidence for and against the effectiveness and appropriateness of treatments (medications,"
+    },
+    {
+      "number": null,
+      "title": "BioMed Central",
+      "level": 2,
+      "line_start": 2440,
+      "text_length": 98,
+      "text_preview": "http://www.biomedcentral.com/home/\n\nThis is publisher of over 150 Open Access scientific journals."
+    },
+    {
+      "number": null,
+      "title": "Future Interfaces to Implement",
+      "level": 2,
+      "line_start": 2446,
+      "text_length": 425,
+      "text_preview": "Create specific “connectors” for each of the above data repositories to perform the required data mining.\n\nThe PHI-compliant system must be flexible enough to accommodate these “data mining connectors"
+    },
+    {
+      "number": null,
+      "title": "Z39.50 Standard",
+      "level": 2,
+      "line_start": 2454,
+      "text_length": 266,
+      "text_preview": "Industry standards such as the Z39.50 standard [http://en.wikipedia.org/wiki/Z39.50] used in the publishing industry. A more recent version of that protocol is that referred to as the “Bath Profile.” "
+    },
+    {
+      "number": null,
+      "title": ".. 1. Introduction to the Profile",
+      "level": 2,
+      "line_start": 2458,
+      "text_length": 387,
+      "text_preview": "This document identifies a subset of specifications from the Z39.50 Information Retrieval Protocol (ANSI/NISO Z39.50/ISO 23950) for use in Z39.50 client and server software. Conformance to this profil"
+    },
+    {
+      "number": null,
+      "title": "2. Purpose and Scope",
+      "level": 2,
+      "line_start": 2462,
+      "text_length": 419,
+      "text_preview": "The purpose of the Bath Profile is to identify those features of the Z39.50 standard that are required to allow effective use of Z39.50 software in a range of library applications, including search an"
+    },
+    {
+      "number": null,
+      "title": ".. 3. Functional Requirements",
+      "level": 2,
+      "line_start": 2466,
+      "text_length": 622,
+      "text_preview": "This section identifies the functional requirements informing the Z39.50 specifications in this release. These requirements focus on search and retrieval between library catalogues, the search and ret"
+    },
+    {
+      "number": null,
+      "title": "Fedora",
+      "level": 2,
+      "line_start": 2476,
+      "text_length": 1245,
+      "text_preview": "Available at http://www.fedora.info/\n\n“Fedora open source software gives organizations a flexible service-oriented architecture for managing and delivering their digital content. At its core is a powe"
+    },
+    {
+      "number": null,
+      "title": "9905: Alerting Mechanism",
+      "level": 2,
+      "line_start": 2506,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2508,
+      "text_length": 426,
+      "text_preview": "This Use Case will process the information generated by the system and will inform the User that some of such information is ready for the User’s review.\n\n\\* Passively (only when User logs in to Dashb"
+    },
+    {
+      "number": null,
+      "title": "9906: Manage Access Control Lists",
+      "level": 2,
+      "line_start": 2538,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2540,
+      "text_length": 948,
+      "text_preview": "Access Controls Lists (“ACLs”) are used to used to manage a matrix of user, role, and access rights to each section of the system. ACLs can also provide increased granularity by allowing the assignmen"
+    },
+    {
+      "number": null,
+      "title": "9921: Use External Medical Sources Database",
+      "level": 2,
+      "line_start": 2576,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2578,
+      "text_length": 822,
+      "text_preview": "This UC will allow the system to access and retrieve information collected and/or stored by external medical systems. For example:\n\n\\* An individual’s medical record stored in outside systems (using e"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 2600,
+      "text_length": 149,
+      "text_preview": "Semantics\n\nUsage\n\nRequirements\n\nImplementation\n\nFlow of Events\n\nBasic Flow \n\nAlternative Flow\n\nPre-Conditions \n\nPost-Conditions \n\nExtension Points"
+    },
+    {
+      "number": null,
+      "title": "9930: Manage Identities",
+      "level": 2,
+      "line_start": 2622,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Documentation",
+      "level": 2,
+      "line_start": 2624,
+      "text_length": 1205,
+      "text_preview": "The purpose of this Use Case is to \"map\" the multiple identities a consumer might have on external systems.\n\nComment by Adrian Gropper [agropper@gmail.com] on 07/07/2006.\n\n..the diagram needs to be ex"
+    },
+    {
+      "number": null,
+      "title": "Special Requirements",
+      "level": 2,
+      "line_start": 2636,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Semantics",
+      "level": 2,
+      "line_start": 2638,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Usage",
+      "level": 2,
+      "line_start": 2640,
+      "text_length": 216,
+      "text_preview": "For example, Consumer Joe Smith might have an account with more than 01 external systems. Each of those external systems has a separate (most likely different) identification account number (\"identity"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 2644,
+      "text_length": 196,
+      "text_preview": "The system should be able to represent itself to outside systems as the Consumer.\n\nOpen items:\n\n\\* how to handle security, identity management?\n\n\\* mapping of Liberty Alliance and similar efforts?"
+    },
+    {
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "line_start": 2654,
+      "text_length": 657,
+      "text_preview": "Scenario:\n\n\\* Joe has an account in Systam A, under username \"JSmith\"\n\n\\* Joe has a separate account in external System B under username \"JoeSmith\"\n\n\\* This Use Case will allow an IEEE(2407-compliant "
+    },
+    {
+      "number": null,
+      "title": "Appendix A: Introduction to UML.",
+      "level": 2,
+      "line_start": 2666,
+      "text_length": 1737,
+      "text_preview": "This section provides a brief introduction to the Unified Modeling Language (“UML”). UML will be used extensively throughout this document, and throughout the development of the reference implementati"
+    },
+    {
+      "number": null,
+      "title": "..Use Case Diagrams",
+      "level": 2,
+      "line_start": 2678,
+      "text_length": 114,
+      "text_preview": "To successfully apply use case diagrams, we must first understand the types of elements used in use case diagrams."
+    },
+    {
+      "number": null,
+      "title": "Actors",
+      "level": 2,
+      "line_start": 2682,
+      "text_length": 162,
+      "text_preview": "Actor classes are used to model and represent roles for “users” of a system, including human users and other systems.   \nActors are denoted as stick person icons."
+    },
+    {
+      "number": null,
+      "title": "..Use Cases",
+      "level": 2,
+      "line_start": 2687,
+      "text_length": 539,
+      "text_preview": "Use case classes are used to model and represent units of functionality or services provided by a system (or parts of a system: subsystems or classes) to users… Use case classes have use case instance"
+    },
+    {
+      "number": null,
+      "title": "..Use Cases",
+      "level": 2,
+      "line_start": 2695,
+      "text_length": 1792,
+      "text_preview": "When modeling use cases, we ought to be aware of the following guidelines:\n\n• Use cases should be named using verb-noun phrases.\n\nUse cases should be described, indicating how they are started and end"
+    },
+    {
+      "number": null,
+      "title": "UML Based Processes for OOA&D<sup>12</sup>",
+      "level": 2,
+      "line_start": 2719,
+      "text_length": 1195,
+      "text_preview": "It is important to understand that UML is a notation for OOA&D. It does not prescribe any particular process. Whatever process is adopted, it must take the system being constructed through a number of"
+    },
+    {
+      "number": null,
+      "title": "UML Tools",
+      "level": 2,
+      "line_start": 2731,
+      "text_length": 571,
+      "text_preview": "Software developers interested in a set of F/OSS UML tools might want to consider using ArgoUML<sup>13</sup> or StarUML<sup>14</sup>, both are excellent (and free) F/OSS UML modeling tools.\n\nNOTICE: A"
+    },
+    {
+      "number": null,
+      "title": "Appendix B: A Development Process Using ArgoUML<sup>17</sup>",
+      "level": 2,
+      "line_start": 2742,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Requirements Capture",
+      "level": 2,
+      "line_start": 2744,
+      "text_length": 210,
+      "text_preview": "Our requirements capture will use the UML concept of Use Cases. Starting with a Vision Document we will see how Use Cases can be developed to describe all aspects of the system's behavior in the probl"
+    },
+    {
+      "number": null,
+      "title": "Analysis",
+      "level": 2,
+      "line_start": 2748,
+      "text_length": 519,
+      "text_preview": "During the analysis stage, we will introduce the UML concept of classes to allow us to build a top level view of the objects that will make up the solution—sometimes known as a concept diagram. We wil"
+    },
+    {
+      "number": null,
+      "title": "Design",
+      "level": 2,
+      "line_start": 2752,
+      "text_length": 739,
+      "text_preview": "We use the UML package diagram to organize the components of the project. We then revisit the class diagram, sequence diagram and statechart diagram, to show how they can be used recursively to design"
+    },
+    {
+      "number": null,
+      "title": "Build",
+      "level": 2,
+      "line_start": 2756,
+      "text_length": 244,
+      "text_preview": "UML is not really concerned with code writing. However at this stage we will show how ArgoUML can be used for code generation. We will also look at how the UML Use Case Diagram and Use Case Specificat"
+    },
+    {
+      "number": null,
+      "title": "Cognitive Psychology and ArgoUML<sup>18</sup>",
+      "level": 2,
+      "line_start": 2760,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "2.4.1.1. Theory",
+      "level": 2,
+      "line_start": 2762,
+      "text_length": 173,
+      "text_preview": "ArgoUML is particularly inspired by three theories within cognitive psychology: i) reflection-in-action, ii) opportunistic design iii) and comprehension and problem solving."
+    },
+    {
+      "number": null,
+      "title": "2.4.1.1.1. Reflection-in-Action",
+      "level": 2,
+      "line_start": 2766,
+      "text_length": 352,
+      "text_preview": "This theory observes that designers of complex systems do not conceive a design fully-formed. Instead, they must construct a partial design, evaluate, reflect on, and revise it, until they are ready t"
+    },
+    {
+      "number": null,
+      "title": "2.4.1.1.2. Opportunistic Design",
+      "level": 2,
+      "line_start": 2771,
+      "text_length": 361,
+      "text_preview": "A theory within cognitive psychology suggesting that although designers plan and describe their work in an ordered, hierarchical fashion, in reality, they choose successive tasks based on the criteria"
+    },
+    {
+      "number": null,
+      "title": "2.4.1.1.3. Comprehension and Problem Solving",
+      "level": 2,
+      "line_start": 2777,
+      "text_length": 682,
+      "text_preview": "A design visualization theory within cognitive psychology. The theory notes that designers must bridge a gap between their mental model of the problem or situation and the formal model of a solution o"
+    },
+    {
+      "number": null,
+      "title": "Vision Document<sup>19</sup>",
+      "level": 2,
+      "line_start": 2786,
+      "text_length": 1145,
+      "text_preview": "Typical sections of this document would be as follows.\n\n• Summary. A statement of the context, problem and solution goals.\n\n• Goals. What are we trying to achieve (and how do we wish to achieve it).\n\n"
+    },
+    {
+      "number": null,
+      "title": "Appendix C: Additional Resources",
+      "level": 2,
+      "line_start": 2804,
+      "text_length": 468,
+      "text_preview": "This is a list of additional resources that might be of interest to readers of this document.\n\nIntroducing SPARQL: Querying the Semantic Web. http://www.xml.com/pub/a/2005/11/16/introducing-sparql-que"
+    },
+    {
+      "number": null,
+      "title": "Structured Analysis<sup>20</sup>",
+      "level": 2,
+      "line_start": 2814,
+      "text_length": 776,
+      "text_preview": "In structured analysis there are three orthogonal views:\n\nThe functional view, made up of data flow diagrams, is the primary view of the system. It defines what is done, the flow of data between thing"
+    },
+    {
+      "number": null,
+      "title": "Appendix D: Identity Management.",
+      "level": 2,
+      "line_start": 2827,
+      "text_length": 2281,
+      "text_preview": "..the diagram needs to be expanded to show the role of user-centered identity management, institutional federation and other Web privacy and security practices that impact interoperability.\n\nIn my opi"
+    },
+    {
+      "number": null,
+      "title": "Appendix E: Proposed Development Model",
+      "level": 1,
+      "line_start": 2848,
+      "text_length": 562,
+      "text_preview": "It is proposed that the PHY reference implementation will include the following element:\n\n![](images/f641652461aaf2271ba8a1b2879cd1cc89e86ab7d13e90fd274a077e1f53a0a9.jpg)  \nFigure 7: Requirements to P"
+    },
+    {
+      "number": null,
+      "title": "Development Process",
+      "level": 2,
+      "line_start": 2859,
+      "text_length": 379,
+      "text_preview": "[NOTE: Some ideas presented in this section were generated based on a discussion with Hari Kalva, Ph.D.<sup>23</sup>]\n\nGiven the variety of individuals participating in this project, the project will "
+    },
+    {
+      "number": null,
+      "title": "User Role",
+      "level": 2,
+      "line_start": 2865,
+      "text_length": 39,
+      "text_preview": "• Requirements\n\n• Validation\n\n• Testing"
+    },
+    {
+      "number": null,
+      "title": "Architect Role",
+      "level": 2,
+      "line_start": 2873,
+      "text_length": 49,
+      "text_preview": "• Design components\n\n• Design and test interfaces"
+    },
+    {
+      "number": null,
+      "title": "Programmer Role",
+      "level": 2,
+      "line_start": 2879,
+      "text_length": 520,
+      "text_preview": "• Create software, modules\n\n• Conduct software-level testing\n\nf.) >> Create \"user animations:\" turn UML Use Cases, and Operating Cases, into \"animations\" to allow target stakeholders to \"experience\" t"
+    },
+    {
+      "number": null,
+      "title": "Index",
+      "level": 2,
+      "line_start": 2903,
+      "text_length": 1742,
+      "text_preview": "1101   \nCreate Community Profile .21   \n1101\\_1   \nComplete CareGiver Information. .23   \n1101\\_2   \nFill Out Health Center Information .25   \n1101\\_3   \nComplete Basic Demographic Information. .27   "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 6,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "IEEE P2407 Standard for Personalized Health Informatics"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "",
+      "raw_html": "<tr><td>IEEE P2407 Standard for Personalized Health Informatics</td></tr><tr><td>For more information contact the editor at: Public Version 10 of 01/18/2007. Senior Manager</td></tr>"
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Term",
+        "Meaning"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "Acronyms and Definitions",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">Term</td><td colspan=\"1\" rowspan=\"1\">Meaning</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor (within aUML framework)</td><td colspan=\"1\" rowspan=\"1\">An actor is something or someone who supplies a stimulus to the system. It can alsobe thought of as something the system requires in order to function. Without acustomer (an actor) in a restaurant, the process of ordering food cannot begin.In addition to actors there also exist primary actors.Primary Actors interact di"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "UC_xyzz_aa"
+      ],
+      "row_count": 21,
+      "data_row_count": 20,
+      "is_empty": false,
+      "section": "Use Case Numbering Convention",
+      "raw_html": "<tr><td>UC_xyzz_aa</td><td></td></tr><tr><td rowspan=\"9\">X (Activity)</td><td>“1&quot;Create</td></tr><tr><td>&quot;2” Manage</td></tr><tr><td>“3”Review</td></tr><tr><td>“4”Upload</td></tr><tr><td>“5” Query</td></tr><tr><td>“6” &lt;TBD&gt;</td></tr><tr><td>&quot;“7” &lt;TBD&gt;</td></tr><tr><td>“8” &lt;TBD&gt;</td></tr><tr><td>“9&quot;Actor is passive (system drives actions)</td></tr><tr><td rowspan=\"9\">Y (Stakeholder)</td><td>&quot;1&quot;Community</td></tr><tr><td>“2” Family</td></tr><tr><td>“"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Function",
+        "Color scheme (using RGB values)"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "Color Table",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Function</td><td rowspan=1 colspan=1>Color scheme (using RGB values)</td></tr><tr><td rowspan=1 colspan=1>Create xx Profile</td><td rowspan=1 colspan=1>207 /233 / 214</td></tr><tr><td rowspan=1 colspan=1>Manage xx Profile</td><td rowspan=1 colspan=1>187 / 214 /253</td></tr><tr><td rowspan=1 colspan=1>External Databases</td><td rowspan=1 colspan=1>252 / 186 / 254</td></tr><tr><td rowspan=1 colspan=1>Monitor xx</td><td rowspan=1 colspan=1>254 / 136/ 80</td></tr><tr><td "
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Actor",
+        "Definition"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "List of Actors",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Actor</td><td rowspan=1 colspan=1>Definition</td></tr><tr><td rowspan=1 colspan=1>Caregiver</td><td rowspan=1 colspan=1>TheNote: “Self&#x27; is also a caregiver (for oneself).</td></tr><tr><td rowspan=1 colspan=1>Guardian</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>Guardian,secondary</td><td rowspan=1 colspan=1>Divorced, non-custodial parentSecondary, or non-caregiver relative or interested individual (trust orbank employee; government agency; co"
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Flow of Events"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "Implementation",
+      "raw_html": "<tr><td>Flow of Events</td></tr><tr><td>Basic Flow</td></tr><tr><td></td></tr><tr><td>Alternative Flow</td></tr><tr><td></td></tr><tr><td>Pre-Conditions</td></tr><tr><td></td></tr><tr><td>Post-Conditions</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>Extension Points</td></tr><tr><td></td></tr>"
+    }
+  ],
+  "image_count": 8,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "f51be39dddb323a72c7074a9df4c6e8364524362a339a45074ad3b99e48e3adf.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/f51be39dddb323a72c7074a9df4c6e8364524362a339a45074ad3b99e48e3adf.jpg",
+      "image_exists": true,
+      "image_size_kb": 203,
+      "alt_text": null,
+      "caption": "Retailer's Branches",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "Distributed Consumer Health Data Demonstration Project",
+      "context_before": "7. Over The Air (“OTA”) provisioning services could securely manage the digital content in the mobile device.\n8. Consumer will have complete control over her family’s health information, wherever she is.\n9. [Implicit] Consumer should be able to move her Health Data across Health Data Hosting Service",
+      "context_after": "Retailer's Branches\nJose.Lacal@Motorola.com 09/28/2006",
+      "md_line": 252,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "69a7f18240c1359f004d4a95a45d77161fdf1fe9df3f6c35850c58cf221f3339.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/69a7f18240c1359f004d4a95a45d77161fdf1fe9df3f6c35850c58cf221f3339.jpg",
+      "image_exists": true,
+      "image_size_kb": 164,
+      "alt_text": null,
+      "caption": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "PHI Use Case Diagram",
+      "context_before": "Jose.Lacal@Motorola.com 09/28/2006\nFigure 2: Distributed Consumer health Data Demonstration Project.\nThis section contains the diagrams generated by StarUML.",
+      "context_after": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org\nFigure 1 – Use Case Diagram of PHI",
+      "md_line": 262,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "e919dae74674df2636db2ff4216cec68f67fa8d111813dd42c610995bbc903d5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/e919dae74674df2636db2ff4216cec68f67fa8d111813dd42c610995bbc903d5.jpg",
+      "image_exists": true,
+      "image_size_kb": 166,
+      "alt_text": null,
+      "caption": "Figure 2 – Use Case Diagram of PHI\\_1",
+      "figure_number": 2,
+      "image_type": "figure",
+      "section": "PHI\\_1 Use Case Diagram",
+      "context_before": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org\nFigure 1 – Use Case Diagram of PHI\nDetailed analysis of the process for creating Individual, Family, and Community profiles.",
+      "context_after": "Figure 2 – Use Case Diagram of PHI\\_1\nMain Component Diagram",
+      "md_line": 271,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "2bcedf2744ac05a53b910e647acf77a544c113a012c0a631640219c9c44eb41d.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/2bcedf2744ac05a53b910e647acf77a544c113a012c0a631640219c9c44eb41d.jpg",
+      "image_exists": true,
+      "image_size_kb": 53,
+      "alt_text": null,
+      "caption": "Figure 3: Actors as Roles.",
+      "figure_number": 3,
+      "image_type": "figure",
+      "section": "Actors are Different and Separate From Roles<sup>10</sup>",
+      "context_before": "This section presents detailed information about each actor, and about the different roles those actors could take in the system.\nMr Southerby as CEO needs access to management information. Fred Smith as Order Entry Clerk needs to enter orders. Sometimes Mr Southerby may need to enter an order when ",
+      "context_after": "Figure 3: Actors as Roles.\nPlease notice: actors do not interact with the system. Roles do (see below).",
+      "md_line": 292,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 5,
+      "image_file": "ab7743dc4864713933e0e3cf5c79fcdc201a6567a0607dc2d4126d5dde8a2e11.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/ab7743dc4864713933e0e3cf5c79fcdc201a6567a0607dc2d4126d5dde8a2e11.jpg",
+      "image_exists": true,
+      "image_size_kb": 55,
+      "alt_text": null,
+      "caption": "Figure 4: Possible Artifacts on a UML Use Case Diagram.<sup>15</sup>",
+      "figure_number": 4,
+      "image_type": "figure",
+      "section": "UML Tools",
+      "context_before": "Build Phase. We take the actual design and write it in a real programming language. This includes not just the programming, but the testing that the program meets the requirements (verification), testing that the program actually solves the customer's problem (validation) and writing all user docume",
+      "context_after": "Figure 4: Possible Artifacts on a UML Use Case Diagram.<sup>15</sup>\nYou might want to read a good UML book or tutorial.<sup>16</sup>",
+      "md_line": 2737,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 6,
+      "image_file": "46518a85299c5203c0682d0ea574c960199624d9141185ec2900407142d0df95.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/46518a85299c5203c0682d0ea574c960199624d9141185ec2900407142d0df95.jpg",
+      "image_exists": true,
+      "image_size_kb": 19,
+      "alt_text": null,
+      "caption": "Figure 5: Axis of Structured Analysis.",
+      "figure_number": 5,
+      "image_type": "figure",
+      "section": "Structured Analysis<sup>20</sup>",
+      "context_before": "The functional view, made up of data flow diagrams, is the primary view of the system. It defines what is done, the flow of data between things that are done and provides the primary structure of the solution. Changes in functionality result in changes in the software structure.\n• The data view, mad",
+      "context_after": "Figure 5: Axis of Structured Analysis.\n..the diagram needs to be expanded to show the role of user-centered identity management, institutional federation and other Web privacy and security practices t",
+      "md_line": 2824,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 7,
+      "image_file": "1dabfe185a8f46bc33645815cfe15813a1f0d0f148e347bc3d151ecf884c5180.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/1dabfe185a8f46bc33645815cfe15813a1f0d0f148e347bc3d151ecf884c5180.jpg",
+      "image_exists": true,
+      "image_size_kb": 133,
+      "alt_text": null,
+      "caption": "Figure 6: Adrian Gropper's Version of Use Cases.",
+      "figure_number": 6,
+      "image_type": "figure",
+      "section": "Appendix D: Identity Management.",
+      "context_before": "..the diagram needs to be expanded to show the role of user-centered identity management, institutional federation and other Web privacy and security practices that impact interoperability.\nIn my opinion, to put the user in control, the PHI standard needs to accommodate both vendor \\_and\\_ instituti",
+      "context_after": "Figure 6: Adrian Gropper's Version of Use Cases.\n..I've edited the diagram to reflect four separate institutional domains that involve identity and could benefit from federation:",
+      "md_line": 2835,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 8,
+      "image_file": "f641652461aaf2271ba8a1b2879cd1cc89e86ab7d13e90fd274a077e1f53a0a9.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/f641652461aaf2271ba8a1b2879cd1cc89e86ab7d13e90fd274a077e1f53a0a9.jpg",
+      "image_exists": true,
+      "image_size_kb": 39,
+      "alt_text": null,
+      "caption": "Figure 7: Requirements to Prototype Process.<sup>22</sup>",
+      "figure_number": 7,
+      "image_type": "figure",
+      "section": "Appendix E: Proposed Development Model",
+      "context_before": "C - In the real-world, many encounters Create a new User from the institution's point of view. In a PHI-compliant world, the User would show up at a genetic testing lab and expect the clerk to identify me in a way that respects my privacy and assures me of total control and informed consent relative",
+      "context_after": "Figure 7: Requirements to Prototype Process.<sup>22</sup>\nDevelop a methodology and tools that help translate product requirements to architectural requirements without the need for extensive and time",
+      "md_line": 2852,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "f51be39dddb323a72c7074a9df4c6e8364524362a339a45074ad3b99e48e3adf.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/f51be39dddb323a72c7074a9df4c6e8364524362a339a45074ad3b99e48e3adf.jpg",
+      "image_exists": true,
+      "image_size_kb": 203,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "Retailer's Branches",
+      "section": "Distributed Consumer Health Data Demonstration Project",
+      "context_before": "7. Over The Air (“OTA”) provisioning services could securely manage the digital content in the mobile device.\n8. Consumer will have complete control over her family’s health information, wherever she is.\n9. [Implicit] Consumer should be able to move her Health Data across Health Data Hosting Service",
+      "context_after": "Retailer's Branches\nJose.Lacal@Motorola.com 09/28/2006",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "69a7f18240c1359f004d4a95a45d77161fdf1fe9df3f6c35850c58cf221f3339.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/69a7f18240c1359f004d4a95a45d77161fdf1fe9df3f6c35850c58cf221f3339.jpg",
+      "image_exists": true,
+      "image_size_kb": 164,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org",
+      "section": "PHI Use Case Diagram",
+      "context_before": "Jose.Lacal@Motorola.com 09/28/2006\nFigure 2: Distributed Consumer health Data Demonstration Project.\nThis section contains the diagrams generated by StarUML.",
+      "context_after": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org\nFigure 1 – Use Case Diagram of PHI",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "e919dae74674df2636db2ff4216cec68f67fa8d111813dd42c610995bbc903d5.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/e919dae74674df2636db2ff4216cec68f67fa8d111813dd42c610995bbc903d5.jpg",
+      "image_exists": true,
+      "image_size_kb": 166,
+      "image_type": "figure",
+      "figure_number": 2,
+      "caption": "Figure 2 – Use Case Diagram of PHI\\_1",
+      "section": "PHI\\_1 Use Case Diagram",
+      "context_before": "IEEEP2407 standards group Copyright (c) 2007 IEEE http://www.IEEE2407.org\nFigure 1 – Use Case Diagram of PHI\nDetailed analysis of the process for creating Individual, Family, and Community profiles.",
+      "context_after": "Figure 2 – Use Case Diagram of PHI\\_1\nMain Component Diagram",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "2bcedf2744ac05a53b910e647acf77a544c113a012c0a631640219c9c44eb41d.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/2bcedf2744ac05a53b910e647acf77a544c113a012c0a631640219c9c44eb41d.jpg",
+      "image_exists": true,
+      "image_size_kb": 53,
+      "image_type": "figure",
+      "figure_number": 3,
+      "caption": "Figure 3: Actors as Roles.",
+      "section": "Actors are Different and Separate From Roles<sup>10</sup>",
+      "context_before": "This section presents detailed information about each actor, and about the different roles those actors could take in the system.\nMr Southerby as CEO needs access to management information. Fred Smith as Order Entry Clerk needs to enter orders. Sometimes Mr Southerby may need to enter an order when ",
+      "context_after": "Figure 3: Actors as Roles.\nPlease notice: actors do not interact with the system. Roles do (see below).",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "ab7743dc4864713933e0e3cf5c79fcdc201a6567a0607dc2d4126d5dde8a2e11.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/ab7743dc4864713933e0e3cf5c79fcdc201a6567a0607dc2d4126d5dde8a2e11.jpg",
+      "image_exists": true,
+      "image_size_kb": 55,
+      "image_type": "figure",
+      "figure_number": 4,
+      "caption": "Figure 4: Possible Artifacts on a UML Use Case Diagram.<sup>15</sup>",
+      "section": "UML Tools",
+      "context_before": "Build Phase. We take the actual design and write it in a real programming language. This includes not just the programming, but the testing that the program meets the requirements (verification), testing that the program actually solves the customer's problem (validation) and writing all user docume",
+      "context_after": "Figure 4: Possible Artifacts on a UML Use Case Diagram.<sup>15</sup>\nYou might want to read a good UML book or tutorial.<sup>16</sup>",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "46518a85299c5203c0682d0ea574c960199624d9141185ec2900407142d0df95.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/46518a85299c5203c0682d0ea574c960199624d9141185ec2900407142d0df95.jpg",
+      "image_exists": true,
+      "image_size_kb": 19,
+      "image_type": "figure",
+      "figure_number": 5,
+      "caption": "Figure 5: Axis of Structured Analysis.",
+      "section": "Structured Analysis<sup>20</sup>",
+      "context_before": "The functional view, made up of data flow diagrams, is the primary view of the system. It defines what is done, the flow of data between things that are done and provides the primary structure of the solution. Changes in functionality result in changes in the software structure.\n• The data view, mad",
+      "context_after": "Figure 5: Axis of Structured Analysis.\n..the diagram needs to be expanded to show the role of user-centered identity management, institutional federation and other Web privacy and security practices t",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "1dabfe185a8f46bc33645815cfe15813a1f0d0f148e347bc3d151ecf884c5180.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/1dabfe185a8f46bc33645815cfe15813a1f0d0f148e347bc3d151ecf884c5180.jpg",
+      "image_exists": true,
+      "image_size_kb": 133,
+      "image_type": "figure",
+      "figure_number": 6,
+      "caption": "Figure 6: Adrian Gropper's Version of Use Cases.",
+      "section": "Appendix D: Identity Management.",
+      "context_before": "..the diagram needs to be expanded to show the role of user-centered identity management, institutional federation and other Web privacy and security practices that impact interoperability.\nIn my opinion, to put the user in control, the PHI standard needs to accommodate both vendor \\_and\\_ instituti",
+      "context_after": "Figure 6: Adrian Gropper's Version of Use Cases.\n..I've edited the diagram to reflect four separate institutional domains that involve identity and could benefit from federation:",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "f641652461aaf2271ba8a1b2879cd1cc89e86ab7d13e90fd274a077e1f53a0a9.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/usecasedocs/mineru_parsed/IEEE2407_uc.pdf/auto/images/f641652461aaf2271ba8a1b2879cd1cc89e86ab7d13e90fd274a077e1f53a0a9.jpg",
+      "image_exists": true,
+      "image_size_kb": 39,
+      "image_type": "figure",
+      "figure_number": 7,
+      "caption": "Figure 7: Requirements to Prototype Process.<sup>22</sup>",
+      "section": "Appendix E: Proposed Development Model",
+      "context_before": "C - In the real-world, many encounters Create a new User from the institution's point of view. In a PHI-compliant world, the User would show up at a genetic testing lab and expect the clerk to identify me in a way that respects my privacy and assures me of total control and informed consent relative",
+      "context_after": "Figure 7: Requirements to Prototype Process.<sup>22</sup>\nDevelop a methodology and tools that help translate product requirements to architectural requirements without the need for extensive and time",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

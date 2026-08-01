@@ -1,0 +1,208 @@
+{
+  "doc_name": "架构设计说明_V2.3",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/starriver_superbrain/架构设计说明_V2.3.md",
+  "md_lines": 154,
+  "md_chars": 4060,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "架构设计说明（V2.3）",
+  "section_count": 23,
+  "sections": [
+    {
+      "number": null,
+      "title": "架构设计说明（V2.3）",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 274,
+      "text_preview": "> 更新公告（2025-08-23）\n> - 新增章节：意识核心 v0、可观测矩阵 v0、安全与回滚、接口映射。\n> - 对齐当前实现：FastAPI + Uvicorn，预览命名空间 /api/v2.3-preview。\n> - 观测与审计：X-Request-Id 透传与服务端生成、关键操作结构化日志。\n> - **【NEW】多智能体系统架构**：星河Orchestrator v0，支持Bre"
+    },
+    {
+      "number": null,
+      "title": "1. 技术栈与原则",
+      "level": 2,
+      "line_start": 14,
+      "text_length": 156,
+      "text_preview": "- 技术栈：Python 3.10+、FastAPI、Uvicorn、Pydantic、CORS（全开放用于本地联调）。\n- 设计原则：文档驱动、契约优先（OpenAPI）、最小必要复杂度（MNC）、可回退、可观测。\n- 命名空间：所有预览接口挂载于 /api/v2.3-preview（根路径和健康检查除外）。"
+    },
+    {
+      "number": null,
+      "title": "2. 系统架构（预览）",
+      "level": 2,
+      "line_start": 19,
+      "text_length": 427,
+      "text_preview": "- 模块划分：\n  - Consciousness（意识）：/consciousness/state（GET/POST）\n  - Memory（记忆）：/memory/sync（POST）、/memory/export（GET）\n  - Reasoning（推理）：/reasoning/plan（POST）\n  - Execution（执行）：/execution/act（POST）\n  - Cl"
+    },
+    {
+      "number": null,
+      "title": "3. 关键设计",
+      "level": 2,
+      "line_start": 31,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 意识核心 v0（最小可用）",
+      "level": 3,
+      "line_start": 32,
+      "text_length": 172,
+      "text_preview": "- 抽象：目标（Goal）/状态机（idle→focus→act→reflect）/注意力路由（基于端点与上下文）/记忆门控（读/写/引用策略）。\n- 外部接口：/consciousness/state（GET/POST）。当前实现为内存态，后续接入记忆系统与计划器。\n- 与 IDE 大模型协同：意识态影响调用策略与资源预算（预留策略钩子）。"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 多智能体系统架构 v0",
+      "level": 3,
+      "line_start": 37,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 整体架构模式",
+      "level": 4,
+      "line_start": 38,
+      "text_length": 221,
+      "text_preview": "- **范式**：Orchestrator-Worker模式，参考Anthropic多智能体研究系统设计\n- **核心角色**：\n  - LeadResearcher（指挥中心）：负责任务分解、策略规划、结果综合\n  - SearchAgent（搜索智能体）：并行执行网络搜索与数据检索\n  - SynthesisAgent（综合智能体）：信息去重、质量评估与知识整合\n  - CitationAge"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 接口设计",
+      "level": 4,
+      "line_start": 46,
+      "text_length": 618,
+      "text_preview": "```yaml\nPOST /api/v2.3-preview/agents/run\nRequest:\n  task_type: \"breadth_first_research\" | \"single_agent_analysis\"\n  query: string\n  max_agents: number (default: 3, max: 5)\n  budget: { time_limit: num"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 调度策略",
+      "level": 4,
+      "line_start": 69,
+      "text_length": 147,
+      "text_preview": "- **任务分解**：基于查询复杂度自动确定子任务数量与边界\n- **并行执行**：Worker智能体独立搜索，通过Interleaved Thinking评估结果\n- **预算守恒**：时间与成本双重约束，超预算自动熔断\n- **失败恢复**：单个Worker失败不影响全局，支持部分结果返回"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 记忆与状态管理",
+      "level": 4,
+      "line_start": 75,
+      "text_length": 78,
+      "text_preview": "- **任务记忆**：保存分解策略、中间结果、决策轨迹\n- **引用知识库**：缓存高质量源与可信度评分\n- **反思循环**：根据结果质量调整下次分解策略"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 可观测矩阵 v0",
+      "level": 3,
+      "line_start": 80,
+      "text_length": 220,
+      "text_preview": "- 追踪：请求头 X-Request-Id 透传，若缺失则服务端生成并在响应头回显 X-Server-Request-Id。\n- 日志：结构化日志（method, path, status, duration_ms, req_id）。默认输出到控制台。\n- 指标：预留端点级计数与延迟直方图埋点（后续接 Prometheus/OpenTelemetry）。\n- **多智能体监控**：Worker调度"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 安全与回滚",
+      "level": 3,
+      "line_start": 86,
+      "text_length": 186,
+      "text_preview": "- 安全基线：最小权限、无敏感明文；本地默认关闭鉴权以便联调，生产启用 Bearer/OIDC。\n- 回滚策略：\n  - 接口级：写操作预留 Idempotency-Key 语义（契约已定义，代码将对齐）。\n  - 数据级：预览期以软状态为主（内存态），后续引入软删除与变更日志以支持快速回滚。\n- **多智能体安全**：Worker沙箱隔离、搜索结果内容过滤、引用源验证"
+    },
+    {
+      "number": null,
+      "title": "4. 非功能设计（目标）",
+      "level": 2,
+      "line_start": 93,
+      "text_length": 185,
+      "text_preview": "- 性能：P95 ≤ 300ms（本地环境基线），多智能体任务 P95 ≤ 5s\n- 可靠性：SLO ≥ 99.9%（预览环境）；关键链路错误率 ≤ 0.1%。\n- 可观测性：核心指标/日志/追踪齐备；SLA 告警路由有效。\n- 合规：采集最小化，授权可撤销，导出可脱敏，审计留痕全链路。\n- **多智能体性能**：支持最大5个并发Worker，预算可配置，支持优雅降级"
+    },
+    {
+      "number": null,
+      "title": "5. 接口映射与命名空间",
+      "level": 2,
+      "line_start": 100,
+      "text_length": 346,
+      "text_preview": "- 命名空间前缀：/api/v2.3-preview。\n- 模块→端点映射：\n  - Consciousness → GET/POST /consciousness/state\n  - Memory → POST /memory/sync, GET /memory/export\n  - Reasoning → POST /reasoning/plan\n  - Execution → POST /e"
+    },
+    {
+      "number": null,
+      "title": "6. 多智能体决策阈值与策略",
+      "level": 2,
+      "line_start": 111,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 何时选择多智能体",
+      "level": 3,
+      "line_start": 112,
+      "text_length": 78,
+      "text_preview": "- 查询需要探索≥3个独立方向\n- 单次搜索结果不足以覆盖主题广度\n- 用户明确要求\"全面研究\"或\"多角度分析\"\n- 时间预算充足（≥30秒）且成本预算允许"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 何时选择单智能体",
+      "level": 3,
+      "line_start": 118,
+      "text_length": 50,
+      "text_preview": "- 查询明确且范围有限\n- 需要快速响应（<10秒）\n- 成本敏感场景\n- 已有足够上下文或缓存结果"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 折中策略",
+      "level": 3,
+      "line_start": 124,
+      "text_length": 71,
+      "text_preview": "- 混合模式：单智能体打底+多智能体补充\n- 渐进式扩展：根据初始结果质量决定是否启动多智能体\n- 用户选择：提供任务类型选择器，支持显式指定"
+    },
+    {
+      "number": null,
+      "title": "7. 演进路线（摘要）",
+      "level": 2,
+      "line_start": 129,
+      "text_length": 211,
+      "text_preview": "- 契约对齐：按 docs/requirements/api/openapi_v2.3-preview.yaml 对齐字段与错误码。\n- 可观测增强：接入 OpenTelemetry/Prometheus；审计日志持久化。\n- 意识 v1：加入多目标优先队列与反思循环，记忆门控策略化。\n- **多智能体v1**：引入强化学习优化调度策略，支持更多Worker类型\n- 规模化：限流/熔断/幂等落地；"
+    },
+    {
+      "number": null,
+      "title": "8. 多智能体质量门禁 v0",
+      "level": 2,
+      "line_start": 136,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "8.1",
+      "title": "8.1 任务分解质量门",
+      "level": 3,
+      "line_start": 137,
+      "text_length": 50,
+      "text_preview": "- 子任务边界清晰，无重叠与遗漏\n- 任务描述具体，包含预期输出格式\n- 并行度合理，符合查询复杂度"
+    },
+    {
+      "number": "8.2",
+      "title": "8.2 执行质量门",
+      "level": 3,
+      "line_start": 142,
+      "text_length": 43,
+      "text_preview": "- Worker独立性验证，无相互依赖\n- 超时与异常处理完备\n- 结果格式一致性检查"
+    },
+    {
+      "number": "8.3",
+      "title": "8.3 综合质量门",
+      "level": 3,
+      "line_start": 147,
+      "text_length": 120,
+      "text_preview": "- 信息去重与一致性验证\n- 引用可信度≥0.7的比例≥50%\n- 最终置信度评分合理且可解释\n\n---\n\n**更新说明**：本版本新增多智能体系统架构设计，为V2.3版本的智能化能力升级奠定了技术基础，支持从单智能体到多智能体的平滑演进。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

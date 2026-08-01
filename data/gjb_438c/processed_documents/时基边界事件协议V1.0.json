@@ -1,0 +1,545 @@
+{
+  "doc_name": "时基边界事件协议V1.0",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/通信协议/时基边界事件协议V1.0.md",
+  "md_lines": 457,
+  "md_chars": 10487,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "时基边界事件协议V1.0",
+  "section_count": 47,
+  "sections": [
+    {
+      "number": null,
+      "title": "时基边界事件协议V1.0",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 116,
+      "text_preview": "> 适用范围：前端 DACS / FPGA → 服务器 SPS\n> 报文定位：**时基边界事件接口**\n> 报文名称：**PPS Notify / 软件秒边界通知包**\n> 报文类型：`PacketType = 0x05`\n\n---"
+    },
+    {
+      "number": "0",
+      "title": "0 设计目标与定位",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "0.1",
+      "title": "0.1 协议定位",
+      "level": 3,
+      "line_start": 12,
+      "text_length": 149,
+      "text_preview": "本报文用于在 **服务器侧没有硬件秒边界输入、也不依赖本地硬中断节拍** 的条件下，把前端执行侧已经感知到的物理秒边界，上送为后端可消费的 **软件秒边界事件**。\n\n该报文的作用不是让服务器“获得了真正的硬件 1PPS”，而是为控制面建立一套统一、可追踪、可回放、可用于调度推进的秒边界软件语义。"
+    },
+    {
+      "number": "0.2",
+      "title": "0.2 设计边界",
+      "level": 3,
+      "line_start": 18,
+      "text_length": 203,
+      "text_preview": "本报文**负责提供边界事实**，不直接承担以下职责：\n\n1. 不直接触发前端表切换\n2. 不直接裁定服务器进入哪个运行状态\n3. 不直接让数据面推进处理周期\n4. 不替代 GNSS / PTP / 本地晶振本身的授时链路\n5. 不承诺硬件级高精度同步保证\n\nPPS 接收线程的职责是接入、校验、去重、投递；权威周期状态由时基管理组件维护；任务调度中心消费该状态推进周期；数据面只消费共享周期状态与参数"
+    },
+    {
+      "number": "0.3",
+      "title": "0.3 最小语义冻结",
+      "level": 3,
+      "line_start": 30,
+      "text_length": 108,
+      "text_preview": "PPS Notify 至少必须表达以下 6 类信息：\n\n1. 边界序号\n2. 对应 UTC 秒值\n3. 前端本地记录的边界时间\n4. 时间来源\n5. 时间质量\n6. 边界标志位\n\n这是该报文的最小冻结语义。\n\n---"
+    },
+    {
+      "number": "1",
+      "title": "1 平面归属与传输规则",
+      "level": 2,
+      "line_start": 45,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 平面定义",
+      "level": 3,
+      "line_start": 47,
+      "text_length": 356,
+      "text_preview": "系统整体协议采用五平面划分，其中第 5 类正式接口定义为：\n\n| 平面     |              报文类型 | 方向         | 核心语义      | 可靠性策略                  |\n| ------ | ----------------: | ---------- | --------- | ---------------------- |\n| 时基边界平"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 端口分配",
+      "level": 3,
+      "line_start": 61,
+      "text_length": 276,
+      "text_preview": "采用独立 UDP 端口，避免与数据/心跳复用：\n\n| 报文类型                | 方向         | 源端口  | 目标端口 |\n| ------------------- | ---------- | ---- | ---- |\n| PPS Notify (`0x05`) | DACS → SPS | 8890 | 8890 |\n\n原因：\n\n1. 与 `0x03/0x04`"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 可靠性与重传原则",
+      "level": 3,
+      "line_start": 75,
+      "text_length": 229,
+      "text_preview": "PPS Notify 冻结为 **不做应用层重传、不做 ACK 闭环**。\n\n原因：\n\n1. 该报文表达的是“边界事实”，不是事务型控制对象\n2. 边界报文天然带有时效性，迟到重传价值很低\n3. 后端应通过 `PpsSeq` 检测重复、乱序、失边界，而不是依赖 ACK\n4. 若发生丢失，应由时基管理组件和调度中心依据失边界规则进入守时、冻结表、降级或安全态，而不是要求前端补发旧边界\n\n这与现有“提"
+    },
+    {
+      "number": "2",
+      "title": "2 通用报文头使用规则",
+      "level": 2,
+      "line_start": 90,
+      "text_length": 87,
+      "text_preview": "PPS Notify 继续复用 **V1.0 通用报文头 32B**，字段定义、字节序、`SourceID/DestID/ControlEpoch` 规则与现有协议保持一致。"
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 通用头约束",
+      "level": 3,
+      "line_start": 94,
+      "text_length": 175,
+      "text_preview": "* `PacketType = 0x05`\n* 多字节字段均采用 **小端序**\n* `ProtocolVersion = 0x10`\n* `SourceID` 必须为具体阵面 DACS，如 `0x11 / 0x12 / 0x13`\n* `DestID` 固定为 `0x01`（SPS）\n* `ControlEpoch` 继续作为链路纪元隔离字段使用"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Common Header.Timestamp 语义扩展",
+      "level": 3,
+      "line_start": 103,
+      "text_length": 176,
+      "text_preview": "对 `PacketType = 0x05`，通用头 `Timestamp` 解释为：\n\n> **本 PPS Notify 报文的发送时间戳（Unix Epoch ms）**\n\n说明：\n\n* 它表示“前端把边界事实发出来”的时刻\n* 它不是“物理边界到达时刻”的唯一权威字段\n* 真正的边界时刻与 UTC 秒值，应以 PPS Payload 内的字段为准"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 SequenceNumber 语义",
+      "level": 3,
+      "line_start": 115,
+      "text_length": 196,
+      "text_preview": "`Common Header.SequenceNumber` 继续按发送端逻辑流递增，作为链路级序号使用。\n但 **软件秒边界去重与乱序判断的主键**，应优先使用 Payload 内的 `PpsSeq`，而不是单纯依赖通用头序列号。\n\n理由：\n\n* `SequenceNumber` 是通用逻辑流序号\n* `PpsSeq` 是专门面向秒边界对象的时基序号\n* 两者职责不同，不应混用\n\n---"
+    },
+    {
+      "number": "3",
+      "title": "3 PPS Notify Payload 结构",
+      "level": 2,
+      "line_start": 128,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 包结构",
+      "level": 3,
+      "line_start": 130,
+      "text_length": 443,
+      "text_preview": "```txt\n┌──────────────────────────────────────────────┐\n│ UDP Payload                                  │\n├──────────────────────────────────────────────┤\n│ Common Header (32B)                         "
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 PayloadLen",
+      "level": 3,
+      "line_start": 144,
+      "text_length": 65,
+      "text_preview": "```txt\nPayloadLen = 40\nUDP Payload Total = 32 + 40 = 72 Bytes\n```"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 设计说明",
+      "level": 3,
+      "line_start": 151,
+      "text_length": 62,
+      "text_preview": "* 固定长度，便于快速解析\n* 4 字节自然对齐\n* 无变长载荷\n* 不携带大对象，不承载调度信息，不与控制表耦合\n\n---"
+    },
+    {
+      "number": "4",
+      "title": "4 PPS Notify Payload 字段表",
+      "level": 2,
+      "line_start": 160,
+      "text_length": 1937,
+      "text_preview": "> Offset 基准：相对于 PPS Notify Payload 起始位置（即 UDP Payload Offset = 32）\n\n| Offset | 字段名称                                 |         类型 | 字节数 | 说明                                                             "
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 EdgeFlags 位定义（冻结）",
+      "level": 2,
+      "line_start": 180,
+      "text_length": 799,
+      "text_preview": "|    Bit | 名称                | 说明                 |\n| -----: | ----------------- | ------------------ |\n|    `0` | `EDGE_VALID`      | 本次边界有效             |\n|    `1` | `DUP_EDGE`        | 检测到本次边界为重复边界 "
+    },
+    {
+      "number": "5",
+      "title": "5 CRC32C 规则",
+      "level": 2,
+      "line_start": 203,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 算法",
+      "level": 3,
+      "line_start": 205,
+      "text_length": 86,
+      "text_preview": "与现有协议保持一致，采用 **CRC-32C (Castagnoli)**。现有协议中 Control、ScheduleApplyAck、Heartbeat 已采用该算法。"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 覆盖范围",
+      "level": 3,
+      "line_start": 209,
+      "text_length": 179,
+      "text_preview": "| 报文                  | 覆盖范围（Payload Offset） | 校验字段位置     |\n| ------------------- | -------------------- | ---------- |\n| PPS Notify (`0x05`) | `0 .. 35`            | `36 .. 39` |"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 校验失败处理",
+      "level": 3,
+      "line_start": 215,
+      "text_length": 170,
+      "text_preview": "PPS Notify 的 CRC32C 校验失败时：\n\n1. 该报文不得进入时基管理组件\n2. PPS 接收线程应静默丢弃并计数\n3. 不回 ACK\n4. 计入 `pps_crc_error_total`\n\n理由：\n\n* PPS Notify 不是控制事务报文\n* 错误的边界事实不能被“勉强消费”\n* 也不值得为它做反向应答闭环\n\n---"
+    },
+    {
+      "number": "6",
+      "title": "6 接收与判定规则",
+      "level": 2,
+      "line_start": 232,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 PPS 接收线程职责",
+      "level": 3,
+      "line_start": 234,
+      "text_length": 163,
+      "text_preview": "PPS 接收线程只负责：\n\n1. 收包\n2. 基础字段校验\n3. CRC32C 校验\n4. `PpsSeq / UtcSeconds` 去重与乱序检查\n5. 生成内部软件秒边界事件并投递\n\n它不负责：\n\n1. 推进调度周期\n2. 直接换表\n3. 直接裁定降级\n4. 直接广播给数据面\n\n这与秒边界设计说明中的职责分层保持一致。"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 基础校验顺序",
+      "level": 3,
+      "line_start": 253,
+      "text_length": 249,
+      "text_preview": "接收顺序冻结为：\n\n1. `Magic` 校验\n2. `ProtocolVersion` 主版本校验\n3. `PacketType == 0x05` 校验\n4. `PayloadLen == 40` 校验\n5. `DestID == 0x01` 校验\n6. `SourceID` 是否为合法 DACS 阵面\n7. `CRC32C` 校验\n8. `TimeSource / TimeQuality / "
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 去重与乱序规则",
+      "level": 3,
+      "line_start": 267,
+      "text_length": 199,
+      "text_preview": "以 `PpsSeq` 为主键，冻结如下：\n\n* 若 `PpsSeq == last_pps_seq`：视为重复边界，丢弃并计数\n* 若 `PpsSeq` 按半区间比较为旧值：视为乱序/旧包，丢弃并计数\n* 若 `PpsSeq` 比 `last_pps_seq` 大 1：正常推进\n* 若 `PpsSeq` 跨越大于 1：判定为丢边界，记录 `missed_pps_count += delta-1`"
+    },
+    {
+      "number": "6.4",
+      "title": "6.4 UTC 秒值一致性规则",
+      "level": 3,
+      "line_start": 276,
+      "text_length": 140,
+      "text_preview": "同时检查 `UtcSeconds`：\n\n* 正常情况下，新边界的 `UtcSeconds` 应比上次增加 1\n* 若不满足，则标记 `TIME_JUMP`\n* 即使 `PpsSeq` 正常，也不能完全忽略 `UtcSeconds` 异常\n* 最终是否接受该事件，由时基管理组件裁定"
+    },
+    {
+      "number": "6.5",
+      "title": "6.5 进入时基管理组件的条件",
+      "level": 3,
+      "line_start": 285,
+      "text_length": 104,
+      "text_preview": "只有在以下条件同时满足时，PPS 接收线程才允许投递：\n\n1. 协议头合法\n2. 长度合法\n3. CRC 合法\n4. `EDGE_VALID = 1`\n5. 非重复、非旧序号\n6. 基础字段值未越界\n\n---"
+    },
+    {
+      "number": "7",
+      "title": "7 时基管理与调度消费规则",
+      "level": 2,
+      "line_start": 298,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "7.1",
+      "title": "7.1 权威周期状态更新",
+      "level": 3,
+      "line_start": 300,
+      "text_length": 178,
+      "text_preview": "时基管理组件消费有效 PPS Notify 后，更新至少以下状态：\n\n* `pps_seq`\n* `current_second`\n* `global_epoch`\n* `time_source`\n* `time_quality`\n* `edge_flags`\n* `boundary_trust_level`\n\n这与现有“权威全局周期状态”冻结口径一致。"
+    },
+    {
+      "number": "7.2",
+      "title": "7.2 调度中心消费方式",
+      "level": 3,
+      "line_start": 314,
+      "text_length": 126,
+      "text_preview": "任务调度中心不得“认包换秒”，而应：\n\n1. 读取时基管理组件维护的权威状态\n2. 判定是否进入新周期\n3. 更新本地 `TargetEffectiveEpoch / GlobalEpoch`\n4. 决定是否正常推进、冻结表、续跑旧表、降级或进入安全态"
+    },
+    {
+      "number": "7.3",
+      "title": "7.3 数据面消费方式",
+      "level": 3,
+      "line_start": 323,
+      "text_length": 100,
+      "text_preview": "数据面不得直接接收 PPS Notify 包。\n数据面只允许通过以下两类对象消费边界语义：\n\n1. 共享周期状态\n2. 参数快照中的周期上下文\n\n这一点应明确冻结，防止控制职责扩散到数据面。\n\n---"
+    },
+    {
+      "number": "8",
+      "title": "8 异常处理与降级规则",
+      "level": 2,
+      "line_start": 335,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "8.1",
+      "title": "8.1 PPS 包丢失",
+      "level": 3,
+      "line_start": 337,
+      "text_length": 114,
+      "text_preview": "若 `PpsSeq` 检测到跳变，说明存在失边界：\n\n* 时基管理组件记录 `missed_pps_count`\n* 若短时少量丢失，可保持当前守时状态并告警\n* 若连续超过阈值，调度中心应进入冻结表、旧表续跑、局部降级或安全态"
+    },
+    {
+      "number": "8.2",
+      "title": "8.2 时间质量下降",
+      "level": 3,
+      "line_start": 345,
+      "text_length": 161,
+      "text_preview": "当 `TimeQuality` 由：\n\n* `Locked -> Holdover`\n* `Holdover -> Freerun/Unknown`\n\n时，后端必须记录状态变化，并重新评估后续定时生效能力。现有协议对定时生效已经冻结了：`Holdover` 默认禁止定时生效，`Freerun/Unknown` 必须禁止。"
+    },
+    {
+      "number": "8.3",
+      "title": "8.3 时间来源切换",
+      "level": 3,
+      "line_start": 354,
+      "text_length": 97,
+      "text_preview": "当 `TimeSource` 发生变化时：\n\n* 必须记录 `TIME_SRC_SWITCH`\n* 显控应可见授时来源切换\n* 若从 GNSS 降到 PTP / Holdover，应提升告警等级"
+    },
+    {
+      "number": "8.4",
+      "title": "8.4 PPS 包迟到",
+      "level": 3,
+      "line_start": 362,
+      "text_length": 218,
+      "text_preview": "PPS Notify 到达晚不等于边界无效，但应计入诊断：\n\n```txt\npps_arrival_latency_ms =\nCommonHeader.Timestamp(ms) - floor(EdgeLocalTimestampNs / 1_000_000)\n```\n\n说明：\n\n* 这里主要用于统计网络通知延迟与抖动\n* 迟到的 PPS 包仍可用于“边界事实记录”\n* 但是否允许其驱动周期推进"
+    },
+    {
+      "number": "9",
+      "title": "9 显控与日志可观测性",
+      "level": 2,
+      "line_start": 379,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "9.1",
+      "title": "9.1 显控最小展示项",
+      "level": 3,
+      "line_start": 381,
+      "text_length": 201,
+      "text_preview": "显控至少展示：\n\n* 当前 `PpsSeq`\n* 当前 `GlobalEpoch`\n* 当前授时来源（GNSS / PTP / Holdover）\n* 当前时间质量（Locked / Holdover / Freerun）\n* 最近一次边界状态（正常 / 跳变 / 重同步 / 失边界）\n* 连续失边界次数\n* 当前是否处于旧表续跑 / 冻结表 / 降级态\n\n这与现有显控“展示结论和态势”的原则一致"
+    },
+    {
+      "number": "9.2",
+      "title": "9.2 日志事件",
+      "level": 3,
+      "line_start": 395,
+      "text_length": 270,
+      "text_preview": "至少打点以下事件：\n\n* `PPS_RX_OK(seq, utc_sec, src, quality)`\n* `PPS_DUP(seq)`\n* `PPS_OUT_OF_ORDER(seq)`\n* `PPS_MISSED(last_seq, new_seq, miss_count)`\n* `PPS_TIME_JUMP(last_utc, new_utc)`\n* `TIME_SRC_SWITCH(ol"
+    },
+    {
+      "number": "10",
+      "title": "10 与现有协议 V1.0 的并入要求",
+      "level": 2,
+      "line_start": 410,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "10.1",
+      "title": "10.1 协议总表新增项",
+      "level": 3,
+      "line_start": 412,
+      "text_length": 221,
+      "text_preview": "协议总表新增：\n\n| 平面     |              报文类型 | 方向         | 核心语义    | 可靠性策略          |\n| ------ | ----------------: | ---------- | ------- | -------------- |\n| 时基边界平面 | `0x05` PPS Notify | DACS → SPS | 软件秒边界"
+    },
+    {
+      "number": "10.2",
+      "title": "10.2 通用头时间戳矩阵补充",
+      "level": 3,
+      "line_start": 420,
+      "text_length": 255,
+      "text_preview": "在 `Timestamp` 语义矩阵中补一行：\n\n| PacketType | 报文名称       | Common Header.Timestamp 语义 | 允许为 0 | 0 的语义     |\n| ---------- | ---------- | -------------------------- | ----- | --------- |\n| `0x05`     | PPS No"
+    },
+    {
+      "number": "10.3",
+      "title": "10.3 UDP 端口分配补充",
+      "level": 3,
+      "line_start": 428,
+      "text_length": 172,
+      "text_preview": "UDP 端口分配补充如下：\n\n| 报文类型                | 方向         | 源端口  | 目标端口 |\n| ------------------- | ---------- | ---- | ---- |\n| PPS Notify (`0x05`) | DACS → SPS | 8890 | 8890 |\n\n---"
+    },
+    {
+      "number": "11",
+      "title": "11 冻结表述",
+      "level": 2,
+      "line_start": 438,
+      "text_length": 218,
+      "text_preview": "> **PPS Notify 报文用于把前端执行侧感知到的物理秒边界，上送为后端控制面可消费的软件秒边界事件。该报文只提供边界事实，不直接承担调度裁决、表生效裁决或数据面驱动职责。PPS 接收线程负责快速接收、校验、去重与事件投递；时基管理组件据此维护权威全局周期状态；任务调度中心基于该状态推进调度周期并裁定后续控制行为；数据面通过共享周期状态与参数快照消费边界语义。该报文提供统一周期语义，不提供"
+    },
+    {
+      "number": "12",
+      "title": "12 精简版字段摘要",
+      "level": 2,
+      "line_start": 444,
+      "text_length": 574,
+      "text_preview": "| 字段                     | 含义                          |\n| ---------------------- | --------------------------- |\n| `PpsSeq`               | 软件秒边界序号                     |\n| `UtcSeconds`           | 边界"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 9,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "平面",
+        "报文类型",
+        "方向",
+        "核心语义",
+        "可靠性策略"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "1.1 平面定义",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文类型",
+        "方向",
+        "源端口",
+        "目标端口"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "1.2 端口分配",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Offset",
+        "字段名称",
+        "类型",
+        "字节数",
+        "说明"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "4 PPS Notify Payload 字段表",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Bit",
+        "名称",
+        "说明"
+      ],
+      "row_count": 11,
+      "data_row_count": 10,
+      "is_empty": false,
+      "section": "4.4 EdgeFlags 位定义（冻结）",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文",
+        "覆盖范围（Payload Offset）",
+        "校验字段位置"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "5.2 覆盖范围",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "平面",
+        "报文类型",
+        "方向",
+        "核心语义",
+        "可靠性策略"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "10.1 协议总表新增项",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "PacketType",
+        "报文名称",
+        "Common Header.Timestamp 语义",
+        "允许为 0",
+        "0 的语义"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "10.2 通用头时间戳矩阵补充",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "报文类型",
+        "方向",
+        "源端口",
+        "目标端口"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "10.3 UDP 端口分配补充",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "字段",
+        "含义"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "12 精简版字段摘要",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

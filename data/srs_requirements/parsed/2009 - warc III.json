@@ -1,0 +1,143 @@
+{
+  "file": "2009 - warc III.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "64 Clifton Street, London,\nEC2A 4HB, U.K\n+44 20 8816 8226\nwww.hanzoarchives.com\ncontact@hanzoarchives.com\nWARC Tools Phase III\nFunctional Requirements\nSpecification\nPrepared for: IIPC\nPrepared by: Hanzo\nDelivered: Tuesday, 20 October 2009\nAbstract & Summation: This Functional Requirements Specifications (FRS) is a base-line statement of\nfunctional requirements for the WARC Tools Phase III project. Also includes high-level estimates of effort\nand schedule.\nConfidential Information. Copyright (c) 2009. Hanzo Archives Limited. All Rights Reserved.\nHanzo Archives Limited. Registered in England. Number: 5410483. VAT: 912 8708 19."
+    },
+    {
+      "page": 2,
+      "text": "Table of Contents\n64 Clifton Street, London, Introduction! 1\nEC2A 4HB, U.K\n+44 20 8816 8226 Background .............................................................................................................................................1\nwww.hanzoarchives.com\nWARC Tools Phase I and Phase II ...............................................................................................1\ncontact@hanzoarchives.com\nWARC Tools Phase III ..................................................................................................................1\nOutline Approach .....................................................................................................................................1\nSpecification! 3\nDefault Behaviours ...................................................................................................................................3\nMigration Application ................................................................................................................................3\nMigration Tool .............................................................................................................................4\nValidation Tool ..........................................................................................................................................6\nRepackaging Tool .....................................................................................................................................6\nReporting Application ...............................................................................................................................7\nWARC Summary Tool ..................................................................................................................7\nWARC Browser Integration ..........................................................................................................8\nQuality Assurance Tool .............................................................................................................................8\nWARC Comparator .....................................................................................................................8\nEnhanced WARC Browser ...........................................................................................................8\nWARC Tools Phase III Functional Requirements Specification i"
+    },
+    {
+      "page": 3,
+      "text": "64 Clifton Street, London, Introduction\nEC2A 4HB, U.K\n+44 20 8816 8226\nBackground\nwww.hanzoarchives.com\nWARC Tools Phase I and Phase II\ncontact@hanzoarchives.com\nThe main goal of the WARC Tools project is to facilitate and promote the adoption of the WARC file format\nfor storing web archives by the mainstream web development community by providing an open source\nsoftware library, a set of command line tools, web server plug-ins and technical documentation for\nmanipulation and management of web archive files, or WARC files.\nThis project has delivered a core software library called “libwarc” and a set of end user command line\ntools, extensions to existing tools, and simple web applications for accessing WARC content. In addition\nall the libraries have APIs and dynamic language bindings. The library and tools are scriptable (command\nlines in shell scripts, dynamic language bindings to the library), and programmable (dynamic language\nbindings, Java packages, and the C library itself).\nTogether, these deliverables are known as “WARC Tools” and are available as free software, here: http://\ncode.google.com/p/warc-tools/\nIn parallel, Hanzo have developed an extension to WARC Tools that provides full-text and metadata search\nof WARC files, known as “Search Tools”, which is also available as free software, here: http://\ncode.google.com/p/search-tools/\nTogether, these projects provide a compelling implementation of the WARC standard, and provide a robust\nengineering foundation for further development of tools and applications centred around WARC files and\ntheir usage.\nWARC Tools Phase III\nFollowing the development of libwarc and associated WARC Tools in phases I and II, Hanzo will implement\na third development phase, WARC Tools Phase III. This phase will build upon the original libwarc,\nextending the collection of WARC Tools and implement a full migration application. Phase III will include\ncommunity participation in the specification of the tools and applications, these will come from a number\nof International Internet Preservation Consortium (IIPC) member institutions, and similarly for testing.\nPhase III implementation will follow the original philosophy of providing powerful tools to enable crawl\nengineers, web archivists, researchers and other WARC users to easily manipulate and explore collections\nof web archive content without needing to write complex low-level code.\nOutline Approach\nWARC Tools Phase III will specify, build, test and deploy the following:\n1. Migration Application\n2. Repackaging Tool\n3. Reporting Application\nWARC Tools Phase III Functional Requirements Specification 1"
+    },
+    {
+      "page": 4,
+      "text": "4. Quality Assurance Tool\n5. Enhanced WARC Browser\nIn addition, Hanzo will carry out the following tasks as part of the project:\n1. Collaborative requirements gathering and requirements management\n2. Libwarc maintenance\n3. Project management and meetings\n4. Deployment within participating institutions\nThe project will be organised around a collaborative engagement with the web archiving community,\ninviting IIPC member institutions to collaborate and contribute functional requirements and deployment\nand testing of the tools and applications in their own institutions.\nSpecifically, Hanzo plan to involve IIPC member institutions to work on creating and/or reviewing\nrequirements during the inception phase of the project, which includes a questionnaire prepared by BnF.\nDuring the transition phase, when working towards project closure, IIPC member institutions are invited to\ncollaborate on acceptance testing of the tools within their “real world” settings; involving deployment of\nthe tools and applications within participating institutions.\nParticipating institutions are:\nDenmark (Netarchive.dk) — will contribute at the testing level, will use a copy of some of their data\nas test data. Happy with the specification to date, but wish to be kept informed of changes and\ndevelopments.\nNorway (NL) — will contribute through testing and collaborating, based on their own plans to\nconvert their web-archive to WARC (approximately 2,000,000,000 URLs).\nUK (BL) — will contribute both at the requirement specification and testing stages of the project,\npossibly using their selective archive as test data.\nFrance (BnF) — will contribute at specification stage and at testing stage also. Will provide ARC\nfiles as test data. Will facilitate circulation and sharing of all useful information between this\nproject and other ongoing relevant work on WARC usage run by the IIPC Preservation WG and the\nIIPC Technical Committee.\nSweden (NL) — form of contribution to be confirmed.\nNew Zealand — will contribute in the specification and the migration process.\nThis approach will ensure the community will have first-hand use and knowledge of the tools in their real-\nlife environment, serving as further acceptance and verification of the toolset as a whole.\nThis Functional Requirements Specifications (FRS) is a base-line statement of functional requirements for\nthe project as a whole, including high-level estimates of effort and schedule, based on the above\napproach and assumptions and best-practice estimation. Following review of the FRS and questionnaire\nadditional estimation and scoping exercises will be carried out to ensure the project remains within the\nbase-line scope. Any institutional requirements that cause the project to exceed this scope will be flagged\nand the institution may either de-scope the requirement or provide additional financial contributions to the\nproject, thereby keeping the requirement in scope.\nAlso listed in this document are Non-Functional Requirements (NFR), which are requireents reflecting\nhigher level goals.\nWARC Tools Phase III Functional Requirements Specification 2"
+    },
+    {
+      "page": 5,
+      "text": "Specification\nDefault Behaviours\nThe following features of WARC Tools commands are to be provided by default. All other modules of WARC\nTools, such as migration tool, repackaging, reporting, etc., will inherit these capabilities.\nNFR 1 — The tools shall be able to process a set of multiple WARC files at the same time. For this\npurpose, the tools will allow you to choose/group them by:\n• explicit naming\n• wildcard name matching\n• size limitation\n• number of items\nNFR 2 — The tools shall be able to scale to process large collections using distributed processing and\ndata transport (see FRS 10 and 11)\nNFR 3 — The tools shall offer best possible performance to correctly process large collections (I/O\nbound)\nNFR 4 — The tools shall be able to run on multiple machines but will not provide functionality for\ndealing with hardware failures (out of scope)\nNFR 5 — Implementation of the tools shall avoid unnecessary technology dependencies and shall not\ninclude development of partner-specific integration technologies\nNFR 6 — The tools shall be compliant with Java development environments, by using web services,\nRESTful API’s, etc.\nNFR 7 — The tools shall provide logging facilities, for example, to follow command progression, i.e.\nprocess duration, output levels, etc.\nNFR 8 — The tools shall provide enhanced usability by providing easy to adapt shell script wrappers for\nthe major commands\nNFR 9 — It shall be possible to operate the tools in modes that restrict their effects to selected collection\nsubsets. For example, select by name (see NFR1), random sampling, etc.\nMigration Application\nThe migration application provides workflow to support and manage the arc → warc migration process\nand verification functionality to check and validate by content and metadata (time, URL, etc.).\nNFR 10 — The workflow system shall have a configurable management strategy for migration from ARCs\nto WARCs.\nAdditionally, the migration application would provide checks and balances throughout the migration\nprocess to ensure it is verifiable and working properly. This application will be designed to support large-\nscale migration to WARC, in which we expect to migrate millions of ARC files to WARC. It will be important\nto take real-life requirements from IIPC member institutions into account.\nThe migration application will consist of four components:\n1. A workflow/configuration application to set up the migration configuration. A web user interface shall\nbe available to set up the migration. End point is a migration configuration that can be used in a\nmigration job. Configuration shall persist as a configuration file or database.\n2. Migration tool to migrate content from a collection of ARC files to WARC files\nWARC Tools Phase III Functional Requirements Specification 3"
+    },
+    {
+      "page": 6,
+      "text": "3. Validation command-line tool to validate content in a collection of WARC files against the original\nARC files content.\n4. A console to report on progress of active migration processes (such as the Heritrix console), manage\nthe process, view logs, etc.\nNon-functional requirements concerning scale of migration will need to be developed alongside the\nfunctional requirements. It should be noted that libwarc and WARC Tools in general have been\nimplemented to deal with very large scale operations by ensuring all functionality is performed with\nminimal memory usage and performed atomically by simple tools in the style of UNIX.\nNFR 11 — The migration workflow system will be driven by command line tools and scripts\nNFR 11.1 -- Migration configurations can be built with a Web User Interface\nNFR 11.2 -- Active migrations can be monitored, paused, and restarted (a console application) with a Web\nUser Interface\nNFR 12 — Pre and post conversion actions will be provided for at each level of the migration, e.g. record,\nWARC, job\nThe migration and validation tools are described below.\nMigration Tool\nA tool will be created to migrate content from a collection of ARC files to a collection of WARC files.\n$ arc_warc_migrate <ARC_FILES> <CONFIG> [options]\nThe command arc_warc_migrate uses a list of ARC files and will migrate them based on the configuration\nfile CONFIG. Each field should describe how it will be translated into WARC records. If some fields are\nmissing, errors will be generated that require operator intervention.\nFR 1 — The migration workflow shall provide a clear Application Programming Interface (API) to handle\nthe migration process and default configuration.\nFR 2 — The migration API will require inclusion of only one header file.\nFR 3 — A configuration must be provided explicitly, errors should be generated in the absence of a\nconfiguration.\nFR 4 — The user shall be able to provide metadata related to the conversion that will be stored in the\nconverted files (e.g., institution, context, crawler, collection name, ...)\nFR 5 — It shall be possible to request that automatically generated migration metadata be stored in the\nconverted files (e.g., OS/Kernel type, original ARC name, ARC size, ARC digests, conversion timestamp,\nARC record offset, ...)\nNFR 13 — IIPC members should provide us with the default METADATA they want to be included for\nmigration.\nExample configuration file directives:\n• undefined_mime: by default, “unknown_mime” will be applied when no MIME type is found\n• ignore_bad_record: if any error occurs during the conversion, skip the record and log the problem.\n• segment_filter_record: the ARC record will be split into multiple WARC Continuation records each one\nnot longer than N bytes. The last record maybe less than N bytes; note that no record will end in such\na way as to split a multi-byte character.\n• metadata_record: a user-supplied metadata record that will be added one to each WARC file.\nWARC Tools Phase III Functional Requirements Specification 4"
+    },
+    {
+      "page": 7,
+      "text": "FR 6 — The migration workflow shall be able to call external tools and services (e.g., database queries,\nshell commands, web service).\nThe migration tool will permit use of external tools or services to generate preservation and migration\nmetadata to be stored in the WARC records. As such the arc2warc command will become one out of\nseveral processes to be used for migration.\nExamples of external tools and services are:\n• tools to create persistent identifiers for WARC-record-ID\n• file identification services (DROID, FILE, JHOVE) to ascertain the format of a file and write it as WARC-\nidentified-payload.\n• tools to scan files for malware and viruses and identify them as such in the WARC file\nFR 7 — The migration process shall use persistent, opaque, unique, and global identifiers for records\naccess.\nFor example:\n• Noid: http://search.cpan.org/~jak/Noid-0.424\n• ARK: http://www.cdlib.org/inside/diglib/ark\n• UUID: http://en.wikipedia.org/wiki/Globally_Unique_Identifier\nFR 8 — A (default) external tool (e.g., ClamAV) will be used to scan files before conversion (pre-conversion\nstep).\nFR 9 — The API should be flexible enough to allow external tools such as JHOVE, DROID to be used for\nfile format identification.\nSuch external tools or services will be identified in the strategy configuration file. The manager should be\nable to follow the progress of a migration process (eg.,number of migrated records/files, time spent and\ntime remaining, etc.), whether it is running on one machine or is distributed across machines.\nFR 10 — The ARC to WARC migration should be able to run on multiple machines that will be easy to\ndeploy. This may be achieved by using a simple messaging infrastructure.\nFR 11 —Logging during the migration may be turned on/off at any time .\nFR 12 — Software checkpoints (such as start-trans, end-trans) may be added during processing for\nmanaging atomic transactions (e.g., operations on a file, these must start and complete to be accepted in\nthe migration), except where operating system limitations would prohibit it.\nNote that it should be possible to avoid having to specify any network code or learn a foreign API, which\naccounts for considerable complexity, for example, in map-reduce solutions (e.g., Hadoop, Google Map/\nReduce). The process migration will take care of these issues at runtime. To start more clients in parallel,\nthis code would be called multiple times from either the local machine or any machine on the local\nnetwork, causing more clients to begin processing the server data concurrently. This will form the parallel\narc2warc conversion strategy used in WARC Tools Phase III.\nFR 13 — It shall be possible to perform a “dry-run migration”. That is, a blank conversion to generate\nuseful reports (performance issues, bad ARCs, time estimation ...) without writing real WARC data (i.e.\nsimulating only). Dry run is defined entirely by the configuration.\nWARC Tools Phase III Functional Requirements Specification 5"
+    },
+    {
+      "page": 8,
+      "text": "While doing a migration, we shall be able to detect and avoid duplicate documents. For this purpose, we\nwill implement checksum-based deduplication. Other deduplication mechanisms can be implemented with\npre- record actions.\nNFR 14 — Deduplication may be run before migration, inside a batch process.\nFR 14 — Duplicate detection shall find and report WARC records with the same checksums. A centralised\ndatabase will be used to store previously processed records, against which new ones will be compared.\nPost migration database can be used for reporting on migrations job-by-job.\nValidation Tool\nA tool will be created to validate content from a collection of WARC files.\n$ arc_warc_verify <ARCFILE> <WARCFILE> <USER_DEFINED_ARC_READER> [options]\nThis command validates whether a migration carried out with arc_warc_migrate was successful or not.\nThe validation process looks at each record contained in the ARC files, extracts the corresponding content\nfrom the WARC files and compares them by computing a checksums. It will also be possible to compare a\nuser-defined set of metadata values.\nFR 15 — To validate that the migration succeeded, arc_warc_verify will use the METADATA included in the\nnewly generated WARC files to match records with their corresponding ARC files (see FR4, and FR5).\nAn option will be provided to let the tool sample a random percentage of records rather than perform an\nexhaustive check. This is provided mainly for rapid verification of large collections, advisable when\nconfidence in the process is high.\nFR 15.1 — Core validation shall use payload checksum comparisons.\nFR 16 — Sampling will be provided where applicable to quickly validate the conversions (FR 15.1 and FR\n18 for example).\nFor this purpose, arc_warc_verify will be aware of record MIME-Types and will sample record types in\nproportion to their representation.\nBy default, the process will use WARC Tools ARC reader and WARC reader/writer. As an alternative it can\nuse an external ARC reader (for example arcreader from Heritrix) or even a wrapper on a non-ARC based\nextractor.\nFR 17 — Validation shall use Heritrix’s arcreader to double check that the original ARC record was\ncorrectly converted to WARC.\nFR 18 — It shall be possible to perform a round trip validation: migrate the newly created WARC file back\nto ARC and compare both checksums (NFR 5)\nRepackaging Tool\nA tool will be created to extract WARC records from a collection and generate a new set of WARC files.\nThis is useful for testing, QA, initial crawl planning and transferring selected material to third parties.\n$ warc_repackage -i <WARC_FILE> <WARC_PATTERN> [options]\nWARC Repackage takes as input a set of WARC files, extracts the content according to the supplied\noptions, and writes the content to new WARC files.\nFR 19 — It shall be possible to repackage WARC files by filtering records based on URL (regular\nexpressions)\nFR 20 — It shall be possible to repackage WARC files by filtering records based on MIME-Types.\nWARC Tools Phase III Functional Requirements Specification 6"
+    },
+    {
+      "page": 9,
+      "text": "FR 21 — It shall be possible to repackage WARC files by filtering records based on size.\nFR 22 — It shall be possible to repackage WARC files by filtering records based on timestamp (e.g., dates\ninterval).\nFR 23 — It shall be possible to repackage WARC files by filtering on any field in the WARC specification.\nFR 24 -- Repackaging will allow pre and post record, file and job operations\nFR 24.1 -- Pre operation can prevent a file or record being processed by returning value\nOptions will specify a number of filters, based on URL, timestamp, WARC metadata, etc., using both\nsimple and advanced regex mode (similar to ‘‘grep -e’’).\nThe identified records are written into new WARC files, with output names based on the WARC_PATTERN\nspecified. Options may be specified for output WARC file size, etc.\nFR 25 — Each repackaged WARC file shall include a user-defined METADATA record which will describe the\nextraction context (e.g., filter used, involved WARC files, ... - see also FR4).\nAdditional metadata records will be added to show the output WARCs as repackaged.\nReporting Application\nThe reporting application consists of two components:\n1. WARC Summary Tool to report on the content of a collection of WARC files\n2. WARC Browser Integration to provide a web user interface for the reports\nWARC Summary Tool\nA tool will be created to report on the content of a collection of WARC files. The basic report form is\nsimilar to the form produced by the crawlers; this can be useful when a crawler report is not otherwise\navailable for a collection.\nFR 26 — The migration framework shall provide tools to build reports from WARC files\nThe summary tool also enables fine grained manipulation of the reports and the production of useful\nvariations.\nwarc_summary WARC_FILES [options]\nWARC_FILES can be a list of WARC files (including wildcards, etc.) or a directory WARC files.\nExample reporting outputs:\n1. (default) summary - similar to a crawl-report, shows the number of documents, start / end date for\ncontents, etc, with options to detect and report multiple crawls (if the WARC files are from multiple\ncrawls), similar to ‘‘lscrawl’’.\n2. mimetypes - a mimetype report, with options to show a breakdown by host, domain , crawl, etc.\n3. hostnames - a host report, with options to show a breakdown by crawl , number of documents, etc.\n4. status codes - a frequency table of status codes, with options to show breakdown by host, domain,\ncrawl, etc.\n5. pseudo crawl log - a list of time-ordered URLs and status information from the WARC file, with\noptions to show a breakdown by crawl, host, domain, etc.\nNFR 16 — Repackaging filters can be used by the summary module\nFR 27 — It shall be possible to export summaries in various formats (e.g., XML, CSV)\nWARC Tools Phase III Functional Requirements Specification 7"
+    },
+    {
+      "page": 10,
+      "text": "This command will also have options for XML and CSV output and filtering, for example, to restrict the\nreport by time ranges, domain or other metadata values.\nWARC Browser Integration\nThe proposed work will include the integration of ‘’warc_summary’’ and ‘‘warc_browser’’ (from phase II),\nwhich will display a directory full of WARC files. Integration will enhance the front page to show links to\nview and explore the above reports including graphs.\nFR 28 — Enhance the WARC browser to display aggregated WARCs summaries in its UI\nFR 29 — Enhance the WARC browser to display a manifest of WARC files and their locations\nQuality Assurance Tool\nWARC Comparator\nA tool will be created to make a comparison of similar crawls, based on analysis of their WARC files.\n$ warc_compare <CRAWL_1_WARC_FILES> ... <CRAWL_N_WARC_FILES> [options]\nwhere WARC_FILES can be a list of WARC files (including wildcards, etc.) or a directory of WARC files.\nOptions have a variety of functions:\n• filters to limit by URL patterns, timestamp, metadata records, etc.,\n• to show reports broken down by domain, hostname, etc., and\n• to add a graph generator for the purpose of WARC quality assurance (Q.A).\nFR 30 — Provide a ‘‘diff‘‘ tool to compare WARC sets based on defined criteria (e.g., timestamp,\nhostname, etc.)\nFR 31 — Provide a tool to draw difference graphs between WARC collections (see FR 30)\nA WARC ’’set comparator’’ enables comparison of crawl results contained in two sets of WARC files. It will\nbe possible to identify important differences (deltas) between multiple/repeated crawls of the same seed.\nThis will be very useful for QA of repetitive crawls.\nFR 32 — Provide a way to view crawls deltas for quality assurance\nFor example, consider a monthly crawl of “www.foo.org”. A WARC Set Comparator would provide a delta\nreport showing the following information:\n• Percentage change in what is provided in the summary\n• A listing of changed pages, with links to the major deviations\nEnhanced WARC Browser\nSmall enhancements to the WARC Browser will be implemented to ensure that it provides a good quality\nbrowsing experience. Typical enhancements will include a proxy mode and server-side rewriting using a\nrules-based approach.\nFR 33 — Implement WARC browser server side rewriting\nFR 34 — Integrate a proxy mode inside the WARC browser\nAnother enhancement is to ensure the Search Tools project is updated and integrated; this will produce\nfull text indexes and provide full-text search functionality to the WARC Browser and on the command line.\nFR 35 — Integrate the full-text search (search-tools project) module with the WARC browser to provide\nusers with WARC indexing/searching capabilities.\nWARC Tools Phase III Functional Requirements Specification 8"
+    }
+  ],
+  "tables": [
+    {
+      "page": 4,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 1,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 2,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 3,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 4,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 5,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "",
+          null
+        ],
+        [
+          "",
+          ""
+        ]
+      ]
+    }
+  ]
+}

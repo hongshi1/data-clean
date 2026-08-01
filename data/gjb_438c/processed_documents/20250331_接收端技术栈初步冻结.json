@@ -1,0 +1,192 @@
+{
+  "doc_name": "20250331_接收端技术栈初步冻结",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/20250331_接收端技术栈初步冻结.md",
+  "md_lines": 601,
+  "md_chars": 12858,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "总体冻结结论",
+  "section_count": 21,
+  "sections": [
+    {
+      "number": null,
+      "title": "总体冻结结论",
+      "level": 2,
+      "line_start": 1,
+      "text_length": 702,
+      "text_preview": "**按“当前环境下、只追求主链路性能与确定性、不优先考虑实现复杂度”的目标，建议冻结为：**\n\n> **DPDK 原生 `i40e` PMD + `vfio-pci` 接管数据面网口 + 单 owner 线程 run-to-completion + 最少必要队列 + 每分片一次落位到 CPI owner 固定槽位 + CPI 上下文单线程独占写入 + 最终 CPI 对象再通过 SPSC 交给下游。"
+    },
+    {
+      "number": null,
+      "title": "1. 收包技术栈",
+      "level": 2,
+      "line_start": 18,
+      "text_length": 433,
+      "text_preview": "**冻结：主数据面使用 `DPDK 原生 i40e PMD`，不采用 AF_XDP 作为主方案。**\n\n**解释：**\n\n* DPDK PMD 的设计目标就是用户态直接轮询 RX/TX 描述符，减少中断与内核协议栈干扰，官方推荐的高性能模型是 run-to-completion 或 pipeline，其中低时延优先通常更贴近 run-to-completion。([DPDK Documentati"
+    },
+    {
+      "number": null,
+      "title": "2. 网口占有方式",
+      "level": 2,
+      "line_start": 34,
+      "text_length": 473,
+      "text_preview": "**冻结：`receiver0/1/2` 这三路数据面网口由 DPDK 独占，绑定到 `vfio-pci`；不再走内核 socket。**\n\n**解释：**\n\n* DPDK 官方建议 DPDK 绑定端口统一使用 `vfio-pci`。([DPDK Documentation][4])\n* 这意味着数据面 PF 被 DPDK 接管后，不再按当前 Linux 网络栈方式提供 UDP socket、fi"
+    },
+    {
+      "number": null,
+      "title": "3. 收包模型",
+      "level": 2,
+      "line_start": 51,
+      "text_length": 276,
+      "text_preview": "**冻结：采用 `run-to-completion`，即 owner 线程在同一核上完成“收包→解析→校验→归属→重组落位→裁决前检查”。**\n\n**解释：**\n\n* 这是 DPDK 官方直接支持的高性能主模型。([DPDK Documentation][1])\n* 你当前接收端目标强调“持续高速收包”“非法包不污染后续上下文”“与解析、重组、输出稳定衔接”，这更适合减少跨线程搬运。\n\n**边界"
+    },
+    {
+      "number": null,
+      "title": "4. 队列模型",
+      "level": 2,
+      "line_start": 67,
+      "text_length": 361,
+      "text_preview": "**冻结：主数据路径只保留“最少必要队列”；默认只在“最终 CPI 输出给下游”这一处使用 SPSC 队列。**\n\n**解释：**\n\n* DPDK ring 是固定大小、无锁、支持单生产者/单消费者或多生产者/多消费者的队列。([DPDK Documentation][5])\n* 但“能用很多队列”不等于“应该用很多队列”。\n  对你这种固定协议、强时序、要做归属和重组的链路，层层排队会增加：\n\n"
+    },
+    {
+      "number": null,
+      "title": "5. 线程模型",
+      "level": 2,
+      "line_start": 93,
+      "text_length": 41,
+      "text_preview": "**冻结：一阵面一 owner 线程；当前先冻结为 3 个 owner 线程。**"
+    },
+    {
+      "number": null,
+      "title": "当前绑定建议",
+      "level": 3,
+      "line_start": 97,
+      "text_length": 353,
+      "text_preview": "* `receiver0 -> owner0 -> CPU16`\n* `receiver1 -> owner1 -> CPU17`\n* `receiver2 -> owner2 -> CPU18`\n\n这和你当前服务器基线里的数据面 CPU 规划、阵面接收线程规划是一致的。\n\n**解释：**\n\n* 一阵面一 owner，最容易保证：\n\n  * CPI 上下文不被并发写\n  * 位图更新不需要原子争用"
+    },
+    {
+      "number": null,
+      "title": "6. CPI 上下文 ownership",
+      "level": 2,
+      "line_start": 123,
+      "text_length": 268,
+      "text_preview": "**冻结：`CPI 上下文` 从创建到封口，全程只允许一个 owner 线程写。**\n\n**解释：**\n\n* 你的接收端职责里，归属、重组、边界推进、异常识别本来就是一条闭环链；如果 CPI 上下文被多个线程共享写，重组位图、PRT 完整状态、封口状态、迟到包处理都会变复杂。\n* 这不是“实现优化项”，而是流程语义的前提条件。\n\n**冻结口径：**\n\n* 允许多个线程读统计快照\n* **不允许多个"
+    },
+    {
+      "number": null,
+      "title": "7. 内存池模型",
+      "level": 2,
+      "line_start": 143,
+      "text_length": 374,
+      "text_preview": "**冻结：采用“全局大 mempool + 每 owner 本地 cache”的 fixed-size 对象池模型；热路径禁止 `malloc/new/free`。**\n\n**解释：**\n\n* DPDK mempool 本身就是 fixed-size object allocator，默认基于 ring；并且官方明确提供 **per-core cache**，用于减少锁竞争与跨核分配开销。([DP"
+    },
+    {
+      "number": null,
+      "title": "8. 分片数据生命周期",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 431,
+      "text_preview": "**冻结：`每个分片只拷贝一次`，并且这次拷贝直接落到 `CPI owner` 的固定槽位。**\n\n**解释：**\n\n* 你当前协议非常规整：\n  单包固定 **5120B**，每个 PRT 固定 **16 包**，4 通道，每通道固定 **4 分片**，`PacketIndex` 固定 `0~3`。这非常适合固定槽位落位。\n* 如果不这样做，而是在：\n\n  * 分片阶段拷一遍\n  * 通道拼接再"
+    },
+    {
+      "number": null,
+      "title": "9. 内部聚合方式",
+      "level": 2,
+      "line_start": 195,
+      "text_length": 305,
+      "text_preview": "**冻结：通道、PRT、CPI 三层都只维护“结构状态”和“引用/段表”，不重复持有大块原始数据副本。**\n\n**解释：**\n\n* 通道层负责：`4 个分片槽位 + 分片位图 + 长度`\n* PRT 层负责：`4 个通道完整状态 + 通道结果引用表`\n* CPI 层负责：`N_PRT 个 PRT 状态 + 完整性统计 + 输出汇总`\n* 原始 IQ 数据只在 **CPI owner 固定槽位**里"
+    },
+    {
+      "number": null,
+      "title": "10. 上下文数据结构",
+      "level": 2,
+      "line_start": 215,
+      "text_length": 328,
+      "text_preview": "**冻结：内部结构优先使用“固定数组/位图/索引表”，不使用链表式热路径结构。**\n\n**解释：**\n\n* 你的协议结构固定：\n\n  * `PacketIndex` 固定 `0~3`\n  * 通道固定 `0~3`\n  * 每 PRT 固定 16 包\n* 这意味着最优实现不是动态容器，而是**定长槽位 + 位图**。\n\n**冻结口径：**\n\n* 通道分片：固定 4 槽\n* PRT 通道：固定 4 槽"
+    },
+    {
+      "number": null,
+      "title": "11. 解析/校验/归属/重组的阶段边界",
+      "level": 2,
+      "line_start": 242,
+      "text_length": 266,
+      "text_preview": "**冻结：这四步在 owner 线程内顺序完成，不拆成独立异步 stage。**\n\n**解释：**\n\n* 接收端核心目标本来就是“收进来→看懂→判断是否合法→判断属于谁→重组→输出”。\n* 如果在性能优先路线下还把它们拆成多级异步阶段，收益通常不如成本。\n\n**冻结口径：**\n\n* 单包进入 owner 后，依次做：\n\n  1. 解析\n  2. 合法性校验\n  3. 归属判定\n  4. 分片落位 "
+    },
+    {
+      "number": null,
+      "title": "12. 裁决与边界推进",
+      "level": 2,
+      "line_start": 267,
+      "text_length": 359,
+      "text_preview": "**冻结：`CPI 的完成判定、截止判定、封口与回收` 由同一个 owner 线程负责；只有“最终完成的 CPI 输出对象”才跨线程。**\n\n**解释：**\n\n* 你当前已经将对外输出粒度冻结为 CPI 级，因此边界、缓存、延迟和统计口径都必须直接按 CPI 级输出契约收敛；内部仍可保留 PRT 粒度作为重组与裁决基础。\n* 既然如此，最优性能路线下，**不要把 CPI 封口权交给另一个写线程**"
+    },
+    {
+      "number": null,
+      "title": "13. 统计、日志、旁路落盘",
+      "level": 2,
+      "line_start": 292,
+      "text_length": 251,
+      "text_preview": "**冻结：统计和旁路必须旁路化，不能反压 owner 主链路。**\n\n**解释：**\n\n* 需求和职责边界都明确要求：旁路落盘必须异步、失败不改变主链路语义，统计/日志只是“产生信息”，不能反向支配主链路。\n* 因为你走的是性能优先路线，这点更不能松。\n\n**冻结口径：**\n\n* owner 线程只做轻量计数和事件打点\n* 大块日志、旁路写盘、指标导出走独立旁路线程\n* 旁路只消费最终对象或必要副"
+    },
+    {
+      "number": null,
+      "title": "14. NUMA、CPU 与核心绑定",
+      "level": 2,
+      "line_start": 313,
+      "text_length": 364,
+      "text_preview": "**冻结：所有 owner 线程、数据面 mempool、CPI 上下文都固定在 Node 1；管理、旁路、录制尽量不占用 16-31。**\n\n**解释：**\n\n* 当前服务器基线已经明确：\n  数据面固定在 **NUMA Node 1 / CPU 16-31**，并且 `receiver_app` 必须 `numactl --cpunodebind=1 --membind=1` 运行。\n* 这和"
+    },
+    {
+      "number": null,
+      "title": "15. 时间戳策略",
+      "level": 2,
+      "line_start": 336,
+      "text_length": 203,
+      "text_preview": "**冻结：主链路只采集“本机接收时间元数据”；不把时间戳采集设计成阻塞热点。**\n\n**解释：**\n\n* 接收端需求要求每个成功进入用户态处理流程的报文记录必要本机接收时间，用于追踪、旁路、分析。\n* 但在性能优先路线下，时间戳只是元数据，不应把主链路拖成复杂硬件时间同步工程。\n\n**冻结口径：**\n\n* 每包记录一个轻量本机时间\n* 用于归属辅助、输出元数据、旁路分析\n* 不上升为主归属锚点\n\n"
+    },
+    {
+      "number": null,
+      "title": "16. 兼容与停止恢复",
+      "level": 2,
+      "line_start": 353,
+      "text_length": 207,
+      "text_preview": "**冻结：第一版只冻“纯数据面 DPDK 运行模式”，不同时兼容“同端口 Linux socket 模式”。**\n\n**解释：**\n\n* 接收端仍然要支持受控启动、停止、复位，但这是生命周期问题，不应在第一版里同时兼容“双栈接收”。\n* 数据面既然要走 `vfio-pci + PMD`，就先把这条路径做好，不同时保留“同一个 PF 还能继续给 Linux 9999/udp 收包”的幻想。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "图 1：系统总览",
+      "level": 1,
+      "line_start": 364,
+      "text_length": 2100,
+      "text_preview": "```mermaid\n---\nconfig:\n  look: neo\n  theme: neutral\n---\nflowchart LR\n    %% =========================\n    %% Diagram 1: 系统总览\n    %% =========================\n    subgraph PHY[\"物理输入层 / 数据面网口\"]\n        "
+    },
+    {
+      "number": null,
+      "title": "图 2：单个 owner 主处理链模板",
+      "level": 1,
+      "line_start": 444,
+      "text_length": 2086,
+      "text_preview": "```mermaid\n---\nconfig:\n  look: neo\n  theme: neutral\n---\nflowchart LR\n    %% =========================\n    %% Diagram 2: 单个 owner 主处理链模板\n    %% =========================\n    subgraph POOL[\"对象池 / 内存管理\"]"
+    },
+    {
+      "number": null,
+      "title": "图 3：下游 / 旁路 / 回收 / 生命周期闭环",
+      "level": 1,
+      "line_start": 520,
+      "text_length": 2289,
+      "text_preview": "```mermaid\n---\nconfig:\n  look: neo\n  theme: neutral\n---\nflowchart TB\n    %% =========================\n    %% Diagram 3: 下游 / 旁路 / 生命周期闭环\n    %% =========================\n    subgraph PRODUCER[\"数据面输出\"]"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

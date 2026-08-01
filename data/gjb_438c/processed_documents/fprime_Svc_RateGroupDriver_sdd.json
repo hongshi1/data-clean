@@ -1,0 +1,216 @@
+{
+  "doc_name": "fprime_Svc_RateGroupDriver_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_RateGroupDriver_sdd.md",
+  "md_lines": 103,
+  "md_chars": 3271,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::RateGroupDriver Component",
+  "section_count": 16,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::RateGroupDriver Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 331,
+      "text_preview": "The RateGroupDriver Component is used to take a single system tick and distribute it to multiple rate groups in a system. \nIt takes the input `Svc::Sched` port, then divides down the tick rate based o"
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 367,
+      "text_preview": "The requirements for RateGroupDriver are as follows:\n\nRequirement | Description | Verification Method\n----------- | ----------- | -------------------\nRGD-001 | The 'Svc::RateGroupDriver' component sha"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 18,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Context",
+      "level": 3,
+      "line_start": 20,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Component Diagram",
+      "level": 4,
+      "line_start": 22,
+      "text_length": 145,
+      "text_preview": "The Svc::RateGroupDriver component has the following component diagram:\n\n![RateGroupDriver Diagram](img/RateGroupDriverBDD.jpg \"RateGroupDriver\")"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 Ports",
+      "level": 4,
+      "line_start": 28,
+      "text_length": 355,
+      "text_preview": "The Svc::RateGroupDriver component uses the following port types:\n\nPort Data Type | Name | Direction | Kind | Usage\n-------------- | ---- | --------- | ---- | -----\n[`Svc::Cycle`](../../Sched/docs/sdd"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Description",
+      "level": 4,
+      "line_start": 37,
+      "text_length": 1042,
+      "text_preview": "The Svc::RateGroupDriver component has one input port that receives a system tick. \n\nThe `configure()` function is passed a divider set specifies the divisors and offsets for each output port. This sh"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Scenarios",
+      "level": 3,
+      "line_start": 62,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 System Tick Port Call",
+      "level": 4,
+      "line_start": 64,
+      "text_length": 222,
+      "text_preview": "As described in the Functional Description section, the RateGroupDriver component accepts calls to the SchedIn and divides them down to the SchedOut ports:\n\n![System Tick Port Call](img/RateGroupDrive"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 State",
+      "level": 3,
+      "line_start": 70,
+      "text_length": 38,
+      "text_preview": "RateGroupDriver has no state machines."
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Algorithms",
+      "level": 3,
+      "line_start": 74,
+      "text_length": 46,
+      "text_preview": "RateGroupDriver has no significant algorithms."
+    },
+    {
+      "number": null,
+      "title": "4. Dictionary",
+      "level": 2,
+      "line_start": 78,
+      "text_length": 29,
+      "text_preview": "No dictionary for this module"
+    },
+    {
+      "number": null,
+      "title": "5. Module Checklists",
+      "level": 2,
+      "line_start": 82,
+      "text_length": 125,
+      "text_preview": "Checklist |\n-------- |\n[Design](Checklist_Design.xlsx) |\n[Code](Checklist_Code.xlsx) |\n[Unit Test](Checklist_Unit_Test.xls) |"
+    },
+    {
+      "number": null,
+      "title": "6. Unit Testing",
+      "level": 2,
+      "line_start": 90,
+      "text_length": 58,
+      "text_preview": "To see unit test coverage run fprime-util check --coverage"
+    },
+    {
+      "number": null,
+      "title": "7. Change Log",
+      "level": 2,
+      "line_start": 94,
+      "text_length": 131,
+      "text_preview": "Date | Description\n---- | -----------\n6/19/2015 | Design review edits\n7/22/2015 | Design review actions\n9/2/2015| Unit test updates"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "RateGroupDriverBDD.jpg \"RateGroupDriver\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/RateGroupDriverBDD.jpg \"RateGroupDriver\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "RateGroupDriver Diagram",
+      "caption": "The Svc::RateGroupDriver component uses the following port types:",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The Svc::RateGroupDriver component has the following component diagram:",
+      "context_after": "The Svc::RateGroupDriver component uses the following port types:",
+      "md_line": 26,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "RateGroupDriverPortCallSequence.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/RateGroupDriverPortCallSequence.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "System Tick Port Call",
+      "caption": "RateGroupDriver has no state machines.",
+      "figure_number": null,
+      "image_type": "state_diagram",
+      "section": "3.3.1 System Tick Port Call",
+      "context_before": "-------------- | ------------ | ------------- | ------------ | ------------- | ------------ | -------------\n1Hz | 1 | 1Hz | 2 | 0.5Hz | 4 | 0.25Hz\nAs described in the Functional Description section, the RateGroupDriver component accepts calls to the SchedIn and divides them down to the SchedOut port",
+      "context_after": "RateGroupDriver has no state machines.",
+      "md_line": 68,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "RateGroupDriverBDD.jpg \"RateGroupDriver\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/RateGroupDriverBDD.jpg \"RateGroupDriver\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "The Svc::RateGroupDriver component uses the following port types:",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The Svc::RateGroupDriver component has the following component diagram:",
+      "context_after": "The Svc::RateGroupDriver component uses the following port types:",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "RateGroupDriverPortCallSequence.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/RateGroupDriverPortCallSequence.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "state_diagram",
+      "figure_number": null,
+      "caption": "RateGroupDriver has no state machines.",
+      "section": "3.3.1 System Tick Port Call",
+      "context_before": "-------------- | ------------ | ------------- | ------------ | ------------- | ------------ | -------------\n1Hz | 1 | 1Hz | 2 | 0.5Hz | 4 | 0.25Hz\nAs described in the Functional Description section, the RateGroupDriver component accepts calls to the SchedIn and divides them down to the SchedOut port",
+      "context_after": "RateGroupDriver has no state machines.",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

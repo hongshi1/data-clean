@@ -1,0 +1,229 @@
+{
+  "file": "2010 - gparted.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Software Requirements\nSpecification\nfor\nGParted\nRequirements for Version\n0.6.0-1\nPrepared by Bill Karatzidis\nISE: Introduction to Software\nEngineering (Aristotle\nUniversity)\n2010-06-19"
+    },
+    {
+      "page": 2,
+      "text": "Software Requirements Specification for GParted Page 1\nCopyright © 2010 Bill Karatzidis.\nPermission is granted to copy, distribute and/or modify this document\nunder the terms of the GNU Free Documentation License, Version 1.3\nor any later version published by the Free Software Foundation;\nwith no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.\nA copy of the license is included at this link: http://www.fsf.org/licensing/licenses/fdl.html"
+    },
+    {
+      "page": 3,
+      "text": "Software Requirements Specification for GParted Page 2\nTable of Contents\n1. Introduction ............................................................................................................................. 3\n1.1 Purpose ......................................................................................................................................... 3\n1.2 Document Conventions ................................................................................................................ 3\n1.3 Intended Audience and Reading Suggestions .............................................................................. 3\n1.4 Project Scope ................................................................................................................................ 4\n1.5 References .................................................................................................................................... 6\n2. Overall Description ................................................................................................................. 7\n2.1 Product Perspective ...................................................................................................................... 7\n2.2 Product Features ........................................................................................................................... 7\n2.3 User Classes and Characteristics .................................................................................................. 8\n2.4 Operating Environment ................................................................................................................ 9\n2.5 Design and Implementation Constraints ...................................................................................... 9\n2.6 User Documentation ................................................................................................................... 10\n2.7 Assumptions and Dependencies ................................................................................................. 10\n3. System Features ..................................................................................................................... 11\n3.1 Boot Menu .................................................................................................................................. 11\n3.2 Select Keymap ........................................................................................................................... 11\n3.3 Language Selection Menu .......................................................................................................... 12\n3.4 GParted Desktop ........................................................................................................................ 12\n3.5 GParted Main Window .............................................................................................................. 13\n3.6 Refresh Connected Devices ....................................................................................................... 13\n3.7 Undo & Apply ............................................................................................................................ 13\n3.8 View Device Information ........................................................................................................... 14\n3.9 Create Partition Table ................................................................................................................ 14\n3.10 Create a New Partition ............................................................................................................... 15\n3.11 Delete a Partition ........................................................................................................................ 16\n3.12 Resize or Move a Partition ......................................................................................................... 16\n3.13 Copy Partition ............................................................................................................................ 16\n3.14 Paste Partition ............................................................................................................................ 16\n3.15 Format Partition ......................................................................................................................... 17\n3.16 Unmount Partition ...................................................................................................................... 18\n3.17 Manage Flags ............................................................................................................................. 18\n3.18 Check and Repair File System ................................................................................................... 19\n3.19 Label Partition ............................................................................................................................ 19\n3.20 Take a Screenshot of the Desktop or an Active Window ........................................................... 19\n3.21 Terminal & Mount Partitions and Save Screenshots to a Device .............................................. 20\n3.22 Information ................................................................................................................................. 20\n3.23 Screen Resolution Changer ........................................................................................................ 21\n3.24 Date and Time ............................................................................................................................ 21\n4. External Interface Requirements ........................................................................................ 22\n4.1 User Interfaces ........................................................................................................................... 22\n4.2 Hardware Interfaces ................................................................................................................... 24\n4.3 Software Interfaces ..................................................................................................................... 24\n4.4 Communications Interfaces ........................................................................................................ 24\n5. Other Nonfunctional Requirements .................................................................................... 25\n5.1 Performance Requirements ........................................................................................................ 25\n5.2 Safety Requirements .................................................................................................................. 25\n5.3 Security Requirements ............................................................................................................... 25\n5.4 Software Quality Attributes ....................................................................................................... 25\n5.5 Other Requirements ................................................................................................................... 25"
+    },
+    {
+      "page": 4,
+      "text": "Software Requirements Specification for GParted Page 3\n1. Introduction\n1.1 Purpose\nThe purpose of this document is to describe and define the functional requirements of\nthe Gparted application. It follows the IEEE standard for Software Requirements\nSpecification documents.\nGparted is a graphical partition editor for creating, reorganizing, and deleting disk\npartitions. Otherwise known as the Gnome Partition Editor, it is a frontend to the GNU\nParted partition editor, and specifically uses its library, libparted, to detect and\nmanipulate devices and partition tables, and perform all the functions it has been\ndesigned for. Several optional file system tools provide support for file systems not\nincluded in libparted.\nThis document deals with the functions of the 0.6.0‐1 version, made available for\npublic testing in 2010‐06‐19. It is a LiveCD application, which means it runs at system\nboot, resides in your computer’s RAM memory, and disappears upon reboot, after\nhaving performed the desired functions. No installs are necessary in any operating\nsystem.\n1.2 Document Conventions\nThe software being described in this document has already been developed. The\nfunctions and characteristics that will be analysed have already been implemented.\nThis document has to stay updated with any new features that will be added in future\nversions of the application.\nThe System Features in section 3 are described in order of appearance, as the\napplication runs.\n1.3 Intended Audience and Reading Suggestions\nThis document is intended for casual users, developers, testers and documentation\nwriters, each one having their own needs and uses of the software. For a more\nthorough analysis on this matter, please refer to section 2.3.\nSection 2 provides an overall description of the software, and section 3 describes the\nfunctional requirements of the project, particularly useful to all of the aforementioned\ngroups. Section 4 discusses the external interface requirements, and finally, in section\n5, you can find the nonfunctional requirements of the project.\nEach section is divided in subsections where different matters are discussed."
+    },
+    {
+      "page": 5,
+      "text": "Software Requirements Specification for GParted Page 4\n1.4 Project Scope\nGParted is one of many programs used for creating, deleting, resizing, moving,\nchecking and copying partitions, and the file systems on them. This is useful for\ncreating space for new operating systems, reorganizing disk space, copying data\nresiding on hard disks and mirroring one partition with another (disk imaging).\nThe GParted project deals with two different versions.\n• GParted, the install version, is an application that resides permanently in your\ncomputer’s hard drive, as a program installed on a Linux operating system.\nhttps://sourceforge.net/projects/gparted/files/gparted/\n• GParted Live is a .zip or an .iso file which you download and burn as an image on\na cd. With this you can boot your computer and use the application. With the\n.zip file, you can create a bootable USB flash drive, and use that instead of the\ncd. There is a tutorial on this online:http://gparted.sourceforge.net/liveusb.php\nThere used to be different files for LiveCD and LiveUSB, but they have been\ncombined to make the GParted Live application, a long time ago.\nhttps://sourceforge.net/projects/gparted/files/gparted‐live‐testing/\nGParted uses GNU Parted as a backend, and aims at keeping the GUI as simple as\npossible, so it does not become a hindrance to the overall casual user experience.\nNext, some screenshots of the main user interface follow.\nMain menu of GParted, background is shown, together with the program and an open Terminal window."
+    },
+    {
+      "page": 6,
+      "text": "Software Requirements Specification for GParted Page 5\nMain screen of GParted\nTerminal"
+    },
+    {
+      "page": 7,
+      "text": "Software Requirements Specification for GParted Page 6\n1.5 References\n• Official page – Home of GParted\nhttp://gparted.sourceforge.net/index.php\n• Project GParted page on Sourceforge\nhttps://sourceforge.net/projects/gparted/\n• Wikipedia GParted page\nhttp://en.wikipedia.org/wiki/GParted\n• Wikipedia GNU Parted page\nhttp://en.wikipedia.org/wiki/GNU_Parted\n• GParted Forum\nhttp://gparted‐forum.surf4.info/index.php\n• How to save files and take screenshots in GParted\nhttp://gparted.sourceforge.net/larry/tips/save_details.htm"
+    },
+    {
+      "page": 8,
+      "text": "Software Requirements Specification for GParted Page 7\n2. Overall Description\n2.1 Product Perspective\nGParted, as already mentioned, is a program for manipulating disk partitions. It is one\nof the best among the many of its kind, supporting more file systems and providing\nmore functions than the rest (Clonezilla, Parted Magic, Parted (backend to GParted),\nPartition Image, Partition Magic for Windows etc.). It is written in C++ and is based on\nthe Debian GNU/Linux operating system. It is a frontend to the GNU Parted application\nwhich was written by the GNU team and supports creating, destroying, resizing,\nchecking, and copying partitions, and the file systems on them, but only through\ncommand line. GParted provides the graphical user interface for ease of access. Other\nprograms use the Parted libraries as well, like KDE Partition Manager and Pyparted.\nBecause this is a Linux‐based application it relies on some other software in order for it\nto work. GParted uses GNU libparted to detect and manipulate devices and partition\ntables. This includes but is not limited to:\n• Parted >= 1.7.1\n• Gtkmm >= 2.8.x (toolkit for creating GUIs)\n• Several optional file system tools provide support for file systems not included\nin libparted.\n2.2 Product Features\nA summary of product features follows:\n• Create partition tables (e.g., msdos, gpt)\n• Enable and disable partition flags (e.g., boot, hidden)\n• Perform actions with partitions such as:\no create or delete\no resize or move (while preserving data)\no check\no label\no copy and paste\n• Supports file systems such as:\next2/ext3/ext4, FAT16/FAT32, hfs/hfs+, linux‐swap, NTFS, reiserfs/4, ufs, xfs file\nsystems.\n• Supports hardware RAID, motherboard BIOS RAID, and Linux software RAID."
+    },
+    {
+      "page": 9,
+      "text": "Software Requirements Specification for GParted Page 8\nThe following actions and file systems are supported by GParted.\nFile Required\nSystem Detect Read Create Grow Shrink Move Copy Check Label software\nbtrfs\ncrypt‐\nluks\ne2fsprog\next2 s\ne2fsprog\next3 s\ne2fsprog\next4 s v1.41+\ndosfstool\nfat16 s\ndosfstool\nfat32 s\nhfs hfsutils\nhfs+ hfsprogs\njfs jfsutils\nmkswap\n(part of\nlinux‐ util‐\nswap linux)\nlvm2 pv\nntfs ntfsprogs\nreiser4pr\nreiser4 ogs\nreiserfsp\nreiserfs rogs\nufs\nxfs xfsprogs\nFile Required\nSystem Detect Read Create Grow Shrink Move Copy Check Label software\nFor more details on system features please refer to section 3.\n2.3 User Classes and Characteristics\nThis application is intended for use by four user classes:\n• Casual Users who may want to partition a hard drive, move or resize their\npartitions, clone or delete, etc. Basic understanding of computers and disk\npartitions is required. Most of the users will use the program in their native"
+    },
+    {
+      "page": 10,
+      "text": "Software Requirements Specification for GParted Page 9\nlanguage, since there is a list the most common ones, during the program\nstartup.\n• Developers who are interested in making the application better, find and correct\nbugs and generally contribute to the GParted community.\n• Testers who use the beta versions of the product and test it in many ways for\nbugs and errors, then submit the data to the bug tracking system.\n• Documentation writers who can use this document to assist them in\ndocumenting the program’s functions and features. This is important,\ndocumentation and help files are vital to any project’s completeness.\n2.4 Operating Environment\nGParted is developed on x86 based computers using GNU/Linux. It can be used on\nother operating systems, such as Windows or Mac OS X, by booting from media\ncontaining GParted Live.\nIn other words you will need a Linux operating system for the install version of\nGParted. The Live version, on which this document is based, needs a basic x86\n1computer, regardless of the operating system, with a CD drive and/or USB port. In\ngeneral, it does not consume many resources and almost every computer will be able\nto handle it properly.\n2.5 Design and Implementation Constraints\nThe program does not support every kind of operation performed in every kind of file\nsystem, but it is constantly being updated and more and more actions and file systems\nwill be supported in the future. The table of permitted actions in supported file\nsystems is in section 2.2.\nGParted does not support logical volume management (LVM2) at present, although\nthis feature has been requested by many users and may be implemented in a future\nrelease.\nIt also must be noted that GParted is not to blame, on most occasions, if a specific\noperation cannot be performed on a specific file system. It uses a wide variety of third\nparty libraries and tools which perform these operations. GParted is simply a frontend,\nwhich brings together all these underlying functions and processes, and presents them\nin a graphical and accessible way.\n1 Systems with 32-bit processors\n2 http://en.wikipedia.org/wiki/Logical_volume_management"
+    },
+    {
+      "page": 11,
+      "text": "Software Requirements Specification for GParted Page 10\n2.6 User Documentation\nOnline Documentation:\n• http://gparted.sourceforge.net/documentation.php\n• http://gparted.sourceforge.net/docs/help‐manual/C/gparted.html\n• http://gparted.sourceforge.net/docs/man‐page/C/gparted.8.html\nThird party Documentation and Tutorials:\n• http://www.dedoimedo.com/computers/gparted.html\n• http://www.howtogeek.com/howto/windows‐vista/using‐gparted‐to‐resize‐\nyour‐windows‐vista‐partition/\nGParted Forum:\n• http://gparted‐forum.surf4.info/index.php\n2.7 Assumptions and Dependencies\nGParted requires a working Linux environment for it to work. The Live version requires\na working CD/DVD drive for it to boot the computer.\nAs every other Linux application, there is a list of dependencies, or a list of packages\nrequired for the program to work. In this occasion, they are file system tools. On\nhttp://packages.debian.org/sid/gparted there is a comprehensive list for the\ndepended, recommended and suggested packages."
+    },
+    {
+      "page": 12,
+      "text": "Software Requirements Specification for GParted Page 11\n3. System Features\n3.1 Boot Menu\nAfter booting your computer with GParted Live, this is the first screen you see.\nGParted provides some other\nmodes, other than the first\ndefault. These include loading to\nRAM only, safe graphic settings,\nand failsafe mode. You can also\nboot your computer’s operating\nsystem (if any) and run RAM tests\nusing Memtest86+. Selecting the\nfirst option, advances the\napplication forwards and presents\nus with the next screen.\n3.2 Select Keymap\nThe keymap is the layout of symbols on your keyboard.\nDifferent keymaps are\nsupported; this screen gives\ninfo about them. The default\noption (don’t touch keymap)\nis the recommended one."
+    },
+    {
+      "page": 13,
+      "text": "Software Requirements Specification for GParted Page 12\n3.3 Language Selection Menu\nSelecting the keymap you want, brings you to the language selection menu.\nA list of a wide variety of\nsupported languages is\ndisplayed. You then enter\nthe number that\ncorresponds to the desired\nlanguage. After that, you are\npresented with a video\nmode preference menu. The\ndefault value you type is 0,\nwhich loads the GParted\nLive application. If X‐window\ngraphical environment fails\nto load, then you can type 1\nfor manual configuration, or\n2 for going to command\nline.\n3.4 GParted Desktop\nOn the desktop you can find all the program’s functions.\nFrom here you can click on\nexit to quit, take a screenshot\nof the desktop or a window,\nopen the terminal, open the\nmain GParted window, find\nsome info about GParted and\nits packages, or launch the\nscreen resolution application."
+    },
+    {
+      "page": 14,
+      "text": "Software Requirements Specification for GParted Page 13\n3.5 GParted Main Window\nFrom this window you can perform all the actions supported by GParted.\nThere is a menu bar on the top\nof the window, with each\noption (GParted, Edit, View,\nDevice, Partition) corresponding\nto a set of actions you can\nperform on a disk. Under that, is\na bar which contains the most\ncommon functions of the\nprogram, which you can\nperform on the drive (hard disk,\nUSB flash etc.) selected from\nthe drop down menu on the far\nright. Then a graphical\nrepresentation of the selected\ndrive’s partitions appears,\ntogether with a more detailed\nlist under that.\n3.6 Refresh Connected Devices\nFrom GParted‐>Refresh Devices you can refresh the\nlist of the connected devices in the system. This can\nbe useful if, for example, you plug in a USB flash\ndrive after GParted has booted. This function\nenables the recognition of the drive.\n3.7 Undo & Apply\nEvery time you perform an operation, it goes in\npending mode. Then, you can undo if you regret\nyour choice, or go ahead and click apply for the\nchanges to happen. This can be done from Edit‐\n>Undo Last Operation, Clear All Operations,\nApply All Operations. Clear all removes every\npending operation from the list. You can also\nundo and apply from the respective buttons on\nthe main functions bar."
+    },
+    {
+      "page": 15,
+      "text": "Software Requirements Specification for GParted Page 14\n3.8 View Device Information\nYou can view the selected device’s information by\nclicking View‐>Device Information. This brings up\ninformation about the selected drive on the left side\nof the GParted main window. Details like the\ndevice’s model, size, heads, sectors, cylinders etc.\nare shown.\n3.9 Create Partition Table\nClicking on Device‐>Create\nPartition Table lets you create\nthe drive’s partition table3. A\nwarning is displayed saying\nthat all of your data will be\nerased. So proceed with\ncaution. A wide variety of\npartition tables are supported\nand the default one is ms‐\ndos.\n3 http://en.wikipedia.org/wiki/Partition_table"
+    },
+    {
+      "page": 16,
+      "text": "Software Requirements Specification for GParted Page 15\n3.10 Create a New Partition\nTo create a new partition, first select the desired hard disk or other device, from the\ndrop down menu on the right. Then you can either click on New from the main\nfunctions bar, or go to Partition‐>New. A pop up dialog window appears on screen.\nHere you have various options. First of all, there is a slider which shrinks and moves to\neither side. This represents the size and position of the partition you will create. You\ncan type in values by hand, or just use the slider. Then, you define the type of the\npartition (Primary, Logical, Extended) and select the desired file system to format the\npartition. The list is displayed in the last screenshot. You can also leave the partition\nunformatted if you wish to and format it later. If you wish to label the partition,\nGParted lets you do so in this dialog. Press Add and then Apply to create the partition.\nIn this screenshot we have selected\nthis part of the disk as the partition\nwe will create. It is shrunk and sits\non the start of the disk. In the same\nway, it can be larger or smaller, and\nsit in the end, or anywhere else on\nthe disk."
+    },
+    {
+      "page": 17,
+      "text": "Software Requirements Specification for GParted Page 16\n3.11 Delete a Partition\nSelect the partition you want to delete. Then press Delete on the main functions bar or\ngo to Partition‐>Delete. There is no dialog, or warning for this action. Of course you\nhave to press Apply for the changes to take effect, or Undo if you changed your mind.\n3.12 Resize or Move a Partition\nSelect the partition you want to resize or move. Then click on Resize/Move from the\nmain functions bar or go to Partition‐>Resize/Move.\nA dialog window appears,\nwith the same slider as in the\ncreate partition window. You\nuse it in the same way or type\nin the numbers in Megabytes\ndirectly. In this screenshot, it\nappears that the partition\nspans the whole drive; we\nwant to shrink it and free up\nthe disk space after it, which\nwill then become unallocated\nspace. Press Resize/Move and\nthen Apply.\n3.13 Copy Partition\nSelect the partition you would like to copy. This is partition cloning, useful if, for\nexample, you migrate to a larger hard drive and wish to keep your data and operating\nsystem (without reformatting). Click on Copy from the main functions bar or go to\nPartition‐>Copy. The selected partition is then copied to the clipboard.\n3.14 Paste Partition\nWith this action you can paste the copied partition to unallocated space of the same\ndrive, another drive in its entirety, or to unallocated space of another drive. Select the\nwhole drive or partition of a drive and then press Paste on the main functions bar or go\nto Partition‐>Paste. A dialog window opens. As with Resize/Move, there is a slider. You\ncan leave it at the default setting, which the exact same size of the partition being\ncopied, or you can only slide it up for the pasted partition to take up more (free) space"
+    },
+    {
+      "page": 18,
+      "text": "Software Requirements Specification for GParted Page 17\nthan the copied one. You can also move around the pasted partition, it doesn’t have to\nbe at the start of the unallocated space.\nHere you see the slider which\ndefaults at the size of the\npartition to copy, but you can\nchange that if you want.\nIMPORTANT: You can paste\nover an existing partition\n(whether it’s formatted or\nunformatted). A warning is\nshown that you will lose all of\nthat partition’s data. So paste\nwith caution. Press Paste and\nthen Apply.\n3.15 Format Partition\nAfter you have created a partition (regardless of formatting it or not) you can format it\nto the file system you like. First, select the partition you want to format. Then, click on\nPartition‐>Format to. A list of the supported file systems appears. Click on the desired\none and then click on Apply."
+    },
+    {
+      "page": 19,
+      "text": "Software Requirements Specification for GParted Page 18\n3.16 Unmount Partition\nIf you have mounted a partition to a specific mount point, you can unmount it by\nclicking on Partition‐>Unmount. Please refer to 3.21 for an online guide on mounting\npartitions in GParted.\n3.17 Manage Flags\nSelecting a partition and then\nclicking on Partition‐>Manage\nFlags, brings up a dialog window\nwith flags and checkboxes. These\nare functions supported by the\npartition, like if the partition is\nbootable, if it is hidden etc. You\ncan change those here. Bear in\nmind that some functions are not\nsupported by some partitions."
+    },
+    {
+      "page": 20,
+      "text": "Software Requirements Specification for GParted Page 19\n3.18 Check and Repair File System\nSelecting a partition and then clicking on Partition‐>Check, sends in pending mode the\ncheck and repair partition errors operation. Click on Apply to have the partition’s file\nsystem analyzed, checked for errors and repaired if errors are found.\n3.19 Label Partition\nSelecting a partition and then\nclicking on Partition‐>Label, opens a\ndialog window asking to name your\npartition. You could also do that\nwhen creating the partition, but if\nyou missed it or didn’t want to do it\nthen, you can label your partition\nfrom this option. You cannot label\nevery partition, because some file\nsystems don’t support labeling.\n3.20 Take a Screenshot of the Desktop or an Active Window\nClicking on Screenshot on the desktop, opens a\ndialog window which informs you that after\nclicking Yes, a cross‐pointer appears and you\nselect the window you want to print‐screen.\nWhen the cross‐hair appears, you can click on\nany active window to take its screenshot, or click\nsomewhere in the desktop’s wallpaper for a\ngeneral desktop screenshot.\nA preview of the screenshot is displayed,\nand a pop‐up message informs you that\nyour screenshot has been saved as\ngparted.jpeg under /root. For saving\nscreenshots to a device, please refer to 3.21."
+    },
+    {
+      "page": 21,
+      "text": "Software Requirements Specification for GParted Page 20\n3.21 Terminal & Mount Partitions and Save Screenshots to a Device\nApart from the main GParted window, you can also launch a command line utility by\nclicking on Terminal.\nThis is useful for more\nadvanced operations, or\nif some operations\ncannot be performed in\nthe main GParted\nwindow. The supported\nshell is bash. For example,\nyou can mount a partition\nto a mount point in the\nsystem. This can be done\nonly through Terminal. It\nis also used for copying\nyour saved screenshots\nfrom the system’s virtual\ndrive to a hard disk or\nUSB flash drive. There is a\ncomprehensive guide on\nhow to do this online: http://gparted.sourceforge.net/larry/tips/save_details.htm\n3.22 Information\nClicking on Info brings up a dialog window, on which you can select the List of packages\nor Windows Information. The first option opens Terminal and presents you with a list\nof packages and libraries installed in GParted. You quit by pressing q. The second\noption opens resize‐windows.txt in Terminal, which shows you some things you should\nbe careful of when resizing Windows XP and Windows Vista partitions. You quit by\npressing q."
+    },
+    {
+      "page": 22,
+      "text": "Software Requirements Specification for GParted Page 21\n3.23 Screen Resolution Changer\nClicking on Screen resolution brings up a window with monitor resolution options. Here\nyou can select the resolution that best fits your monitor. You can also rotate your view,\nchange layout if you have multiple monitors etc.\n3.24 Date and Time\nDate and time is displayed on the desktop’s taskbar. These settings are read from the\ncomputer’s BIOS."
+    },
+    {
+      "page": 23,
+      "text": "Software Requirements Specification for GParted Page 22\n4. External Interface Requirements\n4.1 User Interfaces\n• Main Menu\nThis is the first screen of the program that the user sees, and the part where most\nof the operations take place.\nOn the top, there is the menu bar with each option (GParted, Edit, View, Device,\nPartition) corresponding to a set of actions you can perform on a disk. Under\nthat, is a bar which contains the most common functions of the program.\nThen the selected drive’s partitions are presented in both graphical and detailed\nmode."
+    },
+    {
+      "page": 24,
+      "text": "Software Requirements Specification for GParted Page 23\n• Cancel and Apply\nEvery time you try to edit in any way, any partition, a confirmation dialog appears\nwhich warns about the potential of data loss. You can either click Cancel or Apply.\n• Pasting into an existing partition\nYou can copy a partition, and then paste it on another existing one, whether it is\nformatted or not. This of course leads to loss of data. If that’s fine, click OK on the\nwarning window that is being displayed.\n• Quitting GParted\nYou can exit GParted at any time you wish, by clicking on Exit on the upper left\ncorner of the desktop. You can select Reboot, Shutdown, or Logout. Make your\nchoice and click OK."
+    },
+    {
+      "page": 25,
+      "text": "Software Requirements Specification for GParted Page 24\n4.2 Hardware Interfaces\nFor the GParted Live to run, you will need a PC (regardless of its operating system, it\ncan be Windows or Linux) or Mac, with or without an operating system. Since it is not a\nresource hungry program, it will run on most systems without a problem. A CD/DVD\ndrive is necessary for the application to boot, or at least one USB port if you plan to use\nthe USB version of GParted Live. Lastly, a functional standard keyboard and mouse is\nrequired.\nSupported device types:\n• Hard disks\n• USB Flash drives\n• External hard drives (USB – eSATA enclosures etc.)\n• IDE, SATA, RAID controllers and attached devices\n4.3 Software Interfaces\nAs it has already been stated, GParted Live runs on every system, so it doesn’t need\nany specific software from the user’s side. However, GParted depends on some\nlibraries and tools for its function. These packages are already pre‐included in the .iso\nimage file you downloaded from GParted’s website. Please refer to 2.7 for more details\non that matter.\nBefore booting with GParted Live, you have to download the image file and then burn\nit to a cd. So, you need a cd/dvd burning suite compatible with your operating system.\n4.4 Communications Interfaces\nAlthough network or Internet communication is not obvious, it is available. You can\nconfigure your network adapter to work with GParted by typing in the Terminal:\ndhclient eth0. You can also use the ifconfig and route commands. Please remember to\nedit /etc/resolve.conf accordingly. This enables you to update and add new packages\nto GParted. apt‐get update and apt‐get install <package name> are the corresponding\ncommands."
+    },
+    {
+      "page": 26,
+      "text": "Software Requirements Specification for GParted Page 25\n5. Other Nonfunctional Requirements\n5.1 Performance Requirements\nAs it has already been mentioned, GParted is not a resource hog and will run on almost\nevery computer. Its functions and features are not computationally intensive. It does\nnot require a powerful processor or graphics card, much RAM, or disk space, for both\nthe install and Live version, and the program loads and runs fairly quick. The only real\nrequirement is a CD/DVD drive or a USB port that is working properly.\n5.2 Safety Requirements\nAs it is stated with many warnings in the program, data loss is a serious possibility, if\nyou are not careful, backup your data and/or use the program with extreme caution. It\nis obvious that when you deal with partition changes, you could lose all your data by\nhuman or application error. GParted comes with absolute no warranty and cannot be\nmade responsible for any loss of data.\n5.3 Security Requirements\nGParted Live does not deal with any security or privacy issues, as it does not run from\nwithin an operating system. Every user has administrator rights and full access which\nare given from the start of the program, as you are logged in as root.\n5.4 Software Quality Attributes\nThe application provides a quite friendly user interface with its operations accessible\nfrom the menu bar and the main toolbar. An average or casual user should not find any\nproblem using the program to perform at least its main functions.\nInteroperability is guaranteed since this program runs on both Mac and PC (Linux,\nWindows or other operating system).\n5.5 Other Requirements\nTaken from the website’s disclaimer:\nGParted is free software.\nYou have the freedom to run, copy, distribute, study, change, and improve GParted.\nYou do not have to pay money to use GParted.\nGParted is distributed under the GNU General Public License version 2 or (at your\noption) any later version."
+    }
+  ],
+  "tables": [
+    {
+      "page": 9,
+      "table_idx": 0,
+      "rows": 19,
+      "cols": 20,
+      "data": [
+        [
+          "File\nSystem",
+          "Detect",
+          null,
+          "Read",
+          null,
+          "Create",
+          null,
+          "Grow",
+          null,
+          "Shrink",
+          null,
+          "Move",
+          null,
+          "Copy",
+          null,
+          "Check",
+          null,
+          "Label",
+          null,
+          "Required\nsoftware"
+        ],
+        [
+          "btrfs",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "crypt‐\nluks",
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          "",
+          null,
+          ""
+        ],
+        [
+          "ext2",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "e2fsprog\ns"
+        ],
+        [
+          "ext3",
+          "",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "e2fsprog\ns"
+        ]
+      ]
+    }
+  ]
+}

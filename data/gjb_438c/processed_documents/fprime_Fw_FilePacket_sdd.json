@@ -1,0 +1,80 @@
+{
+  "doc_name": "fprime_Fw_FilePacket_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Fw_FilePacket_sdd.md",
+  "md_lines": 68,
+  "md_chars": 1735,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "Fw::FilePacket Classes",
+  "section_count": 7,
+  "sections": [
+    {
+      "number": null,
+      "title": "Fw::FilePacket Classes",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1",
+      "title": "1 Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 79,
+      "text_preview": "This module provides a type `Fw::FilePacket`.\nIt represents an ISF file packet."
+    },
+    {
+      "number": "2",
+      "title": "2 Design",
+      "level": 2,
+      "line_start": 8,
+      "text_length": 728,
+      "text_preview": "The file packet format is similar to the Protocol Data Unit (PDU) format\ndefined in the CCSDS File Delivery Protocol (CFDP).\nSee &sect; 5 of the\n[CCSDS File Delivery Protocol (CFDP) Recommended Standa"
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 START Packets",
+      "level": 3,
+      "line_start": 30,
+      "text_length": 310,
+      "text_preview": "A start packet has packet type START and sequence index zero.\nIts data consists of the following:\n\n* The file size in bytes (4 bytes).\n\n* The length of the source path in bytes (1 byte).\n\n* The source"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 DATA Packets",
+      "level": 3,
+      "line_start": 45,
+      "text_length": 234,
+      "text_preview": "A data packet has packet type DATA.\nIts data consists of the following:\n\n* The byte offset into the entire file of the file data in this\npacket (4 bytes).\n\n* The length of the file data in bytes (2 by"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 END Packets",
+      "level": 3,
+      "line_start": 57,
+      "text_length": 170,
+      "text_preview": "An end packet has packet type END.\nIts data consists of the following:\n\n* The 32-bit hash value, computed from the file data as described in \nthe CFDP protocol (4 bytes)."
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 CANCEL Packets",
+      "level": 3,
+      "line_start": 65,
+      "text_length": 55,
+      "text_preview": "A cancel packet has packet type CANCEL.\nIt has no data."
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

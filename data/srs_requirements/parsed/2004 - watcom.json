@@ -1,0 +1,1209 @@
+{
+  "file": "2004 - watcom.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Open Watcom Linux Port\nCompiler / Linker Software Requirements\nSpecification\nCopyright © 2004 SciTech Software, Inc.\nCreated on 1/14/2004 11:08 AM"
+    },
+    {
+      "page": 2,
+      "text": "Open Watcom Linux Port Page 2 of 55\nCompiler / Linker Software Requirements Specification\nTable of Contents\nExecutive summary 4\n1. Introduction 4\n1.1 Definitions, acronyms and abbreviations 4\n1.2 References 5\n2. Key Components of the Open Watcom C Compiler and Linker 5\n2.1 ORL 5\n2.1.1 Definition 5\n2.1.2 Description 5\n2.2 WLCore 7\n2.2.1 Definition 7\n2.2.2 Description 7\n2.3 Load ELF 12\n2.3.1 Definition 12\n2.3.2 Description 12\n2.4 GC386 13\n2.4.1 Definition 13\n2.4.2 Description 13\n2.5 OWL 30\n2.5.1 Definition 30\n2.5.2 Description 30\n3. Porting Open Watcom C Compiler and Linker to Linux 32\n3.1 Position-Independent Code 32\n3.1.1 Command Line Switches 33\n3.1.2 ELF Object Files 33\n3.1.3 PIC Generation 35\n3.1.4 Notes 38\n3.2 Building Shared Objects 39\n3.2.1 Linker Command Line 39\n3.2.2 ELF Header 39\n3.2.3 Segments and Sections 39\n3.2.4 Program Headers 40\n3.2.5 Dynamic Section 41\n3.2.6 Dynamic Symbols 42\n3.2.7 Dynamic Relocations 43\n3.2.8 Global Offset Table 44\n3.2.9 Procedure Linkage Table 45\n3.2.10 Notes 48\n3.3 Using Shared Objects 48\n3.3.1 Reading Shared Objects 48\n3.3.2 Program Interpreter 48\n3.3.3 Required Libraries 48\n3.3.4 Global Offset Table 49\n3.3.5 Procedure Linkage Table 49\n3.3.6 Notes 50\n4. Existing Problems 50\nSciTech Software, Inc."
+    },
+    {
+      "page": 3,
+      "text": "Open Watcom Linux Port Page 3 of 55\nCompiler / Linker Software Requirements Specification\n4.1.1 Support of R_386_PC32 relocations 50\n4.1.2 Support of STT_NOTYPE symbols 51\n4.1.3 Accurate segment mapping 52\n5. Estimation 54\n5.1 Position-Independent Code 54\n5.2 Building Shared Objects 54\n5.3 Using Shared Objects 55\n5.4 Final Integration 55\nSciTech Software, Inc."
+    },
+    {
+      "page": 4,
+      "text": "Open Watcom Linux Port Page 4 of 55\nCompiler / Linker Software Requirements Specification\nCompiler / Linker Software Requirements\nSpecification\nExecutive summary\nThis document describes a detailed approach to porting Open Watcom Compiler and Linker to Linux\nplatform.\n1. Introduction\nThis document outlines a set of steps that should be taken to provide shared libraries and position\nindependent code support to the Open Watcom compiler as a part of the Open Watcom Linux porting\neffort.\nAll information is presented relative to open_watcom_devel_1.1.7. Since Open Watcom is open-source\nproject, we assume some of the topics covered might become obsolete or inaccurate at the moment of\nreading this document. A considerable amount of experimental work was performed prior writing this\nSpecification. Some results of that work are included in this document.\nThis document consists of four large sections. Section one is an introductory section. Section two describes\nthe key components of Open Watcom C Compiler and Linker. Section three defines steps, needed for\nadding PIC and shared object support. Section four describes some problems found during our\ninvestigation.\n1.1 Definitions, acronyms and abbreviations\nABI Application Binary Interface\nELF Executable and Linking Format\nThere are three main types of ELF files:\n(cid:131) A relocatable file holds code and data suitable for linking with other object files to create an\nexecutable or a shared object file.\n(cid:131) An executable file holds a program suitable for execution; the file specifies how the function exec()\ncreates a program’s process image.\n(cid:131) A shared object file holds code and data suitable for linking in two contexts. First, the link editor may\nprocess it with other relocatable and shared object files to create another object file. Second, the\ndynamic linker combines it with an executable file and other shared objects to create a process image.\nwlink have limited support of building and using of ELF files.\nOMF Relocatable Object Module Format\nThis format (developed by Microsoft) is produced by wcc386 (and has “native” support in wlink).\nORL Object Reading Library\nAPI for reading object files.\nPDC Position Dependent Code (opposite to PIC)\nPIC Position Independent Code\nThis lets a segment’s virtual address change from one process to another, without invalidating execution\nbehavior. Because PIC uses relative addressing between segments, the difference between virtual\naddresses in memory must match the difference between virtual addresses in the file. The difference\nbetween the virtual address of any segment in memory and the corresponding virtual address in the file is\nthus a single constant value for any one executable or shared object in a given process.\nwcc386 Open Watcom C Compiler\nwlink Open Watcom Linker\nSciTech Software, Inc."
+    },
+    {
+      "page": 5,
+      "text": "Open Watcom Linux Port Page 5 of 55\nCompiler / Linker Software Requirements Specification\n1.2 References\n1. SYSTEM V APPLICATION BINARY INTERFACE, Edition 4.1\n2. SYSTEM V APPLICATION BINARY INTERFACE, Intel386™ Architecture Processor\nSupplement, Fourth Edition\n3. Linux Standard Base Specification for the IA32 Architecture 1.9.0-20031030\n4. OMF 1.1 Specification\n2. Key Components of the Open Watcom C Compiler and Linker\nCertain parts of the Open Watcom source code are especially important for our project. Such parts will be\nreferred as “components” throughout this document, although some of them are logically interrelated\nsource files, and others are subprojects (subdirectories under the Open Watcom source tree). The informal\nnames defined here will be used in the further parts of this document.\nEach component is described in two sections. First section describes the purpose of the component, and\nprovides the list of core source files. Second section describes the principles of function of the\ncorresponding component. Important functions, data structures, and constants are described as well.\n2.1 ORL\n2.1.1 Definition\nAbbreviation of “Object Reading Library”. Located in $OWROOT/bld/orl.\nORL is designed for reading various formats of object files: ELF, OMF, and COFF. We are interested\nmainly in the ELF stuff ($OWROOT/bld/orl/elf).\nELF linking information (e.g. relocation entries) is mapped to abstract ORL linking information. For\nexample, ELF relocation type R_386_32 is mapped to ORL_RELOC_TYPE_WORD_32.\n2.1.2 Description\nThere are several handle types defined in ORL. Most important are orl_sec_handle and\norl_symbol_handle. There are many functions operating with sections and symbols:\nchar * ORLSecGetName( orl_sec_handle );\norl_sec_offset ORLSecGetBase( orl_sec_handle );\norl_sec_size ORLSecGetSize( orl_sec_handle );\norl_sec_type ORLSecGetType( orl_sec_handle );\norl_sec_flags ORLSecGetFlags( orl_sec_handle );\norl_sec_alignment ORLSecGetAlignment( orl_sec_handle );\norl_sec_handle ORLSecGetStringTable( orl_sec_handle );\norl_sec_handle ORLSecGetSymbolTable( orl_sec_handle );\norl_sec_handle ORLSecGetRelocTable( orl_sec_handle );\norl_linnum * ORLSecGetLines( orl_sec_handle );\norl_table_index ORLSecGetNumLines( orl_sec_handle );\norl_sec_offset ORLSecGetOffset( orl_sec_handle );\norl_return ORLSecGetContents( orl_sec_handle, char ** );\nSciTech Software, Inc."
+    },
+    {
+      "page": 6,
+      "text": "Open Watcom Linux Port Page 6 of 55\nCompiler / Linker Software Requirements Specification\norl_return ORLSecQueryReloc( orl_sec_handle, orl_sec_offset,\norl_reloc_return_func );\norl_return ORLSecScanReloc( orl_sec_handle, orl_reloc_return_func );\norl_table_index ORLCvtSecHdlToIdx( orl_sec_handle );\norl_sec_handle ORLCvtIdxToSecHdl( orl_file_handle, orl_table_index );\nchar * ORLSecGetClassName( orl_sec_handle );\norl_sec_combine ORLSecGetCombine( orl_sec_handle );\norl_sec_frame ORLSecGetAbsFrame( orl_sec_handle );\norl_sec_handle ORLSecGetAssociated( orl_sec_handle );\norl_group_handle ORLSecGetGroup( orl_sec_handle );\norl_return ORLRelocSecScan( orl_sec_handle, orl_reloc_return_func );\norl_return ORLSymbolSecScan( orl_sec_handle, orl_symbol_return_func );\norl_return ORLNoteSecScan( orl_sec_handle, orl_note_callbacks *, void *\n);\nchar * ORLSymbolGetName( orl_symbol_handle );\norl_symbol_value ORLSymbolGetValue( orl_symbol_handle );\norl_symbol_binding ORLSymbolGetBinding( orl_symbol_handle );\norl_symbol_type ORLSymbolGetType( orl_symbol_handle );\nunsigned char ORLSymbolGetRawInfo( orl_symbol_handle );\norl_sec_handle ORLSymbolGetSecHandle( orl_symbol_handle );\norl_symbol_handle ORLSymbolGetAssociated( orl_symbol_handle );\nThese and other functions allow access to the object file in the uniform way. Actual mapping from ELF to\nORL is performed by $OWROOT/bld/orl/elf/c/elfentr.c (sections, symbols), elfload.c (sections),\nelflwlv.c (symbols, relocations).\nORL is used by Open Watcom Linker, mostly in $OWROOT/bld/wl/c/objorl.c.\nELF relocations (i.e. 386 ABI) are mapped to abstract ORL relocations in the following way:\n$OWROOT/bld/orl/elf/c/elflwlv.c\nstatic orl_reloc_type convert386Reloc( elf_reloc_type elf_type ) {\nswitch( elf_type ) {\ncase R_386_NONE:\nreturn( ORL_RELOC_TYPE_ABSOLUTE );\ncase R_386_32:\ncase R_386_GOT32:\ncase R_386_GOTOFF:\nreturn( ORL_RELOC_TYPE_WORD_32 );\nSciTech Software, Inc."
+    },
+    {
+      "page": 7,
+      "text": "Open Watcom Linux Port Page 7 of 55\nCompiler / Linker Software Requirements Specification\ncase R_386_PC32:\ncase R_386_PLT32:\ncase R_386_GOTPC:\nreturn( ORL_RELOC_TYPE_REL_32 );\ndefault:\nassert( 0 );\n}\nreturn( ORL_RELOC_TYPE_NONE );\n}\n2.2 WLCore\n2.2.1 Definition\nSynthetically selected part of the Open Watcom Linker ($OWROOT/bld/wl), performing the basic linking\ntasks (e.g. relocations), and interacting to ORL. Main files: obj2supp.c, objcalc.c, objorl.c, objpass1.c,\nobjpass2.c.\n2.2.2 Description\nWe are interested mainly in ELF linking. Since ORL is used to read ELF object files, there is an interface\nto ORL implemented in objorl.c. The linker uses other data structures than ORL, so there is another\nmapping implemented in the mentioned file. Relocations are mapped in the following way:\nswitch( reloc->type ) {\n// ...\ncase ORL_RELOC_TYPE_ABSOLUTE:\ntype = FIX_OFFSET_32 | FIX_ABS;\nbreak;\n// ...\ncase ORL_RELOC_TYPE_REL_32:\ntype = FIX_OFFSET_32 | FIX_REL;\nbreak;\n// ...\ncase ORL_RELOC_TYPE_WORD_32:\ntype = FIX_OFFSET_32;\nbreak;\n}\nConstants FIX_ are defined in the spirit of OMF specification (i.e. FIXUPP records). However, some of\nthese constants implement specific features, e.g. PowerPC relocations.\nSciTech Software, Inc."
+    },
+    {
+      "page": 8,
+      "text": "Open Watcom Linux Port Page 8 of 55\nCompiler / Linker Software Requirements Specification\n$OWROOT/bld/wl/h/obj2supp.h\ntypedef enum {\nFIX_CHANGE_SEG = 0x00000001, // has to be 1. used in pointers!\nFIX_ADDEND_ZERO = 0x00000002,\nFIX_UNSAFE = 0x00000004,\nFIX_ABS = 0x00000008,\nFIX_BASE = 0x00000010,\nFIX_HIGH = 0x00000020,\nFIX_REL = 0x00000040,\nFIX_SHIFT = 0x00000080,\nFIX_TARGET_SHIFT = 8, // contains frame_type\nFIX_TARGET_MASK = 0x00000700,\nFIX_NO_BASE = 0x00001000,\nFIX_SIGNED = 0x00002000,\nFIX_LOADER_RES = 0x00004000,\nFIX_SEC_REL = 0x00008000,\nFIX_NO_OFFSET = 0,\nFIX_OFFSET_8 = 0x00010000,\nFIX_OFFSET_16 = 0x00020000,\nFIX_OFFSET_21 = 0x00030000,\nFIX_OFFSET_32 = 0x00040000,\nFIX_OFFSET_24 = 0x00050000,\nFIX_OFFSET_SHIFT = 16,\nFIX_OFFSET_MASK = 0x00070000,\nFIX_TOC = 0x00100000, // PPC PE\nFIX_TOCV = 0x00200000, // PPC PE\nFIX_IFGLUE = 0x00300000, // PPC PE\nFIX_SPECIAL_MASK = 0x00300000,\nFIX_FRAME_SHIFT = 24, // contains frame_type\nFIX_FRAME_MASK = 0x07000000,\nSciTech Software, Inc."
+    },
+    {
+      "page": 9,
+      "text": "Open Watcom Linux Port Page 9 of 55\nCompiler / Linker Software Requirements Specification\n// now for some handy constants which use these\nFIX_BASE_OFFSET_16 = (FIX_BASE | FIX_OFFSET_16),\nFIX_BASE_OFFSET_32 = (FIX_BASE | FIX_OFFSET_32),\nFIX_HIGH_OFFSET_8 = (FIX_HIGH | FIX_OFFSET_8),\nFIX_HIGH_OFFSET_16 = (FIX_HIGH | FIX_OFFSET_16),\n} fix_type;\nDuring the first pass, relocations are converted to internal representation:\n$OWROOT/bld/wl/c/objorl.c\nstatic orl_return P1Relocs( orl_sec_handle sec )\n/**********************************************/\n{\nreturn ORLRelocSecScan( sec, DoReloc );\n}\nHere ORLRelocSecScan is ORL-function that iterates through the relocation list, and DoReloc() is called\nto convert each relocation (see above).\nRelocation processing is actually implemented in obj2supp.c. This file is a key part of the linker.\nOther important participants of linking process are symbols. Like relocations, ELF symbols (accessible\nthrough ORL functions) are converted to the internal symbol structures:\n$OWROOT/bld/wl/h/syms.h\ntypedef struct symbol {\nstruct symbol * hash;\nstruct symbol * publink;\nstruct symbol * link;\ntarg_addr addr;\nunsigned_16 namelen;\nsym_info info; // flags & floating point fixup type.\nstruct mod_entry * mod;\nunion {\nvoid * edges; // for dead code elim. when sym undefd\nstruct segdata *seg; // seg symbol is in.\nchar * alias; // for aliased syms.\nvoid * import; // NOVELL & OS/2 only: imported symbol\ndata.\nSciTech Software, Inc."
+    },
+    {
+      "page": 10,
+      "text": "Open Watcom Linux Port Page 10 of 55\nCompiler / Linker Software Requirements Specification\noffset cdefsize; // altdef comdefs: size of comdef\n} p;\nunion {\ndos_sym_data d;\nstruct symbol * altdefs; // for keeping track of comdat & comdef\ndefs\nstruct symbol * datasym; // altdef comdats: sym which has data def\nint aliaslen; // for aliases - length of name.\n} u;\nunion {\nstruct symbol * mainsym; // altdefs: main symbol definition\nstruct symbol * def; // for lazy externs\nstruct symbol **vfdata; // for virtual function lazy externs.\nvoid * export; // OS/2 & PE only: exported sym info.\n} e;\nchar * name;\nchar * prefix; // primarily for netware, though could be\n// subverted for other use. gives symbol\n// namespace qualification\n} symbol;\nThere are many SYM_ and ST_ constants describing various symbol properties.\nFinally, calculation of segment addresses (during the second pass) is performed in objcalc.c. Information\nproduced during this process will be used later for creating an executable file. One can iterate through the\ngroups (i.e. grouped segments) this way:\ngroup_entry *currgrp;\nfor( currgrp = Groups; currgrp != NULL; currgrp = currgrp->next_group ) {\n// Do something...\n}\nThere are some important global variables. In the example above, we see Groups is the list of all groups.\nVariable DataGroup specifies the data group, variable NumGroups contains the total number of groups.\nGroup entry is defined as:\n$OWROOT/bld/wl/h/objstruc.h\ntypedef struct group_entry {\nGROUP_ENTRY * next_group;\nSEG_LEADER * leaders;\nSciTech Software, Inc."
+    },
+    {
+      "page": 11,
+      "text": "Open Watcom Linux Port Page 11 of 55\nCompiler / Linker Software Requirements Specification\nsymbol * sym;\nsection * section;\ntarg_addr grp_addr;\nunsigned_16 segflags;\noffset size;\noffset totalsize;\noffset linear; // preferred base address\nunion {\nvoid * grp_relocs; // OS2/ELF only.\nclass_entry * class; // CV (during addr calc )\n} g;\nunion {\nunsigned qnxflags; // QNX\nunsigned miscflags; // OS/2\n} u;\nunsigned num;\nunsigned isfree : 1;\nunsigned isautogrp : 1;\n} group_entry;\nHere size is group size in the file; totalsize is group size in the memory (e.g. uninitialized data do not\nrequire space in the file).\nAnother important global variable is FmtData. This structure contains fields describing the format and\nvarious properties of the output file. For our purposes, the most important fields are type and dll. For ELF\nshared objects, the following test evaluates as TRUE: (FmtData.type & MK_ELF) && FmtData.dll.\nSciTech Software, Inc."
+    },
+    {
+      "page": 12,
+      "text": "Open Watcom Linux Port Page 12 of 55\nCompiler / Linker Software Requirements Specification\n2.3 Load ELF\n2.3.1 Definition\nPart of Open Watcom Linker ($OWROOT/bld/wl), designed for writing executable files in ELF format.\nConsists of two files: loadelf.c and loadelf2.c.\n2.3.2 Description\nCurrently, LoadELF is able to create only ELF executable files (shared objects are not supported). Most of\nthe work is performed in loadelf.c. The second file, loadelf2.c, contains only the routines for creating ELF\nsymbol tables.\nThe main function is FiniELFLoadFile(). The following tasks are performed there:\n1. Initialize the ELF header, program headers, and section headers.\n2. Write groups (i.e. code and data) to the ELF file (program and section headers are changed during\nthis process; i.e. sections: .text, .data, and .bss).\n3. Write relocation section (.rela.text).\n4. Write DWARF debug information (if needed).\n5. Write symbol table (.symtab), hash (.hash), and strings (.strtab).\n6. Write section strings (.shstrtab).\n7. Write section headers.\n8. Write DWARF trailer (if needed).\n9. Rewind and write the ELF header and program headers.\nTask 1 is performed in void SetHeaders( ElfHdr *hdr ). Sections are initialized in void InitSections(\nElfHdr *hdr).\nElfHdr is defined as:\n$OWROOT/bld/wl/h/loadelf2.h\ntypedef struct {\nElf32_Ehdr eh;\nElf32_Shdr *strhdr;\nElf32_Phdr *ph;\nunsigned ph_size;\nElf32_Shdr *sh;\nunsigned sh_size;\nstringtable secstrtab;\nstruct {\nint secstr; // Index of strings section for section names\nint grpbase; // Index base for Groups in section\nint grpnum; // Number of groups\nint relbase; // Index base for relocation sections\nSciTech Software, Inc."
+    },
+    {
+      "page": 13,
+      "text": "Open Watcom Linux Port Page 13 of 55\nCompiler / Linker Software Requirements Specification\nint relnum; // number of relocations\nint symstr; // Index of symbol's string table\nint symtab; // Index of symbol table\nint symhash; // Index of symbol hash table\nint dbgbegin;// Index of first debug section\nint dbgnum; // Number of debug sections\n} i; // Indexes into sh\nunsigned_32 curr_off;\n} ElfHdr;\nThe most interesting structure is i, where section indexes are specified. This structure is filled in\nInitSections(). So the order of sections is predefined.\nProgram header is created in SetHeaders() as well.\nTask 2 is performed in void WriteELFGroups( ElfHdr *hdr ). In this function, group list is iterated (as\ndescribed in WLCore). For each group, code or data are written to the ELF file, using WriteGroupLoad().\nThe corresponding program headers and sections are filled as well, using SetGroupHeaders(). Note that\nuninitialized data (.bss) are processed in the special way.\nRelocations are written using void WriteRelocsSections( ElfHdr *hdr ). In this implementation, all\nrelocations are presented with explicit addends (i.e. SHT_RELA).\nTask 5 is performed by WriteElfSymTable( ElfSymTable *tab, ElfHdr *hdr, int hashidx, int\nsymtabidx, int strtabidx ). Both symbol table and hash are written in this function. Then string table is\nwritten using WriteSHStrings().\nFunction WriteSHStrings() is reused for the next task (i.e. writing section names).\nNote that field curr_off (from ElfHdr) is widely used. This field specifies the current offset in the ELF\nfile. However, it is not updated automatically, e.g. after WriteLoad() therefore precise calculations are\nneeded to keep this value up to date.\nFunctions to write ELF (and other) executable files are located in $OWROOT/bld/wl/c/loadfile.c.\n2.4 GC386\n2.4.1 Definition\nCode Generator for 32-bit family of x86 CPUs, used by Open Watcom C Compiler consists of three\n“layers”:\n• General Code Generator, located in $OWROOT/bld/cg.\n• Common x86 Code Generator (16/32-bit), located in $OWROOT/bld/cg/intel.\n• Specific 32-bit x86 Code Generator, located in $OWROOT/bld/cg/intel/386.\n2.4.2 Description\nDocumentation for the Code Generator ($OWROOT/bld/cg/doc) covers only the interface to the code\ngenerator (i.e. \"General Code Generator\"). The code generator (back end) interface is a set of procedure\ncalls. These are divided into Code Generation (CG), Data Generation (DG), miscellaneous Back End (BE),\nFront end supplied (FE), and debugger information (DB) routines.\nSciTech Software, Inc."
+    },
+    {
+      "page": 14,
+      "text": "Open Watcom Linux Port Page 14 of 55\nCompiler / Linker Software Requirements Specification\nThere is internal machine-independent format (allowing scalability, multiple platforms, and machine-\nindependent optimizations). The main parts of these intermediate data (passed to the code generator for\nparticular machine) are \"blocks\" and \"instructions\":\n$OWROOT/bld/cg/h/block.h\ntypedef struct block {\nstruct block_ins ins;\nstruct block *next_block; /* used for DFS */\nstruct block *prev_block;\nunion {\nstruct interval_def *interval;\nstruct block *partition;\nstruct block *loop;\n} u;\nstruct block *loop_head;\nstruct data_flow_def *dataflow;\nstruct block_edge *input_edges;\npointer cc; /* AKA cc_control */\ndominator_info dom; /* least node in dominator set\n*/\ntype_length stack_depth; /* set by FlowSave stuff */\nunion {\nstruct block *alter_ego; /* used in loop unrolling */\nstruct block *next; /* used for CALL_LABEL kludge\n*/\n} v;\nlabel_handle label; /* front end identification */\nlocal_bit_set available_bit;\ninterval_depth depth; /* loop nesting depth */\nblock_num id; /* internal identification */\nblock_num gen_id;\nblock_num inputs; /* number of input edges */\nblock_num targets; /* number of target blocks */\nblock_class class;\nsigned_32 iterations;\nunsigned_32 unroll_count;\nstruct block_edge edge[ 1 ];\nSciTech Software, Inc."
+    },
+    {
+      "page": 15,
+      "text": "Open Watcom Linux Port Page 15 of 55\nCompiler / Linker Software Requirements Specification\n} block;\n$OWROOT/bld/cg/h/inslist.h\ntypedef struct ins_header {\nstruct instruction *prev;\nstruct instruction *next;\nstruct name_set live;\nsource_line_number line_num;\nopcode_defs opcode;\ninstruction_state state;\n} ins_header;\ntypedef struct instruction {\nstruct ins_header head;\nstruct opcode_entry *table;\nunion {\nstruct opcode_entry *gen_table;\nstruct instruction *parm_list;\nstruct instruction *cse_link;\n} u;\nstruct register_name *zap;\nunion name *result; /* result location */\ninstruction_id id;\ntype_class_def type_class;\ntype_class_def base_type_class;\nunsigned_16 sequence;\n#include \"cgnoalgn.h\"\nunion {\nbyte byte;\nbool bool;\ncall_flags call_flags;\nnop_flags nop_flags;\nbyte zap_value; /* for conversions on AXP */\n} flags;\nunion {\nbyte index_needs; /* a.k.a. reg_set_index */\nbyte stk_max;\nSciTech Software, Inc."
+    },
+    {
+      "page": 16,
+      "text": "Open Watcom Linux Port Page 16 of 55\nCompiler / Linker Software Requirements Specification\n} t;\nbyte stk_entry;\nbyte num_operands;\ninstruction_flags ins_flags;\nbyte stk_exit;\nunion {\nbyte stk_extra;\nbyte stk_depth;\n} s;\n#include \"cgrealgn.h\"\nunion name *operands[ 1 ]; /* operands */\n} instruction;\nSample: Walking through the blocks and instructions\nblock *blk;\ninstruction *ins;\nblk = HeadBlock;\nwhile( blk != NULL ) {\nins = blk->ins.hd.next;\nwhile( ins->head.opcode != OP_BLOCK ) {\n// Do something...\nins = ins->head.next;\n}\nblk = blk->next_block;\n}\nInstructions are machine-independent. For example, opcode == OP_ADD specifies addition. Operands and\nresult have the name type that can represent CPU register, memory location, immediate constant, etc.:\n$OWROOT/bld/cg/h/name.h\ntypedef union name {\nstruct name_def n;\nstruct var_name v;\nstruct const_name c;\nstruct memory_name m;\nSciTech Software, Inc."
+    },
+    {
+      "page": 17,
+      "text": "Open Watcom Linux Port Page 17 of 55\nCompiler / Linker Software Requirements Specification\nstruct temp_name t;\nstruct register_name r;\nstruct indexed_name i;\nunion name *_n;\n} name;\nThis data looks like machine-dependent, since different architectures have different registers. However, this\nis top-level abstraction. The code generator for particular architecture supplies the corresponding set of\nregisters. Actually there are many register sets (e.g. stack pointer, registers for temporary storage, fixed\nregisters, etc.) The hw_reg_set type is able to hold one or more registers (or be empty).\nFor 32-bit family of x86 processors, the register sets are defined in $OWROOT/cg/intel/386/c/386rgtbl.c.\nThere are many inline functions operating with register sets ($OWROOT/cg/h/cghwreg.h). Most of them\nimplement \"set arithmetic\": HW_Asgn, HW_CAsgn, HW_CEqual, HW_COnlyOn, HW_COvlap,\nHW_CSubset, HW_CTurnOff, HW_CTurnOn, HW_Equal, HW_OnlyOn, HW_Ovlap, HW_Subset,\nHW_TurnOff, HW_TurnOn.\nSample: Excluding the EBX register (required for PIC)\nhw_reg_set all;\n// ...\nHW_CTurnOff( all, HW_EBX );\nThere are two levels of code generation for x86: middle level and low level (assuming high level is\nmachine-independent).\nHigh level uses instruction and related functions (only some are shown):\n// Creating new instruction\ninstruction *MakeUnary( opcode_defs, name *, name *, type_class_def );\ninstruction *MakeBinary( opcode_defs, name *, name *, name *, type_class_def );\ninstruction *MakeMove( name *, name *, type_class_def );\n// Miscellaneous allocations\nname *AllocRegName( hw_reg_set );\nname *AllocTemp( type_class_def );\nname *AllocIntConst( int );\nname *AllocUIntConst( uint );\n// Placing the instruction\nvoid AddIns( instruction * );\nvoid PrefixIns( instruction *, instruction * );\nvoid SuffixIns( instruction *, instruction * );\nvoid ReplIns( instruction *, instruction * );\nSciTech Software, Inc."
+    },
+    {
+      "page": 18,
+      "text": "Open Watcom Linux Port Page 18 of 55\nCompiler / Linker Software Requirements Specification\nSample: Generating add ebx, 0BABEh in the current block\nname *ebx;\ninstruction *ins;\nebx = AllocRegName( HW_EBX );\nins = MakeBinary( OP_ADD, ebx, AllocIntConst( 0xBABE ), ebx, WD );\nAddIns(ins);\nAt the low level, we generate the actual x86 opcodes (once and for all). Transformation from middle level\nto low level is performed mainly by i86enc.c, i86enc2.c ($OWROOT/bld/cg/intel), i86enc32.c\n($OWROOT/bld/cg/intel/386).\nThere are several macros for emitting binary opcodes:\n_Code;\n. . .\n_Next;\n. . .\n_Emit;\nOpcodes are inserted using the special functions, e.g.:\nvoid LayOpbyte( opcode op );\nvoid LayOpword( opcode op );\nvoid LayReg( hw_reg_set r );\nvoid LayRegOp( name *r );\nvoid LayRMRegOp( name *r );\nSample: Generating PUSHF\n_Code;\nLayOpbyte( 0x9C );\n_Emit;\nHowever, there are more digestible functions for common cases, e.g. GenRegMove().\nThe information above should give the basic knowledge to the developer unfamiliar with CG386. The last\nuncovered topic is how object files are produced.\nUnfortunately the only object format supported is OMF. Therefore many things in CG386 are rigidly bound\nto OMF structure. OMF output is implemented mostly in $OWROOT/bld/cg/intel/c/i86obj.c, i86esc.c,\nand $OWROOT/bld/cg/c/posixio.c.\nSciTech Software, Inc."
+    },
+    {
+      "page": 19,
+      "text": "Open Watcom Linux Port Page 19 of 55\nCompiler / Linker Software Requirements Specification\nBut there is last but one stage, before data became written to the object file. This stage is optimizing\n(although some optimizations were performed during previous stages). The optimizer\n($OWROOT/bld/cg/c/opt*.c) has the operations queue. The “trace” below shows intercommunications\nbetween the optimizer and OMF output routines (for well-known “Hello, world!” program):\n#include <stdio.h>\nint main(void) {\nprintf(\"Hello, world!\\n\");\nreturn 0;\n}\nTrace:\ni86obj.c: InitSegDefs()\ni86obj.c: DefSegment(id=00000001(1),attr=00000007(7),str=\"_TEXT\",align=00000001(1),use_16=FALSE)\ni86obj.c: DefSegment(id=00000002(2),attr=0000001C(28),str=\"CONST\",align=00000004(4),use_16=FALSE)\ni86obj.c:\nDefSegment(id=00000003(3),attr=0000000C(12),str=\"CONST2\",align=00000004(4),use_16=FALSE)\ni86obj.c: DefSegment(id=00000004(4),attr=00000006(6),str=\"_DATA\",align=00000004(4),use_16=FALSE)\ni86obj.c: DefSegment(id=0000000B(11),attr=00000002(2),str=\"_BSS\",align=00000004(4),use_16=FALSE)\ni86obj.c: ObjInit()\ni86obj.c: InitFPPatches()\ni86obj.c: FillArray(res,size=00000001(1),starting=00000032(50),increment=00000032(50))\ni86obj.c: OutName(name=\"hello.c\",dst)\ni86obj.c: NeedMore(arr,more=00000021(33))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutString(name=\"OS220\",dest)\ni86obj.c: NeedMore(arr,more=00000005(5))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutModel(dest)\ni86obj.c: GetMemModel()\ni86obj.c: OutString(name=\"3fOpd\",dest)\ni86obj.c: NeedMore(arr,more=00000005(5))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"hello.c\",dst)\ni86obj.c: NeedMore(arr,more=00000021(33))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/stdio.h\",dst)\ni86obj.c: NeedMore(arr,more=00000022(34))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/sys/cdefs.h\",dst)\ni86obj.c: NeedMore(arr,more=00000026(38))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/sys/types.h\",dst)\nSciTech Software, Inc."
+    },
+    {
+      "page": 20,
+      "text": "Open Watcom Linux Port Page 20 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: NeedMore(arr,more=00000026(38))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/inttypes.h\",dst)\ni86obj.c: NeedMore(arr,more=00000025(37))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/endian.h\",dst)\ni86obj.c: NeedMore(arr,more=00000023(35))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/stddef.h\",dst)\ni86obj.c: NeedMore(arr,more=00000023(35))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/sys/stat.h\",dst)\ni86obj.c: NeedMore(arr,more=00000025(37))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/stdarg.h\",dst)\ni86obj.c: NeedMore(arr,more=00000023(35))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutName(name=\"/usr/lib/dietlibc/include/stdarg-cruft.h\",dst)\ni86obj.c: NeedMore(arr,more=00000029(41))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000005(5),increment=00000005(5))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000005(5),increment=00000005(5))\ni86obj.c: DoSegGrpNames(dgroup_def,tgroup_def)\ni86obj.c: GetNameIdx(name=\"\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"CODE\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"DATA\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"BSS\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"TLS\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"FLAT\",suff,alloc=)\ni86obj.c: GetNameIdx(name=\"DGROUP\",suff,alloc=)\ni86obj.c: OutIdx(value=00000007(7),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FillArray(res,size=00000040(64),starting=00000005(5),increment=00000005(5))\ni86obj.c: DoSegment(seg,dgroup_def,tgroup_def,use_16=FALSE)\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SegmentAttr(align=00000001(1),tipe=00000007(7),use_16=FALSE)\ni86obj.c: GetNameIdx(name=\"_TEXT\",suff,alloc=)\ni86obj.c: SegmentClass(rec)\ni86obj.c: DoASegDef(rec,use_16=FALSE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000100(256))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000014(20),increment=00000032(50))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000032(50))\ni86obj.c: OutByte(value=00000029(41))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\nSciTech Software, Inc."
+    },
+    {
+      "page": 21,
+      "text": "Open Watcom Linux Port Page 21 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: OutIdx(value=00000008(8),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: PickOMF(cmd=00000098(152))\ni86obj.c: OutInt(value=0000FE80(65152))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutByte(value=0000004F(79))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: DoSegment(seg,dgroup_def,tgroup_def,use_16=FALSE)\ni86obj.c: AskSegIndex(seg=00000002(2))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SegmentAttr(align=00000004(4),tipe=0000001C(28),use_16=FALSE)\ni86obj.c: OutGroup(sidx=00000002(2),group_def,index_p)\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: GetNameIdx(name=\"\",suff,alloc=CONST)\ni86obj.c: SegmentClass(rec)\ni86obj.c: DoASegDef(rec,use_16=FALSE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000100(256))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000014(20),increment=00000032(50))\ni86obj.c: OutByte(value=000000A9(169))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutIdx(value=00000009(9),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000003(3),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: PickOMF(cmd=00000098(152))\ni86obj.c: DoSegment(seg,dgroup_def,tgroup_def,use_16=FALSE)\ni86obj.c: AskSegIndex(seg=00000003(3))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SegmentAttr(align=00000004(4),tipe=0000000C(12),use_16=FALSE)\ni86obj.c: OutGroup(sidx=00000003(3),group_def,index_p)\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutIdx(value=00000003(3),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: GetNameIdx(name=\"\",suff,alloc=CONST2)\ni86obj.c: SegmentClass(rec)\ni86obj.c: DoASegDef(rec,use_16=FALSE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000100(256))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000014(20),increment=00000032(50))\ni86obj.c: OutByte(value=000000A9(169))\nSciTech Software, Inc."
+    },
+    {
+      "page": 22,
+      "text": "Open Watcom Linux Port Page 22 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutIdx(value=0000000A(10),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000003(3),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: PickOMF(cmd=00000098(152))\ni86obj.c: DoSegment(seg,dgroup_def,tgroup_def,use_16=FALSE)\ni86obj.c: AskSegIndex(seg=00000004(4))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SegmentAttr(align=00000004(4),tipe=00000006(6),use_16=FALSE)\ni86obj.c: OutGroup(sidx=00000004(4),group_def,index_p)\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutIdx(value=00000004(4),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: GetNameIdx(name=\"\",suff,alloc=_DATA)\ni86obj.c: SegmentClass(rec)\ni86obj.c: DoASegDef(rec,use_16=FALSE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000100(256))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000014(20),increment=00000032(50))\ni86obj.c: OutByte(value=000000A9(169))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutIdx(value=0000000B(11),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000003(3),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: PickOMF(cmd=00000098(152))\ni86obj.c: DoSegment(seg,dgroup_def,tgroup_def,use_16=FALSE)\ni86obj.c: AskSegIndex(seg=0000000B(11))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SegmentAttr(align=00000004(4),tipe=00000002(2),use_16=FALSE)\ni86obj.c: OutGroup(sidx=00000005(5),group_def,index_p)\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutIdx(value=00000005(5),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: GetNameIdx(name=\"\",suff,alloc=_BSS)\ni86obj.c: SegmentClass(rec)\ni86obj.c: DoASegDef(rec,use_16=FALSE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000100(256))\ni86obj.c: FillArray(res,size=00000001(1),starting=00000014(20),increment=00000032(50))\ni86obj.c: OutByte(value=000000A9(169))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\nSciTech Software, Inc."
+    },
+    {
+      "page": 23,
+      "text": "Open Watcom Linux Port Page 23 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: OutIdx(value=0000000C(12),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000004(4),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: PickOMF(cmd=00000098(152))\ni86obj.c: FlushNames()\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: OutIdx(value=00000006(6),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: FlushNames()\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: TellObjNewProc(proc=00000085(133))\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: AskNameCode(hdl=00000049(73),class=00000000(0))\ni86obj.c: AskBackSeg()\ni86obj.c: SetOP(seg=00000002(2))\ni86obj.c: AskSegIndex(seg=00000002(2))\ni86obj.c: TellObjNewLabel(lbl=00000000(0))\ni86obj.c: SetUpObj(is_data=TRUE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: OutLabel(lbl=0811B9C8(135379400))\ni86obj.c: InitPatch()\ni86obj.c: FillArray(res,size=0000000C(12),starting=0000000A(10),increment=0000000A(10))\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: AskOP()\ni86obj.c: SetUpObj(is_data=TRUE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: OutDBytes(len=0000000F(15),src)\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: NeedMore(arr,more=0000000F(15))\ni86obj.c: IncLocation(by=0000000F(15))\ni86obj.c: SetBigLocation(loc=0000000F(15))\ni86obj.c: SetMaxWritten()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\nSciTech Software, Inc."
+    },
+    {
+      "page": 24,
+      "text": "Open Watcom Linux Port Page 24 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: AskNameCode(hdl=0811BE38(135380536),class=00000002(2))\ni86obj.c: AskSegID(hdl=0811BE38(135380536),class=00000002(2))\ni86obj.c: AskSegPrivate(id=00000002(2))\ni86obj.c: AskSegIndex(seg=00000002(2))\ni86obj.c: AskSegID(hdl=0811BE38(135380536),class=00000002(2))\ni86obj.c: AskSegNear(id=00000002(2))\ni86obj.c: AskSegIndex(seg=00000002(2))\ni86obj.c: AskBackSeg()\ni86obj.c: AskCodeSeg()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: AskCodeSeg()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\ni86esc.c: DoSymRef(opnd,val=00000000(0),base=FALSE)\ni86esc.c: DoFESymRef(sym=0811BE38(135380536),class=00000002(2),val=00000000(0),fixup=00000001(1))\ni86obj.c: AskSegID(hdl=0811BE38(135380536),class=00000002(2))\ni86esc.c:\nDoRelocRef(sym=0811BE38(135380536),class=00000002(2),seg=00000002(2),val=00000000(0),kind=0000000\n0(0))\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\noptmain.c: InputOC(oc)\noptmain.c: LDone(oc)\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: AskCodeSeg()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86esc.c: CodeHasAbsPatch(code)\ni86esc.c: CodeHasAbsPatch(code)\ni86esc.c: CodeHasAbsPatch(code)\ni86esc.c: OutputOC(oc,next_lbl)\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: AskLocation()\ni86esc.c: DoAlignment(len=00000000(0))\ni86obj.c: SavePendingLine(new=00000000(0))\ni86esc.c: SendBytes(ptr,len=00000000(0))\ni86obj.c: SavePendingLine(new=00000000(0))\ni86obj.c: OutLabel(lbl=0811BE00(135380480))\nSciTech Software, Inc."
+    },
+    {
+      "page": 25,
+      "text": "Open Watcom Linux Port Page 25 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: UseImportForm(attr=00000007(7))\ni86obj.c: OutExport(sym=00000085(133))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutObjectName(sym=00000085(133),dest)\ni86obj.c: OutName(name=\"main\",dst)\ni86obj.c: NeedMore(arr,more=00000005(5))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: OutIdx(value=00000000(0),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: InitPatch()\ni86obj.c: FillArray(res,size=0000000C(12),starting=0000000A(10),increment=0000000A(10))\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86esc.c: DumpSavedDebug()\ni86esc.c: OutputOC(oc,next_lbl)\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: AskLocation()\ni86esc.c: DoAlignment(len=00000000(0))\ni86obj.c: SavePendingLine(new=00000000(0))\ni86esc.c: SendBytes(ptr,len=00000000(0))\ni86obj.c: SavePendingLine(new=00000000(0))\ni86obj.c: OutLabel(lbl=0811BC0C(135379980))\ni86obj.c: InitPatch()\ni86obj.c: FillArray(res,size=0000000C(12),starting=0000000A(10),increment=0000000A(10))\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86esc.c: DumpSavedDebug()\ni86esc.c: OutputOC(oc,next_lbl)\ni86esc.c: DumpSavedDebug()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86esc.c: ExpandObj(cur,explen=00000009(9))\ni86obj.c: OutDBytes(len=00000001(1),src)\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutOffset(value=00000000(0))\ni86obj.c: NeedMore(arr,more=00000004(4))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: IncLocation(by=00000001(1))\ni86obj.c: SetBigLocation(loc=00000001(1))\ni86obj.c: SetMaxWritten()\ni86obj.c: OutReloc(seg=00000002(2),class=00000001(1),rel=FALSE)\ni86obj.c: AskSegIndex(seg=00000002(2))\ni86obj.c: CheckLEDataSize(max_size=0000000C(12),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: DoFix(idx=00000001(1),rel=FALSE,base=00000001(1),class=00000001(1),sidx=00000002(2))\nSciTech Software, Inc."
+    },
+    {
+      "page": 26,
+      "text": "Open Watcom Linux Port Page 26 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: NeedMore(arr,more=00000003(3))\ni86obj.c: AskIndexRec(sidx=00000002(2))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutDataLong(value=00000000(0))\ni86obj.c: OutDataInt(value=00000000(0))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000002(2),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: IncLocation(by=00000002(2))\ni86obj.c: SetBigLocation(loc=00000003(3))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: SetMaxWritten()\ni86obj.c: OutDataInt(value=00000000(0))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000002(2),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: IncLocation(by=00000002(2))\ni86obj.c: SetBigLocation(loc=00000005(5))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: SetMaxWritten()\ni86esc.c: OutputOC(oc,next_lbl)\ni86esc.c: DumpSavedDebug()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86esc.c: ExpandCJ(oc)\ni86obj.c: OutDataByte(value=000000E8(232))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: IncLocation(by=00000001(1))\ni86obj.c: SetBigLocation(loc=00000006(6))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SetMaxWritten()\ni86esc.c: OutCodeDisp(lbl=0811AF38(135376696),f=00000001(1),rel=TRUE,class=00000008(8))\ni86obj.c: UseImportForm(attr=0000000F(15))\ni86obj.c: OutImport(sym=00000049(73),class=00000001(1),rel=TRUE)\ni86obj.c: FillArray(res,size=00000001(1),starting=00000100(256),increment=00000032(50))\ni86obj.c: CheckImportSwitch(next_is_static=FALSE)\ni86obj.c: OutName(name=\"printf\",dst)\ni86obj.c: NeedMore(arr,more=00000007(7))\ni86obj.c: OutIdx(value=00000000(0),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: DumpImportResolve(sym=00000049(73),idx=00000001(1))\ni86obj.c: OutSpecialCommon(imp_idx=00000001(1),class=00000001(1),rel=TRUE)\ni86obj.c: CheckLEDataSize(max_size=0000000C(12),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: DoFix(idx=00000001(1),rel=TRUE,base=00000002(2),class=00000001(1),sidx=00000000(0))\ni86obj.c: NeedMore(arr,more=00000003(3))\ni86obj.c: OutIdx(value=00000002(2),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\nSciTech Software, Inc."
+    },
+    {
+      "page": 27,
+      "text": "Open Watcom Linux Port Page 27 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: OutIdx(value=00000001(1),dest)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: OutDataLong(value=00000000(0))\ni86obj.c: OutDataInt(value=00000000(0))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000002(2),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: IncLocation(by=00000002(2))\ni86obj.c: SetBigLocation(loc=00000008(8))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: SetMaxWritten()\ni86obj.c: OutDataInt(value=00000000(0))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000002(2),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: IncLocation(by=00000002(2))\ni86obj.c: SetBigLocation(loc=0000000A(10))\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: SetMaxWritten()\ni86esc.c: OutputOC(oc,next_lbl)\ni86esc.c: DumpSavedDebug()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86esc.c: ExpandObj(cur,explen=00000003(3))\ni86obj.c: OutDBytes(len=00000003(3),src)\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: NeedMore(arr,more=00000003(3))\ni86obj.c: IncLocation(by=00000003(3))\ni86obj.c: SetBigLocation(loc=0000000D(13))\ni86obj.c: SetMaxWritten()\ni86esc.c: OutputOC(oc,next_lbl)\ni86esc.c: DumpSavedDebug()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86esc.c: ExpandObj(cur,explen=00000002(2))\ni86obj.c: OutDBytes(len=00000002(2),src)\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\ni86obj.c: NeedMore(arr,more=00000002(2))\ni86obj.c: IncLocation(by=00000002(2))\ni86obj.c: SetBigLocation(loc=0000000F(15))\ni86obj.c: SetMaxWritten()\ni86esc.c: OutputOC(oc,next_lbl)\ni86esc.c: DumpSavedDebug()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: OutDataByte(value=000000C3(195))\ni86obj.c: SetPendingLine()\ni86obj.c: CheckLEDataSize(max_size=00000001(1),need_init=TRUE)\ni86obj.c: OutLEDataStart(iterated=FALSE)\nSciTech Software, Inc."
+    },
+    {
+      "page": 28,
+      "text": "Open Watcom Linux Port Page 28 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: IncLocation(by=00000001(1))\ni86obj.c: SetBigLocation(loc=00000010(16))\ni86obj.c: NeedMore(arr,more=00000001(1))\ni86obj.c: SetMaxWritten()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: AskCodeSeg()\ni86obj.c: SetOP(seg=00000001(1))\ni86obj.c: AskSegIndex(seg=00000001(1))\ni86obj.c: ObjFini()\ni86obj.c: FiniTarg()\ni86obj.c: FlushObject()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: GenComdef()\ni86obj.c: EjectLEData()\ni86obj.c: EjectImports()\ni86obj.c: SetPatches()\ni86obj.c: SetAbsPatches()\ni86obj.c: PickOMF(cmd=000000A0(160))\ni86obj.c: PickOMF(cmd=0000009C(156))\ni86obj.c: EjectExports()\ni86obj.c: PickOMF(cmd=00000090(144))\ni86obj.c: FreeObjCache()\ni86obj.c: FlushNames()\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: AskIndexRec(sidx=00000001(1))\ni86obj.c: KillStatic(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: FiniTarg()\ni86obj.c: FlushObject()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: GenComdef()\ni86obj.c: EjectLEData()\ni86obj.c: EjectImports()\ni86obj.c: SetPatches()\ni86obj.c: SetAbsPatches()\ni86obj.c: PickOMF(cmd=000000A0(160))\ni86obj.c: EjectExports()\ni86obj.c: FreeObjCache()\ni86obj.c: AskIndexRec(sidx=00000002(2))\ni86obj.c: KillStatic(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: FiniTarg()\ni86obj.c: FlushObject()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: GenComdef()\ni86obj.c: EjectLEData()\ni86obj.c: EjectImports()\ni86obj.c: EjectExports()\nSciTech Software, Inc."
+    },
+    {
+      "page": 29,
+      "text": "Open Watcom Linux Port Page 29 of 55\nCompiler / Linker Software Requirements Specification\ni86obj.c: FreeObjCache()\ni86obj.c: AskIndexRec(sidx=00000003(3))\ni86obj.c: KillStatic(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: FiniTarg()\ni86obj.c: FlushObject()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: GenComdef()\ni86obj.c: EjectLEData()\ni86obj.c: EjectImports()\ni86obj.c: EjectExports()\ni86obj.c: FreeObjCache()\ni86obj.c: AskIndexRec(sidx=00000004(4))\ni86obj.c: KillStatic(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: FiniTarg()\ni86obj.c: FlushObject()\ni86obj.c: SetUpObj(is_data=FALSE)\ni86obj.c: CheckLEDataSize(max_size=00000010(16),need_init=FALSE)\ni86obj.c: GenComdef()\ni86obj.c: EjectLEData()\ni86obj.c: EjectImports()\ni86obj.c: EjectExports()\ni86obj.c: FreeObjCache()\ni86obj.c: AskIndexRec(sidx=00000005(5))\ni86obj.c: KillStatic(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: KillArray(arr)\ni86obj.c: KillStatic(arr)\ni86obj.c: FiniAbsPatches()\ni86obj.c: EndModule()\nThis trace shows how OMF object file is written in i86obj.c. We will refer to this trace in the latter\nsections.\nOMF file is composed of object records. These records contain miscellaneous linking information, e.g.:\nEXTDEF External Names Definition Record (imported symbols)\nPUBDEF Public Names Definition Record (exported symbols)\nSEGDEF Segment Definition Record (describes a logical segment)\nGRPDEF Group Definition Record (segments to be collected together)\nFIXUPP Fixup Record (relocations)\nBAKPAT Backpatch Record (relocations)\nLEDATA Logical Enumerated Data Record (binary code or data)\nActual writing is performed by void PutObjRec( byte class, byte *buff, uint len ) located in posixio.c.\nFor example, class of LEDATA is either 0xA0 or 0xA1.\nSciTech Software, Inc."
+    },
+    {
+      "page": 30,
+      "text": "Open Watcom Linux Port Page 30 of 55\nCompiler / Linker Software Requirements Specification\n2.5 OWL\n2.5.1 Definition\nAbbreviation of “Object Writing Library”. Located in $OWROOT/bld/owl.\nOWL is designed for writing object files in ELF and COFF formats. We are interested mainly in the ELF\n(owelf.c). However, OWL is not an abstract wrapper (like ORL). But rather a set of data structures and\nfunctions, useful for creating object files.\n2.5.2 Description\nOWL is currently used by RISC code generators (Alpha AXP and PowerPC). As mentioned above, OWL is\nnot currently used by CG386.\nOWL provides set of useful functions for creating ELF object files. These functions cover sections,\nsymbols, and relocations. For understanding OWL, one can examine $OWROOT/bld/cg/risc/c/rscobj.c.\nFor example, void OWLEmitReloc( owl_section_handle section, owl_offset offset, owl_symbol_handle\nsym, owl_reloc_type type ) is intended to add new relocation to the specified section. Relocation type is\ndefined in OWL terms:\n$OWROOT/bld/owl/h/owl.h\ntypedef enum {\nOWL_RELOC_ABSOLUTE, // ref to a 32-bit absolute address\nOWL_RELOC_WORD, // a direct ref to a 32-bit address\nOWL_RELOC_HALF_HI, // ref to high half of 32-bit address\nOWL_RELOC_PAIR, // pair - used to indicate prev hi and next lo\nlinked\nOWL_RELOC_HALF_LO, // ref to low half of 32-bit address\nOWL_RELOC_BRANCH_REL, // relative branch (Alpha: 21-bit; PPC: 14-bit)\nOWL_RELOC_BRANCH_ABS, // absolute branch (Alpha: not used; PPC: 14-bit)\nOWL_RELOC_JUMP_REL, // relative jump (Alpha: 14-bit hint; PPC: 24-\nbit)\nOWL_RELOC_JUMP_ABS, // absolute jump (Alpha: not used; PPC:24-bit)\nOWL_RELOC_SECTION_OFFSET, // offset of item within it's section\n// meta reloc\nOWL_RELOC_SECTION_INDEX, // index of section within COFF file\nOWL_RELOC_TOC_OFFSET, // 16-bit offset within TOC (PPC)\nOWL_RELOC_GLUE, // location of NOP for GLUE code\nOWL_RELOC_FP_OFFSET, // cheesy hack for inline assembler\n} owl_reloc_type;\nSciTech Software, Inc."
+    },
+    {
+      "page": 31,
+      "text": "Open Watcom Linux Port Page 31 of 55\nCompiler / Linker Software Requirements Specification\nThese abstract types are mapped to ELF relocation types:\n$OWROOT/bld/owl/c/owreloc.c\nstatic Elf32_Word elfRelocTypes386[] = {\nR_386_NONE,\nR_386_32,\nR_386_NONE,\nR_386_NONE,\nR_386_NONE,\nR_386_PC32,\nR_386_NONE,\nR_386_NONE,\nR_386_NONE,\nR_386_32,\nR_386_32,\nR_386_GOT32,\nR_386_NONE,\n};\nAs shown above, OWL is intended primarily to RISC support, so many 386 ABI features are missing or\nincomplete.\nSciTech Software, Inc."
+    },
+    {
+      "page": 32,
+      "text": "Open Watcom Linux Port Page 32 of 55\nCompiler / Linker Software Requirements Specification\n3. Porting Open Watcom C Compiler and Linker to Linux\nThe porting task was originally defined as:\n• Add PIC support to the compiler.\n• Implement building of shared objects (both PIC and PDC).\n• Implement using of existing shared objects.\nThis task was defined with the assumption Open Watcom is already able to build ELF files (i.e. suitable for\nLinux). This is almost true, but there are two problems:\n• Some bugs (in open_watcom_devel_1.1.7) causing problems in building ELF executables (even\n“Hello, world!”).\n• The only object file format produced by CG386 is OMF.\nThe first problem is, of course, temporary. After fixing the mentioned bugs, it is possible to build ELF\nexecutable from OMF and ELF object files and e.g. dietlibc library.\nHowever, the second problem is more serious. It affects the perspective of PIC implementation (and\ntherefore, building of “real” shared objects). The corresponding issues are described in the latter sections.\n3.1 Position-Independent Code\nPIC stands for Position-Independent Code. The functions in a shared library may be loaded at different\naddresses in different programs, so the code in the shared object must not depend on the address (or\nposition) at which it is loaded. Fortunately, on x86 platform all jumps are PC-relative (except for the\nindirect ones). There are, however, some problems with:\n• functions exported by a shared object;\n• indirect function calls, i.e. (*f)();\n• global variables (including static ones).\nThese problems are solved (in 386 ABI) mostly by introducing special relocation types. These relocation\ntypes are specific to ELF object files, there are no their equivalents in OMF.\nThere are three possible workarounds:\n• introducing OMF extensions for PIC support;\n• adding ELF output to CG386 (using OWL);\n• writing new code generator with ELF output (based on CG386), like RISC ones.\nThe first approach is the simplest from implementation perspective. But we will get a non-standard object\nfile format, alien to both Linux and Windows worlds. Therefore such approach should be ommited.\nThe third approach seems too hard to implement, since CG386 is the most complex code generator. And it\nseems impractical to have two branches of CG386 that differ only in the output format.\nSo the second approach is the best option. There are three subtasks needed for PIC support:\n• introducing new command line switches in wcc386 (for ELF and PIC);\n• implementing output of ELF object files in CG386;\n• implementing PIC (according to 386 ABI) in CG386.\nOf course, changes to Open Watcom Linker are needed as well. But wlink is described in other sections.\nMoreover, we can use ld to build shared object from ELFs produced by wcc386.\nSciTech Software, Inc."
+    },
+    {
+      "page": 33,
+      "text": "Open Watcom Linux Port Page 33 of 55\nCompiler / Linker Software Requirements Specification\n3.1.1 Command Line Switches\nThere are no ELF and PIC switches in Open Watcom C Compiler. In gcc, ELF is default format of object\nfiles, and PIC generation is turned on by either -fPIC or -fpic.\nSince command line of wcc386 differs from gcc very much, we may follow the “Watcom style”. For ELF,\nperhaps the best option is -elf. The “el” prefix is free, since the “nearest” options are -ei and -em. And this\nchoice is logical, because the option -ez stands for “generate PharLap EZ-OMF object files”.\nFor PIC, the GNU style seems unacceptable, since “fp” prefix is intended for floating-point options.\nEspecially, -fpi means “inline 80x87 instructions with emulation”. Like in the ELF case, simply -pic may\nbe acceptable (however, “p” prefixes preprocessor options). As alternative, -zpic seems a good choice,\nsince “z” groups very specific options. There is also -re switch (already implemented). This switch is\nmapped to POSITION_INDEPENDANT option in CG386, but nothing reasonable is performed when it\nis turned on.\nFinally, our switch should be passed from wcc386 to CG386. The interesting files are:\n$OWROOT/bld/cc/c/coptions.c, cgen2.c, $OWROOT/bld/cg/h/cgswitch.h, and\n$OWROOT/bld/cg/intel/h/cgi86swi.h. In the compiler, switches are stored in CompFlags variable. Other\nimportant variables are GenSwitches and (especially) TargetSwitches.\nSwitches are passed to CG386 in cgen2.c:\nvoid DoCompile()\n{\n// ...\ncgi_info = BEInit( GenSwitches, TargetSwitches, OptSize,\nProcRevision );\n// ...\n}\n3.1.2 ELF Object Files\nSince Open Watcom already contains OWL with ELF support, it is planned to use this library in CG386.\nBoth CG386 and OWL were described briefly in the previous sections.\nMany things in CG386 are rigidly bound to OMF structure. OMF output is implemented mostly in\n$OWROOT/bld/cg/intel/c/i86obj.c, i86esc.c, and $OWROOT/bld/cg/c/posixio.c. However, any object\nfile format defines virtually the same objects: groups, segments, symbols, relocations, etc. The biggest\nconceptual difference between OMF and ELF is relocation handling. But the opposite problem was\nsuccessfully solved in ORL and WLCore. So we can implement the same “mapping” approach in CG386,\navoiding harmful changes to the complicated code generator.\nThe sample trace (see section CG386) shows how OMF object file is created.\nCode and data (i.e. binary payload) are written by EjectLEData(). Although there are many calls of this\nfunction in the trace, data are written when the following condition is true: obj->data.used > CurrSeg-\n>data_prefix_size. Instead of calling PutObjRec(), we will call OWLEmitData(). Note that fix-ups are\nwritten in EjectLEData() as well. So OWLEmitReloc() should be used to write relocations.\nSample mapping between i86obj.c and OWL is shown below. Each entry means that we can use specified\nOWL function for OMF task, so there is no direct correspondence between columns.\nSciTech Software, Inc."
+    },
+    {
+      "page": 34,
+      "text": "Open Watcom Linux Port Page 34 of 55\nCompiler / Linker Software Requirements Specification\nOMF OWL\nDefSegment() OWLSectionInit()\nEjectImports() OWLEmitImport()\nEjectExports() OWLEmitExport()\nOutLabel() OWLSymbolInit()\nRISC object code, located in $OWROOT/bld/$OWROOT/bld/rscobj.c. can be used as a reference.\nUnfortunately OWL is RISC-oriented, so missing features should be added. There are some relocation\ntypes missing in the current OWL. These relocations are described in the next section. Abstract relocation\ntypes are defined in owl.h. The mapping between OWL relocations and 386 ABI is defined in owreloc.c:\nstatic Elf32_Word elfRelocTypes386[] = {\nR_386_NONE,\nR_386_32,\nR_386_NONE,\nR_386_NONE,\nR_386_NONE,\nR_386_PC32,\nR_386_NONE,\nR_386_NONE,\nR_386_NONE,\nR_386_32,\nR_386_32,\nR_386_GOT32,\nR_386_NONE,\n};\nSince some relocations are 386-specific, the corresponding constants to both files should be added. In\naddition, new fixup flags are needed for the mapping between OMF-style fixups and OWL relocations.\nExtending fixups seems to be the hardest part of this subtask.\nThe only remark is that OWL in open_watcom_devel_1.1.7 seemed to be under development, i.e. some\nfeatures are incomplete.\nSciTech Software, Inc."
+    },
+    {
+      "page": 35,
+      "text": "Open Watcom Linux Port Page 35 of 55\nCompiler / Linker Software Requirements Specification\n3.1.3 PIC Generation\nGOT base register\nThe EBX register serves as the global offset table base register for position-independent code. So this\nregister should be excluded from normal code generation.\nRegister macros were described in CG386 section. The following template illustrates turning off EBX.\n$OWROOT/bld/cg/intel/386/c/386rgtbl.c\nextern hw_reg_set FixedRegs() {\n/************************************\nreturn the set of register which may not be modified within this routine\n*/\nhw_reg_set fixed;\n// ...\nHW_CTurnOn( fixed, HW_EBX ); // PIC\nreturn( fixed );\n}\nextern hw_reg_set AllCacheRegs() {\n/***************************************\nreturn the set of all registers that could be used to cache values\n*/\nhw_reg_set all;\n// ...\nHW_CTurnOff( all, HW_EBX ); // PIC\nreturn( all );\n}\nSciTech Software, Inc."
+    },
+    {
+      "page": 36,
+      "text": "Open Watcom Linux Port Page 36 of 55\nCompiler / Linker Software Requirements Specification\nPosition-Independent Function Prologue\nprologue:\npushl %ebp\nmovl %esp, %ebp\nsubl $80, %esp\npushl %edi\npushl %esi\npushl %ebx\ncall .L1\n.L1: popl %ebx\naddl $_GLOBAL_OFFSET_TABLE_+[.-.L1], %ebx\nThe call instruction pushes the absolute address of the next instruction onto the stack.\nConsequently, the popl instruction pops the absolute address of .L1 into register %ebx.\nThe last instruction computes the desired absolute value into %ebx. This works because\n_GLOBAL_OFFSET_TABLE_ in the expression gives the distance from the addl instruction to the\nglobal offset table; [.-.L1] gives the distance from .L1 to the addl instruction. Adding their sum to the\nabsolute address of .L1, already in %ebx, gives the absolute address of the global offset table.\nThe last line seems a bit complicated, since there is address calculation. But actually this line should be add\n$0x3,%ebx, where immediate is the explicit addend for R_386_GOTPC relocation. Note that code\ngenerator should create the undefined symbol _GLOBAL_OFFSET_TABLE_, if R_386_GOTPC\nencountered.\nPrologues are handled in $OWROOT/bld/cg/intel/c/i86proc.c, so needed code should be added to void\nGenProlog( void ).\nTemplate:\npointer lbl;\n// ...\nAllocStack();\nAdjustPushLocals();\n// PIC\nlbl = AskForNewLabel();\nGenCallLabel( lbl );\nCodeLabel( lbl, 0 );\nQuickSave( HW_EBX, OP_POP );\nGenRegAdd( HW_EBX, 3 );\n// Add relocation R_386_GOTPC\nGenKillLabel( lbl );\n///PIC\nSciTech Software, Inc."
+    },
+    {
+      "page": 37,
+      "text": "Open Watcom Linux Port Page 37 of 55\nCompiler / Linker Software Requirements Specification\nIn addition, register EBX should be saved in the stack. There is variable to_push in GenProlog(), so the\nneeded code is: HW_CTurnOn( to_push, HW_EBX ).\nMoreover, 386 ABI notes that EBX, ESI, and EDI should be saved in the stack, for both PIC and PDC.\nOf course, PIC actions depend on CG386 switch for PIC. So conditional processing as well should be also\nadded.\nPosition-Independent Function Epilogue\nAll registers previously saved in stack (see above) should be resotred.\nAlthough epilogue is created in void GenEpilog( void ), the interesting function is void DoEpilog( void ).\nBoth are defined in $OWROOT/bld/cg/intel/c/i86proc.c.\nThere is variable to_pop, defining the register set to be popped.\nPIC Function Calls\nFunction calls are handled in $OWROOT/bld/cg/intel/c/i86call.c. There is also important function void\nAddCallIns( instruction *ins, cn call ) located in $OWROOT/bld/cg/c/bldcall.c.\nSince ELF-specific relocations are not implemented yet, there is no code template. However, the task is\nsimple. For PDC, the target address has R_386_PC32 relocation. For PIC, this relocation should be\nR_386_PLT32. The corresponding GNU assembler line is call function@PLT.\nThe information above covers direct function calls. Indirect function calls are kind of PIC data access\ndescribed below.\nPIC Data Access\nThis task covers accessing the global data (including extern and static). Position-independent instructions\ncannot contain absolute addresses. Instead, instructions that reference symbols hold the symbols’ offsets\ninto the global offset table. Combining the offset with the global offset table address in EBX gives the\nabsolute address of the table entry holding the desired address.\nSample PDC PIC\nextern int src; .globl src, dst, ptr .globl src, dst, ptr\nextern int dst;\nextern int *ptr;\nptr = &dst; movl $dst, ptr movl ptr@GOT(%ebx), %eax\nmovl dst@GOT(%ebx), %edx\nmovl %edx, (%eax)\n*ptr = src; movl ptr, %eax movl ptr@GOT(%ebx), %eax\nmovl src, %edx movl (%eax), %eax\nmovl %edx, (%eax) movl src@GOT(%ebx), %edx\nmovl (%edx), %edx\nmovl %edx, (%eax)\nAlthough references like name@GOT seem complicated, their meaning is simple, e.g. mov 0x0(%ebx),\n%eax, where 0x0 is addend for relocation R_386_GOT32, associated with symbol ptr. For PDC,\nrelocation type is R_386_32, and generated code is much simpler.\nFinally, position-independent references to static data may be optimized. Because EBX holds a known\naddress, the global offset table, a program may use it as a base register. External references should use the\nglobal offset table entry, because dynamic linking may bind the entry to a definition outside the current\nobject file’s scope. For static variables, the PIC code will be the following:\nSciTech Software, Inc."
+    },
+    {
+      "page": 38,
+      "text": "Open Watcom Linux Port Page 38 of 55\nCompiler / Linker Software Requirements Specification\nleal ptr@GOTOFF(%ebx), %eax\nleal dst@GOTOFF(%ebx), %edx\nmovl %edx, (%eax)\nmovl ptr@GOTOFF(%ebx), %eax\nmovl src@GOTOFF(%ebx), %edx\nmovl %edx, (%eax)\nAgain, references name@GOTOFF actually correspond to relocations R_386_GOTOFF, where\nrelocation symbol is the segment (e.g. .bss), and implicit addend is offset of name in this segment.\nThere is no code template for data access. This task is most complicated, so additional investigation is\nneeded. PIC data access might affect the common code generator (not only CG386). In general, PIC global\nvariable should be treated as pointer to the actual address instead of address itself.\nOne potentially useful function is AddGlobalIndex() located in\n$OWROOT/bld/cg/intel/386/c/386opseg.c. This function adds EBX to every memory reference.\nSummary\nFor PIC support, code generator should be able to produce some specific relocations (in addition to\nR_386_32 and R_386_PC32). These relocations are summarized below (now from the perspective of link\neditor).\nR_386_GOT32 This relocation type computes the distance from the base of the global offset table to the\nsymbol’s global offset table entry. It additionally instructs the link editor to build a global\noffset table.\nR_386_GOTOFF This relocation type computes the difference between a symbol’s value and the address of the\nglobal offset table. It additionally instructs the link editor to build the global offset table.\nR_386_GOTPC This relocation type resembles R_386_PC32, except it uses the address of the global offset\ntable in its calculation. The symbol referenced in this relocation normally is\n_GLOBAL_OFFSET_TABLE_, which additionally instructs the link editor to build the\nglobal offset table.\nR_386_PLT32 This relocation type computes the address of the symbol’s procedure linkage table entry and\nadditionally instructs the link editor to build a procedure linkage table.\n3.1.4 Notes\nThe information presented in the sections above should not be treated as retelling of 386 ABI. It should be\nused together with ABI documentation. Some details are omitted. During the porting work, developer\nshould refer to ABI and other documentation; perform analysis using objdump and readelf; etc.\nSciTech Software, Inc."
+    },
+    {
+      "page": 39,
+      "text": "Open Watcom Linux Port Page 39 of 55\nCompiler / Linker Software Requirements Specification\n3.2 Building Shared Objects\nThis section describes the changes to Open Watcom Linker, needed for building shared libraries (PIC and\nPDC).\n3.2.1 Linker Command Line\nFortunately, the command line option for building a shared object is already implemented in Open Watcom\nLinker. In such case, one should execute the linker this way: wlink form ELF DLL ...\nDLL stands for Dynamic Linking Library that is shared object in the Linux world. One can check that ELF\nshared object was requested by examining FmtData:\nif( (FmtData.type & MK_ELF) && FmtData.dll ) {\n// Do something...\n}\n3.2.2 ELF Header\nCurrently, LoadELF is able to produce only executable files (ET_EXEC). Shared objects have type\nET_DYN. The following change is needed:\n$OWROOT/bld/wl/c/loadelf.c\nstatic void SetHeaders( ElfHdr *hdr )\n/***********************************/\n{\n// ...\nhdr->eh.e_type = FmtData.dll ? ET_DYN : ET_EXEC;\n// ...\n}\n3.2.3 Segments and Sections\nThis is only a sample. Coding tasks are described in latter sections.\nELF executables created by wlink are organized in the following way (output from readelf -a):\nProgram Headers:\nType Offset VirtAddr PhysAddr FileSiz MemSiz Flg Align\nPHDR 0x000034 0x08048034 0x00000000 0x????? 0x????? R E 0\nLOAD 0x?????? 0x080????? 0x00000000 0x????? 0x????? R E 0x1000\nLOAD 0x?????? 0x080????? 0x00000000 0x????? 0x????? RW 0x1000\nSection to Segment mapping:\nSegment Sections...\n00\n01 .text\n02 .data .bss\nSciTech Software, Inc."
+    },
+    {
+      "page": 40,
+      "text": "Open Watcom Linux Port Page 40 of 55\nCompiler / Linker Software Requirements Specification\nShared objects created by ld are organized in the following way (complete\nexample):\nProgram Headers:\nType Offset VirtAddr PhysAddr FileSiz MemSiz Flg Align\nLOAD 0x000000 0x00000000 0x00000000 0x????? 0x????? R E 0x1000\nLOAD 0x?????? 0x???????? 0x???????? 0x????? 0x????? RW 0x1000\nDYNAMIC 0x?????? 0x???????? 0x???????? 0x????? 0x????? RW 0x4\nSection to Segment mapping:\nSegment Sections...\n00 .hash .dynsym .dynstr .rel.dyn .rel.plt .plt .text .rodata\n01 .data .dynamic .got .bss\n02 .dynamic\nWe will refer to these samples from other sections of this document.\n3.2.4 Program Headers\nUnnecessary PT_PHDR\nSince shared object is not a program, the program header entry PT_PHDR is not needed. Program headers\nare allocated in SetHeaders(), and the first element is always PT_PHDR.\nTemplate:\nstatic void SetHeaders( ElfHdr *hdr )\n/***********************************/\n{\nhdr->eh.e_phnum = NumGroups + (FmtData.dll ? 0 : 1);\n// ...\nif( !FmtData.dll ) {\nhdr->ph->p_type = PT_PHDR;\nhdr->ph->p_offset = sizeof(Elf32_Ehdr);\nhdr->ph->p_vaddr = sizeof(Elf32_Ehdr) + FmtData.base;\nhdr->ph->p_paddr = 0;\nhdr->ph->p_filesz = hdr->ph_size;\nhdr->ph->p_memsz = hdr->ph_size;\nhdr->ph->p_flags = PF_R | PF_X;\nhdr->ph->p_align = 0;\n}\n// ...\nSciTech Software, Inc."
+    },
+    {
+      "page": 41,
+      "text": "Open Watcom Linux Port Page 41 of 55\nCompiler / Linker Software Requirements Specification\n}\nBut PT_PHDR is assumed in WriteELFGroups(), so that function should be changed as well: ph = hdr-\n>ph + (FmtData.dll ? 0 : 1).\nNecessary PT_DYNAMIC\nAlthough PT_PHDR is never used in shared objects, PT_DYNAMIC is always used there. This program\nheader specifies dynamic linking information.\nTherefore we can leave hdr->eh.e_phnum = NumGroups + 1, for executable and shared object.\nFollowing the GNU convention, we will place dynamic segment after other segments.\n3.2.5 Dynamic Section\nThe PT_DYNAMIC segment contains the .dynamic section. This section (with type SHT_DYNAMIC)\ncontains an array of the following structures.\n$OWROOT/bld/watcom/h/exeelf.h\ntypedef struct {\nElf32_Sword d_tag;\nunion {\nElf32_Word d_val;\nElf32_Addr d_ptr;\n} d_un;\n} Elf32_Dyn;\n// dynamic array tags\n#define DT_NULL 0\n#define DT_NEEDED 1 // name of a needed library\n#define DT_PLTRELSZ 2 // size of reloc entries for PLT\n#define DT_PLTGOT 3 // address with PLT or GOT\n#define DT_HASH 4 // symbol hash table address\n#define DT_STRTAB 5 // string table address\n#define DT_SYMTAB 6 // symbol table address\n#define DT_RELA 7 // address of reloc table with addends\n#define DT_RELASZ 8 // size of the DT_RELA table\n#define DT_RELAENT 9 // size of a DT_RELA entry\n#define DT_STRSZ 10 // size of the string table\n#define DT_SYMENT 11 // size of a symbol table entry\n#define DT_SONAME 14 // shared object name\nSciTech Software, Inc."
+    },
+    {
+      "page": 42,
+      "text": "Open Watcom Linux Port Page 42 of 55\nCompiler / Linker Software Requirements Specification\n#define DT_REL 17 // address of reloc table without\naddends\n#define DT_RELSZ 18 // size of the DT_REL table\n#define DT_RELENT 19 // size of a DT_REL entry\n#define DT_PLTREL 20 // type of reloc entry for PLT\n#define DT_DEBUG 21 // for debugging information\n#define DT_JMPREL 23 // reloc entries only with PLT\nThis section should reside in the data segment. We can create this section at the end of first linker pass (as\nsegment in DGROUP). This section will be written later using LoadELF. Additionally, the program header\nPT_DYNAMIC should be updated.\n3.2.6 Dynamic Symbols\nShared objects contain two symbol tables (i.e. sections): normal symbol table (SHT_SYMTAB), and\ndynamic symbol table (SHT_DYNSYM). The name of dynamic symbol table is .dynsym instead of\n.symtab.\nBoth are generally the same, but dynamic table does not contain local symbols (except sections). Of course,\nthe corresponding string table should be created (.dynstr instead of .strtab). For shared objects, section\n.hash is related to dynamic symbol table.\nSome changes are needed to WriteElfSymTable(), located in loadelf2.c. Function WriteSHStrings() from\nloadelf.c should be changed as well. These changes include providing virtual addresses of the\ncorresponding sections (there is no memory allocation for normal symbol table), and supporting different\nsection names and types. Like normal symbol table, two variables are needed for dynamic table:\n$OWROOT/bld/wl/h/loadelf.c\nstatic stringtable SymStrTab;\nstatic ElfSymTable * ElfSymTab;\nstatic stringtable DynStrTab; // new\nstatic ElfSymTable * DynSymTab; // new\nThe corresponding changes are needed to void InitSections( ElfHdr *hdr ) (i.e. allocating .dynsym and\n.dynstr), and to void ChkElfData( void ) (i.e. initializing dynamic symbol table). ELF handle should be\nmodified as well:\n$OWROOT/bld/wl/h/loadelf2.h\ntypedef struct {\nElf32_Ehdr eh;\n// ...\nstringtable secstrtab;\nstruct {\nint secstr; // Index of strings section for section names\nSciTech Software, Inc."
+    },
+    {
+      "page": 43,
+      "text": "Open Watcom Linux Port Page 43 of 55\nCompiler / Linker Software Requirements Specification\nint grpbase; // Index base for Groups in section\nint grpnum; // Number of groups\nint relbase; // Index base for relocation sections\nint relnum; // number of relocations\nint symstr; // Index of symbol's string table\nint symtab; // Index of symbol table\nint symhash; // Index of symbol hash table\nint dynsym; // Index of dynamic symbol's string table\nint dynstr; // Index of dynamic symbol table\nint dbgbegin;// Index of first debug section\nint dbgnum; // Number of debug sections\n} i; // Indexes into sh\nunsigned_32 curr_off;\n} ElfHdr;\nFinally, the dynamic array should be updated (i.e. DT_HASH, DT_STRTAB, DT_SYMTAB,\nDT_STRSZ, and DT_SYMENT).\n3.2.7 Dynamic Relocations\nRelocations are written using WriteRelocsSections(). However, a shared object should contain single\nrelocation table .rel.dyn. So the new function, say WriteDynRelocsSection(), is needed. This function\nshould merge all relocations into single table. It should update .dynamic section as well (i.e. either\nDT_RELA, DT_RELASZ, DT_RELAENT or DT_REL, DT_RELSZ, DT_RELENT). Note that the\ncurrent implementation of WriteRelocsSections() generates only “rela” relocations (i.e. explicit addend).\nTemplate\n// Initialize sh and its fields\n// ...\nAddSecName( hdr, sh, \".rela.dyn\" );\nfor( group = Groups; group != NULL; group = group->next_group ) {\nrelocs = group->g.grp_relocs;\nif( relocs != NULL ) {\nsize = RelocSize( relocs );\nsh->sh_size += size;\nDumpRelocList( relocs );\nhdr->curr_off += size;\n}\ncurrgrp++;\nSciTech Software, Inc."
+    },
+    {
+      "page": 44,
+      "text": "Open Watcom Linux Port Page 44 of 55\nCompiler / Linker Software Requirements Specification\n}\n// Update the dynamic array\n// ...\n3.2.8 Global Offset Table\nWhen link editor encounters one of the following relocation types:\n• R_386_GOT32\n• R_386_GOTOFF\n• R_386_GOTPC\nit should build the Global Offset Table. Additionally wlink should process this relocation types according\nto 386 ABI.\nGOT is defined as Elf32_Addr _GLOBAL_OFFSET_TABLE_[].\nThe table’s entry zero is reserved to hold the address of the dynamic structure, referenced with the symbol\n_DYNAMIC. Entries one and two in the global offset table also are reserved.\nOne should add support of these relocation types to both ORL and WLCore. For ORL, introduce new\nconstants in orlglobl.h, e.g.: ORL_RELOC_TYPE_GOT_32, ORL_RELOC_TYPE_GOT_OFF,\nORL_RELOC_TYPE_GOT_REL. Then extend the mapping between ELF and ORL (elflwlv.c).\nThen the mapping between ORL_ and FIX_ should be added to DoReloc(), objorl.c. Of course, new FIX_\nconstants are needed as well (obj2supp.h).\nRelocation processing is performed in obj2supp.c. Some preprocessing is performed in objorl.c as well.\nRelocation types mentioned above are processed in the following way.\nA This means the addend used to compute the value of the relocatable field.\nG This means the offset into the global offset table at which the address of the relocation entry’s\nsymbol will reside during execution.\nGOT This means the address of the global offset table.\nS This means the value of the symbol whose index resides in the relocation entry.\nR_386_GOT32 G + A - P\nR_386_GOTOFF S + A - GOT\nR_386_GOTPC GOT + A - P\nAs shown in the table, R_386_GOT32 and R_386_GOTPC are processed very close to R_386_PC32 (S +\nA - P). This mean both are FIX_OFFSET_32 | FIX_REL. Similarly, R_386_GOTOFF should be\nFIX_OFFSET_32. Of course, additional FIX_ flags are needed to distinguish them for further processing\nin obj2supp.c.\nWe can build the GOT during ORL conversion, i.e. in DoReloc(). During this phase, symbol offsets into\nthe GOT are calculated.\nSciTech Software, Inc."
+    },
+    {
+      "page": 45,
+      "text": "Open Watcom Linux Port Page 45 of 55\nCompiler / Linker Software Requirements Specification\nAt the end of first linker pass, we can create the .got section (i.e. segment in DGROUP). At this time,\n_GLOBAL_OFFSET_TABLE_ symbol should be defined as well. This allows creating the GOT with\nminimal changes to the source code.\nFor unresolved external symbols, GOT entries are needed as well. Linker should create\nR_386_GLOB_DAT relocations for such GOT entries. These relocations are associated with unresolved\nsymbols.\nAnother relocation type that can appear in shared object is R_386_RELATIVE. Its offset member gives a\nlocation within a shared object that contains a value representing a relative address. The dynamic linker\ncomputes the corresponding virtual address by adding the virtual address at which the shared object was\nloaded to the relative address. Such relocations are created from R_386_GOT32, if the corresponding\nsymbol is not external.\nIn this section, only GOT aspects related with data were described. Code aspects are described in the next\nsection.\nFinally, the dynamic array should be updated (PLTGOT).\nNote that there is PowerPC TOC implementation in Open Watcom Linker. TOC is close to GOT in some\nsense, but in general it is different thing. However, developer should take a look at existing TOC\nimplementation, since it contains some useful ideas.\n3.2.9 Procedure Linkage Table\nPLT is like GOT in some sense, but it is associated with PIC code instead of PIC data. Although 386 ABI\ndefines PLT for PDC and PIC, only PIC PLT is needed for our current task:\n.PLT0: pushl 4(%ebx)\njmp *8(%ebx)\nnop; nop\nnop; nop\n.PLT1: jmp *name1@GOT(%ebx)\npushl $offset\njmp .PLT0@PC\n.PLT2: jmp *name2@GOT(%ebx)\npushl $offset\njmp .PLT0@PC\n...\n.PLT0@PC in each entry means the distance between the corresponding jmp and .PLT0, since x86 jumps\nare PC-relative.\nThe GOT entry should be created for each PLT entry. Such GOT entry should contain the address of the\nfollowing pushl instruction, not the real address of e.g. name1. Thus name1@GOT means the offset of\nthe corresponding GOT entry.\nSciTech Software, Inc."
+    },
+    {
+      "page": 46,
+      "text": "Open Watcom Linux Port Page 46 of 55\nCompiler / Linker Software Requirements Specification\nA new R_386_JUMP_SLOT relocation should be created. Its offset will specify the global offset table\nentry used in the previous jmp instruction. The relocation entry also contains a symbol table index, thus\ntelling the dynamic linker what symbol is being referenced, e.g. name1. Instructions pushl $offset pushes\nthe offset of such relocation in the PLT relocation table (rel.plt).\nWhen first creating the memory image of the program, the dynamic linker sets the second and the third\nentries in the global offset table to special values. Therefore these entries are reserved.\nSince PLT contains instruction opcodes, an implementation template is presented for advice:\ntypedef struct pltent1 {\nunsigned_16 push_ins;\nunsigned_32 push_ofs;\nunsigned_16 jmp_ins;\nunsigned_32 jmp_ofs;\nunsigned_32 nops;\n} PLTENT1;\ntypedef struct pltentn {\nunsigned_16 jmp1_ins;\nunsigned_32 jmp1_ofs;\nunsigned_8 push_ins;\nunsigned_32 push_ofs;\nunsigned_8 jmp2_ins;\nunsigned_32 jmp2_ofs;\n} PLTENTN;\ntypedef union pltent {\nPLTENT1 first;\nPLTENTN entry;\n} PLTENT;\ntypedef struct plt {\nunsigned nentries;\nPLTENT *entries;\n} PLT;\nvoid InitPLT ( PLT *plt ) {\nplt->entries = AllocMem( sizeof( PLTENT ) );\nSciTech Software, Inc."
+    },
+    {
+      "page": 47,
+      "text": "Open Watcom Linux Port Page 47 of 55\nCompiler / Linker Software Requirements Specification\nplt->entries[0].first.push_ins = 0xB3FF;\nplt->entries[0].first.push_ofs = 0x00000004;\nplt->entries[0].first.jmp_ins = 0xA3FF;\nplt->entries[0].first.jmp_ofs = 0x00000008;\nplt->entries[0].first.nops = 0x90909090;\nplt->nentries = 1;\n}\nvoid Add2PLT ( PLT *plt, unsigned_32 gotoff) {\nstatic unsigned_32 reloff = 0;\nplt->entries = ReallocMem( plt->entries, (plt->nentries + 1) * sizeof(\nPLTENT ) );\nplt->entries[plt->nentries].entry.jmp1_ins = 0xA3FF;\nplt->entries[plt->nentries].entry.jmp1_ofs = gotoff;\nplt->entries[plt->nentries].entry.push_ins = 0x68;\nplt->entries[plt->nentries].entry.push_ofs = reloff; reloff += sizeof(\nElf32_Rel );\n// Add R_386_JUMP_SLOT relocation for push_ofs (somehow)...\nplt->entries[plt->nentries].entry.jmp2_ins = 0xE9;\nplt->entries[plt->nentries].entry.jmp2_ofs = -0x10 - plt->nentries *\nsizeof( PLTENT );\nplt->nentries++;\n}\nWhen relocation R_386_PLT32 is encountered, the linker should create new PLT entry for the\ncorresponding symbol (but only if its type is STT_FUNC). For further references to the same symbol, we\nwill refer to the previously created PLT entry. R_386_PLT32 relocations are processed as L + A - P,\nwhere L means the place (section offset or address) of the procedure linkage table entry for a symbol, A\nand P were defined in the previous section. The corresponding ORL type,\nORL_RELOC_TYPE_PLT_32, is already defined (but not implemented yet). This is relative type, so the\nmapping should include FIX_OFFSET_32 | FIX_REL. Source files and functions participating in\nrelocation process were described in the previous section.\nAt the end of first linker pass, we can create the .plt section (i.e. segment in AUTO group). This allows\ncreating the PLT with minimal changes to the source code. Note that the separated relocation section\n(.rel.plt) is needed for PLT relocations. This relocation table should also reside in the code segment.\nFinally, the dynamic array should be updated (PLTRELSZ, PLTREL, and JMPREL).\nSciTech Software, Inc."
+    },
+    {
+      "page": 48,
+      "text": "Open Watcom Linux Port Page 48 of 55\nCompiler / Linker Software Requirements Specification\n3.2.10 Notes\nThe information presented in the sections above should not be treated as retelling of 386 ABI. It should be\nused together with ABI documentation. Some details are omitted, e.g. section flags for the dynamic section.\nDuring the porting work, developer should refer to ABI and other documentation; perform analysis using\nobjdump and readelf; etc.\nNote that symbol types (STT_) are very important for dynamic linking tasks. For example, STT_FUNC is\nclosely related with PLT. The current implementation (i.e. open_watcom_devel_1.1.7) sometimes loses\nsymbol types, so such issues need to be fixed.\n3.3 Using Shared Objects\nThis section describes the changes to Open Watcom Linker, needed for using existing shared libraries (PIC\nand PDC). Note that a shared library may use other shared libraries as well.\nSince many things are related to building shared libraries (which is covered in the provious sections of this\ndocument), this section is sufficiently short.\n3.3.1 Reading Shared Objects\nShared object is another kind of ELF object file. ORL is able to read ELF object files. Some features\nrelated to shared objects are implemented as well. Thus wlink fails (i.e. Segmentation fault) when one\ntries to link a shared object. ORL should be reviewed and fixed in respective to these issues.\nAdditionally, the linker should collect the names of shared objects for further processing (see \"Needed\nLibraries\" below). If this list is non-empty, the linker should perform some tasks described in the further\nsections.\n3.3.2 Program Interpreter\nThe additional program header PT_INTERP is needed for an executable that uses shared object(s). It\nspecifies the location and size of a null-terminated path name to invoke as an interpreter. This segment type\nis meaningful only for executable files (though it may occur for shared objects); it may not occur more than\nonce in a file. If it is present, it must precede any loadable segment entry. For Linux, the program\ninterpreter is /lib/ld-linux.so.2\nThe needed changes in LoadELF are simple and obvious.\n3.3.3 Required Libraries\nThe additional element of the dynamic array (i.e. .dynamic section) is needed. When the dynamic linker\ncreates the memory segments for an object file, the dependencies (recorded in DT_NEEDED entries of the\ndynamic structure) tell what shared objects are needed to supply the program’s services.\nDT_NEEDED holds the string table offset of a null-terminated string, giving the name of a needed library.\nThe offset is an index into the table recorded in the DT_STRTAB entry. The dynamic array may contain\nmultiple entries with this type. These entries’ relative order is significant, though their relation to entries of\nother types is not.\nDynamic array is described in the previous sections.\nSciTech Software, Inc."
+    },
+    {
+      "page": 49,
+      "text": "Open Watcom Linux Port Page 49 of 55\nCompiler / Linker Software Requirements Specification\n3.3.4 Global Offset Table\nThe GOT processing is described in previous section. If any specific relocation is encountered, the linker\nshould resolve them and create the Global Offset Table. See also the next section.\n3.3.5 Procedure Linkage Table\nThe PLT processing is described in previous section. If any specific relocation is encountered, the linker\nshould resolve them and create the Procedure Linkage Table.\nThere is, however, one important case not covered in the previous sections. If PDC shared object is needed\nfor the program, the linker creates PDC PLT. Its format differs from PIC PLT:\n.PLT0: pushl got_plus_4\njmp *got_plus_8\nnop; nop\nnop; nop\n.PLT1: jmp *name1_in_GOT\npushl $offset\njmp .PLT0@PC\n.PLT2: jmp *name2_in_GOT\npushl $offset\njmp .PLT0@PC\n...\nHere got_plus_4 and got_plus_8 specify explicit addresses of the second and third GOT entries,\nrespectively. Similarly, name1_in_GOT specifies address of the GOT entry for name1.\nInstead of implementation template (very similar to PIC one), a sample disassembly is presented:\n08048224 <.plt>:\n8048224: ff 35 b4 93 04 08 pushl 0x80493b4 ;&GOT[1]\n804822a: ff 25 b8 93 04 08 jmp *0x80493b8 ; GOT[2]\n8048230: 00 00\n8048232: 00 00\n8048234: ff 25 bc 93 04 08 jmp *0x80493bc ; GOT[3]\n804823a: 68 00 00 00 00 push $0x0\n804823f: e9 e0 ff ff ff jmp 8048224\n8048244: ff 25 c0 93 04 08 jmp *0x80493c0 ; GOT[4]\n804824a: 68 08 00 00 00 push $0x8\n804824f: e9 d0 ff ff ff jmp 8048224\nSciTech Software, Inc."
+    },
+    {
+      "page": 50,
+      "text": "Open Watcom Linux Port Page 50 of 55\nCompiler / Linker Software Requirements Specification\n3.3.6 Notes\nDuring the porting work, developer should refer to ABI and other documentation; perform analysis using\nobjdump and readelf; etc.\nNote that symbol types (STT_) are very important for dynamic linking tasks. For example, STT_FUNC is\nclosely related with PLT. The current implementation (i.e. open_watcom_devel_1.1.7) sometimes loses\nsymbol types, so such issues need to be fixed.\n4. Existing Problems\nSeveral problems exist in open_watcom_devel_1.1.7, more precely, in the linker. So one is unable to make\neven the “Hello, world!” program.\nNOTE: By the time of the final revision of this document all the problems mentioned in this section were\nfixed in the Open Watcom Perforce depot therefore altering an estimated time requirements. (See\nestimation section).\n4.1.1 Support of R_386_PC32 relocations\nAfter linking, the relocated values are 4 less than they should be.\nGcc, nasm, and other Linux compilers typically generate the following:\ne8 fc ff ff ff call somefunc\n(0xfffffffc is the implicit addend for R386_PC32 relocation).\nWatcom C typically generates the following (of course, in OMF format):\ne8 00 00 00 00 call somefunc\n$OWROOT/bld/wl/c/obj2supp.c\nstatic bool CheckSpecials( fix_data *fix, frame_spec *targ )\n/**********************************************************/\n{\n. . .\nif( !(fix->type & FIX_REL) ) return FALSE;\n. . .\nfixsize = CalcFixupSize( fix->type );\noff -= fixsize;\n. . .\n}\nThis algorithm introduces our 4-byte error. Such correction isn't needed for ELF R386_PC32, since\nimplicit addend is specified (0xfffffffc == -4).\nQUICK FIX: Offset correction should be disabled in case implicit addend was specified.\nSciTech Software, Inc."
+    },
+    {
+      "page": 51,
+      "text": "Open Watcom Linux Port Page 51 of 55\nCompiler / Linker Software Requirements Specification\n$OWROOT/bld/wl/c/obj2supp.c\nstatic bool CheckSpecials( fix_data *fix, frame_spec *targ )\n/**********************************************************/\n{\n. . .\nif( !(fix->type & FIX_REL) ) return FALSE;\n. . .\nfixsize = CalcFixupSize( fix->type );\nif( fix->type & FIX_ADDEND_ZERO ) off -= fixsize; // quickfix #01\n. . .\n}\nNOTE. This is temporary solution. New ORL relocation type (or option) is needed for a more accurate fix.\nThis bug was already fixed in the development source tree at the moment of writing this SRS.\n4.1.2 Support of STT_NOTYPE symbols\nTwo of symbol types defined in ABI:\nSTT_NOTYPE The symbol's type is not specified.\nSTT_FUNC The symbol is associated with a function or other executable code.\nMany of “real-life” ELF object files has symbols of STT_NOTYPE, e.g. _start in dietlibc's start.o. When\nlinking that sort of object files, Open Watcom Linker complains such symbols are not found. This error is\nfatal.\nORL treats STT_NOTYPE and unknown symbol types as ORL_SYM_TYPE_NONE. This (somehow)\nconfuses the linker.\n$OWROOT/bld/orl/elf/c/elflwlv.c\ndefault:\ncurrent->type = ORL_SYM_TYPE_NONE; // ?\nQUICK FIX: If symbol's associated section (i.e. st_shndx) looks like executable, treat that symbol as\nORL_SYM_TYPE_FUNCTION.\n$OWROOT/bld/orl/elf/c/elflwlv.c\norl_return ElfCreateSymbolHandles( elf_sec_handle elf_sec_hnd )\n{\nelf_sec_handle sym_sec; // Nick's quickfix #02\n. . .\ndefault:\n// hotfix #02\nSciTech Software, Inc."
+    },
+    {
+      "page": 52,
+      "text": "Open Watcom Linux Port Page 52 of 55\nCompiler / Linker Software Requirements Specification\nif( ( sym_sec = ElfSymbolGetSecHandle( current ) ) != NULL\n&& sym_sec->type == ORL_SEC_TYPE_PROG_BITS\n&& sym_sec->flags & ORL_SEC_FLAG_EXEC\n) {\ncurrent->type = ORL_SYM_TYPE_FUNCTION;\n} else {\ncurrent->type = ORL_SYM_TYPE_NONE;\n}\nNOTE. This workaround works pretty well for current version, but has some drawbacks in “shared\nlibraries” perspective. When another object file references a function from a shared object, the link editor\nautomatically creates a procedure linkage table entry for the referenced symbol. Shared object symbols\nwith types other than STT_FUNC will not be referenced automatically through the procedure linkage\ntable.\nThe accurate fix should treat STT_NOTYPE as “normal” symbol.\n4.1.3 Accurate segment mapping\nSections .data and .bss share the same segment in ELF executables produced by wlink. If .bss section is\ncreated, the memory size (p_memsz) of that segment became invalid. The produced ELF causes\nsegmentation fault.\nreadelf -a\nSection Headers:\n. . .\n[Nr] Name Type Addr Off Size ES Flg Lk Inf\nAl\n[ 2] .text PROGBITS 08048100 000100 00103d 00 AX 0 0\n4\n[ 3] .data PROGBITS 0804a000 002000 000288 00 WA 0 0\n4\n[ 4] .bss NOBITS 0804b000 003000 0000b4 00 WA 0 0\n4\n. . .\nProgram Headers:\nType Offset VirtAddr PhysAddr FileSiz MemSiz Flg Align\nPHDR 0x000034 0x08048034 0x00000000 0x00060 0x00060 R E 0\nLOAD 0x000100 0x08048100 0x00000000 0x0103d 0x0103d R E 0x1000\nLOAD 0x002000 0x0804a000 0x00000000 0x00288 0x000c4 RW 0x1000\nSection to Segment mapping:\nSegment Sections...\nSciTech Software, Inc."
+    },
+    {
+      "page": 53,
+      "text": "Open Watcom Linux Port Page 53 of 55\nCompiler / Linker Software Requirements Specification\n00\n01 .text\n02\nIt seems page alignment is not taken into account when .bss section is created.\nQUICK FIX: p_memsz should be adjusted after creating the .bss.\n$OWROOT/bld/wl/c/loadelf.c\nInitBSSSect( sh, off, CalcSplitSize(), linear );\nph->p_memsz += ROUND_UP( ph->p_filesz, FmtData.objalign ); //\nquickfix #03\nreadelf -a\nSection Headers:\n[Nr] Name Type Addr Off Size ES Flg Lk Inf\nAl\n. . .\n[ 2] .text PROGBITS 08048100 000100 00103d 00 AX 0 0\n4\n[ 3] .data PROGBITS 0804a000 002000 000288 00 WA 0 0\n4\n[ 4] .bss NOBITS 0804b000 003000 0000b4 00 WA 0 0\n4\n. . .\nProgram Headers:\nType Offset VirtAddr PhysAddr FileSiz MemSiz Flg Align\nPHDR 0x000034 0x08048034 0x00000000 0x00060 0x00060 R E 0\nLOAD 0x000100 0x08048100 0x00000000 0x0103d 0x0103d R E 0x1000\nLOAD 0x002000 0x0804a000 0x00000000 0x00288 0x010c4 RW 0x1000\nSection to Segment mapping:\nSegment Sections...\n00\n01 .text\n02 .data .bss\nNOTE. This workaround works well enough, but the problem should be revised. More accurate fix is\nrequired.\nSciTech Software, Inc."
+    },
+    {
+      "page": 54,
+      "text": "Open Watcom Linux Port Page 54 of 55\nCompiler / Linker Software Requirements Specification\n5. Estimation\nThere are two independent tasks: Code Generator (PIC support) and Linker (building and using shared\nobjects). So it is possible to perform these tasks simultaneously. GNU C Compiler can be used for Linker\ntesting, as well as ld for Code Generator. Then the final integration (i.e. testing) should be performed,\nusing only Open Watcom tools.\n5.1 Position-Independent Code\nCommand line processing\nEstimation: 1 day\nDescription: see section 3.1.1\nExtending OWL\nEstimation: 8 days\nDescription: see section 3.1.2\nImplementing ELF output in CG386\nEstimation: 20 days\nDescription: see section 3.1.2. This is pretty complicated task. No PIC support yet (see below).\nAdding PIC support to CG386\nEstimation: 20 days\nDescription: see section 3.1.3. This is one of most complicated tasks.\nExtending ELF output in CG386\nEstimation: 5 days\nDescription: see sections 3.1.2, 3.1.3. This task means adding PIC features to ELF.\nIntegration\nEstimation: 5 days\nDescription: Mostly testing. Complicated test kit (i.e. C source code) is needed to ensure all things are\nimplemented correctly.\nTotal 59 days\n5.2 Building Shared Objects\nExtending ORL\nEstimation: 3 days\nDescription: see section 3.2.7\nExtending WLCore\nEstimation: 15 days\nDescription: see sections 3.2.7, 3.2.8, 3.2.9\nImproving LoadELF\nEstimation: 5 days\nDescription: see sections 3.2.1 – 3.2.9\nIntegration\nSciTech Software, Inc."
+    },
+    {
+      "page": 55,
+      "text": "Open Watcom Linux Port Page 55 of 55\nCompiler / Linker Software Requirements Specification\nEstimation: 4 days\nDescription: Mostly testing. Complicated test kit (i.e. object files) is needed to ensure all things are\nimplemented correctly.\nTotal 27 days\n5.3 Using Shared Objects\nCommand line processing\nEstimation: 1 day\nDescription: see section 3.3.3\nImproving LoadELF\nEstimation: 1 day. Minimal changes are needed (assuming we are already able to build a shared\nobject).\nDescription: see sections 3.3.2, 3.3.3\nExtending ORL\nEstimation: 10 days\nDescription: see section 3.3.1\nExtending WLCore\nEstimation: 8 days\nDescription: see sections 3.3.4, 3.3.5\nIntegration\nEstimation: 10 days\nDescription: Mostly testing. Complicated test kit (i.e. object files) is needed to ensure all things are\nimplemented correctly. There are many variants, e.g. executable uses three shared objects, where the 1st\nshared object uses the 2nd, and the 3rd uses some another shared object.\nTotal 30 days\n5.4 Final Integration\nEstimation: 10 days\nDescription: Mostly testing. Trying to link ELF object files (i.e. those generated by Open Watcom C)\nusing Open Watcom Linker.\nSciTech Software, Inc."
+    }
+  ],
+  "tables": [
+    {
+      "page": 2,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 2 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 3,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 3 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 4 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 4,
+      "table_idx": 1,
+      "rows": 8,
+      "cols": 2,
+      "data": [
+        [
+          "ABI",
+          "Application Binary Interface"
+        ],
+        [
+          "ELF",
+          "Executable and Linking Format\nThere are three main types of ELF files:\n(cid:131) A relocatable file holds code and data suitable for linking with other object files to create an\nexecutable or a shared object file.\n(cid:131) An executable file holds a program suitable for execution; the file specifies how the function exec()\ncreates a program’s process image.\n(cid:131) A shared object file holds code and data suitable for linking in two contexts. First, the link editor may\nprocess it with other relocatable and shared object files to create another object file. Second, the\ndynamic linker combines it with an executable file and other shared objects to create a process image.\nwlink have limited support of building and using of ELF files."
+        ],
+        [
+          "OMF",
+          "Relocatable Object Module Format\nThis format (developed by Microsoft) is produced by wcc386 (and has “native” support in wlink)."
+        ],
+        [
+          "ORL",
+          "Object Reading Library\nAPI for reading object files."
+        ],
+        [
+          "PDC",
+          "Position Dependent Code (opposite to PIC)"
+        ]
+      ]
+    },
+    {
+      "page": 5,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 5 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 6,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 6 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 7,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 7 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 8,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 8 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 9,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 9 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 10,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 10 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 11,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 11 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 12,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 12 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 13,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 13 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 14,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 14 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 15,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 15 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 16,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 16 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 17,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 17 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 18,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 18 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 19,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 19 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 20,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 20 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 21,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 21 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 22,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 22 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 23,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 23 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 24,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 24 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 25,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 25 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 26,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 26 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 27,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 27 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 28,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 28 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 29,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 29 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 30,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 30 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 31,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 31 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 32,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 32 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 33,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 33 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 34,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 34 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 34,
+      "table_idx": 1,
+      "rows": 5,
+      "cols": 2,
+      "data": [
+        [
+          "OMF",
+          "OWL"
+        ],
+        [
+          "DefSegment()",
+          "OWLSectionInit()"
+        ],
+        [
+          "EjectImports()",
+          "OWLEmitImport()"
+        ],
+        [
+          "EjectExports()",
+          "OWLEmitExport()"
+        ],
+        [
+          "OutLabel()",
+          "OWLSymbolInit()"
+        ]
+      ]
+    },
+    {
+      "page": 35,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 35 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 36,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 36 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 37,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 37 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 37,
+      "table_idx": 1,
+      "rows": 2,
+      "cols": 3,
+      "data": [
+        [
+          "Sample",
+          "PDC",
+          "PIC"
+        ],
+        [
+          "extern int src;\nextern int dst;\nextern int *ptr;\nptr = &dst;\n*ptr = src;",
+          ".globl src, dst, ptr\nmovl $dst, ptr\nmovl ptr, %eax\nmovl src, %edx\nmovl %edx, (%eax)",
+          ".globl src, dst, ptr\nmovl ptr@GOT(%ebx), %eax\nmovl dst@GOT(%ebx), %edx\nmovl %edx, (%eax)\nmovl ptr@GOT(%ebx), %eax\nmovl (%eax), %eax\nmovl src@GOT(%ebx), %edx\nmovl (%edx), %edx\nmovl %edx, (%eax)"
+        ]
+      ]
+    },
+    {
+      "page": 38,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 38 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 38,
+      "table_idx": 1,
+      "rows": 4,
+      "cols": 2,
+      "data": [
+        [
+          "R_386_GOT32",
+          "This relocation type computes the distance from the base of the global offset table to the\nsymbol’s global offset table entry. It additionally instructs the link editor to build a global\noffset table."
+        ],
+        [
+          "R_386_GOTOFF",
+          "This relocation type computes the difference between a symbol’s value and the address of the\nglobal offset table. It additionally instructs the link editor to build the global offset table."
+        ],
+        [
+          "R_386_GOTPC",
+          "This relocation type resembles R_386_PC32, except it uses the address of the global offset\ntable in its calculation. The symbol referenced in this relocation normally is\n_GLOBAL_OFFSET_TABLE_, which additionally instructs the link editor to build the\nglobal offset table."
+        ],
+        [
+          "R_386_PLT32",
+          "This relocation type computes the address of the symbol’s procedure linkage table entry and\nadditionally instructs the link editor to build a procedure linkage table."
+        ]
+      ]
+    },
+    {
+      "page": 39,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 39 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 40,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 40 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 41,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 41 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 42,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 42 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 43,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 43 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 44,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 44 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 44,
+      "table_idx": 1,
+      "rows": 3,
+      "cols": 2,
+      "data": [
+        [
+          "R_386_GOT32",
+          "G + A - P"
+        ],
+        [
+          "R_386_GOTOFF",
+          "S + A - GOT"
+        ],
+        [
+          "R_386_GOTPC",
+          "GOT + A - P"
+        ]
+      ]
+    },
+    {
+      "page": 45,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 45 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 46,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 46 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 47,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 47 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 48,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 48 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 49,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 49 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 50,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 50 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 51,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 51 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 52,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 52 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 53,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 53 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 54,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 54 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    },
+    {
+      "page": 55,
+      "table_idx": 0,
+      "rows": 2,
+      "cols": 2,
+      "data": [
+        [
+          "Open Watcom Linux Port",
+          "Page 55 of 55"
+        ],
+        [
+          "Compiler / Linker Software Requirements Specification",
+          ""
+        ]
+      ]
+    }
+  ]
+}

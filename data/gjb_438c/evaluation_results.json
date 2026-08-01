@@ -1,0 +1,460 @@
+{
+  "eval_date": "2026-07-29",
+  "eval_time": "2026-07-29T13:32:09.209365",
+  "num_docs": 3,
+  "total_gt": 22,
+  "total_gt_conflicts": 8,
+  "total_gt_positives": 14,
+  "total_detected": 10,
+  "TP": 7,
+  "FP": 3,
+  "FN": 1,
+  "TN": 14,
+  "precision": 0.7,
+  "recall": 0.875,
+  "f1": 0.7778,
+  "by_layer": {
+    "syntax": {
+      "TP": 0,
+      "FP": 2,
+      "FN": 0,
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0,
+      "TN": 0
+    },
+    "semantic": {
+      "TP": 3,
+      "FP": 0,
+      "FN": 0,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "TN": 11
+    },
+    "logic": {
+      "TP": 4,
+      "FP": 1,
+      "FN": 1,
+      "P": 0.8,
+      "R": 0.8,
+      "F1": 0.8,
+      "TN": 3
+    }
+  },
+  "per_doc": [
+    {
+      "doc_name": "battery_srs",
+      "total_gt": 8,
+      "total_gt_conflicts": 2,
+      "total_gt_positives": 6,
+      "total_detected": 2,
+      "total_detected_raw": 3,
+      "TP": 1,
+      "FP": 1,
+      "FN": 1,
+      "TN": 6,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5,
+      "by_layer": {
+        "syntax": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "P": 0.0,
+          "R": 0.0,
+          "F1": 0.0,
+          "TN": 0
+        },
+        "semantic": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 0,
+          "P": 1.0,
+          "R": 1.0,
+          "F1": 1.0,
+          "TN": 5
+        },
+        "logic": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 1,
+          "P": 0.0,
+          "R": 0.0,
+          "F1": 0.0,
+          "TN": 1
+        }
+      },
+      "details": [
+        {
+          "gt_id": "GT-007",
+          "matched_detection": "ISSUE-001",
+          "status": "TP",
+          "layer": "semantic",
+          "gt_type": "text_table_conflict",
+          "det_type": "missing_qualification_entry",
+          "gt_desc": "4合格性规定表中'SOC状态更新'行的合格性方法列被OCR解析为两行('单元测'和'试+对比验证')，导致表格结构断裂，合格性方法值不完整",
+          "det_desc": "合格性规定表第3行存在结构断裂(首列为空但后续列有内容)，可能为OCR拆分导致",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": "GT-008",
+          "matched_detection": null,
+          "status": "FN",
+          "layer": "logic",
+          "gt_type": "cross_document_conflict",
+          "det_type": "",
+          "gt_desc": "battery_srs 3.10.2声明电池模型CPU占用率低于5%(以25ms周期运行时)，scheduler_srs 3.10.2声明CPU占用率不超过10",
+          "det_desc": "",
+          "note": "漏报(跨文档)"
+        },
+        {
+          "gt_id": null,
+          "matched_detection": "ISSUE-002",
+          "status": "FP",
+          "layer": "syntax",
+          "gt_type": "",
+          "det_type": "structure",
+          "gt_desc": "",
+          "det_desc": "需求追踪表缺少以下需求条目的追踪关系: 3.2.1, 3.2.4",
+          "note": "误报(无匹配GT)"
+        },
+        {
+          "gt_id": "GT-001",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "电池模型参数(E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah^-1, B=10.354Ah^-1, A=0.312V)在1.2系统概述",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-002",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "25ms离散时间步长在1.2系统概述、3.1.1正常仿真状态、3.2.5离散步进功能、3.3.1与调度器接口、3.10.2硬件资源、3.11质量因素、5可追踪性",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-003",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "单步执行总时间不超过1ms在3.2.5离散步进功能、3.10.2计算机硬件资源使用需求、3.11软件质量因素(实时性)三处重复声明，数值与条件(400MHz A",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-004",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "logic",
+          "gt_type": "logic_satisfiable",
+          "det_type": "",
+          "gt_desc": "离散步进总时间上限1ms(3.2.5) vs 子模块耗时之和：SOC更新0.1ms(3.2.2)+电压计算0.1ms(3.2.3)+发热功率0.05ms(3.2",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-005",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "运行时内存占用不超过1KB在3.9软件环境需求(内存需求)和3.10.2计算机硬件资源使用需求(内存使用)重复声明，数值一致，且均强调无动态内存分配",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-006",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "SOC取值范围[0,1]在3.2.2(SOC状态更新)、3.4.1(数据结构接口)、3.5(内部数据需求)、6(注释术语定义)多处声明，范围一致；初始SOC=S",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        }
+      ]
+    },
+    {
+      "doc_name": "compiler_srs",
+      "total_gt": 7,
+      "total_gt_conflicts": 5,
+      "total_gt_positives": 2,
+      "total_detected": 6,
+      "total_detected_raw": 6,
+      "TP": 5,
+      "FP": 1,
+      "FN": 0,
+      "TN": 2,
+      "precision": 0.8333,
+      "recall": 1.0,
+      "f1": 0.9091,
+      "by_layer": {
+        "syntax": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "P": 0.0,
+          "R": 0.0,
+          "F1": 0.0,
+          "TN": 0
+        },
+        "semantic": {
+          "TP": 2,
+          "FP": 0,
+          "FN": 0,
+          "P": 1.0,
+          "R": 1.0,
+          "F1": 1.0,
+          "TN": 2
+        },
+        "logic": {
+          "TP": 3,
+          "FP": 1,
+          "FN": 0,
+          "P": 0.75,
+          "R": 1.0,
+          "F1": 0.8571,
+          "TN": 0
+        }
+      },
+      "details": [
+        {
+          "gt_id": "GT-001",
+          "matched_detection": "ISSUE-004",
+          "status": "TP",
+          "layer": "logic",
+          "gt_type": "logic_contradiction",
+          "det_type": "cross_section_declaration_contradiction",
+          "gt_desc": "3.1要求的状态和方式声明'本编译器软件在单一状态下运行，不需要区分多种状态或方式'，但紧接的3.1.1正常状态、3.1.2维护状态、3.1.3调试状态列出三种",
+          "det_desc": "第3.1节声明软件仅在单一状态下运行，不支持维护模式等特殊状态，但紧接着在3.1.2和3.1.3节又详细定义了维护状态和调试状态的需求，存在直接逻辑矛盾。",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": "GT-002",
+          "matched_detection": "ISSUE-005",
+          "status": "TP",
+          "layer": "logic",
+          "gt_type": "logic_incomplete",
+          "det_type": "cross_section_promise_implementation_mismatch",
+          "gt_desc": "1.2系统概述列出编译器主要功能包括'词法分析、语法分析、语义分析、代码生成、代码优化和错误处理'共6项，但3.2软件能力需求仅定义3.2.1词法分析、3.2.",
+          "det_desc": "系统概述中承诺了6项主要功能（包括代码生成、代码优化、错误处理），但在详细需求章节3.2中仅定义了3项功能（词法、语法、语义分析），缺失了对代码生成、代码优化和",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": "GT-003",
+          "matched_detection": "ISSUE-003",
+          "status": "TP",
+          "layer": "logic",
+          "gt_type": "logic_unsatisfiable",
+          "det_type": "logic_unsatisfiable",
+          "gt_desc": "3.2.1词法分析、3.2.2语法分析、3.2.3语义分析各要求'分析时间不超过5秒'，三阶段串行合计可达15秒；但3.11软件质量因素要求'对于10000行以",
+          "det_desc": "Z3检测到潜在逻辑矛盾: 逻辑矛盾：词法、语法、语义三个阶段的时间上限均为5秒，串行执行总和可达15秒，超过了总编译时间不超过10秒的约束。",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": "GT-004",
+          "matched_detection": "ISSUE-001",
+          "status": "TP",
+          "layer": "semantic",
+          "gt_type": "text_table_conflict",
+          "det_type": "empty_table_placeholder",
+          "gt_desc": "4合格性规定表全部填写占位符内容：需求名称列填'《GB/T 0028》'、合格性方法列填'合规性方法'、合格性级别列填'合规性级别'、章节号均填'3.3.1'，",
+          "det_desc": "合格性规定表全部为占位符内容，未填写实际需求信息",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": "GT-005",
+          "matched_detection": "ISSUE-002",
+          "status": "TP",
+          "layer": "semantic",
+          "gt_type": "text_table_conflict",
+          "det_type": "empty_table_placeholder",
+          "gt_desc": "5需求可追踪性的正向追踪表和逆向追踪表全部为占位符：指标内容列填'指标内容'、需求名称列填'需求名称'、章节号列填'章节号'，无任何实际追踪关系",
+          "det_desc": "需求追踪表全部为占位符内容，未填写实际追踪信息",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": null,
+          "matched_detection": "ISSUE-006",
+          "status": "FP",
+          "layer": "logic",
+          "gt_type": "",
+          "det_type": "cross_section_policy_contradiction",
+          "gt_desc": "",
+          "det_desc": "第3.12节声明无特殊的设计和实现约束，但第3.9节明确规定了必须使用C/C++语言开发以及必须使用特定编译器（GCC、Clang或MSVC）构建，这两者互为矛",
+          "note": "误报(无匹配GT)"
+        },
+        {
+          "gt_id": "GT-006",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "分析时间不超过5秒在3.2.1词法分析、3.2.2语法分析、3.2.3语义分析三个模块重复声明，数值与条件(10000行以内)完全一致",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-007",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "源代码行数上限10000行在3.2.1、3.2.2、3.2.3(分析时间条件)和3.11(编译时间条件)、3.10.2(内存占用条件)多处出现，数值完全一致",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        }
+      ]
+    },
+    {
+      "doc_name": "scheduler_srs",
+      "total_gt": 7,
+      "total_gt_conflicts": 1,
+      "total_gt_positives": 6,
+      "total_detected": 2,
+      "total_detected_raw": 3,
+      "TP": 1,
+      "FP": 1,
+      "FN": 0,
+      "TN": 6,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "by_layer": {
+        "syntax": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "P": 0.0,
+          "R": 0.0,
+          "F1": 0.0,
+          "TN": 0
+        },
+        "semantic": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "P": 0.0,
+          "R": 0.0,
+          "F1": 0.0,
+          "TN": 4
+        },
+        "logic": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 0,
+          "P": 1.0,
+          "R": 1.0,
+          "F1": 1.0,
+          "TN": 2
+        }
+      },
+      "details": [
+        {
+          "gt_id": "GT-002",
+          "matched_detection": "ISSUE-002",
+          "status": "TP",
+          "layer": "logic",
+          "gt_type": "logic_contradiction",
+          "det_type": "cross_section_policy_contradiction",
+          "gt_desc": "3.4.1模块间接口规范允许clock_nanosleep调用失败时采取降级策略'如使用忙等待'，但3.12设计和实现约束明确声明'不使用忙等待或usleep'",
+          "det_desc": "关于“忙等待”策略的矛盾。3.4.1章节允许在系统调用失败时使用忙等待作为降级策略，但3.12章节明确禁止使用忙等待。",
+          "note": "正确检测"
+        },
+        {
+          "gt_id": null,
+          "matched_detection": "ISSUE-001",
+          "status": "FP",
+          "layer": "syntax",
+          "gt_type": "",
+          "det_type": "structure",
+          "gt_desc": "",
+          "det_desc": "需求追踪表缺少以下需求条目的追踪关系: 3.2.1, 3.2.3",
+          "note": "误报(无匹配GT)"
+        },
+        {
+          "gt_id": "GT-001",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "定时周期25ms在文档多处出现(1.2系统概述、3.1.1初始化状态、3.1.2正常运行状态、3.2.1高精度定时器、3.2.4主循环调度、3.2.5降采样输出",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-003",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "logic",
+          "gt_type": "logic_satisfiable",
+          "det_type": "",
+          "gt_desc": "3.2.4要求单循环执行时间≤5ms（含电池模型计算），而调度周期为25ms；执行时间5ms < 周期25ms，留有20ms余量用于等待，逻辑可满足",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-004",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "logic",
+          "gt_type": "logic_satisfiable",
+          "det_type": "",
+          "gt_desc": "子模块执行时间之和：补偿计算0.01ms(3.2.2)+查询时间0.01ms(3.2.3)+打印阻塞1ms(3.2.5)=1.02ms，不超过单循环执行上限5m",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-005",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_value_diff_semantics",
+          "det_type": "",
+          "gt_desc": "超时告警阈值25ms(3.1.3)与调度周期25ms(3.2.1)数值相同；超时判断条件'执行时间超过25ms'即'超过一个周期'，两处25ms语义相关但用途不",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-006",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "单次定时误差±2ms在3.2.1(高精度定时器性能要求)和3.11(软件质量因素-定时精度)重复声明，数值完全一致",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        },
+        {
+          "gt_id": "GT-007",
+          "matched_detection": null,
+          "status": "TN",
+          "layer": "semantic",
+          "gt_type": "same_param_same_value",
+          "det_type": "",
+          "gt_desc": "CPU占用率不超过10%在3.10.2(硬件资源使用需求)和3.11(质量因素-性能)重复声明，数值与条件(含电池模型计算、ARM单核400MHz)完全一致",
+          "det_desc": "",
+          "note": "正确未报(确认一致)"
+        }
+      ]
+    }
+  ]
+}

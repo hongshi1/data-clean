@@ -1,0 +1,160 @@
+{
+  "doc_name": "fprime_sysfunc_framework",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_framework.md",
+  "md_lines": 122,
+  "md_chars": 8498,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Framework Functionality",
+  "section_count": 17,
+  "sections": [
+    {
+      "number": null,
+      "title": "Framework Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 1129,
+      "text_preview": "- [Fw::Types SDD](https://github.com/nasa/fprime/blob/devel/Fw/Types/docs/sdd.md)\n- [Fw::Obj SDD](https://github.com/nasa/fprime/blob/devel/Fw/Obj/docs/sdd.md)\n- [Fw::Port SDD](https://github.com/nasa"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 21,
+      "text_length": 446,
+      "text_preview": "The F Prime Framework (Fw) provides the foundational types, base classes, port interfaces, and serialization infrastructure upon which all F Prime components are built. It defines the core abstraction"
+    },
+    {
+      "number": null,
+      "title": "Objects and Components",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 782,
+      "text_preview": "All objects in F Prime derive from a common base class that provides identity (name) and optional registration with an object registry. Components are the primary unit of software in F Prime and come "
+    },
+    {
+      "number": null,
+      "title": "Ports",
+      "level": 3,
+      "line_start": 35,
+      "text_length": 365,
+      "text_preview": "Ports define typed interfaces for inter-component communication. Each port specifies a set of arguments and an optional return type. The framework provides base classes for input and output ports. At "
+    },
+    {
+      "number": null,
+      "title": "Serialization",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 405,
+      "text_preview": "All data passed between components is serialized into byte buffers. The framework provides a serialization infrastructure that supports:\n\n- Primitive types (integers, floats, booleans)\n- Strings\n- Enu"
+    },
+    {
+      "number": null,
+      "title": "Commands",
+      "level": 3,
+      "line_start": 51,
+      "text_length": 595,
+      "text_preview": "The command infrastructure provides the mechanism for external systems (ground or sequencers) to invoke operations on components. Commands are defined in FPP models and consist of:\n\n- An opcode that u"
+    },
+    {
+      "number": null,
+      "title": "Events",
+      "level": 3,
+      "line_start": 61,
+      "text_length": 579,
+      "text_preview": "Events are time-tagged log entries that record system activities and anomalies. Each event has:\n\n- A unique identifier\n- A severity level (FATAL, WARNING_HI, WARNING_LO, COMMAND, ACTIVITY_HI, ACTIVITY"
+    },
+    {
+      "number": null,
+      "title": "Telemetry",
+      "level": 3,
+      "line_start": 72,
+      "text_length": 587,
+      "text_preview": "Telemetry channels provide a mechanism for components to publish named data values representing system state. Each telemetry channel has:\n\n- A unique identifier\n- A typed value\n- A time tag indicating"
+    },
+    {
+      "number": null,
+      "title": "Parameters",
+      "level": 3,
+      "line_start": 82,
+      "text_length": 457,
+      "text_preview": "Parameters are named configuration values stored in non-volatile memory that can be read at startup and updated during operation. The framework provides ports for:\n\n- **Getting** a parameter value fro"
+    },
+    {
+      "number": null,
+      "title": "Time",
+      "level": 3,
+      "line_start": 91,
+      "text_length": 472,
+      "text_preview": "The framework provides a time representation that includes a time base (project-specific), a time context, seconds, and microseconds. Time values are used throughout the system to tag events and telem"
+    },
+    {
+      "number": null,
+      "title": "Buffers",
+      "level": 3,
+      "line_start": 95,
+      "text_length": 487,
+      "text_preview": "The framework provides a buffer type that wraps a pointer to allocated memory along with its size and an origin-tracking context value. Buffers avoid copying data by passing references to allocated me"
+    },
+    {
+      "number": null,
+      "title": "Communication Buffers",
+      "level": 3,
+      "line_start": 99,
+      "text_length": 481,
+      "text_preview": "Communication buffers provide the serialization containers for data that is transmitted between the flight software and external systems. The framework defines a base packet class with type identifica"
+    },
+    {
+      "number": null,
+      "title": "Data Products",
+      "level": 3,
+      "line_start": 103,
+      "text_length": 647,
+      "text_preview": "Data products are structured file data intended for downlink. The framework defines:\n\n- **Containers** — Named, prioritized wrappers that hold data product records. Each container has an ID, priority,"
+    },
+    {
+      "number": null,
+      "title": "File Packets",
+      "level": 3,
+      "line_start": 112,
+      "text_length": 280,
+      "text_preview": "File packets provide the serialization format for transferring files between the flight software and ground system. This supports both uplink (ground to flight) and downlink (flight to ground) file tr"
+    },
+    {
+      "number": null,
+      "title": "Data Structures",
+      "level": 3,
+      "line_start": 116,
+      "text_length": 153,
+      "text_preview": "The framework provides reusable data structure implementations including maps and other collections used internally by framework services and components."
+    },
+    {
+      "number": null,
+      "title": "State Machines",
+      "level": 3,
+      "line_start": 120,
+      "text_length": 303,
+      "text_preview": "The framework includes support for hierarchical state machines that can be attached to components. State machines are defined in FPP models and auto-generated into C++ implementations. They provide a "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

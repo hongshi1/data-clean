@@ -1,0 +1,92 @@
+{
+  "summary_date": "2026-07-29",
+  "description": "GJB 438C SRS Gold Standard — 人工标注的真实不一致与确认一致(正值)集合",
+  "documents": [
+    {
+      "doc_name": "scheduler_srs",
+      "system_type": "嵌入式实时调度器",
+      "constraint_count": 65,
+      "total_gts": 7,
+      "conflicts": 1,
+      "positives": 6,
+      "by_severity": {
+        "HIGH": 1,
+        "LOW": 1,
+        "INFO": 5
+      },
+      "by_type": {
+        "same_param_same_value": 3,
+        "logic_contradiction": 1,
+        "logic_satisfiable": 2,
+        "same_value_diff_semantics": 1
+      }
+    },
+    {
+      "doc_name": "compiler_srs",
+      "system_type": "桌面编译器工具",
+      "constraint_count": 30,
+      "total_gts": 7,
+      "conflicts": 5,
+      "positives": 2,
+      "by_severity": {
+        "HIGH": 5,
+        "INFO": 2
+      },
+      "by_type": {
+        "logic_contradiction": 1,
+        "logic_incomplete": 1,
+        "logic_unsatisfiable": 1,
+        "text_table_conflict": 2,
+        "same_param_same_value": 2
+      }
+    },
+    {
+      "doc_name": "battery_srs",
+      "system_type": "嵌入式电池仿真模型",
+      "constraint_count": 102,
+      "total_gts": 8,
+      "conflicts": 2,
+      "positives": 6,
+      "by_severity": {
+        "MEDIUM": 2,
+        "INFO": 6
+      },
+      "by_type": {
+        "same_param_same_value": 5,
+        "logic_satisfiable": 1,
+        "text_table_conflict": 1,
+        "cross_document_conflict": 1
+      }
+    }
+  ],
+  "totals": {
+    "total_documents": 3,
+    "total_gts": 22,
+    "total_conflicts": 8,
+    "total_positives": 14,
+    "conflict_rate": 0.364,
+    "by_severity": {
+      "HIGH": 6,
+      "MEDIUM": 2,
+      "LOW": 1,
+      "INFO": 13
+    },
+    "by_type": {
+      "same_param_same_value": 10,
+      "logic_contradiction": 2,
+      "logic_satisfiable": 3,
+      "logic_incomplete": 1,
+      "logic_unsatisfiable": 1,
+      "text_table_conflict": 3,
+      "same_value_diff_semantics": 1,
+      "cross_document_conflict": 1
+    }
+  },
+  "design_notes": {
+    "positive_examples": "正值(is_conflict=false)标注确认一致的约束对，用于计算检测器的假阳性率(FP)；检测器对正值报警即为误报",
+    "conflict_examples": "真矛盾(is_conflict=true)标注实际存在的不一致，用于计算检测器的召回率(TP)；检测器未检出即为漏报",
+    "severity_levels": "HIGH=严重影响正确性/合规性；MEDIUM=影响可读性/可维护性；LOW=格式/描述粒度差异；INFO=确认一致的正值",
+    "cross_document": "GT-008(battery_srs)为跨文档冲突，需配合scheduler_srs联合检测",
+    "evaluation_metrics": "precision = TP/(TP+FP), recall = TP/(TP+FN), 其中TP=真矛盾被检出, FP=正值被误报, FN=真矛盾未检出"
+  }
+}

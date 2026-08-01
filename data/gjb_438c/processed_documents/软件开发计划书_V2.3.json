@@ -1,0 +1,756 @@
+{
+  "doc_name": "软件开发计划书_V2.3",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/starriver_superbrain/软件开发计划书_V2.3.md",
+  "md_lines": 484,
+  "md_chars": 10613,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "软件开发计划书（V2.3）",
+  "section_count": 82,
+  "sections": [
+    {
+      "number": null,
+      "title": "软件开发计划书（V2.3）",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 196,
+      "text_preview": "> 更新公告（2025-08-22）\n> - 范围扩展：云端持续进化（状态：已开启）纳入V2.3；新增“熙龙同行册”作为情感/叙事记忆制品。\n> - 接口占位：/cloud/consent（授权）、/cloud/status（状态）、/memory/sync（同步）、/memory/export（导出）纳入API设计队列。\n> - 质量门禁：新增隐私合规门禁与云端同步的影子回放与差异阈值。"
+    },
+    {
+      "number": null,
+      "title": "Software Development Plan for StarRiver Brain V2.3",
+      "level": 2,
+      "line_start": 8,
+      "text_length": 118,
+      "text_preview": "**文档编号**：XH-SDP-V2.3-001  \n**版本**：V2.3  \n**编制日期**：2025-01-21  \n**编制人**：项目管理办公室  \n**审核人**：技术委员会  \n**批准人**：项目总负责人  \n\n---"
+    },
+    {
+      "number": null,
+      "title": "1. 引言",
+      "level": 2,
+      "line_start": 19,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 项目概述",
+      "level": 3,
+      "line_start": 21,
+      "text_length": 117,
+      "text_preview": "星河超脑V2.3是基于\"三层七环\"统一意识驱动架构的智能系统，致力于构建具备自主进化能力的最小可行超脑(MVP-SuperBrain)。项目旨在突破V2.2架构瓶颈，实现真正的\"感知→思考→决策→行动→反馈→学习→自我强化\"智能闭环。"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 项目背景",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 110,
+      "text_preview": "- **技术驱动**：V2.2架构缺乏统一意识核心，组件间协调不足，难以支撑自适应学习\n- **业务需求**：需要构建可解释、可控制、可信赖的AI系统\n- **战略目标**：在AI竞争中建立技术护城河，实现真正的自主智能"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 项目目标",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 129,
+      "text_preview": "- **主目标**：28天内完成统一意识驱动的最小可行超脑闭环\n- **性能目标**：意识循环P95 < 100ms，系统可用性≥99.9%\n- **质量目标**：代码覆盖率≥85%，关键路径覆盖≥90%\n- **安全目标**：零高危漏洞，完备的沙箱执行环境"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 适用范围",
+      "level": 3,
+      "line_start": 35,
+      "text_length": 55,
+      "text_preview": "本计划适用于星河超脑V2.3的完整开发生命周期，涵盖需求分析、架构设计、编码实现、测试验证、部署运维等各阶段。"
+    },
+    {
+      "number": null,
+      "title": "2. 项目组织",
+      "level": 2,
+      "line_start": 38,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 组织结构",
+      "level": 3,
+      "line_start": 40,
+      "text_length": 188,
+      "text_preview": "```\n项目总负责人\n    ├── 产品负责人（Product Owner）\n    ├── 架构负责人（Solution Architect）\n    ├── 开发负责人（Development Lead）\n    ├── 测试负责人（QA Lead）\n    ├── 运维负责人（DevOps Lead）\n    └── 安全负责人（Security Lead）\n```"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 角色与职责",
+      "level": 3,
+      "line_start": 52,
+      "text_length": 293,
+      "text_preview": "| 角色 | 主要职责 | 交付件责任 |\n|------|----------|------------|\n| 产品负责人 | 需求分析、优先级排序、验收标准制定 | URD、验收测试案例 |\n| 架构负责人 | 架构设计、技术选型、技术风险评估 | SAD、接口设计说明 |\n| 开发负责人 | 编码实现、代码评审、技术债务管理 | 源代码、单元测试 |\n| 测试负责人 | 测试策略、质量门禁、"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 沟通机制",
+      "level": 3,
+      "line_start": 63,
+      "text_length": 108,
+      "text_preview": "- **每日站会**：15分钟，进展同步与阻塞点识别\n- **周评审会**：里程碑检查、风险评估、决策澄清\n- **变更评审会**：重大变更影响分析与批准\n- **Go/No-Go决策点**：关键里程碑的质量门禁评估"
+    },
+    {
+      "number": null,
+      "title": "3. 生命周期模型",
+      "level": 2,
+      "line_start": 69,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 开发模型",
+      "level": 3,
+      "line_start": 71,
+      "text_length": 102,
+      "text_preview": "采用**敏捷迭代模型**，结合**精益开发**理念：\n- 2周迭代周期，共2个迭代\n- 持续集成/持续部署(CI/CD)\n- 测试驱动开发(TDD)支持核心模块\n- 文档即代码(Docs-as-Code)"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 生命周期阶段",
+      "level": 3,
+      "line_start": 78,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "阶段1：需求与设计（Day -2 ~ Day 0）",
+      "level": 4,
+      "line_start": 80,
+      "text_length": 105,
+      "text_preview": "- **输入**：V2.3概念设计方案、V2.2系统分析报告\n- **活动**：需求分析、架构设计、接口设计、数据建模\n- **输出**：URD、SRS、SAD、API设计说明\n- **里程碑**：设计评审通过"
+    },
+    {
+      "number": null,
+      "title": "阶段2：核心实现（Day 1 ~ Day 14）",
+      "level": 4,
+      "line_start": 86,
+      "text_length": 89,
+      "text_preview": "- **输入**：设计文档、开发环境\n- **活动**：统一意识引擎、记忆系统、推理引擎实现\n- **输出**：核心模块代码、单元测试、集成测试\n- **里程碑**：核心功能演示"
+    },
+    {
+      "number": null,
+      "title": "阶段3：系统集成（Day 15 ~ Day 21）",
+      "level": 4,
+      "line_start": 92,
+      "text_length": 82,
+      "text_preview": "- **输入**：各模块代码、测试用例\n- **活动**：系统集成、端到端测试、性能调优\n- **输出**：集成系统、性能测试报告\n- **里程碑**：系统测试通过"
+    },
+    {
+      "number": null,
+      "title": "阶段4：部署上线（Day 22 ~ Day 28）",
+      "level": 4,
+      "line_start": 98,
+      "text_length": 86,
+      "text_preview": "- **输入**：测试通过的系统、部署方案\n- **活动**：生产部署、监控配置、用户培训\n- **输出**：运行系统、运维文档、用户手册\n- **里程碑**：系统上线运行"
+    },
+    {
+      "number": null,
+      "title": "4. 项目计划",
+      "level": 2,
+      "line_start": 104,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 里程碑计划",
+      "level": 3,
+      "line_start": 106,
+      "text_length": 277,
+      "text_preview": "| 里程碑 | 计划日期 | 关键交付件 | 验收标准 |\n|--------|----------|------------|----------|\n| M1-设计完成 | Day 0 | URD、SRS、SAD | 设计评审通过，技术风险可控 |\n| M2-核心实现 | Day 14 | 统一意识引擎、记忆系统 | 核心功能演示成功，单测覆盖率≥85% |\n| M3-系统集成 | Day 21"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 风险缓解里程碑",
+      "level": 3,
+      "line_start": 115,
+      "text_length": 154,
+      "text_preview": "- **R1-架构风险评估**（Day 3）：技术选型确认，POC验证完成\n- **R2-性能基线确立**（Day 10）：关键算法性能摸底，优化策略制定\n- **R3-安全评估**（Day 17）：威胁建模完成，安全策略验证\n- **R4-Go/No-Go决策**（Day 25）：系统就绪度评估，上线决策"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 工作分解结构(WBS)",
+      "level": 3,
+      "line_start": 121,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.3.1",
+      "title": "4.3.1 统一意识引擎（40人时）",
+      "level": 4,
+      "line_start": 123,
+      "text_length": 60,
+      "text_preview": "- 自我模型设计与实现（12人时）\n- 目标管理系统（10人时）\n- 决策中枢实现（10人时）\n- 学习控制器（8人时）"
+    },
+    {
+      "number": "4.3.2",
+      "title": "4.3.2 记忆系统（32人时）",
+      "level": 4,
+      "line_start": 129,
+      "text_length": 42,
+      "text_preview": "- 多层记忆架构（16人时）\n- 统一索引系统（8人时）\n- 记忆巩固机制（8人时）"
+    },
+    {
+      "number": "4.3.3",
+      "title": "4.3.3 推理与执行引擎（28人时）",
+      "level": 4,
+      "line_start": 134,
+      "text_length": 30,
+      "text_preview": "- 推理引擎（16人时）\n- 执行引擎与工具编排（12人时）"
+    },
+    {
+      "number": "4.3.4",
+      "title": "4.3.4 安全与监控（24人时）",
+      "level": 4,
+      "line_start": 138,
+      "text_length": 28,
+      "text_preview": "- 沙箱执行环境（16人时）\n- 可观测性系统（8人时）"
+    },
+    {
+      "number": "4.3.5",
+      "title": "4.3.5 七天滚动计划WBS扩展（42人时）",
+      "level": 4,
+      "line_start": 142,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Day 1-API资源建模与核心接口清单（8人时）",
+      "level": 5,
+      "line_start": 143,
+      "text_length": 247,
+      "text_preview": "- 统一意识引擎接口：/consciousness/state GET/POST，状态查询与切换（2人时）\n- 记忆系统接口：/memory/sync POST，/memory/export GET，云端同步与导出（2人时）\n- 推理引擎接口：/reasoning/plan POST，计划生成与解释（2人时）\n- 执行引擎接口：/execution/act POST，动作执行与工具编排（1人时）\n"
+    },
+    {
+      "number": null,
+      "title": "Day 1-契约测试初始化（6人时）",
+      "level": 5,
+      "line_start": 150,
+      "text_length": 138,
+      "text_preview": "- OpenAPI规格文件生成与维护（2人时）\n- Schemathesis属性测试配置（2人时）\n- Dredd契约一致性测试配置（1人时）\n- 测试报告自动化与归档机制（1人时）（已完成：GitHub Actions 容器内 pytest 运行 + JUnit 报告上传）"
+    },
+    {
+      "number": null,
+      "title": "Day 1-影子流量录制/回放脚手架（4人时）",
+      "level": 5,
+      "line_start": 156,
+      "text_length": 55,
+      "text_preview": "- 中间件采样机制设计与实现（2人时）\n- 本地文件落盘存储机制（1人时）  \n- 基本回放功能骨架（1人时）"
+    },
+    {
+      "number": null,
+      "title": "Day 1-差异报告与SLO面板占位（4人时）",
+      "level": 5,
+      "line_start": 161,
+      "text_length": 58,
+      "text_preview": "- Metrics快照导出功能（2人时）\n- 对比逻辑与差异报告模板（1人时）\n- SLO面板基础布局占位（1人时）"
+    },
+    {
+      "number": "4.3.6",
+      "title": "4.3.6 多智能体研发线WBS（36人时）",
+      "level": 4,
+      "line_start": 166,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "星河Orchestrator v0规格编写（8人时）",
+      "level": 5,
+      "line_start": 167,
+      "text_length": 144,
+      "text_preview": "- LeadResearcher角色定义与职责（2人时）\n- 并行Subagents架构设计（SearchAgent、SynthesisAgent、CitationAgent）（3人时）\n- Interleaved thinking循环机制（1人时）\n- 任务分解模板与预算策略（2人时）"
+    },
+    {
+      "number": null,
+      "title": "多智能体PoC实现（16人时）",
+      "level": 5,
+      "line_start": 173,
+      "text_length": 94,
+      "text_preview": "- Orchestrator-Worker骨架代码（6人时）\n- /agents/run接口实现与路由（4人时）\n- 研究报告自动化演示用例（4人时）\n- 并行搜索与引用整合逻辑（2人时）"
+    },
+    {
+      "number": null,
+      "title": "评测与对比框架（8人时）",
+      "level": 5,
+      "line_start": 179,
+      "text_length": 86,
+      "text_preview": "- Breadth-First任务集设计（2人时）\n- 质量-成本-时延三指标评测体系（3人时）\n- 单/多智能体AB对比实验（2人时）\n- 评测报告模板与自动化（1人时）"
+    },
+    {
+      "number": null,
+      "title": "与经验系统集成（4人时）",
+      "level": 5,
+      "line_start": 185,
+      "text_length": 57,
+      "text_preview": "- 一人公司方法论规则卡片转换（2人时）\n- 提示词模板与工作流设计（1人时）\n- 商业模式探索示范流程（1人时）"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 七天滚动计划详细任务安排",
+      "level": 3,
+      "line_start": 190,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Day 1: 基础设施与接口契约（总计22人时）",
+      "level": 4,
+      "line_start": 192,
+      "text_length": 408,
+      "text_preview": "**上午（API资源建模 8人时）**\n- 08:30-10:30：统一意识引擎接口设计与实现（2人时）\n- 10:30-12:30：记忆系统同步与导出接口（2人时）\n- 14:00-16:00：推理引擎计划生成接口（2人时）\n- 16:00-17:00：执行引擎动作接口（1人时）\n- 17:00-18:00：可观测性指标接口（1人时）\n\n**下午（契约测试初始化 6人时）**\n- 14:00-1"
+    },
+    {
+      "number": null,
+      "title": "Day 2-3: 多智能体架构设计（总计16人时）",
+      "level": 4,
+      "line_start": 209,
+      "text_length": 315,
+      "text_preview": "**Day 2上午（Orchestrator规格 4人时）**\n- 08:30-10:30：LeadResearcher角色与职责定义（2人时）\n- 10:30-12:30：并行Subagents架构设计（2人时）\n\n**Day 2下午（任务分解与循环机制 4人时）**\n- 14:00-16:00：Interleaved thinking循环设计（2人时）\n- 16:00-18:00：任务分解模板"
+    },
+    {
+      "number": null,
+      "title": "Day 4-5: 研究报告自动化演示（总计12人时）",
+      "level": 4,
+      "line_start": 222,
+      "text_length": 161,
+      "text_preview": "**Day 4（核心逻辑实现 6人时）**\n- 08:30-12:30：研究报告自动化用例开发（4人时）  \n- 14:00-16:00：并行搜索逻辑实现（2人时）\n\n**Day 5（整合与优化 6人时）**\n- 08:30-12:30：引用整合与格式化（4人时）\n- 14:00-16:00：性能优化与错误处理（2人时）"
+    },
+    {
+      "number": null,
+      "title": "Day 6-7: 评测体系与经验集成（总计12人时）",
+      "level": 4,
+      "line_start": 231,
+      "text_length": 149,
+      "text_preview": "**Day 6（评测框架 8人时）**\n- 08:30-12:30：Breadth-First任务集与评测体系（5人时）\n- 14:00-17:00：单/多智能体AB对比实验（3人时）\n\n**Day 7（经验集成与总结 4人时）**\n- 08:30-12:30：经验系统集成与规则卡片转换（4人时）"
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 里程碑与验收标准对齐",
+      "level": 3,
+      "line_start": 239,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "M1-Day1基础设施完成验收标准",
+      "level": 4,
+      "line_start": 241,
+      "text_length": 164,
+      "text_preview": "- API接口：/consciousness, /memory, /reasoning, /execution, /observability 五大核心接口全部实现并通过契约测试\n- 契约测试：OpenAPI规格完整，Schemathesis与Dredd测试通过率≥95%\n- 基础设施：影子流量录制功能可用，SLO面板占位完成"
+    },
+    {
+      "number": null,
+      "title": "M2-Day3多智能体架构设计完成验收标准",
+      "level": 4,
+      "line_start": 246,
+      "text_length": 133,
+      "text_preview": "- 设计文档：星河Orchestrator v0规格文档完成，包含角色定义、架构图、任务分解模板\n- PoC实现：Orchestrator-Worker骨架代码可运行，/agents/run接口可接收请求并返回响应\n- 代码质量：单元测试覆盖率≥80%，代码评审通过"
+    },
+    {
+      "number": null,
+      "title": "M3-Day5研究报告自动化演示完成验收标准",
+      "level": 4,
+      "line_start": 251,
+      "text_length": 105,
+      "text_preview": "- 功能演示：端到端研究报告自动化流程可演示，包含并行搜索、信息整合、引用格式化\n- 性能指标：单次报告生成时间≤5分钟，并发处理能力≥3个任务\n- 质量验证：生成报告包含≥5个有效引用，内容连贯性人工评估通过"
+    },
+    {
+      "number": null,
+      "title": "M4-Day7完整系统验收标准",
+      "level": 4,
+      "line_start": 256,
+      "text_length": 105,
+      "text_preview": "- 评测结果：单/多智能体AB对比完成，质量-成本-时延三维评测数据完整\n- 经验集成：一人公司方法论成功转换为规则卡片，商业模式探索工作流可用\n- 系统稳定性：连续运行24小时无P0/P1故障，SLO指标达标"
+    },
+    {
+      "number": null,
+      "title": "5. 技术管理",
+      "level": 2,
+      "line_start": 261,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 技术标准",
+      "level": 3,
+      "line_start": 263,
+      "text_length": 181,
+      "text_preview": "- **编程语言**：Python 3.11+，TypeScript 5.0+\n- **框架**：FastAPI、React、PyTorch\n- **数据库**：PostgreSQL、Redis、Elasticsearch\n- **容器化**：Docker、Kubernetes\n- **监控**：Prometheus、Grafana、OpenTelemetry"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 开发环境",
+      "level": 3,
+      "line_start": 270,
+      "text_length": 130,
+      "text_preview": "- **开发IDE**：VS Code、PyCharm\n- **版本控制**：Git（GitHub）\n- **CI/CD**：GitHub Actions\n- **测试工具**：pytest、jest、k6\n- **文档工具**：MkDocs Material"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 编码规范",
+      "level": 3,
+      "line_start": 277,
+      "text_length": 111,
+      "text_preview": "- 遵循PEP8（Python）、ESLint（TypeScript）\n- 强制类型注解，mypy严格模式\n- 代码评审必过，至少1名senior reviewer\n- 提交信息遵循Conventional Commits"
+    },
+    {
+      "number": null,
+      "title": "6. 质量管理",
+      "level": 2,
+      "line_start": 283,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 质量目标",
+      "level": 3,
+      "line_start": 285,
+      "text_length": 129,
+      "text_preview": "- **功能质量**：需求覆盖率100%，功能正确性验证通过\n- **代码质量**：单元测试覆盖率≥85%，关键路径覆盖≥90%\n- **性能质量**：响应时间P95<200ms，吞吐量≥1000QPS\n- **安全质量**：零高危漏洞，安全测试100%通过"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 质量活动",
+      "level": 3,
+      "line_start": 291,
+      "text_length": 109,
+      "text_preview": "- **静态分析**：SonarQube代码扫描，每日执行\n- **动态测试**：单元测试、集成测试、端到端测试\n- **性能测试**：压力测试、稳定性测试、容量规划\n- **安全测试**：漏洞扫描、渗透测试、权限验证"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 质量门禁",
+      "level": 3,
+      "line_start": 297,
+      "text_length": 108,
+      "text_preview": "- **代码门禁**：lint通过、类型检查通过、测试覆盖率达标\n- **功能门禁**：自动化测试通过、手工验证通过\n- **性能门禁**：SLO指标达标、无性能回归\n- **安全门禁**：安全扫描通过、合规检查通过"
+    },
+    {
+      "number": null,
+      "title": "7. 配置管理",
+      "level": 2,
+      "line_start": 303,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "7.1",
+      "title": "7.1 配置项识别",
+      "level": 3,
+      "line_start": 305,
+      "text_length": 100,
+      "text_preview": "- **源代码**：应用代码、测试代码、构建脚本\n- **文档**：需求文档、设计文档、用户文档\n- **环境配置**：部署配置、数据库脚本、监控配置\n- **发布件**：可执行程序、容器镜像、部署包"
+    },
+    {
+      "number": "7.2",
+      "title": "7.2 版本控制策略",
+      "level": 3,
+      "line_start": 311,
+      "text_length": 147,
+      "text_preview": "- **分支策略**：GitFlow模型，main/develop/feature/hotfix分支\n- **版本命名**：语义化版本(Semantic Versioning)\n- **标签管理**：每个发布版本打标签，包含变更日志\n- **合并策略**：功能分支必须通过PR合并，需要代码评审"
+    },
+    {
+      "number": "7.3",
+      "title": "7.3 变更控制",
+      "level": 3,
+      "line_start": 317,
+      "text_length": 169,
+      "text_preview": "- **变更分类**：\n  - Level 1（紧急）：生产故障修复，24小时内必须处理\n  - Level 2（重要）：功能缺陷修复，72小时内处理\n  - Level 3（一般）：功能增强，下个迭代处理\n- **变更流程**：变更申请→影响分析→技术评审→批准→实施→验证\n- **回滚策略**：每次部署都必须有回滚计划，支持一键回滚"
+    },
+    {
+      "number": null,
+      "title": "8. 风险管理",
+      "level": 2,
+      "line_start": 325,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "8.1",
+      "title": "8.1 风险识别",
+      "level": 3,
+      "line_start": 327,
+      "text_length": 255,
+      "text_preview": "| 风险类别 | 风险描述 | 概率 | 影响 | 风险等级 |\n|----------|----------|------|------|----------|\n| 技术风险 | 统一意识架构复杂度超预期 | 中 | 高 | 高 |\n| 性能风险 | 响应时间无法达到SLO要求 | 中 | 中 | 中 |\n| 集成风险 | 多模块集成兼容性问题 | 高 | 中 | 高 |\n| 资源风险 | 关键"
+    },
+    {
+      "number": "8.2",
+      "title": "8.2 风险应对策略",
+      "level": 3,
+      "line_start": 337,
+      "text_length": 224,
+      "text_preview": "- **统一意识架构风险**：\n  - 建立技术POC，提前验证关键技术点\n  - 分阶段实现，降低一次性集成风险\n  - 准备技术降级方案，确保基本功能可用\n\n- **性能风险**：\n  - 建立性能基线，持续性能监控\n  - 关键路径性能优化，异步处理机制\n  - 准备性能调优预案，弹性扩容能力\n\n- **集成风险**：\n  - 定义标准接口协议，模块间松耦合\n  - 建立持续集成环境，早期发"
+    },
+    {
+      "number": "8.3",
+      "title": "8.3 风险监控",
+      "level": 3,
+      "line_start": 353,
+      "text_length": 79,
+      "text_preview": "- **周风险评估**：每周例会评估风险状态变化\n- **里程碑风险检查**：关键里程碑进行风险专项检查\n- **风险预警机制**：建立风险指标监控，自动预警"
+    },
+    {
+      "number": null,
+      "title": "9. 验证与确认(V&V)",
+      "level": 2,
+      "line_start": 358,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "9.1",
+      "title": "9.1 验证策略",
+      "level": 3,
+      "line_start": 360,
+      "text_length": 103,
+      "text_preview": "- **需求验证**：需求评审、原型验证、用户反馈\n- **设计验证**：设计评审、架构分析、接口验证\n- **代码验证**：代码评审、静态分析、单元测试\n- **系统验证**：集成测试、系统测试、验收测试"
+    },
+    {
+      "number": "9.2",
+      "title": "9.2 确认活动",
+      "level": 3,
+      "line_start": 366,
+      "text_length": 102,
+      "text_preview": "- **功能确认**：用户场景测试、业务流程验证\n- **性能确认**：负载测试、压力测试、稳定性测试\n- **安全确认**：安全测试、权限验证、合规检查\n- **可用性确认**：易用性测试、可访问性测试"
+    },
+    {
+      "number": "9.3",
+      "title": "9.3 验收标准",
+      "level": 3,
+      "line_start": 372,
+      "text_length": 107,
+      "text_preview": "- **功能验收**：所有用户故事验收通过，功能演示成功\n- **性能验收**：SLO指标全部达标，无性能回归\n- **质量验收**：代码质量门禁通过，测试覆盖率达标\n- **安全验收**：安全评估通过，无高危漏洞"
+    },
+    {
+      "number": null,
+      "title": "10. 支持环境",
+      "level": 2,
+      "line_start": 378,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "10.1",
+      "title": "10.1 开发环境",
+      "level": 3,
+      "line_start": 380,
+      "text_length": 125,
+      "text_preview": "- **硬件要求**：16GB内存，8核CPU，1TB SSD\n- **操作系统**：Ubuntu 22.04 LTS或macOS 13+\n- **开发工具**：详见\"技术管理\"章节\n- **网络要求**：稳定的互联网连接，访问GitHub和相关服务"
+    },
+    {
+      "number": "10.2",
+      "title": "10.2 测试环境",
+      "level": 3,
+      "line_start": 386,
+      "text_length": 109,
+      "text_preview": "- **测试服务器**：与生产环境配置一致的测试集群\n- **数据准备**：测试数据集、基准数据、回归测试用例\n- **监控工具**：测试环境监控、性能分析工具\n- **自动化工具**：CI/CD流水线、自动化测试框架"
+    },
+    {
+      "number": "10.3",
+      "title": "10.3 生产环境",
+      "level": 3,
+      "line_start": 392,
+      "text_length": 116,
+      "text_preview": "- **部署架构**：Kubernetes集群，支持水平扩展\n- **监控系统**：Prometheus + Grafana监控栈\n- **日志系统**：ELK栈，统一日志收集和分析\n- **备份恢复**：数据备份策略，灾难恢复预案"
+    },
+    {
+      "number": null,
+      "title": "11. 培训计划",
+      "level": 2,
+      "line_start": 398,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "11.1",
+      "title": "11.1 技术培训",
+      "level": 3,
+      "line_start": 400,
+      "text_length": 99,
+      "text_preview": "- **架构培训**：统一意识架构原理、设计模式\n- **工具培训**：开发工具使用、CI/CD流程\n- **安全培训**：安全编码规范、威胁防范\n- **运维培训**：部署流程、监控告警、故障处理"
+    },
+    {
+      "number": "11.2",
+      "title": "11.2 流程培训",
+      "level": 3,
+      "line_start": 406,
+      "text_length": 86,
+      "text_preview": "- **敏捷开发**：Scrum流程、看板管理\n- **代码评审**：评审标准、工具使用\n- **质量管理**：测试策略、缺陷管理\n- **变更管理**：变更流程、发布管理"
+    },
+    {
+      "number": null,
+      "title": "12. 项目收尾",
+      "level": 2,
+      "line_start": 412,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "12.1",
+      "title": "12.1 交付件检查清单",
+      "level": 3,
+      "line_start": 414,
+      "text_length": 113,
+      "text_preview": "- [ ] 源代码及构建脚本\n- [ ] 技术文档（架构、设计、API）\n- [ ] 用户文档（安装、配置、使用）\n- [ ] 测试文档（测试计划、测试报告）\n- [ ] 运维文档（部署、监控、故障处理）\n- [ ] 培训材料"
+    },
+    {
+      "number": "12.2",
+      "title": "12.2 项目总结",
+      "level": 3,
+      "line_start": 422,
+      "text_length": 104,
+      "text_preview": "- **经验教训**：技术难点、解决方案、最佳实践\n- **度量数据**：工期、成本、质量指标\n- **改进建议**：流程优化、工具改进、能力提升\n- **知识沉淀**：技术积累、人员成长、组织能力\n\n---"
+    },
+    {
+      "number": null,
+      "title": "附录",
+      "level": 2,
+      "line_start": 430,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "A. 缩略语",
+      "level": 3,
+      "line_start": 432,
+      "text_length": 404,
+      "text_preview": "- SDP: Software Development Plan（软件开发计划）\n- URD: User Requirements Document（用户需求文档）\n- SRS: Software Requirements Specification（软件需求规格说明）\n- SAD: Software Architecture Document（软件架构文档）\n- API: Application"
+    },
+    {
+      "number": null,
+      "title": "B. 参考文档",
+      "level": 3,
+      "line_start": 443,
+      "text_length": 246,
+      "text_preview": "- 《星河超脑V2.3概念设计方案》\n- 《文档模板与写作规范_V2.3》\n- 《编码规范与约定_V2.3》\n- 《GJB 438B-2009 软件工程标准》\n\n---\n**修订历史**\n\n| 版本 | 日期 | 修订内容 | 修订人 |\n|------|------|----------|--------|\n| V1.0 | 2025-01-21 | 初版创建，完整的SDP文档 | 项目管理办公"
+    },
+    {
+      "number": null,
+      "title": "13. 进度同步（2025-08-29）",
+      "level": 2,
+      "line_start": 461,
+      "text_length": 291,
+      "text_preview": "- 构建与交付管线\n  - Docker 构建：已切换国内基础镜像与 pip 源，镜像构建成功（含健康检查）。\n  - 容器内测试：test 阶段镜像新增 pytest/requests/httpx，运行 pytest：15 passed / 0 failed。\n  - 构建上下文：新增 .dockerignore，缩小构建上下文，加速构建。\n- 文档与WBS\n  - 《项目里程碑与风险计划.md"
+    },
+    {
+      "number": null,
+      "title": "完成度估算依据",
+      "level": 3,
+      "line_start": 472,
+      "text_length": 325,
+      "text_preview": "- WBS 大项拆分（示例，累积=100%）：\n  - 基础设施与交付（CI/CD、容器、构建优化）：20% → 已完成约 15%（国内源、健康检查、容器内测试、.dockerignore）。\n  - 后端核心能力（API/统一意识/记忆/推理/执行整合）：40% → 进行中约 10%。\n  - 测试与质量（契约/E2E/覆盖率门禁）：20% → 已完成约 6%（容器化 pytest 通路打通，局"
+    },
+    {
+      "number": null,
+      "title": "下一步",
+      "level": 3,
+      "line_start": 481,
+      "text_length": 100,
+      "text_preview": "- 集成 CI（PR 门禁执行容器内 pytest，报告归档）。\n- 增加契约/回归用例，目标关键接口断言覆盖率 ≥ 95%。\n- 生成 docker-compose 以便本地多服务联调（如有依赖）。"
+    }
+  ],
+  "constraint_count": 1,
+  "constraints": [
+    {
+      "value": 100.0,
+      "unit": "%",
+      "operator": "=",
+      "sentence": "- WBS 大项拆分（示例，累积=100%）：",
+      "section": "完成度估算依据",
+      "section_number": null,
+      "section_title": "完成度估算依据",
+      "line_start": 472
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 4,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "角色",
+        "主要职责",
+        "交付件责任"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "2.2 角色与职责",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "里程碑",
+        "计划日期",
+        "关键交付件",
+        "验收标准"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "4.1 里程碑计划",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "风险类别",
+        "风险描述",
+        "概率",
+        "影响",
+        "风险等级"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "8.1 风险识别",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "版本",
+        "日期",
+        "修订内容",
+        "修订人"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "B. 参考文档",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

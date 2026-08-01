@@ -1,0 +1,112 @@
+{
+  "doc_name": "fprime_sysfunc_telemetry-packetizer",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_telemetry-packetizer.md",
+  "md_lines": 61,
+  "md_chars": 3426,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Telemetry Packetizer Functionality",
+  "section_count": 11,
+  "sections": [
+    {
+      "number": null,
+      "title": "Telemetry Packetizer Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 212,
+      "text_preview": "- [F Prime TlmPacketizer SDD](https://github.com/nasa/fprime/blob/devel/Svc/TlmPacketizer/docs/sdd.md)\n- [FPP User Guide — Telemetry](https://nasa.github.io/fpp/fpp-users-guide.html#Defining-Component"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 482,
+      "text_preview": "The Telemetry Packetizer (TlmPacketizer) provides packetized telemetry storage and downlink. It groups multiple telemetry channels into pre-defined packets, sending all channels in a packet together a"
+    },
+    {
+      "number": null,
+      "title": "Packet Definitions",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 355,
+      "text_preview": "A packet definition table specifies which channels belong to which packets. Each packet definition includes:\n\n- A set of channel IDs and their offsets within the packet buffer\n- A packet identifier\n- "
+    },
+    {
+      "number": null,
+      "title": "Channel Storage and Packing",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 268,
+      "text_preview": "When components write telemetry values, the Packetizer stores them at the appropriate offset within the correct packet buffer. Each packet buffer maintains the most recent values of all its member cha"
+    },
+    {
+      "number": null,
+      "title": "Downlink Cycle",
+      "level": 3,
+      "line_start": 27,
+      "text_length": 286,
+      "text_preview": "When triggered by a scheduled port call, the Packetizer sends all defined packets that are currently enabled. Each packet is transmitted as a single communication buffer containing the packed channel "
+    },
+    {
+      "number": null,
+      "title": "Packet Groups and Enabling",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 362,
+      "text_preview": "Packet groups (sections) can be individually enabled or disabled via command. This allows operators to select which telemetry sets are active during different operational phases. For example:\n\n- A hig"
+    },
+    {
+      "number": null,
+      "title": "Send Levels",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 203,
+      "text_preview": "The packet definition table supports different send levels, allowing packets to be grouped by priority or operational phase. Only packets at or below the current send level are transmitted on each cyc"
+    },
+    {
+      "number": null,
+      "title": "Rate Logic",
+      "level": 3,
+      "line_start": 43,
+      "text_length": 664,
+      "text_preview": "Each telemetry group can be configured with a rate logic mode that controls when packets are sent:\n\n- **SILENCED** — Packet is never sent.\n- **EVERY_MAX** — Packet is sent every MAX delta schedule tic"
+    },
+    {
+      "number": null,
+      "title": "Telemetry Limits",
+      "level": 3,
+      "line_start": 54,
+      "text_length": 140,
+      "text_preview": "As with channel-based telemetry, channels can have limit ranges defined in the dictionary. Limit checking is performed by the ground system."
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 58,
+      "text_length": 187,
+      "text_preview": "- If a channel update arrives for a channel not in any packet definition, it is silently ignored.\n- If the send cycle cannot complete within the scheduling period, packets may be delayed."
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

@@ -1,0 +1,112 @@
+{
+  "doc_name": "fprime_sysfunc_ccsds-protocol",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_ccsds-protocol.md",
+  "md_lines": 60,
+  "md_chars": 4317,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "CCSDS Protocol Functionality",
+  "section_count": 11,
+  "sections": [
+    {
+      "number": null,
+      "title": "CCSDS Protocol Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 1064,
+      "text_preview": "- [F Prime SpacePacketFramer SDD](https://github.com/nasa/fprime/blob/devel/Svc/Ccsds/SpacePacketFramer/docs/sdd.md)\n- [F Prime SpacePacketDeframer SDD](https://github.com/nasa/fprime/blob/devel/Svc/C"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 481,
+      "text_preview": "F Prime provides components implementing the Consultative Committee for Space Data Systems (CCSDS) protocols for missions requiring standards-compliant space communication. These components plug into "
+    },
+    {
+      "number": null,
+      "title": "Space Packet Protocol",
+      "level": 3,
+      "line_start": 21,
+      "text_length": 432,
+      "text_preview": "The Space Packet layer provides application-level packet framing per CCSDS 133.0-B-2:\n\n- **Space Packet Framer** — Constructs CCSDS Space Packets from user data. Each packet is assigned an Application"
+    },
+    {
+      "number": null,
+      "title": "APID Management",
+      "level": 3,
+      "line_start": 28,
+      "text_length": 531,
+      "text_preview": "The APID Manager tracks per-APID sequence counts for both outgoing and incoming Space Packets. It provides incrementing sequence counts to the Space Packet Framer for each APID and validates received "
+    },
+    {
+      "number": null,
+      "title": "TM Space Data Link Protocol",
+      "level": 3,
+      "line_start": 34,
+      "text_length": 288,
+      "text_preview": "The TM Framer implements the CCSDS Telemetry (TM) Space Data Link Protocol (132.0-B-3) for downlink. It wraps payload data (such as Space Packets) into TM Transfer Frames for transmission over the spa"
+    },
+    {
+      "number": null,
+      "title": "TC Space Data Link Protocol",
+      "level": 3,
+      "line_start": 38,
+      "text_length": 161,
+      "text_preview": "The TC Deframer implements the CCSDS Telecommand (TC) Space Data Link Protocol (232.0-B-4) for uplink. It extracts payload data from received TC Transfer Frames."
+    },
+    {
+      "number": null,
+      "title": "AOS Space Data Link Protocol",
+      "level": 3,
+      "line_start": 42,
+      "text_length": 204,
+      "text_preview": "The AOS Framer implements the CCSDS Advanced Orbiting Systems (AOS) Space Data Link Protocol (732.0-B-5). AOS provides an alternative to TM for missions requiring more flexible virtual channel managem"
+    },
+    {
+      "number": null,
+      "title": "Protocol Layering",
+      "level": 3,
+      "line_start": 46,
+      "text_length": 372,
+      "text_preview": "The CCSDS components can be stacked to provide multiple protocol layers. A typical downlink path might be: data source → Space Packet Framer → TM Framer → byte stream driver. A typical uplink path: by"
+    },
+    {
+      "number": null,
+      "title": "Unsupported Features",
+      "level": 3,
+      "line_start": 50,
+      "text_length": 171,
+      "text_preview": "The current CCSDS implementation does not support:\n\n- Multiple Virtual Channel Identifiers (VCIDs) — only a single VCID is available per TM Framer or TC Deframer instance."
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 56,
+      "text_length": 319,
+      "text_preview": "- Malformed frames or packets are rejected with diagnostic events.\n- Sequence count mismatches indicate dropped or reordered packets and are reported via events. The onboard sequence count is synchron"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

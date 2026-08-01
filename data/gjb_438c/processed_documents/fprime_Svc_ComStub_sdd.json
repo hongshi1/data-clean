@@ -1,0 +1,225 @@
+{
+  "doc_name": "fprime_Svc_ComStub_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_ComStub_sdd.md",
+  "md_lines": 111,
+  "md_chars": 9257,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "Svc::ComStub (Passive Component)",
+  "section_count": 11,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::ComStub (Passive Component)",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 1331,
+      "text_preview": "`Svc::ComStub` is an example  F´ component implementing the\n[communication adapter interface](../../../docs/reference/communication-adapter-interface.md) required\nto work with F´ communication compone"
+    },
+    {
+      "number": null,
+      "title": "2. Assumptions",
+      "level": 2,
+      "line_start": 23,
+      "text_length": 243,
+      "text_preview": "Using `Svc::ComStub` assumes that the driver layer (e.g. `Drv::TcpClient`) provides all capability needed to establish\ncommunications. For example, a project can communicate over raw tcp rather than r"
+    },
+    {
+      "number": null,
+      "title": "3. Requirements",
+      "level": 2,
+      "line_start": 30,
+      "text_length": 2604,
+      "text_preview": "| Requirement     | Description                                                                                                                 | Rationale                                             "
+    },
+    {
+      "number": null,
+      "title": "4. Design",
+      "level": 2,
+      "line_start": 42,
+      "text_length": 693,
+      "text_preview": "The diagram below shows the `Svc::ComStub` port interface. `Svc::ComStub` is a basic *Communication Adapter* and can be\nused alongside the other F´ communication components (`Svc::Framer`, `Svc::Defra"
+    },
+    {
+      "number": null,
+      "title": "4.1. Ports",
+      "level": 3,
+      "line_start": 59,
+      "text_length": 2485,
+      "text_preview": "`ComStub` has the following ports.  The first three ports are required for the communication adapter interface, the\nsecond three are because the implementation delegates to a `Drv.ByteStreamDriverMode"
+    },
+    {
+      "number": null,
+      "title": "4.2. State, Configuration, and Runtime Setup",
+      "level": 3,
+      "line_start": 87,
+      "text_length": 488,
+      "text_preview": "`Svc::ComStub` stores a boolean `m_reinitialize` indicating when it should send `Fw::Success::SUCCESS` in\nresponse to a driver reconnection event. This implements the [Communication Adapter Protocol]("
+    },
+    {
+      "number": null,
+      "title": "4.3. Port Handlers",
+      "level": 3,
+      "line_start": 93,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.3.1",
+      "title": "4.3.1 dataIn",
+      "level": 4,
+      "line_start": 95,
+      "text_length": 477,
+      "text_preview": "The `dataIn` port handler receives an `Fw::Buffer` from the F´ system for transmission to the ground. Typically, it\nis connected to the output of the `Svc::Framer` component. In this `Svc::ComStub` im"
+    },
+    {
+      "number": "4.3.1",
+      "title": "4.3.1 drvConnected",
+      "level": 4,
+      "line_start": 103,
+      "text_length": 490,
+      "text_preview": "This port receives the connected signal from the driver and responds with exactly one `Fw::Success::SUCCESS` invocation to the\n`comStatusOut` port. This initiates data flow from `Svc::ComQueue` at sta"
+    },
+    {
+      "number": "4.3.1",
+      "title": "4.3.1 drvReceiveIn",
+      "level": 4,
+      "line_start": 108,
+      "text_length": 158,
+      "text_preview": "The `drvReceiveIn` handler receives data read from the driver and supplies it out the `dataOut` port. It is usually\nconnected to the `Svc::Deframer` component"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 3,
+  "tables": [
+    {
+      "index": 0,
+      "type": "qualification",
+      "format": "markdown",
+      "headers": [
+        "Requirement",
+        "Description",
+        "Rationale",
+        "Verification Method"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "3. Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Kind",
+        "Name",
+        "Port Type",
+        "Usage"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "4.1. Ports",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Kind",
+        "Name",
+        "Port Type",
+        "Usage"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "4.1. Ports",
+      "raw_html": null
+    }
+  ],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "com-adapter.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/com-adapter.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "`Svc::ComStub` as Communication Adapter",
+      "caption": "`Svc::ComStub` implements the",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "4. Design",
+      "context_before": "The diagram below shows the `Svc::ComStub` port interface. `Svc::ComStub` is a basic *Communication Adapter* and can be\nused alongside the other F´ communication components (`Svc::Framer`, `Svc::Deframer`, `Svc::ComQueue`).\n**Svc::ComStub Uplink and Downlink Interface**",
+      "context_after": "`Svc::ComStub` implements the\n[communication adapter interface](../../../docs/reference/communication-adapter-interface.md) by",
+      "md_line": 49,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "byte-stream.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/byte-stream.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "`Svc::ComStub` to `Drv::ByteStreamDriverModel`",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "4. Design",
+      "context_before": "[communication adapter interface](../../../docs/reference/communication-adapter-interface.md) by\ndelegation to a `Drv::ByteStreamDriverModel` as a way to transmit data and receive data. Other communication\nadapter implementations may follow-suite.",
+      "context_after": "`ComStub` has the following ports.  The first three ports are required for the communication adapter interface, the\nsecond three are because the implementation delegates to a `Drv.ByteStreamDriverMode",
+      "md_line": 57,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "com-adapter.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/com-adapter.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "`Svc::ComStub` implements the",
+      "section": "4. Design",
+      "context_before": "The diagram below shows the `Svc::ComStub` port interface. `Svc::ComStub` is a basic *Communication Adapter* and can be\nused alongside the other F´ communication components (`Svc::Framer`, `Svc::Deframer`, `Svc::ComQueue`).\n**Svc::ComStub Uplink and Downlink Interface**",
+      "context_after": "`Svc::ComStub` implements the\n[communication adapter interface](../../../docs/reference/communication-adapter-interface.md) by",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "byte-stream.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/byte-stream.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "4. Design",
+      "context_before": "[communication adapter interface](../../../docs/reference/communication-adapter-interface.md) by\ndelegation to a `Drv::ByteStreamDriverModel` as a way to transmit data and receive data. Other communication\nadapter implementations may follow-suite.",
+      "context_after": "`ComStub` has the following ports.  The first three ports are required for the communication adapter interface, the\nsecond three are because the implementation delegates to a `Drv.ByteStreamDriverMode",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

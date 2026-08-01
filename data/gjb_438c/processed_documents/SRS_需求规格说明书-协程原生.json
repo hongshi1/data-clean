@@ -1,0 +1,850 @@
+{
+  "doc_name": "SRS_需求规格说明书-协程原生",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/ste7an_transport/SRS_需求规格说明书-协程原生.md",
+  "md_lines": 635,
+  "md_chars": 22548,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "通信中间件框架软件需求规格说明书（协程原生）",
+  "section_count": 82,
+  "sections": [
+    {
+      "number": null,
+      "title": "通信中间件框架软件需求规格说明书（协程原生）",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 203,
+      "text_preview": "**版本：** 草案 v3<br>\n**日期：** 2026-07-22<br>\n**状态：** 目标需求，尚未全部实现<br>\n**需求标识前缀：** `RT`（Requirement—Transport）\n\n> 本文件规定协程原生目标架构的、可由调用方或通信对端观察并验证的行为。类名、方法签名、线程投递方式、容器和队列实现等内部设计，除非构成兼容性或强制架构约束，否则留在软件设计说明书（SDD"
+    },
+    {
+      "number": null,
+      "title": "1. 范围",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 3,
+      "line_start": 12,
+      "text_length": 190,
+      "text_preview": "- 软件名称：通信中间件框架（transport）。\n- 软件类型：C++17 通信中间件库。\n- 目标版本：协程原生目标架构。\n- 目标平台：Linux；基准硬件见 3.6.2。\n- 需求状态用语：\n  - **应/不得**：强制、可验收的需求；\n  - **暂定**：当前作为验收基线，后续变更须评审；\n  - **TBD**：尚未具备最终验收条件，不得用占位值通过正式验收。"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 概述",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 338,
+      "text_preview": "本软件提供三层解耦的通信能力：\n\n1. **Transport（传输）**：面向 TCP、UDP、串口和 DDS 的纯字节或样本收发，不解释线缆格式和业务语义；\n2. **Codec（编解码）**：在逻辑消息与线缆字节之间转换，负责序列化、分帧、校验和重同步；\n3. **Comm/node（交互节点）**：组织请求关联、入站分发、超时、连接状态及协议交互。\n\n目标架构以 **AsyncTask 协"
+    },
+    {
+      "number": null,
+      "title": "2. 引用文档",
+      "level": 2,
+      "line_start": 35,
+      "text_length": 809,
+      "text_preview": "| 编号 | 文档 | 用途 |\n|---|---|---|\n| DOC-1 | `README.md` | 项目概览与构建入口 |\n| DOC-2 | git tag `v0.3.0` | as-built 需求基线存档（P0 已从 master 删除，见该 tag） |\n| DOC-3 | git tag `v0.3.0` | as-built 内部设计存档（P0 已从 master 删除，见"
+    },
+    {
+      "number": null,
+      "title": "3. 需求",
+      "level": 2,
+      "line_start": 54,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 能力需求（RT_BASIC_ABILITY）",
+      "level": 3,
+      "line_start": 56,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 AsyncTask 集成能力（RT_CORO_RUNTIME）",
+      "level": 4,
+      "line_start": 58,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1.1",
+      "title": "3.1.1.1 功能需求",
+      "level": 5,
+      "line_start": 60,
+      "text_length": 452,
+      "text_preview": "- **RT_CORO_RUNTIME_001** 框架应以 AsyncTask 作为通信节点、异步 I/O、等待、定时和协作取消的运行环境，不得另设业务线程执行器代替 AsyncTask 调度。\n- **RT_CORO_RUNTIME_002** 框架应支持不同节点在 AsyncTask 的多个运行线程上并行推进，不得把系统限定为单一全局调度线程。\n- **RT_CORO_RUNTIME_003"
+    },
+    {
+      "number": "3.1.1.2",
+      "title": "3.1.1.2 输入输出",
+      "level": 5,
+      "line_start": 68,
+      "text_length": 171,
+      "text_preview": "- 输入：宿主提供的 AsyncTask 运行环境、可选执行域配置、来自任意 AsyncTask fiber 的节点操作。\n- 输出：异步操作的结构化成功或失败结果；不得以未捕获异常向调用方报告预期失败。\n- 需要挂起的操作若从非 AsyncTask fiber 调用，应立即返回 `InvalidState`，不得永久阻塞或产生未定义行为。"
+    },
+    {
+      "number": "3.1.1.3",
+      "title": "3.1.1.3 行为过程描述",
+      "level": 5,
+      "line_start": 74,
+      "text_length": 153,
+      "text_preview": "1. 宿主启动 AsyncTask 运行环境。\n2. 节点在首次成功启动时绑定所属执行域。\n3. 其他 fiber 发起操作时，节点将操作转交所属执行域并异步等待结果。\n4. 不同节点可并行；同一节点按本 SRS 规定的串行和优先级规则处理状态。\n5. 运行环境停止时，节点按 3.1.6 的关闭规则收敛。"
+    },
+    {
+      "number": "3.1.1.4",
+      "title": "3.1.1.4 行为参数",
+      "level": 5,
+      "line_start": 82,
+      "text_length": 153,
+      "text_preview": "- 调度模型：M:N、协作式；具体 worker 数和 affinity 策略由 AsyncTask 与 SDD 决定。\n- 节点执行域：首次成功启动后稳定、不迁移。\n- 同节点入站业务处理并发数：1。\n- 裸线程调用：仅无需挂起且明确声明为线程安全的查询可被允许；其余返回 `InvalidState`。"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 多介质传输能力（RT_TRANSPORT）",
+      "level": 4,
+      "line_start": 89,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.2.1",
+      "title": "3.1.2.1 功能需求",
+      "level": 5,
+      "line_start": 91,
+      "text_length": 770,
+      "text_preview": "- **RT_TRANSPORT_001** 框架应支持 TCP 客户端、TCP 服务端连接、UDP、串口和 DDS 通信，并向节点提供一致的异步收发语义。\n- **RT_TRANSPORT_002** 传输层应只处理字节、样本、来源和目的地址，不得解释消息类型、请求关联或 payload 业务含义。\n- **RT_TRANSPORT_003** TCP 和串口应按字节流交付，单次读取不承诺帧边界"
+    },
+    {
+      "number": "3.1.2.2",
+      "title": "3.1.2.2 输入输出",
+      "level": 5,
+      "line_start": 102,
+      "text_length": 191,
+      "text_preview": "- 输入：介质配置、待发送字节或样本、可选目的地址、取消信号和操作超时。\n- 输出：收到的数据及来源信息，或结构化失败结果。\n- TCP/串口来源在连接存续期间表示该连接对端；UDP 来源应包含发送方地址和端口；DDS 来源应包含足以进行主题路由的信息。\n- 配置非法时应在创建底层通信资源或发送数据之前返回 `Configuration` 或 `InvalidArgument`。"
+    },
+    {
+      "number": "3.1.2.3",
+      "title": "3.1.2.3 行为过程描述",
+      "level": 5,
+      "line_start": 109,
+      "text_length": 120,
+      "text_preview": "1. 节点校验配置并启动传输。\n2. 接收数据被送入对应编解码器；传输层不自行拼接或拆解业务帧。\n3. 发送操作在节点所属执行域内串行进入底层介质。\n4. 对端断开、I/O 失败或关闭时，传输将原因报告节点，由节点按连接状态和重连规则处理。"
+    },
+    {
+      "number": "3.1.2.4",
+      "title": "3.1.2.4 行为参数",
+      "level": 5,
+      "line_start": 116,
+      "text_length": 417,
+      "text_preview": "- 活动读操作上限：每传输实例 1 个；违反时返回 `InvalidState`。\n- 流式部分写失败：当前发送返回 `Io` 或 `Connection`；当前物理连接必须关闭；不得继续在该连接发送，也不得自动重发残缺帧。\n- 发送完成语义：见 RT_TRANSPORT_008；“进入操作系统发送缓冲”不等于“对端已接收”，送达由介质可靠性与上层请求超时各自负责。\n- 不采用 fire-and-"
+    },
+    {
+      "number": "3.1.3",
+      "title": "3.1.3 编解码能力（RT_CODEC）",
+      "level": 4,
+      "line_start": 126,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.3.1",
+      "title": "3.1.3.1 功能需求",
+      "level": 5,
+      "line_start": 128,
+      "text_length": 379,
+      "text_preview": "- **RT_CODEC_001** 框架应允许用户提供自定义编解码器，并将其装配到节点；编解码器是公共扩展能力。\n- **RT_CODEC_002** 编码应把一条逻辑消息转换为一个完整线缆帧；解码应把输入转换为零条、一条或多条逻辑消息。\n- **RT_CODEC_003** 流式编解码器应支持跨任意接收切片拼帧；报文式编解码器应保持单个数据报或样本边界。\n- **RT_CODEC_004** "
+    },
+    {
+      "number": "3.1.3.2",
+      "title": "3.1.3.2 输入输出",
+      "level": 5,
+      "line_start": 137,
+      "text_length": 176,
+      "text_preview": "- 编码输入：一条逻辑消息及协议配置。\n- 编码输出：完整线缆帧，或 `Frame`、`Codec`、`InvalidArgument`、`Unsupported` 等结构化失败。\n- 解码输入：字节流切片、完整数据报或完整 DDS 样本。\n- 解码输出：按接受顺序排列的零到多条合法消息，并可伴随坏帧诊断；具体 C++ 返回类型留给 API/SDD。"
+    },
+    {
+      "number": "3.1.3.3",
+      "title": "3.1.3.3 行为过程描述",
+      "level": 5,
+      "line_start": 144,
+      "text_length": 142,
+      "text_preview": "1. 编码器校验字段和帧长，成功后生成完整帧。\n2. 流式解码器追加允许范围内的数据，扫描同步信息并提取完整帧。\n3. 坏帧产生结构化 `Frame` 诊断、指标和 Trace，然后尝试重新同步。\n4. 可确认的后续合法帧继续交付；无法确认下一帧边界时，仅保留重新同步所需的最小后缀。"
+    },
+    {
+      "number": "3.1.3.4",
+      "title": "3.1.3.4 行为参数",
+      "level": 5,
+      "line_start": 151,
+      "text_length": 159,
+      "text_preview": "- 外部系统协议最大帧长及字段范围见 3.2.7。\n- 不设置固定的连续坏帧数量或错误率关闭阈值。\n- 可恢复坏帧不得关闭节点或连接。\n- 只有解码器判定数据流无法恢复，或底层发生致命 I/O 错误时，才关闭当前物理连接；TCP 客户端随后按 3.1.7 重连。\n- 精确同步算法、缓存容器及诊断返回结构属于 SDD。"
+    },
+    {
+      "number": "3.1.4",
+      "title": "3.1.4 请求关联能力（RT_REQUEST）",
+      "level": 4,
+      "line_start": 159,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.4.1",
+      "title": "3.1.4.1 功能需求",
+      "level": 5,
+      "line_start": 161,
+      "text_length": 464,
+      "text_preview": "- **RT_REQUEST_001** 节点应支持多个并发在途请求，并依据协议提供的关联信息把响应交给唯一请求等待者。\n- **RT_REQUEST_002** 正在使用的关联标识不得重复分配或被覆盖；冲突应在发送前返回 `ResourceExhausted` 或 `InvalidState`。\n- **RT_REQUEST_003** 每个请求应且只能以成功、`Timeout`、`Cancel"
+    },
+    {
+      "number": "3.1.4.2",
+      "title": "3.1.4.2 输入输出",
+      "level": 5,
+      "line_start": 170,
+      "text_length": 97,
+      "text_preview": "- 输入：逻辑请求、目的地址、关联信息生成条件、总超时和取消信号。\n- 输出：唯一匹配响应，或机器可判别的失败结果。\n- 迟到、重复和无匹配响应的输出仅进入指标和 Trace，不进入业务消息流。"
+    },
+    {
+      "number": "3.1.4.3",
+      "title": "3.1.4.3 行为过程描述",
+      "level": 5,
+      "line_start": 176,
+      "text_length": 125,
+      "text_preview": "1. 节点接受请求并立即启动总超时计时。\n2. 在发送前建立唯一关联；无法建立时不得发送。\n3. 请求等待发送、实际发送和响应匹配。\n4. 首个合法终结条件完成请求并清理关联。\n5. 后续响应被丢弃并按“迟到”“重复”“无匹配”或“旧代际”分类报告。"
+    },
+    {
+      "number": "3.1.4.4",
+      "title": "3.1.4.4 行为参数",
+      "level": 5,
+      "line_start": 184,
+      "text_length": 243,
+      "text_preview": "- 总超时从节点接受请求时开始，包含发送排队、实际发送和等待响应的全部时间。\n- 发送开始前超时或取消：从待发送集合移除，不得发送。\n- 已开始发送后超时：本地返回 `Timeout`，不得截断已开始写入的帧。\n- 已开始发送后取消：本地立即返回 `Cancelled`，底层应尽力完整写完该帧；随后响应作为迟到响应丢弃。\n- 已开始写入后自身失败：按 3.1.2.4 的部分写失败规则处理。\n- 对"
+    },
+    {
+      "number": "3.1.5",
+      "title": "3.1.5 入站业务处理能力（RT_HANDLER）",
+      "level": 4,
+      "line_start": 193,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.5.1",
+      "title": "3.1.5.1 功能需求",
+      "level": 5,
+      "line_start": 195,
+      "text_length": 433,
+      "text_preview": "- **RT_HANDLER_001** 应用应以组合方式为节点注册“入站业务处理器”，无需继承框架节点类型或重写虚函数。\n- **RT_HANDLER_002** 入站业务处理器应运行在 AsyncTask fiber 和节点所属执行域中，不得直接在 Qt I/O 回调线程或 DDS provider listener 线程执行。\n- **RT_HANDLER_003** 同一节点的入站业务处理"
+    },
+    {
+      "number": "3.1.5.2",
+      "title": "3.1.5.2 输入输出",
+      "level": 5,
+      "line_start": 204,
+      "text_length": 113,
+      "text_preview": "- 输入：已经成功解码并判定为普通入站业务事件的逻辑消息，以及处理器可观察的取消信号。\n- 输出：处理结果或结构化失败；协议需要响应时，响应语义由对应协议能力规定。\n- 坏帧、迟到响应、重复响应和无匹配响应不得作为处理器输入。"
+    },
+    {
+      "number": "3.1.5.3",
+      "title": "3.1.5.3 行为过程描述",
+      "level": 5,
+      "line_start": 210,
+      "text_length": 141,
+      "text_preview": "1. 合法业务消息进入节点有界业务队列。\n2. 节点在所属执行域启动一个处理器 fiber。\n3. 处理器可以顺序 await 其他异步操作；节点同时继续响应匹配和控制处理。\n4. 处理器返回后，节点启动下一条业务消息。\n5. 处理失败仅终结当前业务事件，并产生指标和 Trace。"
+    },
+    {
+      "number": "3.1.5.4",
+      "title": "3.1.5.4 行为参数",
+      "level": 5,
+      "line_start": 218,
+      "text_length": 478,
+      "text_preview": "- 每节点默认业务队列上限：1024 个事件且 16 MiB；任一上限达到即视为满。\n- 事件数量可配置范围：1～65536；字节上限可配置范围为 64 KiB～256 MiB（每节点），默认 16 MiB。\n- 框架不跨节点核算聚合内存；宿主须保证 Σ(各节点业务队列上限 + DDS 交接队列上限) 落在 3.6.2 的 RSS 预算内。\n- 队列满时：拒绝最新事件，记录 `ResourceEx"
+    },
+    {
+      "number": "3.1.6",
+      "title": "3.1.6 节点生命周期与关闭能力（RT_LIFECYCLE）",
+      "level": 4,
+      "line_start": 229,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.6.1",
+      "title": "3.1.6.1 功能需求",
+      "level": 5,
+      "line_start": 231,
+      "text_length": 788,
+      "text_preview": "- **RT_LIFECYCLE_001** 节点生命周期应为 `Created → Running → Closing → Closed`；进入 `Closed` 后不得重新启动。\n- **RT_LIFECYCLE_002** TCP 客户端物理连接状态应与节点生命周期分离，至少包括 `Disconnected`、`Connecting`、`Connected` 和 `Reconnecting`"
+    },
+    {
+      "number": "3.1.6.2",
+      "title": "3.1.6.2 输入输出",
+      "level": 5,
+      "line_start": 241,
+      "text_length": 147,
+      "text_preview": "- 输入：启动、关闭、等待关闭、运行环境退出和底层致命错误。\n- 输出：节点生命周期、TCP 连接状态、启动结果和完全关闭结果。\n- 用户主动关闭导致的未决操作返回 `Closed`；调用方取消返回 `Cancelled`；超时返回 `Timeout`；远端断开返回 `Connection`。"
+    },
+    {
+      "number": "3.1.6.3",
+      "title": "3.1.6.3 行为过程描述",
+      "level": 5,
+      "line_start": 247,
+      "text_length": 264,
+      "text_preview": "1. 有效启动使节点进入 `Running`；TCP 客户端可同时处于 `Connecting` 或 `Reconnecting`，不要求首次物理连接已建立。\n2. 第一次关闭使节点进入 `Closing`，立即拒绝新操作。\n3. 未开始发送的操作返回 `Closed`，所有在途请求恰好一次返回 `Closed`。\n4. 节点中止活动 I/O 并关闭物理连接，不等待业务响应，也不默认排空发送队列。"
+    },
+    {
+      "number": "3.1.6.4",
+      "title": "3.1.6.4 行为参数",
+      "level": 5,
+      "line_start": 256,
+      "text_length": 149,
+      "text_preview": "- 空闲节点关闭时延：暂定 P99 ≤100 ms。\n- 正常负载节点关闭时延：暂定 P99 ≤500 ms。\n- 最多 256 个在途请求时：暂定完全关闭 ≤1 s。\n- 上述指标仅适用于遵守 3.1.5.4 协作取消要求的处理器。\n- 默认不提供“排空后关闭”；若后续需要，应作为独立能力定义。"
+    },
+    {
+      "number": "3.1.7",
+      "title": "3.1.7 TCP 客户端重连能力（RT_TCP_RECONNECT）",
+      "level": 4,
+      "line_start": 264,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.7.1",
+      "title": "3.1.7.1 功能需求",
+      "level": 5,
+      "line_start": 266,
+      "text_length": 438,
+      "text_preview": "- **RT_TCP_RECONNECT_001** TCP 客户端在节点保持 `Running` 时应自动重连，直到成功或节点关闭；该能力为 TCP 客户端固定语义，不设置运行时 `auto_reconnect` 开关。\n- **RT_TCP_RECONNECT_002** 物理连接断开时，所有当前在途请求应立即且恰好一次返回 `Connection`，不得跨连接代际自动重放。\n- **RT_T"
+    },
+    {
+      "number": "3.1.7.2",
+      "title": "3.1.7.2 输入输出",
+      "level": 5,
+      "line_start": 274,
+      "text_length": 120,
+      "text_preview": "- 输入：有效 TCP 端点、连接超时、退避参数、关闭信号和底层连接事件。\n- 输出：连接状态、配置版本、连接代际、最近失败、连续尝试次数和下一次尝试时间。\n- 等待首次 `Connected` 的调用方超时只结束该次等待，不停止后台重连。"
+    },
+    {
+      "number": "3.1.7.3",
+      "title": "3.1.7.3 行为过程描述",
+      "level": 5,
+      "line_start": 280,
+      "text_length": 174,
+      "text_preview": "1. 有效配置启动后，节点进入 `Running`，TCP 状态进入 `Connecting`。\n2. 连接失败后按退避策略进入 `Reconnecting`。\n3. 连接成功后建立新代际并进入 `Connected`。\n4. 运行中断开时，先终结旧代际请求和未开始处理的旧代际业务事件，再重连。\n5. `Close` 终止当前连接尝试和后续重连。"
+    },
+    {
+      "number": "3.1.7.4",
+      "title": "3.1.7.4 行为参数",
+      "level": 5,
+      "line_start": 288,
+      "text_length": 283,
+      "text_preview": "- 退避初值：1 s；倍率：2；上限：30 s；随机抖动：±20%；无限次重试，直到关闭。\n- 连接连续稳定 60 s 后，下一次断开才重置退避级别。\n- 单次连接超时：暂定默认 5 s，可配置范围 100 ms～60 s。\n- 可重试失败：拒绝连接、连接超时、网络不可达或暂时不可用、临时 DNS 失败、对端关闭或复位、致命 socket I/O 错误。\n- 不可重试失败：无效配置、非法生命周期操"
+    },
+    {
+      "number": "3.1.8",
+      "title": "3.1.8 TCP 运行时重配置能力（RT_TCP_RECONFIG）",
+      "level": 4,
+      "line_start": 297,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.8.1",
+      "title": "3.1.8.1 功能需求",
+      "level": 5,
+      "line_start": 299,
+      "text_length": 444,
+      "text_preview": "- **RT_TCP_RECONFIG_001** 宿主应能显式提交完整 TCP 连接管理配置快照；框架不负责监听配置文件或配置中心。\n- **RT_TCP_RECONFIG_002** 热更新范围仅包括主机、端口、连接超时和重连退避参数，不包括传输类型、编解码器、协议语义、节点类型或节点执行域。\n- **RT_TCP_RECONFIG_003** 配置应先完整校验再原子应用；任一字段非法时整个更"
+    },
+    {
+      "number": "3.1.8.2",
+      "title": "3.1.8.2 输入输出",
+      "level": 5,
+      "line_start": 308,
+      "text_length": 88,
+      "text_preview": "- 输入：完整配置快照及其单调版本。\n- 输出：应用结果、当前有效配置版本，以及必要的状态、指标和 Trace。\n- 失败结果应区分参数非法、版本过期、生命周期非法和内部错误。"
+    },
+    {
+      "number": "3.1.8.3",
+      "title": "3.1.8.3 行为过程描述",
+      "level": 5,
+      "line_start": 314,
+      "text_length": 181,
+      "text_preview": "1. 宿主提交配置快照。\n2. 节点完整校验字段和版本；失败时不改变任何运行状态。\n3. 主机或端口变化时，节点停止接受新发送，旧在途请求以重配置导致的 `Connection` 原因完成，关闭旧连接并立即尝试新端点。\n4. 新端点首次失败后进入正常退避重连。\n5. 仅策略参数变化时，正在进行的连接尝试或已经开始的退避等待使用旧快照；下一次连接动作使用新参数。"
+    },
+    {
+      "number": "3.1.8.4",
+      "title": "3.1.8.4 行为参数",
+      "level": 5,
+      "line_start": 322,
+      "text_length": 140,
+      "text_preview": "- 快照粒度：全量、原子。\n- 端点变化后的第一次连接尝试：立即进行，不先等待退避。\n- 旧代际未开始的业务事件不得再启动处理器；已运行处理器可完成清理，但不得在新代际隐式响应。\n- 配置变更和自动重连是两个独立需求；不得通过 `auto_reconnect` 开关混合两者语义。"
+    },
+    {
+      "number": "3.1.9",
+      "title": "3.1.9 协议交互节点能力（RT_NODE）",
+      "level": 4,
+      "line_start": 329,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.9.1",
+      "title": "3.1.9.1 功能需求",
+      "level": 5,
+      "line_start": 331,
+      "text_length": 809,
+      "text_preview": "- **RT_NODE_001** 框架应提供外部系统协议节点和 DDS 节点，并支持请求—响应、反馈、周期发送和发布—订阅等目标交互能力。\n- **RT_NODE_002** 外部系统协议现有五种交互行为 `noresponse`、`needresponse`、`withfeedback`、`needfeedback`、`repeating` 的精确状态机、时序、重试和终结帧语义为 TBD，本版"
+    },
+    {
+      "number": "3.1.9.2",
+      "title": "3.1.9.2 输入输出",
+      "level": 5,
+      "line_start": 341,
+      "text_length": 133,
+      "text_preview": "- 外部协议输入输出：命令、状态、响应、结果、心跳、payload、协议和关联字段，以及网络或串口寻址信息。\n- DDS 输入输出：topic、样本、关联标识、来源和回送地址等元数据。\n- 精确业务方法名称、handler 类型和 C++ 签名属于 API/SDD。"
+    },
+    {
+      "number": "3.1.9.3",
+      "title": "3.1.9.3 行为过程描述",
+      "level": 5,
+      "line_start": 347,
+      "text_length": 130,
+      "text_preview": "1. 节点接收传输数据并调用已装配的编解码器。\n2. 合法消息优先进行请求响应匹配。\n3. 未匹配且属于业务输入的消息进入有界业务队列。\n4. 协议节点依据相应协议状态机生成必要响应或周期输出。\n5. 五种外部协议交互的完整行为在对应 TBD 关闭后补入本节。"
+    },
+    {
+      "number": "3.1.9.4",
+      "title": "3.1.9.4 行为参数",
+      "level": 5,
+      "line_start": 355,
+      "text_length": 305,
+      "text_preview": "- 控制和处理优先级：\n  1. 关闭、取消、配置代际和连接代际切换；\n  2. 请求响应匹配与请求完成；\n  3. 普通入站业务消息；\n  4. Trace 和非关键统计输出。\n- 优先级仅约束可观察结果，不规定线程、队列或调度算法。\n- DDS listener 转交必须有界且不得阻塞 listener；交接队列默认容量 1024 样本且 16 MiB、独立可配（事件数 1～65536，字节上"
+    },
+    {
+      "number": "3.1.10",
+      "title": "3.1.10 错误与可观测能力（RT_ERROR_TRACE）",
+      "level": 4,
+      "line_start": 365,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.10.1",
+      "title": "3.1.10.1 功能需求",
+      "level": 5,
+      "line_start": 367,
+      "text_length": 489,
+      "text_preview": "- **RT_ERROR_001** 所有可预期失败应通过 `Result<T>`、`Status` 或等价的非异常结果返回；公共异步边界不得抛出异常。\n- **RT_ERROR_002** 错误应包含稳定、机器可判别的类别和可供诊断的文本，不得要求调用方解析字符串前缀判断类别。\n- **RT_ERROR_003** 最低错误类别应包括：`InvalidArgument`、`InvalidStat"
+    },
+    {
+      "number": "3.1.10.2",
+      "title": "3.1.10.2 输入输出",
+      "level": 5,
+      "line_start": 375,
+      "text_length": 125,
+      "text_preview": "- 输入：各层操作、状态变化、异常条件和可选 Trace sink。\n- 输出：结构化结果、计数器、时延分布和结构化 Trace 事件。\n- Trace 应至少支持关联同一节点、配置版本、连接代际和请求；具体字段名称和序列化格式属于 SDD/API。"
+    },
+    {
+      "number": "3.1.10.3",
+      "title": "3.1.10.3 行为过程描述",
+      "level": 5,
+      "line_start": 381,
+      "text_length": 77,
+      "text_preview": "失败在最接近发生位置被分类并向调用方或节点返回；节点根据类别执行继续、丢弃当前事件、关闭物理连接或完全关闭。可观测出口记录事实，但不得反向改变协议控制流。"
+    },
+    {
+      "number": "3.1.10.4",
+      "title": "3.1.10.4 行为参数",
+      "level": 5,
+      "line_start": 385,
+      "text_length": 216,
+      "text_preview": "- 用户关闭→`Closed`；调用方取消→`Cancelled`；总超时→`Timeout`；远端断开→`Connection`。\n- 单条坏帧和单个处理器失败只隔离当前事件；连接级致命错误关闭当前物理连接；内部不变量破坏应报告 `Internal` 并进入安全关闭。\n- Trace sink 自身失败不得导致通信操作失败；失败应被隔离并计数。\n- payload 记录必须由宿主显式启用，并受脱"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 外部接口需求（RT_INTERFACE）",
+      "level": 3,
+      "line_start": 392,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 接口标识和接口图",
+      "level": 4,
+      "line_start": 394,
+      "text_length": 309,
+      "text_preview": "```text\n宿主应用\n   │  RT_IF_API：节点、配置、编解码扩展、结果与可观测接口\n   ▼\n交互节点（Protocol / DDS）\n   │\n   ├── Codec 公共扩展点 ── RT_IF_SYSFRAME / DDS 消息格式\n   │\n   └── 内部传输能力\n          ├── RT_IF_TCP ───── TCP 对端\n          ├── R"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 库编程接口（RT_IF_API）",
+      "level": 4,
+      "line_start": 411,
+      "text_length": 213,
+      "text_preview": "- 宿主应能创建和配置节点、装配编解码器、注册入站业务处理器、启动与关闭节点、发送消息、发起请求、等待连接状态及读取可观测状态。\n- 公共可失败操作应返回结构化结果；需要挂起的操作应可从 AsyncTask fiber 使用。\n- 节点供应用组合使用，不要求应用继承节点类型。\n- 节点/handler 的确切 C++ 类名、函数签名、所有权和 ABI 兼容规则由 API/SDD 固化；固化后如作为"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 TCP 接口（RT_IF_TCP）",
+      "level": 4,
+      "line_start": 418,
+      "text_length": 161,
+      "text_preview": "- 采用 TCP/IP 字节流，不保留应用帧边界。\n- 客户端应支持 3.1.7 的自动重连和 3.1.8 的运行时重配置。\n- 服务端每条接受连接对应独立节点；监听、接受失败和连接关闭应可观测。\n- TCP keepalive、TLS、socket 缓冲区和 Nagle 策略为 TBD 或 SDD 配置，不在本版固定。"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 UDP 接口（RT_IF_UDP）",
+      "level": 4,
+      "line_start": 425,
+      "text_length": 131,
+      "text_preview": "- 一次接收应保留一个 UDP 数据报及发送方 IP/端口；一次发送产生一个数据报。\n- 不承诺可靠、重传或有序；数据报过大、地址非法或发送失败应结构化报告。\n- 性能基准使用不分片的 1200 B payload；更大报文只作观察项，除非部署网络另有正式约束。"
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 串口接口（RT_IF_SERIAL）",
+      "level": 4,
+      "line_start": 431,
+      "text_length": 95,
+      "text_preview": "- 支持设备路径、波特率、数据位、停止位和校验方式配置。\n- 串口按字节流处理，不承诺读取边界等于协议帧边界。\n- 串口断开后的自动重连策略为 TBD；确定前不得宣称与 TCP 客户端相同。"
+    },
+    {
+      "number": "3.2.6",
+      "title": "3.2.6 DDS 接口（RT_IF_DDS）",
+      "level": 4,
+      "line_start": 437,
+      "text_length": 216,
+      "text_preview": "- 支持可配置 domain、topic 和 QoS，并通过 provider 适配具体 DDS 实现。\n- 每个 DDS sample 保持为一个完整输入单元。\n- DDS Reliable/BestEffort、History、Depth 等 QoS 与框架本地队列行为必须分别描述；本地已经丢弃的样本不得宣称可由 DDS reliability 恢复。\n- Fast DDS 未安装时，框架的非"
+    },
+    {
+      "number": "3.2.7",
+      "title": "3.2.7 外部系统协议帧接口（RT_IF_SYSFRAME）",
+      "level": 4,
+      "line_start": 444,
+      "text_length": 719,
+      "text_preview": "当前候选线缆布局如下；它是通信对端可观察的互操作契约，最终值必须由 EXT-3 确认：\n\n| 顺序 | 字段 | 宽度 | 字节序/约束 | 状态 |\n|---:|---|---:|---|---|\n| 1 | `head_flag` | 4 B | 候选 `AA BB CC DD` | TBD |\n| 2 | `frm_type` | 1 B | COMMAND/RESPONSE/RESULT/"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 内部接口需求（RT_IN_INTERFACE）",
+      "level": 3,
+      "line_start": 464,
+      "text_length": 521,
+      "text_preview": "本 SRS 不固定内部 `ITransport` 方法、DDS bridge、挂起表、队列、channel、锁、Qt signal 或 wakeup 机制。上述内容由 SDD 描述，但内部设计必须满足以下需求级约束：\n\n- **RT_IN_INTERFACE_001** 节点、编解码和传输三层应保持职责隔离；传输不得依赖逻辑消息或协议交互语义。\n- **RT_IN_INTERFACE_002** "
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 内部数据需求（RT_IN_DATA）",
+      "level": 3,
+      "line_start": 474,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 逻辑消息数据（RT_DATA_MESSAGE）",
+      "level": 4,
+      "line_start": 476,
+      "text_length": 140,
+      "text_preview": "- 框架应表达 payload、消息类别、关联信息、来源、目的地和协议所需元数据。\n- 不要求所有介质共用一个包含全部字段的 C++ `Message` 结构；具体类型拆分和存储布局由 SDD 决定。\n- payload 所有权和生命周期必须明确，异步操作完成前不得出现悬空引用。"
+    },
+    {
+      "number": "3.4.2",
+      "title": "3.4.2 状态与关联数据（RT_DATA_STATE）",
+      "level": 4,
+      "line_start": 482,
+      "text_length": 124,
+      "text_preview": "- 节点生命周期、TCP 连接状态、配置版本和连接代际应分别存储，不得用一个布尔量混合表示。\n- 每个在途请求应能唯一关联其连接代际、关联标识、超时/取消状态和恰好一次完成状态。\n- 状态变化应具备足够信息支持诊断，但诊断文本不得作为机器判别依据。"
+    },
+    {
+      "number": "3.4.3",
+      "title": "3.4.3 配置数据（RT_DATA_CONFIG）",
+      "level": 4,
+      "line_start": 488,
+      "text_length": 105,
+      "text_preview": "- 配置应是可完整校验的数据快照。\n- TCP 运行时配置应携带单调版本；应用成功后，所有后续连接动作应能指出所用版本。\n- 密钥、凭据等安全数据不属于当前配置范围；若后续加入，应另行规定存储、日志和清除要求。"
+    },
+    {
+      "number": "3.4.4",
+      "title": "3.4.4 缓冲与计量数据（RT_DATA_BUFFER）",
+      "level": 4,
+      "line_start": 494,
+      "text_length": 278,
+      "text_preview": "- 所有面向外部输入或异步生产者的缓存都应**要么有明确上界与溢出行为，要么以协程背压方式天然有界**，且均具备计数指标；发送侧经背压天然有界（RT_TRANSPORT_008），不产生溢出丢弃。\n- 统计至少包括：收发数量/字节、最近发送/接收时间戳、错误类别、坏帧、迟到/重复/无匹配响应、队列深度与丢弃、发送等待者深度、请求时延、处理器时长、重连次数和关闭时延。\n- 每一次框架本地丢弃或重复抑"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 设计和实现约束（RT_DESIGN）",
+      "level": 3,
+      "line_start": 501,
+      "text_length": 1075,
+      "text_preview": "- **RT_DESIGN_001** 使用 C++17 和 CMake，目标运行平台为 Linux。\n- **RT_DESIGN_002** AsyncTask 是强制协程运行时；不得引入 `IExecutor`/`ThreadExecutor` 等独立业务调度体系。AsyncTask 本身按 M:N 模型使用。\n- **RT_DESIGN_003** 目标架构不得设置独立 `Interacti"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 其他需求（RT_OTHER）",
+      "level": 3,
+      "line_start": 512,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.6.1",
+      "title": "3.6.1 安全与鲁棒性（RT_SECURITY）",
+      "level": 4,
+      "line_start": 514,
+      "text_length": 182,
+      "text_preview": "- 本版本不提供加密、身份认证或访问控制；这些能力由外部协议、部署网络或 DDS provider/QoS 提供。\n- 所有外部输入必须进行长度、范围、状态和资源上限校验。\n- 畸形输入、未知来源和异常断连不得导致崩溃、越界访问、use-after-free 或内存无界增长。\n- 默认 Trace 不记录完整 payload，不得意外记录未来配置中的凭据或密钥。"
+    },
+    {
+      "number": "3.6.2",
+      "title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "level": 4,
+      "line_start": 521,
+      "text_length": 1714,
+      "text_preview": "**基准环境 PERF-REF-1**\n\n- CPU：飞腾 FT-2000/4，AArch64，4 核，2.2 GHz；\n- 内存：8 GiB；\n- 网络：两台同等设备，1 Gbit/s 全双工以太网，MTU 1500，无人为后台流量；\n- Linux 发行版、内核、编译器版本、编译优化参数、Qt/Fast DDS 版本：TBD，正式测试前必须固化。\n\n**负载模型**\n\n- payload：64"
+    },
+    {
+      "number": "3.6.3",
+      "title": "3.6.3 可测试性与验收（RT_TESTABILITY）",
+      "level": 4,
+      "line_start": 567,
+      "text_length": 386,
+      "text_preview": "- 应提供内存 Fake 传输/provider 或等效测试替身，验证生命周期、关联、乱序响应、取消、超时、重连代际、队列溢出和关闭。\n- 应测试至少 256 个并发在途请求及乱序响应，验证恰好一次完成和资源清理。\n- 应通过命名丢弃原因计数器验证“框架导致丢失/重复 = 0”：容量内负载下断言各损失类计数器为 0，过载下验证每次丢弃计入正确的命名原因（见 3.6.2、3.4.4）。\n- 应对 T"
+    },
+    {
+      "number": "3.6.4",
+      "title": "3.6.4 待定项（RT_TBD）",
+      "level": 4,
+      "line_start": 576,
+      "text_length": 608,
+      "text_preview": "正式发布本 SRS 前至少关闭以下事项：\n\n| 编号 | 待定事项 | 对验收的影响 |\n|---|---|---|\n| TBD-001 | 五种外部协议交互的状态机、终结帧、超时和重试 | 阻塞对应交互能力验收 |\n| ~~TBD-002~~ | ~~多线程/多 fiber 并发发送的跨调用方排序~~ | **已关闭(v3)**：排序 = 节点执行域到达顺序（RT_TRANSPORT_007） "
+    },
+    {
+      "number": null,
+      "title": "4. 注释",
+      "level": 2,
+      "line_start": 590,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 术语",
+      "level": 3,
+      "line_start": 592,
+      "text_length": 532,
+      "text_preview": "| 术语 | 含义 |\n|---|---|\n| AsyncTask | 本目标架构强制使用的 M:N 协作式协程运行时 |\n| 节点所属执行域 | 节点可变状态和串行业务处理所在的稳定 AsyncTask 执行上下文；不等同于全系统单线程 |\n| 入站业务处理器 | 应用注册的、处理普通入站业务消息的协程处理逻辑；不是底层 I/O 回调 |\n| 请求等待 fiber | 发起请求并等待唯一响应或失"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 需求与设计边界",
+      "level": 3,
+      "line_start": 610,
+      "text_length": 289,
+      "text_preview": "下列内容不在本 SRS 固定，应在 SDD/API 文档说明：\n\n- `ITransport`、`ICodec`、`Result` 等具体 C++ 声明和方法名；\n- 内部挂起表的类名、模板参数、map/channel、锁和清理伪代码；\n- DDS 线程交接组件的名称、队列类型和唤醒方式；\n- Qt signal/slot、coro socket、affinity、线程投递和对象持有实现；\n- 编"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 范围外",
+      "level": 3,
+      "line_start": 623,
+      "text_length": 125,
+      "text_preview": "- payload 业务语义；\n- 消息代理和通用路由服务；\n- 本版本内建的加密、认证和访问控制；\n- TCP 业务请求跨连接自动重放；\n- 默认优雅排空关闭；\n- 自动监听配置文件或配置中心；\n- 运行时切换传输类型、编解码器、节点类型或执行域。"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 与当前实现的关系",
+      "level": 3,
+      "line_start": 633,
+      "text_length": 91,
+      "text_preview": "本文件描述目标行为，不表示 as-built 版本已经满足。当前实现与目标架构的差异应在 `CHANGELOG.md`、迁移计划和测试追溯矩阵中维护，不在需求条目中混入实现进度说明。"
+    }
+  ],
+  "constraint_count": 9,
+  "constraints": [
+    {
+      "value": 5.0,
+      "unit": "s",
+      "operator": "=",
+      "sentence": "- 单次连接超时：暂定默认 5 s，可配置范围 100 ms～60 s。",
+      "section": "3.1.7.4 行为参数",
+      "section_number": "3.1.7.4",
+      "section_title": "3.1.7.4 行为参数",
+      "line_start": 288
+    },
+    {
+      "value": 200.0,
+      "unit": "ms",
+      "operator": "≥",
+      "sentence": "- 单节点吞吐：1 KiB payload 持续至少 200 msg/s、持续 10 min；突发至少 300 msg/s、持续 60 s。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 300.0,
+      "unit": "ms",
+      "operator": "≥",
+      "sentence": "- 单节点吞吐：1 KiB payload 持续至少 200 msg/s、持续 10 min；突发至少 300 msg/s、持续 60 s。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 3000.0,
+      "unit": "ms",
+      "operator": "≥",
+      "sentence": "- 容量：暂定 30 节点 ×100 Hz，即聚合至少 3000 msg/s、持续 10 min；实际部署基线为 20 节点。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 10.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "20 节点 ×100 Hz、1 KiB、持续 24 h；预热 30 min 后至结束 RSS 增长不超过 10%，无崩溃、无资源泄漏、无框架导致的丢失或重复，并能完全关闭。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 80.0,
+      "unit": "%",
+      "operator": "≥",
+      "sentence": "口不采用固定消息频率指标：有效吞吐应达到按波特率、数据位、起始位、停止位和校验位计算的理论有效吞吐的至少 80%；框架附加时延暂定不超过理论线缆时延 +5 ms。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 200.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "、1 KiB 时，进程 CPU P95 暂定不超过四核总能力的 50%（Linux `top` 口径不超过 200%），且任一核心不得连续 60 s 高于 90%。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 2.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "- 未配置 Trace sink 时，吞吐、CPU 和 P99 时延影响暂定不超过 2%；配置 no-op sink 时不超过 10%。实际 I/O sink 的外部写入开销不计入，但不得",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    },
+    {
+      "value": 10.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "e sink 时，吞吐、CPU 和 P99 时延影响暂定不超过 2%；配置 no-op sink 时不超过 10%。实际 I/O sink 的外部写入开销不计入，但不得改变通信正确性。",
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "section_number": "3.6.2",
+      "section_title": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "line_start": 521
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 5,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "文档",
+        "用途"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "2. 引用文档",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "顺序",
+        "字段",
+        "宽度",
+        "字节序/约束",
+        "状态"
+      ],
+      "row_count": 10,
+      "data_row_count": 9,
+      "is_empty": false,
+      "section": "3.2.7 外部系统协议帧接口（RT_IF_SYSFRAME）",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "场景",
+        "P50",
+        "P95",
+        "P99",
+        "状态"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "3.6.2 性能与容量需求（RT_PERFORMANCE）",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "待定事项",
+        "对验收的影响"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "3.6.4 待定项（RT_TBD）",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "术语",
+        "含义"
+      ],
+      "row_count": 12,
+      "data_row_count": 11,
+      "is_empty": false,
+      "section": "4.1 术语",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

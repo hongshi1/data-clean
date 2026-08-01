@@ -1,0 +1,136 @@
+{
+  "doc_name": "fprime_Svc_FileDownlink_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_FileDownlink_sdd.md",
+  "md_lines": 130,
+  "md_chars": 5763,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Svc::FileDownlink Component",
+  "section_count": 14,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::FileDownlink Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1",
+      "title": "1 Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 871,
+      "text_preview": "`FileDownlink` is an active F´ component that manages spacecraft file downlink. Both operators and\ncomponents on the spacecraft can add files to the file queue, which `FileDownlink` will downlink\nfrom"
+    },
+    {
+      "number": "2",
+      "title": "2 Requirements",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 864,
+      "text_preview": "Requirement | Description | Rationale | Verification Method\n---- | ---- | ---- | ----\nFD-001 | `FileDownlink` shall queue up a list of files to downlink | The requirement provides the ability to simul"
+    },
+    {
+      "number": "3",
+      "title": "3 Design",
+      "level": 2,
+      "line_start": 26,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Assumptions",
+      "level": 3,
+      "line_start": 28,
+      "text_length": 796,
+      "text_preview": "The design of `FileDownlink` assumes the following:\n\n1. File downlink occurs by dividing files into packets\nof type [`Fw::FilePacket`](../../../Fw/FilePacket/docs/sdd.md).\n\n2. One file downlink happen"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Ports",
+      "level": 3,
+      "line_start": 46,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 Role Ports",
+      "level": 4,
+      "line_start": 48,
+      "text_length": 413,
+      "text_preview": "Name | Type | Role\n-----| ---- | ----\n`timeCaller` | `Fw::Time` | TimeGet\n`cmdIn` | [`Fw::Cmd`](../../../Fw/Cmd/docs/sdd.md) | Cmd\n`cmdRegOut` | [`Fw::CmdReg`](../../../Fw/Cmd/docs/sdd.md) | CmdReg\n`c"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 Component-Specific Ports",
+      "level": 4,
+      "line_start": 59,
+      "text_length": 653,
+      "text_preview": "Name | Type | Kind | Purpose\n---- | ---- | ---- | ----\n`sendFile` | `Svc::SendFileRequest` | guarded_input | Enqueues file for downlink\n`fileComplete` | `Svc::SendFileComplete` | output | Emits notifi"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Constants",
+      "level": 3,
+      "line_start": 69,
+      "text_length": 567,
+      "text_preview": "`FileDownlink` has the following constants, initialized\nat component instantiation time:\n\n* *downlinkPacketSize*: The size of the packets to use on downlink.\n* *cooldown*: The amount of time in ms to "
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 State",
+      "level": 3,
+      "line_start": 81,
+      "text_length": 455,
+      "text_preview": "`FileDownlink` maintains a *mode* equal to\none of the following values:\n\n* IDLE (0): `FileDownlink` is idle.\n\n* DOWNLINK (1): `FileDownlink` is performing a file downlink.\n\n* CANCEL (2): `FileDownlink"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 Commands",
+      "level": 3,
+      "line_start": 98,
+      "text_length": 75,
+      "text_preview": "`FileDownlink` recognizes the commands described in the following sections."
+    },
+    {
+      "number": "3.6.1",
+      "title": "3.6.1 SendFile/SendPartial",
+      "level": 4,
+      "line_start": 102,
+      "text_length": 517,
+      "text_preview": "SendFile is an asynchronous command that adds a file to the file downlink queue.\nIt has two arguments:\n\n1. *sourceFileName*: The name of the on-board file to send.\n2. *destFileName*: The name of the d"
+    },
+    {
+      "number": "3.6.2",
+      "title": "3.6.2 Cancel",
+      "level": 4,
+      "line_start": 118,
+      "text_length": 107,
+      "text_preview": "Cancel is a synchronous command.\nIf *mode* = DOWNLINK, it sets *mode* to CANCEL.\nOtherwise it does nothing."
+    },
+    {
+      "number": "4",
+      "title": "4 Checklists",
+      "level": 2,
+      "line_start": 124,
+      "text_length": 125,
+      "text_preview": "Checklist |\n-------- |\n[Design](Checklist/design.xlsx) |\n[Code](Checklist/code.xlsx) |\n[Unit Test](Checklist/unit_test.xls) |"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

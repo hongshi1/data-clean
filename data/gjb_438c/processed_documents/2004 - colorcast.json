@@ -1,0 +1,522 @@
+{
+  "doc_name": "2004 - colorcast",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/pure_extended/Dataset/P02. CS179G – ABC Paint Project/mineru_parsed/2004 - colorcast.pdf/auto/2004 - colorcast.pdf.md",
+  "md_lines": 420,
+  "md_chars": 25681,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "Software Requirements Specification",
+  "section_count": 56,
+  "sections": [
+    {
+      "number": null,
+      "title": "Software Requirements Specification",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 3,
+      "text_preview": "for"
+    },
+    {
+      "number": null,
+      "title": "CS179G / ABC Paint Project",
+      "level": 1,
+      "line_start": 5,
+      "text_length": 92,
+      "text_preview": "Version 1.0\n\nPrepared by Benjamin Arai and Conley Read\n\n\u0001-\u0003-\u0004\u0005\u0006\u0007\b\n\nFriday, February 13, 2004"
+    },
+    {
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 1261,
+      "text_preview": "Table of Contents ..   \nRevision History.   \n1. Introduction..   \n1.1 Purpose   \n1.2 Document Conventions.   \n1.3 Intended Audience and Reading Suggestions.   \n1.4 Product Scope 2   \n1.5 References. ."
+    },
+    {
+      "number": null,
+      "title": "Revision History",
+      "level": 2,
+      "line_start": 57,
+      "text_length": 423,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Reason For Changes</td><td rowspan=1 colspan=1>Version</td></tr><tr><td rowspan=1 colspan=1></td><t"
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 61,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 Purpose",
+      "level": 2,
+      "line_start": 63,
+      "text_length": 1159,
+      "text_preview": "In third quarter 2004, ABC Paint will migrate to a new paint numbering scheme. This migration comes at a time that ABC Paint will be adding and discontinuing a number of paints and collections. Althou"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 Document Conventions",
+      "level": 2,
+      "line_start": 71,
+      "text_length": 651,
+      "text_preview": "Two primary typographical conventions were followed in the generation of this specification paper. First, all acronyms are fully defined in their first use and then identified. They are also redundant"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 Intended Audience and Reading Suggestions",
+      "level": 2,
+      "line_start": 79,
+      "text_length": 1034,
+      "text_preview": "This document is intended for reading by developers and project managers. These readers will find that this document is a product specification only, not a design document. It is recommended that all "
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 Product Scope",
+      "level": 2,
+      "line_start": 85,
+      "text_length": 1089,
+      "text_preview": "Ensure that you have read section 1.1 before continuing to this section.\n\nThis system must enable a smooth transition to the new paint numbers and scheme. The system will be designed for use as long a"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 References",
+      "level": 2,
+      "line_start": 95,
+      "text_length": 298,
+      "text_preview": "ABC Paint Project Disaster Recovery Plan HTTP://cs179g.conleyread.net/docs/disaster\\_recovery.pdf\n\nABC Paint Design Problem Statement HTTP://cs179g.conleyread.net/docs/ProblemStatement.pdf\n\nKarl E. Wi"
+    },
+    {
+      "number": null,
+      "title": "2. Overall Description",
+      "level": 2,
+      "line_start": 103,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 Product Perspective",
+      "level": 2,
+      "line_start": 105,
+      "text_length": 1266,
+      "text_preview": "As defined in sections 1.1 and 1.4, the application for ABC Paint will be a first-of-type solution to ensure that their business and their customer’s paint selecting experience maintains continuity an"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Product Functions",
+      "level": 2,
+      "line_start": 117,
+      "text_length": 672,
+      "text_preview": "These functions are modularized sub-components of the client application. Each of the functions has a single purpose and can accomplish its mission without the other components. Together, the componen"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 User Classes and Characteristics",
+      "level": 2,
+      "line_start": 135,
+      "text_length": 919,
+      "text_preview": "ColorKast has identified two user classes for access to the new application. The first user class is default for all users and allows no administrative functionality whatsoever. The second class, the "
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 Operating Environment",
+      "level": 2,
+      "line_start": 147,
+      "text_length": 609,
+      "text_preview": "The proposed ColorKast Solution will be implemented in a client/server model. All processing of searches and storing of information will be local to the server.\n\nServer: The server requires at least a"
+    },
+    {
+      "number": "2.5",
+      "title": "2.5 Design and Implementation Constraints",
+      "level": 2,
+      "line_start": 155,
+      "text_length": 716,
+      "text_preview": "A few issues limit our choices when implementing a suitable solution for the ABC Paint Project.\n\nIt is very important that the application be web-based. We understand that in any design choice, preced"
+    },
+    {
+      "number": "2.6",
+      "title": "2.6 User Documentation",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 160,
+      "text_preview": "Documentation for users will be made available in the form of on-line help within the client application itself. An online tutorial will also be made available."
+    },
+    {
+      "number": "2.7",
+      "title": "2.7 Assumptions and Dependencies",
+      "level": 2,
+      "line_start": 169,
+      "text_length": 1008,
+      "text_preview": "ColorKast assumes that any use of the application will occur in an environment with full compliance to this specification.\n\nThe application will be used on a client computer that matches or exceeds th"
+    },
+    {
+      "number": null,
+      "title": "3. External Interface Requirements",
+      "level": 2,
+      "line_start": 181,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 User Interfaces",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 852,
+      "text_preview": "The application will have a task-based screen interface for increased usability and workflow pace.   \nThe interface will use accelerator keys heavily to allow limited “keyboard-only” application use.\n"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Hardware Interfaces",
+      "level": 2,
+      "line_start": 196,
+      "text_length": 894,
+      "text_preview": "The application is dependent on existing hardware for a display device and for data-entry via a keyboard and Pointing device. The new system does not support legacy monochrome displays. The applicatio"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Software Interfaces",
+      "level": 2,
+      "line_start": 208,
+      "text_length": 532,
+      "text_preview": "The ColorKast software will interface with other software for storage of paint information, paint collection data, and the matching and translation of paint color values.\n\nInterface 1: Connection to d"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Communications Interfaces",
+      "level": 2,
+      "line_start": 218,
+      "text_length": 801,
+      "text_preview": "This product will require communication via the Hyper Text Transfer Protocol (HTTP) to complete transaction based services with client computers. As identified in the Assumptions and Dependencies sect"
+    },
+    {
+      "number": null,
+      "title": "4. System Features",
+      "level": 2,
+      "line_start": 224,
+      "text_length": 292,
+      "text_preview": "Each feature has a single mission it can complete independently. This feature set is a modularized representation of the stand-alone application. The modularization approach allows for a more robust a"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 Graphical Color Chooser",
+      "level": 2,
+      "line_start": 228,
+      "text_length": 92,
+      "text_preview": "The graphical color chooser will be a pointing device driven intuitive color selection tool."
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 232,
+      "text_length": 14,
+      "text_preview": "High priority."
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 236,
+      "text_length": 70,
+      "text_preview": "The color chooser requires the presence of a hardware pointing device."
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 Color Translator",
+      "level": 2,
+      "line_start": 240,
+      "text_length": 203,
+      "text_preview": "The color translator is a special case of the color search engine. The color translator allows old scheme to new scheme paint number translation, given a paint number, collection and a target collecti"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 244,
+      "text_length": 14,
+      "text_preview": "High priority."
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 248,
+      "text_length": 79,
+      "text_preview": "The color translator requires the presence of the software color search module."
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 Closest Colors",
+      "level": 2,
+      "line_start": 252,
+      "text_length": 213,
+      "text_preview": "The closest color tool is a special case of the color search engine. The closest color tool allows the user to locate an arbitrary number of close colors to given a paint number, collection in a targe"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 256,
+      "text_length": 13,
+      "text_preview": "High priority"
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 260,
+      "text_length": 82,
+      "text_preview": "The closest colors tool requires the presence of the software color search module."
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 Color Search Engine",
+      "level": 2,
+      "line_start": 264,
+      "text_length": 205,
+      "text_preview": "The color search engine tool will allow locating an arbitrary number of colors in any or all collections based on initial input of a paint name, number, or color value in a industry standard common fo"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 268,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "High priority",
+      "level": 2,
+      "line_start": 270,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 272,
+      "text_length": 155,
+      "text_preview": "The color search engine requires the color space and paint information databases to be present. These two databases store paint and collection information."
+    },
+    {
+      "number": "4.5",
+      "title": "4.5 User Color Palette",
+      "level": 2,
+      "line_start": 276,
+      "text_length": 455,
+      "text_preview": "This is a user experience tool. The user color palette tool will store a list of the user’s recent color searches. If the color sample matcher is loaded, the user color palette tool will also store re"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 280,
+      "text_length": 13,
+      "text_preview": "High priority"
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 284,
+      "text_length": 158,
+      "text_preview": "The User Color Palette requires the color search engine for color requests and the color sample matcher to enable the storing of uploaded images for matching."
+    },
+    {
+      "number": "4.6",
+      "title": "4.6 Administrative Interface",
+      "level": 2,
+      "line_start": 288,
+      "text_length": 247,
+      "text_preview": "The administrative interface allows administrative users to update, add, and delete paint information. Administrative users are also able to add users. Refer to section 2.3 for development and impleme"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 292,
+      "text_length": 13,
+      "text_preview": "High priority"
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 296,
+      "text_length": 112,
+      "text_preview": "The application administrative interface requires the color space and paint information databases to be present."
+    },
+    {
+      "number": "4.7",
+      "title": "4.7 Color Sample Matcher",
+      "level": 2,
+      "line_start": 300,
+      "text_length": 265,
+      "text_preview": "The color sample matcher allows the client user to upload images in a common format for matching. The color sample matcher will allow the user to graphically select with a hardware pointing device the"
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 Priority",
+      "level": 2,
+      "line_start": 304,
+      "text_length": 110,
+      "text_preview": "Low priority. This module is not a requirement of the project. It is included for specification purposes only."
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 Functional Requirements",
+      "level": 2,
+      "line_start": 308,
+      "text_length": 148,
+      "text_preview": "The color sample matcher requires the color search engine module to function. The color chooser requires the presence of a hardware pointing device."
+    },
+    {
+      "number": null,
+      "title": "5. Other Nonfunctional Requirements",
+      "level": 2,
+      "line_start": 312,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 Performance Requirements",
+      "level": 2,
+      "line_start": 314,
+      "text_length": 866,
+      "text_preview": "Color searches among the various collections defined by ABC Paint will be processed in subsecond time on the server.\n\nChanges to Paint and collection information will occur in Real-time, although the "
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 Safety Requirements",
+      "level": 2,
+      "line_start": 324,
+      "text_length": 663,
+      "text_preview": "Analysis of the proposed product requirements and features has not brought any safety concerns to light. ColorKast recommends that a full legal review of the final product be undertaken prior to any p"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 Security Requirements",
+      "level": 2,
+      "line_start": 330,
+      "text_length": 692,
+      "text_preview": "Due to the nature of the product, the data stored in repositories of the product is generally public information consisting of paint names and color values not easily secured or obfuscated and always "
+    },
+    {
+      "number": "5.4",
+      "title": "5.4 Software Quality Attributes",
+      "level": 2,
+      "line_start": 338,
+      "text_length": 587,
+      "text_preview": "The proposed modular specification of the application lends itself to adaptability, robustness, and reusability.\n\nQuestions of application correctness come to light with respect to the accurate displa"
+    },
+    {
+      "number": "5.5",
+      "title": "5.5 Business Rules",
+      "level": 2,
+      "line_start": 344,
+      "text_length": 443,
+      "text_preview": "ColorKast recommends that ABC Paint apply their conventional business processes and security regimen to granting administrative access to the new system. ColorKast believes that a typical employee or "
+    },
+    {
+      "number": null,
+      "title": "Appendix A: Glossary",
+      "level": 2,
+      "line_start": 348,
+      "text_length": 2150,
+      "text_preview": "Terms:\n\nApplication: The software product being developed by ColorKast for ABC Paint.\n\nClient: A computer or program that can run applications or request application-based services from a server.\n\nCol"
+    },
+    {
+      "number": null,
+      "title": "Appendix B: Analysis Models",
+      "level": 2,
+      "line_start": 394,
+      "text_length": 570,
+      "text_preview": "The project requirements elicitation interview conducted by ColorKast helped to define the proposed architecture of the product.\n\nThe proposed system breaks the problem into two distinct parts, both s"
+    },
+    {
+      "number": null,
+      "title": "Appendix C: To Be Determined List",
+      "level": 2,
+      "line_start": 404,
+      "text_length": 295,
+      "text_preview": "This To Be Determined (TBD) list serves to collect all currently outstanding decisions, choices, and unresolved requirements, including questions the development team may need to ask of the ABC Projec"
+    },
+    {
+      "number": null,
+      "title": "Approval Signatures: Approve Version",
+      "level": 2,
+      "line_start": 410,
+      "text_length": 307,
+      "text_preview": "I hereby approve the attached Software Requirements Specification (SRS). The SRS satisfies all design requirements. I acknowledge that my approval of the attached SRS is binding and that I may no long"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Name",
+        "Date",
+        "Reason For Changes",
+        "Version"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": true,
+      "section": "Revision History",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Name</td><td rowspan=1 colspan=1>Date</td><td rowspan=1 colspan=1>Reason For Changes</td><td rowspan=1 colspan=1>Version</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr>"
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "1d5b0ee8af1c3dc8906054153ac3bad70f9ac7a25070d7f6fd416b2f20bce936.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_extended/Dataset/P02. CS179G – ABC Paint Project/mineru_parsed/2004 - colorcast.pdf/auto/images/1d5b0ee8af1c3dc8906054153ac3bad70f9ac7a25070d7f6fd416b2f20bce936.jpg",
+      "image_exists": true,
+      "image_size_kb": 17,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "Appendix B: Analysis Models",
+      "context_before": "The project requirements elicitation interview conducted by ColorKast helped to define the proposed architecture of the product.\nThe proposed system breaks the problem into two distinct parts, both separated by a connection to the internet.\nIn this proposed scenario, the client computers access the ",
+      "context_after": "This To Be Determined (TBD) list serves to collect all currently outstanding decisions, choices, and unresolved requirements, including questions the development team may need to ask of the ABC Projec",
+      "md_line": 402,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "1d5b0ee8af1c3dc8906054153ac3bad70f9ac7a25070d7f6fd416b2f20bce936.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/pure_extended/Dataset/P02. CS179G – ABC Paint Project/mineru_parsed/2004 - colorcast.pdf/auto/images/1d5b0ee8af1c3dc8906054153ac3bad70f9ac7a25070d7f6fd416b2f20bce936.jpg",
+      "image_exists": true,
+      "image_size_kb": 17,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "Appendix B: Analysis Models",
+      "context_before": "The project requirements elicitation interview conducted by ColorKast helped to define the proposed architecture of the product.\nThe proposed system breaks the problem into two distinct parts, both separated by a connection to the internet.\nIn this proposed scenario, the client computers access the ",
+      "context_after": "This To Be Determined (TBD) list serves to collect all currently outstanding decisions, choices, and unresolved requirements, including questions the development team may need to ask of the ABC Projec",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

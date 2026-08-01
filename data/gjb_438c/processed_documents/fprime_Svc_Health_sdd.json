@@ -1,0 +1,320 @@
+{
+  "doc_name": "fprime_Svc_Health_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_Health_sdd.md",
+  "md_lines": 150,
+  "md_chars": 8616,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::Health Component",
+  "section_count": 29,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::Health Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 191,
+      "text_preview": "The `Svc::Health` component monitors the execution health of the software. It does so by pinging active components and checking for a response. It also does optional platform-specific checks."
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 7,
+      "text_length": 991,
+      "text_preview": "The requirements for `Svc::Health` are as follows:\n\nRequirement | Description | Verification Method\n----------- | ----------- | -------------------\nHTH-001 | The `Svc::Health` component shall ping eac"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 21,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Context",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 Component Diagram",
+      "level": 4,
+      "line_start": 25,
+      "text_length": 123,
+      "text_preview": "The `Svc::Health` component has the following component diagram:\n\n![`Svc::Health` Diagram](img/HealthBDD.jpg \"Svc::Health\")"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 Ports",
+      "level": 4,
+      "line_start": 31,
+      "text_length": 600,
+      "text_preview": "The Svc::Health component uses the following port types:\n\nPort Data Type | Name | Direction | Kind | Usage\n-------------- | ---- | --------- | ---- | -----\n[`Svc::Ping`](../../../Svc/Ping/docs/sdd.md)"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Description",
+      "level": 3,
+      "line_start": 42,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 Pings",
+      "level": 4,
+      "line_start": 44,
+      "text_length": 1517,
+      "text_preview": "The `Svc::Health` component monitors health by iterating through a table of port numbers and their maximum allowed timeout. The timeout is specified as the number of calls to the `SchedIn` port. The a"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Scenarios",
+      "level": 3,
+      "line_start": 48,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 Ping Components",
+      "level": 4,
+      "line_start": 50,
+      "text_length": 123,
+      "text_preview": "The `Svc::Health` component pings other components and checks for their response:\n\n![Ping Components](img/PingSequence.jpg)"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 State",
+      "level": 3,
+      "line_start": 56,
+      "text_length": 36,
+      "text_preview": "`Svc::Health` has no state machines."
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 Algorithms",
+      "level": 3,
+      "line_start": 60,
+      "text_length": 44,
+      "text_preview": "`Svc::Health` has no significant algorithms."
+    },
+    {
+      "number": null,
+      "title": "4. Dictionaries",
+      "level": 2,
+      "line_start": 64,
+      "text_length": 3,
+      "text_preview": "TBD"
+    },
+    {
+      "number": null,
+      "title": "5. Module Checklists",
+      "level": 2,
+      "line_start": 68,
+      "text_length": 125,
+      "text_preview": "Checklist |\n-------- |\n[Design](Checklist_Design.xlsx) |\n[Code](Checklist_Code.xlsx) |\n[Unit Test](Checklist_Unit_Test.xls) |"
+    },
+    {
+      "number": null,
+      "title": "6. Unit Testing",
+      "level": 2,
+      "line_start": 76,
+      "text_length": 520,
+      "text_preview": "The Health unit tests are designed to test interfaces and functionality with the available ports, command processing, telemetry output, EVR and data product generation.\n\n<ol>\n  <li> Nominal scenarios "
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 Unit Test Descriptions",
+      "level": 2,
+      "line_start": 88,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1.1",
+      "title": "6.1.1 Nominal Telemetry Test",
+      "level": 3,
+      "line_start": 89,
+      "text_length": 810,
+      "text_preview": "When the Health component's schedIn handler is called, each ping entry in the user provided table is checked if it's enabled. If the entry is enabled and empty, a ping is sent out through its correspo"
+    },
+    {
+      "number": "6.1.2",
+      "title": "6.1.2 Warning Telemetry Test",
+      "level": 3,
+      "line_start": 97,
+      "text_length": 455,
+      "text_preview": "This test verifies the requirement that component shall track the timeout cycles for each ping entry. This is validated by having the component ping each entry in the table without responding. The cou"
+    },
+    {
+      "number": "6.1.3",
+      "title": "6.1.3 Fault Telemetry Test",
+      "level": 3,
+      "line_start": 102,
+      "text_length": 251,
+      "text_preview": "This test is similar to 6.1.2, with the difference being that the schedIn handler is ran until the fault threshold for each ping entry is reached. The counters for each entry and expected fault EVRs a"
+    },
+    {
+      "number": "6.1.4",
+      "title": "6.1.4 Enable/Disable All Monitoring Test",
+      "level": 3,
+      "line_start": 107,
+      "text_length": 580,
+      "text_preview": "In this test, we verify the requirement to enable/disable all monitoring of the ping entries. This is done by running the schedIn handler with monitoring enabled initially with pings sent to each entr"
+    },
+    {
+      "number": "6.1.5",
+      "title": "6.1.5 Enable/Disable Single Monitor Test",
+      "level": 3,
+      "line_start": 112,
+      "text_length": 224,
+      "text_preview": "This test is similar to 6.1.4, but instead of enabling/disabling all monitors, each ping entry is enabled then disabled. These actions are verified through the previous methodology of 6.1.4. \n\nRequire"
+    },
+    {
+      "number": "6.1.6",
+      "title": "6.1.6 Updating Ping Timeout Test",
+      "level": 3,
+      "line_start": 117,
+      "text_length": 363,
+      "text_preview": "This test verifies the requirement that the component shall have a command to update timeout values for a port entry. This is done by modifying the initial timeout values for each ping entry in the ta"
+    },
+    {
+      "number": "6.1.7",
+      "title": "6.1.7 Watchdog Test",
+      "level": 3,
+      "line_start": 122,
+      "text_length": 239,
+      "text_preview": "This test verifies the requirement that the component shall stroke a watchdog port while all ping are within their limit. This is done by checking the output of the watchdog port and verifying its con"
+    },
+    {
+      "number": "6.1.8",
+      "title": "6.1.8 Nominal Command Test",
+      "level": 3,
+      "line_start": 128,
+      "text_length": 222,
+      "text_preview": "This test verifies the functionally of all the provided health commands including the enable/disable monitoring of the ping entries as well as updating timeouts. All commands are validated and verifie"
+    },
+    {
+      "number": "6.1.9",
+      "title": "6.1.9 Nominal Command and Telemetry Test",
+      "level": 3,
+      "line_start": 131,
+      "text_length": 123,
+      "text_preview": "This test is similar to `6.1.8`, but it includes a nominal running of the SchedIn handler while handling incoming commands."
+    },
+    {
+      "number": "6.1.10",
+      "title": "6.1.10 Miscellaneous",
+      "level": 3,
+      "line_start": 134,
+      "text_length": 126,
+      "text_preview": "This set of test cases verifies the remaining off-nominal error cases. Each test case is simulated and validated individually."
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 Unit Test Coverage",
+      "level": 2,
+      "line_start": 138,
+      "text_length": 58,
+      "text_preview": "To see unit test coverage run fprime-util check --coverage"
+    },
+    {
+      "number": null,
+      "title": "7. Change Log",
+      "level": 2,
+      "line_start": 143,
+      "text_length": 73,
+      "text_preview": "Date | Description\n---- | -----------\n1/11/2016 | Edits for design review"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "HealthBDD.jpg \"Svc::Health\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/HealthBDD.jpg \"Svc::Health\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "`Svc::Health` Diagram",
+      "caption": "The Svc::Health component uses the following port types:",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The `Svc::Health` component has the following component diagram:",
+      "context_after": "The Svc::Health component uses the following port types:",
+      "md_line": 29,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "PingSequence.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/PingSequence.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "Ping Components",
+      "caption": "`Svc::Health` has no state machines.",
+      "figure_number": null,
+      "image_type": "state_diagram",
+      "section": "3.3.1 Ping Components",
+      "context_before": "The `Svc::Health` component monitors health by iterating through a table of port numbers and their maximum allowed timeout. The timeout is specified as the number of calls to the `SchedIn` port. The actual timeout value in wall time will be dependent on the rate at which the port is called. During e",
+      "context_after": "`Svc::Health` has no state machines.",
+      "md_line": 54,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "HealthBDD.jpg \"Svc::Health\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/HealthBDD.jpg \"Svc::Health\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "The Svc::Health component uses the following port types:",
+      "section": "3.1.1 Component Diagram",
+      "context_before": "The `Svc::Health` component has the following component diagram:",
+      "context_after": "The Svc::Health component uses the following port types:",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "PingSequence.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/PingSequence.jpg",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "state_diagram",
+      "figure_number": null,
+      "caption": "`Svc::Health` has no state machines.",
+      "section": "3.3.1 Ping Components",
+      "context_before": "The `Svc::Health` component monitors health by iterating through a table of port numbers and their maximum allowed timeout. The timeout is specified as the number of calls to the `SchedIn` port. The actual timeout value in wall time will be dependent on the rate at which the port is called. During e",
+      "context_after": "`Svc::Health` has no state machines.",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

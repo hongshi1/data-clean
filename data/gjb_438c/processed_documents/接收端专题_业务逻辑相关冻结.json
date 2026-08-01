@@ -1,0 +1,104 @@
+{
+  "doc_name": "接收端专题_业务逻辑相关冻结",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/接收端专题_业务逻辑相关冻结.md",
+  "md_lines": 242,
+  "md_chars": 10222,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "communication",
+  "title": "主流程图",
+  "section_count": 5,
+  "sections": [
+    {
+      "number": null,
+      "title": "主流程图",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 556,
+      "text_preview": "```mermaid\nflowchart TD\n\n    subgraph S0[\"运行前准备层\"]\n        A[\"接收会话准备阶段\"]\n    end\n\n    subgraph S1[\"运行态主路径层\"]\n        B[\"网络入口接收阶段\"]\n        C[\"协议解析与单包校验阶段\"]\n        D[\"归属判定阶段\"]\n        E[\"重组与聚合阶段\"]\n   "
+    },
+    {
+      "number": null,
+      "title": "归属判定阶段",
+      "level": 1,
+      "line_start": 39,
+      "text_length": 1994,
+      "text_preview": "```mermaid\nflowchart TD\n\n    A[\"输入：合法内部报文对象\"]\n    A --> B[\"读取当前有效波位安排快照\"]\n\n    B --> C{\"波位安排快照是否可用\"}\n    C -- \"否\" --> C1[\"判定为不可归属\"]\n    C1 --> C2[\"记录原因：无有效波位安排\"]\n    C2 --> C3[\"输出归属失败结果\"]\n\n    C -- \"是"
+    },
+    {
+      "number": null,
+      "title": "表 1：归属分类判据表",
+      "level": 2,
+      "line_start": 130,
+      "text_length": 2059,
+      "text_preview": "这张表的目的，是把“归属阶段到底输出什么分类、后续怎么处理”一次写死，避免实现时各写各的。\n\n| 归属分类     | 触发条件                                                                                     | 是否进入重组 | 是否记统计 | 是否发异常事件 | 是否污染当前 CPI 上下文 | 建议后续动"
+    },
+    {
+      "number": null,
+      "title": "表 2：当前 CPI 窗口约束来源表",
+      "level": 2,
+      "line_start": 145,
+      "text_length": 3046,
+      "text_preview": "这张表的目的，是把“归属阶段到底依赖哪些约束、这些约束从哪里来”冻结下来。\n不然流程图虽然有了，代码阶段还是会因为来源不清而漂。\n\n| 约束项       | 作用                        | 当前建议来源                                  | 更新时机                 | 使用阶段            | 必需度 | 未冻结"
+    },
+    {
+      "number": null,
+      "title": "重组与聚合阶段",
+      "level": 1,
+      "line_start": 169,
+      "text_length": 2490,
+      "text_preview": "```mermaid\n---\nconfig:\n  look: neo\n  theme: neutral\n  flowchart:\n    curve: basis\n---\nflowchart TD\n    A([\"输入：归属成功结果 + 合法内部报文对象\"]):::io\n\n    subgraph S1 [\"阶段 1｜定位与上下文准备\"]\n        B[\"按 (WaveSlot, CPI) "
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 2,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "归属分类",
+        "触发条件",
+        "是否进入重组",
+        "是否记统计",
+        "是否发异常事件",
+        "是否污染当前 CPI 上下文",
+        "建议后续动作",
+        "备注"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "表 1：归属分类判据表",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "约束项",
+        "作用",
+        "当前建议来源",
+        "更新时机",
+        "使用阶段",
+        "必需度",
+        "未冻结风险"
+      ],
+      "row_count": 15,
+      "data_row_count": 14,
+      "is_empty": false,
+      "section": "表 2：当前 CPI 窗口约束来源表",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

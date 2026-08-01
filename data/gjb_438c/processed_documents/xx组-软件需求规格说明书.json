@@ -1,0 +1,991 @@
+{
+  "doc_name": "xx组-软件需求规格说明书",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo2_rainel02_BUAASoftwareBachelorNotes/mineru_parsed/xx组-软件需求规格说明书.pdf/auto/xx组-软件需求规格说明书.pdf.md",
+  "md_lines": 907,
+  "md_chars": 16491,
+  "language": "zh",
+  "is_gjb_format": true,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "软件需求规格说明书",
+  "section_count": 107,
+  "sections": [
+    {
+      "number": null,
+      "title": "软件需求规格说明书",
+      "level": 2,
+      "line_start": 1,
+      "text_length": 1208,
+      "text_preview": "软件需求规格说明书  \n1 范围  \n1.1 标识  \n1.2 系统概述  \n1.3 文档概述  \n1.4 基线  \n2 引用文件  \n3 需求  \n3.1 所需的状态和方式  \n3.2 需求概述  \n3.2.1 目 标  \n3.2.2 运行环境  \n3.2.3 用户的特点  \n3.2.4 关键点  \n3.2.5 约束条件  \n3.3 需求规格  \n3.3.1 软件系统总体功能/对象结构  \n3."
+    },
+    {
+      "number": "1",
+      "title": "1 范围",
+      "level": 2,
+      "line_start": 97,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 2,
+      "line_start": 99,
+      "text_length": 120,
+      "text_preview": "本文档适用于“软课程管理平台”软件系统。\n\n标识号: P1-EDUSOFT\n\n标题: 软课程管理平台\n\n缩略词语: EDUSOFT(Educate Software)\n\n版本号: 1.0\n\n发行号: 1\n\n开发方:“软课程管理平台“开发6组"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 系统概述",
+      "level": 2,
+      "line_start": 115,
+      "text_length": 117,
+      "text_preview": "本系统旨在为北航师生提供一个功能全面、用户体验优良的在线平台，以支持课程管理、在线学习和评估等需求。它是一个高效、灵活的教学管理工具，根据不同用户身份（教师、助教、学生）提供差异化的功能模块。系统注重用户体验、隐私性、美观性和易用性。"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 文档概述",
+      "level": 2,
+      "line_start": 119,
+      "text_length": 82,
+      "text_preview": "本文档（软件需求规格说明书 SRS）旨在详细描述软课程管理平台 (SCMP) 的功能需求、非功能需求、接口需求和约束条件。它是后续系统设计、开发、测试和验收的基础。"
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 基线",
+      "level": 2,
+      "line_start": 123,
+      "text_length": 32,
+      "text_preview": "本文档基于“项目1: 软课程管理平台”描述文档和软件开发计划书。"
+    },
+    {
+      "number": "2",
+      "title": "2 引用文件",
+      "level": 2,
+      "line_start": 127,
+      "text_length": 35,
+      "text_preview": "1. 《项目1: 软课程管理平台》描述文档\n\n2. 《软件开发计划书》"
+    },
+    {
+      "number": "3",
+      "title": "3 需求",
+      "level": 2,
+      "line_start": 133,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 所需的状态和方式",
+      "level": 2,
+      "line_start": 135,
+      "text_length": 63,
+      "text_preview": "系统主要运行在“正常操作”状态。细化的状态（如维护、降级等）在此阶段暂不详细定义。所有需求均适用于正常操作状态，除非特别说明。"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 需求概述",
+      "level": 2,
+      "line_start": 139,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 目标",
+      "level": 2,
+      "line_start": 141,
+      "text_length": 132,
+      "text_preview": "1.开发意图、应用目标及作用范围\n\n1）开发意图: 解决软件工程等实践性强学科在线教学管理的需求，提供一个集成化的平台。\n\n2）应用 目标: 为高校师生提供高效、灵活的课程管理、在线学习、练习与评估工具。\n\n3）作用范围: 主要面向高校教学场景，支持多种教学活动。"
+    },
+    {
+      "number": null,
+      "title": "2.系统的主要功能、处理流程、数据流程及简要说明",
+      "level": 2,
+      "line_start": 151,
+      "text_length": 477,
+      "text_preview": "1）主要功能:\n\n（1）课程和班级管理：实现课程与班级的创建、信息维护与批量管理，支持学生加入、任务分配及学习进度实时可视化，方便教师统筹教学。\n\n（2）教学资料管理：提供多格式资料上传、在线预览与下载，并支持按章节或标签分类、版本控制和权限设置，确保资源安全有序。\n\n（3）在线练习：支持多种题型的练习发布与组卷，自动批改客观题，并提供实时反馈与错题收藏功能，提升练习效率。\n\n（4）历史记录查询："
+    },
+    {
+      "number": null,
+      "title": "3）数据流程",
+      "level": 2,
+      "line_start": 175,
+      "text_length": 107,
+      "text_preview": "1. 输入：前端接收课程信息、学生名单、教学资料、练习代码与答案等。\n\n2. 处理：后端负责数据存储、客观题自动批改、成绩与进度统计。\n\n3. 输出：生成并展示课程页面、资料列表、练习成绩及综合报告，支持导出下载。"
+    },
+    {
+      "number": null,
+      "title": "3.系统高层次图",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 80,
+      "text_preview": "![](images/bef558e2cb7360778b98094b685686c68bba942c30c450e1f360e1d564c52df8.jpg)"
+    },
+    {
+      "number": null,
+      "title": "4.产品关系",
+      "level": 2,
+      "line_start": 187,
+      "text_length": 20,
+      "text_preview": "独立产品，可考虑与学校现有认证系统集成。"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 运行环境",
+      "level": 2,
+      "line_start": 191,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.硬件环境",
+      "level": 2,
+      "line_start": 193,
+      "text_length": 48,
+      "text_preview": "CPU : Ryzen 7-7840hs 无需独立显卡支持\n\n内存：32GB\n\n存储空间：1TB"
+    },
+    {
+      "number": null,
+      "title": "2.支持环境",
+      "level": 2,
+      "line_start": 201,
+      "text_length": 125,
+      "text_preview": "操作系统：linux或windows或macos\n\n浏览器兼容：\n\nChrome：51 – 113；\n\nEdge：15 – 110；\n\nSafari：10 – 16.3 – TP；\n\nFirefox：54 – 112；\n\nOpera：38 – 94；"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 用户的特点",
+      "level": 2,
+      "line_start": 217,
+      "text_length": 197,
+      "text_preview": "本平台的用户主要是高校人员，分为教师、助教、学生等角色，特点分析如下：\n\n1.教师: 具备学科专业知识，熟悉教学流程，对在线教学平台有一定使用经验，期望高效管理课程和学生。\n\n2.助教: 通常为高年级学生或研究生，辅助教师进行管理、答疑、批改等工作，权限介于教师和学生之间（具体权限待角色管理定义）。\n\n3.学生: 主要使用者，需要通过平台学习、完成练习、查看反馈，对易用性、学习体验要求较高。"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 关键点",
+      "level": 2,
+      "line_start": 227,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.关键功能",
+      "level": 2,
+      "line_start": 229,
+      "text_length": 188,
+      "text_preview": "1）课程与班级管理：支持课程创建、章节调整、班级分组与学生进度实时跟踪。\n\n2）教学资料管理：提供多格式上传、分类检索、版本控制及权限过滤功能。\n\n3）在线练习：实现题库组卷、客观题自动批改、主观题人工评阅与错题本、收藏题目。\n\n4）历史记录查询：展示学习轨迹、生成成绩报告、班级排名及导出功能。\n\n5）用户与权限管理：多角色注册登录、单点认证、细粒度权限分配及个人信息维护。"
+    },
+    {
+      "number": null,
+      "title": "2.关键算法",
+      "level": 2,
+      "line_start": 241,
+      "text_length": 140,
+      "text_preview": "1）自动批改算法：对选择题、填空题等客观题型进行答案比对与快速评分。\n\n2）防作弊检测算法：通过剪贴板监控等手段识别异常答题行为。\n\n3）进度分析算法：计算课程完成率与练习正确率，生成学习趋势与预警提醒。\n\n4）个性化推荐算法：基于用户历史、相似度和题目难度推荐练习题与学习资料。"
+    },
+    {
+      "number": null,
+      "title": "3.关键技术",
+      "level": 2,
+      "line_start": 251,
+      "text_length": 178,
+      "text_preview": "1）前后端分离：采用 React/Vue 与 RESTful API 协同构建高交互性界面。\n\n2）全文检索：引入 Elasticsearch 实现教学资料与题库的高速模糊搜索。\n\n3）实时通信：借助 WebSocket 推送答题进度与后台反馈，提升系统响应速度。\n\n4）容器化部署：使用 Docker 与 Kubernetes 支持微服务伸缩与持续交付。"
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 约束条件",
+      "level": 2,
+      "line_start": 261,
+      "text_length": 171,
+      "text_preview": "1. 时间约束：该项目需要在6月份之前完成。\n\n2. 经费约束：包括但不限于服务器租用和维护、数据库建设和管理、OSS购买等费用。\n\n3. 技术选型：采用瀑布模型进行开发工作，前端使用vue框架，后端使用springboot+java框架。\n\n4. 数据安全和隐私保护：考虑如何保护用户信息安全，尊重并保护用户隐私。\n\n5. 遵循相关法律法规"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 需求规格",
+      "level": 2,
+      "line_start": 273,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 软件系统总体功能/对象结构",
+      "level": 2,
+      "line_start": 275,
+      "text_length": 80,
+      "text_preview": "![](images/c6a17c7c6ae779f86b8acc85433c31a5825251e5db4fc5bf5f8237a7297393e9.jpg)"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 软件子系统功能/对象结构",
+      "level": 2,
+      "line_start": 279,
+      "text_length": 42,
+      "text_preview": "用户界面：\n\n注册/登录模块：允许教师、助教、学生注册账户并登录系统，提供身份验证。"
+    },
+    {
+      "number": null,
+      "title": "课程和班级管理界面：",
+      "level": 2,
+      "line_start": 285,
+      "text_length": 86,
+      "text_preview": "课程管理：教师可以创建和管理课程，查看课程结构和内容，上传和编辑教学资料。\n\n班级管理：教师可以创建班级，批量导入学生，管理班级成员信息，分配学习任务并跟踪学生的学习进度。"
+    },
+    {
+      "number": null,
+      "title": "学习资料管理界面：",
+      "level": 2,
+      "line_start": 291,
+      "text_length": 52,
+      "text_preview": "教师端：教师上传并管理课程资料，提供权限控制功能。\n\n学生端：学生可以在线查看或下载，提供资料分类功能。"
+    },
+    {
+      "number": null,
+      "title": "在线练习界面：",
+      "level": 2,
+      "line_start": 297,
+      "text_length": 79,
+      "text_preview": "教师端：创建练习、题库导入/手动添加、设置（题型、分值、时间、提交次数）、自动/手动批改、生成报告。\n\n学生端：参与练习并查看反馈、解析、允许错题重做、收藏。"
+    },
+    {
+      "number": null,
+      "title": "学习记录查询界面：",
+      "level": 2,
+      "line_start": 303,
+      "text_length": 106,
+      "text_preview": "学生可以查看学习轨迹、练习记录以及成绩报告，帮助学生自我评估和调整学习计划。\n\n教师可以生成报告（如学生的得分、排名）、导出文件。\n\n用户信息管理界面：\n\n用户可以查看和修改个人信息，修改密码，提供隐私保护措施。"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 描述约定",
+      "level": 2,
+      "line_start": 313,
+      "text_length": 49,
+      "text_preview": "本文档使用标准中文描述。\n\n专业术语在首次出现时会进行解释。\n\n需求项使用唯一的标识符以便于定位。"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 CSCI能力需求",
+      "level": 2,
+      "line_start": 321,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 软件开发和编程能力",
+      "level": 2,
+      "line_start": 323,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1.1",
+      "title": "3.4.1.1 课程和班级管理功能需求",
+      "level": 2,
+      "line_start": 325,
+      "text_length": 278,
+      "text_preview": "1.系统应允许教师创建课程，并设置课程名称、代码、大纲、教学目标和考核方式。\n\n2.系统应支持教师上传课程资源（如课件,额外补充资料等）。\n\n3.系统应允许教师按教学进度调整课程内容（添加/删除章节）。\n\n4.系统应提供课程预览功能，允许教师查看课程整体结构。\n\n5.系统应允许教师创建班级，并设置班级名称和唯一标识码。\n\n6.系统应支持教师批量导入学生名单以添加班级成员。\n\n7.系统应支持学生通过"
+    },
+    {
+      "number": "3.4.1.2",
+      "title": "3.4.1.2 教学资料管理功能",
+      "level": 2,
+      "line_start": 345,
+      "text_length": 95,
+      "text_preview": "1.系统应支持教师上传多种格式的教学资料（如 PPT、PDF、视频、代码文件等）。\n\n2.系统应允许学生在线预览或下载教学资料。\n\n3.系统应提供资料分类管理功能，允许按章节或类型整理资料。"
+    },
+    {
+      "number": "3.4.1.3",
+      "title": "3.4.1.3 在线练习功能",
+      "level": 2,
+      "line_start": 353,
+      "text_length": 161,
+      "text_preview": "1.系统应允许教师创建在线练习任务，从题库导入题目或手动添加题目到练习中，设置练习的开放时间窗口。\n\n2.系统应能自动批改客观题,允许教师手动批阅主观题，系统支持自动生成练习的初步反馈报告。\n\n3.学生应能查看教师发布的在线练习列表,能参与（作答）在线练习,能收到反馈，收藏错题并重复练习。\n\n4.系统应采取措施防止作弊。"
+    },
+    {
+      "number": "3.4.1.5",
+      "title": "3.4.1.5 用户管理功能",
+      "level": 2,
+      "line_start": 363,
+      "text_length": 124,
+      "text_preview": "1.系统应支持用户注册，区分教师、助教、学生身份,根据用户身份（角色）分配不同的系统访问权限，并要求填写基本信息。\n\n2.系统应支持用户通过账号密码登录\n\n3.系统应允许用户修改个人资料和登录密码，采用加密方式存储用户密码等敏感数据，保障隐私安全。"
+    },
+    {
+      "number": "3.4.1.6",
+      "title": "3.4.1.6 其他可选需求",
+      "level": 2,
+      "line_start": 371,
+      "text_length": 50,
+      "text_preview": "1.系统可提供在线讨论区功能，方便师生交流。\n\n2.系统可提供任务提醒（如截止日期临近）和通知功能。"
+    },
+    {
+      "number": "3.4.1.7",
+      "title": "3.4.1.7 性能需求",
+      "level": 2,
+      "line_start": 377,
+      "text_length": 110,
+      "text_preview": "1.响应时间：系统应该在秒级别内响应用户请求，以确保良好的用户体验。\n\n2.吞吐量：支持同时大量用户在线练习，保证系统能够处理并发请求。\n\n3.可扩展性：系统应该具备良好的可扩展性，能够根据用户量的增加而扩展服务器资源。"
+    },
+    {
+      "number": null,
+      "title": "3.4.2数据分析和处理能力",
+      "level": 2,
+      "line_start": 385,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 387,
+      "text_length": 160,
+      "text_preview": "学习进度与成绩分析：系统应能够汇总学生的学习进度、成绩和任务完成情况，生成个性化的学习报告。\n\n数据可视化功能：教师和管理员可以通过图表、报表等形式查看学生的学习情况，便于分析学生的学习行为、作业提交情况和课程进度。\n\n推荐系统：基于学生的学习行为和成绩数据，系统应能为学生推荐适合的学习内容、复习材料或额外的练习任务。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 395,
+      "text_length": 72,
+      "text_preview": "数据分析应支持高并发的数据请求，确保在多个用户查询时不会出现延迟。\n\n-数据存储应支持大规模数据处理，保证海量学习数据在查询时能够快速返回结果。"
+    },
+    {
+      "number": null,
+      "title": "3.4.3网络和安全能力",
+      "level": 2,
+      "line_start": 401,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 403,
+      "text_length": 168,
+      "text_preview": "用户认证与权限管理：系统应支持用户注册、登录和身份验证，确保不同角色（如教师、学生、助教、管理员）的访问权限得以严格控制。\n\n数据加密与隐私保护：所有敏感数据（如学生成绩、个人信息）应进行加密存储，并通过HTTPS协议保证数据在传输过程中的安全性。\n\n防护机制：系统应具备防止常见网络攻击的能力，如SQL注入、跨站脚本攻击（XSS）等。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 411,
+      "text_length": 56,
+      "text_preview": "身份验证过程应在秒级响应，以保证用户体验。\n\n安全性要求系统能够在遭受常见安全攻击时保持高可靠性，防止数据泄露。"
+    },
+    {
+      "number": "3.4.4",
+      "title": "3.4.4 人机交互和用户体验能力",
+      "level": 2,
+      "line_start": 417,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 419,
+      "text_length": 147,
+      "text_preview": "多角色支持：系统应为教师、学生和管理员提供不同的功能界面和操作权限，确保每个用户角色都能方便地找到所需功能。\n\n界面友好性：系统界面应清晰、简洁，提供直观的操作流程，帮助用户快速上手，减少培训成本。\n\n多设备兼容性：系统应支持PC、平板和手机等不同设备的访问，保证不同屏幕尺寸下的良好显示效果。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 427,
+      "text_length": 57,
+      "text_preview": "用户界面应具备响应式设计，确保在不同浏览器和设备上均能流畅运行。\n\n页面加载时间应保持在3秒以内，以优化用户体验。"
+    },
+    {
+      "number": null,
+      "title": "3.4.5可维护性和可扩展性",
+      "level": 2,
+      "line_start": 433,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 435,
+      "text_length": 154,
+      "text_preview": "模块化设计：系统应采用模块化的架构设计，每个功能模块（如课程管理、任务分配、成绩管理等）应能够独立开发和维护，避免系统耦合过强。\n\nAPI支持：系统应提供开放的API接口，便于集成外部工具或与学校其他信息系统对接。\n\n版本管理与更新：系统应具备版本管理和升级机制，确保在进行系统更新时，不影响现有功能的使用。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 443,
+      "text_length": 63,
+      "text_preview": "系统架构应支持水平和垂直扩展，能够根据用户数和数据量的增长扩展计算资源。\n\n系统应支持高并发操作，保证平台的可扩展性和稳定性。"
+    },
+    {
+      "number": null,
+      "title": "3.4.6系统集成和接口能力",
+      "level": 2,
+      "line_start": 449,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 451,
+      "text_length": 110,
+      "text_preview": "第三方系统集成：平台应能够与学校的其他系统（如教务系统、学生管理系统）进行无缝集成，确保数据的同步和一致性。\n\n数据交换接口：提供RESTful API接口，支持与外部系统（如成绩管理系统、在线考试系统等）进行数据交换。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 457,
+      "text_length": 72,
+      "text_preview": "接口调用应具有高可靠性和高并发支持，保证与外部系统的数据交换不受影响。\n\n支持标准的数据格式（如JSON、XML），确保平台与其他系统的兼容性。"
+    },
+    {
+      "number": null,
+      "title": "3.4.7可靠性和高可用性",
+      "level": 2,
+      "line_start": 463,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 465,
+      "text_length": 87,
+      "text_preview": "故障恢复与备份：系统应具备自动化的备份机制和灾难恢复能力，保证系统在发生故障后能快速恢复。\n\n冗余设计：为确保系统的高可用性，平台应实现数据库和服务的冗余备份，防止单点故障。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 471,
+      "text_length": 44,
+      "text_preview": "系统应确保至少99.9%的正常运行时间，保证在高并发和系统故障的情况下依然能够提供服务。"
+    },
+    {
+      "number": null,
+      "title": "3.4.8合规性和法律要求",
+      "level": 2,
+      "line_start": 475,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1.功能需求：",
+      "level": 2,
+      "line_start": 477,
+      "text_length": 98,
+      "text_preview": "隐私保护与合规性：平台应符合数据保护和隐私法律法规（如GDPR等），确保学生和教师的个人数据得到合法保护。\n\n版权管理：在上传教学资料（如课件、视频等）时，系统应考虑版权问题，确保资料的合法使用。"
+    },
+    {
+      "number": null,
+      "title": "2.性能需求：",
+      "level": 2,
+      "line_start": 483,
+      "text_length": 46,
+      "text_preview": "在处理个人数据和敏感信息时，系统应采取高标准的加密和访问控制策略，确保信息的安全性和合规性。"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 CSCI外部接口需求",
+      "level": 2,
+      "line_start": 487,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.5.1",
+      "title": "3.5.1 接口标识和接口图",
+      "level": 2,
+      "line_start": 489,
+      "text_length": 82,
+      "text_preview": "1. UI-001: 用户界面 (User Interface)\n\n接口实体: 用户 (通过Web浏览器)\n\n描述: 系统与最终用户交互的主要界面，基于Web技术。"
+    },
+    {
+      "number": "3.5.2",
+      "title": "3.5.2 UI-001 (用户界面)",
+      "level": 2,
+      "line_start": 497,
+      "text_length": 579,
+      "text_preview": "REQ-IF-UI-001 界面兼容性接口\n\n接口优先级：P1（关键业务功能）\n\n接口类型：Web界面渲染\n\n界面应基于Web浏览器，兼容主流现代浏览器（如Chrome, Firefox,Edge）。\n\nREQ-IF-UI-002 界面易用性接口\n\n接口优先级：P1（关键业务功能）\n\n接口类型：用户交互设计\n\n界面设计应遵循易用性原则，操作流程直观、便捷。\n\nREQ-IF-UI-003 界面视觉设"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 CSCI内部接口需求",
+      "level": 2,
+      "line_start": 551,
+      "text_length": 42,
+      "text_preview": "系统内部模块间的接口（如课程管理模块与用户管理模块的数据交互）留待详细设计阶段定义。"
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 CSCI内部数据需求",
+      "level": 2,
+      "line_start": 555,
+      "text_length": 977,
+      "text_preview": "数据库需求：\n\n数据库类型：项目使用MySQL数据库\n\n数据库模型：使用关系型数据库\n\n数据表设计：该项目主要包含七张表\n\n用户表（包括用户ID、用户名、加密后的密码、角色、姓名、学号/工号等基本信息）\n\n课程表（包括课程ID、名称、代码、大纲、目标、考核方式、创建教师等）\n\n课程章节表（包括章节ID、课程ID、章节名称、章节顺序等）\n\n班级表（包括班级ID、名称、代码、所属课程、教师等）\n\n班级"
+    },
+    {
+      "number": null,
+      "title": "数据文件需求：",
+      "level": 2,
+      "line_start": 619,
+      "text_length": 104,
+      "text_preview": "文件类型：有多种类型的数据文件，如文本文件、图像文件、音频文件等\n\n格式：数据文件的格式，包含CSV、JSON、XML等\n\n存储位置：文本信息存储在数据库中，图片和音频信息采用磁盘存储或者使用OSS云服务存储"
+    },
+    {
+      "number": null,
+      "title": "数据管理需求：",
+      "level": 2,
+      "line_start": 627,
+      "text_length": 188,
+      "text_preview": "数据获取：数据的来源包含用户上传、网络爬虫或请求外部接口等\n\n数据更新：新增、修改和删除操作都通过请求接口进行\n\n数据备份和恢复：建立数据库备份和恢复机制，保障数据的可靠性和持久性数据交互需求：\n\n数据传输格式：与外部系统或模块之间的数据传输格式，包含JSON、Martipartfile和Binary等\n\n通信协议：采用HTTP、TCP/IP等协议，确保数据传输的安全和稳定"
+    },
+    {
+      "number": null,
+      "title": "数据保护需求：",
+      "level": 2,
+      "line_start": 639,
+      "text_length": 139,
+      "text_preview": "隐私保护：采取必要的措施保护用户隐私，如数据脱敏、数据匿名化等\n\n数据安全：加密敏感数据，确保数据在传输和存储过程中的安全性\n\n访问控制：建立严格的访问控制策略，限制数据的访问权限，防止未授权的访问\n\n身份验证：确保用户身份的合法性，采用身份验证机制，如用户名密码、双因素认证等"
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 适应性需求",
+      "level": 2,
+      "line_start": 649,
+      "text_length": 101,
+      "text_preview": "系统需配置运行环境参数，例如数据库连接信息、文件存储路径等，这些参数根据实际运行需求进行调整。\n\n课程代码、班级代码、用户学号/工号等数据依赖于具体使用场景，系统需能够根据这些数据进行相应的配置和适应。"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 保密性需求 (Safety)",
+      "level": 2,
+      "line_start": 655,
+      "text_length": 92,
+      "text_preview": "为防止误操作导致严重后果，系统应提供二次确认机制，特别是在删除课程、班级、重要资料等敏感操作时。\n\n系统应有适当的权限控制机制，确保只有授权用户才能执行管理操作，防止非授权访问和操作。"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 保密性和私密性需求 (Security & Privacy)",
+      "level": 2,
+      "line_start": 661,
+      "text_length": 261,
+      "text_preview": "系统应实施基于角色的访问控制，确保用户只能访问其权限允许的功能和数据，以维护系统的保密性和私密性。\n\n用户密码必须使用强哈希算法（如bcrypt, Argon2）加盐存储，以增强密码的安全性。\n\n系统与用户浏览器之间的通信应使用HTTPS加密，以保护数据传输的安全。\n\n系统应防止常见的Web安全漏洞，如XSS、CSRF、SQL注入等，以减少安全风险。\n\n教师设置的资料访问权限（如特定班级可见）必须"
+    },
+    {
+      "number": "3.11",
+      "title": "3.11 CSCI环境需求",
+      "level": 2,
+      "line_start": 675,
+      "text_length": 107,
+      "text_preview": "开发团队使用个⼈电脑运行项目，硬件配置大体如下：\n\n计算机硬件\n\n处理器型号：12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz\n\n⽹络配置：1000 Mbps带宽⽹络适配器"
+    },
+    {
+      "number": null,
+      "title": "操作系统",
+      "level": 2,
+      "line_start": 685,
+      "text_length": 18,
+      "text_preview": "Windows 11 64-bits"
+    },
+    {
+      "number": null,
+      "title": "浏览器支持",
+      "level": 2,
+      "line_start": 689,
+      "text_length": 67,
+      "text_preview": "支持所有主流浏览器\n\n最新版本的Google Chrome、Mozilla Firefox、Microsoft Edge或Safari"
+    },
+    {
+      "number": "3.12",
+      "title": "3.12 计算机资源需求",
+      "level": 2,
+      "line_start": 695,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.12.1",
+      "title": "3.12.1 计算机硬件需求",
+      "level": 2,
+      "line_start": 697,
+      "text_length": 221,
+      "text_preview": "服务器端：服务器需具备中等及以上配置，包括多核 CPU（建议至少 4 核）、≥8GB RAM、≥100GB 存储空间，能够支持课程管理、资料上传下载、在线练习等功能的并发访问。具体配置视实际用户数量与系统负载测试结果确定（TBD）。\n\n网络：平台运行需稳定的公网访问环境，建议下行带宽不低于 10Mbps，以保障用户流畅访问与教学资料传输。\n\n用户端：兼容主流现代浏览器的 PC、平板或智能手机，推荐"
+    },
+    {
+      "number": "3.12.2",
+      "title": "3.12.2 资源利用需求",
+      "level": 2,
+      "line_start": 705,
+      "text_length": 115,
+      "text_preview": "在峰值使用场景（如期中考试周、批量上传下载资料）下，系统应保证 CPU 与内存资源利用率不超过 70%–80%，保障系统响应速度与稳定性。\n\n应支持基本的资源监控机制，例如定期记录系统负载、内存使用情况，以便维护人员进行性能优化。"
+    },
+    {
+      "number": "3.12.3",
+      "title": "3.12.3 软件需求",
+      "level": 2,
+      "line_start": 711,
+      "text_length": 61,
+      "text_preview": "用户端：\n\n支持 HTML5 与 JavaScript 的现代浏览器，如 Chrome、Edge、Firefox 等最新版"
+    },
+    {
+      "number": "3.12.4",
+      "title": "3.12.4 通信需求",
+      "level": 2,
+      "line_start": 717,
+      "text_length": 80,
+      "text_preview": "平台基于 HTTP/HTTPS 协议运行于 TCP/IP 网络上。\n\n若后期对接学校认证系统（如 SSO），应支持 OAuth2.0 或 SAML 等认证协议。"
+    },
+    {
+      "number": "3.13",
+      "title": "3.13 软件质量因素",
+      "level": 2,
+      "line_start": 723,
+      "text_length": 165,
+      "text_preview": "在本软件需求规格说明书中，我们特别强调了软课程管理平台在计算机软件配置项\n\n（CSCI）中的各项质量要求。为保障平台在高校教学环境中具备稳定性、实用性和可持续性，本节详细阐述了项目所需遵循的各类软件质量属性。这些要求源自对用户需求、使用场景和未来发展趋势的分析，旨在指导后续的设计与实现工作，确保软件系统具有良好的表现和演进能力。"
+    },
+    {
+      "number": null,
+      "title": "功能性",
+      "level": 2,
+      "line_start": 729,
+      "text_length": 227,
+      "text_preview": "软课程管理平台必须具备实现全部核心功能的能力，涵盖课程创建与编辑、班级管理、资料上传与分类、在线练习发布与提交、学生学习记录查询、成绩反馈、用户注册与权限管理等多个教学业务环节。所有功能应与前述功能性需求章节所列条目一致，保证平台能够完整支撑教师授课、学生学习和管理人员维护的全流程操作，且各模块之间的数据和权限应保持一致性，避免功能缺失、权限混乱或模块孤立等问题影响使用效果。平台还需支持未来新功能"
+    },
+    {
+      "number": null,
+      "title": "可用性",
+      "level": 2,
+      "line_start": 733,
+      "text_length": 204,
+      "text_preview": "系统应确保在需要时能够被用户稳定访问和操作，无论在教学日常使用、考试高峰期还是维护窗口期间，均需具备持续服务能力。平台应支持多用户并发访问，确保用户在任何时段内都能顺利进行课程查看、作业提交、成绩查询等关键操作。同时，系统应提供可视化的错误提示和操作反馈，指导用户在操作中及时发现与纠正问题。运维团队应设定系统健康监控机制，对系统可用性进行持续追踪，并在出现系统异常时第一时间告警与响应，防止大规模服"
+    },
+    {
+      "number": null,
+      "title": "可靠性",
+      "level": 2,
+      "line_start": 737,
+      "text_length": 233,
+      "text_preview": "平台必须具备产生正确、一致结果的能力，确保所有用户在不同终端和网络环境下访问系统时，均可获得准确、稳定的使用体验。系统应具备高可用性架构设计，在负载较高、并发用户访问较多或出现突发异常的情况下仍能保持核心功能的稳定运行，避免数据丢失、逻辑错误或服务不可用。各类数据交互操作，如用户信息编辑、作业提交、成绩更新等，必须具备事务一致性机制和失败回滚机制，确保在出现故障时系统能恢复到一致状态。此外，系统需"
+    },
+    {
+      "number": null,
+      "title": "灵活性",
+      "level": 2,
+      "line_start": 741,
+      "text_length": 201,
+      "text_preview": "系统在设计时应具备良好的灵活性，以适应未来教学模式、用户需求和功能扩展的变化。平台应支持配置化开发与参数驱动机制，使管理员能够在无需修改代码的前提下调整如课程模板、用户角色、题型规则等核心业务参数。系统应预留接口和模块化集成能力，方便后续集成学校认证系统、通知系统、学籍系统等外部服务。此外，平台还应支持功能模块的热更新与灵活部署，在不影响现有功能稳定性的前提下，实现新功能上线或旧功能优化的平滑过渡"
+    },
+    {
+      "number": null,
+      "title": "可移植性",
+      "level": 2,
+      "line_start": 745,
+      "text_length": 160,
+      "text_preview": "平台应具备良好的可移植性，便于在不同的操作系统（如Windows、Linux）和部署环境（如学校本地服务器、云服务平台）中快速搭建与迁移。开发过程中应尽量采用跨平台技术与容器化方案（如Docker），统一运行环境，减少环境差异带来的部署难题。在数据管理方面，平台应支持数据导出与导入，便于进行平台迁移或对接其他信息系统。"
+    },
+    {
+      "number": null,
+      "title": "可重用性",
+      "level": 2,
+      "line_start": 749,
+      "text_length": 197,
+      "text_preview": "平台的架构设计应高度模块化，各功能模块（如用户认证模块、课程管理模块、资料上传模块）应具备明确的接口与职责边界，并能独立于项目本身进行部署和调用。此类模块应在后续教学类系统开发中具备复用价值，提升开发效率，降低开发成本。此外，前端界面组件和后端服务逻辑也应封装为可复用单元，在团队内部和其他项目中均可灵活复用。平台还应提供标准化API接口，方便其他系统或开发者调用相关服务，扩展平台的生态能力。"
+    },
+    {
+      "number": null,
+      "title": "可测试性",
+      "level": 2,
+      "line_start": 753,
+      "text_length": 198,
+      "text_preview": "平台应具备易于充分测试的能力，从系统设计开始就应考虑测试覆盖范围与可测试性。平台各功能模块需支持单元测试，确保基本逻辑正确性；模块间集成应具备集成测试用例，保障协同操作的有效性；平台整体部署后应支持系统测试与压力测试，验证其在实际教学场景中的稳定性与可扩展性。为提升测试效率，系统应支持自动化测试框架与持续集成工具，并实现测试环境与正式环境的严格隔离，以便安全地验证功能变更而不影响正常教学活动。"
+    },
+    {
+      "number": null,
+      "title": "易用性",
+      "level": 2,
+      "line_start": 757,
+      "text_length": 234,
+      "text_preview": "平台应易于被用户理解、学习和使用，特别是在高校师生这一广泛用户群体中，应避免复杂的操作流程和晦涩的技术术语。用户界面应简洁明了、操作逻辑符合常规教学系统使用习惯，功能分布合理，信息呈现清晰，确保用户在最短时间内即可熟练完成课程浏览、资料查阅、作业提交等常规操作。同时，平台应提供统一的操作提示、反馈机制、在线帮助文档或引导系统，引导用户完成复杂任务。易用性还体现在平台对弱网环境和移动设备的适配能力上"
+    },
+    {
+      "number": "3.14",
+      "title": "3.14 设计与实现约束",
+      "level": 2,
+      "line_start": 761,
+      "text_length": 168,
+      "text_preview": "所有代码需遵守统一的代码规范（如 Google Java Style）。\n\n项目使用 Git 进行版本控制，并定期进行代码评审与合并。\n\n所选技术应团队成员熟悉，具有活跃社区支持，便于长期维护。\n\n后端采用 MVC 架构，前后端分离，接口文档建议使用 Swagger 自动生成。\n\n系统设计应尽量避免重复功能，避免堆叠需求导致系统臃肿。"
+    },
+    {
+      "number": "3.15",
+      "title": "3.15 数据管理需求",
+      "level": 2,
+      "line_start": 773,
+      "text_length": 192,
+      "text_preview": "输入数据：\n\n用户注册信息、登录凭证、课程与班级信息、教学资料文件、练习题与提交内容、评分反馈等。\n\n输出数据：\n\n课程展示、资料列表、练习反馈、学习报告、系统通知、用户列表等。\n\n数据管理需求：\n\n支持用户、课程、班级、作业、提交记录的增删改查。\n\n设计数据库应满足三范式，支持数据关联完整性约束。\n\n需考虑数据库定期备份、数据增长后的扩展性与分库策略（如用户数据与练习数据分表）。"
+    },
+    {
+      "number": "3.16",
+      "title": "3.16 系统操作流程",
+      "level": 2,
+      "line_start": 791,
+      "text_length": 178,
+      "text_preview": "常规操作：\n\n学生：登录、选课、查阅资料、提交练习、查看反馈与成绩。\n\n教师：创建课程与班级、上传教学资料、发布练习、批改与评分。\n\n初始化操作：\n\n第一次部署需初始化数据库结构、创建管理员账号。\n\n系统环境变量需配置如数据库地址、邮件服务等。\n\n恢复操作：\n\n系统应支持每日 自动备份数据（数据库与文件），并具备通过备份进行数据恢复的操作流程（TBD）。"
+    },
+    {
+      "number": "3.17",
+      "title": "3.17 故障处理与错误管理",
+      "level": 2,
+      "line_start": 809,
+      "text_length": 227,
+      "text_preview": "REQ-FH-001（用户输入错误提示）：\n\n系统在用户输入不合法或权限不足时，应以友好提示框提示具体问题内容，避免技术术语。\n\nREQ-FH-002（系统内部错误处理）：\n\n系统在发生运行时异常时应记录详细日志，包括请求参数、出错模块、时间戳、用户信息等，同时向用户显示统一的“系统错误，请联系管理员”页面。\n\nREQ-FH-003（长时操作反馈）：\n\n对于导入大量学生名单、生成报告等操作，应显示"
+    },
+    {
+      "number": "3.18",
+      "title": "3.18 算法说明",
+      "level": 2,
+      "line_start": 823,
+      "text_length": 83,
+      "text_preview": "客观题自动批改算法: 对比学生答案与标准答案。\n\n学习进度计算算法: 根据学生完成的章节、资料阅读、练习参与情况计算百分比。\n\n排名计算算法: 根据练习得分进行排序。"
+    },
+    {
+      "number": "3.19",
+      "title": "3.19 有关人员需求",
+      "level": 2,
+      "line_start": 831,
+      "text_length": 67,
+      "text_preview": "最终用户: 高校教师、助教、学生，具备基本计算机操作能力。\n\n系统管理员: 需要具备服务器管理、数据库维护、系统部署和监控的基本技能。"
+    },
+    {
+      "number": "3.20",
+      "title": "3.20 有关培训需求",
+      "level": 2,
+      "line_start": 837,
+      "text_length": 89,
+      "text_preview": "对最终用户，主要依赖系统的易用性设计。可提供在线帮助文档或F $\\mathsf { A Q } _ { \\mathsf { c } }$\n\n对系统管理员，需要提供部署和维护手册。"
+    },
+    {
+      "number": "3.21",
+      "title": "3.21 有关后勤需求",
+      "level": 2,
+      "line_start": 843,
+      "text_length": 72,
+      "text_preview": "需要服务器托管（物理或云）。\n\n需要定期的系统维护（如更新、打补丁）。\n\n需要数据备份策略和存储空间。\n\n需要软件支持（问题解答、Bug修复）。"
+    },
+    {
+      "number": "3.22",
+      "title": "3.22 其他需求",
+      "level": 2,
+      "line_start": 853,
+      "text_length": 46,
+      "text_preview": "系统可提供在线讨论区功能，方便师生交流。\n\n系统可提供任务提醒（如截止日期临近）和通知功能。"
+    },
+    {
+      "number": "3.23",
+      "title": "3.23 包装需求",
+      "level": 2,
+      "line_start": 859,
+      "text_length": 18,
+      "text_preview": "不适用（Web应用，主要涉及部署）。"
+    },
+    {
+      "number": "3.24",
+      "title": "3.24 需求的优先次序和关键程度",
+      "level": 2,
+      "line_start": 863,
+      "text_length": 173,
+      "text_preview": "高优先级/关键: 用户管理核心（注册登录、角色权限）、课程/班级核心管理、资料上传/查看、练习创建/参与/自动批改（客观题）、历史记录核心查询、安全性、可靠性、易用性。\n\n中优先级: 批量导入、编程题自动评测、版本管理、导出功能、性能优化、可维护性。\n\n低优先级: 可选功能（讨论区、通知）、与学校SSO集成（除非明确要求）、界面美观性细节打磨。"
+    },
+    {
+      "number": "4",
+      "title": "4 合格性规定",
+      "level": 2,
+      "line_start": 871,
+      "text_length": 1475,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>需求简述</td><td rowspan=1 colspan=1>合格性方法（演示/测试/分析/审查）</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>课程和班级管理功能</td><"
+    },
+    {
+      "number": "5",
+      "title": "5 需求可追踪性",
+      "level": 2,
+      "line_start": 875,
+      "text_length": 116,
+      "text_preview": "本文档中的所有需求（第3章）均来源于第2章引用的《项目1: 软课程管理平台》描述文档。高层目标和约束追溯至源文档的“引言”和“其他可选需求”部分。具体功能需求追溯至源文档的第一至第五节。合格性规定（第4章）确保每个需求都有验证方法。"
+    },
+    {
+      "number": "6",
+      "title": "6 尚未解决的问题",
+      "level": 2,
+      "line_start": 879,
+      "text_length": 110,
+      "text_preview": "在开发和规划阶段，我们识别出了一些关键的遗留问题，这些问题尚未得到解决，并可能影响到CSCI的实现和验收。这些遗留问题主要包括从高层规格派生的复杂需求未能完全满足，以及与现有技术限制相关的挑战。以下是详细的遗留问题列表："
+    },
+    {
+      "number": null,
+      "title": "功能性遗留问题",
+      "level": 2,
+      "line_start": 883,
+      "text_length": 214,
+      "text_preview": "具体运行环境: 服务器操作系统、Web服务器、数据库、后端语言/框架、前端框架的具体选型和版本。\n\n性能指标: 明确的并发用户数、响应时间、资源利用率等量化指标。\n\n编程题自动评测: 支持的编程语言、具体的评测逻辑、资源限制（时间/内存）。\n\n与学校认证系统集成: 是否需要以及具体采用哪种SSO协议和集成方式。\n\n数据备份与恢复策略: 具体的备份频率、保留周期、恢复流程。\n\n助教角色权限: 助教的"
+    },
+    {
+      "number": null,
+      "title": "性能与可靠性问题",
+      "level": 2,
+      "line_start": 897,
+      "text_length": 292,
+      "text_preview": "1. 性能问题：我们的系统并没有针对高并发情况进行优化，很可能在高并发量的情况下出现系统响应速度过慢甚至服务器难以承载的问题。\n\n2. 可靠性问题：我们的系统仅仅有基本的针对网络攻击的防范措施，在面临网络攻击的情况下的时候很可能会导致防御失败，同时对于在网络连接不稳或者网络连接突然中断的情况下的临时应对措施不够充分，没有充足的备份以便建立新的连接。同时在服务器宕机的情况下用户也会无法听歌，没有对于"
+    },
+    {
+      "number": "7",
+      "title": "7 注解",
+      "level": 2,
+      "line_start": 905,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "附录",
+      "level": 2,
+      "line_start": 907,
+      "text_length": 0,
+      "text_preview": ""
+    }
+  ],
+  "constraint_count": 3,
+  "constraints": [
+    {
+      "value": 99.9,
+      "unit": "%",
+      "operator": "≥",
+      "sentence": "系统应确保至少99.9%的正常运行时间，保证在高并发和系统故障的情况下依然能够提供服务。",
+      "section": "2.性能需求：",
+      "section_number": null,
+      "section_title": "2.性能需求：",
+      "line_start": 471
+    },
+    {
+      "value": 10.0,
+      "unit": "Mb",
+      "operator": "≥",
+      "sentence": "网络：平台运行需稳定的公网访问环境，建议下行带宽不低于 10Mbps，以保障用户流畅访问与教学资料传输。",
+      "section": "3.12.1 计算机硬件需求",
+      "section_number": "3.12.1",
+      "section_title": "3.12.1 计算机硬件需求",
+      "line_start": 697
+    },
+    {
+      "value": 70.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "在峰值使用场景（如期中考试周、批量上传下载资料）下，系统应保证 CPU 与内存资源利用率不超过 70%–80%，保障系统响应速度与稳定性。",
+      "section": "3.12.2 资源利用需求",
+      "section_number": "3.12.2",
+      "section_title": "3.12.2 资源利用需求",
+      "line_start": 705
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "qualification",
+      "format": "html",
+      "headers": [
+        "序号",
+        "需求简述",
+        "合格性方法（演示/测试/分析/审查）"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "4 合格性规定",
+      "raw_html": "<tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>需求简述</td><td rowspan=1 colspan=1>合格性方法（演示/测试/分析/审查）</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>课程和班级管理功能</td><td rowspan=1 colspan=1>测试，演示</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>教学资料管理功能</td><td rowspan=1 colspan=1>测试，演示</td></tr><tr><td rowspan=1 colspan=1>3</td><td rowspan=1 colspan=1>在线练习功能</td><td rowspan=1 colspan=1>测试，演示</td></tr><tr><td rowspan=1 colspan=1>4</td><td rowspan=1 col"
+    }
+  ],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "bef558e2cb7360778b98094b685686c68bba942c30c450e1f360e1d564c52df8.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo2_rainel02_BUAASoftwareBachelorNotes/mineru_parsed/xx组-软件需求规格说明书.pdf/auto/images/bef558e2cb7360778b98094b685686c68bba942c30c450e1f360e1d564c52df8.jpg",
+      "image_exists": true,
+      "image_size_kb": 87,
+      "alt_text": null,
+      "caption": "独立产品，可考虑与学校现有认证系统集成。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.系统高层次图",
+      "context_before": "1. 输入：前端接收课程信息、学生名单、教学资料、练习代码与答案等。\n2. 处理：后端负责数据存储、客观题自动批改、成绩与进度统计。\n3. 输出：生成并展示课程页面、资料列表、练习成绩及综合报告，支持导出下载。",
+      "context_after": "独立产品，可考虑与学校现有认证系统集成。",
+      "md_line": 185,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "c6a17c7c6ae779f86b8acc85433c31a5825251e5db4fc5bf5f8237a7297393e9.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo2_rainel02_BUAASoftwareBachelorNotes/mineru_parsed/xx组-软件需求规格说明书.pdf/auto/images/c6a17c7c6ae779f86b8acc85433c31a5825251e5db4fc5bf5f8237a7297393e9.jpg",
+      "image_exists": true,
+      "image_size_kb": 76,
+      "alt_text": null,
+      "caption": "用户界面：",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "3.3.1 软件系统总体功能/对象结构",
+      "context_before": "4. 数据安全和隐私保护：考虑如何保护用户信息安全，尊重并保护用户隐私。\n5. 遵循相关法律法规",
+      "context_after": "用户界面：",
+      "md_line": 277,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "bef558e2cb7360778b98094b685686c68bba942c30c450e1f360e1d564c52df8.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo2_rainel02_BUAASoftwareBachelorNotes/mineru_parsed/xx组-软件需求规格说明书.pdf/auto/images/bef558e2cb7360778b98094b685686c68bba942c30c450e1f360e1d564c52df8.jpg",
+      "image_exists": true,
+      "image_size_kb": 87,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "独立产品，可考虑与学校现有认证系统集成。",
+      "section": "3.系统高层次图",
+      "context_before": "1. 输入：前端接收课程信息、学生名单、教学资料、练习代码与答案等。\n2. 处理：后端负责数据存储、客观题自动批改、成绩与进度统计。\n3. 输出：生成并展示课程页面、资料列表、练习成绩及综合报告，支持导出下载。",
+      "context_after": "独立产品，可考虑与学校现有认证系统集成。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "c6a17c7c6ae779f86b8acc85433c31a5825251e5db4fc5bf5f8237a7297393e9.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo2_rainel02_BUAASoftwareBachelorNotes/mineru_parsed/xx组-软件需求规格说明书.pdf/auto/images/c6a17c7c6ae779f86b8acc85433c31a5825251e5db4fc5bf5f8237a7297393e9.jpg",
+      "image_exists": true,
+      "image_size_kb": 76,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "用户界面：",
+      "section": "3.3.1 软件系统总体功能/对象结构",
+      "context_before": "4. 数据安全和隐私保护：考虑如何保护用户信息安全，尊重并保护用户隐私。\n5. 遵循相关法律法规",
+      "context_after": "用户界面：",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

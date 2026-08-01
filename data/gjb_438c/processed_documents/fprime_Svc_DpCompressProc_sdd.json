@@ -1,0 +1,257 @@
+{
+  "doc_name": "fprime_Svc_DpCompressProc_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_DpCompressProc_sdd.md",
+  "md_lines": 182,
+  "md_chars": 9635,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::DpCompressProc",
+  "section_count": 16,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::DpCompressProc",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 319,
+      "text_preview": "`Svc::DpCompressProc` is a Data Product Processor component to assist in creating compressed data products. `Svc::DpCompressProc` does not perform any compression itself. Instead it manages the compre"
+    },
+    {
+      "number": null,
+      "title": "Usage Examples",
+      "level": 2,
+      "line_start": 6,
+      "text_length": 27,
+      "text_preview": "See DataProduct subtopology"
+    },
+    {
+      "number": null,
+      "title": "Diagrams",
+      "level": 3,
+      "line_start": 10,
+      "text_length": 590,
+      "text_preview": "```mermaid\nsequenceDiagram\n    DpProducer->DpManager: DpSend\n    DpManager->>+DpWriter: productSendOut\n\n    DpWriter->>+DpCompressProc: procBufferSendOut\n\n    DpCompressProc->>+DpZLibCompress: compres"
+    },
+    {
+      "number": null,
+      "title": "Typical Usage",
+      "level": 3,
+      "line_start": 35,
+      "text_length": 209,
+      "text_preview": "```\n     procBufferSendOut    compressChunk\n +--------+    +--------------+    +----------------+\n |DpWriter| -> |DpCompressProc| -> |DpZLibCompressor|\n +--------+    +--------------+    +------------"
+    },
+    {
+      "number": null,
+      "title": "Port Descriptions",
+      "level": 2,
+      "line_start": 44,
+      "text_length": 259,
+      "text_preview": "| Name | Description |\n|---|---|\n|procRequest| Synchronous input port receiving `Fw::Buffer` data product containers from `DpWriter` for compression processing|\n|compressChunk| Pass chunks of the orig"
+    },
+    {
+      "number": null,
+      "title": "Component States",
+      "level": 2,
+      "line_start": 50,
+      "text_length": 53,
+      "text_preview": "None. DpCompressProc is stateless between invocations"
+    },
+    {
+      "number": null,
+      "title": "Parameters",
+      "level": 2,
+      "line_start": 54,
+      "text_length": 341,
+      "text_preview": "| Name | Description |\n|---|---|\n|ENABLE| Enable compression. If disable then DpCompressProc always returns the original data product uncompressed\n|CHUNK\\_SIZE | Size, in bytes, to chunk the incoming "
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 60,
+      "text_length": 678,
+      "text_preview": "Add requirements in the chart below\n| Name | Description | Validation |\n|---|---|---|\n|SVC-DPCOMPRESSPROC-001 | `Svc::DpCompressProc` shall return the passed `Fw::Buffer` as either a valid compressed "
+    },
+    {
+      "number": null,
+      "title": "Events",
+      "level": 2,
+      "line_start": 68,
+      "text_length": 379,
+      "text_preview": "| Name                  | Description                                                        |\n|-----------------------|--------------------------------------------------------------------|\n| Compress"
+    },
+    {
+      "number": null,
+      "title": "Detailed Documentation",
+      "level": 2,
+      "line_start": 76,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Data Product Compression Algorithm",
+      "level": 3,
+      "line_start": 78,
+      "text_length": 707,
+      "text_preview": "`Svc::DpCompressProc` is passed an `Fw::Buffer` containing a Data Product container. When `Svc::DpCompressProc` returns the port call the container will be in one of two states.\n\n1. `Svc::DpCompressPr"
+    },
+    {
+      "number": null,
+      "title": "CompressChunk port",
+      "level": 3,
+      "line_start": 87,
+      "text_length": 1550,
+      "text_preview": "The CompressChunk port call is a synchronous port call with three arguments, buffer, min\\_compression and write\\_offset and a return enum CompressionAlgorithm\n\nThe buffer, an `Fw::Buffer`, is a chunk "
+    },
+    {
+      "number": null,
+      "title": "Compressed Data Product Format",
+      "level": 3,
+      "line_start": 99,
+      "text_length": 903,
+      "text_preview": "A compressed record contains an uncompressed data product header, with the same metadata as the original product, and a compressed data section. The data checksum corresponds to the compressed data se"
+    },
+    {
+      "number": null,
+      "title": "Original Product",
+      "level": 4,
+      "line_start": 110,
+      "text_length": 966,
+      "text_preview": "```\n+----------+\n|  Header  |\n+----------+\n| Record 1 |\n+----------+\n| Record 2 |\n+----------+\n| Record 3 |\n+----------+\n|   ....   |\n+----------+\n| Record N |\n+----------+\n```\nis chunked to the follo"
+    },
+    {
+      "number": null,
+      "title": "Compression State Machine",
+      "level": 3,
+      "line_start": 163,
+      "text_length": 2208,
+      "text_preview": "The algorithm to place the compressed data at the correct location needs to know whether the current chunk was compressed and whether the previous chunk was compressed. This information is tracked thr"
+    },
+    {
+      "number": null,
+      "title": "Change Log",
+      "level": 2,
+      "line_start": 179,
+      "text_length": 61,
+      "text_preview": "| Date | Description |\n|---|---|\n|04/14/2026| Initial Draft |"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 5,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "Port Descriptions",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Parameters",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description",
+        "Validation"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "Events",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Date",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Change Log",
+      "raw_html": null
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "DpCompressProcSM.drawio.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/DpCompressProcSM.drawio.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "DPCompress State Machine",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "Compression State Machine",
+      "context_before": "```\nThe compressed product is guaranteed to be no larger than the original data product\nThe algorithm to place the compressed data at the correct location needs to know whether the current chunk was compressed and whether the previous chunk was compressed. This information is tracked through the use",
+      "context_after": "The component starts in Init and immediately moves to either the Pre-Commit or Compressed state depending on the first chunk. If the first chunk is incompressible then the state machine moves to the P",
+      "md_line": 167,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "DpCompressProcSM.drawio.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/DpCompressProcSM.drawio.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "Compression State Machine",
+      "context_before": "```\nThe compressed product is guaranteed to be no larger than the original data product\nThe algorithm to place the compressed data at the correct location needs to know whether the current chunk was compressed and whether the previous chunk was compressed. This information is tracked through the use",
+      "context_after": "The component starts in Init and immediately moves to either the Pre-Commit or Compressed state depending on the first chunk. If the first chunk is incompressible then the state machine moves to the P",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

@@ -1,0 +1,495 @@
+{
+  "analysis_date": "2026-07-28",
+  "total_documents": 3,
+  "documents": [
+    {
+      "name": "scheduler_srs",
+      "basic_info": {
+        "name": "scheduler_srs",
+        "source_pdf": "[08]调度器-软件需求规格说明-438C.pdf",
+        "pdf_size_kb": 356.9,
+        "md_size_kb": 25.2,
+        "pages": 15,
+        "md_lines": 421,
+        "total_chars": 16010,
+        "system_type": "嵌入式实时调度器 (Embedded Linux, ARM)"
+      },
+      "section_stats": {
+        "total_sections": 44,
+        "level_distribution": {
+          "h2": 44,
+          "h3": 0,
+          "h4": 0
+        },
+        "gjb6_required_sections": {
+          "1 范围": true,
+          "2 引用文档": true,
+          "3 需求": true,
+          "4 合格性规定": true,
+          "5 需求可追踪性": true,
+          "6 注释": true
+        },
+        "all_gjb6_present": true,
+        "capability_3_2_x_count": 5,
+        "capability_3_2_x_titles": [
+          "3.2.1 高精度定时器功能",
+          "3.2.2 时间漂移补偿功能",
+          "3.2.3 电流序列管理功能",
+          "3.2.4 主循环调度功能",
+          "3.2.5 降采样输出功能"
+        ]
+      },
+      "table_stats": {
+        "total_tables": 5,
+        "type_distribution": {
+          "modification": 1,
+          "reference": 1,
+          "qualification": 1,
+          "traceability": 2
+        },
+        "tables_detail": [
+          {
+            "type": "modification",
+            "section": "TH-Scheduler-周期任务调度器 软件需求规格说明 产品型号-Scheduler",
+            "rows": 19,
+            "cols": 8,
+            "content_summary": "空模板(文件更改记录,无数据)"
+          },
+          {
+            "type": "reference",
+            "section": "2 引用文档",
+            "rows": 2,
+            "cols": 5,
+            "content_summary": "已填充(2条引用文档)"
+          },
+          {
+            "type": "qualification",
+            "section": "4 合格性规定",
+            "rows": 7,
+            "cols": 5,
+            "content_summary": "已填充(合格性方法表)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 6,
+            "cols": 2,
+            "content_summary": "已填充(追踪关系)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 4,
+            "cols": 2,
+            "content_summary": "已填充(追踪关系)"
+          }
+        ]
+      },
+      "image_stats": {
+        "total_image_files": 7,
+        "body_image_references": 0,
+        "note": "images目录为MinerU页面渲染图,非文档正文插图"
+      },
+      "constraint_stats": {
+        "total": 65,
+        "by_type": {
+          "design": 43,
+          "conditional": 4,
+          "default": 1,
+          "tolerance": 1,
+          "cumulative": 1,
+          "numerical": 12,
+          "temporal": 3
+        },
+        "by_section": {
+          "1.1": 1,
+          "3.1.1": 1,
+          "3.1.2": 1,
+          "3.1.3": 1,
+          "3.2.1": 4,
+          "3.2.2": 4,
+          "3.2.3": 6,
+          "3.2.4": 4,
+          "3.2.5": 6,
+          "3.4": 6,
+          "3.4.1": 4,
+          "3.4.2": 3,
+          "3.5": 2,
+          "3.10.1": 5,
+          "3.10.2": 5,
+          "3.10.3": 5,
+          "3.12": 5,
+          "5": 2
+        },
+        "numerical_param_names": [
+          "定时器精度",
+          "单次定时误差",
+          "主循环调用深度",
+          "内核版本",
+          "单循环执行时间",
+          "补偿计算时间",
+          "栈使用量",
+          "总时间误差",
+          "主频",
+          "打印阻塞时间",
+          "CPU占用率",
+          "内存占用",
+          "内存",
+          "查询时间"
+        ],
+        "same_param_multi_occurrence": {
+          "运行周期": 2,
+          "驱动周期": 3
+        },
+        "value_frequency_top": {
+          "25ms": 9,
+          "1秒": 2,
+          "固定周期": 1,
+          "±2ms": 1,
+          "CLOCK_MONOTONIC": 1,
+          "start_time + n * interval": 1,
+          "不超过50ms": 1,
+          "不超过0.01ms": 1
+        }
+      },
+      "potential_conflicts": [
+        {
+          "type": "逻辑冲突",
+          "description": "3.4.1允许clock_nanosleep失败时采取降级策略'忙等待',但3.12明确'不使用忙等待或usleep'",
+          "locations": [
+            "3.4.1 模块间接口规范",
+            "3.12 设计和实现约束"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "文本-表格冲突",
+          "description": "4合格性表'降采样输出'合格性方法为'功能 测试'(含空格),其余无空格;且表中REQ-3.2.5后两行为注释行被误解析为数据行",
+          "locations": [
+            "4 合格性规定"
+          ],
+          "severity": "低"
+        },
+        {
+          "type": "格式冲突",
+          "description": "3.2.4正文'主循环流程'后断行,MinerU将'主循环流'与'程'拆分为两段",
+          "locations": [
+            "3.2.4 主循环调度功能"
+          ],
+          "severity": "低"
+        },
+        {
+          "type": "同参数多值冲突",
+          "description": "'运行周期'在1.1描述为'固定周期'(未给数值),在3.1.1/3.2.1/3.10.2等处为25ms;描述粒度不一致",
+          "locations": [
+            "1.1 标识",
+            "3.1.1",
+            "3.2.1",
+            "3.10.2"
+          ],
+          "severity": "低"
+        }
+      ]
+    },
+    {
+      "name": "battery_srs",
+      "basic_info": {
+        "name": "battery_srs",
+        "source_pdf": "[08]电池仿真模型-软件需求规格说明-438C.pdf",
+        "pdf_size_kb": 373.5,
+        "md_size_kb": 27.5,
+        "pages": 15,
+        "md_lines": 444,
+        "total_chars": 17877,
+        "system_type": "嵌入式电池仿真模型 (Embedded, ARM Linux)"
+      },
+      "section_stats": {
+        "total_sections": 44,
+        "level_distribution": {
+          "h2": 44,
+          "h3": 0,
+          "h4": 0
+        },
+        "gjb6_required_sections": {
+          "1 范围": true,
+          "2 引用文档": true,
+          "3 需求": true,
+          "4 合格性规定": true,
+          "5 需求可追踪性": true,
+          "6 注释": true
+        },
+        "all_gjb6_present": true,
+        "capability_3_2_x_count": 5,
+        "capability_3_2_x_titles": [
+          "3.2.1 电池模型初始化功能",
+          "3.2.2SOC 状态更新功能",
+          "3.2.3 电压计算功能",
+          "3.2.4 发热功率计算功能",
+          "3.2.5 离散步进功能"
+        ]
+      },
+      "table_stats": {
+        "total_tables": 5,
+        "type_distribution": {
+          "modification": 1,
+          "reference": 1,
+          "qualification": 1,
+          "traceability": 2
+        },
+        "tables_detail": [
+          {
+            "type": "modification",
+            "section": "TH-BatterySim-电池仿真模型 软件需求规格说明 产品型号-BatterySim",
+            "rows": 19,
+            "cols": 8,
+            "content_summary": "空模板(文件更改记录,无数据)"
+          },
+          {
+            "type": "reference",
+            "section": "2 引用文档",
+            "rows": 2,
+            "cols": 5,
+            "content_summary": "已填充(2条引用文档)"
+          },
+          {
+            "type": "qualification",
+            "section": "4 合格性规定",
+            "rows": 7,
+            "cols": 5,
+            "content_summary": "已填充(合格性方法表)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 6,
+            "cols": 2,
+            "content_summary": "已填充(追踪关系)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 4,
+            "cols": 2,
+            "content_summary": "已填充(追踪关系)"
+          }
+        ]
+      },
+      "image_stats": {
+        "total_image_files": 6,
+        "body_image_references": 0,
+        "note": "images目录为MinerU页面渲染图,非文档正文插图"
+      },
+      "constraint_stats": null,
+      "potential_conflicts": [
+        {
+          "type": "逻辑冲突",
+          "description": "3.2.5离散步进'总时间不超过1ms'含SOC(0.1ms)+电压(0.1ms)+功率(0.05ms)=0.25ms,余量大;但3.10.2称CPU占用率低于5%而scheduler侧称含模型计算10%,两文档对电池模型CPU占比描述基准不一致",
+          "locations": [
+            "3.2.5",
+            "3.10.2"
+          ],
+          "severity": "中"
+        },
+        {
+          "type": "文本-表格冲突",
+          "description": "4合格性表'SOC状态更新'行被OCR拆成两行('单元测'/'试+对比验证'),合格性方法列断裂",
+          "locations": [
+            "4 合格性规定"
+          ],
+          "severity": "中"
+        },
+        {
+          "type": "格式冲突",
+          "description": "1.2系统概述电池参数'B=10.354'与3.2.1'B=10.354'一致,但OCR将3.2.1的参数渲染为LaTeX碎片,数值可读性差",
+          "locations": [
+            "1.2 系统概述",
+            "3.2.1"
+          ],
+          "severity": "低"
+        },
+        {
+          "type": "同参数多值冲突",
+          "description": "电池模型参数(E0/Q/R/M/B/A)在1.2、3.2.1、3.5三处重复声明,值一致但分布散落,易产生后续修改遗漏",
+          "locations": [
+            "1.2",
+            "3.2.1",
+            "3.5"
+          ],
+          "severity": "低"
+        }
+      ]
+    },
+    {
+      "name": "compiler_srs",
+      "basic_info": {
+        "name": "compiler_srs",
+        "source_pdf": "[10][SRS] 软件需求规格说明-438C-2021-filled_20260708180433.pdf",
+        "pdf_size_kb": 252.1,
+        "md_size_kb": 24.7,
+        "pages": 15,
+        "md_lines": 397,
+        "total_chars": 15009,
+        "system_type": "桌面编译器工具 (Desktop, Windows/Linux)"
+      },
+      "section_stats": {
+        "total_sections": 42,
+        "level_distribution": {
+          "h2": 42,
+          "h3": 0,
+          "h4": 0
+        },
+        "gjb6_required_sections": {
+          "1 范围": true,
+          "2 引用文档": true,
+          "3 需求": true,
+          "4 合格性规定": true,
+          "5 需求可追踪性": true,
+          "6 注释": true
+        },
+        "all_gjb6_present": true,
+        "capability_3_2_x_count": 3,
+        "capability_3_2_x_titles": [
+          "3.2.1 词法分析模块",
+          "3.2.2 语法分析模块",
+          "3.2.3 语义分析模块"
+        ]
+      },
+      "table_stats": {
+        "total_tables": 5,
+        "type_distribution": {
+          "modification": 1,
+          "other": 1,
+          "qualification": 1,
+          "traceability": 2
+        },
+        "tables_detail": [
+          {
+            "type": "modification",
+            "section": "Software Requirements Specification 产品型号-BYQ",
+            "rows": 19,
+            "cols": 8,
+            "content_summary": "空模板(文件更改记录,无数据)"
+          },
+          {
+            "type": "other",
+            "section": "2 引用文档",
+            "rows": 3,
+            "cols": 5,
+            "content_summary": "其他"
+          },
+          {
+            "type": "qualification",
+            "section": "4 合格性规定",
+            "rows": 5,
+            "cols": 5,
+            "content_summary": "已填充(合格性方法表)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 6,
+            "cols": 2,
+            "content_summary": "已填充(追踪关系)"
+          },
+          {
+            "type": "traceability",
+            "section": "5 需求可追踪性",
+            "rows": 4,
+            "cols": 2,
+            "content_summary": "占位符模板(未填写)"
+          }
+        ]
+      },
+      "image_stats": {
+        "total_image_files": 6,
+        "body_image_references": 0,
+        "note": "images目录为MinerU页面渲染图,非文档正文插图"
+      },
+      "constraint_stats": null,
+      "potential_conflicts": [
+        {
+          "type": "逻辑冲突",
+          "description": "3.1声明'单一状态下运行,不需要区分多种状态',但紧接3.1.1/3.1.2/3.1.3列出正常/维护/调试三种状态,自相矛盾",
+          "locations": [
+            "3.1",
+            "3.1.1",
+            "3.1.2",
+            "3.1.3"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "逻辑冲突",
+          "description": "1.2系统概述列出'代码生成、代码优化、错误处理'功能,但3.2软件能力需求仅有3.2.1词法/3.2.2语法/3.2.3语义分析三个模块,缺失代码生成与优化模块的需求定义",
+          "locations": [
+            "1.2 系统概述",
+            "3.2 软件能力需求"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "逻辑冲突",
+          "description": "3.2.1/3.2.2/3.2.3各要求'分析时间不超过5秒',三者串行合计15秒;但3.11要求'编译时间不超过10秒',若包含全部阶段则15s>10s不可满足",
+          "locations": [
+            "3.2.1",
+            "3.2.2",
+            "3.2.3",
+            "3.11 软件质量因素"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "文本-表格冲突",
+          "description": "4合格性规定表全部填写占位符'《GB/T 0028》''合规性方法''合规性级别',与实际3.2.x需求无关,表格未填写真实数据",
+          "locations": [
+            "4 合格性规定"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "文本-表格冲突",
+          "description": "5可追踪性正/逆向表全部为占位符'指标内容''需求名称''章节号',无实际追踪关系",
+          "locations": [
+            "5 需求可追踪性"
+          ],
+          "severity": "高"
+        },
+        {
+          "type": "格式冲突",
+          "description": "目录中'3.2.X（软件能力）''3.3.X（接口）'显示'错误！未定义书签',模板占位符未替换",
+          "locations": [
+            "目录"
+          ],
+          "severity": "中"
+        },
+        {
+          "type": "格式冲突",
+          "description": "2引用文档表'《GB/T 0018》'版本字段为'0028'(与《GB/T 0028》相同),疑似版本号填写错误",
+          "locations": [
+            "2 引用文档"
+          ],
+          "severity": "中"
+        }
+      ]
+    }
+  ],
+  "cross_document_summary": {
+    "avg_pages": 15.0,
+    "avg_tables": 5.0,
+    "avg_constraints": 65.0,
+    "common_table_types": [
+      "traceability",
+      "modification",
+      "qualification",
+      "reference",
+      "other"
+    ],
+    "common_conflict_types": [
+      "逻辑冲突",
+      "文本-表格冲突",
+      "格式冲突",
+      "同参数多值冲突"
+    ],
+    "constraint_coverage": "仅scheduler_srs完成约束提取(65条);battery/compiler尚未提取"
+  }
+}

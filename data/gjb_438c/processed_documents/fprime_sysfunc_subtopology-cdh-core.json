@@ -1,0 +1,80 @@
+{
+  "doc_name": "fprime_sysfunc_subtopology-cdh-core",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_subtopology-cdh-core.md",
+  "md_lines": 53,
+  "md_chars": 3279,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "CDH Core Subtopology",
+  "section_count": 7,
+  "sections": [
+    {
+      "number": null,
+      "title": "CDH Core Subtopology",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 727,
+      "text_preview": "- [CdhCore Subtopology SDD](https://github.com/nasa/fprime/blob/devel/Svc/Subtopologies/CdhCore/docs/sdd.md)\n- [F Prime CommandDispatcher SDD](https://github.com/nasa/fprime/blob/devel/Svc/CmdDispatch"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 14,
+      "text_length": 542,
+      "text_preview": "The CdhCore subtopology bundles the core Command and Data Handling (CDH) services that nearly every F Prime deployment requires into a single reusable unit. It provides command dispatching, event hand"
+    },
+    {
+      "number": null,
+      "title": "Included Services",
+      "level": 3,
+      "line_start": 20,
+      "text_length": 936,
+      "text_preview": "The CdhCore subtopology contains the following component instances:\n\n- **Command Dispatcher** (active) — Routes incoming commands to the appropriate component and reports execution status.\n- **Event M"
+    },
+    {
+      "number": null,
+      "title": "Internal Wiring",
+      "level": 3,
+      "line_start": 33,
+      "text_length": 281,
+      "text_preview": "Within the subtopology, the Event Manager's fatal announcement port is wired to the configurable fatal handler. All other service connections (command registration, event reporting, health pinging, te"
+    },
+    {
+      "number": null,
+      "title": "Configuration",
+      "level": 3,
+      "line_start": 37,
+      "text_length": 426,
+      "text_preview": "The subtopology supports configuration of:\n\n- Base IDs for all component instances\n- Queue sizes for active and queued components\n- Stack sizes and priorities for active component threads\n- Health pin"
+    },
+    {
+      "number": null,
+      "title": "Required Inputs",
+      "level": 3,
+      "line_start": 48,
+      "text_length": 219,
+      "text_preview": "- Rate group connections to drive the Health component's monitoring cycle\n- A telemetry sender implementation\n- A fatal handler implementation\n- Command, event, and health connections from all compone"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

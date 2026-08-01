@@ -1,0 +1,144 @@
+[
+  {
+    "diagram_found": true,
+    "states": [
+      {
+        "name": "STARTUP",
+        "in_text": true,
+        "in_diagram": true,
+        "initial": true,
+        "final": false
+      },
+      {
+        "name": "OPERATIONS",
+        "in_text": true,
+        "in_diagram": true,
+        "initial": false,
+        "final": false
+      },
+      {
+        "name": "SHUTDOWN",
+        "in_text": true,
+        "in_diagram": true,
+        "initial": false,
+        "final": false
+      }
+    ],
+    "transitions": [
+      {
+        "from": "STARTUP",
+        "to": "OPERATIONS",
+        "condition": "not specified in text",
+        "in_text": false,
+        "in_diagram": true
+      },
+      {
+        "from": "OPERATIONS",
+        "to": "SHUTDOWN",
+        "condition": "not specified in text",
+        "in_text": false,
+        "in_diagram": true
+      },
+      {
+        "from": "SHUTDOWN",
+        "to": "STARTUP",
+        "condition": "not specified in text",
+        "in_text": false,
+        "in_diagram": true
+      }
+    ],
+    "checks": {
+      "coverage_states": {
+        "passed": true,
+        "issues": []
+      },
+      "coverage_transitions": {
+        "passed": true,
+        "issues": []
+      },
+      "reachability": {
+        "passed": true,
+        "unreachable": []
+      },
+      "deadlock": {
+        "passed": true,
+        "deadlock_states": []
+      },
+      "completeness": {
+        "passed": false,
+        "undescribed_edges": [
+          "STARTUP→OPERATIONS",
+          "OPERATIONS→SHUTDOWN",
+          "SHUTDOWN→STARTUP"
+        ]
+      }
+    },
+    "overall": "inconsistent",
+    "summary": "The state diagram depicts a cyclic relationship among STARTUP, OPERATIONS, and SHUTDOWN that is entirely absent from the textual requirements. While all states are present in both text and diagram, all states are reachable, and no deadlocks exist, the diagram includes three transitions that are not described in the text. The text only specifies that STARTUP is the initial state upon power application and that states are mutually exclusive.",
+    "page": 19
+  },
+  {
+    "diagram_found": false,
+    "states": [],
+    "transitions": [],
+    "checks": {
+      "coverage_states": {
+        "passed": false,
+        "issues": [
+          "Page contains an internal interface diagram (Figure 3.4-1), not a state machine diagram. No states identified."
+        ]
+      },
+      "coverage_transitions": {
+        "passed": false,
+        "issues": [
+          "Page contains an internal interface diagram (Figure 3.4-1), not a state machine diagram. No transitions identified."
+        ]
+      },
+      "reachability": {
+        "passed": true,
+        "unreachable": []
+      },
+      "deadlock": {
+        "passed": true,
+        "deadlock_states": []
+      },
+      "completeness": {
+        "passed": true,
+        "undescribed_edges": []
+      }
+    },
+    "overall": "inconsistent",
+    "summary": "The page does not contain a state machine diagram. Figure 3.4-1 is a TCS Internal Interface Diagram (system block diagram) showing static components—SAR, Imagery Subsystem, Real Time Processor, Non Real Time Processor, Power Supply, RAID, CD-ROM Drive, Tape Drive, VCR, Printer, Intercomm, and various data link modules—connected by interface lines. The accompanying text enumerates minimum required internal interfaces (AV Standard Interface, Data Server, SAR Processor, Intercom, Local Printer, Video Cassette Recorder). No states, transitions, initial state, or final state are present; therefore, formal state machine analysis is not applicable.",
+    "page": 49
+  },
+  {
+    "diagram_found": false,
+    "states": [],
+    "transitions": [],
+    "checks": {
+      "coverage_states": {
+        "passed": true,
+        "issues": []
+      },
+      "coverage_transitions": {
+        "passed": true,
+        "issues": []
+      },
+      "reachability": {
+        "passed": true,
+        "unreachable": []
+      },
+      "deadlock": {
+        "passed": true,
+        "deadlock_states": []
+      },
+      "completeness": {
+        "passed": true,
+        "undescribed_edges": []
+      }
+    },
+    "overall": "consistent",
+    "summary": "No state machine diagram or state behavioral requirements present. Page 39 contains only static interface and capability requirements (AV Standard Interface, Real Time Processor, Distributed Processing, SAR Processor, Intercom); no states, transitions, or triggering conditions are described.",
+    "page": 50
+  }
+]

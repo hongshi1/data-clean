@@ -1,0 +1,873 @@
+{
+  "doc_name": "post-grass-system",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/post-grass-system.pdf.md",
+  "md_lines": 284,
+  "md_chars": 26632,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "D Software Requirements Specification ostDocument rass",
+  "section_count": 45,
+  "sections": [
+    {
+      "number": null,
+      "title": "D Software Requirements Specification ostDocument rass",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 388,
+      "text_preview": "Drafted by:\n\nDi Simone Alessio Di Sorbo Alessandro Ragni Domenico Romano Enrico Serino Antonio\n\nSupervision by: Prof. Antoniol Giulio\n\n068/100005\n\n068/100254\n\n068/100006\n\nApproved by:\n\nProf. Antoniol "
+    },
+    {
+      "number": null,
+      "title": "Index",
+      "level": 2,
+      "line_start": 25,
+      "text_length": 1257,
+      "text_preview": "1 Introduction....   \n1.1 Background..   \n1.2 Purpose & Scope.. .3   \n1.3 Glossary of Terms.. .4   \n1.4 Definitions, Acronyms and Abbreviations.. ..5   \n1.5 References.. .5   \n1.5.1 PostGrass Project "
+    },
+    {
+      "number": "1",
+      "title": "1 Introduction",
+      "level": 2,
+      "line_start": 58,
+      "text_length": 206,
+      "text_preview": "This document is the first artifacts in the development life cycle of the product. It ’s a guideline for designers and developers about the functionalities performed and the problems that the system s"
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 Background",
+      "level": 2,
+      "line_start": 62,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Project title: PostGrass GRASS extension to the PostGIS functionalities",
+      "level": 2,
+      "line_start": 64,
+      "text_length": 3838,
+      "text_preview": "Rapid overview on the project environment:\n\nGRASS (Geographic Resources Analysis Support System) is a raster based GIS, vector GIS, image processing system, and graphics production system. GRASS conta"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 Purpose & Scope",
+      "level": 2,
+      "line_start": 82,
+      "text_length": 608,
+      "text_preview": "A new GRASS vector format and library is under development (GRASS 5.1).The new vector support is based on flat files for geometry and RDBMS for attributes. This solution is suitable for many tasks but"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 Glossary of Terms",
+      "level": 2,
+      "line_start": 88,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "A B C D E",
+      "level": 2,
+      "line_start": 90,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "F",
+      "level": 2,
+      "line_start": 92,
+      "text_length": 242,
+      "text_preview": "Function A defined objective or characteristic action of a system or component. A software module that performs a specific action, is invoked by the appearance of its name in an expression, may receiv"
+    },
+    {
+      "number": null,
+      "title": "G H",
+      "level": 2,
+      "line_start": 96,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "I",
+      "level": 2,
+      "line_start": 98,
+      "text_length": 54,
+      "text_preview": "Interface A connection between two devices or systems."
+    },
+    {
+      "number": null,
+      "title": "J K",
+      "level": 2,
+      "line_start": 102,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "L",
+      "level": 2,
+      "line_start": 104,
+      "text_length": 130,
+      "text_preview": "Library A controlled collection of software and related documentation designed to aid in software development, use or maintenance."
+    },
+    {
+      "number": null,
+      "title": "M",
+      "level": 2,
+      "line_start": 108,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "N",
+      "level": 2,
+      "line_start": 110,
+      "text_length": 161,
+      "text_preview": "Network Describes the physical hardware and software connections between computers allowing information to be shared and electronic communications to take place."
+    },
+    {
+      "number": null,
+      "title": "O",
+      "level": 2,
+      "line_start": 114,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "P",
+      "level": 2,
+      "line_start": 116,
+      "text_length": 404,
+      "text_preview": "Patch A modification made directly to an object program without reassembling or recompiling from the source program.\n\nPortability The ease with which a system or component can be transferred from one "
+    },
+    {
+      "number": null,
+      "title": "R",
+      "level": 2,
+      "line_start": 124,
+      "text_length": 187,
+      "text_preview": "Requirements The statement of needs by a user that triggers the development of a program, system, or project. May be called business functional requirements or requirement specifications."
+    },
+    {
+      "number": null,
+      "title": "S T U V W X Y Z",
+      "level": 2,
+      "line_start": 128,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.4",
+      "title": "1.4 Definitions, Acronyms and Abbreviations",
+      "level": 2,
+      "line_start": 130,
+      "text_length": 402,
+      "text_preview": "<table><tr><td>GRASS SFRD or PSFRD SRS or PSRS SDD or PSDD UD or PUD</td><td>Graphical Resources Analysis Support System PostGrass Software Feasibility Research Document PostGrass Software Requirement"
+    },
+    {
+      "number": "1.5",
+      "title": "1.5 References",
+      "level": 2,
+      "line_start": 134,
+      "text_length": 101,
+      "text_preview": "The following document are used as design and development requirements of the PostGrass system parts."
+    },
+    {
+      "number": "1.5.1",
+      "title": "1.5.1 PostGrass Project Documents",
+      "level": 2,
+      "line_start": 138,
+      "text_length": 85,
+      "text_preview": "Grass Reference Manual (GRM)\n\nPostGrass Software Feasibility Research Document (SFRD)"
+    },
+    {
+      "number": "1.6",
+      "title": "1.6 Overview",
+      "level": 2,
+      "line_start": 144,
+      "text_length": 58,
+      "text_preview": "The document is organized following the IEEE std 830−1998."
+    },
+    {
+      "number": "2",
+      "title": "2 Overall Description",
+      "level": 2,
+      "line_start": 148,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 Product Perspective",
+      "level": 2,
+      "line_start": 150,
+      "text_length": 232,
+      "text_preview": "The product PostGrass is not a complete system, but it’s an integral part of the Software GRASS. This document will be useful during the development of future project tied to the functionalities imple"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 Product Functions",
+      "level": 2,
+      "line_start": 154,
+      "text_length": 1138,
+      "text_preview": "<table><tr><td rowspan=1 colspan=1>Create a DataBase with PostGis extension (PostGrass DataBase)</td></tr><tr><td rowspan=1 colspan=1>2</td></tr><tr><td rowspan=1 colspan=1>Drop a DataBase with PostGi"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 User Characteristic",
+      "level": 2,
+      "line_start": 158,
+      "text_length": 231,
+      "text_preview": "A PostGrass User is the PostGis user which own the table defined in the frmt file example relative to a PostGrass DataBase as indicated in the Feasibility Research Document (SFRD).\n\nEvery User has rea"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 Constraints",
+      "level": 2,
+      "line_start": 164,
+      "text_length": 525,
+      "text_preview": "Library must be reliable in multi user environment (for writing).\n\nSimultaneous write access by more clients must be available.\n\nLibrary should be optimized for speed.\n\nBinary cursors should be used, "
+    },
+    {
+      "number": "3",
+      "title": "3 Specific Requirements",
+      "level": 2,
+      "line_start": 186,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 External interface requirements",
+      "level": 2,
+      "line_start": 188,
+      "text_length": 5,
+      "text_preview": "None."
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Function Requirements",
+      "level": 2,
+      "line_start": 192,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 Overview of DataBase Interaction",
+      "level": 2,
+      "line_start": 194,
+      "text_length": 80,
+      "text_preview": "![](images/7213603284033fc426e832e377b8b72cdedd38801c0af99a648da1d68e2ec9ee.jpg)"
+    },
+    {
+      "number": "3.2.1.1",
+      "title": "3.2.1.1 Create a DataBase with PostGIS extension Use Case",
+      "level": 2,
+      "line_start": 198,
+      "text_length": 1595,
+      "text_preview": "![](images/97453ce6c515f923624e4ee0451bb62b854d6ec7a2656cadc6c97c7d2b40ba0b.jpg)\n\n<table><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Ca"
+    },
+    {
+      "number": "3.2.1.2",
+      "title": "3.2.1.2 Drop a DataBase with PostGIS extension Use Case",
+      "level": 2,
+      "line_start": 204,
+      "text_length": 1516,
+      "text_preview": "![](images/ab807ac66aabd330e25e518a84099bef487cedecf972f51052018add2bcb7793.jpg)\n\n<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase "
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 Overview of PostGrass System Interaction",
+      "level": 2,
+      "line_start": 210,
+      "text_length": 80,
+      "text_preview": "![](images/5853af4bd8d73c02a2e7fb5b65ce549e4d03c2fe16e6ce9cc43e371dc0260600.jpg)"
+    },
+    {
+      "number": "3.2.2.1",
+      "title": "3.2.2.1 Open a connection on a PostGrass DataBase",
+      "level": 2,
+      "line_start": 214,
+      "text_length": 1395,
+      "text_preview": "![](images/cdda4b99c60ea9cafd351d4663d5bfcba6f5b2f17516a5b7b96030f9cc543275.jpg)\n\n<table><tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><"
+    },
+    {
+      "number": "3.2.2.2",
+      "title": "3.2.2.2 Perform a write line on the DataBase",
+      "level": 2,
+      "line_start": 220,
+      "text_length": 1681,
+      "text_preview": "![](images/0381536684aba702960c768c737267f8428f6c673713a9218da47c1a22ab51f3.jpg)\n\n<table><tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write"
+    },
+    {
+      "number": "3.2.2.3",
+      "title": "3.2.2.3 Perform a rewrite line on the DataBase",
+      "level": 2,
+      "line_start": 226,
+      "text_length": 1685,
+      "text_preview": "![](images/ce3e193105d1a2ac863c07388d48936084064fecf608d7df0e7239daba779a60.jpg)\n\n<table><tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewri"
+    },
+    {
+      "number": "3.2.2.4",
+      "title": "3.2.2.4 Perform a read line on the DataBase",
+      "level": 2,
+      "line_start": 232,
+      "text_length": 1481,
+      "text_preview": "![](images/fd2ea64cd3e7a9b37fe1c6c377f28442191c7edd21d17eba4e07a179834463da.jpg)\n\n<table><tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read"
+    },
+    {
+      "number": "3.2.2.5",
+      "title": "3.2.2.5 Perform a read next line on the DataBase",
+      "level": 2,
+      "line_start": 238,
+      "text_length": 1491,
+      "text_preview": "![](images/153d4d3963b71af3ecbfe2a002d1b3d71c20e901ca834d8d53bdf73aa4df0056.jpg)\n\n<table><tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read"
+    },
+    {
+      "number": "3.2.2.6",
+      "title": "3.2.2.6 Perform a rewind on the DataBase",
+      "level": 2,
+      "line_start": 244,
+      "text_length": 1560,
+      "text_preview": "![](images/dffcf39e4935f56608914926fb745ce802c8b9c3d23504ea23df00b2dab61519.jpg)\n\n<table><tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td c"
+    },
+    {
+      "number": "3.2.2.7",
+      "title": "3.2.2.7 Close a connection to a PostGrass DataBase",
+      "level": 2,
+      "line_start": 250,
+      "text_length": 1538,
+      "text_preview": "![](images/acea20a860ac96ed29df002473221bea07cfb8db3ef0c9ecb35503bb623cfdfa.jpg)\n\n<table><tr><td colspan=\"2\">Use Case Id: CCD</td><td colspan=\"4\">Close a connection to a PostGrass DataBase</td></tr><t"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 Design Constraints",
+      "level": 2,
+      "line_start": 256,
+      "text_length": 100,
+      "text_preview": "Must use C programming language to develop the project.\n\nMust use postgreSQL with PostGIS extension."
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 Software System Attributes",
+      "level": 2,
+      "line_start": 262,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 Reliability, Availability, Security, Maintainability, Portability",
+      "level": 2,
+      "line_start": 264,
+      "text_length": 727,
+      "text_preview": "The product satisfied the committent’ requirements when:\n\nWe develop a patch file for pgrass.\n\nThe patched pgrass must be able to import/export ascii files (v.in/out.ascii grass module) to postgres an"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 11,
+  "tables": [
+    {
+      "index": 0,
+      "type": "qualification",
+      "format": "html",
+      "headers": [
+        "GRASS SFRD or PSFRD SRS or PSRS SDD or PSDD UD or PUD",
+        "Graphical Resources Analysis Support System PostGrass Software Feasibility Research Document PostGrass Software Requirement Specification Document PostGrass Software Design Description Document TVRRD or PTVRRD PostGrass Test or Validation Result Report Document PostGrass User Documentation To Be Determined"
+      ],
+      "row_count": 1,
+      "data_row_count": 0,
+      "is_empty": false,
+      "section": "1.4 Definitions, Acronyms and Abbreviations",
+      "raw_html": "<tr><td>GRASS SFRD or PSFRD SRS or PSRS SDD or PSDD UD or PUD</td><td>Graphical Resources Analysis Support System PostGrass Software Feasibility Research Document PostGrass Software Requirement Specification Document PostGrass Software Design Description Document TVRRD or PTVRRD PostGrass Test or Validation Result Report Document PostGrass User Documentation To Be Determined</td></tr>"
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Create a DataBase with PostGis extension (PostGrass DataBase)"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "2.2 Product Functions",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Create a DataBase with PostGis extension (PostGrass DataBase)</td></tr><tr><td rowspan=1 colspan=1>2</td></tr><tr><td rowspan=1 colspan=1>Drop a DataBase with PostGis extension (PostGrass DataBase)</td></tr><tr><td rowspan=1 colspan=1>2</td></tr><tr><td rowspan=1 colspan=1>Open a connection to a PostGrass DataBase</td></tr><tr><td rowspan=1 colspan=1>2</td></tr><tr><td rowspan=1 colspan=1>Close a Connection to a PostGrass DataBase</td></tr><tr><td rowspan=1 colspan=1>"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Create a DataBase with PostGIS extension Use Case"
+      ],
+      "row_count": 14,
+      "data_row_count": 13,
+      "is_empty": false,
+      "section": "3.2.1.1 Create a DataBase with PostGIS extension Use Case",
+      "raw_html": "<tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Case</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5></td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>None</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>User postmaster</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>None</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 cols"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: DD"
+      ],
+      "row_count": 17,
+      "data_row_count": 16,
+      "is_empty": false,
+      "section": "3.2.1.2 Drop a DataBase with PostGIS extension Use Case",
+      "raw_html": "<tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Actors:</td><td colspan=\"4\">User Postmaster</td></tr><tr><td colspan=\"4\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Use Case Uses:</td><td colspan=\"4\">None</td></tr><tr>"
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Open a connection on a PostGrass DataBase"
+      ],
+      "row_count": 13,
+      "data_row_count": 12,
+      "is_empty": false,
+      "section": "3.2.2.1 Open a connection on a PostGrass DataBase",
+      "raw_html": "<tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>2</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>None</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>User defined in the frmt file concerning vector</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>None</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>None</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>PostGIS features "
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: PWD"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "3.2.2.2 Perform a write line on the DataBase",
+      "raw_html": "<tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"4\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Use Case Uses:</td><td colspan="
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: PRD"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "3.2.2.3 Perform a rewrite line on the DataBase",
+      "raw_html": "<tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewrite line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"4\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">Use Case Uses:</td><td colspa"
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: PRDD"
+      ],
+      "row_count": 17,
+      "data_row_count": 16,
+      "is_empty": false,
+      "section": "3.2.2.4 Perform a read line on the DataBase",
+      "raw_html": "<tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"2\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Use Case Uses:</td><td colspan="
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: PRND"
+      ],
+      "row_count": 17,
+      "data_row_count": 16,
+      "is_empty": false,
+      "section": "3.2.2.5 Perform a read next line on the DataBase",
+      "raw_html": "<tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read next line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"2\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Use Case Uses:</td><td col"
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: PRWD"
+      ],
+      "row_count": 18,
+      "data_row_count": 17,
+      "is_empty": false,
+      "section": "3.2.2.6 Perform a rewind on the DataBase",
+      "raw_html": "<tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td colspan=\"4\">Perform a rewind on the DataBase</td></tr><tr><td colspan=\"4\">Reset the reading status to the first read line</td></tr><tr><td colspan=\"3\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"3\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"3\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan="
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Use Case Id: CCD",
+        "Close a connection to a PostGrass DataBase"
+      ],
+      "row_count": 17,
+      "data_row_count": 16,
+      "is_empty": false,
+      "section": "3.2.2.7 Close a connection to a PostGrass DataBase",
+      "raw_html": "<tr><td colspan=\"2\">Use Case Id: CCD</td><td colspan=\"4\">Close a connection to a PostGrass DataBase</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\"></td></tr><tr><td colspan=\"2\">Actors:</td><td colspan=\"4\">User defined in the frmt file concerning vector</td></tr><tr><td colspan=\"2\">Use Case Extends:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">Use "
+    }
+  ],
+  "image_count": 11,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "7213603284033fc426e832e377b8b72cdedd38801c0af99a648da1d68e2ec9ee.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/7213603284033fc426e832e377b8b72cdedd38801c0af99a648da1d68e2ec9ee.jpg",
+      "image_exists": true,
+      "image_size_kb": 29,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.1 Overview of DataBase Interaction",
+      "context_before": "None.",
+      "context_after": null,
+      "md_line": 196,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "97453ce6c515f923624e4ee0451bb62b854d6ec7a2656cadc6c97c7d2b40ba0b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/97453ce6c515f923624e4ee0451bb62b854d6ec7a2656cadc6c97c7d2b40ba0b.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.1.1 Create a DataBase with PostGIS extension Use Case",
+      "context_before": null,
+      "context_after": "<table><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Case</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5></td><",
+      "md_line": 200,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 3,
+      "image_file": "ab807ac66aabd330e25e518a84099bef487cedecf972f51052018add2bcb7793.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/ab807ac66aabd330e25e518a84099bef487cedecf972f51052018add2bcb7793.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.1.2 Drop a DataBase with PostGIS extension Use Case",
+      "context_before": "<table><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Case</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5></td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>None</td></tr><tr><td></td><td><",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td ",
+      "md_line": 206,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "5853af4bd8d73c02a2e7fb5b65ce549e4d03c2fe16e6ce9cc43e371dc0260600.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/5853af4bd8d73c02a2e7fb5b65ce549e4d03c2fe16e6ce9cc43e371dc0260600.jpg",
+      "image_exists": true,
+      "image_size_kb": 104,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2 Overview of PostGrass System Interaction",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td col",
+      "context_after": null,
+      "md_line": 212,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 5,
+      "image_file": "cdda4b99c60ea9cafd351d4663d5bfcba6f5b2f17516a5b7b96030f9cc543275.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/cdda4b99c60ea9cafd351d4663d5bfcba6f5b2f17516a5b7b96030f9cc543275.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.1 Open a connection on a PostGrass DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td col",
+      "context_after": "<table><tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>2</td></tr><tr><td></td><td></td><td rowspan=1 col",
+      "md_line": 216,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 6,
+      "image_file": "0381536684aba702960c768c737267f8428f6c673713a9218da47c1a22ab51f3.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/0381536684aba702960c768c737267f8428f6c673713a9218da47c1a22ab51f3.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.2 Perform a write line on the DataBase",
+      "context_before": "<table><tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>2</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>None</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>User defined in the frmt file con",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4",
+      "md_line": 222,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 7,
+      "image_file": "ce3e193105d1a2ac863c07388d48936084064fecf608d7df0e7239daba779a60.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/ce3e193105d1a2ac863c07388d48936084064fecf608d7df0e7239daba779a60.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.3 Perform a rewrite line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">A",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewrite line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=",
+      "md_line": 228,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 8,
+      "image_file": "fd2ea64cd3e7a9b37fe1c6c377f28442191c7edd21d17eba4e07a179834463da.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/fd2ea64cd3e7a9b37fe1c6c377f28442191c7edd21d17eba4e07a179834463da.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.4 Perform a read line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewrite line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\"",
+      "context_after": "<table><tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4",
+      "md_line": 234,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 9,
+      "image_file": "153d4d3963b71af3ecbfe2a002d1b3d71c20e901ca834d8d53bdf73aa4df0056.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/153d4d3963b71af3ecbfe2a002d1b3d71c20e901ca834d8d53bdf73aa4df0056.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.5 Perform a read next line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">A",
+      "context_after": "<table><tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read next line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colsp",
+      "md_line": 240,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 10,
+      "image_file": "dffcf39e4935f56608914926fb745ce802c8b9c3d23504ea23df00b2dab61519.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/dffcf39e4935f56608914926fb745ce802c8b9c3d23504ea23df00b2dab61519.jpg",
+      "image_exists": true,
+      "image_size_kb": 13,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.6 Perform a rewind on the DataBase",
+      "context_before": "<table><tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read next line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=",
+      "context_after": "<table><tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td colspan=\"4\">Perform a rewind on the DataBase</td></tr><tr><td colspan=\"4\">Reset the",
+      "md_line": 246,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 11,
+      "image_file": "acea20a860ac96ed29df002473221bea07cfb8db3ef0c9ecb35503bb623cfdfa.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/acea20a860ac96ed29df002473221bea07cfb8db3ef0c9ecb35503bb623cfdfa.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "3.2.2.7 Close a connection to a PostGrass DataBase",
+      "context_before": "<table><tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td colspan=\"4\">Perform a rewind on the DataBase</td></tr><tr><td colspan=\"4\">Reset the reading status to the first read line</td></tr><tr><td colspan=\"3\">Exceptions:</td><td colspan=\"4\">",
+      "context_after": "<table><tr><td colspan=\"2\">Use Case Id: CCD</td><td colspan=\"4\">Close a connection to a PostGrass DataBase</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Des",
+      "md_line": 252,
+      "has_caption": false,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "7213603284033fc426e832e377b8b72cdedd38801c0af99a648da1d68e2ec9ee.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/7213603284033fc426e832e377b8b72cdedd38801c0af99a648da1d68e2ec9ee.jpg",
+      "image_exists": true,
+      "image_size_kb": 29,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.1 Overview of DataBase Interaction",
+      "context_before": "None.",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "97453ce6c515f923624e4ee0451bb62b854d6ec7a2656cadc6c97c7d2b40ba0b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/97453ce6c515f923624e4ee0451bb62b854d6ec7a2656cadc6c97c7d2b40ba0b.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.1.1 Create a DataBase with PostGIS extension Use Case",
+      "context_before": null,
+      "context_after": "<table><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Case</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5></td><",
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "ab807ac66aabd330e25e518a84099bef487cedecf972f51052018add2bcb7793.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/ab807ac66aabd330e25e518a84099bef487cedecf972f51052018add2bcb7793.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.1.2 Drop a DataBase with PostGIS extension Use Case",
+      "context_before": "<table><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>Create a DataBase with PostGIS extension Use Case</td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5></td></tr><tr><td></td><td></td><td></td><td></td><td rowspan=1 colspan=5>None</td></tr><tr><td></td><td><",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td ",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "5853af4bd8d73c02a2e7fb5b65ce549e4d03c2fe16e6ce9cc43e371dc0260600.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/5853af4bd8d73c02a2e7fb5b65ce549e4d03c2fe16e6ce9cc43e371dc0260600.jpg",
+      "image_exists": true,
+      "image_size_kb": 104,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2 Overview of PostGrass System Interaction",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td col",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "cdda4b99c60ea9cafd351d4663d5bfcba6f5b2f17516a5b7b96030f9cc543275.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/cdda4b99c60ea9cafd351d4663d5bfcba6f5b2f17516a5b7b96030f9cc543275.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.1 Open a connection on a PostGrass DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: DD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Drop a DataBase with PostGIS extension Use Case</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td col",
+      "context_after": "<table><tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>2</td></tr><tr><td></td><td></td><td rowspan=1 col",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "0381536684aba702960c768c737267f8428f6c673713a9218da47c1a22ab51f3.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/0381536684aba702960c768c737267f8428f6c673713a9218da47c1a22ab51f3.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.2 Perform a write line on the DataBase",
+      "context_before": "<table><tr><td></td><td></td><td rowspan=1 colspan=4>Open a connection on a PostGrass DataBase</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>2</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>None</td></tr><tr><td></td><td></td><td rowspan=1 colspan=4>User defined in the frmt file con",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "ce3e193105d1a2ac863c07388d48936084064fecf608d7df0e7239daba779a60.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/ce3e193105d1a2ac863c07388d48936084064fecf608d7df0e7239daba779a60.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.3 Perform a rewrite line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: PWD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a write line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\">A",
+      "context_after": "<table><tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewrite line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "fd2ea64cd3e7a9b37fe1c6c377f28442191c7edd21d17eba4e07a179834463da.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/fd2ea64cd3e7a9b37fe1c6c377f28442191c7edd21d17eba4e07a179834463da.jpg",
+      "image_exists": true,
+      "image_size_kb": 14,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.4 Perform a read line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"8\">Use Case Id: PRD</td></tr><tr><td colspan=\"4\">Use Case:</td><td colspan=\"4\">Perform a rewrite line on the DataBase</td></tr><tr><td colspan=\"4\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"4\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"4\"",
+      "context_after": "<table><tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "153d4d3963b71af3ecbfe2a002d1b3d71c20e901ca834d8d53bdf73aa4df0056.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/153d4d3963b71af3ecbfe2a002d1b3d71c20e901ca834d8d53bdf73aa4df0056.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.5 Perform a read next line on the DataBase",
+      "context_before": "<table><tr><td colspan=\"6\">Use Case Id: PRDD</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=\"2\">A",
+      "context_after": "<table><tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read next line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colsp",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "dffcf39e4935f56608914926fb745ce802c8b9c3d23504ea23df00b2dab61519.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/dffcf39e4935f56608914926fb745ce802c8b9c3d23504ea23df00b2dab61519.jpg",
+      "image_exists": true,
+      "image_size_kb": 13,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.6 Perform a rewind on the DataBase",
+      "context_before": "<table><tr><td colspan=\"5\">Use Case Id: PRND</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">Perform a read next line on the DataBase</td></tr><tr><td colspan=\"2\">Description:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Exceptions:</td><td colspan=\"4\">None</td></tr><tr><td colspan=",
+      "context_after": "<table><tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td colspan=\"4\">Perform a rewind on the DataBase</td></tr><tr><td colspan=\"4\">Reset the",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "acea20a860ac96ed29df002473221bea07cfb8db3ef0c9ecb35503bb623cfdfa.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/post-grass-system.pdf/auto/images/acea20a860ac96ed29df002473221bea07cfb8db3ef0c9ecb35503bb623cfdfa.jpg",
+      "image_exists": true,
+      "image_size_kb": 15,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "3.2.2.7 Close a connection to a PostGrass DataBase",
+      "context_before": "<table><tr><td colspan=\"6\">Use Case Id: PRWD</td></tr><tr><td colspan=\"3\" rowspan=\"2\">Use Case: Description:</td><td colspan=\"4\">Perform a rewind on the DataBase</td></tr><tr><td colspan=\"4\">Reset the reading status to the first read line</td></tr><tr><td colspan=\"3\">Exceptions:</td><td colspan=\"4\">",
+      "context_after": "<table><tr><td colspan=\"2\">Use Case Id: CCD</td><td colspan=\"4\">Close a connection to a PostGrass DataBase</td></tr><tr><td colspan=\"2\">Use Case:</td><td colspan=\"4\">2</td></tr><tr><td colspan=\"2\">Des",
+      "has_caption": false,
+      "has_context": true
+    }
+  ]
+}

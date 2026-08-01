@@ -1,0 +1,875 @@
+{
+  "doc_name": "[08]调度器-软件需求规格说明-438C",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/[08]调度器-软件需求规格说明-438C.pdf.md",
+  "md_lines": 421,
+  "md_chars": 16010,
+  "language": "zh",
+  "is_gjb_format": true,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "TH-Scheduler-周期任务调度器 软件需求规格说明 产品型号-Scheduler",
+  "section_count": 46,
+  "sections": [
+    {
+      "number": null,
+      "title": "TH-Scheduler-周期任务调度器 软件需求规格说明 产品型号-Scheduler",
+      "level": 1,
+      "line_start": 7,
+      "text_length": 25,
+      "text_preview": "共 XX 页\n\n太行项目组\n\n2026-05-06"
+    },
+    {
+      "number": null,
+      "title": "TH-Scheduler-周期任务调度器 软件需求规格说明 产品型号-Scheduler",
+      "level": 1,
+      "line_start": 15,
+      "text_length": 4918,
+      "text_preview": "编制： 日期：\n\n校对： 日期：\n\n审核： 日期：\n\n标审： 日期：\n\n审定： 日期：\n\n批准： 日期：\n\n文件更改记录表\n<table><tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>版本号</td><td rowspan=1 colspan=1>页次</td><td rowspan=1 colspan=1>标记</td><t"
+    },
+    {
+      "number": null,
+      "title": "目 录",
+      "level": 2,
+      "line_start": 32,
+      "text_length": 782,
+      "text_preview": "1 范围 .. 1  \n1.1 标识 .  \n1.2 系统概述.  \n1.3 文档概述.  \n2 引用文档. 1  \n3 需求 ... . 2  \n3.1 要求的状态和方式 . 2  \n3.1.1 初始化状态 . 2  \n3.1.2正常运行状态 . 2  \n3.1.3超时告警状态 . 2  \n3.2 软件能力需求.. . 2  \n3.2.1高精度定时器功能 . 2  \n3.2.2时间漂移补偿功能 "
+    },
+    {
+      "number": "1",
+      "title": "1 范围",
+      "level": 2,
+      "line_start": 78,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 2,
+      "line_start": 80,
+      "text_length": 259,
+      "text_preview": "本 文 档 适 用 于 周 期 性 任 务 调 度 器 软 件 （ Scheduler ）， 标 识 号 为TH/Scheduler-SRS-V1.0，版本号为 V1.0，发布号为 Release 1。该软件由太行项目组嵌入式软件研发部开发，用于嵌入式Linux系统中驱动电池仿真模型以固定周期运行。\n\na）文档标识号：TH/Scheduler-SRS-V1.0；\n\nb）标题：软件需求规格说明\n\nc"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 系统概述",
+      "level": 2,
+      "line_start": 94,
+      "text_length": 399,
+      "text_preview": "周期性任务调度器软件是一个用于嵌入式Linux系统的实时任务调度器，以25ms 固定周期驱动电池模型（battery\\_model）运行。软件基于 Linux 高精度定时器（clock\\_nanosleep）实现周期调度，具备时间漂移补偿能力，确保长时间运行的平均周期精度满足要求。\n\n该软件应用于嵌入式电池管理系统（BMS）场景，为电池仿真模型提供精确的时序驱动。开发背景源于太行项目对ARM Li"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 文档概述",
+      "level": 2,
+      "line_start": 102,
+      "text_length": 181,
+      "text_preview": "本文档规定了周期性任务调度器软件的需求规格，包括功能需求、性能需求、接口需求、环境需求和质量需求等方面。文档内容涵盖软件的范围、引用文档、详细需求说明、合格性规定、需求可追踪性和相关注释。\n\n本文档为软件的设计、开发、测试和验收提供依据，适用于嵌入式软件开发人员、测试人员、系统集成人员和项目管理人员使用。本文档为内部文档，仅限太行项目组内部使用，不得对外传播。"
+    },
+    {
+      "number": "2",
+      "title": "2 引用文档",
+      "level": 2,
+      "line_start": 108,
+      "text_length": 611,
+      "text_preview": "本章列出周期性任务调度器软件需求规格说明编制所引用的标准和相关文档。\n\n表 2-1 引用文件\n<table><tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>名称</td><td rowspan=1 colspan=1>版本</td><td rowspan=1 colspan=1>发布日期</td><td rowspan=1 co"
+    },
+    {
+      "number": "3",
+      "title": "3 需求",
+      "level": 2,
+      "line_start": 115,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 要求的状态和方式",
+      "level": 2,
+      "line_start": 117,
+      "text_length": 14,
+      "text_preview": "调度器软件在以下状态下运行："
+    },
+    {
+      "number": "3.1.1",
+      "title": "3.1.1 初始化状态",
+      "level": 2,
+      "line_start": 121,
+      "text_length": 87,
+      "text_preview": "软件在初始化状态下运行，完成电池模型初始化（调用battery\\_init()）、定时器初始化（设定 25ms 周期）、电流序列加载等准备工作。初始化完成后转入正常运行状态。"
+    },
+    {
+      "number": "3.1.2",
+      "title": "3.1.2 正常运行状态",
+      "level": 2,
+      "line_start": 125,
+      "text_length": 96,
+      "text_preview": "软件在正常运行状态下运行，主循环以25ms 周期执行：获取当前电流值→调用 battery\\_step()→读取电池状态→降采样输出→等待下一周期。软件在此状态下应满足所有功能需求和性能需求。"
+    },
+    {
+      "number": "3.1.3",
+      "title": "3.1.3 超时告警状态",
+      "level": 2,
+      "line_start": 129,
+      "text_length": 81,
+      "text_preview": "当某一周期的任务执行时间超过25ms时，软件进入超时告警状态。在此状态下，调度器跳过本次延迟等待，打印超时警告信息，立即进入下一周期。超时告警不影响后续正常调度。"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 软件能力需求",
+      "level": 2,
+      "line_start": 133,
+      "text_length": 21,
+      "text_preview": "调度器软件的核心能力需求包括以下功能模块："
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 高精度定时器功能",
+      "level": 2,
+      "line_start": 137,
+      "text_length": 284,
+      "text_preview": "功能名称：高精度定时器\n\n功能描述：封装 Linux 高精度定时器，提供基于 CLOCK\\_MONOTONIC 的绝对时间等待机制。记录第一次调用的起始时间，后续每次计算下一个绝对唤醒时间，确保平均周期为 25ms。采用 clock\\_nanosleep(CLOCK\\_MONOTONIC,TIMER\\_ABSTIME, ...)实现绝对时间等待。\n\n输入：定时周期（interval\\_ms，默认 "
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 时间漂移补偿功能",
+      "level": 2,
+      "line_start": 151,
+      "text_length": 297,
+      "text_preview": "功能名称：时间漂移补偿\n\n功能描述：通过绝对时间补偿机制消除长时间运行的时间漂移。每个周期计算下一个绝对唤醒时间 ${ \\mathrm { ( n e x t \\_ w a k e = s t a r t \\_ t i m e + n \\textsuperscript { * } i n t e r v a l ) } }$ ），即使某次任务执行超时，后续周期仍能追踪到正确的绝对时间点。连续运行 "
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 电流序列管理功能",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 170,
+      "text_preview": "功能名称：电流序列管理\n\n功能描述：管理测试电流序列，支持按时间段切换不同的电流模式。预设测试序列：前10秒恒流10A，接着5秒脉冲50A（每0.5秒切换一次），最后持续放电至SOC接近0。\n\n输入：当前仿真时间（s）\n\n输出：当前应输出的电流值（A）\n\n性能要求：查询时间不超过0.01ms\n\n约束条件：电流序列可通过数组配置，支持硬编码"
+    },
+    {
+      "number": "3.2.4",
+      "title": "3.2.4 主循环调度功能",
+      "level": 2,
+      "line_start": 179,
+      "text_length": 225,
+      "text_preview": "功能名称：主循环调度\n\n功能描述：实现调度器主循环，按25ms周期驱动电池模型运行。主循环流\n\n程：初始化→获取当前电流→调用 battery\\_step(I\\_out, DT)→读取电池状态→每 1秒打印一行输出→等待下一周期。\n\n输入：无（由main函数启动）\n\n输出：时间(s)、SOC、电压(V)、功率(W)的格式化输出\n\n性能要求：单循环执行时间不超过5ms（含电池模型计算）\n\n约束条件："
+    },
+    {
+      "number": "3.2.5",
+      "title": "3.2.5 降采样输出功能",
+      "level": 2,
+      "line_start": 195,
+      "text_length": 174,
+      "text_preview": "功能名称：降采样输出\n\n功能描述：将25ms周期的内部数据降采样为 1秒间隔的输出，减少输出数据量。每40个周期（1秒）打印一行数据，输出格式为'时间(s) SOC 电压(V) 功率(W)'。\n\n输入：当前周期计数、电池状态数据\n\n输出：格式化的标准输出行\n\n性能要求：打印操作不阻塞超过1ms\n\n约束条件：最后一秒的数据即使不足40个周期也应输出"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 软件外部接口需求",
+      "level": 2,
+      "line_start": 209,
+      "text_length": 13,
+      "text_preview": "调度器软件的接口需求如下："
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 与电池模型的接口",
+      "level": 2,
+      "line_start": 213,
+      "text_length": 178,
+      "text_preview": "调度器通过函数调用接口与电池模型交互，调用 battery\\_init()进行初始化，每 25ms 调用 battery\\_step(I\\_out, DT)执行一步计算，通过 battery\\_get\\_voltage()、battery\\_get\\_soc()、battery\\_get\\_ploss()读取模型输出。调度器不得修改电池模型的内部结构体。"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 与标准输出的接口",
+      "level": 2,
+      "line_start": 217,
+      "text_length": 98,
+      "text_preview": "调度器通过标准输出（stdout）打印运行结果，每1秒输出一行格式化数据：时间(s) SOC 电压(V) 功率(W)。超时告警信息也通过标准错误输出（stderr）打印。不涉及网络通信或文件输出。"
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 软件内部接口需求",
+      "level": 2,
+      "line_start": 221,
+      "text_length": 290,
+      "text_preview": "调度器软件内部接口需求如下：\n\n1. 定时器模块与主循环接口：定时器模块通过 timer\\_init()和 timer\\_wait\\_next()函数向主循环提供定时服务。timer\\_init()设定周期参数，timer\\_wait\\_next()阻塞到\n\n下一个周期起点。\n\n2. 电流序列模块与主循环接口：电流序列模块通过 get\\_current\\_at\\_time(t)函数向主循环提供当前"
+    },
+    {
+      "number": "3.4.1",
+      "title": "3.4.1 模块间接口规范",
+      "level": 2,
+      "line_start": 233,
+      "text_length": 238,
+      "text_preview": "调度器内部模块间接口规范如下：\n\n1. 接口定义：每个模块通过头文件（.h）声明对外接口函数，实现文件（.c）中定义具体实现。\n\n2. 错误处理：clock\\_gettime 和 clock\\_nanosleep 调用失败时，定时器模块应打印错误信息并采取降级策略（如使用忙等待）。\n\n3. 数据传递：模块间数据传递通过函数参数和返回值完成，不使用全局变量（除必要的定时器状态外）。\n\n4. 模块解耦"
+    },
+    {
+      "number": "3.4.2",
+      "title": "3.4.2 模块内部接口规范",
+      "level": 2,
+      "line_start": 245,
+      "text_length": 185,
+      "text_preview": "调度器内部模块内接口规范如下：\n\n1. 函数接口：模块内部函数遵循统一的命名规范（模块名\\_功能名），参数和返回值类型明确。\n\n2. 数据结构：定时器模块内部使用timer\\_state\\_t结构体存储起始时间、周期和下次唤醒时间等状态。\n\n3. 头文件保护：所有头文件使用 include guard 宏保护，命名格式为\\_\\_MODULE\\_NAME\\_H\\_\\_。"
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 软件内部数据需求",
+      "level": 2,
+      "line_start": 255,
+      "text_length": 250,
+      "text_preview": "调度器软件内部数据需求如下：\n\n1. 定时器状态结构体（timer\\_state\\_t）：存储起始时间（struct timespec）、周期间隔（int，单位 ms）、下次唤醒时间（struct timespec）。\n\n2. 电流序列数组：存储测试电流序列的时间-电流对，采用结构体数组表示，每个元素包含开始时间和电流值。\n\n3. 运行统计变量：周期计数器（int）、超时计数器（int）、总运行时"
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 适应性需求",
+      "level": 2,
+      "line_start": 267,
+      "text_length": 70,
+      "text_preview": "调度器软件以源代码形式提供，通过Makefile 支持本地编译和ARM交叉编译。用户可通过修改电流序列数组和定时周期参数适配不同的测试场景。"
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 安全性需求",
+      "level": 2,
+      "line_start": 271,
+      "text_length": 182,
+      "text_preview": "调度器软件的安全性需求如下：\n\n1. 错误处理：clock\\_gettime 和 clock\\_nanosleep 调用失败时不应导致程序崩溃，应打印错误信息并尝试继续运行或安全退出。\n\n2. 超时保护：当任务执行时间超过一个周期时，应检测并报告超时，防止调度器进入死循环或无限延迟。\n\n3. 内存安全：不使用动态内存分配，所有变量使用栈或静态存储，避免内存泄漏。"
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 保密性需求",
+      "level": 2,
+      "line_start": 281,
+      "text_length": 69,
+      "text_preview": "调度器软件为嵌入式系统内部组件，不涉及用户权限管理、数据加密、审计日志或访问控制等保密性需求。软件在嵌入式平台内部运行，不与外部网络通信。"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 软件环境需求",
+      "level": 2,
+      "line_start": 285,
+      "text_length": 286,
+      "text_preview": "调度器软件的运行环境需求如下：\n\n1. 目标平台：ARM Linux（内核 4.1.15，单核处理器）\n\n2. 编 译器 ： GCC （ 支 持 C99 标 准）或 ARM 交 叉 编 译 工 具 链（arm-linux-gnueabihf-gcc）\n\n3. 系 统 调 用 ： 需 支 持 clock\\_gettime(CLOCK\\_MONOTONIC) 和clock\\_nanosleep 系统调"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 计算机资源需求",
+      "level": 2,
+      "line_start": 299,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.10.1",
+      "title": "3.10.1 计算机硬件需求",
+      "level": 2,
+      "line_start": 301,
+      "text_length": 92,
+      "text_preview": "目标处理器：ARM架构单核处理器，主频不低于400MHz\n\n内存：最低要求32MB系统内存\n\n定时器精度：系统需支持 CLOCK\\_MONOTONIC 高精度定时器，精度不低于 1ms"
+    },
+    {
+      "number": "3.10.2",
+      "title": "3.10.2 计算机硬件资源使用需求",
+      "level": 2,
+      "line_start": 309,
+      "text_length": 104,
+      "text_preview": "CPU使用：以25ms周期运行时 CPU占用率不超过10%（含电池模型计算）\n\n内存使用：运行时内存占用不超过2KB（定时器状态+电流序列+统计变量）\n\n栈使用：主循环调用深度不超过5层，栈使用量不超过1KB"
+    },
+    {
+      "number": "3.10.3",
+      "title": "3.10.3 计算机软件需求",
+      "level": 2,
+      "line_start": 317,
+      "text_length": 99,
+      "text_preview": "操作系统：嵌入式Linux（内核版本4.1.15及以上）\n\n运行库：libc（POSIX.1-2001 标准）、librt（POSIX 实时扩展）\n\n构建工具：GNU Make、ARM交叉编译工具链"
+    },
+    {
+      "number": "3.10.4",
+      "title": "3.10.4 计算机通信需求",
+      "level": 2,
+      "line_start": 325,
+      "text_length": 52,
+      "text_preview": "调度器软件不需要网络通信功能，所有数据交互通过本地函数调用完成。输出通过标准输出打印，无计算机通信需求。"
+    },
+    {
+      "number": "3.11",
+      "title": "3.11 软件质量因素",
+      "level": 2,
+      "line_start": 329,
+      "text_length": 276,
+      "text_preview": "调度器软件的质量因素要求如下：\n\n1. 正确性：调度器应能正确驱动电池模型运行，输出结果与预期一致（放电电压下降、SOC线性下降）。\n\n2. 定时精度：连续运行 1000 个周期后总时间误差不超过 50ms，单个周期误差不超过±2ms。\n\n3. 可靠性：软件应能长时间稳定运行（至少连续运行 2 分钟）无明显漂移或异常。\n\n4. 性能：CPU占用率不超过10%（在ARM单核400MHz处理器上）。\n"
+    },
+    {
+      "number": "3.12",
+      "title": "3.12 设计和实现约束",
+      "level": 2,
+      "line_start": 345,
+      "text_length": 227,
+      "text_preview": "调度器软件的设计和实现约束如下：\n\n1. 编程语言：仅使用标准 C99 和 POSIX API。\n\n2. 内存管理：禁止使用动态内存分配（malloc/free），所有变量使用栈或静态存储。\n\n3. 调度方式：使用 clock\\_nanosleep 绝对时间等待方式，不使用忙等待或usleep。\n\n4. 电池模型接口：不得修改电池模型的内部结构体，仅通过其提供的函数接口访问。\n\n5. 非RTOS："
+    },
+    {
+      "number": "3.13",
+      "title": "3.13 人员需求",
+      "level": 2,
+      "line_start": 359,
+      "text_length": 47,
+      "text_preview": "调度器软件开发人员需具备嵌入式Linux编程能力、POSIX定时器使用经验和实时系统调试能力。"
+    },
+    {
+      "number": "3.14",
+      "title": "3.14 培训需求",
+      "level": 2,
+      "line_start": 363,
+      "text_length": 38,
+      "text_preview": "本软件不需要特殊的培训需求，开发和使用人员可通过阅读本文档和源代码快速上手。"
+    },
+    {
+      "number": "3.15",
+      "title": "3.15 软件保障需求",
+      "level": 2,
+      "line_start": 367,
+      "text_length": 74,
+      "text_preview": "软件以源代码形式交付，包含 scheduler.h/c、timer.h/c、main.c 和 Makefile。交付物支持本地编译和ARM交叉编译。"
+    },
+    {
+      "number": "3.16",
+      "title": "3.16 其他需求",
+      "level": 2,
+      "line_start": 371,
+      "text_length": 8,
+      "text_preview": "无其他特殊需求。"
+    },
+    {
+      "number": "3.17",
+      "title": "3.17 验收、交付和包装需求（修改有关内容）",
+      "level": 2,
+      "line_start": 375,
+      "text_length": 70,
+      "text_preview": "软件以源代码形式交付，包含 scheduler.h/c（定时器+主循环框架）、main.c（测试电流逻辑）和Makefile（交叉编译用）。"
+    },
+    {
+      "number": "3.18",
+      "title": "3.18 需求的优先顺序和关键程度",
+      "level": 2,
+      "line_start": 379,
+      "text_length": 58,
+      "text_preview": "高精度定时器功能和主循环调度功能为核心关键需求，时间漂移补偿功能为高优先级需求，电流序列管理和降采样输出为一般需求。"
+    },
+    {
+      "number": "4",
+      "title": "4 合格性规定",
+      "level": 2,
+      "line_start": 383,
+      "text_length": 1316,
+      "text_preview": "调度器软件的合格性方法如下表所示：\n\n<table><tr><td colspan=\"2\" rowspan=\"1\">需求名称</td><td colspan=\"1\" rowspan=\"1\">需求的唯一标识</td><td colspan=\"1\" rowspan=\"1\">本文档中的章节号</td><td colspan=\"1\" rowspan=\"1\">合格性方法</td><td colspan=\"1"
+    },
+    {
+      "number": "5",
+      "title": "5 需求可追踪性",
+      "level": 2,
+      "line_start": 389,
+      "text_length": 1775,
+      "text_preview": "本章建立调度器软件需求与系统需求之间的双向追踪关系。\n\n表5-1 需求的正向追踪性\n<table><tr><td rowspan=1 colspan=2>《XXX课题可行性研究报告》中的指标</td><td rowspan=1 colspan=2>软件需求</td></tr><tr><td rowspan=1 colspan=1>指标内容</td><td rowspan=1 colspan=1>章"
+    },
+    {
+      "number": "6",
+      "title": "6 注释",
+      "level": 2,
+      "line_start": 399,
+      "text_length": 374,
+      "text_preview": "术语定义：\n\nclock\\_nanosleep：POSIX高精度定时器系统调用，支持绝对时间和相对时间等待。\n\nCLOCK\\_MONOTONIC：单调递增时钟，不受系统时间调整影响，适合用于定时测量。\n\n时间漂移：由于任务执行开销和定时器精度限制导致的实际周期与目标周期的累积偏差。\n\n降采样：将高频数据按固定间隔提取为低频数据的过程。\n\n脉冲电流：在固定时间间隔内交替切换高低电流值的测试模式。\n\n"
+    }
+  ],
+  "constraint_count": 18,
+  "constraints": [
+    {
+      "value": 25.0,
+      "unit": "ms",
+      "operator": "=",
+      "sentence": "输入：定时周期（interval\\_ms，默认 25ms）",
+      "section": "3.2.1 高精度定时器功能",
+      "section_number": "3.2.1",
+      "section_title": "3.2.1 高精度定时器功能",
+      "line_start": 137
+    },
+    {
+      "value": 2.0,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "性能要求：单次定时误差不超过±2ms",
+      "section": "3.2.1 高精度定时器功能",
+      "section_number": "3.2.1",
+      "section_title": "3.2.1 高精度定时器功能",
+      "line_start": 137
+    },
+    {
+      "value": 2.0,
+      "unit": "ms",
+      "operator": "±",
+      "sentence": "性能要求：单次定时误差不超过±2ms",
+      "section": "3.2.1 高精度定时器功能",
+      "section_number": "3.2.1",
+      "section_title": "3.2.1 高精度定时器功能",
+      "line_start": 137
+    },
+    {
+      "value": 50.0,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "），即使某次任务执行超时，后续周期仍能追踪到正确的绝对时间点。连续运行 1000 个周期后总时间误差不超过50ms。",
+      "section": "3.2.2 时间漂移补偿功能",
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 时间漂移补偿功能",
+      "line_start": 151
+    },
+    {
+      "value": 0.01,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "性能要求：补偿计算时间不超过0.01ms",
+      "section": "3.2.2 时间漂移补偿功能",
+      "section_number": "3.2.2",
+      "section_title": "3.2.2 时间漂移补偿功能",
+      "line_start": 151
+    },
+    {
+      "value": 0.01,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "性能要求：查询时间不超过0.01ms",
+      "section": "3.2.3 电流序列管理功能",
+      "section_number": "3.2.3",
+      "section_title": "3.2.3 电流序列管理功能",
+      "line_start": 165
+    },
+    {
+      "value": 5.0,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "性能要求：单循环执行时间不超过5ms（含电池模型计算）",
+      "section": "3.2.4 主循环调度功能",
+      "section_number": "3.2.4",
+      "section_title": "3.2.4 主循环调度功能",
+      "line_start": 179
+    },
+    {
+      "value": 0.025,
+      "unit": "s",
+      "operator": "=",
+      "sentence": "4. 离散步长常量：DT=0.025s，输出降采样间隔=1s（40个周期）。",
+      "section": "3.5 软件内部数据需求",
+      "section_number": "3.5",
+      "section_title": "3.5 软件内部数据需求",
+      "line_start": 255
+    },
+    {
+      "value": 1.0,
+      "unit": "s",
+      "operator": "=",
+      "sentence": "4. 离散步长常量：DT=0.025s，输出降采样间隔=1s（40个周期）。",
+      "section": "3.5 软件内部数据需求",
+      "section_number": "3.5",
+      "section_title": "3.5 软件内部数据需求",
+      "line_start": 255
+    },
+    {
+      "value": 400.0,
+      "unit": "MHz",
+      "operator": "≥",
+      "sentence": "目标处理器：ARM架构单核处理器，主频不低于400MHz",
+      "section": "3.10.1 计算机硬件需求",
+      "section_number": "3.10.1",
+      "section_title": "3.10.1 计算机硬件需求",
+      "line_start": 301
+    },
+    {
+      "value": 1.0,
+      "unit": "ms",
+      "operator": "≥",
+      "sentence": "定时器精度：系统需支持 CLOCK\\_MONOTONIC 高精度定时器，精度不低于 1ms",
+      "section": "3.10.1 计算机硬件需求",
+      "section_number": "3.10.1",
+      "section_title": "3.10.1 计算机硬件需求",
+      "line_start": 301
+    },
+    {
+      "value": 10.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "CPU使用：以25ms周期运行时 CPU占用率不超过10%（含电池模型计算）",
+      "section": "3.10.2 计算机硬件资源使用需求",
+      "section_number": "3.10.2",
+      "section_title": "3.10.2 计算机硬件资源使用需求",
+      "line_start": 309
+    },
+    {
+      "value": 2.0,
+      "unit": "KB",
+      "operator": "≤",
+      "sentence": "内存使用：运行时内存占用不超过2KB（定时器状态+电流序列+统计变量）",
+      "section": "3.10.2 计算机硬件资源使用需求",
+      "section_number": "3.10.2",
+      "section_title": "3.10.2 计算机硬件资源使用需求",
+      "line_start": 309
+    },
+    {
+      "value": 1.0,
+      "unit": "KB",
+      "operator": "≤",
+      "sentence": "栈使用：主循环调用深度不超过5层，栈使用量不超过1KB",
+      "section": "3.10.2 计算机硬件资源使用需求",
+      "section_number": "3.10.2",
+      "section_title": "3.10.2 计算机硬件资源使用需求",
+      "line_start": 309
+    },
+    {
+      "value": 50.0,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "2. 定时精度：连续运行 1000 个周期后总时间误差不超过 50ms，单个周期误差不超过±2ms。",
+      "section": "3.11 软件质量因素",
+      "section_number": "3.11",
+      "section_title": "3.11 软件质量因素",
+      "line_start": 329
+    },
+    {
+      "value": 2.0,
+      "unit": "ms",
+      "operator": "≤",
+      "sentence": "2. 定时精度：连续运行 1000 个周期后总时间误差不超过 50ms，单个周期误差不超过±2ms。",
+      "section": "3.11 软件质量因素",
+      "section_number": "3.11",
+      "section_title": "3.11 软件质量因素",
+      "line_start": 329
+    },
+    {
+      "value": 2.0,
+      "unit": "ms",
+      "operator": "±",
+      "sentence": "2. 定时精度：连续运行 1000 个周期后总时间误差不超过 50ms，单个周期误差不超过±2ms。",
+      "section": "3.11 软件质量因素",
+      "section_number": "3.11",
+      "section_title": "3.11 软件质量因素",
+      "line_start": 329
+    },
+    {
+      "value": 10.0,
+      "unit": "%",
+      "operator": "≤",
+      "sentence": "4. 性能：CPU占用率不超过10%（在ARM单核400MHz处理器上）。",
+      "section": "3.11 软件质量因素",
+      "section_number": "3.11",
+      "section_title": "3.11 软件质量因素",
+      "line_start": 329
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 5,
+  "tables": [
+    {
+      "index": 0,
+      "type": "modification",
+      "format": "html",
+      "headers": [
+        "序号",
+        "版本号",
+        "页次",
+        "标记",
+        "处数",
+        "更改文件号",
+        "更改者",
+        "日期"
+      ],
+      "row_count": 20,
+      "data_row_count": 19,
+      "is_empty": true,
+      "section": "TH-Scheduler-周期任务调度器 软件需求规格说明 产品型号-Scheduler",
+      "raw_html": "<tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>版本号</td><td rowspan=1 colspan=1>页次</td><td rowspan=1 colspan=1>标记</td><td rowspan=1 colspan=1>处数</td><td rowspan=1 colspan=1>更改文件号</td><td rowspan=1 colspan=1>更改者</td><td rowspan=1 colspan=1>日期</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></"
+    },
+    {
+      "index": 1,
+      "type": "reference",
+      "format": "html",
+      "headers": [
+        "序号",
+        "名称",
+        "版本",
+        "发布日期",
+        "来源"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "2 引用文档",
+      "raw_html": "<tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>名称</td><td rowspan=1 colspan=1>版本</td><td rowspan=1 colspan=1>发布日期</td><td rowspan=1 colspan=1>来源</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>《GJB 438C 软件文档编制规范》</td><td rowspan=1 colspan=1>438C</td><td rowspan=1 colspan=1>2024-01-01</td><td rowspan=1 colspan=1>相关标准库</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>《电池仿真模型软件需求规格说明》</td><td rowspan=1 colspan=1>V1.0</td><td rowspan=1 colspan=1>2026-"
+    },
+    {
+      "index": 2,
+      "type": "qualification",
+      "format": "html",
+      "headers": [
+        "需求名称",
+        "需求的唯一标识",
+        "本文档中的章节号",
+        "合格性方法",
+        "合格性级别"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "4 合格性规定",
+      "raw_html": "<tr><td colspan=\"2\" rowspan=\"1\">需求名称</td><td colspan=\"1\" rowspan=\"1\">需求的唯一标识</td><td colspan=\"1\" rowspan=\"1\">本文档中的章节号</td><td colspan=\"1\" rowspan=\"1\">合格性方法</td><td colspan=\"1\" rowspan=\"1\">合格性级别</td></tr><tr><td colspan=\"2\" rowspan=\"1\">高精度定时器</td><td colspan=\"1\" rowspan=\"1\">REQ-3.2.1</td><td colspan=\"1\" rowspan=\"1\">3.2.1</td><td colspan=\"1\" rowspan=\"1\">单元测试+精度测量</td><td colspan=\"1\" rowspan=\"1\">关键</td></tr><tr><td colspan=\"2\" rowspan=\"1\">时间漂移补偿</td><td colspan=\"1\" rowspan=\"1\">REQ-3.2.2</td><td col"
+    },
+    {
+      "index": 3,
+      "type": "traceability",
+      "format": "html",
+      "headers": [
+        "《XXX课题可行性研究报告》中的指标",
+        "软件需求"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "5 需求可追踪性",
+      "raw_html": "<tr><td rowspan=1 colspan=2>《XXX课题可行性研究报告》中的指标</td><td rowspan=1 colspan=2>软件需求</td></tr><tr><td rowspan=1 colspan=1>指标内容</td><td rowspan=1 colspan=1>章节号</td><td rowspan=1 colspan=1>需求名称</td><td rowspan=1 colspan=1>章节号</td></tr><tr><td rowspan=1 colspan=1>25ms 周期驱动电池模型</td><td rowspan=1 colspan=1>总体目标</td><td rowspan=1 colspan=1>主循环调度功能</td><td rowspan=1 colspan=1>3.2.4</td></tr><tr><td rowspan=1 colspan=1>处理时间漂移（补偿执行开销）</td><td rowspan=1 colspan=1>总体目标</td><td rowspan=1 colspan=1>时间漂移补偿功能</td><"
+    },
+    {
+      "index": 4,
+      "type": "traceability",
+      "format": "html",
+      "headers": [
+        "软件需求",
+        "《XXXXX课题可行性研究报告》中的指标"
+      ],
+      "row_count": 5,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "5 需求可追踪性",
+      "raw_html": "<tr><td colspan=\"2\" rowspan=\"1\">软件需求</td><td colspan=\"2\" rowspan=\"1\">《XXXXX课题可行性研究报告》中的指标</td></tr><tr><td colspan=\"1\" rowspan=\"1\">需求名称</td><td colspan=\"1\" rowspan=\"1\">指标内容</td><td colspan=\"1\" rowspan=\"1\">指标内容</td><td colspan=\"1\" rowspan=\"1\">章节号</td></tr><tr><td colspan=\"1\" rowspan=\"1\">主循环调度功能</td><td colspan=\"1\" rowspan=\"1\">25ms 周期驱动电池模型步进</td><td colspan=\"1\" rowspan=\"1\">25ms 周期驱动电池模型</td><td colspan=\"1\" rowspan=\"1\">总体目标</td></tr><tr><td colspan=\"1\" rowspan=\"1\">时间漂移补偿功能</td><td colspan=\"1\" rows"
+    }
+  ],
+  "image_count": 7,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "2e6ba055248597afd8aa668fd4e1066322df86ff4e10a52a8f1a2d77fcfeb3e6.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/2e6ba055248597afd8aa668fd4e1066322df86ff4e10a52a8f1a2d77fcfeb3e6.jpg",
+      "image_exists": true,
+      "image_size_kb": 127,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 2,
+      "image_file": "dd030f6d475b85493118b28544711751ac01104b8245bea9a52a495583a27ab2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/dd030f6d475b85493118b28544711751ac01104b8245bea9a52a495583a27ab2.jpg",
+      "image_exists": true,
+      "image_size_kb": 51,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 3,
+      "image_file": "36ac34884783597fd81cc2c068f270301cbfaca2705cf863303ebfb4ae088218.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/36ac34884783597fd81cc2c068f270301cbfaca2705cf863303ebfb4ae088218.jpg",
+      "image_exists": true,
+      "image_size_kb": 74,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 4,
+      "image_file": "505a9e02aef115b0981cbd520a247963727b34ba3cb5e953122367bb76a2ba69.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/505a9e02aef115b0981cbd520a247963727b34ba3cb5e953122367bb76a2ba69.jpg",
+      "image_exists": true,
+      "image_size_kb": 90,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 5,
+      "image_file": "e7bab2e6ba6f3d2f80eeeac7e2e09eee568c4e99997ea52a443dab58ed98d406.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/e7bab2e6ba6f3d2f80eeeac7e2e09eee568c4e99997ea52a443dab58ed98d406.jpg",
+      "image_exists": true,
+      "image_size_kb": 76,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 6,
+      "image_file": "786f40bc465cdd5cf8fee9067925c823307abadc75a1707513cc08c5b5c60b0a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/786f40bc465cdd5cf8fee9067925c823307abadc75a1707513cc08c5b5c60b0a.jpg",
+      "image_exists": true,
+      "image_size_kb": 67,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 7,
+      "image_file": "512eb57c81ac6cecddf2939cac29aba8b9bd58b6d27e23e8c04d4de4b24dbf64.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/512eb57c81ac6cecddf2939cac29aba8b9bd58b6d27e23e8c04d4de4b24dbf64.jpg",
+      "image_exists": true,
+      "image_size_kb": 48,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "2e6ba055248597afd8aa668fd4e1066322df86ff4e10a52a8f1a2d77fcfeb3e6.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/2e6ba055248597afd8aa668fd4e1066322df86ff4e10a52a8f1a2d77fcfeb3e6.jpg",
+      "image_exists": true,
+      "image_size_kb": 127,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "dd030f6d475b85493118b28544711751ac01104b8245bea9a52a495583a27ab2.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/dd030f6d475b85493118b28544711751ac01104b8245bea9a52a495583a27ab2.jpg",
+      "image_exists": true,
+      "image_size_kb": 51,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "36ac34884783597fd81cc2c068f270301cbfaca2705cf863303ebfb4ae088218.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/36ac34884783597fd81cc2c068f270301cbfaca2705cf863303ebfb4ae088218.jpg",
+      "image_exists": true,
+      "image_size_kb": 74,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "505a9e02aef115b0981cbd520a247963727b34ba3cb5e953122367bb76a2ba69.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/505a9e02aef115b0981cbd520a247963727b34ba3cb5e953122367bb76a2ba69.jpg",
+      "image_exists": true,
+      "image_size_kb": 90,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "e7bab2e6ba6f3d2f80eeeac7e2e09eee568c4e99997ea52a443dab58ed98d406.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/e7bab2e6ba6f3d2f80eeeac7e2e09eee568c4e99997ea52a443dab58ed98d406.jpg",
+      "image_exists": true,
+      "image_size_kb": 76,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "786f40bc465cdd5cf8fee9067925c823307abadc75a1707513cc08c5b5c60b0a.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/786f40bc465cdd5cf8fee9067925c823307abadc75a1707513cc08c5b5c60b0a.jpg",
+      "image_exists": true,
+      "image_size_kb": 67,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "512eb57c81ac6cecddf2939cac29aba8b9bd58b6d27e23e8c04d4de4b24dbf64.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/radar/gjb_438c_examples/mineru_parsed/[08]调度器-软件需求规格说明-438C.pdf/auto/images/512eb57c81ac6cecddf2939cac29aba8b9bd58b6d27e23e8c04d4de4b24dbf64.jpg",
+      "image_exists": true,
+      "image_size_kb": 48,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

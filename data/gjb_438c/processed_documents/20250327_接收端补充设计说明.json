@@ -1,0 +1,360 @@
+{
+  "doc_name": "20250327_接收端补充设计说明",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/20250327_接收端补充设计说明.md",
+  "md_lines": 303,
+  "md_chars": 4181,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "补充设计说明",
+  "section_count": 42,
+  "sections": [
+    {
+      "number": null,
+      "title": "补充设计说明",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 文档目的",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 154,
+      "text_preview": "为减少联调阶段对协议语义的重复解释与歧义理解，现对当前版本中的关键协议项作补充说明。本说明用于明确接收与发送两端在实现过程中的统一约束，作为现阶段工程实现、联调验证及后续测试的依据。\n\n除非后续联调过程中发现与系统级约束存在明确冲突，否则本说明所列内容建议作为当前版本的固定实现口径，不再频繁调整。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "2. 字节序设计说明",
+      "level": 2,
+      "line_start": 11,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.1",
+      "title": "2.1 设计结论",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 71,
+      "text_preview": "协议中所有多字节整数字段统一采用**小端字节序（Little Endian）**。\n\n包头与包尾标识按固定字节流发送，不按主机字节序进行解释。"
+    },
+    {
+      "number": "2.2",
+      "title": "2.2 适用范围",
+      "level": 3,
+      "line_start": 19,
+      "text_length": 113,
+      "text_preview": "本约定适用于当前协议中的全部多字节整数类型字段，包括但不限于：\n\n* CPI 计数（2 字节）\n* PRT 计数（2 字节）\n* IQ 点数（2 字节）\n\n后续如扩展长度、时间戳、序列号等字段，也应保持一致，统一采用小端表示。"
+    },
+    {
+      "number": "2.3",
+      "title": "2.3 标识字段说明",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 79,
+      "text_preview": "* 包头 `0x55AAFF03` 按字节流发送为：`55 AA FF 03`\n* 包尾 `0x55AAFF30` 按字节流发送为：`55 AA FF 30`"
+    },
+    {
+      "number": "2.4",
+      "title": "2.4 设计说明",
+      "level": 3,
+      "line_start": 34,
+      "text_length": 60,
+      "text_preview": "统一采用小端字节序，有利于：\n\n* 与服务器主机本地字节序保持一致\n* 降低发送端与接收端实现中的额外转换成本\n\n---"
+    },
+    {
+      "number": null,
+      "title": "3. CPI 计数与 PRT 计数递增规则说明",
+      "level": 2,
+      "line_start": 43,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 总体原则",
+      "level": 3,
+      "line_start": 45,
+      "text_length": 129,
+      "text_preview": "CPI 计数与 PRT 计数均用于描述**逻辑采集/发送时序**，其递增依据应以逻辑时序边界为准，而非以单个 UDP 包是否成功发送、是否丢失或是否触发重传为依据。\n\n该原则的目的在于保证接收端状态机的判定基准稳定，避免因链路波动导致时序语义漂移。\n\n---"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 CPI 计数规则",
+      "level": 3,
+      "line_start": 53,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 设计结论",
+      "level": 4,
+      "line_start": 55,
+      "text_length": 147,
+      "text_preview": "* CPI 计数定义为 **16 位无符号整数**\n* 取值范围为 `0 ~ 65535`\n* 每当一个新的 CPI 开始时，CPI 计数加 1\n* 回绕方式为：`65535 -> 0`\n* CPI 计数表示逻辑时序中的 CPI 编号\n* 不因 UDP 丢包、链路抖动或重传策略变化而改变其语义"
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 接收端解释要求",
+      "level": 4,
+      "line_start": 64,
+      "text_length": 155,
+      "text_preview": "* 同一 CPI 内的所有 UDP 包，其 `CPI 计数` 必须保持一致\n* 当接收端检测到 `CPI 计数` 发生跳变时，应视为进入新的 CPI\n* 接收端应基于当前 CPI 下各 PRT/通道/分包的接收结果，对该 CPI 的完整性作出独立判定\n* 若跳变关系不满足预期连续性，应记录为异常事件\n\n---"
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 PRT 计数规则",
+      "level": 3,
+      "line_start": 73,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 设计结论",
+      "level": 4,
+      "line_start": 75,
+      "text_length": 134,
+      "text_preview": "* PRT 计数定义为 **16 位无符号整数**\n* 在同一个 CPI 内，PRT 计数自 `0` 开始递增\n* 每进入一个新的 CPI，PRT 计数重新从 `0` 开始\n* PRT 计数表示当前 CPI 内的逻辑 PRT 序号\n* 不因个别分包丢失而改变其编号语义"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 接收端解释要求",
+      "level": 4,
+      "line_start": 83,
+      "text_length": 132,
+      "text_preview": "* `(CPI计数, PRT计数)` 共同标识一个逻辑 PRT 数据单元\n* 同一 `(CPI, PRT, 通道)` 下，接收端应收集该 PRT 对应的全部分包\n* 当新的 CPI 到来时，若上一 CPI 中仍存在未完成的 PRT，应按异常或截断场景处理\n\n---"
+    },
+    {
+      "number": null,
+      "title": "4. 包计数字段定义说明",
+      "level": 2,
+      "line_start": 91,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 设计结论",
+      "level": 3,
+      "line_start": 93,
+      "text_length": 55,
+      "text_preview": "包计数字段定义为**当前通道内的分包序号**，字段长度为 **1 字节**，取值范围固定为：\n\n`0 ~ 3`"
+    },
+    {
+      "number": "4.2",
+      "title": "4.2 对应关系说明",
+      "level": 3,
+      "line_start": 99,
+      "text_length": 146,
+      "text_preview": "当前设计中：\n\n* 一个 PRT 共发送 16 个 UDP 包\n* 共包含 4 个通道\n* 每个通道固定对应 4 个包\n\n因此分配关系为：\n\n* 通道 0：包计数 `0 ~ 3`\n* 通道 1：包计数 `0 ~ 3`\n* 通道 2：包计数 `0 ~ 3`\n* 通道 3：包计数 `0 ~ 3`"
+    },
+    {
+      "number": "4.3",
+      "title": "4.3 设计解释",
+      "level": 3,
+      "line_start": 114,
+      "text_length": 150,
+      "text_preview": "当前包头中已包含：\n\n* 通道计数\n* 包计数\n\n在此条件下，最清晰且工程可执行性最高的建模方式是：\n\n* `通道计数` 用于标识当前数据所属通道\n* `包计数` 用于标识该通道内的分片序号\n\n对应的接收端重组主键可明确表示为：\n\n`(CPI, PRT, Channel, PacketIndex)`"
+    },
+    {
+      "number": "4.4",
+      "title": "4.4 说明",
+      "level": 3,
+      "line_start": 130,
+      "text_length": 111,
+      "text_preview": "不建议将包计数定义为 `0 ~ 15` 的全局分包序号，也不建议保留 `0 ~ 8` 这类不能与现有分包结构严格对应的定义。后者既不对应总包序号，也不对应通道内分片序号，存在明显歧义，不利于接收端实现与测试验证。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "5. IQ 数据格式说明",
+      "level": 2,
+      "line_start": 136,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.1",
+      "title": "5.1 设计结论",
+      "level": 3,
+      "line_start": 138,
+      "text_length": 128,
+      "text_preview": "每个 IQ 复数点由两个 16 位有符号整数组成，采用二进制补码编码：\n\n* `I: int16`\n* `Q: int16`\n\n每个复数点占用 **4 字节**。\n\n数据区内样点排列顺序固定为：\n\n`I0, Q0, I1, Q1, I2, Q2, ...`"
+    },
+    {
+      "number": "5.2",
+      "title": "5.2 当前版本约束",
+      "level": 3,
+      "line_start": 151,
+      "text_length": 66,
+      "text_preview": "当前协议版本中：\n\n* 不采用浮点表示\n* 不采用压缩编码\n* 不采用块浮点表示\n* 不采用变长样点格式\n* 不定义额外缩放因子字段"
+    },
+    {
+      "number": "5.3",
+      "title": "5.3 接收端解释边界",
+      "level": 3,
+      "line_start": 161,
+      "text_length": 99,
+      "text_preview": "接收端在当前版本中仅负责将数据区字节流正确还原为 `int16/int16` 格式的 IQ 样点序列，即：\n\n* 视为原始定点复数采样\n* 不负责物理量还原\n* 不负责幅值归一化\n* 不负责量纲解释"
+    },
+    {
+      "number": "5.4",
+      "title": "5.4 说明",
+      "level": 3,
+      "line_start": 170,
+      "text_length": 100,
+      "text_preview": "关于量化的物理意义，例如：\n\n* 满量程定义\n* ADC 位宽映射关系\n* 前端增益标定\n* 电压或功率单位含义\n\n上述内容建议归入前端采样链路定义，不作为当前接收协议最小实现语义的一部分。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "6. 数据区填充与有效点解释说明",
+      "level": 2,
+      "line_start": 183,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.1",
+      "title": "6.1 设计结论",
+      "level": 3,
+      "line_start": 185,
+      "text_length": 113,
+      "text_preview": "`IQ 点数` 字段用于表示**当前 UDP 包中有效 IQ 点的数量**。\n\n数据区解释规则如下：\n\n* 前 `IQ点数 × 4` 字节为有效 IQ 数据\n* 剩余字节为补齐区（Padding）\n* 补齐区必须全部填 `0`"
+    },
+    {
+      "number": "6.2",
+      "title": "6.2 约束要求",
+      "level": 3,
+      "line_start": 195,
+      "text_length": 89,
+      "text_preview": "需明确以下边界：\n\n* 补齐区不属于有效数据\n* 补齐区不表示“无效采样点”\n* 接收端必须严格依据 `IQ点数` 截断解析有效数据\n* 不得将补齐区解释为额外样点并参与后续处理"
+    },
+    {
+      "number": "6.3",
+      "title": "6.3 工程语义说明",
+      "level": 3,
+      "line_start": 204,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.3.1",
+      "title": "6.3.1 有效点",
+      "level": 4,
+      "line_start": 206,
+      "text_length": 51,
+      "text_preview": "有效点是指当前包实际承载的样点数据。即使某个样点值恰好为 `I=0, Q=0`，其仍然是有效采样结果。"
+    },
+    {
+      "number": "6.3.2",
+      "title": "6.3.2 补齐区",
+      "level": 4,
+      "line_start": 210,
+      "text_length": 70,
+      "text_preview": "补齐区仅用于满足固定 UDP 包长度要求，不参与任何数据语义表达：\n\n* 不进入重组结果\n* 不作为样点数据使用\n* 不输入后续信号处理流程"
+    },
+    {
+      "number": "6.4",
+      "title": "6.4 版本边界说明",
+      "level": 3,
+      "line_start": 218,
+      "text_length": 73,
+      "text_preview": "当前版本中不单独设计“无效点标记”语义。如未来确有业务需要，应通过独立字段或上层规则进行扩展，不建议通过 Padding 区承载该语义。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "7. 波位切换与包尾判定说明",
+      "level": 2,
+      "line_start": 224,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "7.1",
+      "title": "7.1 总体原则",
+      "level": 3,
+      "line_start": 226,
+      "text_length": 91,
+      "text_preview": "波位切换的主判定依据应为**波位安排定义的逻辑时序边界**，而包尾标志仅作为当前波位数据发送完成的辅助确认信息。\n\n因此，不应将“是否收到尾包”作为波位结束的唯一判定依据。\n\n---"
+    },
+    {
+      "number": "7.2",
+      "title": "7.2 波位边界规则",
+      "level": 3,
+      "line_start": 234,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "7.2.1",
+      "title": "7.2.1 设计结论",
+      "level": 4,
+      "line_start": 236,
+      "text_length": 80,
+      "text_preview": "* 一个波位对应一组连续 CPI\n* 波位切换仅允许发生在 **CPI 边界**\n* 不允许在一个 CPI 中途切换波位\n* 不允许在一个 PRT 中途切换波位"
+    },
+    {
+      "number": "7.3",
+      "title": "7.3 包尾字段语义",
+      "level": 3,
+      "line_start": 243,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "7.3.1",
+      "title": "7.3.1 设计结论",
+      "level": 4,
+      "line_start": 245,
+      "text_length": 80,
+      "text_preview": "* 仅“当前波位最后一个 PRT 的最后一个 UDP 包”携带有效包尾 `0x55AAFF30`\n* 其他 UDP 包的包尾字段统一填 `0x00000000`"
+    },
+    {
+      "number": "7.4",
+      "title": "7.4 接收端判定策略",
+      "level": 3,
+      "line_start": 250,
+      "text_length": 189,
+      "text_preview": "接收端应结合波位安排表及当前上下文进行判定，主要包括：\n\n* 当前 CPI 是否属于当前波位\n* 当前波位在逻辑上应于何时结束\n\n在此基础上，接收端处理原则如下：\n\n1. 若按逻辑边界应结束，且同时收到有效尾包，则判定为正常完成\n2. 若按逻辑边界应结束，但尾包丢失，则仍可按逻辑边界完成收尾，同时记录异常\n3. 若在逻辑边界之前提前收到尾包，则应判定为协议错误或发送端实现错误"
+    },
+    {
+      "number": "7.5",
+      "title": "7.5 设计说明",
+      "level": 3,
+      "line_start": 263,
+      "text_length": 128,
+      "text_preview": "采用“逻辑边界为主、尾包标志为辅”的原因如下：\n\n* 尾包本身可能丢失，单独依赖尾包不具备充分鲁棒性\n* 仅依赖后续波位首包进行反推，状态机会存在滞后与不确定性\n* 以逻辑调度定义归属、以尾包作为完成确认，更利于接收端形成稳定、可验证的状态机实现\n\n---"
+    },
+    {
+      "number": null,
+      "title": "8. 实现建议",
+      "level": 2,
+      "line_start": 273,
+      "text_length": 249,
+      "text_preview": "为保证协议两端实现一致，建议在发送端、接收端、联调测试及协议文档中统一落实以下原则：\n\n* 所有多字节字段按小端编码实现\n* CPI/PRT 计数按逻辑时序维护，不与链路状态绑定\n* 分包重组以 `(CPI, PRT, Channel, PacketIndex)` 为基本索引\n* CPI 完整性由接收端依据已接收数据独立判定\n* IQ 数据统一按 `int16 + int16` 的固定格式解释\n*"
+    },
+    {
+      "number": null,
+      "title": "1）接收端最终输出单位：**CPI**",
+      "level": 2,
+      "line_start": 288,
+      "text_length": 205,
+      "text_preview": "该结论在当前版本中应直接冻结，不再保留 PRT 级对外输出作为并行口径。\n\n但要补一句关键约束：\n\n> **外部输出单位是 CPI；内部重组与完整性判定粒度仍然保持到 PRT。**\n\n也就是说：\n\n* 对下游信号处理消费者：交付的是 **CPI 级原始数据单元**\n* 对接收端内部状态机：仍按 **PRT / Channel / Packet** 管理重组、完整性判定和异常\n\n这是最稳的分层方式。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

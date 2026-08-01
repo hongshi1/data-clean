@@ -1,0 +1,1199 @@
+{
+  "doc_name": "需求规格说明书_DouXinGuaXin",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/需求规格说明书_DouXinGuaXin.md",
+  "md_lines": 583,
+  "md_chars": 27537,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "软件学院书籍影视交流平台——需求规格说明书",
+  "section_count": 36,
+  "sections": [
+    {
+      "number": null,
+      "title": "软件学院书籍影视交流平台——需求规格说明书",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "概述",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "用户简介",
+      "level": 3,
+      "line_start": 4,
+      "text_length": 165,
+      "text_preview": "本项目所针对的用户主要以在校大学生以及课程负责人，首先是因为环境方面，我们处于大学，仍在经营学业，无法过多宣传本项目，只能通过同学间的互相帮助来完成项目的各方面；其次是本项目是作为课程的一个任务，在提交时，对本项目进行查验的是课程的负责人。因此，本项目的用户大致分为这两类。当然如果存在其他用户，本项目也能为其提供很好的使用体验。"
+    },
+    {
+      "number": null,
+      "title": "项目的目的与目标",
+      "level": 3,
+      "line_start": 8,
+      "text_length": 174,
+      "text_preview": "本项目的目的和目标是为了能给对书籍、影视等艺术作品感兴趣的用户提供一个交流的平台，从而让思想在这里碰撞，让用户能够随心所欲的发表自己的观点，以及与其他用户进行讨论。本项目希望能够为大家搭建一个更加自由的平台，每个人的评论能够被其他人看到并且可以对其他人的观点进行评价，让用户们都能在这里找到自己喜爱的书籍影视作品，以及分享自己所喜爱的书籍影视作品。"
+    },
+    {
+      "number": null,
+      "title": "涉及名词解释",
+      "level": 3,
+      "line_start": 12,
+      "text_length": 116,
+      "text_preview": "[1] 用户：包含游客以及已经完成注册的用户，在平台中主要进行交互的对象。\n\n[2] 小组管理员：指在参与小组中的一个负责的对象，能够对其小组的帖子进行管理。\n\n[3] 系统管理员：指整个平台的管理员，与实际平台的功能等等关联不大。"
+    },
+    {
+      "number": null,
+      "title": "参考资料",
+      "level": 3,
+      "line_start": 20,
+      "text_length": 36,
+      "text_preview": "[1] 吕云翔.软件工程实用教程[M].北京：清华大学出版社，2015."
+    },
+    {
+      "number": null,
+      "title": "相关文档",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 67,
+      "text_preview": "[1] 《软件开发企划书》\n\n[2] 《软件设计说明书》\n\n[3] 《部署文档》\n\n[4] 《测试报告》\n\n[5] 《用户使用说明书》"
+    },
+    {
+      "number": null,
+      "title": "版本更新信息",
+      "level": 3,
+      "line_start": 36,
+      "text_length": 584,
+      "text_preview": "@版本更新记录表\n\n|  版本  | 更新者 |   更新    |          更新纪要           | 完成度 |\n| :----: | :----: | :-------: | :-------------------------: | :----: |\n| v1.0.0 |  杨壮  | 2020.4.19 |          项目创建           |  暂无  |"
+    },
+    {
+      "number": null,
+      "title": "系统总体简介",
+      "level": 2,
+      "line_start": 50,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "角色定义",
+      "level": 3,
+      "line_start": 52,
+      "text_length": 532,
+      "text_preview": "|  角色名称  |                        角色定义及说明                        |\n| :--------: | :----------------------------------------------------------: |\n|    游客    | 对平台的内容、其他用户的帖子具有读权限，可以进行浏览，无法加入小组、无法发帖，也无法"
+    },
+    {
+      "number": null,
+      "title": "系统的开发运行环境",
+      "level": 3,
+      "line_start": 63,
+      "text_length": 165,
+      "text_preview": "使用Windows系统进行开发，开发环境如下：\n\n```\n操作系统：Windows 10\n数据库系统：MySQL\nIDE：Visual Studio Code\n测试工具：Google Chrome\n编码方式：UTF-8\n```\n\n**运行环境如下：**\n\n```\n操作系统：Windows、Android\n运行界面：WEB\n```"
+    },
+    {
+      "number": null,
+      "title": "工作流程",
+      "level": 3,
+      "line_start": 82,
+      "text_length": 254,
+      "text_preview": "网站的总体工作图如下：\n\n![1](pic\\1.PNG)\n\n本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。\n\n首先是项目启动，小组各人员进行成员分工，确定各自负责的板块，然后开始着手项目分析，确定本项目的各个模块的细节信息，然后开始项目前后端设计，设计如何进行编写源代码，然后进行项目全面开发，开始动工编写代码，前端和后端分别进行并定期交流以实现前后端更好的交互。在编写完成后对项目"
+    },
+    {
+      "number": null,
+      "title": "系统的未来拓展",
+      "level": 3,
+      "line_start": 94,
+      "text_length": 245,
+      "text_preview": "本项目的初衷是为了搭建一个书籍影视的交流平台，在未来拓展方面，本项目可以增加其他类型的板块，例如书法、美术作品，增设不同类型的模块，不仅限于书籍和影视，从用户的兴趣入手，增添各类模块，让用户在这个平台上能够找到自己的所有爱好，每个爱好都能发表自己的观点。\n\n另外的方面就是对平台的适应性进行调整，可以开发跨平台APP。让这款平台能够更好的符合用户的使用标准，不再局限于某一方面。然后再就是与其他的软件"
+    },
+    {
+      "number": null,
+      "title": "系统功能需求",
+      "level": 2,
+      "line_start": 100,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "功能模块总体设计",
+      "level": 3,
+      "line_start": 101,
+      "text_length": 31,
+      "text_preview": "![功能模块设计](pic\\ModuleDesign.png)"
+    },
+    {
+      "number": null,
+      "title": "用例图形式分析",
+      "level": 3,
+      "line_start": 105,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "账号管理模块",
+      "level": 4,
+      "line_start": 107,
+      "text_length": 5152,
+      "text_preview": "用例图如图所示\n\n![](pic\\zhanghaoyl.png)\n\n以下为用例表\n\n|     编号     |                 101                  |   用例名称   | 注册 |\n| ------------ | :----------------------------------- | :----------- | ---- |\n| 使用人员 |  "
+    },
+    {
+      "number": null,
+      "title": "影视书籍模块",
+      "level": 4,
+      "line_start": 175,
+      "text_length": 5762,
+      "text_preview": "用例图如图所示\n\n![](pic\\yingshishujiyl.png)\n\n| 编号     | 201                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |\n"
+    },
+    {
+      "number": null,
+      "title": "话题模块",
+      "level": 4,
+      "line_start": 251,
+      "text_length": 4025,
+      "text_preview": "用例图如图所示\n\n![](pic\\huatiyl.png)\n\n| 编号     | 301                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |\n| 使用人员 "
+    },
+    {
+      "number": null,
+      "title": "小组模块",
+      "level": 4,
+      "line_start": 307,
+      "text_length": 7314,
+      "text_preview": "用例图如图所示\n\n![](pic\\xiaozuyl.png)\n\n| 编号     | 401                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |\n| 使用人员"
+    },
+    {
+      "number": null,
+      "title": "系统性能需求",
+      "level": 2,
+      "line_start": 403,
+      "text_length": 878,
+      "text_preview": "| 编号 |    性能需求来源名称    |   使用者   |               功能描述               |             响应要求              |          结果          |\n| :--: | :--------------------: | :--------: | :----------------------------"
+    },
+    {
+      "number": null,
+      "title": "系统界面设计",
+      "level": 2,
+      "line_start": 414,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "界面需求",
+      "level": 3,
+      "line_start": 415,
+      "text_length": 69,
+      "text_preview": "输入设备：键盘、鼠标\n\n输出设备：显示器 \n\n显示风格：P2P简介页面风格\n\n显示方式：适配浏览器的长宽\n\n输出格式：以PC端网页方式输出"
+    },
+    {
+      "number": null,
+      "title": "页面设计",
+      "level": 3,
+      "line_start": 427,
+      "text_length": 49,
+      "text_preview": "这一部分仅为暂时的页面设计，可能会和后续的完成作品有些出入，最终的页面情况还请参考软件设计说明书。"
+    },
+    {
+      "number": null,
+      "title": "首页/热点内容浏览页面",
+      "level": 4,
+      "line_start": 431,
+      "text_length": 178,
+      "text_preview": "![主页第二版](pic/main.png)\n\n**包含功能模块：**\n\n注册登录、浏览内容、检索内容。\n\n**调用背景：**\n\n网页的主页，热点内容的浏览页面，进入网页最先看到的页面。\n\n**页面组成：**\n\n透明导航栏，头版文章，热点推送内容。\n\n**页面使用简介：**\n\n进入网页最先看到的页面。用户和游客可以看到热点内容，可以进入书籍或者影视分类。"
+    },
+    {
+      "number": null,
+      "title": "书籍、影视浏览页面",
+      "level": 4,
+      "line_start": 451,
+      "text_length": 162,
+      "text_preview": "![书籍](pic/shuji.png)\n\n**包含功能模块：**\n\n检索内容，浏览内容。\n\n**调用背景：**\n\n单击导航栏的书籍/影视标签后进入的页面。\n\n**页面组成：**\n\n导航栏，书籍内容。\n\n**页面使用简介：**\n\n在此页面，用户和游客可以看到书籍库总览，可以进入某一个书籍页面，也可以通过搜索查找到某一本书。"
+    },
+    {
+      "number": null,
+      "title": "具体书籍、影视页面",
+      "level": 4,
+      "line_start": 471,
+      "text_length": 182,
+      "text_preview": "![书籍](pic/shujiju.png)\n\n**包含功能模块：**\n\n评论书籍、评论影视、点赞评论、反对评论、举报评论、检索内容。\n\n**调用背景：**\n\n在浏览页面点击具体书籍即可进入此页面。\n\n**页面组成：**\n\n导航栏、书籍页面、搜索框、评论区。\n\n**页面使用简介：**\n\n在此页面下，用户可以对书籍进行评论，也可以对评论内容进行点赞、反对或者举报。"
+    },
+    {
+      "number": null,
+      "title": "话题/小组页面",
+      "level": 4,
+      "line_start": 491,
+      "text_length": 161,
+      "text_preview": "![书籍](pic/ht-xz.png)\n\n**包含功能模块：**\n\n检索内容，浏览内容，参与话题，发表图文。\n\n**调用背景：**\n\n话题的具体页面，通过浏览话题页面（设计中）进入。\n\n**页面组成：**\n\n导航栏、书籍页面、搜索框、评论区。\n\n**页面使用简介：**\n\n用户可以在此页面参与讨论，发表图文或者检索内容。"
+    },
+    {
+      "number": null,
+      "title": "注册登录页面",
+      "level": 4,
+      "line_start": 511,
+      "text_length": 145,
+      "text_preview": "![注册登录](pic/reglog.png)\n\n**包含功能模块：**\n\n注册、登录、找回密码。\n\n**调用背景：**\n\n在任意页面点击右上角的注册/登录按钮。\n\n**页面组成：**\n\n导航栏、注册登录组件。\n\n**页面使用简介：**\n\n游客可以使用注册登录页面注册为用户或者登录为用户。"
+    },
+    {
+      "number": null,
+      "title": "后台管理页面",
+      "level": 4,
+      "line_start": 531,
+      "text_length": 153,
+      "text_preview": "![后台](pic/admin.png)\n\n**包含功能模块：**\n\n查看个人信息、修改个人信息、删除用户、修改书籍内容。\n\n**调用背景：**\n\n管理员登录后可以进入此页面。\n\n**页面组成：**\n\n导航栏、管理组件。\n\n**页面使用简介：**\n\n管理员可以对书籍影视进行管理，也可以对用户进行管理操作。"
+    },
+    {
+      "number": null,
+      "title": "接口设计需求",
+      "level": 3,
+      "line_start": 551,
+      "text_length": 124,
+      "text_preview": "1.判断书籍影视作品的发布商是否有资格权限的接口\n\n2.判断书籍影视作品的发布商提交的信息的接口\n\n3.用户参与平台各种形式的交流反馈的接口\n\n4.用户对平台相关数据进行检索的接口\n\n5.用户进行相关管理审核工作的接口\n\n6.用户进行登录注册的接口"
+    },
+    {
+      "number": null,
+      "title": "系统的其他需求",
+      "level": 2,
+      "line_start": 565,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "安全性",
+      "level": 3,
+      "line_start": 567,
+      "text_length": 94,
+      "text_preview": "平台能够保证用户相关信息的安全性，防止用户的个人隐私信息和资料泄露。同时需要能够维护平台的安全，保证平台上相关的书籍影视相关数据安全。同时，防止用户在书籍影视平台上进行各种违规非法的操作。"
+    },
+    {
+      "number": null,
+      "title": "可靠性",
+      "level": 3,
+      "line_start": 571,
+      "text_length": 65,
+      "text_preview": "同书籍影视平台能够保障平台上的相关书籍影视数据信息正确无误，确保书籍影视交流平台咨询内容详实，保证各个板块交流讨论的内容健康向上。"
+    },
+    {
+      "number": null,
+      "title": "灵活性",
+      "level": 3,
+      "line_start": 575,
+      "text_length": 92,
+      "text_preview": "系统平台的设计能够让用户在简洁直观的界面下进行操作和浏览，提高用户使用时的体验。\n\n平台能够完成用户所需要的相关书籍影视作品的查找工作，以及能够完成对于书籍和影视作品的评论和反馈功能。"
+    },
+    {
+      "number": null,
+      "title": "系统的使用约束",
+      "level": 2,
+      "line_start": 581,
+      "text_length": 70,
+      "text_preview": "考虑到本系统仅为提供书籍影视资讯交流所用，所以暂时没有对使用进行什么特殊的约束，使用者可以假设以书籍影视平台用户的身份进行对系统的一些操作。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 30,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "版本",
+        "更新者",
+        "更新",
+        "更新纪要",
+        "完成度"
+      ],
+      "row_count": 8,
+      "data_row_count": 4,
+      "is_empty": false,
+      "section": "版本更新信息",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "角色名称",
+        "角色定义及说明"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "角色定义",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "101",
+        "用例名称",
+        "注册"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "102",
+        "用例名称",
+        "登录"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "103",
+        "用例名称",
+        "找回密码"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "104",
+        "用例名称",
+        "查看个人信息"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "105",
+        "用例名称",
+        "修改个人信息"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "106",
+        "用例名称",
+        "删除用户"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "账号管理模块",
+      "raw_html": null
+    },
+    {
+      "index": 8,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "201",
+        "用例名称",
+        "浏览内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 9,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "202",
+        "用例名称",
+        "检索内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 10,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "203",
+        "用例名称",
+        "评论影视书籍"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 11,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "204",
+        "用例名称",
+        "评分影视书籍"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 12,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "205",
+        "用例名称",
+        "点赞评论"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 13,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "206",
+        "用例名称",
+        "反对评论"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 14,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "207",
+        "用例名称",
+        "举报评论"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "影视书籍模块",
+      "raw_html": null
+    },
+    {
+      "index": 15,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "301",
+        "用例名称",
+        "浏览内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "话题模块",
+      "raw_html": null
+    },
+    {
+      "index": 16,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "302",
+        "用例名称",
+        "检索内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "话题模块",
+      "raw_html": null
+    },
+    {
+      "index": 17,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "303",
+        "用例名称",
+        "参与话题"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "话题模块",
+      "raw_html": null
+    },
+    {
+      "index": 18,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "304",
+        "用例名称",
+        "创建话题"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "话题模块",
+      "raw_html": null
+    },
+    {
+      "index": 19,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "305",
+        "用例名称",
+        "发表图文"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "话题模块",
+      "raw_html": null
+    },
+    {
+      "index": 20,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "401",
+        "用例名称",
+        "浏览内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 21,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "402",
+        "用例名称",
+        "检索内容"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 22,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "403",
+        "用例名称",
+        "参与小组"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 23,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "404",
+        "用例名称",
+        "创建小组"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 24,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "405",
+        "用例名称",
+        "发表帖子"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 25,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "406",
+        "用例名称",
+        "申请管理员"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 26,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "407",
+        "用例名称",
+        "置顶帖子"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 27,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "408",
+        "用例名称",
+        "加精帖子"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 28,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "409",
+        "用例名称",
+        "删除帖子"
+      ],
+      "row_count": 8,
+      "data_row_count": 7,
+      "is_empty": false,
+      "section": "小组模块",
+      "raw_html": null
+    },
+    {
+      "index": 29,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "编号",
+        "性能需求来源名称",
+        "使用者",
+        "功能描述",
+        "响应要求",
+        "结果"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "系统性能需求",
+      "raw_html": null
+    }
+  ],
+  "image_count": 13,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "pic\\1.PNG",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\1.PNG",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "1",
+      "caption": "本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。",
+      "figure_number": null,
+      "image_type": "flowchart",
+      "section": "工作流程",
+      "context_before": "运行界面：WEB\n```\n网站的总体工作图如下：",
+      "context_after": "本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。\n首先是项目启动，小组各人员进行成员分工，确定各自负责的板块，然后开始着手项目分析，确定本项目的各个模块的细节信息，然后开始项目前后端设计，设计如何进行编写源代码，然后进行项目全面开发，开始动工编写代码，前端和后端分别进行并定期交流以实现前后端更好的交互。在编写完成后对项目功能进行相应的测试，进行项目的改进，最后完成项目。具体可以参考",
+      "md_line": 86,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "pic\\2.PNG",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\2.PNG",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "2",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "工作流程",
+      "context_before": "网站的总体工作图如下：\n本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。\n首先是项目启动，小组各人员进行成员分工，确定各自负责的板块，然后开始着手项目分析，确定本项目的各个模块的细节信息，然后开始项目前后端设计，设计如何进行编写源代码，然后进行项目全面开发，开始动工编写代码，前端和后端分别进行并定期交流以实现前后端更好的交互。在编写完成后对项目功能进行相应的测试，进行项目的改进，最后完成项目。具体可以参考附件甘特图。",
+      "context_after": "本项目的初衷是为了搭建一个书籍影视的交流平台，在未来拓展方面，本项目可以增加其他类型的板块，例如书法、美术作品，增设不同类型的模块，不仅限于书籍和影视，从用户的兴趣入手，增添各类模块，让用户在这个平台上能够找到自己的所有爱好，每个爱好都能发表自己的观点。",
+      "md_line": 92,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 3,
+      "image_file": "pic\\ModuleDesign.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\ModuleDesign.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "功能模块设计",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "功能模块总体设计",
+      "context_before": "本项目的初衷是为了搭建一个书籍影视的交流平台，在未来拓展方面，本项目可以增加其他类型的板块，例如书法、美术作品，增设不同类型的模块，不仅限于书籍和影视，从用户的兴趣入手，增添各类模块，让用户在这个平台上能够找到自己的所有爱好，每个爱好都能发表自己的观点。\n另外的方面就是对平台的适应性进行调整，可以开发跨平台APP。让这款平台能够更好的符合用户的使用标准，不再局限于某一方面。然后再就是与其他的软件或者其他平台实现交互，让其他平台的用户也能够觉得轻松的在本平台上交流，而不再局限于单方面。",
+      "context_after": null,
+      "md_line": 103,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 4,
+      "image_file": "pic\\zhanghaoyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\zhanghaoyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": null,
+      "caption": "以下为用例表",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "账号管理模块",
+      "context_before": "用例图如图所示",
+      "context_after": "以下为用例表\n|     编号     |                 101                  |   用例名称   | 注册 |",
+      "md_line": 111,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 5,
+      "image_file": "pic\\yingshishujiyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\yingshishujiyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": null,
+      "caption": "| 编号     | 201                                          | 用例名称 | 浏览内容     |",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "影视书籍模块",
+      "context_before": "| 活动步骤 | 1. 管理员选择需要删除的用户并点击删除选项<br />2. 系统提示管理员将要删除该用户并得到用户的确认 <br />3. 系统提示删除用户成功并返回用户列表页面 |          |              |\n| 异常处理 | 系统异常，并给出相应的提示信息                               |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 201                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "md_line": 179,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 6,
+      "image_file": "pic\\huatiyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\huatiyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": null,
+      "caption": "| 编号     | 301                                          | 用例名称 | 浏览内容     |",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "话题模块",
+      "context_before": "| 活动步骤 | 1.用户进入一条评论页面 <br />2.用户点击举报按钮<br />3.用户输入举报标题和举报内容<br />4.用户点击提交按钮<br />5.系统给出提交成功与否的提示 |          |              |\n| 异常处理 | 1.用户是游客，或者注册后未登录，系统提示注册/登录<br />2.举报格式不符合要求，系统进行相关提示。 |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 301                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "md_line": 255,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 7,
+      "image_file": "pic\\xiaozuyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\xiaozuyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": null,
+      "caption": "| 编号     | 401                                          | 用例名称 | 浏览内容     |",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "小组模块",
+      "context_before": "| 活动步骤 | 1.用户输入文字，上传图片<br />2.用户点击发布按钮<br />3.系统返回参与是否成功的提示 |          |              |\n| 异常处理 | 1.用户未参与话题，系统提示参与话题。<br />2.用户发布的图文不合规范，系统提示修改 |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 401                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "md_line": 311,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 8,
+      "image_file": "main.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/main.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "主页第二版",
+      "caption": "注册登录、浏览内容、检索内容。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "首页/热点内容浏览页面",
+      "context_before": "输出格式：以PC端网页方式输出\n这一部分仅为暂时的页面设计，可能会和后续的完成作品有些出入，最终的页面情况还请参考软件设计说明书。",
+      "context_after": "**包含功能模块：**\n注册登录、浏览内容、检索内容。",
+      "md_line": 433,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 9,
+      "image_file": "shuji.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/shuji.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "书籍",
+      "caption": "检索内容，浏览内容。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "书籍、影视浏览页面",
+      "context_before": "透明导航栏，头版文章，热点推送内容。\n**页面使用简介：**\n进入网页最先看到的页面。用户和游客可以看到热点内容，可以进入书籍或者影视分类。",
+      "context_after": "**包含功能模块：**\n检索内容，浏览内容。",
+      "md_line": 453,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 10,
+      "image_file": "shujiju.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/shujiju.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "书籍",
+      "caption": "评论书籍、评论影视、点赞评论、反对评论、举报评论、检索内容。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "具体书籍、影视页面",
+      "context_before": "导航栏，书籍内容。\n**页面使用简介：**\n在此页面，用户和游客可以看到书籍库总览，可以进入某一个书籍页面，也可以通过搜索查找到某一本书。",
+      "context_after": "**包含功能模块：**\n评论书籍、评论影视、点赞评论、反对评论、举报评论、检索内容。",
+      "md_line": 473,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 11,
+      "image_file": "ht-xz.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/ht-xz.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "书籍",
+      "caption": "检索内容，浏览内容，参与话题，发表图文。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "话题/小组页面",
+      "context_before": "导航栏、书籍页面、搜索框、评论区。\n**页面使用简介：**\n在此页面下，用户可以对书籍进行评论，也可以对评论内容进行点赞、反对或者举报。",
+      "context_after": "**包含功能模块：**\n检索内容，浏览内容，参与话题，发表图文。",
+      "md_line": 493,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 12,
+      "image_file": "reglog.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/reglog.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "注册登录",
+      "caption": "注册、登录、找回密码。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "注册登录页面",
+      "context_before": "导航栏、书籍页面、搜索框、评论区。\n**页面使用简介：**\n用户可以在此页面参与讨论，发表图文或者检索内容。",
+      "context_after": "**包含功能模块：**\n注册、登录、找回密码。",
+      "md_line": 513,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 13,
+      "image_file": "admin.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/admin.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "后台",
+      "caption": "查看个人信息、修改个人信息、删除用户、修改书籍内容。",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "后台管理页面",
+      "context_before": "导航栏、注册登录组件。\n**页面使用简介：**\n游客可以使用注册登录页面注册为用户或者登录为用户。",
+      "context_after": "**包含功能模块：**\n查看个人信息、修改个人信息、删除用户、修改书籍内容。",
+      "md_line": 533,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "pic\\1.PNG",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\1.PNG",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "flowchart",
+      "figure_number": null,
+      "caption": "本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。",
+      "section": "工作流程",
+      "context_before": "运行界面：WEB\n```\n网站的总体工作图如下：",
+      "context_after": "本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。\n首先是项目启动，小组各人员进行成员分工，确定各自负责的板块，然后开始着手项目分析，确定本项目的各个模块的细节信息，然后开始项目前后端设计，设计如何进行编写源代码，然后进行项目全面开发，开始动工编写代码，前端和后端分别进行并定期交流以实现前后端更好的交互。在编写完成后对项目功能进行相应的测试，进行项目的改进，最后完成项目。具体可以参考",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\2.PNG",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\2.PNG",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "工作流程",
+      "context_before": "网站的总体工作图如下：\n本项目的工作流程主要分为五大方面，网站的总体工作流程图如下所示。\n首先是项目启动，小组各人员进行成员分工，确定各自负责的板块，然后开始着手项目分析，确定本项目的各个模块的细节信息，然后开始项目前后端设计，设计如何进行编写源代码，然后进行项目全面开发，开始动工编写代码，前端和后端分别进行并定期交流以实现前后端更好的交互。在编写完成后对项目功能进行相应的测试，进行项目的改进，最后完成项目。具体可以参考附件甘特图。",
+      "context_after": "本项目的初衷是为了搭建一个书籍影视的交流平台，在未来拓展方面，本项目可以增加其他类型的板块，例如书法、美术作品，增设不同类型的模块，不仅限于书籍和影视，从用户的兴趣入手，增添各类模块，让用户在这个平台上能够找到自己的所有爱好，每个爱好都能发表自己的观点。",
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\ModuleDesign.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\ModuleDesign.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "功能模块总体设计",
+      "context_before": "本项目的初衷是为了搭建一个书籍影视的交流平台，在未来拓展方面，本项目可以增加其他类型的板块，例如书法、美术作品，增设不同类型的模块，不仅限于书籍和影视，从用户的兴趣入手，增添各类模块，让用户在这个平台上能够找到自己的所有爱好，每个爱好都能发表自己的观点。\n另外的方面就是对平台的适应性进行调整，可以开发跨平台APP。让这款平台能够更好的符合用户的使用标准，不再局限于某一方面。然后再就是与其他的软件或者其他平台实现交互，让其他平台的用户也能够觉得轻松的在本平台上交流，而不再局限于单方面。",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\zhanghaoyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\zhanghaoyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "以下为用例表",
+      "section": "账号管理模块",
+      "context_before": "用例图如图所示",
+      "context_after": "以下为用例表\n|     编号     |                 101                  |   用例名称   | 注册 |",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\yingshishujiyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\yingshishujiyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "| 编号     | 201                                          | 用例名称 | 浏览内容     |",
+      "section": "影视书籍模块",
+      "context_before": "| 活动步骤 | 1. 管理员选择需要删除的用户并点击删除选项<br />2. 系统提示管理员将要删除该用户并得到用户的确认 <br />3. 系统提示删除用户成功并返回用户列表页面 |          |              |\n| 异常处理 | 系统异常，并给出相应的提示信息                               |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 201                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\huatiyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\huatiyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "| 编号     | 301                                          | 用例名称 | 浏览内容     |",
+      "section": "话题模块",
+      "context_before": "| 活动步骤 | 1.用户进入一条评论页面 <br />2.用户点击举报按钮<br />3.用户输入举报标题和举报内容<br />4.用户点击提交按钮<br />5.系统给出提交成功与否的提示 |          |              |\n| 异常处理 | 1.用户是游客，或者注册后未登录，系统提示注册/登录<br />2.举报格式不符合要求，系统进行相关提示。 |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 301                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "pic\\xiaozuyl.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic\\xiaozuyl.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "| 编号     | 401                                          | 用例名称 | 浏览内容     |",
+      "section": "小组模块",
+      "context_before": "| 活动步骤 | 1.用户输入文字，上传图片<br />2.用户点击发布按钮<br />3.系统返回参与是否成功的提示 |          |              |\n| 异常处理 | 1.用户未参与话题，系统提示参与话题。<br />2.用户发布的图文不合规范，系统提示修改 |          |              |\n用例图如图所示",
+      "context_after": "| 编号     | 401                                          | 用例名称 | 浏览内容     |\n| -------- | -------------------------------------------- | -------- | :----------- |",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "main.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/main.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "注册登录、浏览内容、检索内容。",
+      "section": "首页/热点内容浏览页面",
+      "context_before": "输出格式：以PC端网页方式输出\n这一部分仅为暂时的页面设计，可能会和后续的完成作品有些出入，最终的页面情况还请参考软件设计说明书。",
+      "context_after": "**包含功能模块：**\n注册登录、浏览内容、检索内容。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "shuji.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/shuji.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "检索内容，浏览内容。",
+      "section": "书籍、影视浏览页面",
+      "context_before": "透明导航栏，头版文章，热点推送内容。\n**页面使用简介：**\n进入网页最先看到的页面。用户和游客可以看到热点内容，可以进入书籍或者影视分类。",
+      "context_after": "**包含功能模块：**\n检索内容，浏览内容。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "shujiju.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/shujiju.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "评论书籍、评论影视、点赞评论、反对评论、举报评论、检索内容。",
+      "section": "具体书籍、影视页面",
+      "context_before": "导航栏，书籍内容。\n**页面使用简介：**\n在此页面，用户和游客可以看到书籍库总览，可以进入某一个书籍页面，也可以通过搜索查找到某一本书。",
+      "context_after": "**包含功能模块：**\n评论书籍、评论影视、点赞评论、反对评论、举报评论、检索内容。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "ht-xz.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/ht-xz.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "检索内容，浏览内容，参与话题，发表图文。",
+      "section": "话题/小组页面",
+      "context_before": "导航栏、书籍页面、搜索框、评论区。\n**页面使用简介：**\n在此页面下，用户可以对书籍进行评论，也可以对评论内容进行点赞、反对或者举报。",
+      "context_after": "**包含功能模块：**\n检索内容，浏览内容，参与话题，发表图文。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "reglog.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/reglog.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "注册、登录、找回密码。",
+      "section": "注册登录页面",
+      "context_before": "导航栏、书籍页面、搜索框、评论区。\n**页面使用简介：**\n用户可以在此页面参与讨论，发表图文或者检索内容。",
+      "context_after": "**包含功能模块：**\n注册、登录、找回密码。",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "admin.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo8_colasama_DouXinGuaXin/pic/admin.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "查看个人信息、修改个人信息、删除用户、修改书籍内容。",
+      "section": "后台管理页面",
+      "context_before": "导航栏、注册登录组件。\n**页面使用简介：**\n游客可以使用注册登录页面注册为用户或者登录为用户。",
+      "context_after": "**包含功能模块：**\n查看个人信息、修改个人信息、删除用户、修改书籍内容。",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

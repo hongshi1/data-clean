@@ -1,0 +1,104 @@
+{
+  "doc_name": "compiler_srs",
+  "check_date": "2026-07-29T13:30:12.901786",
+  "checker_version": "2.3",
+  "total_constraints": 30,
+  "total_tables": 5,
+  "total_issues": 6,
+  "by_type": {
+    "empty_table_placeholder": 2,
+    "logic_unsatisfiable": 1,
+    "cross_section_declaration_contradiction": 1,
+    "cross_section_promise_implementation_mismatch": 1,
+    "cross_section_policy_contradiction": 1
+  },
+  "by_severity": {
+    "HIGH": 5,
+    "MEDIUM": 1
+  },
+  "issues": [
+    {
+      "check_type": "empty_table_placeholder",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "description": "合格性规定表全部为占位符内容，未填写实际需求信息",
+      "table_type": "qualification",
+      "section": "4 合格性规定"
+    },
+    {
+      "check_type": "empty_table_placeholder",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "description": "需求追踪表全部为占位符内容，未填写实际追踪信息",
+      "table_type": "traceability",
+      "section": "5 需求可追踪性"
+    },
+    {
+      "check_type": "logic_unsatisfiable",
+      "severity": "HIGH",
+      "confidence": 1.0,
+      "description": "Z3检测到潜在逻辑矛盾: 逻辑矛盾：词法、语法、语义三个阶段的时间上限均为5秒，串行执行总和可达15秒，超过了总编译时间不超过10秒的约束。",
+      "z3_result": "CONFLICT",
+      "conflict_model": "[syntax_time = 5,\n semantic_time = 5,\n lexical_time = 1/2,\n time_limit = 10,\n total_compile_time = 21/2]",
+      "conflicts": [
+        "逻辑矛盾：词法、语法、语义三个阶段的时间上限均为5秒，串行执行总和可达15秒，超过了总编译时间不超过10秒的约束。"
+      ],
+      "explicit_constraints": 4,
+      "implicit_constraints": 1
+    },
+    {
+      "check_type": "cross_section_declaration_contradiction",
+      "severity": "HIGH",
+      "confidence": 0.85,
+      "description": "第3.1节声明软件仅在单一状态下运行，不支持维护模式等特殊状态，但紧接着在3.1.2和3.1.3节又详细定义了维护状态和调试状态的需求，存在直接逻辑矛盾。",
+      "locations": [
+        {
+          "section": "3.1 要求的状态和方式",
+          "text": "本编译器软件在单一状态下运行，不需要区分多种状态或方式...软件不支持维护模式、降级模式或紧急模式等特殊状态。"
+        },
+        {
+          "section": "3.1.2 维护状态",
+          "text": "软件在维护状态下运行，进行错误修复、功能改进或性能优化等维护活动。"
+        }
+      ],
+      "verification_reason": "启发式判断: 未匹配设计差异模式，保留为潜在矛盾",
+      "verification_source": "heuristic"
+    },
+    {
+      "check_type": "cross_section_promise_implementation_mismatch",
+      "severity": "HIGH",
+      "confidence": 0.85,
+      "description": "系统概述中承诺了6项主要功能（包括代码生成、代码优化、错误处理），但在详细需求章节3.2中仅定义了3项功能（词法、语法、语义分析），缺失了对代码生成、代码优化和错误处理模块的详细定义。",
+      "locations": [
+        {
+          "section": "1.2 系统概述",
+          "text": "主要功能包括词法分析、语法分析、语义分析、代码生成、代码优化和错误处理。"
+        },
+        {
+          "section": "3.2 软件能力需求",
+          "text": "3.2.1 词法分析模块... 3.2.2 语法分析模块... 3.2.3 语义分析模块... (后续无3.2.4等章节)"
+        }
+      ],
+      "verification_reason": "启发式判断: 未匹配设计差异模式，保留为潜在矛盾",
+      "verification_source": "heuristic"
+    },
+    {
+      "check_type": "cross_section_policy_contradiction",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "description": "第3.12节声明无特殊的设计和实现约束，但第3.9节明确规定了必须使用C/C++语言开发以及必须使用特定编译器（GCC、Clang或MSVC）构建，这两者互为矛盾。",
+      "locations": [
+        {
+          "section": "3.12 设计和实现约束",
+          "text": "本软件无特殊的设计和实现约束..."
+        },
+        {
+          "section": "3.9 软件环境需求",
+          "text": "需使用 C/C++或类似编程语言开发，编译器本身需要 GCC、Clang 或 MSVC等编译器进行构建。"
+        }
+      ],
+      "verification_reason": "启发式判断: 未匹配设计差异模式，保留为潜在矛盾",
+      "verification_source": "heuristic"
+    }
+  ]
+}

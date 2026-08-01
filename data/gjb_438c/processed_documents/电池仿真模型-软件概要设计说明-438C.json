@@ -1,0 +1,498 @@
+{
+  "doc_name": "电池仿真模型-软件概要设计说明-438C",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/电池仿真模型-软件概要设计说明-438C.pdf.md",
+  "md_lines": 174,
+  "md_chars": 12138,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "TH-BatterySim-电池仿真模型软件概要设计说明产品型号-BatterySim",
+  "section_count": 20,
+  "sections": [
+    {
+      "number": null,
+      "title": "TH-BatterySim-电池仿真模型软件概要设计说明产品型号-BatterySim",
+      "level": 1,
+      "line_start": 7,
+      "text_length": 25,
+      "text_preview": "共 XX 页\n\n太行项目组\n\n2026-05-06"
+    },
+    {
+      "number": null,
+      "title": "TH-BatterySim-电池仿真模型软件概要设计说明产品型号-BatterySim",
+      "level": 1,
+      "line_start": 15,
+      "text_length": 4918,
+      "text_preview": "编制： 日期：\n\n校对： 日期：\n\n审核： 日期：\n\n标审： 日期：\n\n审定： 日期：\n\n批准： 日期：\n\n文件更改记录表\n<table><tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>版本号</td><td rowspan=1 colspan=1>页次</td><td rowspan=1 colspan=1>标记</td><t"
+    },
+    {
+      "number": null,
+      "title": "目 录",
+      "level": 2,
+      "line_start": 32,
+      "text_length": 235,
+      "text_preview": "1 范围...  \n1.1 标识.. ..1  \n1.2 系统概述. ..1  \n1.3 文裆概述 ..1  \n2 引用文档. ..1  \n3 系统设计决策. ..2  \n4 系统体系结构设计. .2  \n4.1 电池仿真模型 CSCI. ..3  \n4.1.1 CSCI 概述. ..3  \n4.1.2 CSCI 部件设计. ..3  \n4.1.3 执行方案. ..3  \n4.1.4 接口设计. "
+    },
+    {
+      "number": "1",
+      "title": "1 范围",
+      "level": 2,
+      "line_start": 49,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 标识",
+      "level": 2,
+      "line_start": 51,
+      "text_length": 249,
+      "text_preview": "本文档适用于电池仿真模型软件（BatterySim），软件名称为电池仿真模型，缩写为 BatterySim，文档标识号为 TH/BatterySim-SDD-V1.0，版本号为 V1.0。该软件由太行项目组嵌入式软件研发部研制，用于嵌入式系统中的锂离子电池物理模型仿真。\n\na）文档标识号：TH/BatterySim-SDD-V1.0；\n\nb）标题：软件概要设计说明；\n\nc）软件名称：TH-Batt"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 系统概述",
+      "level": 2,
+      "line_start": 65,
+      "text_length": 249,
+      "text_preview": "本概要设计说明面向电池仿真模型软件的总体设计，描述软件在嵌入式电池管理系统（BMS）场景中的设计方案。软件基于Thevenin与Shepherd复合模型，以 25ms 固定步长离散化方式实现电池电压、SOC 和发热功率的实时计算。系统运行于ARM Linux（内核4.1.15，单核）平台，由外部调度器驱动。\n\n系统采用分层模块化结构，覆盖模型初始化、状态更新、电压计算、功率计算和步进控制等能力，便"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 文裆概述",
+      "level": 2,
+      "line_start": 71,
+      "text_length": 130,
+      "text_preview": "本文档给出电池仿真模型软件的概要设计，包括系统设计决策、体系结构设计、CSCI 划分、接口定义、需求可追踪性和相关注释内容。本文档为后续详细设计、编码实现、测试策划和技术评审提供依据。\n\n文档密级为内部，仅用于太行项目组、嵌入式软件开发人员和授权评审人员查阅。"
+    },
+    {
+      "number": "2",
+      "title": "2 引用文档",
+      "level": 2,
+      "line_start": 77,
+      "text_length": 844,
+      "text_preview": "本章列出概要设计说明编制所直接引用的标准、需求文档及相关支撑资料。\n\n表 2-1 引用文件\n<table><tr><td colspan=\"1\" rowspan=\"1\">序号</td><td colspan=\"1\" rowspan=\"1\">名称</td><td colspan=\"1\" rowspan=\"1\">版本</td><td colspan=\"1\" rowspan=\"1\">发布日期</td><"
+    },
+    {
+      "number": "3",
+      "title": "3 系统设计决策",
+      "level": 2,
+      "line_start": 84,
+      "text_length": 720,
+      "text_preview": "系统设计采用集中式状态管理与管线化计算相结合的总体方案：所有电池状态集中存储在统一的battery\\_state\\_t结构体中，步进函数按照'SOC更新→电压计算→功率计算'的固定顺序依次执行各计算步骤。\n\n针对嵌入式实时性和可靠性要求，系统采用以下关键设计决策：\n\n1. 静态内存分配策略：所有变量使用静态结构体存储，禁止动态内存分配，确保运行时内存行为确定。\n\n2. 固定步长离散化：采用 25m"
+    },
+    {
+      "number": "4",
+      "title": "4 系统体系结构设计",
+      "level": 2,
+      "line_start": 110,
+      "text_length": 79,
+      "text_preview": "电池仿真模型软件采用单 CSCI 体系结构，内部划分为模型管理部件和计\n\n算处理部件两个核心部件，通过统一的battery\\_state\\_t结构体共享数据。"
+    },
+    {
+      "number": "4.1",
+      "title": "4.1 电池仿真模型 CSCI",
+      "level": 2,
+      "line_start": 116,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1.1",
+      "title": "4.1.1 CSCI 概述",
+      "level": 2,
+      "line_start": 118,
+      "text_length": 121,
+      "text_preview": "电池仿真模型 CSCI 是系统的唯一软件配置项，负责完成电池模型的初始化、状态更新、电压计算和发热功率计算等全部功能。该 CSCI 封装了完整的Thevenin+Shepherd 复合电池模型，对外提供初始化接口、步进计算接口和状态查询接口。"
+    },
+    {
+      "number": "4.1.2",
+      "title": "4.1.2 CSCI 部件设计",
+      "level": 2,
+      "line_start": 122,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.1.2.1",
+      "title": "4.1.2.1 模型管理与计算部件",
+      "level": 2,
+      "line_start": 124,
+      "text_length": 213,
+      "text_preview": "模型管理与计算部件由模型初始化子部件、SOC 状态更新子部件、电压计算子部件、发热功率计算子部件和步进控制子部件组成。模型初始化子部件负责设定电池参数和初始状态；SOC 状态更新子部件负责根据输入电流更新已放电容量和 SOC；电压计算子部件负责基于复合模型计算端电压；发热功率计算子部件负责计算焦耳热损耗；步进控制子部件负责按固定顺序调度各计算步骤。所有子部件共享 battery\\_state\\_t"
+    },
+    {
+      "number": "4.1.3",
+      "title": "4.1.3 执行方案",
+      "level": 2,
+      "line_start": 128,
+      "text_length": 413,
+      "text_preview": "电池仿真模型 CSCI 按 '初始化→循环步进' 的方式执行。初始化阶段由battery\\_init() 完成参数设定和状态重置。运行阶段由外部调度器每 25ms 调用一次 battery\\_step()，函数内部依次执行：SOC 状态更新（ $\\mathrm { i t ( k + 1 ) } { = } \\mathrm { i t ( k ) } { + } \\mathrm { I \\_ o "
+    },
+    {
+      "number": "4.1.4",
+      "title": "4.1.4 接口设计",
+      "level": 2,
+      "line_start": 132,
+      "text_length": 160,
+      "text_preview": "该 CSCI 对外提供三个层次的接口：初始化接口（battery\\_init）、步进计算接口（battery\\_step）和状态查询接口（battery\\_get\\_voltage、battery\\_get\\_soc、battery\\_get\\_ploss）。所有接口通过 battery\\_model.h 头文件声明。"
+    },
+    {
+      "number": "4.1.4.1",
+      "title": "4.1.4.1 接口标识和接口图",
+      "level": 2,
+      "line_start": 136,
+      "text_length": 163,
+      "text_preview": "接口标识以 'IF-BSIM-\\*' 规则统一命名，包括初始化接口 IF-BSIM-INIT、步进计算接口 IF-BSIM-STEP、电压查询接口 IF-BSIM-GET-V、SOC 查询接口IF-BSIM-GET-SOC、功率查询接口 IF-BSIM-GET-P。接口图以函数调用方式描述 CSCI 与外部调度器的依赖关系。"
+    },
+    {
+      "number": "4.1.4.1.1",
+      "title": "4.1.4.1.1 电池仿真模型接口",
+      "level": 2,
+      "line_start": 140,
+      "text_length": 428,
+      "text_preview": "初始化接口 IF-BSIM-INIT：函数原型 void battery\\_init(void)，无输入参数，设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻\n\n¹, A=0.312V）和初始状态（SOC=1.0, it=0）。\n\n步进计算接口 IF-BSIM-STEP：函数原型 void battery\\_step(doub"
+    },
+    {
+      "number": "5",
+      "title": "5 需求可追踪性",
+      "level": 2,
+      "line_start": 150,
+      "text_length": 1916,
+      "text_preview": "本章建立电池仿真模型软件需求与概要设计单元之间的双向追踪关系，支持从需求到设计、从设计回溯需求的核查分析。\n\na)从本SDD所标识的每个软件单元，到分配给它的CSCI需求的可追踪性。\n\nb)从每个CSCI需求，到被分配这些需求的软件单元的可追踪性。\n\n表5-1 需求的正向追踪性\n<table><tr><td rowspan=1 colspan=2>软件需求</td><td rowspan=1 co"
+    },
+    {
+      "number": "6",
+      "title": "6 注释",
+      "level": 2,
+      "line_start": 164,
+      "text_length": 847,
+      "text_preview": "术语说明：CSCI 指计算机软件配置项；SOC 指电池荷电状态；Thevenin 模型指基于戴维南等效电路的电池模型；Shepherd 模型指包含极化和指数衰减项的经验电池模型。\n\n电压计算公式： $\\mathbf { V } = \\mathrm { E 0 \\mathrm { ~ - ~ } I \\ o u t } \\ \\times \\ \\mathrm { R \\mathrm { - } M }"
+    }
+  ],
+  "constraint_count": 9,
+  "constraints": [
+    {
+      "value": 800.0,
+      "unit": "V",
+      "operator": "=",
+      "sentence": "IT：函数原型 void battery\\_init(void)，无输入参数，设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 50.0,
+      "unit": "A",
+      "operator": "=",
+      "sentence": "void battery\\_init(void)，无输入参数，设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 0.012,
+      "unit": "Ω",
+      "operator": "=",
+      "sentence": "tery\\_init(void)，无输入参数，设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 0.004,
+      "unit": "A",
+      "operator": "=",
+      "sentence": "(void)，无输入参数，设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 10.354,
+      "unit": "A",
+      "operator": "=",
+      "sentence": "设定默认电池参数（E0=800V, Q=50Ah, R=0.012Ω, M=0.004Ah⁻¹, B=10.354Ah⁻",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 0.312,
+      "unit": "V",
+      "operator": "=",
+      "sentence": "¹, A=0.312V）和初始状态（SOC=1.0, it=0）。",
+      "section": "4.1.4.1.1 电池仿真模型接口",
+      "section_number": "4.1.4.1.1",
+      "section_title": "4.1.4.1.1 电池仿真模型接口",
+      "line_start": 140
+    },
+    {
+      "value": 800.0,
+      "unit": "V",
+      "operator": "=",
+      "sentence": "其中 E0=800V（开路电压常数），R=0.012Ω（内阻）， $\\mathrm { M } { = } 0 . 0",
+      "section": "6 注释",
+      "section_number": "6",
+      "section_title": "6 注释",
+      "line_start": 164
+    },
+    {
+      "value": 0.012,
+      "unit": "Ω",
+      "operator": "=",
+      "sentence": "其中 E0=800V（开路电压常数），R=0.012Ω（内阻）， $\\mathrm { M } { = } 0 . 0 0 4 \\mathrm { A h",
+      "section": "6 注释",
+      "section_number": "6",
+      "section_title": "6 注释",
+      "line_start": 164
+    },
+    {
+      "value": 0.312,
+      "unit": "V",
+      "operator": "=",
+      "sentence": "1 0 . 3 5 4 \\mathrm { A h } ^ { - 1 }$ （指数区时间常数），A=0.312V（指数区幅值），it 为已放电容量（Ah）。",
+      "section": "6 注释",
+      "section_number": "6",
+      "section_title": "6 注释",
+      "line_start": 164
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 4,
+  "tables": [
+    {
+      "index": 0,
+      "type": "modification",
+      "format": "html",
+      "headers": [
+        "序号",
+        "版本号",
+        "页次",
+        "标记",
+        "处数",
+        "更改文件号",
+        "更改者",
+        "日期"
+      ],
+      "row_count": 20,
+      "data_row_count": 19,
+      "is_empty": true,
+      "section": "TH-BatterySim-电池仿真模型软件概要设计说明产品型号-BatterySim",
+      "raw_html": "<tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>版本号</td><td rowspan=1 colspan=1>页次</td><td rowspan=1 colspan=1>标记</td><td rowspan=1 colspan=1>处数</td><td rowspan=1 colspan=1>更改文件号</td><td rowspan=1 colspan=1>更改者</td><td rowspan=1 colspan=1>日期</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></"
+    },
+    {
+      "index": 1,
+      "type": "reference",
+      "format": "html",
+      "headers": [
+        "序号",
+        "名称",
+        "版本",
+        "发布日期",
+        "来源"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "2 引用文档",
+      "raw_html": "<tr><td colspan=\"1\" rowspan=\"1\">序号</td><td colspan=\"1\" rowspan=\"1\">名称</td><td colspan=\"1\" rowspan=\"1\">版本</td><td colspan=\"1\" rowspan=\"1\">发布日期</td><td colspan=\"1\" rowspan=\"1\">来源</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1</td><td colspan=\"1\" rowspan=\"1\">《GJB 438C 软件文档编制规</td><td colspan=\"1\" rowspan=\"1\">438C</td><td colspan=\"1\" rowspan=\"1\">2024-01-01</td><td colspan=\"1\" rowspan=\"1\">相关标准库</td></tr><tr><td colspan=\"1\" rowspan=\"1\"></td><td colspan=\"1\" rowspan=\"1\">范》</td><td colspan=\"1\" rowspan=\"1\"></t"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "软件需求",
+        "软件单元"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "5 需求可追踪性",
+      "raw_html": "<tr><td rowspan=1 colspan=2>软件需求</td><td rowspan=1 colspan=2>软件单元</td></tr><tr><td rowspan=1 colspan=1>名称/标识</td><td rowspan=1 colspan=1>软件需求规格说明的章节号</td><td rowspan=1 colspan=1>名称/标识</td><td rowspan=1 colspan=1>本文档的章节号</td></tr><tr><td rowspan=4 colspan=1>电池模型初始化功能</td><td rowspan=4 colspan=1>3.2.1</td><td rowspan=1 colspan=1>模型初始化子部件</td><td rowspan=1 colspan=1>4.1</td></tr><tr><td rowspan=1 colspan=1>SOC 状态更新子部件</td><td rowspan=1 colspan=1>4.1</td></tr><tr><td rowspan=1 colspan=1>电压计算子部件</td>"
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "软件单元",
+        "软件需求"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "5 需求可追踪性",
+      "raw_html": "<tr><td rowspan=1 colspan=2>软件单元</td><td rowspan=1 colspan=2>软件需求</td></tr><tr><td rowspan=1 colspan=1>名称/标识</td><td rowspan=1 colspan=1>名称/标识</td><td rowspan=1 colspan=1>名称/标识</td><td rowspan=1 colspan=1>本文档的章节号</td></tr><tr><td rowspan=1 colspan=1>模型初始化子部件</td><td rowspan=1 colspan=1>4.1</td><td rowspan=1 colspan=1>电池模型初始化功能</td><td rowspan=1 colspan=1>3.2.1</td></tr><tr><td rowspan=1 colspan=1>SOC 状态更新子部件</td><td rowspan=1 colspan=1>4.1</td><td rowspan=1 colspan=1>SOC 状态更新功能</td><td rowspan=1"
+    }
+  ],
+  "image_count": 5,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "c303c3cc41a37dabda0fda208e4dd12e46c88a1d0d30282215cf831b46c33504.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/c303c3cc41a37dabda0fda208e4dd12e46c88a1d0d30282215cf831b46c33504.jpg",
+      "image_exists": true,
+      "image_size_kb": 126,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 2,
+      "image_file": "b1e3880473381e37131fac1b77dbb509650c065aaac0f0eb778021fb61678a36.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/b1e3880473381e37131fac1b77dbb509650c065aaac0f0eb778021fb61678a36.jpg",
+      "image_exists": true,
+      "image_size_kb": 31,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 3,
+      "image_file": "ebb85e9a4ef4c5cb8cec8ec9cc698b0e630bc71a5a7e992809d6a602674e5c17.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/ebb85e9a4ef4c5cb8cec8ec9cc698b0e630bc71a5a7e992809d6a602674e5c17.jpg",
+      "image_exists": true,
+      "image_size_kb": 28,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 4,
+      "image_file": "8dd9e127fe0a1e134f3e9209d3d9f3c63149749ca60e7998540f99d22e20661e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/8dd9e127fe0a1e134f3e9209d3d9f3c63149749ca60e7998540f99d22e20661e.jpg",
+      "image_exists": true,
+      "image_size_kb": 68,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 5,
+      "image_file": "e6d2c5eb3fd5236cebe55c91fa31baab0e03f767e933a4ad9f535e56719c3c58.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/e6d2c5eb3fd5236cebe55c91fa31baab0e03f767e933a4ad9f535e56719c3c58.jpg",
+      "image_exists": true,
+      "image_size_kb": 74,
+      "alt_text": null,
+      "caption": null,
+      "figure_number": null,
+      "image_type": "orphaned_figure",
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "md_line": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "c303c3cc41a37dabda0fda208e4dd12e46c88a1d0d30282215cf831b46c33504.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/c303c3cc41a37dabda0fda208e4dd12e46c88a1d0d30282215cf831b46c33504.jpg",
+      "image_exists": true,
+      "image_size_kb": 126,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "b1e3880473381e37131fac1b77dbb509650c065aaac0f0eb778021fb61678a36.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/b1e3880473381e37131fac1b77dbb509650c065aaac0f0eb778021fb61678a36.jpg",
+      "image_exists": true,
+      "image_size_kb": 31,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "ebb85e9a4ef4c5cb8cec8ec9cc698b0e630bc71a5a7e992809d6a602674e5c17.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/ebb85e9a4ef4c5cb8cec8ec9cc698b0e630bc71a5a7e992809d6a602674e5c17.jpg",
+      "image_exists": true,
+      "image_size_kb": 28,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "8dd9e127fe0a1e134f3e9209d3d9f3c63149749ca60e7998540f99d22e20661e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/8dd9e127fe0a1e134f3e9209d3d9f3c63149749ca60e7998540f99d22e20661e.jpg",
+      "image_exists": true,
+      "image_size_kb": 68,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "e6d2c5eb3fd5236cebe55c91fa31baab0e03f767e933a4ad9f535e56719c3c58.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/more_gjb/mineru_parsed/电池仿真模型-软件概要设计说明-438C.pdf/auto/images/e6d2c5eb3fd5236cebe55c91fa31baab0e03f767e933a4ad9f535e56719c3c58.jpg",
+      "image_exists": true,
+      "image_size_kb": 74,
+      "image_type": "orphaned_figure",
+      "figure_number": null,
+      "caption": null,
+      "section": null,
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

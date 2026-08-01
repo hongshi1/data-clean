@@ -1,0 +1,530 @@
+{
+  "doc_name": "MewTrain火车购票系统需求规格说明书",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/MewTrain火车购票系统需求规格说明书.md",
+  "md_lines": 578,
+  "md_chars": 11066,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "MewTrain火车购票系统需求规格说明书",
+  "section_count": 39,
+  "sections": [
+    {
+      "number": null,
+      "title": "MewTrain火车购票系统需求规格说明书",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 5,
+      "text_preview": "[TOC]"
+    },
+    {
+      "number": null,
+      "title": "**一、引言**",
+      "level": 2,
+      "line_start": 5,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**1.1 目的**",
+      "level": 3,
+      "line_start": 7,
+      "text_length": 158,
+      "text_preview": "本文档是MewTrain火车购票系统的需求规格说明书，旨在对该软件系统的功能、性能、约束条件和接口等方面进行详细的描述和规范。\n\n本文档适用于软件开发团队、项目管理人员、软件测试人员和其他相关利益相关者，旨在确保MewTrain火车购票系统的需求得到准确、清晰和一致的定义和表达，从而为系统开发和实施提供指导和依据。"
+    },
+    {
+      "number": null,
+      "title": "**1.2 范围**",
+      "level": 3,
+      "line_start": 13,
+      "text_length": 102,
+      "text_preview": "该火车购票系统被命名为MewTrain。该系统将提供火车票查询、火车票购买、用户管理、铁路管理功能。由于MewTrain火车购票系统为课程作业，故该系统的开发不以盈利为目的，不会进行长期部署和正式的运营。"
+    },
+    {
+      "number": null,
+      "title": "**1.3 定义、缩写和简略语**",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 1370,
+      "text_preview": "| 缩写     | 全称                                | 含义                                       |\n| -------- | ----------------------------------- | ------------------------------------------ |\n| SRS      | S"
+    },
+    {
+      "number": null,
+      "title": "**1.4 引用文件**",
+      "level": 3,
+      "line_start": 36,
+      "text_length": 150,
+      "text_preview": "[1] GB/T 9385-2008 计算机软件需求规格说明规范\n\n[2] Q/CR 9140 -2018 铁路客运服务信息系统设计规范\n\n[3] 中华人民共和国电子商务法，全国人民代表大会常务委员会公告 [2018]\n\n[4] 吕云翔. 软件工程实用教程[M]. 北京：清华大学出版社, 2015."
+    },
+    {
+      "number": null,
+      "title": "**1.5综述**",
+      "level": 3,
+      "line_start": 46,
+      "text_length": 304,
+      "text_preview": "本文档包括以下章节：引言、总体描述、结构化自然语言需求、模型化需求共四章。\n\n第一章引言，介绍了MewTrain火车购票系统需求规格说明书的目的，该系统的范围，该文档使用的定义、简写和缩略语，引用文件，对整篇文档进行了综述。\n\n第二章总体描述，对MewTrain火车购票系统进行了产品描述，介绍了产品功能，用户特点和产品部署和运营时的约束，并对该系统地假设和依赖关系进行了分析。\n\n第三章结构化自然语"
+    },
+    {
+      "number": null,
+      "title": "**二、总体描述**",
+      "level": 2,
+      "line_start": 58,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**2.1 产品描述**",
+      "level": 3,
+      "line_start": 60,
+      "text_length": 186,
+      "text_preview": "MewTrain火车购票系统是一个完全自我包含的软件系统，旨在为用户提供火车票查询、火车票购买、用户管理和铁路管理功能。该系统将通过直观地用户界面和稳定的系统接口，为用户提供便捷和高效的服务体验。\n\nMewTrain火车购票系统将作为一个独立的软件产品，不与其他系统集成。但作为一个处理现实实际情况的系统，该系统需要从铁路部门处获得实际的车次和票价信息，来为用户提供服务。"
+    },
+    {
+      "number": null,
+      "title": "**2.1.1 系统接口**",
+      "level": 4,
+      "line_start": 66,
+      "text_length": 673,
+      "text_preview": "用户接口：该接口负责管理用户注册、登录和注销，以及处理用户与系统的交互。它应该提供一个易于使用的界面，使用户可以方便地浏览和搜索车票，选择和购买车票，以及查看订单历史记录等。\n\n支付接口：该接口负责处理用户的支付请求，并与第三方支付平台进行交互。它应该确保所有支付信息都是安全和私密的，并支持常见的支付方式，例如信用卡、银行转账和电子钱包。\n\n车票查询接口：该接口应该提供一个能够搜索和显示可用车票信"
+    },
+    {
+      "number": null,
+      "title": "**2.1.3 软件接口**",
+      "level": 4,
+      "line_start": 82,
+      "text_length": 407,
+      "text_preview": "1. 名称：MySQL数据库 \n\n记：DB \n\n规格说明编号：MewTrain-SRS-001 \n\n版本号：MySQL 8.0.23 \n\n来源：Oracle Corporation\n\n目的：用于存储和管理MewTrain购票系统的所有数据。\n\n\n\n2. 名称：支付宝支付接口 \n\n记：Alipay \n\n规格说明编号：MewTrain-SRS-003\n\n版本号：1.0 \n\n来源：阿里巴巴集团\n\n目的："
+    },
+    {
+      "number": null,
+      "title": "**2.1.4 操作**",
+      "level": 4,
+      "line_start": 138,
+      "text_length": 224,
+      "text_preview": "1. 用户操作模式：用户可以使用系统的不同操作模式，例如选择座位模式、购票模式、退票模式等等。\n\n2. 交互操作的周期和无人值守操作的周期：系统应该明确用户和系统之间交互操作的周期和无人值守操作的周期，确保系统能够在需要时及时响应用户的操作。\n\n3. 数据处理支持功能：系统应该支持数据处理功能，例如对订单数据、座位信息等数据进行处理和管理。\n\n4.  备份和恢复操作：系统应该具备备份和恢复功能，确"
+    },
+    {
+      "number": null,
+      "title": "**2.1.5 现场适应性要求**",
+      "level": 4,
+      "line_start": 148,
+      "text_length": 113,
+      "text_preview": "在部署该系统时，操作系统需要为Windows或Linux，内存至少为2GB，运行环境需要Python 3.9及以上。该系统作为一个Web开发项目，部署在服务器上，可以通过浏览器向互联网中各种设备提供服务，具有良好的现场适应性。"
+    },
+    {
+      "number": null,
+      "title": "**2.3用户特点**",
+      "level": 3,
+      "line_start": 152,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**2.3.1 目标用户群体**",
+      "level": 4,
+      "line_start": 154,
+      "text_length": 133,
+      "text_preview": "火车购票系统的目标用户群体为所有需要搭乘火车旅行的人，包括旅游者、商务出行者、探亲访友者等。系统的使用者主要分为两类：一是购票用户，需要使用系统进行火车票购买、支付、退改签等相关业务；二是管理用户，包括系统管理员、站务员等，需要使用系统进行票务管理、数据监控等操作。"
+    },
+    {
+      "number": null,
+      "title": "**2.3.2 用户属性**",
+      "level": 4,
+      "line_start": 158,
+      "text_length": 193,
+      "text_preview": "1. 用户基本素质：购票用户和管理用户都需要具备基本的计算机应用知识和网络使用技能。\n\n2. 用户特征：购票用户属于广大消费者群体，具有购买火车票的需求；管理用户则具有相关的管理经验和技能，需要对票务系统进行有效的管理和维护。\n\n3. 用户习惯：由于系统的操作流程相对稳定，用户在使用系统时一般会按照规定的步骤进行操作。购票用户可能存在较为急迫的购票需求，需要快速、便捷地完成购票流程。"
+    },
+    {
+      "number": null,
+      "title": "**2.3.3用户需求**",
+      "level": 4,
+      "line_start": 166,
+      "text_length": 196,
+      "text_preview": "1. 用户需要一款稳定、安全、可靠的火车购票系统，以便于快速便捷地完成购票流程。\n\n2. 用户需要多种支付方式，并且支付过程需要安全可靠。\n\n3. 用户需要系统提供车票预订、购票、退票、改签等功能，并且这些功能需要易于理解和操作。\n\n4. 用户需要查询车次时刻、座位信息、票价等相关信息，以便于做出正确的购票决策。\n\n5. 用户需要通过系统获取相关的信息提示和提醒，以确保购票流程的顺利完成。"
+    },
+    {
+      "number": null,
+      "title": "**2.4约束**",
+      "level": 3,
+      "line_start": 178,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**2.4.1 法规政策**",
+      "level": 4,
+      "line_start": 180,
+      "text_length": 130,
+      "text_preview": "本系统需要遵守国家和地方政府的法规政策，符合中国相关的数据保护法规和隐私保护要求，如《中华人民共和国网络安全法》、《中华人民共和国个人信息保护法》等。同时，本系统所处理的数据应当遵守中国境内的相关法律法规，如《中华人民共和国刑法》、《中华人民共和国民法典》等。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.2 硬件局限**",
+      "level": 4,
+      "line_start": 184,
+      "text_length": 28,
+      "text_preview": "本系统受服务器带宽限制，对于高并发请求存在处理能力上限。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.3 与其他应用的接口**",
+      "level": 4,
+      "line_start": 188,
+      "text_length": 40,
+      "text_preview": "本系统需要与Mysql数据库系统进行数据交换和信息共享，需要遵守接口规范和标准。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.4 并行操作**",
+      "level": 4,
+      "line_start": 192,
+      "text_length": 32,
+      "text_preview": "本系统需要支持多用户同时操作，需要考虑并发控制和数据一致性问题。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.5 审核和控制功能**",
+      "level": 4,
+      "line_start": 196,
+      "text_length": 50,
+      "text_preview": "本系统需要具备审计和监控功能，能够对用户和系统进行安全控制和管理，例如防止SQL注入和跨站脚本攻击。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.6 接口协议**",
+      "level": 4,
+      "line_start": 200,
+      "text_length": 25,
+      "text_preview": "前后端交互需要使用RESTful API接口协议。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.7 可靠性需求**",
+      "level": 4,
+      "line_start": 204,
+      "text_length": 31,
+      "text_preview": "本系统需要保证高可靠性和可用性，避免系统崩溃或数据丢失等问题。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.8 应用的关键性**",
+      "level": 4,
+      "line_start": 208,
+      "text_length": 42,
+      "text_preview": "本系统是对客户购票和运营管理的重要支持，需要考虑其关键性和紧急性，确保系统稳定运行。"
+    },
+    {
+      "number": null,
+      "title": "**2.4.9 安全和保密考虑**",
+      "level": 4,
+      "line_start": 212,
+      "text_length": 51,
+      "text_preview": "本系统需要具备安全和保密保护措施，保障用户和系统数据的机密性、完整性和可用性，例如数据加密和访问控制。"
+    },
+    {
+      "number": null,
+      "title": "**2.5 假设和依赖关系**",
+      "level": 3,
+      "line_start": 216,
+      "text_length": 355,
+      "text_preview": "1.  系统运行的硬件平台包括服务器和客户端设备，且客户端设备必须具有Web浏览器软件。\n\n2. 网络通信基础设施已经建立，且具有足够的带宽和可靠性，以保证系统的正常运行和数据传输的稳定性。\n\n3. 系统的用户能够提供有效的身份验证信息，包括用户名和密码等。\n\n4. 系统需要依赖第三方支付平台提供支付服务，需要确保支付平台的安全性和稳定性，以保证系统正常运行。\n\n5. 系统需要遵守中国相关的法律法"
+    },
+    {
+      "number": null,
+      "title": "**二 结构化自然语言需求**",
+      "level": 2,
+      "line_start": 232,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**2.1：用户故事**",
+      "level": 3,
+      "line_start": 234,
+      "text_length": 699,
+      "text_preview": "**作为用户，我应该可以通过日期与城市来查询我应该做的火车班次与其余票情况，并能够通过线上支付来抢购车票**\n\n作为用户，我应该可以选择特定的日期与始终城市，以便查询是否有相应的列车与其起止时间\n\n作为用户，我应该可以选择某一条列车的班次，以便查询该列车的详细信息（列车班号、始发站、中间站、终点站、时刻表、车厢设施等）\n\n作为用户，我应该可以查看列车的余票，以便选择是否购票或抢票\n\n作为用户，我应"
+    },
+    {
+      "number": null,
+      "title": "**2.2：交互流程**",
+      "level": 3,
+      "line_start": 270,
+      "text_length": 2836,
+      "text_preview": "**作为用户，我应该可以通过日期与城市来查询我应该做的火车班次与其余票情况，并能够通过线上支付来抢购车票**\n\n基本流程{\n\n（用户）1.用户点击“日期”。\n\n​\t（用户）2.用户选择特定日期。\n\n​\t（用户）3.用户点击“起始地”与“终点地”。\n\n​\t（用户）4.用户输入起止地点。\n\n​\t（系统）5.当用户选择完日期与起止地点后，MewTrain应在数据库中筛选该日期经过起止地点的车次，并显示该"
+    },
+    {
+      "number": null,
+      "title": "**2.3：非功能需求(可测试)**",
+      "level": 3,
+      "line_start": 506,
+      "text_length": 470,
+      "text_preview": "非功能需求：\n\n{\n\n1. 支持文本显示的语言国际化。\n\n2. 系统需要易于使用，用户可以轻松地进行查询、订票等操作。易用性可以通过用户体验测试、用户调查等方式进行测试。\n\n3. 系统应该易于维护和升级，以确保其长期可靠性和可用性。例如，系统应该能够进行日志记录和错误报告，以便开发人员可以快速定位和修复问题。\n\n4. 可靠性要求，对输入有提示，数据有检查，防止数据异常。\n\n5. 安全性要求，严格权"
+    },
+    {
+      "number": null,
+      "title": "**三 、模型化需求**",
+      "level": 2,
+      "line_start": 530,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**3.1:用例图**",
+      "level": 3,
+      "line_start": 532,
+      "text_length": 92,
+      "text_preview": "![img](https://docimg2.docs.qq.com/image/AgAAET6QeFnU4P2AADdCEpftJ6LxTIpn.jpeg?w=1382&h=745)"
+    },
+    {
+      "number": null,
+      "title": "**3.2:系统顺序图**",
+      "level": 3,
+      "line_start": 536,
+      "text_length": 286,
+      "text_preview": "![img](https://docimg7.docs.qq.com/image/AgAAET6QeFk_wbBPDd9LaLbb1idAmfOS.jpeg?w=1103&h=753)\n\n\n\n\n\n![img](https://docimg3.docs.qq.com/image/AgAAET6QeFnfln0oJlBEwIpPY-AqpnSm.jpeg?w=1105&h=753)\n\n\n\n![img]"
+    },
+    {
+      "number": null,
+      "title": "**3.3：概念类图**",
+      "level": 3,
+      "line_start": 554,
+      "text_length": 92,
+      "text_preview": "![img](https://docimg6.docs.qq.com/image/AgAAET6QeFkq87YOBXJCoa9gwWe9KGgr.jpeg?w=1105&h=696)"
+    },
+    {
+      "number": null,
+      "title": "**3.4：操作合约及不变式**",
+      "level": 2,
+      "line_start": 558,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "**3.4.1 操作合约**",
+      "level": 4,
+      "line_start": 560,
+      "text_length": 415,
+      "text_preview": "1. 用户注册：用户在注册时必须提供有效的个人信息，并且系统会对这些信息进行验证。如果注册成功，则会在系统中创建一个新的用户账户。\n2. 用户账户设置：用户可以在系统中开通多个账户，并且可以通过充值功能来完成后续购票功能。\n3. 管理员设置：系统管理员可以管理所有用户信息以及用户账户信息。\n4. 铁路系统员：铁路系统员可以在系统中添加、修改和删除火车铁路运行车次。一条完整运行车次的信息应该包括该车"
+    },
+    {
+      "number": null,
+      "title": "**3.4.2 不变式**",
+      "level": 4,
+      "line_start": 570,
+      "text_length": 333,
+      "text_preview": "1. 用户必须提供有效的个人信息才能注册成功，并且系统需要对这些信息进行验证。\n2. 用户账户中的余额必须大于等于购票所需的票价，才能进行购票操作。\n3. 系统管理员必须对所有用户信息和用户账户信息进行管理，并保证这些信息的准确性和安全性。\n4. 铁路系统员必须确保添加、修改和删除火车铁路运行车次的操作是合法的，并且不会破坏系统中已有的其他信息。\n5. 用户查询火车车次时，系统必须返回所有能满足用"
+    }
+  ],
+  "constraint_count": 2,
+  "constraints": [
+    {
+      "value": 1.5,
+      "unit": "秒",
+      "operator": "≤",
+      "sentence": "6. 响应时间要求：在95％的情况下，一般时段响应时间不超过1.5秒，高峰时段不超过4秒。在非高峰时间根据起始地点和日期等特定条件进行搜索，可以在2秒内得到搜索结果。",
+      "section": "**2.3：非功能需求(可测试)**",
+      "section_number": null,
+      "section_title": "**2.3：非功能需求(可测试)**",
+      "line_start": 506
+    },
+    {
+      "value": 4.0,
+      "unit": "秒",
+      "operator": "≤",
+      "sentence": "6. 响应时间要求：在95％的情况下，一般时段响应时间不超过1.5秒，高峰时段不超过4秒。在非高峰时间根据起始地点和日期等特定条件进行搜索，可以在2秒内得到搜索结果。",
+      "section": "**2.3：非功能需求(可测试)**",
+      "section_number": null,
+      "section_title": "**2.3：非功能需求(可测试)**",
+      "line_start": 506
+    }
+  ],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 1,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "缩写",
+        "全称",
+        "含义"
+      ],
+      "row_count": 15,
+      "data_row_count": 14,
+      "is_empty": false,
+      "section": "**1.3 定义、缩写和简略语**",
+      "raw_html": null
+    }
+  ],
+  "image_count": 5,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "AgAAET6QeFnU4P2AADdCEpftJ6LxTIpn.jpeg?w=1382&h=745",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg2.docs.qq.com/image/AgAAET6QeFnU4P2AADdCEpftJ6LxTIpn.jpeg?w=1382&h=745",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "img",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "**3.1:用例图**",
+      "context_before": "8. 前端页面需要简洁美观，功能操作简单易懂\n}",
+      "context_after": null,
+      "md_line": 534,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "AgAAET6QeFk_wbBPDd9LaLbb1idAmfOS.jpeg?w=1103&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg7.docs.qq.com/image/AgAAET6QeFk_wbBPDd9LaLbb1idAmfOS.jpeg?w=1103&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "img",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 538,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 3,
+      "image_file": "AgAAET6QeFnfln0oJlBEwIpPY-AqpnSm.jpeg?w=1105&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg3.docs.qq.com/image/AgAAET6QeFnfln0oJlBEwIpPY-AqpnSm.jpeg?w=1105&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "img",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 544,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 4,
+      "image_file": "AgAAET6QeFlwBRTa3k5I9K46c6uONgGP.jpeg?w=1333&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg5.docs.qq.com/image/AgAAET6QeFlwBRTa3k5I9K46c6uONgGP.jpeg?w=1333&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "img",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 548,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_index": 5,
+      "image_file": "AgAAET6QeFkq87YOBXJCoa9gwWe9KGgr.jpeg?w=1105&h=696",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg6.docs.qq.com/image/AgAAET6QeFkq87YOBXJCoa9gwWe9KGgr.jpeg?w=1105&h=696",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "img",
+      "caption": null,
+      "figure_number": null,
+      "image_type": "unknown",
+      "section": "**3.3：概念类图**",
+      "context_before": null,
+      "context_after": null,
+      "md_line": 556,
+      "has_caption": false,
+      "has_context": false
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "AgAAET6QeFnU4P2AADdCEpftJ6LxTIpn.jpeg?w=1382&h=745",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg2.docs.qq.com/image/AgAAET6QeFnU4P2AADdCEpftJ6LxTIpn.jpeg?w=1382&h=745",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "**3.1:用例图**",
+      "context_before": "8. 前端页面需要简洁美观，功能操作简单易懂\n}",
+      "context_after": null,
+      "has_caption": false,
+      "has_context": true
+    },
+    {
+      "image_file": "AgAAET6QeFk_wbBPDd9LaLbb1idAmfOS.jpeg?w=1103&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg7.docs.qq.com/image/AgAAET6QeFk_wbBPDd9LaLbb1idAmfOS.jpeg?w=1103&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "AgAAET6QeFnfln0oJlBEwIpPY-AqpnSm.jpeg?w=1105&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg3.docs.qq.com/image/AgAAET6QeFnfln0oJlBEwIpPY-AqpnSm.jpeg?w=1105&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "AgAAET6QeFlwBRTa3k5I9K46c6uONgGP.jpeg?w=1333&h=753",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg5.docs.qq.com/image/AgAAET6QeFlwBRTa3k5I9K46c6uONgGP.jpeg?w=1333&h=753",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "**3.2:系统顺序图**",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    },
+    {
+      "image_file": "AgAAET6QeFkq87YOBXJCoa9gwWe9KGgr.jpeg?w=1105&h=696",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/buaa/repo7_ningshi01_MewTrain/https:/docimg6.docs.qq.com/image/AgAAET6QeFkq87YOBXJCoa9gwWe9KGgr.jpeg?w=1105&h=696",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "unknown",
+      "figure_number": null,
+      "caption": null,
+      "section": "**3.3：概念类图**",
+      "context_before": null,
+      "context_after": null,
+      "has_caption": false,
+      "has_context": false
+    }
+  ]
+}

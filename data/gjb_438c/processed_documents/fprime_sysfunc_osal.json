@@ -1,0 +1,112 @@
+{
+  "doc_name": "fprime_sysfunc_osal",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_osal.md",
+  "md_lines": 67,
+  "md_chars": 4121,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "embedded",
+  "title": "Operating System Abstraction Layer (OSAL)",
+  "section_count": 11,
+  "sections": [
+    {
+      "number": null,
+      "title": "Operating System Abstraction Layer (OSAL)",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 264,
+      "text_preview": "- [OSAL SDD](https://github.com/nasa/fprime/blob/devel/Os/docs/sdd.md)\n- [Generic Services SDD](https://github.com/nasa/fprime/blob/devel/Os/Generic/docs/sdd.md)\n- [How-To: Implement an OSAL](https://"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 10,
+      "text_length": 578,
+      "text_preview": "The Operating System Abstraction Layer (OSAL) provides a portable interface to operating system services, enabling F Prime applications to run on multiple operating systems without source code modific"
+    },
+    {
+      "number": null,
+      "title": "Concurrency",
+      "level": 3,
+      "line_start": 14,
+      "text_length": 729,
+      "text_preview": "The OSAL provides the following concurrency primitives:\n\n- **Tasks** — Thread creation, joining, and lifecycle management. Tasks support start/stop callbacks and can be delayed for a specified duratio"
+    },
+    {
+      "number": null,
+      "title": "File System",
+      "level": 3,
+      "line_start": 23,
+      "text_length": 349,
+      "text_preview": "The OSAL provides file and directory access:\n\n- **Files** — Open, read, write, seek, flush, and CRC computation on individual files.\n- **Directories** — Open, iterate, and create directory entries.\n- "
+    },
+    {
+      "number": null,
+      "title": "System Resources",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 227,
+      "text_preview": "The OSAL provides access to system-level information:\n\n- **Raw Time** — Access to the system clock for measuring time intervals.\n- **CPU** — CPU count and per-CPU usage statistics.\n- **Memory** — Syst"
+    },
+    {
+      "number": null,
+      "title": "Console",
+      "level": 3,
+      "line_start": 39,
+      "text_length": 152,
+      "text_preview": "The console service provides a mechanism for writing messages to the system console output, used primarily for text event logging and diagnostic output."
+    },
+    {
+      "number": null,
+      "title": "Generic Services",
+      "level": 3,
+      "line_start": 43,
+      "text_length": 269,
+      "text_preview": "In addition to the platform-specific core services, the OSAL provides generic services that are implemented independently of the underlying OS:\n\n- **Priority Queue** — A heap-based priority queue impl"
+    },
+    {
+      "number": null,
+      "title": "Implementation Architecture",
+      "level": 3,
+      "line_start": 49,
+      "text_length": 667,
+      "text_preview": "The OSAL uses a delegate pattern where each service has three layers:\n\n1. **Interface** — A pure-virtual base class defining the service contract\n2. **Wrapper** — A final concrete class that applicati"
+    },
+    {
+      "number": null,
+      "title": "Error Handling",
+      "level": 3,
+      "line_start": 59,
+      "text_length": 226,
+      "text_preview": "All OSAL operations return typed status enumerations specific to each service. Platform backends translate native error codes into these status values so that application code never needs to interpret"
+    },
+    {
+      "number": null,
+      "title": "Available Backends",
+      "level": 3,
+      "line_start": 63,
+      "text_length": 399,
+      "text_preview": "- **Posix** — Full implementation using POSIX APIs (pthreads, file I/O, clock_gettime). Default for Linux and macOS.\n- **Stub** — No-op implementations that return NOT_SUPPORTED. Used as a starting po"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

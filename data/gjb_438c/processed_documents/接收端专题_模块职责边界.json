@@ -1,0 +1,360 @@
+{
+  "doc_name": "接收端专题_模块职责边界",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/radar/接收端专题/接收端专题_模块职责边界.md",
+  "md_lines": 427,
+  "md_chars": 4813,
+  "language": "zh",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "web",
+  "title": "2.3 接收端的任务边界",
+  "section_count": 42,
+  "sections": [
+    {
+      "number": "2.3",
+      "title": "2.3 接收端的任务边界",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 253,
+      "text_preview": "本节用于冻结接收端模块的任务边界，明确其在整个雷达后端数据链路中的职责范围。\n边界定义的目标不是追求“功能尽量多”，而是保证：\n\n* 主数据路径职责清晰\n* 与控制面、信号处理、存储分析等模块解耦\n* 后续实现、联调、验收均有明确依据\n* 开发调试能力与实时主链路不互相污染\n\n本节中“接收端”特指：\n\n> 从服务器网络入口接收雷达原始 UDP 数据报文，完成协议解析、合法性校验、归属判定、最小必要"
+    },
+    {
+      "number": "2.3.1",
+      "title": "2.3.1 边界定义原则",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 14,
+      "text_preview": "接收端的边界按以下原则冻结："
+    },
+    {
+      "number": null,
+      "title": "原则一：只负责数据面入口，不负责后续算法处理",
+      "level": 3,
+      "line_start": 21,
+      "text_length": 24,
+      "text_preview": "接收端是数据面入口模块，不承担信号处理算法职责。"
+    },
+    {
+      "number": null,
+      "title": "原则二：只消费控制面结果，不参与控制面决策",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 34,
+      "text_preview": "接收端可以读取波位安排和相关配置，但不负责生成、优化或修改波位安排。"
+    },
+    {
+      "number": null,
+      "title": "原则三：只做最小必要重组，不做过度业务解释",
+      "level": 3,
+      "line_start": 29,
+      "text_length": 56,
+      "text_preview": "接收端负责把 UDP 分包提升为可供下游消费的 CPI 级原始数据单元，但不负责目标级、显示级、算法级语义解释。"
+    },
+    {
+      "number": null,
+      "title": "原则四：开发调试能力必须旁路化",
+      "level": 3,
+      "line_start": 33,
+      "text_length": 41,
+      "text_preview": "原始数据落盘、抓包、调试记录等能力必须以旁路方式实现，不能反向主导实时接收主链路。"
+    },
+    {
+      "number": null,
+      "title": "原则五：主链路优先于调试链路",
+      "level": 3,
+      "line_start": 37,
+      "text_length": 60,
+      "text_preview": "当主链路实时性与调试/落盘能力发生冲突时，优先保证主链路稳定运行；调试链路允许降级、采样或丢弃，但必须可观测。\n\n---"
+    },
+    {
+      "number": "2.3.2",
+      "title": "2.3.2 接收端应该做的事",
+      "level": 2,
+      "line_start": 43,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 承担网络入口收包职责",
+      "level": 3,
+      "line_start": 45,
+      "text_length": 116,
+      "text_preview": "接收端应负责从指定网口、指定端口持续接收雷达 UDP 数据报文，并将其送入用户态处理流水线。\n\n其职责包括：\n\n* 网络接口接收\n* UDP payload 提取\n* 必要的本机收包时间戳采集\n* 将报文移交应用层解析逻辑\n\n---"
+    },
+    {
+      "number": null,
+      "title": "2. 承担协议解析职责",
+      "level": 3,
+      "line_start": 58,
+      "text_length": 116,
+      "text_preview": "接收端应负责解析协议字段，并把字节流还原为结构化协议对象。\n\n其职责包括：\n\n* 包头解析\n* CPI 计数解析\n* PRT 计数解析\n* 通道计数解析\n* 包计数解析\n* IQ 点数解析\n* 包尾解析\n* 数据区起止定位\n\n---"
+    },
+    {
+      "number": null,
+      "title": "3. 承担协议合法性校验职责",
+      "level": 3,
+      "line_start": 75,
+      "text_length": 131,
+      "text_preview": "接收端应负责在单包层面完成协议合法性校验，过滤非法、矛盾或越界报文，防止其进入后续重组流程。\n\n其职责包括：\n\n* 报文长度校验\n* 包头/包尾合法性校验\n* 字段范围校验\n* 字段组合一致性校验\n* padding 规则校验\n* 尾包出现位置规则校验\n\n---"
+    },
+    {
+      "number": null,
+      "title": "4. 承担波位/CPI/PRT 归属判定职责",
+      "level": 3,
+      "line_start": 90,
+      "text_length": 183,
+      "text_preview": "接收端应根据当前波位安排和协议字段，判断每个合法报文属于哪个波位、哪个 CPI、哪个 PRT、哪个通道、哪个分片。\n\n其职责包括：\n\n* 建立 `(WaveSlot, CPI, PRT, Channel, PacketIndex)` 归属关系\n* 判断包是否落入当前有效接收窗口\n* 区分正常包、过期包、未来包、越界包\n* 将归属结果交给重组上下文管理逻辑\n\n---"
+    },
+    {
+      "number": null,
+      "title": "5. 承担最小必要重组职责",
+      "level": 3,
+      "line_start": 103,
+      "text_length": 192,
+      "text_preview": "接收端应负责把 UDP 分包重组为内部可管理的 PRT / Channel / Packet 结果，并最终汇聚为面向下游消费的 CPI 级原始数据单元，同时对下游隐藏底层分包细节。\n\n其职责包括：\n\n* 按重组键建立缓存\n* 拼接通道级数据片段\n* 在内部形成 PRT 级聚合结果，并继续汇聚为 CPI 级对外输出单元\n* 明确每个 CPI 级输出单元的有效数据范围与元数据\n\n---"
+    },
+    {
+      "number": null,
+      "title": "6. 承担边界推进与完整性判定职责",
+      "level": 3,
+      "line_start": 116,
+      "text_length": 178,
+      "text_preview": "接收端应负责判定内部 PRT 结果是否完成、当前 CPI 是否结束、当前波位是否收尾，以及对外 CPI 级输出单元在异常条件下如何截止或回收上下文。\n\n其职责包括：\n\n* PRT 完成判定\n* CPI 完整性判定\n* CPI 切换判定\n* 波位结束判定\n* 尾包辅助确认\n* 缺包/错序/重复/跳变等异常识别\n* 未完成上下文的过期回收与异常收尾\n\n---"
+    },
+    {
+      "number": null,
+      "title": "7. 承担结构化输出职责",
+      "level": 3,
+      "line_start": 132,
+      "text_length": 153,
+      "text_preview": "接收端应向信号处理消费者输出稳定、清晰、低耦合的 CPI 级原始数据对象，而不是继续向下游传递网包或碎片协议细节。\n\n其职责包括：\n\n* 输出 CPI 级原始 IQ 数据本体\n* 输出波位/CPI 标识及必要的 PRT 聚合上下文\n* 输出完整性状态\n* 输出异常状态\n* 输出必要的接收时间信息\n\n---"
+    },
+    {
+      "number": null,
+      "title": "8. 承担统计、日志与事件输出职责",
+      "level": 3,
+      "line_start": 146,
+      "text_length": 150,
+      "text_preview": "接收端应负责产生可观测信息，支撑联调、压测、异常定位与验收。\n\n其职责包括：\n\n* 收包统计\n* 丢包/缺包统计\n* 非法包统计\n* 完整/不完整 CPI 输出统计\n* 波位/CPI/PRT 异常统计\n* 关键错误日志与事件上报\n\n但这里的职责仅限于“产生信息”，不延伸为复杂运维平台建设。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "9. 承担开发调试阶段的原始数据旁路落盘职责",
+      "level": 3,
+      "line_start": 163,
+      "text_length": 68,
+      "text_preview": "在开发调试阶段，接收端应支持将雷达原始数据以旁路方式写入硬盘，作为算法分析、问题复盘和离线验证的原始资料。\n\n这一职责的边界应明确如下："
+    },
+    {
+      "number": "9.1",
+      "title": "9.1 接收端应提供原始数据旁路输出能力",
+      "level": 4,
+      "line_start": 169,
+      "text_length": 37,
+      "text_preview": "接收端应能够在不改变主接收语义的前提下，将原始雷达数据副本导出到本地磁盘。"
+    },
+    {
+      "number": "9.2",
+      "title": "9.2 落盘对象应保持“原始性”",
+      "level": 4,
+      "line_start": 173,
+      "text_length": 111,
+      "text_preview": "用于算法分析的旁路数据，应优先保存为：\n\n* 原始 IQ 数据\n* 必要的波位/CPI/PRT/通道元数据\n* 完整性与异常标记\n* 必要的本机接收时间信息\n\n其目标是服务算法分析与离线回放，而不是生成显示结果或处理结果。"
+    },
+    {
+      "number": "9.3",
+      "title": "9.3 落盘能力必须旁路化、异步化",
+      "level": 4,
+      "line_start": 184,
+      "text_length": 45,
+      "text_preview": "原始数据落盘不得与主接收链路串行耦合，不得因磁盘抖动、写入拥塞、文件切换等行为阻塞主链路。"
+    },
+    {
+      "number": "9.4",
+      "title": "9.4 落盘能力必须可开关、可限流、可降级",
+      "level": 4,
+      "line_start": 188,
+      "text_length": 98,
+      "text_preview": "开发调试阶段可以开启落盘；关闭时不得残留主链路额外负担。\n在磁盘吞吐不足或空间受限时，允许对落盘能力进行：\n\n* 降采样\n* 限流\n* 丢弃旁路副本\n* 文件滚动切换\n\n但必须记录相关统计与告警。"
+    },
+    {
+      "number": "9.5",
+      "title": "9.5 旁路落盘不改变主链路数据判定",
+      "level": 4,
+      "line_start": 200,
+      "text_length": 45,
+      "text_preview": "无论旁路落盘是否成功，都不得改变主链路对接收、校验、重组、提交、丢弃的核心语义。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "10. 承担配置消费职责",
+      "level": 3,
+      "line_start": 206,
+      "text_length": 96,
+      "text_preview": "接收端可以消费以下输入配置：\n\n* 当前波位安排\n* 接收参数配置\n* 调试开关\n* 原始数据落盘开关\n* 日志级别与统计开关\n\n但其职责仅限于读取和执行，不包含配置生成与策略决策。\n\n---"
+    },
+    {
+      "number": "2.3.3",
+      "title": "2.3.3 接收端不应该做的事",
+      "level": 2,
+      "line_start": 220,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. 不负责信号处理算法",
+      "level": 3,
+      "line_start": 222,
+      "text_length": 112,
+      "text_preview": "接收端不负责任何信号处理算法实现，包括但不限于：\n\n* 脉冲压缩\n* FFT / MTD\n* 波束形成\n* 杂波抑制\n* CFAR\n* 参数估计\n* 目标提取与聚类\n\n这些均属于后续信号处理消费者或其下游模块职责。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "2. 不负责控制面调度决策",
+      "level": 3,
+      "line_start": 238,
+      "text_length": 81,
+      "text_preview": "接收端不负责：\n\n* 生成波位安排\n* 决定下一时刻发什么波位\n* 修改波位时序\n* 决定控制计划是否切换\n\n接收端只能使用控制面已冻结、已下发的结果。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "3. 不负责显控与态势业务语义",
+      "level": 3,
+      "line_start": 251,
+      "text_length": 59,
+      "text_preview": "接收端不负责：\n\n* 目标/航迹语义解释\n* 态势显示对象生成\n* 显控界面数据加工\n* UI 相关数据服务\n\n---"
+    },
+    {
+      "number": null,
+      "title": "4. 不负责长期归档与存储平台建设",
+      "level": 3,
+      "line_start": 262,
+      "text_length": 132,
+      "text_preview": "即使开发调试阶段需要原始数据旁路落盘，接收端也不负责建设完整的长期数据归档系统，不负责：\n\n* 长周期历史归档体系\n* 检索索引平台\n* 数据资产管理平台\n* 复杂压缩归档策略\n* 离线分析产品化平台\n\n接收端最多承担“开发调试阶段的本地旁路写盘”职责。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "5. 不负责离线算法分析本身",
+      "level": 3,
+      "line_start": 276,
+      "text_length": 95,
+      "text_preview": "接收端可以输出原始数据供分析使用，但不负责：\n\n* 离线算法运行\n* 数据标注\n* 算法效果评估\n* 分析报告生成\n\n也就是说，接收端负责“提供原始资料”，不负责“完成分析工作”。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "6. 不负责链路可靠化补偿与猜测性修复",
+      "level": 3,
+      "line_start": 289,
+      "text_length": 115,
+      "text_preview": "接收端不应做以下行为：\n\n* 自动重传机制设计\n* 猜测性补包\n* 对缺失数据做插值补全\n* 将错误计数强行改写为看似连续\n* 伪造尾包或伪造完整性状态\n\n接收端可以标记异常、丢弃异常、降级提交，但不能伪造“正确数据”。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "7. 不负责让调试落盘反向支配主链路",
+      "level": 3,
+      "line_start": 303,
+      "text_length": 119,
+      "text_preview": "即使启用原始数据写盘，接收端也不应：\n\n* 因磁盘慢而阻塞实时接收\n* 因文件系统异常而暂停主链路提交\n* 因调试录制开启而改变主链路判定逻辑\n* 因追求“全部录全”而牺牲实时处理稳定性\n\n主链路与旁路落盘之间必须保持主次分明。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "8. 不负责复杂资源调度与系统级编排",
+      "level": 3,
+      "line_start": 316,
+      "text_length": 87,
+      "text_preview": "接收端不负责：\n\n* 全系统 CPU/GPU 任务调度\n* 多模块生命周期编排\n* 全局资源竞争仲裁\n* 跨节点作业编排\n\n这些属于更上层的编排或系统管理模块职责。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "9. 不负责替代专用抓包工具",
+      "level": 3,
+      "line_start": 329,
+      "text_length": 136,
+      "text_preview": "接收端的旁路落盘能力主要面向“算法分析原始资料”与“应用层问题复盘”，不等同于完整网络抓包系统。\n若需要：\n\n* 完整保存二层/三层/四层网络报文\n* 保留网卡层行为细节\n* 排查驱动/NIC/内核问题\n\n应使用专门抓包方案，而不是让接收端承载所有网络诊断职责。\n\n---"
+    },
+    {
+      "number": "2.3.4",
+      "title": "2.3.4 开发调试阶段原始数据旁路落盘的专项边界说明",
+      "level": 2,
+      "line_start": 342,
+      "text_length": 51,
+      "text_preview": "鉴于当前阶段存在“向硬盘保存雷达原始数据，留作算法分析原始资料”的明确需求，现对该能力做专项边界冻结。"
+    },
+    {
+      "number": null,
+      "title": "一、该能力属于接收端的扩展职责，但不是主职责",
+      "level": 3,
+      "line_start": 346,
+      "text_length": 68,
+      "text_preview": "它是开发调试阶段的重要能力，但不改变接收端的主职责仍然是：\n\n* 接收\n* 校验\n* 归属\n* 重组\n* 输出给信号处理消费者\n\n---"
+    },
+    {
+      "number": null,
+      "title": "二、该能力必须以旁路方式接入",
+      "level": 3,
+      "line_start": 358,
+      "text_length": 53,
+      "text_preview": "其接入方式必须是：\n\n* 从主链路复制副本\n* 异步写盘\n* 与主链路解耦\n* 失败不反压主链路\n\n---"
+    },
+    {
+      "number": null,
+      "title": "三、该能力的默认服务对象是“算法分析资料”",
+      "level": 3,
+      "line_start": 369,
+      "text_length": 50,
+      "text_preview": "因此，优先保存的应是**原始雷达数据及必要元数据**，而不是显示结果、算法结果或派生特征。\n\n---"
+    },
+    {
+      "number": null,
+      "title": "四、该能力属于开发调试配置项",
+      "level": 3,
+      "line_start": 375,
+      "text_length": 67,
+      "text_preview": "应支持：\n\n* 显式开启/关闭\n* 输出目录配置\n* 文件滚动策略配置\n* 限流/采样策略配置\n* 空间不足时的降级策略配置\n\n---"
+    },
+    {
+      "number": null,
+      "title": "五、该能力不改变接收端与下游的主接口契约",
+      "level": 3,
+      "line_start": 387,
+      "text_length": 80,
+      "text_preview": "也就是说，即便启用或关闭原始数据旁路落盘：\n\n* 接收端对信号处理消费者的输出结构不应变化\n* 主链路完整性判定规则不应变化\n* 主状态机行为不应变化\n\n---"
+    },
+    {
+      "number": "2.3.5",
+      "title": "2.3.5 本节结论",
+      "level": 2,
+      "line_start": 397,
+      "text_length": 13,
+      "text_preview": "接收端的任务边界应冻结为："
+    },
+    {
+      "number": null,
+      "title": "接收端负责",
+      "level": 3,
+      "line_start": 401,
+      "text_length": 108,
+      "text_preview": "* 网络入口收包\n* 协议解析\n* 合法性校验\n* 波位/CPI/PRT 归属判定\n* 最小必要重组\n* 边界推进与异常判定\n* CPI 级结构化数据输出\n* 统计、日志、事件输出\n* 开发调试阶段的原始数据旁路落盘"
+    },
+    {
+      "number": null,
+      "title": "接收端不负责",
+      "level": 3,
+      "line_start": 413,
+      "text_length": 187,
+      "text_preview": "* 信号处理算法\n* 控制面调度决策\n* 显控业务语义\n* 长期归档平台\n* 离线算法分析\n* 猜测性修复\n* 让调试链路支配主链路\n* 系统级资源编排\n* 替代专用抓包工具\n\n归根结底，接收端应被定义为：\n\n> 一个以实时主链路为核心、以协议正确性和边界确定性为约束、以对外输出 CPI 级原始数据单元为目标、并在开发调试阶段提供可控原始数据旁路落盘能力的数据面入口模块。"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}

@@ -1,0 +1,153 @@
+{
+  "doc_name": "fprime_sysfunc_communication",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_docs/fprime_sysfunc_communication.md",
+  "md_lines": 85,
+  "md_chars": 7100,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "aerospace",
+  "title": "Communication Stack Functionality",
+  "section_count": 12,
+  "sections": [
+    {
+      "number": null,
+      "title": "Communication Stack Functionality",
+      "level": 1,
+      "line_start": 2,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "References",
+      "level": 2,
+      "line_start": 4,
+      "text_length": 1403,
+      "text_preview": "- [F Prime Protocol SDD](https://github.com/nasa/fprime/blob/devel/Svc/FprimeProtocol/docs/sdd.md)\n- [F Prime Framer SDD](https://github.com/nasa/fprime/blob/devel/Svc/FprimeFramer/docs/sdd.md)\n- [F P"
+    },
+    {
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "line_start": 21,
+      "text_length": 553,
+      "text_preview": "The communication stack provides the data path between the flight software and external systems (ground station, other processors, or other deployments). It handles outgoing data (downlink) by queuing"
+    },
+    {
+      "number": null,
+      "title": "Communication Stack Topology",
+      "level": 3,
+      "line_start": 25,
+      "text_length": 155,
+      "text_preview": "The following diagram shows the F Prime communication stack using the ComFprime subtopology:\n\n![ComFprime Communication Stack](img/com-fprime-topology.png)"
+    },
+    {
+      "number": null,
+      "title": "Downlink Path",
+      "level": 3,
+      "line_start": 31,
+      "text_length": 1403,
+      "text_preview": "Outgoing data flows through the following stages:\n\n1. **Queuing** — [ComQueue](https://github.com/nasa/fprime/blob/devel/Svc/ComQueue/docs/sdd.md) receives data from multiple sources (telemetry, event"
+    },
+    {
+      "number": null,
+      "title": "Uplink Path",
+      "level": 3,
+      "line_start": 41,
+      "text_length": 866,
+      "text_preview": "Incoming data flows through the following stages:\n\n1. **Accumulation** — [FrameAccumulator](https://github.com/nasa/fprime/blob/devel/Svc/FrameAccumulator/docs/sdd.md) receives a stream of byte buffer"
+    },
+    {
+      "number": null,
+      "title": "F Prime Protocol",
+      "level": 3,
+      "line_start": 51,
+      "text_length": 499,
+      "text_preview": "The F Prime protocol is a minimal framing protocol consisting of four fields:\n\n1. Start word — identifies the beginning of a frame\n2. Packet size — the size of the enclosed payload\n3. Payload data — t"
+    },
+    {
+      "number": null,
+      "title": "Retry Mechanism",
+      "level": 3,
+      "line_start": 62,
+      "text_length": 354,
+      "text_preview": "[ComRetry](https://github.com/nasa/fprime/blob/devel/Svc/ComRetry/docs/sdd.md) sits in the downlink path before the communication adapter and resends failed transmissions up to a configurable maximum "
+    },
+    {
+      "number": null,
+      "title": "Communication Logging",
+      "level": 3,
+      "line_start": 66,
+      "text_length": 266,
+      "text_preview": "[ComLogger](https://github.com/nasa/fprime/blob/devel/Svc/ComLogger/README.md) records all outgoing data to files on the file system, providing a record of transmitted data for debugging and analysis."
+    },
+    {
+      "number": null,
+      "title": "Splitting and Aggregation",
+      "level": 3,
+      "line_start": 70,
+      "text_length": 514,
+      "text_preview": "- [CmdSplitter](https://github.com/nasa/fprime/blob/devel/Svc/CmdSplitter/docs/sdd.md) — Duplicates incoming command buffers to multiple outputs, enabling redundant command processing paths.\n- [ComSpl"
+    },
+    {
+      "number": null,
+      "title": "CCSDS Protocol Support",
+      "level": 3,
+      "line_start": 76,
+      "text_length": 350,
+      "text_preview": "For missions requiring standards-compliant space communication, the F Prime and CCSDS protocol components can be swapped in the communication stack. CCSDS components provide Space Packet framing, TM/T"
+    },
+    {
+      "number": null,
+      "title": "Off Nominal",
+      "level": 3,
+      "line_start": 80,
+      "text_length": 434,
+      "text_preview": "- Frame validation failures (bad CRC, malformed frames) cause the frame to be dropped with a warning event.\n- Queue overflow causes data to be dropped according to the queue's configured overflow beha"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 0,
+  "tables": [],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "com-fprime-topology.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_docs/img/com-fprime-topology.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "ComFprime Communication Stack",
+      "caption": "Outgoing data flows through the following stages:",
+      "figure_number": null,
+      "image_type": "flowchart",
+      "section": "Communication Stack Topology",
+      "context_before": "The communication stack provides the data path between the flight software and external systems (ground station, other processors, or other deployments). It handles outgoing data (downlink) by queuing, framing, and transmitting packets, and incoming data (uplink) by accumulating byte streams, extrac",
+      "context_after": "Outgoing data flows through the following stages:",
+      "md_line": 29,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "com-fprime-topology.png",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_docs/img/com-fprime-topology.png",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "flowchart",
+      "figure_number": null,
+      "caption": "Outgoing data flows through the following stages:",
+      "section": "Communication Stack Topology",
+      "context_before": "The communication stack provides the data path between the flight software and external systems (ground station, other processors, or other deployments). It handles outgoing data (downlink) by queuing, framing, and transmitting packets, and incoming data (uplink) by accumulating byte streams, extrac",
+      "context_after": "Outgoing data flows through the following stages:",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

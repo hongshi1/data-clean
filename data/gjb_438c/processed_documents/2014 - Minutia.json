@@ -1,0 +1,622 @@
+{
+  "doc_name": "2014 - Minutia",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2014 - Minutia.pdf/auto/2014 - Minutia.pdf.md",
+  "md_lines": 378,
+  "md_chars": 21045,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Minutia Deviation Tool: Software Requirements Specification (SRS) (Version 1.1)",
+  "section_count": 61,
+  "sections": [
+    {
+      "number": null,
+      "title": "Minutia Deviation Tool: Software Requirements Specification (SRS) (Version 1.1)",
+      "level": 1,
+      "line_start": 18,
+      "text_length": 1202,
+      "text_preview": "June 12, 2014\n\nDOJ Office of Justice Programs National Institute of Justice Sensor, Surveillance, and Biometric Technologies (SSBT) Center of Excellence (CoE)\n\n![](images/79be59f3f71c687f3ed99dd4dfcd4"
+    },
+    {
+      "number": null,
+      "title": "TABLE OF CONTENTS",
+      "level": 2,
+      "line_start": 40,
+      "text_length": 1597,
+      "text_preview": "LIST OF FIGURES iii   \nLIST OF TABLES iv   \nCHANGE HISTORY   \n1.0 SCOPE   \n1.1 Identification   \n1.2 System Overview   \n1.3 Document Overview   \n1.3.1 Thresholds and Objectives   \n2.0 REFERENCED DOCUM"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 87,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "ii",
+      "level": 2,
+      "line_start": 89,
+      "text_length": 297,
+      "text_preview": "This document is a research report submitted to the U.S. Department of Justice. This report has not been published by the Department. Opinions or points of view expressed are those of the author(s) an"
+    },
+    {
+      "number": null,
+      "title": "LIST OF FIGURES",
+      "level": 2,
+      "line_start": 93,
+      "text_length": 45,
+      "text_preview": "Figure 1: MDT External Interface Diagram ...5"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 97,
+      "text_length": 302,
+      "text_preview": "iii\n\nThis document is a research report submitted to the U.S. Department of Justice. This report has not been published by the Department. Opinions or points of view expressed are those of the author("
+    },
+    {
+      "number": null,
+      "title": "LIST OF TABLES",
+      "level": 2,
+      "line_start": 103,
+      "text_length": 93,
+      "text_preview": "Table 1: Listing of Requirements and Sources .. .10   \nTable 2: Acronyms and Abbreviations 11"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 108,
+      "text_length": 745,
+      "text_preview": "iv\n\nThis document is a research report submitted to the U.S. Department of Justice. This report has not been published by the Department. Opinions or points of view expressed are those of the author(s"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 117,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.0",
+      "title": "1.0 SCOPE",
+      "level": 2,
+      "line_start": 119,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "1.1",
+      "title": "1.1 Identification",
+      "level": 2,
+      "line_start": 121,
+      "text_length": 48,
+      "text_preview": "Minutia Deviation Tool (MDT), version 1.0 (beta)"
+    },
+    {
+      "number": "1.2",
+      "title": "1.2 System Overview",
+      "level": 2,
+      "line_start": 125,
+      "text_length": 1983,
+      "text_preview": "The MDT is a prototype Computer Software Configuration Item (CSCI) (i.e., software utility) that shall aid a user in designating equivalent minutia pairs across two fingerprint biometric images and ca"
+    },
+    {
+      "number": "1.3",
+      "title": "1.3 Document Overview",
+      "level": 2,
+      "line_start": 137,
+      "text_length": 154,
+      "text_preview": "The Software Requirements Specification (SRS) document specifies the required functionality, capabilities, computer interfaces, and usability for the MDT."
+    },
+    {
+      "number": "1.3.1",
+      "title": "1.3.1 Thresholds and Objectives",
+      "level": 2,
+      "line_start": 141,
+      "text_length": 184,
+      "text_preview": "Each requirement shall have a threshold value or an objective value. Requirements labeled [T] indicate Threshold requirements. Requirements labeled [O] indicate Objective requirements."
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 145,
+      "text_length": 405,
+      "text_preview": "For requirements, \"threshold\" shall mean the minimum acceptable value that, in the user's judgment, is necessary to satisfy the need.\n\nThe “objective\" value is the value desired by the user, and the v"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 151,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "2.0",
+      "title": "2.0 REFERENCED DOCUMENTS",
+      "level": 2,
+      "line_start": 153,
+      "text_length": 723,
+      "text_preview": "• Department of Defense (DOD), DI-IPSC-81433A Software Requirements Specification Data Item Description (SRS DID) (December 15, 1999)\n\n• National Institute of Standards and Technology (NIST), ANSI/NIS"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 165,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.0",
+      "title": "3.0 REQUIREMENTS",
+      "level": 2,
+      "line_start": 167,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Required States and Modes",
+      "level": 2,
+      "line_start": 169,
+      "text_length": 36,
+      "text_preview": "No states or modes are required. [T]"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 CSCI Capability Requirements",
+      "level": 2,
+      "line_start": 173,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.2.1",
+      "title": "3.2.1 Display Fingerprint Image and Minutiae [T]",
+      "level": 2,
+      "line_start": 175,
+      "text_length": 430,
+      "text_preview": "a. The MDT shall open a pair of Latent Friction Ridge Features Search (LFFS) EBTS files (i.e., \\*.1ffs file format). [T]\n\nb. The MDT shall display the fingerprint image. [T]\n\nc. The MDT shall overlay "
+    },
+    {
+      "number": "3.2.2",
+      "title": "3.2.2 Calculate Minutiae Deviations [T]",
+      "level": 2,
+      "line_start": 185,
+      "text_length": 440,
+      "text_preview": "a. The MDT shall calculate the spatial deviations between a pair of minutiae selected on the two fingerprints. [T]\n\ni. The MDT shall allow the user to select a baseline minutia using the GUI and mouse"
+    },
+    {
+      "number": "3.2.3",
+      "title": "3.2.3 Filter Minutia Deviations [O]",
+      "level": 2,
+      "line_start": 197,
+      "text_length": 747,
+      "text_preview": "a. The MDT may allow a user to filter minutiae. [O]\n\na. The MDT may graphically mark minutia pairs as they are selected for deviation calculations and maintain a running graphical display of selected "
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 211,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3",
+      "title": "3.3 CSCI External Interface Requirements",
+      "level": 2,
+      "line_start": 213,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.3.1",
+      "title": "3.3.1 Interface Identification and Diagrams",
+      "level": 2,
+      "line_start": 215,
+      "text_length": 333,
+      "text_preview": "a. The MDT shall provide a GUI. [T]\n\nb. The MDT shall allow a user to manually open files from the local computer. [T]\n\nc. The MDT shall allow a user to manually save a results file to the local compu"
+    },
+    {
+      "number": "3.3.2",
+      "title": "3.3.2 EBTS Files",
+      "level": 2,
+      "line_start": 226,
+      "text_length": 843,
+      "text_preview": "a. The MDT shall open a pair of LFFS EBTS files (i.e., \\*.1ffs file format) for display within the GUI. [T]\n\nb. The MDT shall open an LFFS file that contains a valid Type-9 and Type-13 record, in acco"
+    },
+    {
+      "number": "3.3.3",
+      "title": "3.3.3 Deviation Log File",
+      "level": 2,
+      "line_start": 238,
+      "text_length": 294,
+      "text_preview": "a. The MDT shall allow a user to save a text file containing a log of minutiae pairs with details and the resulting deviation calculations from the current user session. The text file will be in a tab"
+    },
+    {
+      "number": "3.3.4",
+      "title": "3.3.4 Session File",
+      "level": 2,
+      "line_start": 242,
+      "text_length": 460,
+      "text_preview": "a. The MDT shall allow a user to save a session file containing all data from the LFFS files, Deviation Log file, and any actions taken within the session by the user that resulted in a change state. "
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 248,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.4",
+      "title": "3.4 CSCI Internal Interface Requirements",
+      "level": 2,
+      "line_start": 250,
+      "text_length": 47,
+      "text_preview": "No internal interface requirements for the MDT."
+    },
+    {
+      "number": "3.5",
+      "title": "3.5 CSCI Internal Data Requirements",
+      "level": 2,
+      "line_start": 254,
+      "text_length": 42,
+      "text_preview": "No internal data requirements for the MDT."
+    },
+    {
+      "number": "3.6",
+      "title": "3.6 Adaptation Requirements",
+      "level": 2,
+      "line_start": 258,
+      "text_length": 39,
+      "text_preview": "No adaptation requirements for the MDT."
+    },
+    {
+      "number": "3.7",
+      "title": "3.7 Safety Requirements",
+      "level": 2,
+      "line_start": 262,
+      "text_length": 35,
+      "text_preview": "No safety requirements for the MDT."
+    },
+    {
+      "number": "3.8",
+      "title": "3.8 Security and Privacy Requirements",
+      "level": 2,
+      "line_start": 266,
+      "text_length": 145,
+      "text_preview": "a. MDT will not provide per-user security setting. [T]\n\nb. MDT will be able to operate in a standard DoD Information System (IS) Environment. [T]"
+    },
+    {
+      "number": "3.9",
+      "title": "3.9 CSCI Environment Requirements",
+      "level": 2,
+      "line_start": 272,
+      "text_length": 49,
+      "text_preview": "a. MDT will operate in an office environment. [T]"
+    },
+    {
+      "number": "3.10",
+      "title": "3.10 Computer Resource Requirements",
+      "level": 2,
+      "line_start": 276,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.10.1",
+      "title": "3.10.1 Computer Hardware Requirements",
+      "level": 2,
+      "line_start": 278,
+      "text_length": 67,
+      "text_preview": "a. MDT shall operate on a standard Government desktop computer. [T]"
+    },
+    {
+      "number": "3.10.2",
+      "title": "3.10.2 Computer Hardware Resource Utilization Requirements",
+      "level": 2,
+      "line_start": 282,
+      "text_length": 114,
+      "text_preview": "a. MDT will require a minimum 100 Megabytes (MB) of RAM. [T]\n\nb. MDT will require a minimum 200 MB hard drive. [T]"
+    },
+    {
+      "number": "3.10.3",
+      "title": "3.10.3 Computer Software Requirements",
+      "level": 2,
+      "line_start": 288,
+      "text_length": 117,
+      "text_preview": "a. MDT will run in the Microsoft Windows 7 operating system. [T]\n\nb. MDT will require Microsoft .Net Framework 4. [T]"
+    },
+    {
+      "number": "3.10.4",
+      "title": "3.10.4 Computer Communications Requirements",
+      "level": 2,
+      "line_start": 294,
+      "text_length": 55,
+      "text_preview": "a. MDT shall not provide any network functionality. [T]"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 298,
+      "text_length": 300,
+      "text_preview": "6\n\nThis document is a research report submitted to the U.S. Department of Justice. This report has not been published by the Department. Opinions or points of view expressed are those of the author(s)"
+    },
+    {
+      "number": "3.11",
+      "title": "3.11 Software Quality Factors",
+      "level": 2,
+      "line_start": 304,
+      "text_length": 338,
+      "text_preview": "a. Due in part to the prototype/research nature of this effort, the MDT will utilize a Spiral development methodology. This will provide the best methodology to support the development of the current "
+    },
+    {
+      "number": "3.12",
+      "title": "3.12 Design and Implementation Constraints",
+      "level": 2,
+      "line_start": 308,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.12.1",
+      "title": "3.12.1 Hardware Design Constraints",
+      "level": 2,
+      "line_start": 310,
+      "text_length": 222,
+      "text_preview": "The hardware/operating system for the MDT shall meet the following minimal system requirements:\n\na. Microsoft Windows 7 or higher [T]\n\nb. X86 Dual Core Processor [T]\n\nc. 2 Gigabytes (GB) Memory [T]\n\nd"
+    },
+    {
+      "number": "3.12.2",
+      "title": "3.12.2 Software Constraints",
+      "level": 2,
+      "line_start": 322,
+      "text_length": 355,
+      "text_preview": "a. MDT will execute on a Windows 7 or higher compatible computer system. [T]\n\nb. MDT will use a Windows Standard user interface. [T]\n\nc. An effort will be made to develop all software for the MDT usin"
+    },
+    {
+      "number": "3.13",
+      "title": "3.13 Personnel-Related Requirements",
+      "level": 2,
+      "line_start": 330,
+      "text_length": 46,
+      "text_preview": "No personnel-related requirements for the MDT."
+    },
+    {
+      "number": "3.14",
+      "title": "3.14 Training-Related Requirements",
+      "level": 2,
+      "line_start": 334,
+      "text_length": 45,
+      "text_preview": "No training-related requirements for the MDT."
+    },
+    {
+      "number": "3.15",
+      "title": "3.15 Logistics-Related Requirements",
+      "level": 2,
+      "line_start": 338,
+      "text_length": 46,
+      "text_preview": "No logistics-related requirements for the MDT."
+    },
+    {
+      "number": "3.16",
+      "title": "3.16 Other Requirements",
+      "level": 2,
+      "line_start": 342,
+      "text_length": 34,
+      "text_preview": "No other requirements for the MDT."
+    },
+    {
+      "number": "3.17",
+      "title": "3.17 Packaging Requirements",
+      "level": 2,
+      "line_start": 346,
+      "text_length": 160,
+      "text_preview": "a. The MDT will be delivered on 2 compact discs (CDs). One CD will contain the application. The second CD will contain the source code and documentation for MDT"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 350,
+      "text_length": 138,
+      "text_preview": "tool delivered on disc one. Upon sponsor written request the delivery can be made electronically as an alternative to the CD delivery. [T]"
+    },
+    {
+      "number": "3.18",
+      "title": "3.18 Precedence and Criticality of Requirements",
+      "level": 2,
+      "line_start": 354,
+      "text_length": 35,
+      "text_preview": "All requirements have equal weight."
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 358,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "4.0",
+      "title": "4.0 QUALIFICATION PROVISIONS",
+      "level": 2,
+      "line_start": 360,
+      "text_length": 118,
+      "text_preview": "a. The MDT shall be demonstrated to representatives of the government sponsors to verifying the CSCI capabilities. [T]"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 364,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "5.0",
+      "title": "5.0 REQUIREMENTS TRACEABILITY",
+      "level": 2,
+      "line_start": 366,
+      "text_length": 1250,
+      "text_preview": "Table 1: Listing of Requirements and Sources\n<table><tr><td rowspan=1 colspan=1>ID No.</td><td rowspan=1 colspan=1>Section</td><td rowspan=1 colspan=1>Requirement</td><td rowspan=1 colspan=1>Source / "
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 371,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "6.0",
+      "title": "6.0 NOTES",
+      "level": 2,
+      "line_start": 373,
+      "text_length": 3213,
+      "text_preview": "Table 2: Acronyms and Abbreviations\n<table><tr><td rowspan=1 colspan=1>ACRONYM</td><td rowspan=1 colspan=1>DESCRIPTION</td></tr><tr><td rowspan=1 colspan=1>ASD(R&amp;E)</td><td rowspan=1 colspan=1>Ass"
+    },
+    {
+      "number": null,
+      "title": "UNCLASSIFIED",
+      "level": 2,
+      "line_start": 378,
+      "text_length": 0,
+      "text_preview": ""
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 3,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Version/Revision",
+        "RevisionDate",
+        "Description of Change"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "UNCLASSIFIED",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Version/Revision</td><td rowspan=1 colspan=1>RevisionDate</td><td rowspan=1 colspan=1>Description of Change</td></tr><tr><td rowspan=1 colspan=1>1.0</td><td rowspan=1 colspan=1>06/05/14</td><td rowspan=1 colspan=1>Final Draft for Customer Review</td></tr><tr><td rowspan=1 colspan=1>1.1</td><td rowspan=1 colspan=1>06/12/14</td><td rowspan=1 colspan=1>Final Revised Document</td></tr>"
+    },
+    {
+      "index": 1,
+      "type": "qualification",
+      "format": "html",
+      "headers": [
+        "ID No.",
+        "Section",
+        "Requirement",
+        "Source / Reference"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "5.0 REQUIREMENTS TRACEABILITY",
+      "raw_html": "<tr><td rowspan=1 colspan=1>ID No.</td><td rowspan=1 colspan=1>Section</td><td rowspan=1 colspan=1>Requirement</td><td rowspan=1 colspan=1>Source / Reference</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>3.2.1</td><td rowspan=1 colspan=1>Display Fingerprint Image and Minutiae</td><td rowspan=1 colspan=1>Program Narrative</td></tr><tr><td rowspan=1 colspan=1>2</td><td rowspan=1 colspan=1>3.2.2</td><td rowspan=1 colspan=1>Calculate Minutiae Deviations</td><td rowspan=1 colspan"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "ACRONYM",
+        "DESCRIPTION"
+      ],
+      "row_count": 35,
+      "data_row_count": 34,
+      "is_empty": false,
+      "section": "6.0 NOTES",
+      "raw_html": "<tr><td rowspan=1 colspan=1>ACRONYM</td><td rowspan=1 colspan=1>DESCRIPTION</td></tr><tr><td rowspan=1 colspan=1>ASD(R&amp;E)</td><td rowspan=1 colspan=1>Assistant Secretary of Defense for Research and Engineering</td></tr><tr><td rowspan=1 colspan=1>AT&amp;L</td><td rowspan=1 colspan=1>Acquisition, Technology, and Logistics</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1>CD</td><td rowspan=1 colspan=1>Compact Disc</td></tr><tr><td rowspan="
+    }
+  ],
+  "image_count": 2,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "79be59f3f71c687f3ed99dd4dfcd45d2403b0043f64179eded3e81f24ed16a6b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2014 - Minutia.pdf/auto/images/79be59f3f71c687f3ed99dd4dfcd45d2403b0043f64179eded3e81f24ed16a6b.jpg",
+      "image_exists": true,
+      "image_size_kb": 16,
+      "alt_text": null,
+      "caption": "Prepared for Defense Biometrics & Forensics OSD AT&L, ASD(R&E)",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "Minutia Deviation Tool: Software Requirements Specification (SRS) (Version 1.1)",
+      "context_before": "of the author(s) and do not necessarily reflect the official position or policies of the U.S. Department of Justice.\nJune 12, 2014\nDOJ Office of Justice Programs National Institute of Justice Sensor, Surveillance, and Biometric Technologies (SSBT) Center of Excellence (CoE)",
+      "context_after": "Prepared for Defense Biometrics & Forensics OSD AT&L, ASD(R&E)\nPrepared by ManTech",
+      "md_line": 24,
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_index": 2,
+      "image_file": "334869d42a786a4e94bd9dce4f53d08fbfa8ac2b86213ea99781a1011cb73a1e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2014 - Minutia.pdf/auto/images/334869d42a786a4e94bd9dce4f53d08fbfa8ac2b86213ea99781a1011cb73a1e.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "alt_text": null,
+      "caption": "Figure 1: MDT External Interface Diagram",
+      "figure_number": 1,
+      "image_type": "interface_diagram",
+      "section": "3.3.1 Interface Identification and Diagrams",
+      "context_before": "a. The MDT shall provide a GUI. [T]\nb. The MDT shall allow a user to manually open files from the local computer. [T]\nc. The MDT shall allow a user to manually save a results file to the local computer. [T]",
+      "context_after": "Figure 1: MDT External Interface Diagram\na. The MDT shall open a pair of LFFS EBTS files (i.e., \\*.1ffs file format) for display within the GUI. [T]",
+      "md_line": 223,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "79be59f3f71c687f3ed99dd4dfcd45d2403b0043f64179eded3e81f24ed16a6b.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2014 - Minutia.pdf/auto/images/79be59f3f71c687f3ed99dd4dfcd45d2403b0043f64179eded3e81f24ed16a6b.jpg",
+      "image_exists": true,
+      "image_size_kb": 16,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "Prepared for Defense Biometrics & Forensics OSD AT&L, ASD(R&E)",
+      "section": "Minutia Deviation Tool: Software Requirements Specification (SRS) (Version 1.1)",
+      "context_before": "of the author(s) and do not necessarily reflect the official position or policies of the U.S. Department of Justice.\nJune 12, 2014\nDOJ Office of Justice Programs National Institute of Justice Sensor, Surveillance, and Biometric Technologies (SSBT) Center of Excellence (CoE)",
+      "context_after": "Prepared for Defense Biometrics & Forensics OSD AT&L, ASD(R&E)\nPrepared by ManTech",
+      "has_caption": true,
+      "has_context": true
+    },
+    {
+      "image_file": "334869d42a786a4e94bd9dce4f53d08fbfa8ac2b86213ea99781a1011cb73a1e.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/reqlist_reqnet_reqsim/ChandanKSahu-ReqList_ReqNet_ReqSim-e42f1ed/0    Requirement Specification Documents/mineru_parsed/2014 - Minutia.pdf/auto/images/334869d42a786a4e94bd9dce4f53d08fbfa8ac2b86213ea99781a1011cb73a1e.jpg",
+      "image_exists": true,
+      "image_size_kb": 24,
+      "image_type": "interface_diagram",
+      "figure_number": 1,
+      "caption": "Figure 1: MDT External Interface Diagram",
+      "section": "3.3.1 Interface Identification and Diagrams",
+      "context_before": "a. The MDT shall provide a GUI. [T]\nb. The MDT shall allow a user to manually open files from the local computer. [T]\nc. The MDT shall allow a user to manually save a results file to the local computer. [T]",
+      "context_after": "Figure 1: MDT External Interface Diagram\na. The MDT shall open a pair of LFFS EBTS files (i.e., \\*.1ffs file format) for display within the GUI. [T]",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

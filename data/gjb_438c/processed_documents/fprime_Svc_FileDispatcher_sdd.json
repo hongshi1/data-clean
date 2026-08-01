@@ -1,0 +1,296 @@
+{
+  "doc_name": "fprime_Svc_FileDispatcher_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_FileDispatcher_sdd.md",
+  "md_lines": 91,
+  "md_chars": 4056,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::FileDispatcher",
+  "section_count": 15,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::FileDispatcher",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 371,
+      "text_preview": "Component to dispatch delivered files to various services. The user passes in a table that maps file extensions to numbered output ports represented by a user's own version of the enumeration in the c"
+    },
+    {
+      "number": null,
+      "title": "Requirements",
+      "level": 2,
+      "line_start": 5,
+      "text_length": 676,
+      "text_preview": "Add requirements in the chart below\n\n| Name | Description | Rationale | Validation |\n|---|---|---|---|\n|FPRIME-FDISP-001|File dispatcher will provide a way to dispatch files to other components|Need t"
+    },
+    {
+      "number": null,
+      "title": "Usage Examples",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Typical Usage",
+      "level": 3,
+      "line_start": 17,
+      "text_length": 274,
+      "text_preview": "`Svc::FileUplink` is typically connected to `FileDispatcher` to process files that have been uplinked to the system. The user should create a configuration table that maps file extensions to output po"
+    },
+    {
+      "number": null,
+      "title": "Configuration Table Structure",
+      "level": 4,
+      "line_start": 21,
+      "text_length": 1071,
+      "text_preview": "The user should instantiate an instance of `FileDispatcherTable` and supply it to the `configure()` function during initialization. The fields should be filled in as follows:\n\n|Field|Value|Notes|\n|---"
+    },
+    {
+      "number": null,
+      "title": "Diagrams",
+      "level": 2,
+      "line_start": 40,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "Class Diagram",
+      "level": 3,
+      "line_start": 42,
+      "text_length": 71,
+      "text_preview": "![`FileDispatcher` Diagram](img/FileDispatcher.drawio.png \"FileUplink\")"
+    },
+    {
+      "number": null,
+      "title": "Port Descriptions",
+      "level": 2,
+      "line_start": 46,
+      "text_length": 286,
+      "text_preview": "| Name | Description |\n|---|---|\n|`fileAnnounceRecv`|Input port that receives file name of new file|\n|`fileDispatch`|Array of output ports that dispatch a new files based on a user supplied table|\n|`p"
+    },
+    {
+      "number": null,
+      "title": "Component States",
+      "level": 2,
+      "line_start": 55,
+      "text_length": 17,
+      "text_preview": "No state machines"
+    },
+    {
+      "number": null,
+      "title": "Parameters",
+      "level": 2,
+      "line_start": 58,
+      "text_length": 13,
+      "text_preview": "No parameters"
+    },
+    {
+      "number": null,
+      "title": "Commands",
+      "level": 2,
+      "line_start": 61,
+      "text_length": 99,
+      "text_preview": "| Name | Description |\n|---|---|\n|`ENABLE_DISPATCH`|Enables or disables a particular dispatch type|"
+    },
+    {
+      "number": null,
+      "title": "Events",
+      "level": 2,
+      "line_start": 66,
+      "text_length": 174,
+      "text_preview": "| Name | Description |\n|---|---|\n|`FileDispatchState`|Sent when a dispatch type is enabled or disabled|\n|`FileDispatched`|Sent when a dispatch type is matched and dispatched|"
+    },
+    {
+      "number": null,
+      "title": "Telemetry",
+      "level": 2,
+      "line_start": 72,
+      "text_length": 12,
+      "text_preview": "No telemetry"
+    },
+    {
+      "number": null,
+      "title": "Unit Tests",
+      "level": 2,
+      "line_start": 76,
+      "text_length": 638,
+      "text_preview": "| Name | Description | Output | Coverage |\n|---|---|---|---|\n|`dispatchTest`|Tests dispatches of files|---|---|\n|`dispatchAllDisabledTest`|Tests dispatches of files with all file types initially disab"
+    },
+    {
+      "number": null,
+      "title": "Change Log",
+      "level": 2,
+      "line_start": 88,
+      "text_length": 61,
+      "text_preview": "| Date | Description |\n|---|---|\n|12/10/2025| Initial Draft |"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 8,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description",
+        "Rationale",
+        "Validation"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Field",
+        "Value",
+        "Notes"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "Configuration Table Structure",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Field",
+        "Value",
+        "Notes"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "Configuration Table Structure",
+      "raw_html": null
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 4,
+      "data_row_count": 3,
+      "is_empty": false,
+      "section": "Port Descriptions",
+      "raw_html": null
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Commands",
+      "raw_html": null
+    },
+    {
+      "index": 5,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "Events",
+      "raw_html": null
+    },
+    {
+      "index": 6,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Description",
+        "Output",
+        "Coverage"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "Unit Tests",
+      "raw_html": null
+    },
+    {
+      "index": 7,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Date",
+        "Description"
+      ],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": false,
+      "section": "Change Log",
+      "raw_html": null
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "FileDispatcher.drawio.png \"FileUplink\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/FileDispatcher.drawio.png \"FileUplink\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "alt_text": "`FileDispatcher` Diagram",
+      "caption": "| Name | Description |",
+      "figure_number": null,
+      "image_type": "figure",
+      "section": "Class Diagram",
+      "context_before": "|`fileExt`|The file extension or suffix to detect in the file name and route. The same extension/suffix can be used multiple times and be routed to different ports|Must be non-zero in length, or it will cause an assert|\n|`port`|The outgoing port number must be a member of the `FileDispatchPort` or i",
+      "context_after": "| Name | Description |\n|---|---|",
+      "md_line": 44,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "FileDispatcher.drawio.png \"FileUplink\"",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/nasa/fprime_sdd/img/FileDispatcher.drawio.png \"FileUplink\"",
+      "image_exists": false,
+      "image_size_kb": 0,
+      "image_type": "figure",
+      "figure_number": null,
+      "caption": "| Name | Description |",
+      "section": "Class Diagram",
+      "context_before": "|`fileExt`|The file extension or suffix to detect in the file name and route. The same extension/suffix can be used multiple times and be routed to different ports|Must be non-zero in length, or it will cause an assert|\n|`port`|The outgoing port number must be a member of the `FileDispatchPort` or i",
+      "context_after": "| Name | Description |\n|---|---|",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

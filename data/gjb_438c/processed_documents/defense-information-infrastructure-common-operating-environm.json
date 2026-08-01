@@ -1,0 +1,639 @@
+{
+  "doc_name": "defense-information-infrastructure-common-operating-environment",
+  "source": "collection_mineru",
+  "md_path": "data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/defense-information-infrastructure-common-operating-environment.pdf/auto/defense-information-infrastructure-common-operating-environment.pdf.md",
+  "md_lines": 533,
+  "md_chars": 37574,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "DRAFT SOFTWARE REQUIREMENTS SPECIFICATION (SRS) FOR THE DEFENSE INFORMATION INFRASTRUCTURE (DII) COMMON OPERATING ENVIRONMENT (COE) XML SERVICES (XS)",
+  "section_count": 64,
+  "sections": [
+    {
+      "number": null,
+      "title": "DRAFT SOFTWARE REQUIREMENTS SPECIFICATION (SRS) FOR THE DEFENSE INFORMATION INFRASTRUCTURE (DII) COMMON OPERATING ENVIRONMENT (COE) XML SERVICES (XS)",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 196,
+      "text_preview": "11 JUNE 1999\n\nVersion 2.0\n\nPrepared by DII COE AOG Data Access Services Technical Working Group (DATATWG) Semi-Structured Data and Metadata Sub-panel (SSD-MD) Jim Pipher & Jim Schoening, Co-Chairs"
+    },
+    {
+      "number": null,
+      "title": "DRAFT",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 53,
+      "text_preview": "Prepared For Defense Information System Agency (DISA)"
+    },
+    {
+      "number": null,
+      "title": "TABLE OF CONTENTS",
+      "level": 1,
+      "line_start": 13,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 1 SCOPE",
+      "level": 2,
+      "line_start": 15,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 1.1 IDENTIFICATION OF FUNCTIONAL AREA",
+      "level": 2,
+      "line_start": 17,
+      "text_length": 388,
+      "text_preview": "This Software Requirements Specification (SRS) establishes the functional, performance, and verification requirements for the XML Services (XS) functional area of the Defense Information Infrastructur"
+    },
+    {
+      "number": null,
+      "title": "XS 1.2 FUNCTIONAL AREA OVERVIEW",
+      "level": 2,
+      "line_start": 21,
+      "text_length": 428,
+      "text_preview": "XML Services provide infrastructure services for mission and support applications using XML technology. These services isolate vendor-unique implementations of data access and provide applications a m"
+    },
+    {
+      "number": null,
+      "title": "XS 1.3 DOCUMENT OVERVIEW",
+      "level": 2,
+      "line_start": 25,
+      "text_length": 424,
+      "text_preview": "This document outlines the software capabilities required for the XS components for the DII COE. Section 2 lists the documents that are applicable to this specification. Section 3 provides a list of f"
+    },
+    {
+      "number": null,
+      "title": "XS 2 APPLICABLE DOCUMENTS",
+      "level": 2,
+      "line_start": 29,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 2.1 GOVERNMENT DOCUMENTS",
+      "level": 2,
+      "line_start": 31,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "SPECIFICATIONS:",
+      "level": 2,
+      "line_start": 33,
+      "text_length": 962,
+      "text_preview": "Defense Information Infrastructure (DII), Shared Data Environment (SHADE), CAPSTONE DOCUMENT Version 1.0, 11 July 1996\n\nACCS-A1-100-006 System Specification for ATCCS, 22 March 1995\n\nATCCS-A1-302-001A"
+    },
+    {
+      "number": null,
+      "title": "November1994.",
+      "level": 2,
+      "line_start": 59,
+      "text_length": 102,
+      "text_preview": "User Interface Specifications for Global Command and Control System (GCCS), Version 1.0, October 1994."
+    },
+    {
+      "number": null,
+      "title": "Environment",
+      "level": 2,
+      "line_start": 63,
+      "text_length": 134,
+      "text_preview": "Draft Architectural Design Document for the Global Command and Control System (GCCS) Common Operating (COE), Version 3, 24 July, 1994."
+    },
+    {
+      "number": null,
+      "title": "STANDARDS:",
+      "level": 2,
+      "line_start": 67,
+      "text_length": 274,
+      "text_preview": "MIL-STD-498 Military Standard - Software Development and Documentation, DOD, Dec. 1994.\n\nFIPS PUB 127-2 Database Language SQL - Federal Information Processing Standards Publication 127-2, 2 June, 1993"
+    },
+    {
+      "number": null,
+      "title": "XS 2.2 NON-GOVERNMENT DOCUMENTS",
+      "level": 2,
+      "line_start": 77,
+      "text_length": 270,
+      "text_preview": "Petrucci, Steve, \"Cross-Platform Power Tools, Application Developers for the Macintosh, Windows, and Windows NT\", Random House Electronic Publishing, 1993.\n\nDonald Lewine,\"POSIX Programmer's Guide\", O"
+    },
+    {
+      "number": null,
+      "title": "XS 3 REQUIREMENTS",
+      "level": 2,
+      "line_start": 83,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 3.1 REQUIRED STATES AND MODES",
+      "level": 2,
+      "line_start": 85,
+      "text_length": 3008,
+      "text_preview": "XS 3.1.1 Environmental Mode: This is the real-time operations that must react to varying degrees of readiness to full scale wartime operations such as crisis planning with the use of heterogeneous dat"
+    },
+    {
+      "number": null,
+      "title": "XS 3.2 XML SERVICES CAPABILITY REQUIREMENTS",
+      "level": 2,
+      "line_start": 103,
+      "text_length": 6751,
+      "text_preview": "The XS shall deliver inter-related components as shown in figure 3.2-1\n\n![](images/07bb7fc7cb54713a69905c680c52e3d7449d0bb8a436a62299e8eaa2afccdd49.jpg)  \nFigure 3.2-1  \nXS 3.2.1 Register Terms and St"
+    },
+    {
+      "number": null,
+      "title": "XS 3.2.3 Generate xml & schema documents",
+      "level": 2,
+      "line_start": 221,
+      "text_length": 633,
+      "text_preview": "XS 3.2.3.1 Generate a document that includes (by ref or by value) a schema\n\nXS 3.2.3.2 Develop scheme to permit dynamic cross-referencing and indexing of XML objects.\n\nXS 3.2.3.3 Generate language (na"
+    },
+    {
+      "number": null,
+      "title": "XS 3.3 Consume xml & schema documents",
+      "level": 2,
+      "line_start": 247,
+      "text_length": 390,
+      "text_preview": "XS 3.3.1 Parsers (dom, sax)\n\nXS 3.3.2 Check conformance\n\nXS 3.3.2.1 Well-formed\n\nXS 3.3.2.2 Validate\n\nXS 3.3.2.3 Create validation constraints shall enable a meaningful sharing of XML-based schemas an"
+    },
+    {
+      "number": null,
+      "title": "XS 3.4 REGISTRY SERVICES EXTERNAL INTERFACE REQUIREMENTS",
+      "level": 2,
+      "line_start": 265,
+      "text_length": 68,
+      "text_preview": "The Registry shall provide standard APIs as specified in Appendix B."
+    },
+    {
+      "number": null,
+      "title": "XS 3.5 DATA ACCESS SERVICES INTERNAL INTERFACE REQUIREMENTS",
+      "level": 2,
+      "line_start": 269,
+      "text_length": 71,
+      "text_preview": "The XS function shall provide standard APIs as specified in Appendix C."
+    },
+    {
+      "number": null,
+      "title": "XS 3.6 DATA ACCESS SERVICES INTERNAL DATA REQUIREMENTS",
+      "level": 2,
+      "line_start": 273,
+      "text_length": 147,
+      "text_preview": "XS 3.6.1 The XS shall internally interface (transparent to the operator) with the existing data elements of the DBIF, DAC, and COTS RDBMS products."
+    },
+    {
+      "number": null,
+      "title": "XS 3.7 REGISTRY SERVICES ENVIRONMENT REQUIREMENTS",
+      "level": 2,
+      "line_start": 277,
+      "text_length": 99,
+      "text_preview": "XS 3.7.1 The Registry software shall be portable and required to execute on COEcompliant platforms."
+    },
+    {
+      "number": null,
+      "title": "XS 3.8 PERSONNEL-RELATED REQUIREMENTS",
+      "level": 2,
+      "line_start": 281,
+      "text_length": 126,
+      "text_preview": "Not applicable. Personnel requirements shall be determined by the developers of the system in which the XS module is embedded."
+    },
+    {
+      "number": null,
+      "title": "XS 3.9 TRAINING-RELATED REQUIREMENTS",
+      "level": 2,
+      "line_start": 285,
+      "text_length": 125,
+      "text_preview": "Not applicable. Training requirements shall be determined by the developers of the system in which the XS module is embedded."
+    },
+    {
+      "number": null,
+      "title": "XS 3.10 LOGISTICS-RELATED REQUIREMENTS",
+      "level": 2,
+      "line_start": 289,
+      "text_length": 205,
+      "text_preview": "The XS developer is responsible for software maintenance, software support, and software updates. The DISA Configuration Manager (CM) is responsible for distribution of the XS product to system develo"
+    },
+    {
+      "number": null,
+      "title": "XS 3.11 OTHER REQUIREMENTS",
+      "level": 2,
+      "line_start": 293,
+      "text_length": 5,
+      "text_preview": "None."
+    },
+    {
+      "number": null,
+      "title": "XS 3.12 PACKAGING REQUIREMENTS",
+      "level": 2,
+      "line_start": 297,
+      "text_length": 73,
+      "text_preview": "The XS software shall be delivered in accordance with DII COE guidelines."
+    },
+    {
+      "number": null,
+      "title": "XS 3.13 PRECEDENCE AND CRITICALITY OF REQUIREMENTS",
+      "level": 2,
+      "line_start": 301,
+      "text_length": 785,
+      "text_preview": "The following table depicts the mapping of the requirements in Section 3 to their corresponding precedence and criticality code and to other related requirements within the XS SRS. The precedence and "
+    },
+    {
+      "number": null,
+      "title": "XS 4 QUALIFICATION PROVISIONS",
+      "level": 2,
+      "line_start": 313,
+      "text_length": 217,
+      "text_preview": "COE Software will be qualified through formal validation tests of the SRS level requirements. The Qualification Methods applied to the software shall include test, demonstration, analysis, and inspect"
+    },
+    {
+      "number": null,
+      "title": "XS 4.1 TEST",
+      "level": 2,
+      "line_start": 317,
+      "text_length": 211,
+      "text_preview": "A qualification method that is carried out by operation of the item/component/I/F (or some part of the computer S/W configuration item, etc.) and that relies on the collection and subsequent examinati"
+    },
+    {
+      "number": null,
+      "title": "XS 4.2 DEMONSTRATION",
+      "level": 2,
+      "line_start": 321,
+      "text_length": 271,
+      "text_preview": "A qualification method that is carried out by operation of the item/component/I/F (or some part of the computer S/W configuration item, etc.), and that relies on observable functional operation not re"
+    },
+    {
+      "number": null,
+      "title": "XS 4.3 ANALYSIS",
+      "level": 2,
+      "line_start": 325,
+      "text_length": 287,
+      "text_preview": "A qualification method that is carried out by the processing of accumulated data. An example of accumulated data is the compilation of data obtained from other qualification methods. Examples of the p"
+    },
+    {
+      "number": null,
+      "title": "XS 4.4 INSPECTION",
+      "level": 2,
+      "line_start": 329,
+      "text_length": 156,
+      "text_preview": "A qualification method that is carried out by visual examination, physical manipulation, or measurement to verify that the requirements have been satisfied."
+    },
+    {
+      "number": null,
+      "title": "XS 5 REQUIREMENTS TRACEABILITY",
+      "level": 2,
+      "line_start": 333,
+      "text_length": 33,
+      "text_preview": "Provided under separate document."
+    },
+    {
+      "number": null,
+      "title": "XS 6 NOTES",
+      "level": 2,
+      "line_start": 337,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 6.1 ACRONYMS & ABBREVIATIONS",
+      "level": 2,
+      "line_start": 339,
+      "text_length": 4003,
+      "text_preview": "<table><tr><td>ACCS</td><td>Army Command and Control Systems</td></tr><tr><td>GCCS-A</td><td>Global Command and Control System- Army</td></tr><tr><td>ANSI</td><td>American National Standards Institute"
+    },
+    {
+      "number": null,
+      "title": "XS 6.2 GLOSSARY OF TERMS",
+      "level": 2,
+      "line_start": 343,
+      "text_length": 6650,
+      "text_preview": "Automatically: Indicates processing initiated during execution of other processes, but dependent on information and/or parameters to be generated or supplied to these other processes. The information "
+    },
+    {
+      "number": null,
+      "title": "XS 7 APPENDIX A",
+      "level": 2,
+      "line_start": 385,
+      "text_length": 98,
+      "text_preview": "The metadata and procedures are described for the current Information Resource Submittal Package ."
+    },
+    {
+      "number": null,
+      "title": "Metadata and Related Information",
+      "level": 2,
+      "line_start": 389,
+      "text_length": 426,
+      "text_preview": "An XML tag may be described as any object and is easily created by anyone using a text editor. Although XML is a relatively new technology, many developers are already using XML in operational COE sys"
+    },
+    {
+      "number": null,
+      "title": "XML Registry.",
+      "level": 2,
+      "line_start": 393,
+      "text_length": 483,
+      "text_preview": "To ensure interoperability, this registry provides a baseline set of tags developed through coordination and approval among the Community. The Registry allows a user to browse, search, and retrieve da"
+    },
+    {
+      "number": null,
+      "title": "Developer's Role.",
+      "level": 2,
+      "line_start": 397,
+      "text_length": 434,
+      "text_preview": "Developers are urged to review the baseline tags, adopt them where possible, and subscribe to future notifications about the tags. If, after reviewing the tags in the Registry, you cannot reuse an exi"
+    },
+    {
+      "number": null,
+      "title": "COE Chief Engineer's Role.",
+      "level": 2,
+      "line_start": 401,
+      "text_length": 220,
+      "text_preview": "The COE Chief Engineer will approve a single Point of Contact (POC) for a COI to manage the tags within that COI. The COE Chief Engineer will reserve ultimate authority to mediate any unresolved dispu"
+    },
+    {
+      "number": null,
+      "title": "The COE Data Engineering Team's Role.",
+      "level": 2,
+      "line_start": 405,
+      "text_length": 250,
+      "text_preview": "Tags and semantics will be analyzed to identify opportunities to consolidate tags towards a single or a minimal number of representations. A \"market forces\" model can also guide COE Data Engineering i"
+    },
+    {
+      "number": null,
+      "title": "The Community of Interest's POC's Role.",
+      "level": 2,
+      "line_start": 409,
+      "text_length": 1968,
+      "text_preview": "(The information in the following section is current as of 17 May, 1999. Please consult the Registry for the most authoritative list of information resources types.) The POC responsibilities will incl"
+    },
+    {
+      "number": null,
+      "title": "Procedures",
+      "level": 2,
+      "line_start": 419,
+      "text_length": 559,
+      "text_preview": "For Developers may submit and use information resources within the Registry constitutes guidance in the generation and use of XML as an authoritative source for approved XML data and metadata componen"
+    },
+    {
+      "number": null,
+      "title": "Rules and Convensions.",
+      "level": 2,
+      "line_start": 433,
+      "text_length": 121,
+      "text_preview": "Establishing a new Information Resource. Follow these conventions for creating new information resources for the Registry"
+    },
+    {
+      "number": null,
+      "title": "1. Use \"XML\\_Attributes\" sparingly",
+      "level": 2,
+      "line_start": 437,
+      "text_length": 759,
+      "text_preview": "If the term is well recognized outside its container term, designate it as an element. Example: CTRY\\_CD, CTRY\\_NM, CTRY\\_ABBRD\\_NM, CTRY\\_OFF\\_NM, CTRY\\_SCP\\_NT\\_TX, and CTRY\\_PSTL\\_NM are all charac"
+    },
+    {
+      "number": null,
+      "title": "Include descriptive definitions AND synonyms for the Information Resource Definition.",
+      "level": 2,
+      "line_start": 441,
+      "text_length": 462,
+      "text_preview": "Initially, the Registry will not have keyword, thesaurus, or ontology support but it will have a substring search for a number of fields, including definition. Therefore, we urge submitters to include"
+    },
+    {
+      "number": null,
+      "title": "XS 8 APPENDIX B",
+      "level": 2,
+      "line_start": 445,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 8.1 EXTERNAL PROGRAMMING INTERFACES",
+      "level": 2,
+      "line_start": 447,
+      "text_length": 334,
+      "text_preview": "The External Interfaces for the XS SRS are defined as interfaces to non-COE components. Detailed information (as specified in paragraph 3.3 of the Data Item Description DI-IPSC-81433) defining these i"
+    },
+    {
+      "number": null,
+      "title": "XS 9 APPENDIX C",
+      "level": 2,
+      "line_start": 451,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 9.1 INTERNAL PROGRAMMING INTERFACES",
+      "level": 2,
+      "line_start": 453,
+      "text_length": 387,
+      "text_preview": "The Internal Interfaces for the XS SRS are defined as interfaces to COE components. Detailed information (as specified in paragraph 3.4 of the Data Item Description DI-IPSC-81433) defining these inter"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.1 MANAGEMENT SERVICES API",
+      "level": 2,
+      "line_start": 459,
+      "text_length": 114,
+      "text_preview": "It incorporates other interfaces to:\n\n· Network Administration\n\n· System Administration\n\n· Security Administration"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.2 DISTRIBUTED SYSTEM SERVICES",
+      "level": 2,
+      "line_start": 469,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.2.1 COMMUNICATIONS SERVICES API",
+      "level": 2,
+      "line_start": 471,
+      "text_length": 74,
+      "text_preview": "It incorporates other interfaces to:\n\n· Communications\n\n· Network Services"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.2.2 DISTRIBUTION AND OBJECT MANAGEMENT SERVICES",
+      "level": 2,
+      "line_start": 479,
+      "text_length": 99,
+      "text_preview": "It incorporates other interfaces to:\n\n· Distributed Computing Services\n\n· Data Interchange Services"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.3 APPLICATION SUPPORT SERVICES",
+      "level": 2,
+      "line_start": 487,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.3.1 PRESENTATION SERVICES",
+      "level": 2,
+      "line_start": 489,
+      "text_length": 80,
+      "text_preview": "It incorporates other interfaces to:\n\n· Executive Manager\n\n· Multi-Media Support"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.4 COMMON SUPPORT APPLICATIONS",
+      "level": 2,
+      "line_start": 497,
+      "text_length": 36,
+      "text_preview": "It incorporates other interfaces to:"
+    },
+    {
+      "number": null,
+      "title": "· Office Automation",
+      "level": 2,
+      "line_start": 501,
+      "text_length": 70,
+      "text_preview": "· Message Processing\n\n· Correlation\n\n· MCG&I\n\n· Alerts\n\n· On-line Help"
+    },
+    {
+      "number": null,
+      "title": "XS 9.1.5 SOFTWARE DEVELOPMENT SERVICES",
+      "level": 2,
+      "line_start": 513,
+      "text_length": 59,
+      "text_preview": "It incorporates other interfaces to:\n\n· Developer’s Toolkit"
+    },
+    {
+      "number": null,
+      "title": "XS 10 APPENDIX C",
+      "level": 2,
+      "line_start": 519,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "XS 10.1 INTERFACES TO COMMERCIAL PRODUCTS",
+      "level": 2,
+      "line_start": 521,
+      "text_length": 560,
+      "text_preview": "The Interfaces to Commercial Products for the XS SRS are identified below. Detailed information (as specified in paragraph 3.3 of the Data Item Description DI-IPSC-81433) defining these interfaces wil"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 5,
+  "tables": [
+    {
+      "index": 0,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Requirement/ParagraphNumber",
+        "Requirement Description",
+        "Prec",
+        "RelatedRequirementWithin XS SRS"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "XS 3.13 PRECEDENCE AND CRITICALITY OF REQUIREMENTS",
+      "raw_html": "<tr><td rowspan=1 colspan=1>Requirement/ParagraphNumber</td><td rowspan=1 colspan=1>Requirement Description</td><td rowspan=1 colspan=1>Prec</td><td rowspan=1 colspan=1>RelatedRequirementWithin XS SRS</td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1>TBD</td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td><td rowspan=1 colspan=1></td></tr>"
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "ACCS",
+        "Army Command and Control Systems"
+      ],
+      "row_count": 68,
+      "data_row_count": 67,
+      "is_empty": false,
+      "section": "XS 6.1 ACRONYMS & ABBREVIATIONS",
+      "raw_html": "<tr><td>ACCS</td><td>Army Command and Control Systems</td></tr><tr><td>GCCS-A</td><td>Global Command and Control System- Army</td></tr><tr><td>ANSI</td><td>American National Standards Institute</td></tr><tr><td>API</td><td>Application Programming Interface</td></tr><tr><td>ASCII</td><td>American Standard Code Information Interchange</td></tr><tr><td>ASCII RTF</td><td>American Standard Code Information Interchange Rich Text Format</td></tr><tr><td>ASRD</td><td>AWIS Software Requirements Specifica"
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Information Resource",
+        "Description"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "The Community of Interest's POC's Role.",
+      "raw_html": "<tr><td>Information Resource</td><td>Description</td></tr><tr><td>XML Element</td><td>tag, either complex or terminal node</td></tr><tr><td>XML_Attribute</td><td>characteristic of an element, may be constrained by enumeration</td></tr><tr><td>Model</td><td>a representation using a formalism such as IDEF1x or Object Modeling</td></tr><tr><td>XML_Spec Domain</td><td>a DTD or DCD; the schema for an XML document the valid values for an element or attribute; expressed as a valid SQL expression or by "
+    },
+    {
+      "index": 3,
+      "type": "other",
+      "format": "html",
+      "headers": [
+        "Forward term",
+        "Reverse term"
+      ],
+      "row_count": 9,
+      "data_row_count": 8,
+      "is_empty": false,
+      "section": "The Community of Interest's POC's Role.",
+      "raw_html": "<tr><td>Forward term</td><td>Reverse term</td></tr><tr><td>uses</td><td>used_by</td></tr><tr><td>describes</td><td>described_by</td></tr><tr><td>is_XML_spec_for</td><td>defined_by_XML_spec</td></tr><tr><td>is_newer_version_of</td><td>is_older_version_of</td></tr><tr><td>is_constrained_by_domain</td><td>is_domain_for</td></tr><tr><td>belongs_to_namespace</td><td>is_namespace_for</td></tr><tr><td>element_may_be_qualified_by_attribute</td><td>attribute_may_qualify_element</td></tr><tr><td>is_model_"
+    },
+    {
+      "index": 4,
+      "type": "other",
+      "format": "html",
+      "headers": [],
+      "row_count": 2,
+      "data_row_count": 1,
+      "is_empty": true,
+      "section": "XS 10.1 INTERFACES TO COMMERCIAL PRODUCTS",
+      "raw_html": "<tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr>"
+    }
+  ],
+  "image_count": 1,
+  "images": [
+    {
+      "image_index": 1,
+      "image_file": "07bb7fc7cb54713a69905c680c52e3d7449d0bb8a436a62299e8eaa2afccdd49.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/defense-information-infrastructure-common-operating-environment.pdf/auto/images/07bb7fc7cb54713a69905c680c52e3d7449d0bb8a436a62299e8eaa2afccdd49.jpg",
+      "image_exists": true,
+      "image_size_kb": 51,
+      "alt_text": null,
+      "caption": "Figure 3.2-1",
+      "figure_number": 3,
+      "image_type": "figure",
+      "section": "XS 3.2 XML SERVICES CAPABILITY REQUIREMENTS",
+      "context_before": "XS 3.1.7 Maintenance Mode: This mode includes modification and/or addition of application data segments, user permission, privileges, and restructuring storage and memory areas. In addition, maintenance also shall pertain to shutdown, open not-mounted and online/off-line implementations, modificatio",
+      "context_after": "Figure 3.2-1\nXS 3.2.1 Register Terms and Structures (e.g., tags, DTDs, DCDs)",
+      "md_line": 107,
+      "has_caption": true,
+      "has_context": true
+    }
+  ],
+  "image_text_pairs": [
+    {
+      "image_file": "07bb7fc7cb54713a69905c680c52e3d7449d0bb8a436a62299e8eaa2afccdd49.jpg",
+      "image_path": "/Users/gexuancheng/Desktop/research2/data_clean/data/gjb_438c/srs_collection/re_uts_srs/re-at-uts/re-at-uts/Data/mineru_parsed/defense-information-infrastructure-common-operating-environment.pdf/auto/images/07bb7fc7cb54713a69905c680c52e3d7449d0bb8a436a62299e8eaa2afccdd49.jpg",
+      "image_exists": true,
+      "image_size_kb": 51,
+      "image_type": "figure",
+      "figure_number": 3,
+      "caption": "Figure 3.2-1",
+      "section": "XS 3.2 XML SERVICES CAPABILITY REQUIREMENTS",
+      "context_before": "XS 3.1.7 Maintenance Mode: This mode includes modification and/or addition of application data segments, user permission, privileges, and restructuring storage and memory areas. In addition, maintenance also shall pertain to shutdown, open not-mounted and online/off-line implementations, modificatio",
+      "context_after": "Figure 3.2-1\nXS 3.2.1 Register Terms and Structures (e.g., tags, DTDs, DCDs)",
+      "has_caption": true,
+      "has_context": true
+    }
+  ]
+}

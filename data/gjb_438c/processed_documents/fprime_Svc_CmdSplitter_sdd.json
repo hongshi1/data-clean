@@ -1,0 +1,150 @@
+{
+  "doc_name": "fprime_Svc_CmdSplitter_sdd",
+  "source": "collection_raw",
+  "md_path": "data/gjb_438c/srs_collection/nasa/fprime_sdd/fprime_Svc_CmdSplitter_sdd.md",
+  "md_lines": 57,
+  "md_chars": 4064,
+  "language": "en",
+  "is_gjb_format": false,
+  "gjb_version": null,
+  "system_type": "unknown",
+  "title": "Svc::CmdSplitter Component",
+  "section_count": 10,
+  "sections": [
+    {
+      "number": null,
+      "title": "Svc::CmdSplitter Component",
+      "level": 1,
+      "line_start": 1,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": null,
+      "title": "1. Introduction",
+      "level": 2,
+      "line_start": 3,
+      "text_length": 725,
+      "text_preview": "The `Svc::CmdSplitter` splits an uplinked command execution to two separate `Svc::CmdDispatcher` components: one \"local\" and the other \"remote\". This splitting is done by opcode where local commands a"
+    },
+    {
+      "number": null,
+      "title": "2. Requirements",
+      "level": 2,
+      "line_start": 9,
+      "text_length": 1256,
+      "text_preview": "The requirements for `Svc::CmdSplitter` are as follows:\n\n| Requirement          | Description                                                                                          | Verification Me"
+    },
+    {
+      "number": null,
+      "title": "3. Design",
+      "level": 2,
+      "line_start": 22,
+      "text_length": 0,
+      "text_preview": ""
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 Ports",
+      "level": 3,
+      "line_start": 24,
+      "text_length": 1085,
+      "text_preview": "| Name                | Type           | Kind             | Description                                                              |\n|---------------------|----------------|------------------|------"
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Functional Description",
+      "level": 3,
+      "line_start": 36,
+      "text_length": 251,
+      "text_preview": "The `Svc::CmdSplitter` routes an incoming command buffer of type `Fw::ComBuffer` to a local or remote command dispatcher.  This is done by comparing the command's opcode to the configured base opcode "
+    },
+    {
+      "number": "3.1",
+      "title": "3.1 State",
+      "level": 3,
+      "line_start": 40,
+      "text_length": 188,
+      "text_preview": "`Svc::CmdSplitter` has only one internal state variable: `m_remoteBase` the configured base opcode for remote opcodes. This is set by a call to the `configure()` method at system start-up."
+    },
+    {
+      "number": "3.2",
+      "title": "3.2 Algorithms",
+      "level": 3,
+      "line_start": 44,
+      "text_length": 49,
+      "text_preview": "`Svc::CmdSplitter` has no significant algorithms."
+    },
+    {
+      "number": null,
+      "title": "4. Unit Testing",
+      "level": 2,
+      "line_start": 48,
+      "text_length": 96,
+      "text_preview": "To see unit test coverage run `fprime-util check --coverage` in the `Svc::CmdSplitter` directory"
+    },
+    {
+      "number": null,
+      "title": "5. Change Log",
+      "level": 2,
+      "line_start": 52,
+      "text_length": 195,
+      "text_preview": "| Date       | Description                     |\n|------------|---------------------------------|\n| 2023-06-12 | Initial                         |\n| 2023-09-27 | Support multiple command inputs |"
+    }
+  ],
+  "constraint_count": 0,
+  "constraints": [],
+  "llm_constraint_count": 0,
+  "llm_constraints": null,
+  "table_count": 3,
+  "tables": [
+    {
+      "index": 0,
+      "type": "qualification",
+      "format": "markdown",
+      "headers": [
+        "Requirement",
+        "Description",
+        "Verification Method"
+      ],
+      "row_count": 7,
+      "data_row_count": 6,
+      "is_empty": false,
+      "section": "2. Requirements",
+      "raw_html": null
+    },
+    {
+      "index": 1,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Name",
+        "Type",
+        "Kind",
+        "Description"
+      ],
+      "row_count": 6,
+      "data_row_count": 5,
+      "is_empty": false,
+      "section": "3.1 Ports",
+      "raw_html": null
+    },
+    {
+      "index": 2,
+      "type": "other",
+      "format": "markdown",
+      "headers": [
+        "Date",
+        "Description"
+      ],
+      "row_count": 3,
+      "data_row_count": 2,
+      "is_empty": false,
+      "section": "5. Change Log",
+      "raw_html": null
+    }
+  ],
+  "image_count": 0,
+  "images": [],
+  "image_text_pairs": []
+}
