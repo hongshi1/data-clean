@@ -1,152 +1,179 @@
-# AGENTS.md — SRS一致性检测项目导航
+# AGENTS.md — SRS一致性校验与上下文关联研究项目
 
-## 项目目标
+## 项目定位
 
-对GJB 438C格式的SRS文档进行三层一致性检测（语法/语义/逻辑），构建数据集与评测体系，产出论文初稿。
+基于16份真实GJB格式SRS文档，研究**一致性校验**与**上下文关联**两个正交技术方向。
+
+这不是工程项目，是科研项目。目标是产出有技术创新的方法和可评测的结果，面向RE/ICSE/FSE级别论文。
+
+## 两个核心方向
+
+### 方向A：上下文关联（不一致性校验的前置准备）
+
+**问题**：SRS文档中，同一个需求/实体可能分布在多个位置——3.2.1节的文字描述、接口图、合格性表中的行、追溯表中的映射。如何把这些分散的、多模态的内容**聚合成一个条目**，使得一致性校验有明确的检测对象？
+
+**本质**：多模态上下文聚合 / 跨章节实体链接
+
+**输入**：一份SRS文档（markdown + 图片 + 表格）
+**输出**：条目列表，每个条目 = {文字片段, 关联图片, 关联表格行, 章节位置, 语义角色}
+
+**关键挑战**：
+- 如何判断两段文字描述的是"同一个事物"？
+- 图片和文字如何关联（markdown引用？位置邻接？语义相似？）
+- 表格中的哪一行对应哪个需求？
+- "同一个事物"的粒度是什么（一个参数？一个功能？一个接口？）
+
+### 方向B：不一致性校验（对聚合条目执行检测）
+
+**问题**：给定一个聚合条目（或一对条目），如何检测其中存在的不一致性？
+
+**三个层面**：
+- **语法层**：格式、编号、结构是否合规（如章节缺失、编号不连续、需求ID重复）
+- **语义层**：同一参数/概念在不同位置的值/含义是否一致（如同参数不同值、正文与表格矛盾）
+- **逻辑层**：约束之间是否逻辑可满足（如子模块时间之和≤总预算、允许vs禁止矛盾）
+
+**当前状态**：具体的不一致性类型**尚未定义**——需要先调研16份数据集中实际存在哪些不一致性，再定义检测方法。
+
+**关键挑战**：
+- 如何区分"合理差异"（如不同设备形态的配置差异）和"真实矛盾"？
+- 逻辑层矛盾如何形式化（Z3？NLI？混合？）
+- 没有Gold Standard如何评测？
+
+### 两个方向的关系
+
+```
+方向A(上下文关联) → 产出条目对 → 方向B(不一致性校验) → 产出检测结果
+```
+
+是流水线关系，但**各自有独立的技术贡献**：
+- 方向A的贡献 = 准确的条目聚合方法（如何判断"同一个事物"）
+- 方向B的贡献 = 准确的不一致性检测方法（如何判断"不一致"）
+
+## 数据集
+
+### 主数据集：16份真实GJB格式SRS
+
+```
+data/软件需归样例数据集/
+├── 01数据获取转换分系统需求规格说明-终稿.doc
+├── 02界面集成框架软件需求规格说明-终稿.doc
+├── ...
+└── 16流媒体传输服务软件需求规格说明-终稿.doc
+```
+
+- 16份真实军事信息系统SRS，GJB 438C格式
+- 涵盖数据获取、传输、处理、部署等多个子系统
+- 已用textutil解析为markdown：`data/gjb_438c/parsed_srs_dataset/`
+- 13份结构完整（6章+3.1~3.18），3份格式异常
+
+### 辅助数据
+
+| 数据 | 路径 | 说明 |
+|------|------|------|
+| GJB 438C标准OCR | `data/gjb_438c/ocr/` | 81页标准原文MinerU解析 |
+| GJB规则库 | `knowledge/gjb_438c_rules_full.json` | 120条规则(可追溯到OCR行号) |
+| GJB词典 | `knowledge/srs_kb.json` | 23参数+13接口+10单位族 |
+| Gold Standard(旧) | `data/gjb_438c/gold_standard/` | 3份合成SRS的22条标注(8真矛盾+14正值) |
+| MinerU解析(旧) | `data/gjb_438c/mineru_srs/` | 3份合成SRS的MinerU解析 |
+
+### 数据预处理脚本
+
+| 脚本 | 说明 |
+|------|------|
+| `tools/srs_doc_batch_parse.py` | .doc→markdown批量解析(目录映射恢复编号) |
+
+## 待完成的调研工作
+
+### 调研1：SRS中实际存在哪些不一致性？
+
+**目的**：定义方向B的具体检测对象
+
+**方法**：人工阅读2-3份SRS文档，记录所有发现的不一致性
+- 01数据获取转换分系统（最大文档，接口最多）
+- 03服务集成框架（需求项最多）
+- 06运行支撑服务（约束最多）
+
+**产出**：不一致性类型清单 + 每种类型的示例
+
+### 调研2：SRS中"同一事物"的分布模式
+
+**目的**：定义方向A的聚合粒度和关联方法
+
+**方法**：分析同一参数/功能/接口在文档中的出现位置
+- 同一参数在哪些章节出现？
+- 图片在哪些章节被引用？
+- 表格中的行对应哪些章节的需求？
+
+**产出**：条目聚合规则 + 聚合粒度定义
+
+### 调研3：现有方法调研
+
+**目的**：明确技术创新点
+
+**方法**：调研NLP4RE领域的一致性检测和上下文关联方法
+- ARTA数据集的requirement smells检测方法
+- Bendík 2017的依赖图+SAT方法
+- LLM-based requirement relation extraction
+- 多模态文档理解(图文关联)
+
+**产出**：技术路线对比 + 创新点定位
 
 ## 项目结构
 
 ```
 data_clean/
-├── tools/                              # 代码
+├── data/
+│   ├── 软件需归样例数据集/              # ★主数据集(16份真实GJB SRS .doc)
+│   └── gjb_438c/
+│       ├── parsed_srs_dataset/          # ★解析后markdown(16份)
+│       ├── ocr/                         # GJB 438C标准OCR
+│       ├── mineru_srs/                  # 3份旧Gold Standard的MinerU解析
+│       ├── gold_standard/               # 旧Gold Standard(3份合成SRS)
+│       └── (旧数据目录: extracted_constraints/ extracted_tables/ 等)
+│
+├── knowledge/                           # 基础知识库
+│   ├── gjb_438c_rules.json             # GJB规则库(v1.0, 46条)
+│   ├── gjb_438c_rules_full.json        # GJB完整规则库(v2.0, 120条)
+│   ├── gjb_rules_gap_analysis.json     # 规则差距分析
+│   ├── gjb_rules_part1/2/3*.json       # 规则分部文件
+│   ├── srs_kb_graph_v2.json            # 旧知识图谱(7720节点)
+│   └── srs_kb.json                     # 旧词典(23参数)
+│
+├── tools/                               # 工具脚本
+│   ├── srs_doc_batch_parse.py          # .doc批量解析(数据预处理)
 │   ├── srs_mineru_parse.py             # MinerU解析(单文档)
-│   ├── srs_collection_mineru_parse.py  # MinerU批量解析SRS数据集
 │   ├── srs_structurer.py               # MinerU输出→结构化JSON
 │   ├── srs_table_parser.py             # HTML表格→结构化数据
-│   ├── srs_collection_table_extract.py # 批量表格提取
-│   ├── srs_constraint_extract.py       # LLM提取7种约束
-│   ├── srs_constraint_extract_more.py  # 扩展约束提取
-│   ├── srs_constraint_extract_collection.py # 批量约束提取
-│   ├── srs_gjb_rule_extract.py         # 从GJB 438C OCR结果提取规则
-│   ├── srs_gjb_compliance_scan.py      # GJB规则合规扫描
-│   ├── srs_kb_graph_builder.py         # 构建知识图谱
-│   ├── srs_consistency_checker_v2.py   # 三层一致性检测v2(含Z3实际求解)
-│   ├── srs_eval.py                     # 评测框架(P/R/F1, 对齐Gold Standard)
-│   ├── srs_image_text_matcher.py       # 图片-文本匹配v3(VLM辅助)
-│   ├── srs_unified_processor.py        # 统一文档处理(章节/约束/表格/图片整合)
-│   ├── srs_unified_dataset_builder.py  # 统一数据集构建
-│   ├── srs_dedup_documents.py          # 基于内容指纹的文档去重
-│   ├── srs_dataset_catalog.py          # 数据集编目
-│   ├── srs_dataset_stats.py            # 数据集统计
-│   ├── srs_metadata_collector.py       # 元数据采集
-│   ├── srs_public_metadata_collect.py  # 公开元数据采集
-│   ├── srs_ieee830_analyze.py          # IEEE 830分析
-│   ├── cmapss_multiroute_detection.py  # C-MAPSS多路由检测(上游用)
-│   ├── real_multiroute_detection.py    # H4R焊接多路由检测(上游用)
-│   └── archive/                        # 归档脚本(19个: 17 PURE + v1 checker + compliance_check)
+│   ├── srs_constraint_extract.py       # LLM提取约束
+│   ├── srs_gjb_rule_extract.py         # GJB规则提取
+│   ├── srs_gjb_compliance_scan.py      # GJB合规扫描
+│   ├── srs_consistency_checker_v2.py   # 三层一致性检测v2(含Z3)
+│   ├── srs_eval.py                     # 评测框架
+│   ├── srs_image_text_matcher.py       # 图片-文本匹配
+│   ├── srs_unified_processor.py        # 统一文档处理
+│   └── archive/                        # 归档脚本
 │
-├── data/gjb_438c/                      # GJB数据(当前工作, 16个子目录)
-│   ├── source_pdfs/                    # GJB标准原始PDF
-│   ├── ocr/                            # GJB 438C-2021 MinerU OCR结果(81页)
-│   ├── ocr_7p/                         # GJB 1330A MinerU OCR结果
-│   ├── demo/                           # 5份公开GJB格式SRS PDF
-│   ├── 438B-2009全套模板/              # 33个GJB 438B DOCX模板
-│   ├── 438C-2021全套模板/              # 20个GJB 438C DOCX模板
-│   ├── mineru_srs/                     # 3份SRS的MinerU解析结果
-│   ├── extracted_constraints/          # LLM提取的约束
-│   ├── extracted_tables/               # 表格结构化数据
-│   ├── consistency_reports/            # 一致性检测报告(v1+v2)
-│   ├── gold_standard/                  # Gold Standard(battery/compiler/scheduler)
-│   ├── image_text_matches/             # 图片-文本匹配结果
-│   ├── processed_documents/            # 统一处理后的文档
-│   ├── srs_collection/                 # 多源SRS集合(9+来源)
-│   ├── unified_dataset/                # 统一数据集(359份: 65 GJB + 294通用)
-│   └── dataset/                        # 数据集catalog/metadata/rules
+├── docs/srs_project/                    # 项目文档
+│   ├── literature_survey/              # 文献调研
+│   └── (旧文档: 01-07_*.md 等)
 │
-├── data/srs_requirements/              # PURE数据集(旧,开发用)
-│   ├── req/                            # 62个原始PURE PDF
-│   ├── mineru_parsed/                  # MinerU解析
-│   ├── structured/                     # 结构化JSON
-│   └── (旧目录: parsed/ ner_output/ bert_crf/ 等)
-│
-├── knowledge/                          # 知识库
-│   ├── gjb_438c_rules.json             # GJB规则库(4类规则)
-│   ├── gjb_438c_rules_full.json        # GJB完整规则库
-│   ├── gjb_rules_gap_analysis.json     # 规则差距分析
-│   ├── gjb_rules_part1_chapters.json   # 规则-第1部分(正文章节)
-│   ├── gjb_rules_part2_appendix_j.json # 规则-第2部分(附录J)
-│   ├── gjb_rules_part3_other_appendices.json # 规则-第3部分(其他附录)
-│   ├── srs_kb_graph_v2.json            # 知识图谱v2(7720节点)
-│   └── srs_kb.json                     # 旧知识库(23参数)
-│
-├── docs/srs_project/                   # 项目文档
-│   ├── README.md                       # 项目入口
-│   ├── 01_PROJECT_OVERVIEW.md          # 项目概览
-│   ├── 02_DATASET.md                   # 数据集说明
-│   ├── 03_DETECTION_DETAILS.md         # 检测细节
-│   ├── 04_PAPER_REPRODUCTION.md        # 论文复现
-│   ├── 05_EVALUATION.md                # 评测说明
-│   ├── 06_OPERATION_MANUAL.md          # 操作手册
-│   ├── 07_HANDOFF.md                   # 交接文档
-│   ├── ARCHITECTURE_DESIGN.md          # 架构设计
-│   ├── DESIGN_V2.md                    # 方案设计v2(多角度)
-│   ├── SRS_DATASET_SURVEY.md           # 数据集调研
-│   ├── DATA_AGENT_ANALYSIS.md          # 数据分析
-│   ├── literature_survey/              # 文献调研(128篇+专题报告)
-│   │   ├── SURVEY_SUMMARY.md           # 调研汇总
-│   │   ├── TOP5_DEEP_READ.md           # Top5论文精读
-│   │   └── (16个专题调研报告)
-│   ├── merged/                         # 融合方案文档(G1/G2/G9/G10)
-│   └── reading_reports/                # 读书报告
-│
-└── (Data-Juicer框架代码 — 上游,不修改)
+└── .sisyphus/                          # 审计报告(已清理)
 ```
+
+## 环境
+
+- MinerU venv: `~/mineru-env/bin/python`
+- GLM-5 API: `https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions`
+- API_KEY: `n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7`
+- MODEL: `ep-glsztk-1778496696841467392`
 
 ## 当前状态
 
-### 已完成
-- MinerU环境搭建(Python 3.12 venv, CPU模式)
-- GJB 438C-2021标准OCR(81页) + 规则提取(4类) + 完整规则库 + 差距分析
-- SRS数据集构建: 359份文档(65 GJB格式 + 294通用), 来自buaa/gjb438b/ieee830/nasa/radar等9+来源
-- 三层一致性检测引擎v2: 同值/文本-表格/逻辑, **Z3实际求解已集成**
-- Gold Standard构建: 3份(battery_srs / compiler_srs / scheduler_srs)
-- 评测框架就绪: `srs_eval.py` 对齐Gold Standard, 按层计算P/R/F1
-- 图片-文本匹配v3: Markdown引用提取 + VLM描述兜底
-- 统一文档处理 + 基于内容指纹的文档去重
-- 文献调研(5方向128篇) + Top5精读 + merged方案文档(G1/G2/G9/G10)
-
-### 进行中
-- 一致性检测假阳性优化
-- 扩展Gold Standard到更多文档
-
-### 环境
-- MinerU venv: `~/mineru-env/bin/python`
-- GLM-5 API: `https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions`
-- Kimi-K2.6 API: 多模态(文本+图片)
-
-## 常用命令
-
-```bash
-# MinerU解析(单文档)
-MINERU_MODEL_SOURCE=huggingface ~/mineru-env/bin/python tools/srs_mineru_parse.py
-
-# MinerU批量解析(数据集)
-MINERU_MODEL_SOURCE=huggingface ~/mineru-env/bin/python tools/srs_collection_mineru_parse.py
-
-# 统一文档处理(章节/约束/表格/图片整合)
-python3 tools/srs_unified_processor.py
-
-# 图片-文本匹配
-python3 tools/srs_image_text_matcher.py
-
-# 文档去重
-python3 tools/srs_dedup_documents.py
-
-# 约束提取
-python3 tools/srs_constraint_extract.py
-
-# 表格解析
-python3 tools/srs_table_parser.py
-
-# 一致性检测(v2, 含Z3实际求解)
-python3 tools/srs_consistency_checker_v2.py
-
-# 评测(对齐Gold Standard, 输出P/R/F1)
-python3 tools/srs_eval.py
-
-# GJB规则提取
-~/mineru-env/bin/python tools/srs_gjb_rule_extract.py
-
-# 知识图谱构建
-~/mineru-env/bin/python tools/srs_kb_graph_builder.py
-```
+- ✅ 数据准备：16份真实SRS已解析为markdown
+- ✅ 基础知识：GJB 120条规则 + 词典
+- ⬜ 调研1：SRS中实际不一致性类型（未开始）
+- ⬜ 调研2：SRS中"同一事物"分布模式（未开始）
+- ⬜ 调研3：现有方法调研（部分完成，需更新）
+- ⬜ 方向A方法设计（待调研后开始）
+- ⬜ 方向B方法设计（待调研后开始）
+- ⬜ Gold Standard构建（待方法设计后开始）

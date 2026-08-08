@@ -1,0 +1,2683 @@
+<Document doc_id="16流媒体传输服务软件需求规格说明-终稿">
+  <Section section_id="1.1" title="标识" start_line="2">
+    <Paragraph line="3">本文档已被批准的标识号：AZ6932.499.0119 SRS；</Paragraph>
+    <Paragraph line="4">本文档所适用的软件名称为：流媒体传输服务；</Paragraph>
+    <Paragraph line="5">本文档的版本号为：V1.00.04/2020年12月31日；</Paragraph>
+    <Paragraph line="6">本文档所适用的软件所属系统为：某信息系统软件。</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="7" />
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="8">
+    <Paragraph line="9">流媒体传输服务完成信息服务环境软件功能域软件音视频传输的功能，提供桌面、平板形态的软件，主要为信息系统业务软件提供流媒体信息的编解码和传输控制能力，能够屏蔽复杂、异构、互连的通信网络，在多种通信条件下运行；能够基于宽带网络环境下，提供基于UDP/IP协议，向服务调用者提供流媒体数据的传输服务，保证媒体数据的近实时接收和同步播放。</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="10">
+    <Paragraph line="11">需方：某单位；</Paragraph>
+    <Paragraph line="12">使用方：某单位；</Paragraph>
+    <Paragraph line="13">开发方：某单位；</Paragraph>
+    <Paragraph line="14">保障机构：某单位；</Paragraph>
+    <Paragraph line="15">运行方案：随操作系统自启动；</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="16">
+    <Paragraph line="17">在本文档中，第2章列出了本文档中引用的其它文档的信息，第3章详细描述了流媒体传输服务软件的各种需求以及实现方式，第4章规定了确认第3章各项需求正确实现的合格性验证方法，第5章描述本文档列出的各项需求与相应的系统需求规格说明文档列出的需求的对应关系。其中，第3章是本文档的主要部分。</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="18" />
+  <Section section_id="2" title="表 SEQ 表 \* ARABIC 1 引用文档" start_line="19">
+    <Paragraph line="20">文档编号</Paragraph>
+    <Paragraph line="21">标题</Paragraph>
+    <Paragraph line="22">修订版本</Paragraph>
+    <Paragraph line="23">修订日期</Paragraph>
+    <Paragraph line="24">编写单位</Paragraph>
+    <Paragraph line="25">GJB 438B-2009</Paragraph>
+    <Paragraph line="26">《军用软件开发文档编制规范》</Paragraph>
+    <Paragraph line="28">2009年5月</Paragraph>
+    <Paragraph line="29">总装备部</Paragraph>
+    <Paragraph line="30">GJB 439A-2013</Paragraph>
+    <Paragraph line="31">《军品软件质量保证通用要求》</Paragraph>
+    <Paragraph line="33">2013年7月</Paragraph>
+    <Paragraph line="34">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="35">GJB 450A-2004</Paragraph>
+    <Paragraph line="36">《装备可靠性工作通用要求》</Paragraph>
+    <Paragraph line="38">2004年7月</Paragraph>
+    <Paragraph line="39">总装备部</Paragraph>
+    <Paragraph line="40">GJB 2786A-2009</Paragraph>
+    <Paragraph line="41">《军用软件开发通用要求》</Paragraph>
+    <Paragraph line="43">2009年5月</Paragraph>
+    <Paragraph line="44">总装备部</Paragraph>
+    <Paragraph line="45">GJB 5235-2004</Paragraph>
+    <Paragraph line="46">《军用软件配置管理》</Paragraph>
+    <Paragraph line="48">2004年9月</Paragraph>
+    <Paragraph line="49">总装备部</Paragraph>
+    <Paragraph line="50">GJB/Z 102A-2012</Paragraph>
+    <Paragraph line="51">《军用软件安全性设计指南》</Paragraph>
+    <Paragraph line="53">2012年7月</Paragraph>
+    <Paragraph line="54">总装备部</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="56" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="57">
+    <Paragraph line="58">流媒体传输服务软件是由一个后端服务和多个客户端服务同时运行的C/S架构，但视频界面在Web端展现，客户端服务将视频数据通过Websocket连接推向Web端。采取这种架构的好处不仅可以利用Sip协议的会话控制信令，还能兼容chrome的性能。具体软件的实现过程分为三部分：视频会议、P2P视屏通话和视频流数据接入显示。</Paragraph>
+    <Paragraph line="59">流媒体服务端由会话控制模块、呼叫信令服务模块和媒体处理服务模块组成，主要负责视频信息采集、视频编解码处理、维护多路视频的数据处理。客户端由音视频会议模块和chrome浏览器组成，音视频会议由会议控制模块、呼叫信令处理模块和媒体处理模块组成。</Paragraph>
+    <Paragraph line="60">流媒体传输服务软件部署在服务器上，当软件启动后，进入工作状态，在该状态下等待应用程序接入；各终端机上的应用程序通过加载流媒体传输服务二次开发接口库访问服务器，连接服务器成功后即可完成流媒体传输控制、流媒体数据监控、流媒体参数配置、流媒体会话控制、流媒体数据传输。</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="61">
+    <Paragraph line="62">流媒体传输服务软件按照其功能需求，包含流媒体传输控制、流媒体数据监控、流媒体参数配置、流媒体会话控制、流媒体数据传输功能。</Paragraph>
+    <Paragraph line="63">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_1" section="3.2" />
+    <Paragraph line="64">图 SEQ 图 \* ARABIC 1 流媒体传输服务软件功能图</Paragraph>
+    <Image image_id="IMG_2" section="3.2" figure_number="1" caption="流媒体传输服务软件功能图" />
+    <Paragraph line="65">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_3" section="3.2" />
+    <Paragraph line="66">图 SEQ 图 \* ARABIC 2 流媒体传输服务软件用例图</Paragraph>
+    <Image image_id="IMG_4" section="3.2" figure_number="2" caption="流媒体传输服务软件用例图" />
+  </Section>
+  <Table table_id="T_1" type="other" title="流媒体传输服务软件所有能力标识" section="3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>流媒体数据传输</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-LMTSJCS</Cell>
+      <Cell>（1）能够为上层应用提供流媒体同步信息；(2)支持多路、多方向并行传输能力；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1/4.2 a)</Cell>
+      <Cell>2</Cell>
+      <Cell>流媒体会话控制</Cell>
+      <Cell>PZXQ-GN-LMTHHKZ</Cell>
+      <Cell>提供流媒体会话控制，支持点播、暂停、关闭等会话控制信令的可靠传输功能，能够返回会话状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>流媒体参数配置</Cell>
+      <Cell>PZXQ-GN-CSPZ</Cell>
+      <Cell>提供配置信息输入能力，能够通过接口设置流媒体传输服务的配置信息；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>4</Cell>
+      <Cell>流媒体传输控制</Cell>
+      <Cell>PZXQ-GN-LMTCSKZ</Cell>
+    </Row>
+    <Row>
+      <Cell>(1)提供流媒体数据流的单播、组播能力；(2)提供数据接收时的乱序重组功能，将流媒体数据按源发方发送顺序提交至接收端应用软件；(3)能够周期性的发送传输质量控制包；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>流媒体数据监控</Cell>
+      <Cell>PZXQ-GN-LMTSJJK</Cell>
+      <Cell>(1)能够检测流媒体传输服务运行过程中的状态信息；(2)能够向传输服务调用者返回流媒体数据当前的传输质量，包括传输时延、传输丢包率；</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1" title="流媒体数据传输（PZXQ-GN-LMTSJCS）" start_line="117" req_id="PZXQ-GN-LMTSJCS">
+    <Paragraph line="118">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_5" section="3.2.1" />
+    <Paragraph line="119">图 SEQ 图 \* ARABIC 3 流媒体数据传输用例图</Paragraph>
+    <Image image_id="IMG_6" section="3.2.1" figure_number="3" caption="流媒体数据传输用例图" />
+  </Section>
+  <Table table_id="T_2" type="other" title="流媒体数据传输所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>状态/方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>应用软件收发</Cell>
+      <Cell>PZXQ-GN-LMTSJCS-JRYYRJ</Cell>
+    </Row>
+    <Row>
+      <Cell>能够为上层应用提供流媒体同步信息</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1a)/4.2 a)</Cell>
+    </Row>
+    <Row>
+      <Cell>并行传输</Cell>
+      <Cell>PZXQ-GN-LMTSJCS-JRTYSB</Cell>
+      <Cell>支持多路、多方向并行传输能力</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1b)/4.2 a)</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.1" title="应用软件收发（PZXQ-GN-LMTSJCS-JRYYRJ）" start_line="146" req_id="PZXQ-GN-LMTSJCS" />
+  <Table table_id="T_3" type="other" title="应用软件收发用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：应用软件收发</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是应用软件收发的用例，描述流媒体传输服务应用软件收发报文数据的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1. 服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>10.目的应用软件C接收应用软件A发来的数据，数据收发成功。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9.流媒体传输服务收到应用软件A发来的数据，触发回调函数，按照回调函数接口要求输入源应用软件A信息、数据类型、可靠性、流媒体数据，发送数据至应用软件C；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.2" title="并行传输（PZXQ-GN-LMTSJCS-PXCS）" start_line="186" req_id="PZXQ-GN-LMTSJCS" />
+  <Table table_id="T_4" type="other" title="并行传输例描述" section="3.2.1.2">
+    <Headers>
+      <Cell>Use Case 名称：并行传输</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是并行传输的用例，描述应用软件收发流媒体数据时能够多路、多方向并行传输的过程。</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>9.应用软件C调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>10. 应用软件C调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>11.应用软件C调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>14.在目的应用软件A能够收到应用软件C发过来的数据，同时目的应用软件C接收源端应用软件A发来的数据，数据收发成功。</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>12．流媒体传输服务将数据按照配置文件中的拆分包大小，将数据拆分为若干个小数据包并编号；如果拆分包失败，执行异常流E4；</Cell>
+      <Cell>13. 流媒体传输服务同时将应用软件填写的目的应用软件信息和数据相关属性信息，为数据添加协议头信息，逐包发送至目的端应用软件；如果协议头构建失败，执行异常流E5;如果发送失败，执行异常流E6；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>异常流E4：运行支撑服务将拆分包失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E5：运行支撑服务将构建协议头失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E6：运行支撑服务将发送失败信息写入日志文件，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2" title="流媒体会话控制（PZXQ-GN-LMTHHKZ）" start_line="241" req_id="PZXQ-GN-LMTHHKZ">
+    <Paragraph line="242">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_7" section="3.2.2" />
+    <Paragraph line="243">图 SEQ 图 \* ARABIC 4 流媒体数据传输用例图</Paragraph>
+    <Image image_id="IMG_8" section="3.2.2" figure_number="4" caption="流媒体数据传输用例图" />
+  </Section>
+  <Table table_id="T_5" type="other" title="流媒体数据传输所有能力标识" section="3.2.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>状态/方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>点播会话控制</Cell>
+      <Cell>PZXQ-GN-LMTHHKZ-DBHHKZ</Cell>
+    </Row>
+    <Row>
+      <Cell>提供流媒体会话控制，支持点播会话控制信令的可靠传输功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+    </Row>
+    <Row>
+      <Cell>暂停会话控制</Cell>
+      <Cell>PZXQ-GN-LMTHHKZ-ZTHHKZ</Cell>
+      <Cell>提供流媒体会话控制，支持暂停会话控制信令的可靠传输功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>关闭会话控制</Cell>
+      <Cell>PZXQ-GN-LMTHHKZ-GBHHKZ</Cell>
+      <Cell>提供流媒体会话控制，支持关闭会话控制信令的可靠传输功能</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2.1" title="点播会话控制（PZXQ-GN-LMTHHKZ-DBHHKZ）" start_line="279" req_id="PZXQ-GN-LMTHHKZ" />
+  <Table table_id="T_6" type="other" title="点播会话控制用例描述" section="3.2.2.1">
+    <Headers>
+      <Cell>Use Case 名称：点播会话控制</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是点播会话控制的用例，描述流媒体传输服务点播会话控制的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用RTSP会话实体初始化接口，按照接口要求填入应用初始化会话时指定的实体号以及处理会话状态数据的回调函数等信息；</Cell>
+      <Cell>5.应用软件A调用会话表示请求接口；</Cell>
+      <Cell>7.应用软件C调用会话表示响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>9.应用软件A调用会话建立请求接口；</Cell>
+      <Cell>11.应用软件C调用会话建立响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+    </Row>
+    <Row>
+      <Cell>13. 应用软件A调用会话播放请求，输入相应的参数，如媒体对应的RTSP URL、播放开始时间；</Cell>
+      <Cell>15. 应用软件C调用会话播放响应，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>17.应用软件A的会话状态输出为正在播放。</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.流媒体传输服务发起会话表示请求，过程中根据对应会话通道的状态判断能否发起会话表示请求，若能发起会话表示请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+      <Cell>8.流媒体传输服务根据会话通道的状态判断能否进行表示请求响应，若能表示请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A；</Cell>
+      <Cell>10.流媒体传输服务发起会话建立请求，过程中根据对应会话通道的状态判断能否发起会话建立请求，若能发起会话建立请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C;</Cell>
+      <Cell>12.流媒体传输服务根据会话通道的状态判断能否进行建立请求响应，若能建立请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A;</Cell>
+      <Cell>14．根据对应会话通道的状态判断能否发起会话播放请求，若能发起会话播放请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+    </Row>
+    <Row>
+      <Cell>16.流媒体传输服务根据会话通道的状态判断能否进行播放请求响应，若能播放请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2.2" title="暂停会话控制（PZXQ-GN-LMTHHKZ-ZTHHKZ）" start_line="332" req_id="PZXQ-GN-LMTHHKZ" />
+  <Table table_id="T_7" type="other" title="暂停会话控制用例描述" section="3.2.2.2">
+    <Headers>
+      <Cell>Use Case 名称：暂停会话控制</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是暂停会话控制的用例，描述流媒体传输服务暂停会话控制的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用RTSP会话实体初始化接口，按照接口要求填入应用初始化会话时指定的实体号以及处理会话状态数据的回调函数等信息；</Cell>
+      <Cell>5.应用软件A调用会话表示请求接口；</Cell>
+      <Cell>7.应用软件C调用会话表示响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>9.应用软件A调用会话建立请求接口；</Cell>
+      <Cell>11.应用软件C调用会话建立响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+    </Row>
+    <Row>
+      <Cell>13. 应用软件A调用暂停播放请求，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>15. 应用软件C收到暂停播放请求回调。</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>6.流媒体传输服务发起会话表示请求，过程中根据对应会话通道的状态判断能否发起会话表示请求，若能发起会话表示请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+    </Row>
+    <Row>
+      <Cell>8.流媒体传输服务根据会话通道的状态判断能否进行表示请求响应，若能表示请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A；</Cell>
+      <Cell>10.流媒体传输服务发起会话建立请求，过程中根据对应会话通道的状态判断能否发起会话建立请求，若能发起会话建立请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C;</Cell>
+      <Cell>12.流媒体传输服务根据会话通道的状态判断能否进行建立请求响应，若能建立请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A;</Cell>
+      <Cell>14．根据对应会话通道的状态判断能否发起会话暂停请求，若能发起会话暂停请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2.3" title="关闭会话控制（PZXQ-GN-LMTHHKZ-GBHHKZ）" start_line="380" req_id="PZXQ-GN-LMTHHKZ" />
+  <Table table_id="T_8" type="other" title="关闭会话控制用例描述" section="3.2.2.3">
+    <Headers>
+      <Cell>Use Case 名称：暂停会话控制</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是暂停会话控制的用例，描述流媒体传输服务暂停会话控制的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用RTSP会话实体初始化接口，按照接口要求填入应用初始化会话时指定的实体号以及处理会话状态数据的回调函数等信息；</Cell>
+      <Cell>5.应用软件A调用会话表示请求接口；</Cell>
+      <Cell>7.应用软件C调用会话表示响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>9.应用软件A调用会话建立请求接口；</Cell>
+      <Cell>11.应用软件C调用会话建立响应接口，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+    </Row>
+    <Row>
+      <Cell>13. 应用软件A调用关闭会话请求，输入相应的参数，如媒体对应的RTSP URL；</Cell>
+      <Cell>15. 应用软件C收到关闭请求回调。</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>6.流媒体传输服务发起会话表示请求，过程中根据对应会话通道的状态判断能否发起会话表示请求，若能发起会话表示请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+    </Row>
+    <Row>
+      <Cell>8.流媒体传输服务根据会话通道的状态判断能否进行表示请求响应，若能表示请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A；</Cell>
+      <Cell>10.流媒体传输服务发起会话建立请求，过程中根据对应会话通道的状态判断能否发起会话建立请求，若能发起会话建立请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C;</Cell>
+      <Cell>12.流媒体传输服务根据会话通道的状态判断能否进行建立请求响应，若能建立请求响应则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件A;</Cell>
+      <Cell>14．根据对应会话通道的状态判断能否发起会话关闭请求，若能发起会话关闭请求则封装相应会话描述信息并发送，同时维护会话通道的状态，并通知应用软件C；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3" title="流媒体参数配置（PZXQ-GN-CSPZ）" start_line="428" req_id="PZXQ-GN-CSPZ">
+    <Paragraph line="429">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_9" section="3.2.3" />
+    <Paragraph line="430">图 SEQ 图 \* ARABIC 5 流媒体参数配置用例图</Paragraph>
+    <Image image_id="IMG_10" section="3.2.3" figure_number="5" caption="流媒体参数配置用例图" />
+  </Section>
+  <Table table_id="T_9" type="other" title="流媒体参数配置所有能力标识" section="3.2.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>媒体参数设置</Cell>
+      <Cell>PZXQ-GN-CSPZ-MTCSPZ</Cell>
+    </Row>
+    <Row>
+      <Cell>提供配置信息输入能力，能够通过接口设置流媒体传输服务的媒体参数设置配置信息。</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+    </Row>
+    <Row>
+      <Cell>成员参数设置</Cell>
+      <Cell>PZXQ-GN-CSPZ-MDDZCSPZ</Cell>
+      <Cell>提供配置信息输入能力，能够通过接口设置流媒体传输服务的成员参数设置配置信息。</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3.1" title="媒体参数设置（PZXQ-GN-CSPZ-MTCSPZ）" start_line="457" req_id="PZXQ-GN-CSPZ" />
+  <Table table_id="T_10" type="other" title="媒体参数设置用例描述" section="3.2.3.1">
+    <Headers>
+      <Cell>Use Case 名称：媒体参数设置</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是媒体参数设置的用例，描述用户在流媒体传输服务运行时对媒体参数设置动态修改的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>7.应用软件A修改调用设置媒体参数接口，修改媒体数据的帧间隔。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>10. 目的应用软件C接收界面上显示源端应用软件A发来的数据，数据收发成功。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9．流媒体传输服务按照设置的媒体数据的帧间隔进行数据传输；</Cell>
+      <Cell>检测服务配置信息合法性，当遇到不合法输入时提示用户错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志文件，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3.2" title="成员参数设置（PZXQ-GN-CSPZ-MDDZCSPZ）" start_line="498" req_id="PZXQ-GN-CSPZ" />
+  <Table table_id="T_11" type="other" title="成员参数设置用例描述" section="3.2.3.2">
+    <Headers>
+      <Cell>Use Case 名称：成员参数设置</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是动态配置目的地址参数的用例，描述用户在流媒体传输服务运行时对目的地址参数动态修改的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>7.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>9.目的应用软件C接收界面上显示源端应用软件A发来的数据，数据收发成功。</Cell>
+      <Cell>10.应用软件A调用设置目的地址参数接口，设置删除成员地址C。</Cell>
+    </Row>
+    <Row>
+      <Cell>11.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>12.目的应用软件C接收界面上未收到源端应用软件A发来的数据。</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+    </Row>
+    <Row>
+      <Cell>8．流媒体传输服务按照设置的目的地址进行数据传输；</Cell>
+      <Cell>检测服务配置信息合法性，当遇到不合法输入时提示用户错误信息</Cell>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志文件，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.4" title="流媒体传输控制（PZXQ-GN-LMTCSKZ）" start_line="543" req_id="PZXQ-GN-LMTCSKZ">
+    <Paragraph line="544">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_11" section="3.2.4" />
+    <Paragraph line="545">图 SEQ 图 \* ARABIC 6 流媒体传输控制用例图</Paragraph>
+    <Image image_id="IMG_12" section="3.2.4" figure_number="6" caption="流媒体传输控制用例图" />
+  </Section>
+  <Table table_id="T_12" type="other" title="流媒体传输控制所有能力标识" section="3.2.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>乱序重组</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-LMTCSKZ-LXCZ</Cell>
+      <Cell>提供数据接收时的乱序重组功能，将流媒体数据按源发方发送顺序提交至接收端应用软件；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+  </Table>
+  <Section section_id="4.1.4" title="a)" start_line="562">
+    <Paragraph line="564">传输质量控制</Paragraph>
+    <Paragraph line="565">PZXQ-GN-LMTCSKZ-CSZLKZ</Paragraph>
+    <Paragraph line="566">能够周期性的发送传输质量控制包</Paragraph>
+    <Paragraph line="567">沿用</Paragraph>
+    <Paragraph line="568">桌面版、平板版</Paragraph>
+    <Paragraph line="569">运行阶段</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="b)" start_line="570">
+    <Paragraph line="572">流媒体组播控制</Paragraph>
+    <Paragraph line="573">PZXQ-GN-LMTCSKZ-LMTZBKZ</Paragraph>
+    <Paragraph line="574">提供流媒体数据流的单播、组播能力</Paragraph>
+    <Paragraph line="575">沿用</Paragraph>
+    <Paragraph line="576">桌面版、平板版</Paragraph>
+    <Paragraph line="577">运行阶段</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="c)" start_line="578" />
+  <Section section_id="3.2.4.1" title="乱序重组（PZXQ-GN-LMTCSKZ-LXCZ）" start_line="580" req_id="PZXQ-GN-LMTCSKZ" />
+  <Table table_id="T_13" type="other" title="乱序重组用例描述" section="3.2.4.1">
+    <Headers>
+      <Cell>Use Case 名称：乱序重组</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是乱序重组的用例，描述应用软件收发流媒体数据时对数据进行乱序重组的过程。</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据，发送数据的长度大于服务配置文件中分包长度的大小；</Cell>
+      <Cell>11.目的端应用软件C正确接收源端应用软件A发来的数据，数据收发成功。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9．流媒体传输服务将数据按照配置文件中的拆分包大小，将数据拆分为若干个小数据包并编号；如果拆分包失败，执行异常流E4，逐包发送数据，如果发送失败，执行异常流E5；</Cell>
+      <Cell>10. 流媒体传输服务按照数据包编号进行重组；重组完成后提交给目的端应用软件C；</Cell>
+    </Row>
+    <Row>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>异常流E4：运行支撑服务将拆分包失败信息写入日志文件，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E5：运行支撑服务将发送失败信息写入日志文件，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.4.2" title="传输质量控制（PZXQ-GN-LMTCSKZ-CSZLKZ）" start_line="626" req_id="PZXQ-GN-LMTCSKZ" />
+  <Table table_id="T_14" type="other" title="传输质量控制用例描述" section="3.2.4.2">
+    <Headers>
+      <Cell>Use Case 名称：传输质量控制</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是传输质量控制的用例，描述应用软件收发流媒体数据时进行传输质量控制的过程。</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>10.目的应用软件C输出流媒体数据当前的传输质量，包括传输时延、传输丢包率。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9. 流媒体传输服务周期性的发送传输质量控制包。向目的端应用软件C返回流媒体数据当前的传输质量，包括传输时延、传输丢包率；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.4.3" title="流媒体组播控制（PZXQ-GN-LMTCSKZ-LMTZBKZ）" start_line="667" req_id="PZXQ-GN-LMTCSKZ" />
+  <Table table_id="T_15" type="other" title="流媒体组播控制用例描述" section="3.2.4.3">
+    <Headers>
+      <Cell>Use Case 名称：流媒体组播控制</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是流媒体组播控制的用例，描述流媒体传输服务进行流媒体数据流的单播、组播过程。</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>10.目的应用软件C输出源端应用软件A发来的数据，数据收发成功；</Cell>
+    </Row>
+    <Row>
+      <Cell>11. 应用软件A调用设置目的地址参数接口，按照接口要求输入增加组播地址目标成员的IP地址、目标成员的IP端口号等信息，将应用软件C添加到组播成员中。</Cell>
+      <Cell>12.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>14.目的应用软件C输出源端应用软件A发来的数据，数据收发成功；</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9.流媒体传输服务将顺序解析接收到的流媒体数据，并实时提交流媒体数据；</Cell>
+      <Cell>。</Cell>
+      <Cell>13.流媒体传输服务将顺序解析接收到的流媒体数据，并实时提交流媒体数据给组播成员；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.5" title="流媒体数据监控（PZXQ-GN-LMTSJJK）" start_line="717" req_id="PZXQ-GN-LMTSJJK">
+    <Paragraph line="718">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_13" section="3.2.5" />
+    <Paragraph line="719">图 SEQ 图 \* ARABIC 7 流媒体流媒体数据监控用例图</Paragraph>
+    <Image image_id="IMG_14" section="3.2.5" figure_number="7" caption="流媒体流媒体数据监控用例图" />
+  </Section>
+  <Table table_id="T_16" type="other" title="流媒体流媒体数据监控所有能力标识" section="3.2.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>服务状态采集监控</Cell>
+      <Cell>PZXQ-GN-LMTSJJK-FWZTCJJK</Cell>
+    </Row>
+    <Row>
+      <Cell>能够检测流媒体传输服务的内部状态；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面版、平板版</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+  </Table>
+  <Section section_id="4.1.5" title="a)" start_line="736">
+    <Paragraph line="738">传输质量监控</Paragraph>
+    <Paragraph line="739">PZXQ-GN-LMTSJJK-CSZLJK</Paragraph>
+    <Paragraph line="740">能够向传输服务调用者返回流媒体数据当前的传输质量，包括传输时延、传输丢包率；</Paragraph>
+    <Paragraph line="741">沿用</Paragraph>
+    <Paragraph line="742">桌面版、平板版</Paragraph>
+    <Paragraph line="743">运行阶段</Paragraph>
+  </Section>
+  <Section section_id="4.1.5" title="b)" start_line="744" />
+  <Section section_id="3.2.5.1" title="服务状态采集监控（PZXQ-GN-LMTSJJK-FWZTCJJK）" start_line="746" req_id="PZXQ-GN-LMTSJJK" />
+  <Table table_id="T_17" type="other" title="服务状态采集监控用例描述" section="3.2.5.1">
+    <Headers>
+      <Cell>Use Case 名称：服务状态采集监控</Cell>
+      <Cell>Actors：服务集成框架</Cell>
+      <Cell>概述：本用例是服务状态采集监控的用例，描述对局域网内传输服务状态信息的采集监控的过程；</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常、服务集成框架软件运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架启动查看服务状态，启动流媒体传输服务软件；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.在服务集成框架界面中可以看到当前网络中流媒体传输服务状态；</Cell>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>4.流媒体传输服务将其状态发送到服务集成框架软件处；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.5.2" title="传输质量监控（PZXQ-GN-LMTSJJK-CSZLJK）" start_line="774" req_id="PZXQ-GN-LMTSJJK" />
+  <Table table_id="T_18" type="other" title="传输质量监控用例描述" section="3.2.5.2">
+    <Headers>
+      <Cell>Use Case 名称：传输质量监控</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是传输质量监控的用例，描述应用软件收发流媒体数据时进行传输质量监控的过程。</Cell>
+      <Cell>前置条件：网络连接正常、流媒体传输服务运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务集成框架软件启动流媒体传输服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件A、应用软件C调用流媒体服务初始化接口，按照接口要求填入应用软件注册信息，以及接收数据回调函数，向服务进行注册；</Cell>
+      <Cell>6.应用软件A调用设置媒体参数接口，按照接口要求输入媒体数据的类型、媒体数据的帧间隔等信息。</Cell>
+      <Cell>7. 应用软件A调用设置目的地址参数接口，按照接口要求输入目标成员的IP地址、目标成员的IP端口号等信息。</Cell>
+      <Cell>8.应用软件A调用数据发送接口，按照接口要求输入流媒体数据缓冲区、流媒体数据缓冲区长度，发送数据；</Cell>
+      <Cell>10.目的应用软件C输出流媒体数据当前的传输质量，包括传输时延、传输丢包率。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.流媒体传输服务初始化成功，如果流媒体传输服务启动失败，执行异常流E1；</Cell>
+      <Cell>3.流媒体传输服务读取服务配置文件信息，如果读取失败，执行异常流E2；</Cell>
+      <Cell>5.流媒体传输服务记录应用软件A、应用软件C信息，完成应用软件A、应用软件C的注册；如果注册失败，执行异常流E3；</Cell>
+      <Cell>9. 流媒体传输服务周期性的发送传输质量控制包。向目的端应用软件C返回流媒体数据当前的传输质量，包括传输时延、传输丢包率；</Cell>
+      <Cell>当遇到不合法输入时提示用户错误信息，保证注释率不少于20%，能够准确记录编程过程</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行支撑服务将服务启动失败信息写入日志文件，用例结束。</Cell>
+      <Cell>异常流E2：运行支撑服务将读取配置文件失败信息写入日志，用例结束。</Cell>
+      <Cell>异常流E3：运行支撑服务将注册失败信息写入日志，并提示应用软件重新注册，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="815" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="816">
+    <Paragraph line="817">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_15" section="3.4.1" />
+    <Paragraph line="818">图 SEQ 图 \* ARABIC 8 流媒体传输服务软件外部接口需求</Paragraph>
+    <Image image_id="IMG_16" section="3.4.1" figure_number="8" caption="流媒体传输服务软件外部接口需求" />
+    <Paragraph line="819">流媒体传输服务软件外部接口包括：与服务集成框架接口、与运行支撑服务接口、与通信设备接口、与应用软件接口。</Paragraph>
+  </Section>
+  <Table table_id="T_19" type="qualification" title="流媒体传输服务软件外部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>流媒体传输服务软件与应用软件之间接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-WBJK-LMTCSFW-YYRJ</Cell>
+      <Cell>函数接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>应用软件</Cell>
+      <Cell>源用户信息、媒体类型、数据内容、数据长度、数据包的丢包率、数据包的传输时延、会话状态信息</Cell>
+    </Row>
+    <Row>
+      <Cell>低</Cell>
+      <Cell>应用软件</Cell>
+      <Cell>本系统</Cell>
+      <Cell>源用户信息、目的用户信息、媒体类型、传输接受数据回调函数、传输质量反馈回调函数</Cell>
+      <Cell>低</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>流媒体传输服务软件与通信设备之间接口</Cell>
+      <Cell>PZXQ-WBJK-LMTCSFW-TXSB</Cell>
+      <Cell>硬件接口</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>通信设备</Cell>
+      <Cell>源用户信息、目的用户信息、传输属性、数据内容、数据长度</Cell>
+      <Cell>低</Cell>
+      <Cell>通信设备</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>源用户信息、目的用户信息、传输属性、数据内容、数据长度</Cell>
+      <Cell>低</Cell>
+      <Cell>3</Cell>
+      <Cell>流媒体传输服务软件与运行支撑服务之间接口</Cell>
+      <Cell>PZXQ-WBJK-LMTCSFW-YXZCFW</Cell>
+    </Row>
+    <Row>
+      <Cell>函数接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>日志信息</Cell>
+      <Cell>低</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>流媒体传输服务软件与服务集成框架软件之间接口</Cell>
+      <Cell>PZXQ-WBJK-LMTCSFW-FWJCKJJK</Cell>
+      <Cell>函数接口</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>服务集成框架</Cell>
+      <Cell>服务状态信息</Cell>
+      <Cell>中</Cell>
+      <Cell>服务集成框架</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>服务控制信息</Cell>
+      <Cell>中</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.2" title="与应用软件接口（PZXQ-WBJK-LMTCSFW-YYRJ）" start_line="874" req_id="PZXQ-WBJK-LMTCSFW" />
+  <Table table_id="T_20" type="other" title="与应用软件接口数据元素说明" section="3.3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>源用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>目的用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>传输属性</Cell>
+      <Cell>策略号</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>服务质量</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>优先级</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>可靠性</Cell>
+      <Cell>unsigned int</Cell>
+    </Row>
+    <Row>
+      <Cell>报文版本类型</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>业务类型</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>加密类型</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned char</Cell>
+      <Cell>系统标识</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>信道标识</Cell>
+      <Cell>unsigned char</Cell>
+    </Row>
+    <Row>
+      <Cell>协议类型</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>压缩类型</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>char *</Cell>
+      <Cell>5</Cell>
+      <Cell>数据长度</Cell>
+    </Row>
+    <Row>
+      <Cell>数据长度</Cell>
+      <Cell>size_t</Cell>
+      <Cell>6</Cell>
+      <Cell>媒体数据的采样间隔</Cell>
+      <Cell>媒体数据的采样间隔</Cell>
+    </Row>
+    <Row>
+      <Cell>double</Cell>
+      <Cell>7</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>char</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>unsigned long</Cell>
+      <Cell>9</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>bool</Cell>
+      <Cell>10</Cell>
+      <Cell>数据包的丢包率</Cell>
+    </Row>
+    <Row>
+      <Cell>数据包的丢包率</Cell>
+      <Cell>double</Cell>
+      <Cell>11</Cell>
+      <Cell>数据包的往返时延</Cell>
+      <Cell>数据包的往返时延</Cell>
+    </Row>
+    <Row>
+      <Cell>double</Cell>
+      <Cell>12</Cell>
+      <Cell>同步时间差值</Cell>
+      <Cell>同步时间差值</Cell>
+      <Cell>double</Cell>
+    </Row>
+    <Row>
+      <Cell>13</Cell>
+      <Cell>媒体传输带宽</Cell>
+      <Cell>媒体传输带宽</Cell>
+      <Cell>long</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.3" title="与服务集成框架接口（PZXQ-WBJK-LMTCSFW-FWJCKJJK）" start_line="994" req_id="PZXQ-WBJK-LMTCSFW" />
+  <Table table_id="T_21" type="other" title="与服务集成框架接口数据元素说明" section="3.3.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务状态信息</Cell>
+      <Cell>服务名称、内存占用率、CPU占用率、启动状态</Cell>
+      <Cell>String</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>服务控制信息</Cell>
+      <Cell>服务的启动、停止和重启</Cell>
+      <Cell>String</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4" title="与运行支撑服务接口（PZXQ-WBJK-LMTCSFW-YXZCFW）" start_line="1011" req_id="PZXQ-WBJK-LMTCSFW" />
+  <Table table_id="T_22" type="other" title="与服务集成框架接口数据元素说明" section="3.3.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>日志信息</Cell>
+      <Cell>ERROR级别日志信息</Cell>
+      <Cell>char *</Cell>
+      <Cell>WARN级别日志信息</Cell>
+    </Row>
+    <Row>
+      <Cell>char *</Cell>
+      <Cell>INFO级别日志信息</Cell>
+      <Cell>char *</Cell>
+      <Cell>DEBUG级别日志信息</Cell>
+      <Cell>char *</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.5" title="与通信设备接口（PZXQ-WBJK-LMTCSFW-TXSB）" start_line="1030" req_id="PZXQ-WBJK-LMTCSFW" />
+  <Table table_id="T_23" type="other" title="与通信设备接口数据元素说明" section="3.3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>源用户信息</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>目的用户信息</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>3</Cell>
+      <Cell>传输属性</Cell>
+    </Row>
+    <Row>
+      <Cell>优先级</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>可靠性</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>业务类型</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned char</Cell>
+      <Cell>信道标识</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>4</Cell>
+      <Cell>数据内容</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>char *</Cell>
+      <Cell>5</Cell>
+      <Cell>数据长度</Cell>
+      <Cell>数据长度</Cell>
+    </Row>
+    <Row>
+      <Cell>size_t</Cell>
+      <Cell>7</Cell>
+      <Cell>媒体数据的采样间隔</Cell>
+      <Cell>媒体数据的采样间隔</Cell>
+      <Cell>double</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>char</Cell>
+      <Cell>9</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>unsigned long</Cell>
+      <Cell>10</Cell>
+      <Cell>媒体数据的标志位</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>bool</Cell>
+      <Cell>11</Cell>
+      <Cell>数据包的丢包率</Cell>
+      <Cell>数据包的丢包率</Cell>
+    </Row>
+    <Row>
+      <Cell>double</Cell>
+      <Cell>12</Cell>
+      <Cell>数据包的往返时延</Cell>
+      <Cell>数据包的往返时延</Cell>
+      <Cell>double</Cell>
+    </Row>
+    <Row>
+      <Cell>13</Cell>
+      <Cell>同步时间差值</Cell>
+      <Cell>同步时间差值</Cell>
+      <Cell>double</Cell>
+      <Cell>14</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体传输带宽</Cell>
+      <Cell>媒体传输带宽</Cell>
+      <Cell>long</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="1111" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="1112">
+    <Paragraph line="1113">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_17" section="3.4.1" />
+    <Paragraph line="1114">图 SEQ 图 \* ARABIC 9 流媒体传输服务软件内部接口需求</Paragraph>
+    <Image image_id="IMG_18" section="3.4.1" figure_number="9" caption="流媒体传输服务软件内部接口需求" />
+    <Paragraph line="1115">流媒体传输服务软件内部接口包括：监控接口、数据缓存接口、流媒体会话控制接口、流媒体参数配置接口、传输控制接口。</Paragraph>
+  </Section>
+  <Table table_id="T_24" type="qualification" title="流媒体传输服务软件内部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>监控接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-NBJK-LMTCSFW-JK</Cell>
+      <Cell>函数接口</Cell>
+      <Cell>流媒体数据传输模块</Cell>
+      <Cell>流媒体数据监控模块</Cell>
+      <Cell>用户信息、传输质量属性</Cell>
+    </Row>
+    <Row>
+      <Cell>低</Cell>
+      <Cell>2</Cell>
+      <Cell>流媒体会话控制接口</Cell>
+      <Cell>PZXQ-NBJK-LMTCSFW-BJMZKLXY</Cell>
+      <Cell>函数接口</Cell>
+    </Row>
+    <Row>
+      <Cell>流媒体数据传输模块</Cell>
+      <Cell>流媒体会话控制模块</Cell>
+      <Cell>会话状态、媒体信息</Cell>
+      <Cell>高</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>流媒体参数配置接口</Cell>
+      <Cell>PZXQ-NBJK-LMTCSFW-JYSJ</Cell>
+      <Cell>函数接口</Cell>
+      <Cell>流媒体参数配置</Cell>
+      <Cell>流媒体数据传输模块</Cell>
+    </Row>
+    <Row>
+      <Cell>成员参数信息、媒体类型</Cell>
+      <Cell>高</Cell>
+      <Cell>4</Cell>
+      <Cell>传输控制接口</Cell>
+      <Cell>PZXQ-NBJK-LMTCSFW-PDCSJ</Cell>
+    </Row>
+    <Row>
+      <Cell>函数接口</Cell>
+      <Cell>流媒体数据传输模块</Cell>
+      <Cell>流媒体传输控制模块</Cell>
+      <Cell>用户信息、媒体类型、传输属性、媒体流信息</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>客户端接口</Cell>
+      <Cell>PZXQ-NBJK-LMTCSFW-KHDJK</Cell>
+      <Cell>函数接口</Cell>
+      <Cell>流媒体数据传输模块</Cell>
+    </Row>
+    <Row>
+      <Cell>流媒体客户端模块</Cell>
+      <Cell>视频会话的建立、播放、暂停和终止</Cell>
+      <Cell>高</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.2" title="监控接口（PZXQ-NBJK-LMTCSFW-JK）" start_line="1166" req_id="PZXQ-NBJK-LMTCSFW" />
+  <Table table_id="T_25" type="other" title="监控接口数据元素说明" section="3.4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>流媒体传输信息</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>优先级</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned char</Cell>
+      <Cell>可靠性</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>媒体类型</Cell>
+      <Cell>char</Cell>
+    </Row>
+    <Row>
+      <Cell>业务类型</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>char *</Cell>
+      <Cell>数据长度</Cell>
+    </Row>
+    <Row>
+      <Cell>size_t</Cell>
+      <Cell>数据流量</Cell>
+      <Cell>Int</Cell>
+      <Cell>2</Cell>
+      <Cell>流媒体传输质量信息</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的压缩比</Cell>
+      <Cell>double</Cell>
+      <Cell>帧大小</Cell>
+      <Cell>double</Cell>
+      <Cell>分辨率</Cell>
+    </Row>
+    <Row>
+      <Cell>long</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.3" title="流媒体会话控制接口（PZXQ-NBJK-LMTCSFW-BJMZKLXY）" start_line="1210" req_id="PZXQ-NBJK-LMTCSFW" />
+  <Table table_id="T_26" type="other" title="流媒体会话控制接口数据元素说明" section="3.4.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>源用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>目的用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>会话控制信息</Cell>
+      <Cell>RTSP会话控制视频的URL</Cell>
+      <Cell>char *</Cell>
+      <Cell>RTSP会话控制音频的URL</Cell>
+    </Row>
+    <Row>
+      <Cell>char *</Cell>
+      <Cell>RTSP会话中视频的类型值</Cell>
+      <Cell>char</Cell>
+      <Cell>RTSP会话中音频的类型值</Cell>
+      <Cell>char</Cell>
+    </Row>
+    <Row>
+      <Cell>RTSP会话集中控制的URL</Cell>
+      <Cell>char *</Cell>
+      <Cell>播放开始时间</Cell>
+      <Cell>double</Cell>
+      <Cell>播放开始时间</Cell>
+    </Row>
+    <Row>
+      <Cell>double</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.4" title="流媒体参数配置接口（PZXQ-NBJK-LMTCSFW-JYSJ）" start_line="1268" req_id="PZXQ-NBJK-LMTCSFW" />
+  <Table table_id="T_27" type="other" title="校验数据包接口数据元素说明" section="3.4.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>目的用户信息</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned char</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>char</Cell>
+      <Cell>3</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>unsigned long</Cell>
+      <Cell>4</Cell>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>媒体数据的标志位</Cell>
+    </Row>
+    <Row>
+      <Cell>bool</Cell>
+      <Cell>5</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>char</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.5" title="流媒体传输控制接口（PZXQ-NBJK-LMTCSFW-PDCSJ）" start_line="1300" req_id="PZXQ-NBJK-LMTCSFW" />
+  <Table table_id="T_28" type="other" title="流媒体传输控制接口数据元素说明" section="3.4.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>源用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>目的用户信息</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>软件标识</Cell>
+    </Row>
+    <Row>
+      <Cell>unsigned int</Cell>
+      <Cell>用户IP</Cell>
+      <Cell>unsigned int</Cell>
+      <Cell>单元编号</Cell>
+      <Cell>usigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>媒体类型</Cell>
+      <Cell>媒体类型</Cell>
+      <Cell>char</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>char *</Cell>
+      <Cell>5</Cell>
+      <Cell>数据长度</Cell>
+    </Row>
+    <Row>
+      <Cell>数据长度</Cell>
+      <Cell>size_t</Cell>
+      <Cell>6</Cell>
+      <Cell>媒体数据的类型</Cell>
+      <Cell>媒体数据的类型</Cell>
+    </Row>
+    <Row>
+      <Cell>char</Cell>
+      <Cell>7</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+      <Cell>unsigned long</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>bool</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.6" title="流媒体客户端接口（PZXQ-NBJK-LMTCSFW-KHDJK）" start_line="1365" req_id="PZXQ-NBJK-LMTCSFW" />
+  <Table table_id="T_29" type="other" title="流媒体客户端接口数据元素表" section="3.4.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>IP地址</Cell>
+      <Cell>呼叫对端的IP地址</Cell>
+      <Cell>char *</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>Port端口</Cell>
+      <Cell>视频通话的的应用端口</Cell>
+      <Cell>size_t</Cell>
+      <Cell>3</Cell>
+      <Cell>实体号</Cell>
+    </Row>
+    <Row>
+      <Cell>标识会议号使用，区分不同会议</Cell>
+      <Cell>char</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="1387" />
+  <Table table_id="T_30" type="other" title="流媒体传输服务软件内部数据汇总表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据名称</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>相关功能及标识</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>用户信息</Cell>
+      <Cell>用户标识、软件标识、用户ip、单元编号</Cell>
+      <Cell>定义源、目的用户和软件信息</Cell>
+      <Cell>2</Cell>
+      <Cell>数据类型</Cell>
+    </Row>
+    <Row>
+      <Cell>用户消息类型、消息功能域分类、消息编号、消息子类型</Cell>
+      <Cell>定义传输数据的消息类型</Cell>
+      <Cell>3</Cell>
+      <Cell>传输属性</Cell>
+      <Cell>策略号、服务质量、优先级、可靠性、业务类型、加密类型、系统标识、信道标识、协议类型、压缩类型</Cell>
+    </Row>
+    <Row>
+      <Cell>定义数据的传输方式</Cell>
+      <Cell>4</Cell>
+      <Cell>数据包信息</Cell>
+      <Cell>数据id、数据总包数、当前数据包编号</Cell>
+      <Cell>定义数据和数据拆包信息</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>媒体数据信息</Cell>
+      <Cell>媒体数据类型、媒体数据的采样间隔、媒体数据的帧间隔、媒体数据的标志位、数据包的丢包率</Cell>
+      <Cell>数据包的往返时延、同步时间差值、媒体传输带宽</Cell>
+      <Cell>定义媒体信息类型</Cell>
+    </Row>
+    <Row>
+      <Cell>6</Cell>
+      <Cell>流媒体传输质量信息</Cell>
+      <Cell>媒体数据的压缩比、帧大小、分辨率</Cell>
+      <Cell>定义传输质量信息</Cell>
+      <Cell>7</Cell>
+    </Row>
+    <Row>
+      <Cell>会话控制信息</Cell>
+      <Cell>RTSP会话控制视频的URL、RTSP会话控制音频的URL、RTSP会话中视频的类型值、RTSP会话中音频的类型值、RTSP会话集中控制的URL、播放开始时间、播放开始时间</Cell>
+      <Cell>定义会话控制信息</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_31" type="other" title="用户信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>1</Cell>
+      <Cell>用户标识</Cell>
+      <Cell>4294967295</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>软件标识</Cell>
+      <Cell>4294967295</Cell>
+    </Row>
+    <Row>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>3</Cell>
+      <Cell>用户ip</Cell>
+    </Row>
+    <Row>
+      <Cell>4294967295</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>单元编号</Cell>
+      <Cell>4294967295</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_32" type="other" title="数据类型数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>1</Cell>
+      <Cell>用户消息类型</Cell>
+      <Cell>15</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>消息功能域分类</Cell>
+      <Cell>31</Cell>
+    </Row>
+    <Row>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>3</Cell>
+      <Cell>消息编号</Cell>
+    </Row>
+    <Row>
+      <Cell>127</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>消息子类型</Cell>
+      <Cell>255</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_33" type="other" title="传输属性数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>1</Cell>
+      <Cell>策略号</Cell>
+      <Cell>4294967295</Cell>
+      <Cell>0</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>服务质量</Cell>
+      <Cell>4294967295</Cell>
+    </Row>
+    <Row>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>3</Cell>
+      <Cell>优先级</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>可靠性</Cell>
+      <Cell>1</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>报文版本类型</Cell>
+      <Cell>255</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>6</Cell>
+      <Cell>业务类型</Cell>
+      <Cell>255</Cell>
+      <Cell>0</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>7</Cell>
+      <Cell>加密类型</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>8</Cell>
+      <Cell>系统标识</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>9</Cell>
+    </Row>
+    <Row>
+      <Cell>信道标识</Cell>
+      <Cell>255</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>协议类型</Cell>
+      <Cell>255</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>11</Cell>
+      <Cell>压缩类型</Cell>
+      <Cell>3</Cell>
+      <Cell>0</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_34" type="other" title="数据包信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>1</Cell>
+      <Cell>数据id</Cell>
+      <Cell>65535</Cell>
+      <Cell>0</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>数据总包数</Cell>
+      <Cell>32</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>包</Cell>
+      <Cell>3</Cell>
+      <Cell>数据包编号</Cell>
+    </Row>
+    <Row>
+      <Cell>32</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_35" type="other" title="媒体数据信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>1</Cell>
+      <Cell>媒体数据类型</Cell>
+      <Cell>10</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>媒体数据的采样间隔</Cell>
+      <Cell>600</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>ms</Cell>
+      <Cell>3</Cell>
+      <Cell>媒体数据的帧间隔</Cell>
+    </Row>
+    <Row>
+      <Cell>6000</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>ms</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>媒体数据的标志位</Cell>
+      <Cell>1</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>数据包的丢包率</Cell>
+      <Cell>100</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.6" title="适应性需求" start_line="1624">
+    <Paragraph line="1625">a）采用跨平台开发工具及开发环境，确保软件能适应不同硬件环境（如桌面平台、手持平台等），具有在多种国产操作系统运行适配能力；</Paragraph>
+    <Paragraph line="1626">b）后台服务按照处理器、操作系统的运行条件，根据自身功能要求分别编译生成桌面、平板等不同形态；</Paragraph>
+    <Paragraph line="1627">c）系统运行时能够根据系统登录者席位身份，加载不同的界面和服务，支持业务功能灵活重组；</Paragraph>
+    <Paragraph line="1628">d）依据在桌面、平板不同硬件形态，通过软件部署管理自动下载、安装相应环境的软件包，实现多平台运行。</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1629" />
+  <Section section_id="3.7" title="表 SEQ 表 \* ARABIC 37 流媒体传输服务软件安全性需求" start_line="1630">
+    <Paragraph line="1631">序号</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1632">
+    <Paragraph line="1633">详细说明</Paragraph>
+    <Paragraph line="1635">故障检测与诊断</Paragraph>
+    <Paragraph line="1636">软件自检，检测软件中的故障，阻止错误结果的影响</Paragraph>
+    <Paragraph line="1638">输入信息的合法性检查</Paragraph>
+    <Paragraph line="1639">软件应对编制信息、格式化代码、战果战损等需要用户编辑的信息具有合法性检查功能，避免用户输入无效数据。</Paragraph>
+    <Paragraph line="1641">异常日志记录</Paragraph>
+    <Paragraph line="1642">发生异常时，通过运维支撑服务提供的日志接口记录软件的失效原因和标识、软件异常位置和原因，给用户排查问题提供支撑能力</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="1644">
+    <Paragraph line="1645">在流媒体传输服务软件集成为系统后，随系统所集成的保密相关功能完成加密存储或加密交互，同时在系统安装和软件运行时设定权限密码。</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="1646" />
+  <Section section_id="3.9.1" title="运行环境需求" start_line="1647" />
+  <Table table_id="T_36" type="other" title="软件运行环境" section="3.9.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备</Cell>
+      <Cell>名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>软件要求</Cell>
+    </Headers>
+    <Row>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>操作系统：元心 V4.1.1/银河锐华V4.0.0.0</Cell>
+      <Cell>数据库：SQLite V3.0.0</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>操作系统：银河麒麟 V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="1703">
+    <Paragraph line="1704">编程语言：C/C++；</Paragraph>
+    <Paragraph line="1705">开发编译环境：Qt 5.6.0/5.9.6、EMSS v1.0.1；</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="1706" />
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="1707" />
+  <Table table_id="T_37" type="other" title="计算机硬件配置需求" section="3.10.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+    </Headers>
+    <Row>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="1749" />
+  <Section section_id="3.10.2" title="表 SEQ 表 \* ARABIC 40 流媒体传输服务软件计算机硬件资源利用需求表" start_line="1750">
+    <Paragraph line="1751">序号</Paragraph>
+    <Paragraph line="1752">计算机硬件能力</Paragraph>
+    <Paragraph line="1753">允许使用的最大值</Paragraph>
+    <Paragraph line="1754">说明</Paragraph>
+    <Paragraph line="1756">硬盘容量</Paragraph>
+    <Paragraph line="1757">≤50G</Paragraph>
+    <Paragraph line="1758">保证流媒体传输服务正常收发数据时，硬盘容量不小于50G</Paragraph>
+    <Paragraph line="1760">内存容量</Paragraph>
+    <Paragraph line="1761">≤20M</Paragraph>
+    <Paragraph line="1762">保证流媒体传输服务正常收发数据时，内存容量不小于20M</Paragraph>
+    <Paragraph line="1764">通信传输速率</Paragraph>
+    <Paragraph line="1765">≤网卡最大传输速率</Paragraph>
+    <Paragraph line="1766">流媒体传输服务传输速率由网卡性能决定</Paragraph>
+  </Section>
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="1768" />
+  <Table table_id="T_38" type="other" title="流媒体传输服务软件计算机需求" section="3.10.3">
+    <Headers>
+      <Cell>软件种类</Cell>
+      <Cell>软件名称</Cell>
+      <Cell>部署位置</Cell>
+      <Cell>软件版本</Cell>
+      <Cell>操作系统</Cell>
+    </Headers>
+    <Row>
+      <Cell>银河麒麟服务器版</Cell>
+      <Cell>轻量化服务器</Cell>
+      <Cell>V4.0.2</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>银河麒麟桌面版</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>V4.0.2</Cell>
+      <Cell>元心</Cell>
+      <Cell>携行作业设备、武器平台信息终端、携行信息终端</Cell>
+    </Row>
+    <Row>
+      <Cell>V4.0.0.0</Cell>
+      <Cell>银河锐华</Cell>
+      <Cell>V4.1.1</Cell>
+      <Cell>银河锐华</Cell>
+      <Cell>携行信息终端、武器平台信息终端、携行信息终端</Cell>
+    </Row>
+    <Row>
+      <Cell>V4.1.1</Cell>
+      <Cell>元心</Cell>
+      <Cell>V4.1.1</Cell>
+      <Cell>信息平台服务软件</Cell>
+      <Cell>运行支撑服务</Cell>
+    </Row>
+    <Row>
+      <Cell>轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Cell>
+      <Cell>随使用服务版本同步更新</Cell>
+      <Cell>信息平台服务软件</Cell>
+      <Cell>服务集成框架</Cell>
+      <Cell>轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Cell>
+    </Row>
+    <Row>
+      <Cell>随使用服务版本同步更新</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="1802">
+    <Paragraph line="1803">流媒体传输服务软件需要有线IP信道和无线IP宽带信道。</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="1804" />
+  <Table table_id="T_39" type="other" title="流媒体传输服务软件质量要求与措施表" section="3.11">
+    <Headers>
+      <Cell>序号</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3.11" title="软件质量因素" start_line="1807" />
+  <Section section_id="3.11" title="软件质量因素描述" start_line="1808">
+    <Paragraph line="1809">要求程度</Paragraph>
+    <Paragraph line="1810">采取的措施</Paragraph>
+    <Paragraph line="1812">功能性</Paragraph>
+    <Paragraph line="1813">实现全部所需功能的能力</Paragraph>
+    <Paragraph line="1814">符合3.2节系统能力需求</Paragraph>
+    <Paragraph line="1815">通过系统需求分析和软件设计满足功能指标</Paragraph>
+    <Paragraph line="1817">可靠性</Paragraph>
+    <Paragraph line="1818">产生正确、一致结果的能力</Paragraph>
+    <Paragraph line="1819">能够过滤用户非法输入，将异常信息提示给用户</Paragraph>
+    <Paragraph line="1820">通过异常处理模块</Paragraph>
+    <Paragraph line="1822">可维护性</Paragraph>
+    <Paragraph line="1823">易于更正的能力</Paragraph>
+    <Paragraph line="1824">维护人员可快速定位故障</Paragraph>
+    <Paragraph line="1825">运行日志记录文件</Paragraph>
+    <Paragraph line="1827">可用性</Paragraph>
+    <Paragraph line="1828">需要时进行访问和操作的能力</Paragraph>
+    <Paragraph line="1832">灵活性</Paragraph>
+    <Paragraph line="1833">易于适应需求变化的能力</Paragraph>
+    <Paragraph line="1837">可移植性</Paragraph>
+    <Paragraph line="1838">易于修改以适应新环境的能力</Paragraph>
+    <Paragraph line="1842">可重用性</Paragraph>
+    <Paragraph line="1843">可被多个应用使用的能力</Paragraph>
+    <Paragraph line="1847">可测试性</Paragraph>
+    <Paragraph line="1848">易于充分测试的能力</Paragraph>
+    <Paragraph line="1849">可仿真环境下完成主要功能验证</Paragraph>
+    <Paragraph line="1850">依靠操作系统和仿真网络</Paragraph>
+    <Paragraph line="1852">易用性</Paragraph>
+    <Paragraph line="1853">易于学习和使用的能力</Paragraph>
+    <Paragraph line="1854">人机接口友好，简洁、一致，并形成闭环反馈</Paragraph>
+    <Paragraph line="1855">采用统一人机交互规范对人机接口进行一体设计，按业务流程和实装操作进行界面设计和交互设计</Paragraph>
+    <Paragraph line="1856">10</Paragraph>
+    <Paragraph line="1857">易分析性</Paragraph>
+    <Paragraph line="1858">提供日志功能，用于记录软件运行过程中关键处理和运行情况；</Paragraph>
+    <Paragraph line="1859">软件异常时，可根据日志记录定位软件异常位置和原因；</Paragraph>
+    <Paragraph line="1860">软件程序代码注释率：不小于20%</Paragraph>
+    <Paragraph line="1861">采用统一代码规范，对代码进行静态检查；分析代码中关键处理逻辑、异常控制逻辑，打印日志</Paragraph>
+    <Paragraph line="1862">11</Paragraph>
+    <Paragraph line="1863">稳定性</Paragraph>
+    <Paragraph line="1864">软件稳定运行，资源占用率保持平稳</Paragraph>
+    <Paragraph line="1866">软件实现中，对内存、cpu等资源精准控制；通过压力测试和重复测试保证软件稳定运行</Paragraph>
+    <Paragraph line="1867">12</Paragraph>
+    <Paragraph line="1868">易恢复性</Paragraph>
+    <Paragraph line="1869">当软件模块运行发生错误时，可查看错误提示，软件运行异常中止情况下，软件应能重新启动运行</Paragraph>
+    <Paragraph line="1870">平均失效恢复时间（MTTR）：不大于0.5小时</Paragraph>
+    <Paragraph line="1871">组件化设计，降低软件之间耦合度；软件服务化、对象化，实现软件负载均衡、可恢复</Paragraph>
+    <Paragraph line="1872">13</Paragraph>
+    <Paragraph line="1873">容错性</Paragraph>
+    <Paragraph line="1874">对软件输入输出信息进行数据处理范围和规则检验</Paragraph>
+    <Paragraph line="1875">软件能识别异常值，提示用户</Paragraph>
+    <Paragraph line="1876">软件缺陷密度（FD）低于3.6（缺陷数/千行）</Paragraph>
+    <Paragraph line="1877">通过软件设计、单元测试、集成测试控制缺陷密度</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="1878" />
+  <Table table_id="T_40" type="other" title="流媒体传输服务软件设计与实现约束要求表" section="3.12">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>软件设计与实现遵循的标准</Cell>
+      <Cell>GJB438B-2009 军用软件开发文档通用要求</Cell>
+    </Headers>
+    <Row>
+      <Cell>GJB5235-2004 军用软件配置管理</Cell>
+      <Cell>GJB 9001B-2009质量管理体系要求</Cell>
+      <Cell>软件开发原则</Cell>
+      <Cell>采用面向对象、面向服务的开发方法</Cell>
+      <Cell>编程语言及规则</Cell>
+    </Row>
+    <Row>
+      <Cell>流媒体传输服务软件采用C++开发语言，符合C++编码规范；界面设计符合界面设计规范；软件集成遵循服务集成规范、数据集成规范、界面集成规范</Cell>
+      <Cell>开发工具及环境要求</Cell>
+      <Cell>开发工具：Qt 5.6.0/5.9.6、C/C++ x11</Cell>
+      <Cell>开发环境：x86架构银河麒麟操作系统</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.13" title="人员需求" start_line="1898" />
+  <Section section_id="3.13" title="表 SEQ 表 \* ARABIC 44 人员需求表" start_line="1899">
+    <Paragraph line="1900">序号</Paragraph>
+    <Paragraph line="1901">人员对象</Paragraph>
+    <Paragraph line="1902">技术水平</Paragraph>
+    <Paragraph line="1904">软件开发人员</Paragraph>
+    <Paragraph line="1905">熟练掌握软件需求分析、设计、编码、测试方法，并熟练使用QT、C/C++ x11开发工具</Paragraph>
+    <Paragraph line="1907">软件保障人员</Paragraph>
+    <Paragraph line="1908">了解银河麒麟操作系统、元心/中兴绿地/锐华麒麟操作系统、鼎桥TDOS操作系统的一般操作使用以及达梦数据库/SQLite、WPS/永中办公软件的基本管理维护功能，能够熟练操作使用信息系统软件</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="1909" />
+  <Section section_id="3.14" title="表 SEQ 表 \* ARABIC 45 培训需求表" start_line="1910">
+    <Paragraph line="1911">序号</Paragraph>
+    <Paragraph line="1912">所属技能需求</Paragraph>
+    <Paragraph line="1913">培训内容</Paragraph>
+    <Paragraph line="1914">培训对象</Paragraph>
+    <Paragraph line="1915">备注</Paragraph>
+    <Paragraph line="1917">基础软件安装</Paragraph>
+    <Paragraph line="1918">服务器维护指南</Paragraph>
+    <Paragraph line="1919">使用人员</Paragraph>
+    <Paragraph line="1920">根据使用人员对平台软件的熟悉程度适当调整培训时间</Paragraph>
+    <Paragraph line="1922">应用软件安装</Paragraph>
+    <Paragraph line="1923">软件用户手册</Paragraph>
+    <Paragraph line="1924">维护人员</Paragraph>
+    <Paragraph line="1927">软件使用培训</Paragraph>
+    <Paragraph line="1928">集成方提供软件操作使用培训</Paragraph>
+    <Paragraph line="1929">使用人员</Paragraph>
+    <Paragraph line="1932">软件故障排查</Paragraph>
+    <Paragraph line="1933">开发方或集成方提供软件故障排查、状态恢复培训</Paragraph>
+    <Paragraph line="1934">使用人员、维护人员</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="1936" />
+  <Section section_id="3.15" title="表 SEQ 表 \* ARABIC 46 软件保障需求表" start_line="1937">
+    <Paragraph line="1938">序号</Paragraph>
+    <Paragraph line="1939">保障需求</Paragraph>
+    <Paragraph line="1940">保障设备</Paragraph>
+    <Paragraph line="1941">保障人员</Paragraph>
+    <Paragraph line="1942">备注</Paragraph>
+    <Paragraph line="1944">软件故障排查</Paragraph>
+    <Paragraph line="1945">便携机，网络调试助手</Paragraph>
+    <Paragraph line="1946">用户维护人员</Paragraph>
+    <Paragraph line="1949">软件升级</Paragraph>
+    <Paragraph line="1950">光驱，软件安装盘</Paragraph>
+    <Paragraph line="1951">开发人员</Paragraph>
+    <Paragraph line="1953">开发方应提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。</Paragraph>
+    <Paragraph line="1954">系统交付后应按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="1955">
+    <Paragraph line="1956">流媒体传输服务软件无其它特殊需求。</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="1957">
+    <Paragraph line="1958">使用光盘存储和包装流媒体传输服务软件的安装系统，并对安装光盘进行必要的标识、封装、防震等保护处理。可以人工携带光盘介质移交用户安装、检查、测试、验收。否则，可照抄如下内容：“流媒体传输服务软件对包装需求留待与用户协商确定”。</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="表 SEQ 表 \* ARABIC 47 流媒体传输服务软件验收、交付和包装需求表" start_line="1959">
+    <Paragraph line="1960">序号</Paragraph>
+    <Paragraph line="1961">软件名称</Paragraph>
+    <Paragraph line="1962">数量</Paragraph>
+    <Paragraph line="1963">包装标记</Paragraph>
+    <Paragraph line="1964">说明</Paragraph>
+    <Paragraph line="1966">流媒体传输服务软件</Paragraph>
+    <Paragraph line="1968">光盘 CD-1-207</Paragraph>
+    <Paragraph line="1969">自动安装</Paragraph>
+    <Paragraph line="1971">流媒体传输服务软件用户手册</Paragraph>
+    <Paragraph line="1973">光盘 CD-1-207</Paragraph>
+    <Paragraph line="1976">流媒体传输服务软件程序员手册</Paragraph>
+    <Paragraph line="1978">光盘 CD-1-207</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="1980" />
+  <Table table_id="T_41" type="other" title="流媒体传输服务软件重要程度排序表" section="3.18">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求类型</Cell>
+      <Cell>重要性与关键性等级</Cell>
+      <Cell>高级</Cell>
+      <Cell>中级</Cell>
+    </Headers>
+    <Row>
+      <Cell>低级</Cell>
+      <Cell>1</Cell>
+      <Cell>功能需求</Cell>
+      <Cell>3.2.1.1</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.2</Cell>
+      <Cell>3</Cell>
+      <Cell>3.2.2.1</Cell>
+      <Cell>4</Cell>
+      <Cell>3.2.2.2</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>3.2.2.3</Cell>
+      <Cell>6</Cell>
+      <Cell>3.2.3.1</Cell>
+      <Cell>7</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.3.2</Cell>
+      <Cell>8</Cell>
+      <Cell>3.2.4.1</Cell>
+      <Cell>9</Cell>
+      <Cell>3.2.4.2</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>3.2.4.3</Cell>
+      <Cell>12</Cell>
+      <Cell>3.2.5.1</Cell>
+      <Cell>13</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.5.2</Cell>
+      <Cell>14</Cell>
+      <Cell>接口需求</Cell>
+      <Cell>3.3.2</Cell>
+      <Cell>15</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.3</Cell>
+      <Cell>16</Cell>
+      <Cell>3.3.4</Cell>
+      <Cell>17</Cell>
+      <Cell>3.3.5</Cell>
+    </Row>
+    <Row>
+      <Cell>18</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.7" title="安全性需求" start_line="2043">
+    <Paragraph line="2044">3.7</Paragraph>
+    <Paragraph line="2046">19</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2047">
+    <Paragraph line="2048">3.8</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="2050" />
+  <Section section_id="4" title="表 SEQ 表 \* ARABIC 49 合格性规定" start_line="2051">
+    <Paragraph line="2052">需求名称/标识</Paragraph>
+    <Paragraph line="2053">本文档的章节号</Paragraph>
+    <Paragraph line="2054">合格性方法</Paragraph>
+    <Paragraph line="2055">合格性级别</Paragraph>
+    <Paragraph line="2056">应用软件收发/PZXQ-GN-LMTSJCS-JRYYRJ</Paragraph>
+    <Paragraph line="2057">3.2.1.1</Paragraph>
+    <Paragraph line="2058">A、B</Paragraph>
+    <Paragraph line="2059">a、b</Paragraph>
+    <Paragraph line="2060">并行传输/PZXQ-GN-LMTSJCS-PXCS</Paragraph>
+    <Paragraph line="2061">3.2.1.2</Paragraph>
+    <Paragraph line="2062">A、B</Paragraph>
+    <Paragraph line="2063">a、b</Paragraph>
+    <Paragraph line="2064">点播会话控制/PZXQ-GN-LMTHHKZ-DBHHKZ</Paragraph>
+    <Paragraph line="2065">3.2.2.1</Paragraph>
+    <Paragraph line="2066">A、B</Paragraph>
+    <Paragraph line="2067">a、b</Paragraph>
+    <Paragraph line="2068">暂停会话控制/PZXQ-GN-LMTHHKZ-ZTHHKZ</Paragraph>
+    <Paragraph line="2069">3.2.2.2</Paragraph>
+    <Paragraph line="2070">A、B</Paragraph>
+    <Paragraph line="2071">a、b</Paragraph>
+    <Paragraph line="2072">关闭会话控制/PZXQ-GN-LMTHHKZ-GBHHKZ</Paragraph>
+    <Paragraph line="2073">3.2.2.3</Paragraph>
+    <Paragraph line="2074">A、B</Paragraph>
+    <Paragraph line="2075">a、b</Paragraph>
+    <Paragraph line="2076">媒体参数设置/PZXQ-GN-CSPZ-MTCSPZ</Paragraph>
+    <Paragraph line="2077">3.2.3.1</Paragraph>
+    <Paragraph line="2078">A、B</Paragraph>
+    <Paragraph line="2079">a、b</Paragraph>
+    <Paragraph line="2080">成员参数设置/PZXQ-GN-CSPZ-MDDZCSPZ</Paragraph>
+    <Paragraph line="2081">3.2.3.1</Paragraph>
+    <Paragraph line="2082">A、B</Paragraph>
+    <Paragraph line="2083">a、b</Paragraph>
+    <Paragraph line="2084">乱序重组/PZXQ-GN-LMTCSKZ-LXCZ</Paragraph>
+    <Paragraph line="2085">3.2.4.1</Paragraph>
+    <Paragraph line="2086">A、B</Paragraph>
+    <Paragraph line="2087">a、b</Paragraph>
+    <Paragraph line="2088">传输质量控制/PZXQ-GN-LMTCSKZ-CSZLKZ</Paragraph>
+    <Paragraph line="2089">3.2.4.2</Paragraph>
+    <Paragraph line="2090">A、B</Paragraph>
+    <Paragraph line="2091">a、b</Paragraph>
+    <Paragraph line="2092">流媒体组播控制/ PZXQ-GN-LMTCSKZ-LMTZBKZ</Paragraph>
+    <Paragraph line="2093">3.2.4.3</Paragraph>
+    <Paragraph line="2094">A、B</Paragraph>
+    <Paragraph line="2095">a、b</Paragraph>
+    <Paragraph line="2096">服务状态采集监控/PZXQ-GN-LMTSJJK-FWZTCJ</Paragraph>
+    <Paragraph line="2097">3.2.5.1</Paragraph>
+    <Paragraph line="2098">A、B</Paragraph>
+    <Paragraph line="2099">a、b</Paragraph>
+    <Paragraph line="2100">传输质量监控/PZXQ-GN-LMTSJJK-FWZTCJ</Paragraph>
+    <Paragraph line="2101">3.2.5.2</Paragraph>
+    <Paragraph line="2102">A、B</Paragraph>
+    <Paragraph line="2103">a、b</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2105" />
+  <Table table_id="T_42" type="traceability" title="需求的正向追踪性" section="5">
+    <Headers>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>本文档的名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="2117">
+    <Paragraph line="2118">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2119">
+    <Paragraph line="2120">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2122">
+    <Paragraph line="2123">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2124">
+    <Paragraph line="2125">1.2</Paragraph>
+    <Paragraph line="2127">系统和软件用途</Paragraph>
+    <Paragraph line="2128">1.2.1</Paragraph>
+    <Paragraph line="2129">系统和软件用途</Paragraph>
+    <Paragraph line="2130">1.2.1</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="2132">
+    <Paragraph line="2133">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="2134">
+    <Paragraph line="2135">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2137">
+    <Paragraph line="2138">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2139">
+    <Paragraph line="2140">1.3</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2142" />
+  <Section section_id="2" title="引用文档" start_line="2144">
+    <Paragraph line="2147">运行环境要求</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="2149">
+    <Paragraph line="2150">3.9</Paragraph>
+    <Paragraph line="2152">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="2154">
+    <Paragraph line="2157">功能</Paragraph>
+    <Paragraph line="2158">4.1</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="2159">
+    <Paragraph line="2160">3.2</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="a)" start_line="2162">
+    <Paragraph line="2163">流媒体数据传输/PZXQ-GN-LMTSJCS</Paragraph>
+    <Paragraph line="2164">3.2.1</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="b)" start_line="2166">
+    <Paragraph line="2167">流媒体数据传输/PZXQ-GN-LMTSJCS</Paragraph>
+    <Paragraph line="2168">3.2.1</Paragraph>
+    <Paragraph line="2170">4.1.2</Paragraph>
+    <Paragraph line="2171">流媒体会话控制/PZXQ-GN-LMTHHKZ</Paragraph>
+    <Paragraph line="2172">3.2.2</Paragraph>
+    <Paragraph line="2174">4.1.3</Paragraph>
+    <Paragraph line="2175">流媒体参数配置/PZXQ-GN-LMTCSKZ</Paragraph>
+    <Paragraph line="2176">3.2.3</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="a)" start_line="2178">
+    <Paragraph line="2179">流媒体传输控制/PZXQ-GN-LMTCSKZ</Paragraph>
+    <Paragraph line="2180">3.2.4</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="b)" start_line="2182">
+    <Paragraph line="2183">流媒体传输控制/PZXQ-GN-LMTCSKZ</Paragraph>
+    <Paragraph line="2184">3.2.4</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="c)" start_line="2186">
+    <Paragraph line="2187">流媒体传输控制/PZXQ-GN-LMTCSKZ</Paragraph>
+    <Paragraph line="2188">3.2.4</Paragraph>
+  </Section>
+  <Section section_id="4.1.5" title="a)" start_line="2190">
+    <Paragraph line="2191">流媒体数据监控/PZXQ-GN-LMTSJJK</Paragraph>
+    <Paragraph line="2192">3.2.5</Paragraph>
+  </Section>
+  <Section section_id="4.1.5" title="b)" start_line="2194">
+    <Paragraph line="2195">流媒体数据监控/PZXQ-GN-LMTSJJK</Paragraph>
+    <Paragraph line="2196">3.2.5</Paragraph>
+    <Paragraph line="2198">与应用软件接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号1" start_line="2199">
+    <Paragraph line="2200">与应用软件接口/ PZXQ-WBJK-LMTCSFW-YYRJ</Paragraph>
+    <Paragraph line="2201">3.3.2</Paragraph>
+    <Paragraph line="2203">与服务集成框架接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号2" start_line="2204">
+    <Paragraph line="2205">与服务集成框架接口/ PZXQ-WBJK-LMTCSFW-FWJCKJJK</Paragraph>
+    <Paragraph line="2206">3.3.3</Paragraph>
+    <Paragraph line="2208">与运行支撑服务接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号3" start_line="2209">
+    <Paragraph line="2210">与运行支撑服务接口/ PZXQ-WBJK-LMTCSFW-YXZCFW</Paragraph>
+    <Paragraph line="2211">3.3.4</Paragraph>
+    <Paragraph line="2213">与通信设备接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号4" start_line="2214">
+    <Paragraph line="2215">与通信设备接口/ PZXQ-WBJK-LMTCSFW-TXSB</Paragraph>
+    <Paragraph line="2216">3.3.5</Paragraph>
+    <Paragraph line="2218">性能</Paragraph>
+    <Paragraph line="2219">4.2</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="2220">
+    <Paragraph line="2221">3.2.1.1</Paragraph>
+    <Paragraph line="2223">输入/输出</Paragraph>
+    <Paragraph line="2224">4.3</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2225">
+    <Paragraph line="2226">3.3</Paragraph>
+    <Paragraph line="2228">数据处理要求</Paragraph>
+    <Paragraph line="2229">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="2230">
+    <Paragraph line="2231">3.5</Paragraph>
+    <Paragraph line="2233">接口</Paragraph>
+    <Paragraph line="2234">4.5</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2235">
+    <Paragraph line="2236">3.3</Paragraph>
+    <Paragraph line="2238">可靠性</Paragraph>
+    <Paragraph line="2239">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2240">
+    <Paragraph line="2241">3.6</Paragraph>
+    <Paragraph line="2243">安全性</Paragraph>
+    <Paragraph line="2244">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="2245">
+    <Paragraph line="2246">3.7</Paragraph>
+    <Paragraph line="2248">保密性</Paragraph>
+    <Paragraph line="2249">4.7.3</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2250">
+    <Paragraph line="2251">3.8</Paragraph>
+    <Paragraph line="2253">设计约束</Paragraph>
+    <Paragraph line="2255">设计和构造约束</Paragraph>
+    <Paragraph line="2256">3.12</Paragraph>
+    <Paragraph line="2258">编程语言及编程规则</Paragraph>
+    <Paragraph line="2259">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求、计算机资源需求" start_line="2260">
+    <Paragraph line="2261">3.9、 3.10</Paragraph>
+    <Paragraph line="2263">开发工具及环境要求</Paragraph>
+    <Paragraph line="2264">5.2</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求、计算机资源需求" start_line="2265">
+    <Paragraph line="2266">3.9、 3.10</Paragraph>
+    <Paragraph line="2268">测试工具和环境要求</Paragraph>
+    <Paragraph line="2269">5.3</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2270">
+    <Paragraph line="2271">3.12</Paragraph>
+    <Paragraph line="2273">结构复杂性要求</Paragraph>
+    <Paragraph line="2274">5.4</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2275">
+    <Paragraph line="2276">3.6</Paragraph>
+    <Paragraph line="2278">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2280">
+    <Paragraph line="2281">3.17</Paragraph>
+    <Paragraph line="2283">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求、培训需求、软件保证需求" start_line="2285">
+    <Paragraph line="2286">3.13、3.14、3.15</Paragraph>
+  </Section>
+  <Table table_id="T_43" type="traceability" title="需求的逆向追踪性" section="3.13">
+    <Headers>
+      <Cell>本文档名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="2299">
+    <Paragraph line="2300">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2301">
+    <Paragraph line="2302">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2304">
+    <Paragraph line="2305">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2306">
+    <Paragraph line="2307">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="2309">
+    <Paragraph line="2310">1.2.1</Paragraph>
+    <Paragraph line="2311">系统和软件用途</Paragraph>
+    <Paragraph line="2312">1.2.1</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="2314">
+    <Paragraph line="2315">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="2316">
+    <Paragraph line="2317">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2319">
+    <Paragraph line="2320">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2321">
+    <Paragraph line="2322">1.3</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2324" />
+  <Section section_id="2" title="引用文档" start_line="2326" />
+  <Section section_id="3" title="需求" start_line="2329">
+    <Paragraph line="2331">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3.1" title="要求的状态和方式" start_line="2334">
+    <Paragraph line="2335">3.1</Paragraph>
+    <Paragraph line="2336">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="2339">
+    <Paragraph line="2340">3.2</Paragraph>
+    <Paragraph line="2341">功能</Paragraph>
+    <Paragraph line="2342">4.1</Paragraph>
+    <Paragraph line="2344">应用软件收发/ PZXQ-GN-LMTSJCS-JRYYRJ</Paragraph>
+    <Paragraph line="2345">3.2.1.1</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="a)" start_line="2347">
+    <Paragraph line="2349">并行传输/PZXQ-GN-LMTSJCS-PXCS</Paragraph>
+    <Paragraph line="2350">3.2.1.2</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="b)" start_line="2352">
+    <Paragraph line="2354">点播会话控制/ PZXQ-GN-LMTHHKZ-DBHHKZ</Paragraph>
+    <Paragraph line="2355">3.2.2.1</Paragraph>
+    <Paragraph line="2357">4.1.2</Paragraph>
+    <Paragraph line="2359">暂停会话控制/ PZXQ-GN-LMTHHKZ-ZTHHKZ</Paragraph>
+    <Paragraph line="2360">3.2.2.2</Paragraph>
+    <Paragraph line="2362">4.1.2</Paragraph>
+    <Paragraph line="2364">关闭会话控制/ PZXQ-GN-LMTHHKZ-GBHHKZ</Paragraph>
+    <Paragraph line="2365">3.2.2.3</Paragraph>
+    <Paragraph line="2367">4.1.2</Paragraph>
+    <Paragraph line="2369">媒体参数设置/ PZXQ-GN-CSPZ-MTCSPZ</Paragraph>
+    <Paragraph line="2370">3.2.3.1</Paragraph>
+    <Paragraph line="2372">4.1.3</Paragraph>
+    <Paragraph line="2374">成员参数设置/ PZXQ-GN-CSPZ-MDDZCSPZ</Paragraph>
+    <Paragraph line="2375">3.2.3.2</Paragraph>
+    <Paragraph line="2377">4.1.3</Paragraph>
+    <Paragraph line="2379">乱序重组/PZXQ-GN-LMTCSKZ-LXCZ</Paragraph>
+    <Paragraph line="2380">3.2.4.1</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="a)" start_line="2382">
+    <Paragraph line="2384">传输质量控制/PZXQ-GN-LMTCSKZ-CSZLKZ</Paragraph>
+    <Paragraph line="2385">3.2.4.2</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="b)" start_line="2387">
+    <Paragraph line="2389">流媒体组播控制/PZXQ-GN-LMTCSKZ-LMTZBKZ</Paragraph>
+    <Paragraph line="2390">3.2.4.3</Paragraph>
+  </Section>
+  <Section section_id="4.1.4" title="c)" start_line="2392">
+    <Paragraph line="2394">服务状态采集监控/ PZXQ-GN-LMTSJJK-FWZTCJ</Paragraph>
+    <Paragraph line="2395">3.2.5.1</Paragraph>
+  </Section>
+  <Section section_id="4.1.5" title="a)" start_line="2397">
+    <Paragraph line="2399">传输质量监控/ PZXQ-GN-LMTSJJK-FWZTCJ</Paragraph>
+    <Paragraph line="2400">3.2.5.2</Paragraph>
+  </Section>
+  <Section section_id="4.1.5" title="b)" start_line="2402">
+    <Paragraph line="2404">与服务集成框架接口/ PZXQ-WBJK-LMTCSFW-FWJCKJJK</Paragraph>
+    <Paragraph line="2405">3.3.3</Paragraph>
+    <Paragraph line="2406">与服务集成框架接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号1" start_line="2407">
+    <Paragraph line="2409">与运行支撑服务接口/ PZXQ-WBJK-LMTCSFW-YXZCFW</Paragraph>
+    <Paragraph line="2410">3.3.4</Paragraph>
+    <Paragraph line="2411">与运行支撑服务接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号2" start_line="2412">
+    <Paragraph line="2414">与通信设备接口/ PZXQ-WBJK-LMTCSFW-TXSB</Paragraph>
+    <Paragraph line="2415">3.3.5</Paragraph>
+    <Paragraph line="2416">与通信设备接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号3" start_line="2417">
+    <Paragraph line="2419">与数据库接口/ PZXQ-WBJK-LMTCSFW-SJKJK</Paragraph>
+    <Paragraph line="2420">3.3.6</Paragraph>
+    <Paragraph line="2421">与数据库接口</Paragraph>
+  </Section>
+  <Section section_id="4.5" title="序号4" start_line="2422">
+    <Paragraph line="2424">3.3</Paragraph>
+    <Paragraph line="2425">输入/输出、接口</Paragraph>
+    <Paragraph line="2426">4.3、4.5</Paragraph>
+    <Paragraph line="2428">输入/输出、接口</Paragraph>
+    <Paragraph line="2429">4.3、4.5</Paragraph>
+    <Paragraph line="2431">3.5</Paragraph>
+    <Paragraph line="2432">数据处理要求</Paragraph>
+    <Paragraph line="2433">4.4</Paragraph>
+    <Paragraph line="2435">3.6</Paragraph>
+    <Paragraph line="2436">可靠性</Paragraph>
+    <Paragraph line="2437">4.7.1</Paragraph>
+    <Paragraph line="2439">3.7</Paragraph>
+    <Paragraph line="2440">安全性</Paragraph>
+    <Paragraph line="2441">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2443">
+    <Paragraph line="2444">3.8</Paragraph>
+    <Paragraph line="2445">保密性</Paragraph>
+    <Paragraph line="2446">4.7.3</Paragraph>
+  </Section>
+  <Section section_id="3.9.1" title="运行环境需求" start_line="2448">
+    <Paragraph line="2449">3.9.1</Paragraph>
+    <Paragraph line="2450">运行环境要求</Paragraph>
+  </Section>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="2453">
+    <Paragraph line="2454">3.9.2</Paragraph>
+    <Paragraph line="2455">开发工具及环境要求</Paragraph>
+    <Paragraph line="2456">5.2</Paragraph>
+    <Paragraph line="2458">3.11</Paragraph>
+    <Paragraph line="2459">质量控制要求</Paragraph>
+    <Paragraph line="2462">3.12</Paragraph>
+    <Paragraph line="2463">质量控制要求</Paragraph>
+    <Paragraph line="2466">3.13</Paragraph>
+    <Paragraph line="2467">软件保障要求</Paragraph>
+    <Paragraph line="2470">3.14</Paragraph>
+    <Paragraph line="2471">软件保障要求</Paragraph>
+    <Paragraph line="2474">3.15</Paragraph>
+    <Paragraph line="2475">软件保障要求</Paragraph>
+    <Paragraph line="2478">3.17</Paragraph>
+    <Paragraph line="2479">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2482">
+    <Paragraph line="2483">无。</Paragraph>
+    <Paragraph line="2485">PAGE   \* MERGEFORMATII</Paragraph>
+    <Paragraph line="2487">PAGE   \* MERGEFORMATI</Paragraph>
+    <Paragraph line="2489">PAGE   \* MERGEFORMAT2</Paragraph>
+    <Paragraph line="2491">PAGE   \* MERGEFORMAT1</Paragraph>
+  </Section>
+</Document>

@@ -1,0 +1,3036 @@
+<Document doc_id="09数据同步共享服务软件需求规格说明-终">
+  <Section section_id="1" title="范围" start_line="1" />
+  <Section section_id="1.1" title="标识" start_line="2">
+    <Paragraph line="3">本文档已被批准的标识号：AZ6932.490.0109 SRS；</Paragraph>
+    <Paragraph line="4">本文档所适用的软件名称为：数据同步共享服务；</Paragraph>
+    <Paragraph line="5">本文档的版本号为：V1.00.03/2020年06月25日；</Paragraph>
+    <Paragraph line="6">本文档所适用的软件所属系统为：某级信息系统软件。</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="7" />
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="8">
+    <Paragraph line="9">某级信息系统软件按照国产自主可控要求，进行基础软件环境选型，以及应用软件的新研和国产化迁移改造，对功能要素分散、流程独立的业务功能进行整合优化，研制适应不同使用需求、使用场景的软件，实现信息系统软件的融合、型谱优化和业务提能，推动某信息系统软件向“国产化、服务化、轻量化”方向发展。</Paragraph>
+    <Paragraph line="10">某信息服务环境软件是某信息系统软件的重要组成，是连接底层各类硬件信息基础设施与上层各种应用系统的桥梁，通过基础平台融合汇聚底层资源，规范技术体制、支撑体系运行、促进互通互联等，是支撑构建某信息系统的重要支撑，其软件主要部署运行在各级机构的信息处理设备上，提供系统运维、数据运维、信息传输、信息处理、信息展现等功能，支撑应用软件和用户完成开发、集成、运维、运行全流程的使用。</Paragraph>
+    <Paragraph line="11">数据同步共享服务完成信息服务环境软件功能域数据同步共享的功能，提供桌面、平板两种形态的软件，主要为上层应用软件提供数据同步和数据共享功能，建立以用户需求为中心的信息的请求/应答和按需共享机制。数据共享功能提供桌面版和平板版，支持应用软件按主题订阅或发布数据；数据同步功能包括主备数据库同步功能、数据下载功能和数据上传功能。其中，主备数据库同步功能仅提供桌面版；数据下载功能和数据上传功能均仅提供平板版。数据资源管理功能仅提供桌面版，支持数据资源目录展现、资源主题的模糊查找功能和数据资源的修改功能。</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统和软件的一般特性" start_line="12">
+    <Paragraph line="13">需方：某单位；</Paragraph>
+    <Paragraph line="14">使用方：某单位；</Paragraph>
+    <Paragraph line="15">开发方：某单位；</Paragraph>
+    <Paragraph line="16">保障机构：某单位；</Paragraph>
+    <Paragraph line="17">运行方案：系统开机后，进入系统运维，切换至本软件的相关功能菜单。</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="18">
+    <Paragraph line="19">在本文档中，第2章列出了本文档中引用的其它文档的信息，第3章详细描述了数据同步共享服务的各种需求以及实现方式，第4章规定了确认第3章各项需求正确实现的合格性验证方法，第5章描述本文档列出的各项需求与相应的系统需求规格说明文档列出的需求的对应关系。其中，第3章是本文档的主要部分。</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="20" />
+  <Section section_id="2" title="表  SEQ 表 \* ARABIC 1引用文档表" start_line="21">
+    <Paragraph line="22">文档编号</Paragraph>
+    <Paragraph line="23">标题</Paragraph>
+    <Paragraph line="24">修订版本</Paragraph>
+    <Paragraph line="25">修订日期</Paragraph>
+    <Paragraph line="26">编写单位</Paragraph>
+    <Paragraph line="27">GJB 438B-2009</Paragraph>
+    <Paragraph line="28">《军用软件开发文档通用要求》</Paragraph>
+    <Paragraph line="30">2009年5月</Paragraph>
+    <Paragraph line="31">总装备部</Paragraph>
+    <Paragraph line="32">GJB 439A-2013</Paragraph>
+    <Paragraph line="33">《军品软件质量保证通用要求》</Paragraph>
+    <Paragraph line="35">2013年7月</Paragraph>
+    <Paragraph line="36">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="37">GJB/Z 102A-2012</Paragraph>
+    <Paragraph line="38">《军用软件安全性设计指南》</Paragraph>
+    <Paragraph line="40">2012年7月</Paragraph>
+    <Paragraph line="41">总装备部</Paragraph>
+    <Paragraph line="42">GJB 1267-1991</Paragraph>
+    <Paragraph line="43">《军用软件维护》</Paragraph>
+    <Paragraph line="45">1991年10月</Paragraph>
+    <Paragraph line="46">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="47">GJB 2786A-2009</Paragraph>
+    <Paragraph line="48">《军用软件开发通用要求》</Paragraph>
+    <Paragraph line="50">2009年5月</Paragraph>
+    <Paragraph line="51">总装备部</Paragraph>
+    <Paragraph line="52">GJB 1268A-2004</Paragraph>
+    <Paragraph line="53">《军用软件验收要求》</Paragraph>
+    <Paragraph line="55">2004年9月</Paragraph>
+    <Paragraph line="56">总装备部</Paragraph>
+    <Paragraph line="57">GJB 5235-2004</Paragraph>
+    <Paragraph line="58">《军用软件配置管理》</Paragraph>
+    <Paragraph line="60">2004年9月</Paragraph>
+    <Paragraph line="61">总装备部</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="62" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="63">
+    <Paragraph line="64">数据同步共享服务只有一个活动运行状态，无需多个运行状态。数据同步共享服务运行方式在桌面版、平板版。</Paragraph>
+  </Section>
+  <Section section_id="3.1.1" title="软件活动图" start_line="65" />
+  <Section section_id="3.1.1.1" title="数据同步服务软件活动图" start_line="66">
+    <Paragraph line="67">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_1" section="3.1.1.1" />
+    <Paragraph line="68">图  SEQ 图 \* ARABIC 1数据同步服务车上状态时活动图</Paragraph>
+    <Paragraph line="70">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_2" section="3.1.1.1" />
+    <Paragraph line="71">图  SEQ 图 \* ARABIC 2 数据同步服务下车状态时活动图</Paragraph>
+    <Paragraph line="72">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_3" section="3.1.1.1" />
+    <Paragraph line="73">图  SEQ 图 \* ARABIC 3 数据同步服务上车状态时活动图</Paragraph>
+  </Section>
+  <Section section_id="3.1.1.2" title="数据共享服务软件活动图" start_line="74">
+    <Paragraph line="75">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_4" section="3.1.1.2" />
+  </Section>
+  <Section section_id="3.3.2.1" title="图  SEQ 图 \* ARABIC 4 数据共享服务在数据发布状态时活动图" start_line="76">
+    <Paragraph line="78">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_5" section="3.3.2.1" />
+    <Paragraph line="79">图  SEQ 图 \* ARABIC 5 数据共享服务在主题订阅状态时活动图</Paragraph>
+  </Section>
+  <Section section_id="3.1.1.3" title="数据资源管理软件活动图" start_line="80">
+    <Paragraph line="81">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_6" section="3.1.1.3" />
+    <Paragraph line="82">图  SEQ 图 \* ARABIC 6 数据资源管理中目录展现活动图</Paragraph>
+    <Paragraph line="83">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_7" section="3.1.1.3" />
+    <Paragraph line="84">图  SEQ 图 \* ARABIC 7数据资源管理中数据资源修改活动图</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="85">
+    <Paragraph line="86">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_8" section="3.2" />
+    <Paragraph line="87">图  SEQ 图 \* ARABIC 8 数据同步共享服务功能图</Paragraph>
+    <Paragraph line="88">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_9" section="3.2" />
+    <Paragraph line="89">图  SEQ 图 \* ARABIC 9 数据同步共享服务用例图</Paragraph>
+  </Section>
+  <Table table_id="T_1" type="other" title="数据同步共享服务所有能力标识" section="3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据同步</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB</Cell>
+      <Cell>车上状态下，同步主备达梦数据库间数据、上车和下车状态下同步达梦数据库和sqlite数据库间数据</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2</Cell>
+      <Cell>2</Cell>
+      <Cell>数据资源管理</Cell>
+      <Cell>PZXQ-GN-SJZYGL</Cell>
+      <Cell>数据资源目录的展现功能和模糊查找；提供数据资源的修改功能；支持修改数据资源的内容。</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据共享</Cell>
+      <Cell>PZXQ-GN-SJGX</Cell>
+      <Cell>存储和获取数据</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1" title="数据同步能力(PZXQ-GN-SJTB)" start_line="123" req_id="PZXQ-GN-SJTB">
+    <Paragraph line="124">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_10" section="3.2.1" />
+    <Paragraph line="125">图  SEQ 图 \* ARABIC 10 数据同步任务用例图</Paragraph>
+  </Section>
+  <Table table_id="T_2" type="other" title="数据同步服务软件所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行</Cell>
+      <Cell>状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>主备达梦增量同步</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB</Cell>
+      <Cell>主备服务器数据库间增量同步功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.a、4.2.a</Cell>
+      <Cell>2</Cell>
+      <Cell>数据下载</Cell>
+      <Cell>PZXQ-GN-SJTB-SJXZ</Cell>
+    </Row>
+    <Row>
+      <Cell>达梦数据库到席位sqlite3轻量数据库的数据下载功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.f、4.2.a</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>数据上传</Cell>
+      <Cell>PZXQ-GN-SJTB-SJSC</Cell>
+      <Cell>席位sqlite3轻量数据库到达梦数据库的数据上传功能</Cell>
+      <Cell>新研</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.g、4.2.a</Cell>
+      <Cell>4</Cell>
+      <Cell>日志记录功能</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-RZJLGN</Cell>
+      <Cell>对同步任务日志、数据下载日志和数据上传日志进行记录</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.h</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.1" title="主备达梦增量同步(PZXQ-GN-SJTB-ZBZLTB)" start_line="168" req_id="PZXQ-GN-SJTB">
+    <Paragraph line="169">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_11" section="3.2.1.1" />
+    <Paragraph line="170">图  SEQ 图 \* ARABIC 11数据同步任务用例图</Paragraph>
+  </Section>
+  <Table table_id="T_3" type="other" title="主备达梦数据库增量同步能力标识" section="3.2.1.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>同步任务管理功能</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWGL</Cell>
+      <Cell>提供对同步任务的管理功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.d</Cell>
+      <Cell>2</Cell>
+      <Cell>同步任务配置功能</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWPZ</Cell>
+      <Cell>提供对同步数据表、任务优先级的配置功能</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.b</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>异常处理功能</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-YCCLGN</Cell>
+      <Cell>提供异常处理功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.e</Cell>
+      <Cell>同步任务管理(PZXQ-GN-SJTB-ZBZLTB-TBRWGL)</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 12 同步任务功能用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_4" type="other" title="同步任务管理功能能力标识" section="3.2.1.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>同步任务创建</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWCJ</Cell>
+      <Cell>同步任务的创建；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.d</Cell>
+      <Cell>2</Cell>
+      <Cell>同步任务列表展示</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWLBZS</Cell>
+      <Cell>同步任务列表展示；</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.d</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>同步任务停止</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWTZ</Cell>
+      <Cell>同步任务提供停止功能；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.d</Cell>
+      <Cell>4</Cell>
+      <Cell>同步任务启动</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWQD</Cell>
+    </Row>
+    <Row>
+      <Cell>同步任务启动功能；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.d</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>同步任务删除</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWSC</Cell>
+      <Cell>同步任务删除功能</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.d</Cell>
+      <Cell>6</Cell>
+      <Cell>同步任务详情展示</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBRWXQZS</Cell>
+      <Cell>同步任务详细信息展示功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.d</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 13 同步任务管理流程图</Cell>
+      <Cell>同步任务创建（PZXQ-GN-SJTB-ZBZLTB-TBRWCJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_5" type="other" title="创建同步任务用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：主备数据库间增量同步任务创建</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现主备达梦数据库间数据的同步功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户配置源达梦数据库的IP地址、数据库用户名和密码；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．用户输入任务相关信息，如任务名称、任务描述和任务同步频率、任务需求方、选择好任务优先级；输入目标数据库IP地址、用户名和密码；选择好同步策略；</Cell>
+      <Cell>4.用户勾选同步数据表；</Cell>
+      <Cell>10.启动任务</Cell>
+      <Cell>3.连接源达梦数据库，从主数据库中获取所有表名称，如果失败，执行异常流E1，如果成功，返回数据库表名称列表。</Cell>
+      <Cell>5．判断同步表是否存在其他任务中，如果不存在，执行异常流E2，否则，执行下一步判断。</Cell>
+    </Row>
+    <Row>
+      <Cell>6.判断同步表在从数据库中是否存在，如果不存在，执行异常流E3，否则，执行下一步判断。</Cell>
+      <Cell>7.判断同步表结构是否一致，如果不存在，执行异常流E4，否则，执行下一步判断。</Cell>
+      <Cell>8.开启源数据库审计功能，只记录insert、update、delete成功的命令，如果不成功，执行异常流E5，否则，将任务实例加入任务队列。</Cell>
+      <Cell>9.任务创建成功。</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：系统提示同步表存在其他任务中，用例结束。</Cell>
+      <Cell>异常流E3：系统提示目标数据库同步表不存在，用例结束。</Cell>
+      <Cell>异常流E4：系统提示源数据库、目标数据库，同步表结构不一致，用例结束。</Cell>
+      <Cell>异常流E5：系统提示源数据库审计功能开启失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>同步任务删除（PZXQ-GN-SJTB-ZBZLTB-TBRWSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_6" type="other" title="同步任务删除用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：删除同步任务</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现删除同步任务功能</Cell>
+      <Cell>前置条件：主达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.选择“任务监控”标签页</Cell>
+    </Row>
+    <Row>
+      <Cell>3.用户界面展示任务列表</Cell>
+      <Cell>4.在任务列表中的，点击“删除”按钮</Cell>
+      <Cell>2.连接源达梦数据库，从主数据库中获取所有任务信息，如果失败，执行异常流E1，如果成功，返回同步任务列表json字符串。</Cell>
+      <Cell>5.修改任务实例的运行状态，使得该任务实例永久不能进入同步任务线程池。如果失败，进入执行异常流E2</Cell>
+      <Cell>6.从数据库中删除该任务记录如果失败，进入执行异常流E2</Cell>
+    </Row>
+    <Row>
+      <Cell>7.重新展示同步任务列表</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示删除任务失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务停止（PZXQ-GN-SJTB-ZBZLTB-TBRWTZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_7" type="other" title="同步任务停止用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步任务停止</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现停止同步任务功能</Cell>
+      <Cell>前置条件：主达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.选择“任务监控”标签页</Cell>
+    </Row>
+    <Row>
+      <Cell>3.用户界面展示任务列表</Cell>
+      <Cell>4.在任务列表中的，点击“停止”按钮</Cell>
+      <Cell>2.连接源达梦数据库，从主数据库中获取所有任务信息，如果失败，执行异常流E1，如果成功，返回同步任务列表json字符串。</Cell>
+      <Cell>5.修改任务实例的运行状态，使得该任务实例不会再进入同步任务线程池，而不会执行同步任务，如果失败，执行异常流E2。</Cell>
+      <Cell>6.对应任务行，“停止”按钮置灰,“开始”按钮可以点击，“状态”圆点变为红色。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示任务停止失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务启动（PZXQ-GN-SJTB-ZBZLTB-TBRWQD）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_8" type="other" title="同步任务启动用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步任务启动</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现启动同步任务功能</Cell>
+      <Cell>前置条件：主达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.选择“任务监控”标签页</Cell>
+    </Row>
+    <Row>
+      <Cell>3.用户界面展示任务列表</Cell>
+      <Cell>4.在任务列表中的，点击“启动”按钮</Cell>
+      <Cell>连接源达梦数据库，从主数据库中获取所有任务信息，如果失败，执行异常流E1，如果成功，返回同步任务列表json字符串。</Cell>
+      <Cell>5.修改任务实例的运行状态，使得该任务实例可以进入同步任务线程池，根据同步频率间隔时间，周期性执行同步任务,如果操作失败，执行执行异常流E2</Cell>
+      <Cell>6.对应任务行，“启动”按钮置灰,“删除”按钮可以点击，“状态”圆点变为绿色</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示启动任务失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务列表展示（PZXQ-GN-SJTB-ZBZLTB-TBRWLBZS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_9" type="other" title="同步任务列表展示用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步任务列表展示</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现同步任务列表展示功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.选择“任务监控”标签页</Cell>
+    </Row>
+    <Row>
+      <Cell>3.用户界面展示同步任务列表；</Cell>
+      <Cell>2.连接源达梦数据库，从主数据库中获取所有任务信息，如果失败，执行异常流E1，如果成功，返回同步任务列表json字符串。</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务详情展示（PZXQ-GN-SJTB-ZBZLTB-TBRWXQZS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_10" type="other" title="同步任务详情展示用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步任务详情展示</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现同步任务详情展示功能</Cell>
+      <Cell>前置条件：主达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.选择“任务监控”标签页</Cell>
+    </Row>
+    <Row>
+      <Cell>3.用户界面展示任务列表</Cell>
+      <Cell>4.在任务列表中的，点击“详情”按钮</Cell>
+      <Cell>2.连接源达梦数据库，从主数据库中获取所有任务信息，如果失败，执行异常流E1，如果成功，返回同步任务列表json字符串。</Cell>
+      <Cell>5.查找对应任务信息，如果失败，执行异常流E2，如果成功，将任务详细信息展示在详情页面。</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：系统提示获取任务信息失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务配置功能（PZXQ-GN-SJTB-ZBZLTB-TBRWPZ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 14 同步任务配置功能用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_11" type="other" title="同步任务配置功能能力标识" section="3.2.1.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>同步表检索</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBBJS</Cell>
+      <Cell>主备服务器同步数据表检索功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.b</Cell>
+      <Cell>2</Cell>
+      <Cell>同步表添加</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBBTJ</Cell>
+      <Cell>主备服务器同步数据表添加功能</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.b</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>同步表删除</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-TBBSC</Cell>
+      <Cell>主备服务器同步数据表删除功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.b</Cell>
+      <Cell>4</Cell>
+      <Cell>同步任务优先级配置</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-RWYXJPZ</Cell>
+    </Row>
+    <Row>
+      <Cell>主备服务器同步任务优先级配置功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.c</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 15 同步表配置功能流程图</Cell>
+      <Cell>同步表检索（PZXQ-GN-SJTB-ZBZLTB-TBRWPZ-TBBJS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_12" type="other" title="数据库同步表检索用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步表检索</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步表检索功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.录入同步任务信息，提交</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在搜索框中添加完整的表名称，并对输入结果进行合法性校验；</Cell>
+      <Cell>6.在搜索框中添加部分表名称</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1</Cell>
+      <Cell>3.获取所有表，并在界面上展示表列表</Cell>
+      <Cell>5.检索结果展示</Cell>
+    </Row>
+    <Row>
+      <Cell>7.检索结果展示</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步表添加（PZXQ-GN-SJTB-ZBZLTB-TBRWPZ-TBBTJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_13" type="other" title="数据库同步表添加用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步表添加</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步表添加功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.录入同步任务信息，提交</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在“选择待同步列表”中，单选、多选、全选表名称，单击添加按钮</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1</Cell>
+      <Cell>3.调用数据统一访问服务，获取所有表，并在界面上展示表列表</Cell>
+      <Cell>5.将选择的表添加到“已经选择列表”，并从“选择待同步列表”删除</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步表删除（PZXQ-GN-SJTB-ZBZLTB-TBRWPZ-BBSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_14" type="other" title="数据库同步表删除用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步表删除</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步表删除功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.录入同步任务信息，提交</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在“选择待同步列表”中，单选、多选、全选表名称，单击“添加”按钮</Cell>
+      <Cell>6.在“已经选择列表”中，单击、多选、全选表名称，单击“删除”按钮</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1</Cell>
+      <Cell>3.调用数据统一访问服务，获取所有表，并在界面上展示表列表</Cell>
+      <Cell>5.将选择的表添加到“已经选择列表”，并从“选择待同步列表”删除</Cell>
+    </Row>
+    <Row>
+      <Cell>7.将选择的表还原到“选择同步列表”，并从“已经选择列表”中删除</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>同步任务优先级配置（PZXQ-GN-SJTB-ZBZLTB-TBRWPZ-RWYXJPZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_15" type="other" title="数据库同步任务优先级配置用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：同步任务优先级配置</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要描述同步任务优先级配置活动</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.录入同步任务信息，提交</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在“选择待同步列表”中，单选、多选、全选表名称，单击“添加”按钮</Cell>
+      <Cell>6.在“已经选择列表”中，单击、多选、全选表名称，单击“删除”按钮</Cell>
+      <Cell>2.检查主数据库连接是否正常，如果异常，则进入异常流E1</Cell>
+      <Cell>3.获取所有表，并在界面上展示表列表</Cell>
+      <Cell>5.将选择的表添加到“已经选择列表”，并从“选择待同步列表”删除</Cell>
+    </Row>
+    <Row>
+      <Cell>7.将选择的表还原到“选择同步列表”，并从“已经选择列表”中删除</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>异常处理功能(PZXQ-GN-SJTB-ZBZLTB-YCCLGN)</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 16 异常处理功能用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_16" type="other" title="异常处理功能能力标识" section="3.2.1.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务启动异常</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-FWQQDYC</Cell>
+      <Cell>记录主备服务器数据同步服务启动异常</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.e</Cell>
+      <Cell>2</Cell>
+      <Cell>主达梦库同步异常</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-ZDMKTBYC</Cell>
+      <Cell>记录主备服务器数据同步主服务器数据库异常</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.e</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>备达梦库同步异常</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-BKTBYC</Cell>
+      <Cell>记录主备服务器数据同步备服务器数据库异常</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.e</Cell>
+      <Cell>4</Cell>
+      <Cell>执行sql语句异常</Cell>
+      <Cell>PZXQ-GN-SJTB-ZBZLTB-ZXSQLYJYC</Cell>
+    </Row>
+    <Row>
+      <Cell>记录主备服务器数据同步中执行sql语句异常</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.e</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 17 异常处理流程图</Cell>
+      <Cell>服务启动异常（PZXQ-GN-SJTB-ZBZLTB-FWQQDYC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_17" type="other" title="服务启动异常处理用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：服务启动异常处理</Cell>
+      <Cell>Actors：用户、运行支撑服务</Cell>
+      <Cell>概述：本用例主要对同步过程中，主达梦数据库发生异常时，任务启动失败进行异常处理功能</Cell>
+      <Cell>前置条件：主达梦数据库连接不正常</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.同步服务启动完成；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.调用运行支撑服务，检查主服务器数据库服务是否启动正常，如果异常，则进入异常流E1</Cell>
+      <Cell>异常流E1：系统提示主服务器数据库服务启动失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>主达梦库同步异常（PZXQ-GN-SJTB-ZBZLTB-ZDMKTBYC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_18" type="other" title="主达梦数据库异常处理用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：主达梦数据库异常处理</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步过程中，主达梦数据库发生异常时，停止同步任务功能</Cell>
+      <Cell>前置条件：主备达梦数据库启动时连接正常，在运行过程中，主达梦数据库连接失败。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.同步服务启动</Cell>
+    </Row>
+    <Row>
+      <Cell>3.手动关闭主数据库所在机器的网络</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1</Cell>
+      <Cell>4.执行同步任务时，检查发现主数据库连接不成功，进入异常流E2</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表连接失败，停止同步任务，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>备达梦库同步异常（PZXQ-GN-SJTB-ZBZLTB-BKTBYC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_19" type="other" title="备数据库异常处理用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：备数据库异常处理</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步过程中，从达梦数据库发生异常时，停止同步任务功能</Cell>
+      <Cell>前置条件：主备达梦数据库启动时连接正常，在运行过程中，从达梦数据库连接失败。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.同步服务启动</Cell>
+    </Row>
+    <Row>
+      <Cell>3.手动关闭从数据库所在机器的网络</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1；</Cell>
+      <Cell>4.执行同步任务时，检查发现主数据库连接不成功，进入异常流E2；</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E1：系统提示从数据库数据表连接失败，停止同步任务，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>执行sql语句异常（PZXQ-GN-SJTB-ZBZLTB-ZXSQLYJYC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_20" type="other" title="执行sql语句异常用例描述" section="3.2.1.1">
+    <Headers>
+      <Cell>Use Case 名称：执行sql语句异常处理</Cell>
+      <Cell>Actors：用户、数据统一访问服务</Cell>
+      <Cell>概述：本用例主要实现同步过程中，执行同步sql语句错误，停止同步任务功能</Cell>
+      <Cell>前置条件：主备达梦数据库启动时连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.同步服务启动</Cell>
+    </Row>
+    <Row>
+      <Cell>3.手动修改从数据库中同步表的表结构；</Cell>
+      <Cell>2.调用数据统一访问服务，检查主数据库连接是否正常，如果异常，则进入异常流E1；</Cell>
+      <Cell>4.执行同步任务时，从数据库执行插入语句失败，进入异常流E2；</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示从数据库数据执行sql异常，停止同步任务，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.2" title="数据下载（PZXQ-GN-SJTB-SJXZ）" start_line="733" req_id="PZXQ-GN-SJTB">
+    <Paragraph line="734">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_12" section="3.2.1.2" />
+    <Paragraph line="735">图  SEQ 图 \* ARABIC 18数据下载用例图</Paragraph>
+  </Section>
+  <Table table_id="T_21" type="other" title="数据下载能力标识表" section="3.2.1.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>状态/方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据下载初始化</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-SJXZ-CSH</Cell>
+      <Cell>实现主服务器的数据库(达梦数据库)到席位数据库（sqlite数据库）的数据下载初始化功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.f</Cell>
+      <Cell>2</Cell>
+      <Cell>数据下载</Cell>
+      <Cell>PZXQ-GN-SJTB-SJXZ-SJXZ</Cell>
+      <Cell>实现主服务器的数据库(达梦数据库)到席位数据库（sqlite数据库）的配置数据获取功能</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.f</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据下载关闭</Cell>
+      <Cell>PZXQ-GN-SJTB-SJXZ-SJXZGB</Cell>
+      <Cell>实现主服务器的数据库(达梦数据库)到席位数据库（sqlite数据库）的数据下载关闭功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.f</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 19数据下载流程图</Cell>
+      <Cell>数据下载初始化（PZXQ-GN-SJTB-SJXZ-CSH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_22" type="other" title="数据下载初始化用例描述" section="3.2.1.2">
+    <Headers>
+      <Cell>Use Case 名称：数据下载初始化</Cell>
+      <Cell>Actors：应用软件、运行支撑服务、数据统一访问服务</Cell>
+      <Cell>概述：本用例是达梦数据库数据下载至sqlite数据库的扩展子用例，用于数据下载初始化活动；</Cell>
+      <Cell>前置条件：数据库安装正常，共享数据库段安装正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件传入主服务器数据库用户名、密码、IP地址、DB文件路径，调用初始化函数；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．调用数据统一访问服务，查看主服务器数据库是否登录成功。系统提示：如果主服务器数据库登录成功，提示用户登录成功，如果登录失败，提示用户登录失败，执行异常流E1；</Cell>
+      <Cell>3．系统提示：如果席位数据库登录成功，提示用户登录成功，如果登录失败，提示用户登录失败，执行异常流E2；</Cell>
+      <Cell>异常流E1：主服务器数据库连接失败，用例结束。</Cell>
+      <Cell>异常流E2：席位数据库连接失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>数据下载（PZXQ-GN-SJTB-SJXZ-SJXZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_23" type="other" title="数据下载用例描述" section="3.2.1.2">
+    <Headers>
+      <Cell>Use Case 名称：数据下载</Cell>
+      <Cell>Actors：应用软件、数据统一访问服务</Cell>
+      <Cell>概述：本用例是达梦数据库数据下载到sqlite数据库的扩展子用例，用于获取配置数据并下载的活动；</Cell>
+      <Cell>前置条件：数据库登录正常</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件输入配置文件路径，调用数据下载接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统读取数据下载配置文件，调用数据统一访问服务，创建数据下载任务并执行；如果失败，执行异常流E1。</Cell>
+      <Cell>异常流E1：系统提示数据下载失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>数据下载关闭（PZXQ-GN-SJTB-SJXZ-SJXZGB）</Cell>
+      <Cell>数据下载关闭用例描述，见表25所示。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_24" type="other" title="数据下载关闭用例描述" section="3.2.1.2">
+    <Headers>
+      <Cell>Use Case 名称：数据下载关闭</Cell>
+      <Cell>Actors：应用软件、数据统一访问服务</Cell>
+      <Cell>概述：本用例是达梦数据库数据下载到sqlite数据库的扩展子用例，用于数据下载完成后的关闭活动；</Cell>
+      <Cell>前置条件：数据库登录正常，数据下载完毕</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据下载关闭接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统调用数据统一访问服务，关闭数据库连接句柄。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.3" title="数据上传（PZXQ-GN-SJTB-SJSC）" start_line="831" req_id="PZXQ-GN-SJTB">
+    <Paragraph line="832">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_13" section="3.2.1.3" />
+    <Paragraph line="833">图  SEQ 图 \* ARABIC 20 数据上传用例图</Paragraph>
+  </Section>
+  <Table table_id="T_25" type="other" title="数据上传能力标识表" section="3.2.1.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>状态/方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据上传初始化</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-SJSC-CSH</Cell>
+      <Cell>席位数据库（sqlite数据库）到主服务器的数据库(达梦数据库)的数据上传初始化功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.g</Cell>
+      <Cell>2</Cell>
+      <Cell>增量数据上传</Cell>
+      <Cell>PZXQ-GN-SJTB-SJSC-ZLSJSC</Cell>
+      <Cell>席位数据库（sqlite数据库）到主服务器的数据库(达梦数据库)的增量数据上传功能</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.g</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>增量数据上传关闭</Cell>
+      <Cell>PZXQ-GN-SJTB-SJSC-ZLSJSCGB</Cell>
+      <Cell>席位数据库（sqlite数据库）到主服务器的数据库(达梦数据库)的增量数据上传关闭功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.g</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 21数据上传流程图</Cell>
+      <Cell>数据上传初始化（PZXQ-GN-SJTB-SJSC-CSH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_26" type="other" title="数据上传初始化用例描述" section="3.2.1.3">
+    <Headers>
+      <Cell>Use Case 名称：数据上传初始化</Cell>
+      <Cell>Actors：应用软件、运行支撑服务、数据统一访问服务</Cell>
+      <Cell>概述：本用例是sqlite数据库数据上传至达梦数据库的扩展子用例，用于数据上传初始化活动；</Cell>
+      <Cell>前置条件：数据库安装正常，共享数据库段安装正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件传入主服务器数据库用户名、密码、IP地址、DB文件路径，调用初始化函数；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统调用数据统一访问服务，查看主服务器数据库是否登录成功。系统提示：如果主服务器数据库登录成功，提示用户登录成功，如果登录失败，提示用户登录失败，执行异常流E1；</Cell>
+      <Cell>3．系统提示：如果席位数据库登录成功，提示用户登录成功，如果登录失败，提示用户登录失败，执行异常流E2。</Cell>
+      <Cell>异常流E1：主服务器数据库连接失败，用例结束。</Cell>
+      <Cell>异常流E2：席位数据库连接失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>增量数据上传（PZXQ-GN-SJTB-SJSC-ZLSJSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_27" type="other" title="增量数据上传用例描述" section="3.2.1.3">
+    <Headers>
+      <Cell>Use Case 名称：增量数据上传</Cell>
+      <Cell>Actors：应用软件、数据统一访问服务</Cell>
+      <Cell>概述：本用例是sqlite数据库上传至达梦数据库的扩展子用例，用于增量数据上传的活动</Cell>
+      <Cell>前置条件：数据库连接正常，增量数据获取正常</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据上传接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统读取sqlite中下车阶段的操作日志，获取到下车阶段的增量数据；如果失败，执行异常流E1。</Cell>
+      <Cell>3．调用数据统一访问服务，将获取到的增量数据上传到达梦数据库并插入；如果失败，执行异常流E2。</Cell>
+      <Cell>4．将sqlite数据库中增量数据清空；如果失败，执行异常流E3。</Cell>
+      <Cell>异常流E1：系统提示增量数据获取失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示增量数据上传失败，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E3：系统提示增量数据删除失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>增量数据上传关闭（PZXQ-GN-SJTB-SJSC-ZLSJSCGB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_28" type="other" title="增量数据上传关闭用例描述" section="3.2.1.3">
+    <Headers>
+      <Cell>Use Case 名称：增量数据上传关闭</Cell>
+      <Cell>Actors：应用软件、数据统一访问服务</Cell>
+      <Cell>概述：本用例是sqlite数据库上传至达梦数据库的扩展子用例，用于增量数据上传关闭的活动</Cell>
+      <Cell>前置条件：数据库连接正常</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据上传关闭接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统调用数据统一访问服务，关闭数据库连接句柄。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1.4" title="日志记录功能(PZXQ-GN-SJTB-RZJLGN)" start_line="933" req_id="PZXQ-GN-SJTB">
+    <Paragraph line="934">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_14" section="3.2.1.4" />
+    <Paragraph line="935">图  SEQ 图 \* ARABIC 22 日志记录功能用例图</Paragraph>
+  </Section>
+  <Table table_id="T_29" type="other" title="日志记录功能能力标识表" section="3.2.1.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>状态/方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>同步任务日志</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJTB-RZJLGN-TBRWRZ</Cell>
+      <Cell>同步任务过程中的日志记录功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2.h</Cell>
+      <Cell>2</Cell>
+      <Cell>数据上传日志</Cell>
+      <Cell>PZXQ-GN-SJTB-RZJLGN-SJXZRZ</Cell>
+      <Cell>sqlite数据库到主服务器数据库数据上传日志</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.h</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据下载日志</Cell>
+      <Cell>PZXQ-GN-SJTB-RZJLGN-SJSCRZ</Cell>
+      <Cell>主服务器数据库到sqlite数据库数据下载日志</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2.h</Cell>
+      <Cell>同步任务日志记录（PZXQ-GN-SJTB-RZJLGN-TBRWRZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_30" type="other" title="同步任务日志用例描述" section="3.2.1.4">
+    <Headers>
+      <Cell>Use Case 名称：同步任务日志记录</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现同步任务过程中的日志记录功能</Cell>
+      <Cell>前置条件：主备达梦数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.启动同步数据库服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.创建、启动、停止、删除同步任务；</Cell>
+      <Cell>2.系统初始化，将日志信息打印到日志文件；</Cell>
+      <Cell>4.打印正常运行信息日志，如果执行失败，打印错误日志。</Cell>
+      <Cell>异常流E1：系统提示源数据库数据表获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>数据下载日志记录（PZXQ-GN-SJTB-RZJLGN-SJXZRZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_31" type="other" title="数据下载日志用例描述" section="3.2.1.4">
+    <Headers>
+      <Cell>Use Case 名称：数据下载日志记录</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例达梦数据库同步至sqlite数据库扩展子用例，用于数据转换日志记录的活动；</Cell>
+      <Cell>前置条件：数据库连接正常，转换任务正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户进行通过转换页面，执行转换任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统按照提示与用户交互进行转换任务，如果任务执行成功，保留用户抽取转换日志信息，如果失败，执行异常流E1。</Cell>
+      <Cell>异常流E1：系统提示任务失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>数据上传日志记录（PZXQ-GN-SJTB-RZJLGN-SJSCRZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_32" type="other" title="数据上传日志用例描述" section="3.2.1.4">
+    <Headers>
+      <Cell>Use Case 名称：数据上传日志记录</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例sqlite数据库同步至达梦数据库扩展子用例，用于数据转换日志记录的活动；</Cell>
+      <Cell>前置条件：数据库连接正常，转换任务正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户进行通过转换页面，执行转换任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统按照提示与用户交互进行转换任务，如果任务执行成功，保留用户抽取转换日志信息，如果失败，执行异常流E1。</Cell>
+      <Cell>异常流E1：系统提示任务失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2" title="数据共享能力（PZXQ-GN-SJGX）" start_line="1030" req_id="PZXQ-GN-SJGX">
+    <Paragraph line="1031">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_15" section="3.2.2" />
+    <Paragraph line="1032">图  SEQ 图 \* ARABIC 23数据共享任务用例图</Paragraph>
+  </Section>
+  <Table table_id="T_33" type="other" title="数据共享服务软件所有能力标识" section="3.2.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>获取主题</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJGX-HQZT</Cell>
+      <Cell>获取资源池中所有资源主题</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1.c</Cell>
+      <Cell>2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.2.1" title="数据发布" start_line="1051">
+    <Paragraph line="1052">PZXQ-GN-SJGX-SJFB</Paragraph>
+    <Paragraph line="1053">以指定主题发送消息</Paragraph>
+    <Paragraph line="1054">沿用</Paragraph>
+    <Paragraph line="1055">桌面、平板</Paragraph>
+    <Paragraph line="1056">运行阶段</Paragraph>
+    <Paragraph line="1057">4.1.1.a</Paragraph>
+    <Paragraph line="1059">主题订阅</Paragraph>
+    <Paragraph line="1060">PZXQ-GN-SJGX-ZTDY</Paragraph>
+    <Paragraph line="1061">接收特定主题的消息</Paragraph>
+    <Paragraph line="1062">沿用</Paragraph>
+    <Paragraph line="1063">桌面、平板</Paragraph>
+    <Paragraph line="1064">运行阶段</Paragraph>
+    <Paragraph line="1065">4.1.1.b</Paragraph>
+  </Section>
+  <Section section_id="3.2.2.1" title="获取主题 (PZXQ-GN-SJGX-HQZT)" start_line="1067" req_id="PZXQ-GN-SJGX">
+    <Paragraph line="1068">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_16" section="3.2.2.1" />
+    <Paragraph line="1069">图  SEQ 图 \* ARABIC 24 获取主题流程图</Paragraph>
+  </Section>
+  <Table table_id="T_34" type="other" title="获取主题用例描述" section="3.2.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取主题</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例主要实现获取资源池中所有资源主题的功能</Cell>
+      <Cell>前置条件：数据共享服务正常启动。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1. 初始化数据共享服务，并保证初始化成功；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.进入初始化页面</Cell>
+      <Cell>4.前端左侧展示出所有订阅的主题名称；</Cell>
+      <Cell>3.系统会获取消息队列中订阅的所有主题，并推送给前端页面；</Cell>
+      <Cell>异常流E1：系统提示失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2.2" title="数据发布(PZXQ-GN-SJGX-SJFB)" start_line="1092" req_id="PZXQ-GN-SJGX">
+    <Paragraph line="1093">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_17" section="3.2.2.2" />
+    <Paragraph line="1094">图  SEQ 图 \* ARABIC 25 数据发送流程图</Paragraph>
+  </Section>
+  <Section section_id="3.3.2.1" title="表  SEQ 表 \* ARABIC 36数据发布用例描述" start_line="1095" />
+  <Section section_id="3.3.2.1" title="Use Case 名称：数据发布" start_line="1096">
+    <Paragraph line="1097">Actors：应用软件、统一传输服务</Paragraph>
+  </Section>
+  <Section section_id="3.3.2.1" title="概述：本用例主要实现数据共享下的数据发布功能" start_line="1098">
+    <Paragraph line="1099">前置条件：数据共享服务正常启动。</Paragraph>
+    <Paragraph line="1100">主事件流</Paragraph>
+    <Paragraph line="1101">Actor的动作</Paragraph>
+    <Paragraph line="1102">系统的动作</Paragraph>
+    <Paragraph line="1103">动作约束</Paragraph>
+    <Paragraph line="1104">（性能、可靠性、容错等）</Paragraph>
+    <Paragraph line="1105">1.初始化数据共享服务，并保证初始化成功；</Paragraph>
+    <Paragraph line="1107">2.选中一个主题名，在右侧输入框中输入待提交的数据，点击提交按钮；</Paragraph>
+    <Paragraph line="1109">5.前端页面更新该主题下的数据内容；</Paragraph>
+    <Paragraph line="1111">3．系统会通过后台消息队列传输接口，以覆盖的形式将数据内容发送给该主题对应的消息队列；</Paragraph>
+    <Paragraph line="1113">4.系统根据是否进行数据缓存，选择调用统一传输服务进行数据缓存；</Paragraph>
+    <Paragraph line="1115">异常流E1：系统提示失败，用例结束。</Paragraph>
+    <Paragraph line="1117">后置条件：无。</Paragraph>
+  </Section>
+  <Section section_id="3.2.2.3" title="主题订阅(PZXQ-GN-SJGX-ZTDY)" start_line="1119" req_id="PZXQ-GN-SJGX">
+    <Paragraph line="1120">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_18" section="3.2.2.3" />
+    <Paragraph line="1121">图  SEQ 图 \* ARABIC 26 主题订阅流程图</Paragraph>
+  </Section>
+  <Table table_id="T_35" type="other" title="主题订阅用例描述" section="3.2.2.3">
+    <Headers>
+      <Cell>Use Case 名称：主题订阅</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例主要实现数据共享下某特定主题的订阅功能</Cell>
+      <Cell>前置条件：数据共享服务正常启动。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.初始化消息共享服务，并保证初始化成功；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.进入数据共享目录界面，</Cell>
+      <Cell>4.点击选中一个主题；</Cell>
+      <Cell>6.前端页面展示出该主题下的数据内容，长度，TTL值等信息；</Cell>
+      <Cell>3.系统会获取消息队列中订阅的所有主题，并推送给前端页面；</Cell>
+      <Cell>5.系统发送get请求，获取该主题下的数据内容，包括订阅主题，TTL值以及数据的长度，并将这些信息推送到前端页面；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3" title="数据资源管理能力(PZXQ-GN-SJZYGL)" start_line="1148" req_id="PZXQ-GN-SJZYGL">
+    <Paragraph line="1149">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_19" section="3.2.3" />
+    <Paragraph line="1150">图  SEQ 图 \* ARABIC 27 数据资源管理任务用例图</Paragraph>
+  </Section>
+  <Table table_id="T_36" type="other" title="数据资源管理软件所有能力标识" section="3.2.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据资源目录的展现功能</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJZYGL-SJZYMLZX</Cell>
+      <Cell>用页面目录形式展示出所有的数据资源</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.3.a</Cell>
+      <Cell>2</Cell>
+      <Cell>数据资源的修改功能</Cell>
+      <Cell>PZXQ-GN-SJZYGL-SJZYXG</Cell>
+      <Cell>对数据资源进行修改</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3.b</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3.1" title="数据资源目录展现(PZXQ-GN-SJZYGL-SJZYMLZX)" start_line="1177" req_id="PZXQ-GN-SJZYGL">
+    <Paragraph line="1178">数据资源目录展现功能为用户提供数据资源的呈现展示功能，用户可以查看所有注册成功的主题名称，并支持模糊查找。</Paragraph>
+    <Paragraph line="1179">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_20" section="3.2.3.1" />
+    <Paragraph line="1180">图  SEQ 图 \* ARABIC 28 数据资源目录展现流程图</Paragraph>
+  </Section>
+  <Table table_id="T_37" type="other" title="数据资源目录展现用例描述" section="3.2.3.1">
+    <Headers>
+      <Cell>Use Case 名称：数据资源目录展现</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例主要实现数据资源的展示功能</Cell>
+      <Cell>前置条件：数据共享服务正常启动。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1. 初始化数据共享服务，并保证初始化成功；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.进入初始化页面；</Cell>
+      <Cell>4.关闭数据共享服务；</Cell>
+      <Cell>3．获取所有主题名称；</Cell>
+      <Cell>异常流E1：系统提示失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3.2" title="数据资源修改(PZXQ-GN-SJZYGL-SJZYXG)" start_line="1203" req_id="PZXQ-GN-SJZYGL">
+    <Paragraph line="1204">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_21" section="3.2.3.2" />
+    <Paragraph line="1205">图  SEQ 图 \* ARABIC 29 数据资源目录修改功能流程图</Paragraph>
+  </Section>
+  <Table table_id="T_38" type="other" title="数据资源修改用例描述" section="3.2.3.2">
+    <Headers>
+      <Cell>Use Case 名称：数据资源修改</Cell>
+      <Cell>Actors：用户、统一传输服务</Cell>
+      <Cell>概述：本用例主要实现数据资源的修改功能</Cell>
+      <Cell>前置条件：数据共享服务正常启动。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.初始化数据共享服务，并保证初始化成功；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.关闭数据共享服务；</Cell>
+      <Cell>2．选中某主题，修改该主题下的内容；</Cell>
+      <Cell>3.系统根据是否需要进行数据缓存，选择调用统一传输服务，进行数据内容缓存；</Cell>
+      <Cell>异常流E1：系统提示失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="1227" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="1228">
+    <Paragraph line="1229">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_22" section="3.4.1" />
+    <Paragraph line="1230">图 SEQ 图 \* ARABIC 30 数据同步共享服务外部接口需求</Paragraph>
+    <Image image_id="IMG_23" section="3.4.1" figure_number="30" caption="数据同步共享服务外部接口需求" />
+  </Section>
+  <Table table_id="T_39" type="qualification" title="数据同步共享服务外部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>与应用软件接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-WBJK-YYRJ</Cell>
+      <Cell>API接口</Cell>
+      <Cell>本软件</Cell>
+      <Cell>应用软件</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.2.1" title="提供数据发布" start_line="1246">
+    <Paragraph line="1249">应用软件</Paragraph>
+    <Paragraph line="1250">本软件</Paragraph>
+    <Paragraph line="1251">订阅数据回调</Paragraph>
+    <Paragraph line="1254">与运行支撑服务接口</Paragraph>
+    <Paragraph line="1255">PZXQW-WBJK-YXZCFW</Paragraph>
+    <Paragraph line="1256">API接口</Paragraph>
+    <Paragraph line="1257">运行支撑服务</Paragraph>
+    <Paragraph line="1258">本软件</Paragraph>
+    <Paragraph line="1259">向运行支撑服务获取数据库信息、主备服务器IP地址等信息</Paragraph>
+    <Paragraph line="1262">人机交互接口</Paragraph>
+    <Paragraph line="1263">PZXQ-WBJK-RJJH</Paragraph>
+    <Paragraph line="1264">人机接口</Paragraph>
+    <Paragraph line="1265">界面集成框架</Paragraph>
+    <Paragraph line="1266">本软件</Paragraph>
+    <Paragraph line="1267">提供用户配置同步策略信息</Paragraph>
+    <Paragraph line="1270">与数据统一访问服务接口</Paragraph>
+    <Paragraph line="1271">PZXQ-WBJK-SJTYFW</Paragraph>
+    <Paragraph line="1272">API接口</Paragraph>
+    <Paragraph line="1273">数据统一访问服务</Paragraph>
+    <Paragraph line="1274">本软件</Paragraph>
+    <Paragraph line="1275">向数据库中存储数据</Paragraph>
+    <Paragraph line="1278">本软件</Paragraph>
+    <Paragraph line="1279">数据统一访问服务</Paragraph>
+    <Paragraph line="1280">访问数据库中的数据</Paragraph>
+    <Paragraph line="1283">与统一传输服务接口</Paragraph>
+    <Paragraph line="1284">PZXQ-WBJK-TYCSFW</Paragraph>
+    <Paragraph line="1285">API接口</Paragraph>
+    <Paragraph line="1286">本软件</Paragraph>
+    <Paragraph line="1287">统一传输服务</Paragraph>
+    <Paragraph line="1288">数据同步共享服务向统一传输服务中写入缓存数据</Paragraph>
+  </Section>
+  <Section section_id="3.3.2" title="与应用软件接口（PZXQ-WBJK-YYRJ）" start_line="1290" req_id="PZXQ-WBJK-YYRJ" />
+  <Section section_id="3.3.2.1" title="与应用软件接口为应用软件提供数据发布和数据订阅两个子功能。数据发布功能为应用提供数据内容的发布功能。数据订阅功能支持应用获取某特定主题或某一类主题的数据内容。" start_line="1291" />
+  <Section section_id="3.3.2.1" title="数据发布" start_line="1292" />
+  <Section section_id="3.3.2.1" title="表 SEQ 表 \* ARABIC 42 数据发布功能中数据元素说明" start_line="1293">
+    <Paragraph line="1294">序号</Paragraph>
+    <Paragraph line="1295">数据集名称</Paragraph>
+    <Paragraph line="1296">数据组成</Paragraph>
+    <Paragraph line="1297">数据约束</Paragraph>
+    <Paragraph line="1298">数据标准</Paragraph>
+    <Paragraph line="1300">主题</Paragraph>
+    <Paragraph line="1301">主题描述信息</Paragraph>
+    <Paragraph line="1302">String</Paragraph>
+    <Paragraph line="1305">传输参数列表</Paragraph>
+    <Paragraph line="1306">参数描述信息</Paragraph>
+    <Paragraph line="1307">String</Paragraph>
+    <Paragraph line="1310">出车标志位</Paragraph>
+    <Paragraph line="1311">是否出车标志</Paragraph>
+    <Paragraph line="1312">bool</Paragraph>
+    <Paragraph line="1315">发布的数据</Paragraph>
+    <Paragraph line="1316">数据</Paragraph>
+    <Paragraph line="1317">char *</Paragraph>
+    <Paragraph line="1320">发布数据的长度</Paragraph>
+    <Paragraph line="1321">数据长度</Paragraph>
+    <Paragraph line="1322">size_t</Paragraph>
+  </Section>
+  <Section section_id="3.3.2.2" title="数据订阅" start_line="1324" />
+  <Section section_id="3.3.2.2" title="表  SEQ 表 \* ARABIC 43数据订阅功能中数据元素说明" start_line="1325">
+    <Paragraph line="1326">序号</Paragraph>
+    <Paragraph line="1327">数据集名称</Paragraph>
+    <Paragraph line="1328">数据组成</Paragraph>
+    <Paragraph line="1329">数据约束</Paragraph>
+    <Paragraph line="1330">数据标准</Paragraph>
+    <Paragraph line="1332">主题结构体</Paragraph>
+    <Paragraph line="1333">主题描述信息</Paragraph>
+    <Paragraph line="1334">String</Paragraph>
+    <Paragraph line="1337">回调函数</Paragraph>
+    <Paragraph line="1338">主题、数据长度、数据内容</Paragraph>
+    <Paragraph line="1339">函数</Paragraph>
+  </Section>
+  <Section section_id="3.3.3" title="与运行支撑服务接口（PZXQ-WBJK-YXZCFW）" start_line="1341" req_id="PZXQ-WBJK-YXZCFW" />
+  <Table table_id="T_40" type="other" title="运行支撑服务接口数据元素说明" section="3.3.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据库监控信息</Cell>
+      <Cell>主服务器IP信息</Cell>
+      <Cell>String</Cell>
+      <Cell>用户ID</Cell>
+    </Row>
+    <Row>
+      <Cell>String</Cell>
+      <Cell>备服务器IP信息</Cell>
+      <Cell>String</Cell>
+      <Cell>上下车状态</Cell>
+      <Cell>String</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库相关信息</Cell>
+      <Cell>String</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4" title="与数据统一访问服务接口（PZXQ-WBJK-SJTYFW）" start_line="1363" req_id="PZXQ-WBJK-SJTYFW" />
+  <Section section_id="3.3.4.1" title="数据同步共享服务与数据统一访问服务接口包括数据访问、数据存储两个子功能。数据访问功能支持数据同步共享服务通过数据统一访问服务提供的数据访问接口从数据库中获取到数据；数据存储功能支持数据同步共享服务通过数据统一访问服务提供的存储数据接口向数据库中存入数据。" start_line="1364" />
+  <Section section_id="3.3.4.1" title="数据存储" start_line="1365" />
+  <Section section_id="3.3.4.1" title="数据同步共享服务通过数据统一访问服务存储接口将同步数据存储到相应的目标数据库。数据统一访问服务存储接口数据元素说明表，见下表所示。" start_line="1366" />
+  <Table table_id="T_41" type="other" title="数据统一访问服务存储接口数据元素说明" section="3.3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>存储数据</Cell>
+      <Cell>初始化数据库连接句柄</Cell>
+      <Cell>String</Cell>
+      <Cell>连接数据库用户名</Cell>
+    </Row>
+    <Row>
+      <Cell>String</Cell>
+      <Cell>连接数据库密码</Cell>
+      <Cell>String</Cell>
+      <Cell>连接数据库服务地址</Cell>
+      <Cell>String</Cell>
+    </Row>
+    <Row>
+      <Cell>SQL文本数据插入</Cell>
+      <Cell>String</Cell>
+      <Cell>BLOB字段插入</Cell>
+      <Cell>Blob</Cell>
+      <Cell>配置文件存储</Cell>
+    </Row>
+    <Row>
+      <Cell>文件</Cell>
+      <Cell>INT类型数据插入</Cell>
+      <Cell>Int</Cell>
+      <Cell>FLOAT类型数据插入</Cell>
+      <Cell>Float</Cell>
+    </Row>
+    <Row>
+      <Cell>String类型数据插入</Cell>
+      <Cell>String</Cell>
+      <Cell>Date类型数据插入</Cell>
+      <Cell>date</Cell>
+      <Cell>Json类型数据插入</Cell>
+    </Row>
+    <Row>
+      <Cell>Json</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4.2" title="数据访问" start_line="1401" />
+  <Table table_id="T_42" type="other" title="数据统一访问服务访问接口数据元素说明" section="3.3.4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4.2" title="数据访问" start_line="1409">
+    <Paragraph line="1410">初始化数据库连接句柄</Paragraph>
+    <Paragraph line="1411">String</Paragraph>
+    <Paragraph line="1413">连接数据库用户名</Paragraph>
+    <Paragraph line="1414">String</Paragraph>
+    <Paragraph line="1415">连接数据库密码</Paragraph>
+    <Paragraph line="1416">String</Paragraph>
+    <Paragraph line="1417">连接数据库服务地址</Paragraph>
+    <Paragraph line="1418">String</Paragraph>
+    <Paragraph line="1419">SQL数据查询</Paragraph>
+    <Paragraph line="1420">String</Paragraph>
+    <Paragraph line="1421">BLOB字段查询</Paragraph>
+    <Paragraph line="1422">Blob</Paragraph>
+    <Paragraph line="1423">配置文件读取</Paragraph>
+    <Paragraph line="1424">String</Paragraph>
+    <Paragraph line="1425">INT类型数据查询</Paragraph>
+    <Paragraph line="1426">Int</Paragraph>
+    <Paragraph line="1427">FLOAT类型数据查询</Paragraph>
+    <Paragraph line="1428">Float</Paragraph>
+    <Paragraph line="1429">String类型数据查询</Paragraph>
+    <Paragraph line="1430">String</Paragraph>
+    <Paragraph line="1431">Date类型数据查询</Paragraph>
+    <Paragraph line="1432">date</Paragraph>
+    <Paragraph line="1433">Json类型数据查询</Paragraph>
+    <Paragraph line="1434">Json</Paragraph>
+    <Paragraph line="1435">SQL文本数据导出</Paragraph>
+    <Paragraph line="1436">文件</Paragraph>
+  </Section>
+  <Section section_id="3.3.5" title="人机交互接口（PZXQ-WBJK-RJJH）" start_line="1437" req_id="PZXQ-WBJK-RJJH" />
+  <Table table_id="T_43" type="other" title="界面集成框架接口数据元素说明" section="3.3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>人机操作信息</Cell>
+      <Cell>用户的各种操作信息，包括获取主数据库所有表、获取所有数据同步任务、创建数据同步任务、启动数据同步任务、停止数据同步任务、删除数据同步任务等</Cell>
+      <Cell>String</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.6" title="与统一传输服务接口（PZXQ-WBJK-TYCSFW）" start_line="1450" req_id="PZXQ-WBJK-TYCSFW" />
+  <Section section_id="3.3.4.1" title="数据同步共享服务与统一传输服务接口实现缓存数据存储功能。" start_line="1451" />
+  <Section section_id="3.3.6.1" title="缓存数据存储" start_line="1452" />
+  <Section section_id="3.3.4.1" title="缓存数据存储功能为应用提供发布数据内容的缓存功能，数据同步共享服务调用此接口实现数据内容的缓存功能。缓存数据存储功能中数据元素说明表，见表48所示。" start_line="1453" />
+  <Section section_id="3.3.4.1" title="表 SEQ 表 \* ARABIC 48 缓存数据存储功能中数据元素说明" start_line="1454">
+    <Paragraph line="1455">序号</Paragraph>
+    <Paragraph line="1456">数据集名称</Paragraph>
+    <Paragraph line="1457">数据组成</Paragraph>
+    <Paragraph line="1458">数据约束</Paragraph>
+    <Paragraph line="1459">数据标准</Paragraph>
+    <Paragraph line="1461">主题</Paragraph>
+    <Paragraph line="1462">主题描述信息</Paragraph>
+    <Paragraph line="1463">String</Paragraph>
+    <Paragraph line="1464">--</Paragraph>
+    <Paragraph line="1466">数据有效期</Paragraph>
+    <Paragraph line="1467">以秒为单位 0表示没有有效期，覆盖模式存储</Paragraph>
+    <Paragraph line="1468">int64_t</Paragraph>
+    <Paragraph line="1469">--</Paragraph>
+    <Paragraph line="1471">数据序列号</Paragraph>
+    <Paragraph line="1472">输出参数，数据序列号</Paragraph>
+    <Paragraph line="1473">int64_t</Paragraph>
+    <Paragraph line="1474">--</Paragraph>
+    <Paragraph line="1476">发布的数据</Paragraph>
+    <Paragraph line="1477">数据</Paragraph>
+    <Paragraph line="1478">char *</Paragraph>
+    <Paragraph line="1479">--</Paragraph>
+    <Paragraph line="1481">发布数据的长度</Paragraph>
+    <Paragraph line="1482">数据长度</Paragraph>
+    <Paragraph line="1483">size_t</Paragraph>
+    <Paragraph line="1484">--</Paragraph>
+  </Section>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="1486" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="1487">
+    <Paragraph line="1488">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_24" section="3.4.1" />
+    <Paragraph line="1489">图  SEQ 图 \* ARABIC 31数据同步共享服务内部接口需求</Paragraph>
+  </Section>
+  <Table table_id="T_44" type="qualification" title="数据同步共享服务内部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>数据共享与数据资源管理接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-NBJK-SJGX-SJZYGL</Cell>
+      <Cell>API接口</Cell>
+      <Cell>数据共享</Cell>
+      <Cell>数据资源管理</Cell>
+      <Cell>主题资源及主题内容</Cell>
+    </Row>
+    <Row>
+      <Cell>低</Cell>
+      <Cell>2</Cell>
+      <Cell>数据资源管理</Cell>
+      <Cell>数据共享</Cell>
+      <Cell>主题资源及主题内容</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>数据同步与数据共享接口</Cell>
+      <Cell>PZXQ-NBJK-SJTB-SJGX</Cell>
+      <Cell>API接口</Cell>
+      <Cell>数据同步</Cell>
+    </Row>
+    <Row>
+      <Cell>数据共享</Cell>
+      <Cell>异常状态信息</Cell>
+      <Cell>高</Cell>
+      <Cell>4</Cell>
+      <Cell>数据共享</Cell>
+    </Row>
+    <Row>
+      <Cell>数据同步</Cell>
+      <Cell>同步配置信息</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.2" title="数据共享与数据资源管理接口(PZXQ-NBJK-SJGX-SJZYGL)" start_line="1524" req_id="PZXQ-NBJK-SJGX" />
+  <Table table_id="T_45" type="other" title="数据共享与数据资源管理数据元素说明" section="3.4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>主题资源及主题内容</Cell>
+      <Cell>主题名称</Cell>
+      <Cell>String</Cell>
+      <Cell>内容</Cell>
+    </Row>
+    <Row>
+      <Cell>String</Cell>
+      <Cell>超时时间</Cell>
+      <Cell>Int</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.3" title="数据同步与数据共享接口(PZXQ-NBJK-SJTB-SJGX)" start_line="1542" req_id="PZXQ-NBJK-SJTB" />
+  <Table table_id="T_46" type="other" title="数据同步与数据共享数据元素说明" section="3.4.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>主题资源及主题内容</Cell>
+      <Cell>主题名称</Cell>
+      <Cell>String</Cell>
+      <Cell>内容</Cell>
+    </Row>
+    <Row>
+      <Cell>String</Cell>
+      <Cell>超时时间</Cell>
+      <Cell>Int</Cell>
+      <Cell>2</Cell>
+      <Cell>异常状态信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常状态主题名称</Cell>
+      <Cell>String</Cell>
+      <Cell>状态详情</Cell>
+      <Cell>String</Cell>
+      <Cell>超时时间</Cell>
+    </Row>
+    <Row>
+      <Cell>Int</Cell>
+      <Cell>3</Cell>
+      <Cell>同步配置信息</Cell>
+      <Cell>同步配置主题名称</Cell>
+      <Cell>String</Cell>
+    </Row>
+    <Row>
+      <Cell>配置数据</Cell>
+      <Cell>String</Cell>
+      <Cell>超时时间</Cell>
+      <Cell>Int</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="1582" />
+  <Table table_id="T_47" type="other" title="数据同步共享服务汇总表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据名称</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>相关功能及标识</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据同步配置信息、数据同步管理数据</Cell>
+      <Cell>任务名、任务详情、任务类型、源数据库ip、源数据库用户名、源数据库密码、目的数据库ip、目的用户名、目的数据库密码、同步间隔、任务优先级、任务ID</Cell>
+      <Cell>任务状态、操作</Cell>
+      <Cell>数据同步</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>2</Cell>
+      <Cell>数据同步监控数据</Cell>
+      <Cell>任务ID、任务名、源数据库IP、目的数据库IP、待同步表、同步条件、上次同步时间</Cell>
+      <Cell>数据同步</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>3</Cell>
+      <Cell>发布订阅数据</Cell>
+      <Cell>应用程序发布的数据和主题下对应的数据</Cell>
+      <Cell>数据共享</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>4</Cell>
+      <Cell>存取数据信息</Cell>
+      <Cell>通过数据统一访问服务，按照自定义规则存取数据</Cell>
+      <Cell>数据同步</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>5</Cell>
+      <Cell>缓存信息</Cell>
+      <Cell>本软件通过统一传输服务进行缓存的数据</Cell>
+      <Cell>数据共享</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_48" type="other" title="数据同步配置信息和管理数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>任务名</Cell>
+      <Cell>100</Cell>
+      <Cell>8</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>任务详情</Cell>
+      <Cell>200</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>任务类型</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>源数据库ip</Cell>
+      <Cell>15</Cell>
+      <Cell>7</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>源数据库用户名</Cell>
+      <Cell>20</Cell>
+      <Cell>2</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>源数据库密码</Cell>
+      <Cell>20</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>目的数据库ip</Cell>
+      <Cell>15</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>目的用户名</Cell>
+    </Row>
+    <Row>
+      <Cell>20</Cell>
+      <Cell>2</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>目的数据库密码</Cell>
+      <Cell>20</Cell>
+      <Cell>9</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>同步间隔</Cell>
+      <Cell>86400</Cell>
+      <Cell>120</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>秒</Cell>
+      <Cell>--</Cell>
+      <Cell>任务优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>任务ID</Cell>
+      <Cell>200</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>任务状态</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>操作</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_49" type="other" title="数据同步监控数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>任务ID</Cell>
+      <Cell>200</Cell>
+      <Cell>10</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>任务名</Cell>
+      <Cell>100</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>源数据库IP</Cell>
+    </Row>
+    <Row>
+      <Cell>15</Cell>
+      <Cell>7</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>目的数据库IP</Cell>
+      <Cell>15</Cell>
+      <Cell>7</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+    </Row>
+    <Row>
+      <Cell>--</Cell>
+      <Cell>待同步表</Cell>
+      <Cell>500</Cell>
+      <Cell>12</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>同步条件</Cell>
+      <Cell>1000</Cell>
+      <Cell>0</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+      <Cell>上次同步时间</Cell>
+      <Cell>20</Cell>
+    </Row>
+    <Row>
+      <Cell>20</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_50" type="other" title="发布订阅数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>发布订阅数据</Cell>
+      <Cell>120</Cell>
+      <Cell>5</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_51" type="other" title="存取数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>存取数据</Cell>
+      <Cell>10000</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_52" type="other" title="缓存数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>缓存数据</Cell>
+      <Cell>120</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>-</Cell>
+      <Cell>字节</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.6" title="适应性需求" start_line="1829">
+    <Paragraph line="1830">a）采用跨平台开发工具及开发环境，确保软件能适应不同硬件环境（如桌面平台、手持平台等），具有在多种国产操作系统运行适配能力；</Paragraph>
+    <Paragraph line="1831">b）后台服务按照处理器、操作系统的运行条件，根据自身功能要求分别编译生成桌面、平板等不同形态；</Paragraph>
+    <Paragraph line="1832">c)界面展现按照《界面设计规范》中桌面界面风格进行界面展现的设计，按照《界面开发规范》中的界面自适应规则进行设计，便于在不同尺寸和分辨率的显控终端下实现界面自适应调整；</Paragraph>
+    <Paragraph line="1833">d）系统运行时能够根据系统登录者席位身份，加载不同的界面和服务，支持业务功能灵活重组；</Paragraph>
+    <Paragraph line="1834">e）提供服务的负载均衡功能，在服务出现异常或访问拥堵时不影响指挥系统正常运转；</Paragraph>
+    <Paragraph line="1835">f）依据在桌面、平板不同硬件形态，通过软件部署管理自动下载、安装相应环境的软件包，实现多平台运行。</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1836" />
+  <Section section_id="3.7" title="表 SEQ 表 \* ARABIC 58 数据同步共享服务安全性需求" start_line="1837">
+    <Paragraph line="1838">序号</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1839">
+    <Paragraph line="1840">详细说明</Paragraph>
+    <Paragraph line="1842">故障检测与诊断</Paragraph>
+    <Paragraph line="1843">如果遇到异常数据，在保证程序正常运行的情况下，返回错误信息并记录在日志中</Paragraph>
+    <Paragraph line="1845">数据库操作权限校验</Paragraph>
+    <Paragraph line="1846">对数据库操作权限进行校验</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="1847">
+    <Paragraph line="1848">数据同步共享服务对用户提供使用系统软件的鉴权功能，通过用户名、密码确保对软件（数据）的操作是得到有效授权的。</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="1849" />
+  <Section section_id="3.9.1" title="运行环境需求" start_line="1850" />
+  <Table table_id="T_53" type="other" title="软件运行环境" section="3.9.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>软件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+    </Headers>
+    <Row>
+      <Cell>处理器：16核</Cell>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+    <Row>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+      <Cell>存储：不小于256GB</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>操作系统：元心 V4.1.1/银河锐华V4.0.0.0</Cell>
+      <Cell>数据库：SQLite V3.0.0</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+    </Row>
+    <Row>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+    </Row>
+    <Row>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>操作系统：银河麒麟 V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="1905">
+    <Paragraph line="1906">a)操作系统：银河麒麟V4.0.2；</Paragraph>
+    <Paragraph line="1907">b)数据库管理系统：达梦数据库V7.6和SQLite 3.0；</Paragraph>
+    <Paragraph line="1908">c)开发工具：VsCodeV1.30.0，QtV5.9.6；</Paragraph>
+    <Paragraph line="1909">d)办公软件：wps-officeV10.1.0.7490。</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="1910" />
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="1911" />
+  <Table table_id="T_54" type="other" title="计算机硬件配置需求" section="3.10.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+    </Headers>
+    <Row>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="1953" />
+  <Section section_id="3.10.2" title="数据同步共享服务无需特殊计算机硬件资源利用需求。" start_line="1954" />
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="1955" />
+  <Section section_id="3.10.3" title="表 SEQ 表 \* ARABIC 61 数据同步共享服务计算机软件需求" start_line="1956">
+    <Paragraph line="1957">软件种类</Paragraph>
+    <Paragraph line="1958">软件名称</Paragraph>
+    <Paragraph line="1959">软件版本</Paragraph>
+    <Paragraph line="1960">操作系统</Paragraph>
+    <Paragraph line="1961">银河麒麟</Paragraph>
+    <Paragraph line="1962">4.0.2</Paragraph>
+    <Paragraph line="1963">数据库软件</Paragraph>
+    <Paragraph line="1964">SQLite</Paragraph>
+    <Paragraph line="1965">3.0</Paragraph>
+    <Paragraph line="1966">办公软件</Paragraph>
+    <Paragraph line="1967">wps-office</Paragraph>
+    <Paragraph line="1968">V10.1</Paragraph>
+    <Paragraph line="1969">应用支撑软件</Paragraph>
+    <Paragraph line="1970">QT</Paragraph>
+    <Paragraph line="1971">5.9.6</Paragraph>
+    <Paragraph line="1972">信息平台服务软件</Paragraph>
+    <Paragraph line="1973">统一传输服务</Paragraph>
+    <Paragraph line="1974">随使用服务版本同步更新</Paragraph>
+    <Paragraph line="1975">运行支撑服务</Paragraph>
+    <Paragraph line="1976">随使用服务版本同步更新</Paragraph>
+    <Paragraph line="1977">数据统一访问服务</Paragraph>
+    <Paragraph line="1978">随使用服务版本同步更新</Paragraph>
+  </Section>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="1980" />
+  <Section section_id="3.10.4" title="数据同步共享服务无需特殊计算机通信需求。" start_line="1981" />
+  <Section section_id="3.11" title="软件质量因素" start_line="1982" />
+  <Table table_id="T_55" type="other" title="数据同步共享服务质量要求与措施表" section="3.11">
+    <Headers>
+      <Cell>序号</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3.11" title="软件质量因素" start_line="1985" />
+  <Section section_id="3.11" title="软件质量因素描述" start_line="1986">
+    <Paragraph line="1987">要求程度</Paragraph>
+    <Paragraph line="1988">采取的措施</Paragraph>
+    <Paragraph line="1990">功能性</Paragraph>
+    <Paragraph line="1991">实现全部所需功能的能力</Paragraph>
+    <Paragraph line="1992">符合3.2节要求</Paragraph>
+    <Paragraph line="1993">软件设计</Paragraph>
+    <Paragraph line="1995">可维护性</Paragraph>
+    <Paragraph line="1996">易于更正的能力</Paragraph>
+    <Paragraph line="1997">维护人员可快速定位故障</Paragraph>
+    <Paragraph line="1998">运行日志记录文件</Paragraph>
+    <Paragraph line="2000">可用性</Paragraph>
+    <Paragraph line="2001">需要时进行访问和操作的能力</Paragraph>
+    <Paragraph line="2005">灵活性</Paragraph>
+    <Paragraph line="2006">易于适应需求变化的能力</Paragraph>
+    <Paragraph line="2010">可移植性</Paragraph>
+    <Paragraph line="2011">易于修改以适应新环境的能力</Paragraph>
+    <Paragraph line="2012">支持跨平台</Paragraph>
+    <Paragraph line="2015">可重用性</Paragraph>
+    <Paragraph line="2016">可被多个应用使用的能力</Paragraph>
+    <Paragraph line="2020">可测试性</Paragraph>
+    <Paragraph line="2021">易于充分测试的能力</Paragraph>
+    <Paragraph line="2022">可仿真环境下完成主要功能验证</Paragraph>
+    <Paragraph line="2023">依靠操作系统和仿真网络</Paragraph>
+    <Paragraph line="2025">易用性</Paragraph>
+    <Paragraph line="2026">易于学习和使用的能力</Paragraph>
+    <Paragraph line="2027">人机接口友好，易学习培训</Paragraph>
+    <Paragraph line="2028">采用图形用户界面</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2030" />
+  <Table table_id="T_56" type="other" title="数据同步共享服务设计与实现约束要求表" section="3.12">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>1</Cell>
+      <Cell>软件体系结构</Cell>
+    </Headers>
+    <Row>
+      <Cell>采用B/S架构</Cell>
+      <Cell>2</Cell>
+      <Cell>输入/输出</Cell>
+      <Cell>标准人机接口，专用屏边键</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>软件平台</Cell>
+      <Cell>国产操作系统</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.13" title="人员需求" start_line="2045" />
+  <Section section_id="3.13" title="表 SEQ 表 \* ARABIC 64 人员需求表" start_line="2046">
+    <Paragraph line="2047">序号</Paragraph>
+    <Paragraph line="2048">人员对象</Paragraph>
+    <Paragraph line="2049">人员数量</Paragraph>
+    <Paragraph line="2050">技术水平</Paragraph>
+    <Paragraph line="2051">具体要求</Paragraph>
+    <Paragraph line="2053">软件操作人员</Paragraph>
+    <Paragraph line="2055">了解中标麒麟、银河麒麟操作系统，比较熟练地操作各操作系统下的一般应用程序</Paragraph>
+    <Paragraph line="2056">应熟悉软件作战条令等相关业务流程和工作内容</Paragraph>
+    <Paragraph line="2058">软件维护人员</Paragraph>
+    <Paragraph line="2060">掌握中标麒麟、银河麒麟操操作系统和达梦数据库管理系统的管理与维护操作</Paragraph>
+    <Paragraph line="2061">了解软件的主要功能和数据库结构</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="2063" />
+  <Section section_id="3.14" title="表 SEQ 表 \* ARABIC 65 培训需求表" start_line="2064">
+    <Paragraph line="2065">序号</Paragraph>
+    <Paragraph line="2066">所属技能需求</Paragraph>
+    <Paragraph line="2067">培训内容</Paragraph>
+    <Paragraph line="2068">培训对象</Paragraph>
+    <Paragraph line="2069">备注</Paragraph>
+    <Paragraph line="2071">基础软件安装</Paragraph>
+    <Paragraph line="2072">服务器维护指南</Paragraph>
+    <Paragraph line="2073">使用人员</Paragraph>
+    <Paragraph line="2074">根据使用人员对平台软件的熟悉程度适当调整培训时间</Paragraph>
+    <Paragraph line="2076">应用软件安装</Paragraph>
+    <Paragraph line="2077">软件用户手册</Paragraph>
+    <Paragraph line="2078">维护人员</Paragraph>
+    <Paragraph line="2081">软件使用培训</Paragraph>
+    <Paragraph line="2082">集成方提供软件操作使用培训</Paragraph>
+    <Paragraph line="2083">使用人员</Paragraph>
+    <Paragraph line="2086">软件故障排查</Paragraph>
+    <Paragraph line="2087">开发方或集成方提供软件故障排查、状态恢复培训</Paragraph>
+    <Paragraph line="2088">使用人员、维护人员</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2091" />
+  <Section section_id="3.15" title="表 SEQ 表 \* ARABIC 66 软件保障需求表" start_line="2092">
+    <Paragraph line="2093">序号</Paragraph>
+    <Paragraph line="2094">保障需求</Paragraph>
+    <Paragraph line="2095">保障设备</Paragraph>
+    <Paragraph line="2096">保障人员</Paragraph>
+    <Paragraph line="2097">备注</Paragraph>
+    <Paragraph line="2099">软件故障排查</Paragraph>
+    <Paragraph line="2100">便携机，网络调试助手</Paragraph>
+    <Paragraph line="2101">用户维护人员</Paragraph>
+    <Paragraph line="2104">软件升级</Paragraph>
+    <Paragraph line="2105">光驱，软件安装盘</Paragraph>
+    <Paragraph line="2106">开发人员</Paragraph>
+    <Paragraph line="2109">开发方应提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。</Paragraph>
+    <Paragraph line="2110">系统交付后应按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="2111">
+    <Paragraph line="2112">数据同步共享服务无其它特殊需求。</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2113" />
+  <Section section_id="3.17" title="表 SEQ 表 \* ARABIC 67数据同步共享服务软件验收、交付和包装需求表" start_line="2114">
+    <Paragraph line="2115">序号</Paragraph>
+    <Paragraph line="2116">软件名称</Paragraph>
+    <Paragraph line="2117">数量</Paragraph>
+    <Paragraph line="2118">包装标记</Paragraph>
+    <Paragraph line="2119">说明</Paragraph>
+    <Paragraph line="2121">数据同步共享服务</Paragraph>
+    <Paragraph line="2123">光盘 CD-1-207</Paragraph>
+    <Paragraph line="2124">自动安装</Paragraph>
+    <Paragraph line="2126">数据同步共享服务软件用户手册</Paragraph>
+    <Paragraph line="2128">光盘 CD-1-207</Paragraph>
+    <Paragraph line="2131">数据同步共享服务软件程序员手册</Paragraph>
+    <Paragraph line="2133">光盘 CD-1-207</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="2135" />
+  <Table table_id="T_57" type="other" title="数据同步共享服务重要程度排序表" section="3.18">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求类型</Cell>
+      <Cell>重要性与关键性等级</Cell>
+      <Cell>高级</Cell>
+      <Cell>中级</Cell>
+    </Headers>
+    <Row>
+      <Cell>低级</Cell>
+      <Cell>1</Cell>
+      <Cell>功能需求</Cell>
+      <Cell>3.2.2</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1</Cell>
+      <Cell>3</Cell>
+      <Cell>3.2.3</Cell>
+      <Cell>8</Cell>
+      <Cell>接口需求</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.2</Cell>
+      <Cell>9</Cell>
+      <Cell>3.3.5</Cell>
+      <Cell>10</Cell>
+      <Cell>3.3.4</Cell>
+    </Row>
+    <Row>
+      <Cell>11</Cell>
+      <Cell>3.3.3</Cell>
+    </Row>
+  </Table>
+  <Section section_id="4" title="合格性规定" start_line="2168" />
+  <Section section_id="4" title="表 SEQ 表 \* ARABIC 69 合格性规定" start_line="2169">
+    <Paragraph line="2170">需求名称/标识</Paragraph>
+    <Paragraph line="2171">本文档的章节号</Paragraph>
+    <Paragraph line="2172">合格性方法</Paragraph>
+    <Paragraph line="2173">合格性级别</Paragraph>
+    <Paragraph line="2174">同步任务创建</Paragraph>
+    <Paragraph line="2175">3.2.1.1.1.1</Paragraph>
+    <Paragraph line="2176">A、B</Paragraph>
+    <Paragraph line="2177">a、b</Paragraph>
+    <Paragraph line="2178">同步任务删除</Paragraph>
+    <Paragraph line="2179">3.2.1.1.1.2</Paragraph>
+    <Paragraph line="2180">A、B</Paragraph>
+    <Paragraph line="2181">a、b</Paragraph>
+    <Paragraph line="2182">同步任务停止</Paragraph>
+    <Paragraph line="2183">3.2.1.1.1.3</Paragraph>
+    <Paragraph line="2184">A、B</Paragraph>
+    <Paragraph line="2185">a、b</Paragraph>
+    <Paragraph line="2186">同步任务启动</Paragraph>
+    <Paragraph line="2187">3.2.1.1.1.4</Paragraph>
+    <Paragraph line="2188">A、B</Paragraph>
+    <Paragraph line="2189">a、b</Paragraph>
+    <Paragraph line="2190">同步任务列表展示</Paragraph>
+    <Paragraph line="2191">3.2.1.1.1.5</Paragraph>
+    <Paragraph line="2192">A、B</Paragraph>
+    <Paragraph line="2193">a、b</Paragraph>
+    <Paragraph line="2194">同步任务详情展示</Paragraph>
+    <Paragraph line="2195">3.2.1.1.1.6</Paragraph>
+    <Paragraph line="2196">A、B</Paragraph>
+    <Paragraph line="2197">a、b</Paragraph>
+    <Paragraph line="2198">同步表检索</Paragraph>
+    <Paragraph line="2199">3.2.1.1.2.1</Paragraph>
+    <Paragraph line="2200">A、B</Paragraph>
+    <Paragraph line="2201">a、b</Paragraph>
+    <Paragraph line="2202">同步表添加</Paragraph>
+    <Paragraph line="2203">3.2.1.1.2.2</Paragraph>
+    <Paragraph line="2204">A、B</Paragraph>
+    <Paragraph line="2205">a、b</Paragraph>
+    <Paragraph line="2206">同步表删除</Paragraph>
+    <Paragraph line="2207">3.2.1.1.2.3</Paragraph>
+    <Paragraph line="2208">A、B</Paragraph>
+    <Paragraph line="2209">a、b</Paragraph>
+    <Paragraph line="2210">同步任务优先级配置</Paragraph>
+    <Paragraph line="2211">3.2.1.1.2.4</Paragraph>
+    <Paragraph line="2212">A、B</Paragraph>
+    <Paragraph line="2213">a、b</Paragraph>
+    <Paragraph line="2214">服务启动异常</Paragraph>
+    <Paragraph line="2215">3.2.1.1.3.1</Paragraph>
+    <Paragraph line="2216">A、B</Paragraph>
+    <Paragraph line="2217">a、b</Paragraph>
+    <Paragraph line="2218">主达梦库同步异常</Paragraph>
+    <Paragraph line="2219">3.2.1.1.3.2</Paragraph>
+    <Paragraph line="2220">A、B</Paragraph>
+    <Paragraph line="2221">a、b</Paragraph>
+    <Paragraph line="2222">备达梦库同步异常</Paragraph>
+    <Paragraph line="2223">3.2.1.1.3.3</Paragraph>
+    <Paragraph line="2224">A、B</Paragraph>
+    <Paragraph line="2225">a、b</Paragraph>
+    <Paragraph line="2226">执行sql语句异常</Paragraph>
+    <Paragraph line="2227">3.2.1.1.3.4</Paragraph>
+    <Paragraph line="2228">A、B</Paragraph>
+    <Paragraph line="2229">a、b</Paragraph>
+    <Paragraph line="2230">数据下载初始化</Paragraph>
+    <Paragraph line="2231">3.2.1.2.1</Paragraph>
+    <Paragraph line="2232">A、B</Paragraph>
+    <Paragraph line="2233">a、b</Paragraph>
+    <Paragraph line="2234">数据下载</Paragraph>
+    <Paragraph line="2235">3.2.1.2.2</Paragraph>
+    <Paragraph line="2236">A、B</Paragraph>
+    <Paragraph line="2237">a、b</Paragraph>
+    <Paragraph line="2238">数据下载关闭</Paragraph>
+    <Paragraph line="2239">3.2.1.2.3</Paragraph>
+    <Paragraph line="2240">A、B</Paragraph>
+    <Paragraph line="2241">a、b</Paragraph>
+    <Paragraph line="2242">数据上传初始化</Paragraph>
+    <Paragraph line="2243">3.2.1.3.1</Paragraph>
+    <Paragraph line="2244">A、B</Paragraph>
+    <Paragraph line="2245">a、b</Paragraph>
+    <Paragraph line="2246">增量数据上传</Paragraph>
+    <Paragraph line="2247">3.2.1.3.2</Paragraph>
+    <Paragraph line="2248">A、B</Paragraph>
+    <Paragraph line="2249">a、b</Paragraph>
+    <Paragraph line="2250">增量数据上传关闭</Paragraph>
+    <Paragraph line="2251">3.2.1.3.3</Paragraph>
+    <Paragraph line="2252">A、B</Paragraph>
+    <Paragraph line="2253">a、b</Paragraph>
+    <Paragraph line="2254">同步任务日志记录</Paragraph>
+    <Paragraph line="2255">3.2.1.4.1</Paragraph>
+    <Paragraph line="2256">A、B</Paragraph>
+    <Paragraph line="2257">a、b</Paragraph>
+    <Paragraph line="2258">数据下载日志记录</Paragraph>
+    <Paragraph line="2259">3.2.1.4.2</Paragraph>
+    <Paragraph line="2260">A、B</Paragraph>
+    <Paragraph line="2261">a、b</Paragraph>
+    <Paragraph line="2262">数据上传日志记录</Paragraph>
+    <Paragraph line="2263">3.2.1.4.3</Paragraph>
+    <Paragraph line="2264">A、B</Paragraph>
+    <Paragraph line="2265">a、b</Paragraph>
+    <Paragraph line="2266">获取主题</Paragraph>
+    <Paragraph line="2267">3.2.2.1</Paragraph>
+    <Paragraph line="2268">A、B</Paragraph>
+    <Paragraph line="2269">a、b</Paragraph>
+  </Section>
+  <Section section_id="3.3.2.1" title="数据发布" start_line="2270">
+    <Paragraph line="2271">3.2.2.2</Paragraph>
+    <Paragraph line="2272">A、B</Paragraph>
+    <Paragraph line="2273">a、b</Paragraph>
+    <Paragraph line="2274">主题订阅</Paragraph>
+    <Paragraph line="2275">3.2.2.3</Paragraph>
+    <Paragraph line="2276">A、B</Paragraph>
+    <Paragraph line="2277">a、b</Paragraph>
+    <Paragraph line="2278">数据资源目录展现</Paragraph>
+    <Paragraph line="2279">3.2.3.1</Paragraph>
+    <Paragraph line="2280">A、B</Paragraph>
+    <Paragraph line="2281">a、b</Paragraph>
+    <Paragraph line="2282">数据资源修改</Paragraph>
+    <Paragraph line="2283">3.2.3.2</Paragraph>
+    <Paragraph line="2284">A、B</Paragraph>
+    <Paragraph line="2285">a、b</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2287">
+    <Paragraph line="2288">本文档的追踪性见表70和表71。</Paragraph>
+  </Section>
+  <Table table_id="T_58" type="traceability" title="需求的正向追踪性" section="5">
+    <Headers>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>本文档的名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="1" title="范围" start_line="2295" />
+  <Section section_id="1" title="范围" start_line="2297" />
+  <Section section_id="1.1" title="标识" start_line="2300">
+    <Paragraph line="2301">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2302">
+    <Paragraph line="2303">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2305">
+    <Paragraph line="2306">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2307">
+    <Paragraph line="2308">1.2</Paragraph>
+    <Paragraph line="2310">系统和软件用途</Paragraph>
+    <Paragraph line="2311">1.2.1</Paragraph>
+    <Paragraph line="2312">系统和软件用途</Paragraph>
+    <Paragraph line="2313">1.2.1</Paragraph>
+    <Paragraph line="2315">系统与软件一般特性</Paragraph>
+    <Paragraph line="2316">1.2.2</Paragraph>
+    <Paragraph line="2317">系统与软件一般特性</Paragraph>
+    <Paragraph line="2318">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2320">
+    <Paragraph line="2321">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2322">
+    <Paragraph line="2323">1.3</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2325" />
+  <Section section_id="2" title="引用文档" start_line="2327">
+    <Paragraph line="2330">运行环境要求</Paragraph>
+    <Paragraph line="2332">运行环境要求</Paragraph>
+    <Paragraph line="2333">3.9.1</Paragraph>
+    <Paragraph line="2335">硬件环境</Paragraph>
+    <Paragraph line="2336">3.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="2337">
+    <Paragraph line="2338">3.10.1</Paragraph>
+    <Paragraph line="2340">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="2342">
+    <Paragraph line="2345">功能</Paragraph>
+    <Paragraph line="2346">4.1</Paragraph>
+    <Paragraph line="2347">能力需求</Paragraph>
+    <Paragraph line="2348">3.2</Paragraph>
+    <Paragraph line="2350">数据同步功能</Paragraph>
+    <Paragraph line="2351">3.2.1.1</Paragraph>
+    <Paragraph line="2352">同步任务创建</Paragraph>
+    <Paragraph line="2353">3.2.1.1.1.1</Paragraph>
+    <Paragraph line="2355">同步任务删除</Paragraph>
+    <Paragraph line="2356">3.2.1.1.1.2</Paragraph>
+    <Paragraph line="2358">同步任务停止</Paragraph>
+    <Paragraph line="2359">3.2.1.1.1.3</Paragraph>
+    <Paragraph line="2361">同步任务启动</Paragraph>
+    <Paragraph line="2362">3.2.1.1.1.4</Paragraph>
+    <Paragraph line="2364">同步任务列表展示</Paragraph>
+    <Paragraph line="2365">3.2.1.1.1.5</Paragraph>
+    <Paragraph line="2367">同步任务详情展示</Paragraph>
+    <Paragraph line="2368">3.2.1.1.1.6</Paragraph>
+    <Paragraph line="2370">同步表检索</Paragraph>
+    <Paragraph line="2371">3.2.1.1.2.1</Paragraph>
+    <Paragraph line="2373">同步表添加</Paragraph>
+    <Paragraph line="2374">3.2.1.1.2.2</Paragraph>
+    <Paragraph line="2376">同步表删除</Paragraph>
+    <Paragraph line="2377">3.2.1.1.2.3</Paragraph>
+    <Paragraph line="2379">同步任务优先级配置</Paragraph>
+    <Paragraph line="2380">3.2.1.1.2.4</Paragraph>
+    <Paragraph line="2382">服务启动异常</Paragraph>
+    <Paragraph line="2383">3.2.1.1.3.1</Paragraph>
+    <Paragraph line="2385">主达梦库同步异常</Paragraph>
+    <Paragraph line="2386">3.2.1.1.3.2</Paragraph>
+    <Paragraph line="2388">备达梦库同步异常</Paragraph>
+    <Paragraph line="2389">3.2.1.1.3.3</Paragraph>
+    <Paragraph line="2391">执行sql语句异常</Paragraph>
+    <Paragraph line="2392">3.2.1.1.3.4</Paragraph>
+    <Paragraph line="2394">3.2.1.2</Paragraph>
+    <Paragraph line="2395">数据下载初始化</Paragraph>
+    <Paragraph line="2396">3.2.1.2.1</Paragraph>
+    <Paragraph line="2398">配置数据获取</Paragraph>
+    <Paragraph line="2399">3.2.1.2.2</Paragraph>
+    <Paragraph line="2401">数据下载关闭</Paragraph>
+    <Paragraph line="2402">3.2.1.2.3</Paragraph>
+    <Paragraph line="2404">3.2.1.3</Paragraph>
+    <Paragraph line="2405">数据上传初始化</Paragraph>
+    <Paragraph line="2406">3.2.1.3.1</Paragraph>
+    <Paragraph line="2408">增量数据获取</Paragraph>
+    <Paragraph line="2409">3.2.1.3.2</Paragraph>
+    <Paragraph line="2411">增量数据上传</Paragraph>
+    <Paragraph line="2412">3.2.1.3.3</Paragraph>
+    <Paragraph line="2414">增量数据删除</Paragraph>
+    <Paragraph line="2415">3.2.1.3.4</Paragraph>
+    <Paragraph line="2417">增量数据上传关闭</Paragraph>
+    <Paragraph line="2418">3.2.1.3.5</Paragraph>
+    <Paragraph line="2420">3.2.1.4</Paragraph>
+    <Paragraph line="2421">同步任务日志记录</Paragraph>
+    <Paragraph line="2422">3.2.1.4.1</Paragraph>
+    <Paragraph line="2424">数据下载日志记录</Paragraph>
+    <Paragraph line="2425">3.2.1.4.2</Paragraph>
+    <Paragraph line="2427">数据上传日志记录</Paragraph>
+    <Paragraph line="2428">3.2.1.4.3</Paragraph>
+    <Paragraph line="2430">数据共享功能</Paragraph>
+    <Paragraph line="2431">3.2.2</Paragraph>
+    <Paragraph line="2432">获取主题</Paragraph>
+    <Paragraph line="2433">3.2.2.1</Paragraph>
+    <Paragraph line="2435">数据发送</Paragraph>
+    <Paragraph line="2436">3.2.2.2</Paragraph>
+    <Paragraph line="2438">主题订阅</Paragraph>
+    <Paragraph line="2439">3.2.2.3</Paragraph>
+    <Paragraph line="2441">数据资源管理功能</Paragraph>
+    <Paragraph line="2442">3.2.3</Paragraph>
+    <Paragraph line="2443">数据资源目录展现功能</Paragraph>
+    <Paragraph line="2444">3.2.3.1</Paragraph>
+    <Paragraph line="2446">数据资源修改功能</Paragraph>
+    <Paragraph line="2447">3.2.3.2</Paragraph>
+    <Paragraph line="2449">性能</Paragraph>
+    <Paragraph line="2450">4.2</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="2451">
+    <Paragraph line="2452">3.2</Paragraph>
+    <Paragraph line="2454">4.2.a</Paragraph>
+    <Paragraph line="2455">数据同步能力</Paragraph>
+    <Paragraph line="2456">3.2.1</Paragraph>
+    <Paragraph line="2458">4.2.b</Paragraph>
+    <Paragraph line="2459">数据共享能力</Paragraph>
+    <Paragraph line="2460">3.2.2.2</Paragraph>
+    <Paragraph line="2462">4.2.c</Paragraph>
+    <Paragraph line="2463">数据共享能力</Paragraph>
+    <Paragraph line="2464">3.2.2.3</Paragraph>
+    <Paragraph line="2466">输入/输出</Paragraph>
+    <Paragraph line="2467">4.3</Paragraph>
+  </Section>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="2468">
+    <Paragraph line="2469">3.5</Paragraph>
+    <Paragraph line="2471">数据处理要求</Paragraph>
+    <Paragraph line="2472">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2473">
+    <Paragraph line="2474">3.3</Paragraph>
+    <Paragraph line="2476">接口</Paragraph>
+    <Paragraph line="2477">4.5</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2478">
+    <Paragraph line="2479">3.3</Paragraph>
+    <Paragraph line="2481">固件</Paragraph>
+    <Paragraph line="2482">4.6</Paragraph>
+    <Paragraph line="2484">不追踪</Paragraph>
+    <Paragraph line="2485">关键性要求</Paragraph>
+    <Paragraph line="2486">4.7</Paragraph>
+    <Paragraph line="2488">不追踪</Paragraph>
+    <Paragraph line="2489">可靠性</Paragraph>
+    <Paragraph line="2490">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2491">
+    <Paragraph line="2492">3.6</Paragraph>
+    <Paragraph line="2494">安全性</Paragraph>
+    <Paragraph line="2495">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="2496">
+    <Paragraph line="2497">3.7</Paragraph>
+    <Paragraph line="2499">保密性</Paragraph>
+    <Paragraph line="2500">4.7.3</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2501">
+    <Paragraph line="2502">3.8</Paragraph>
+    <Paragraph line="2504">设计约束</Paragraph>
+    <Paragraph line="2506">设计和构造约束</Paragraph>
+    <Paragraph line="2507">3.12</Paragraph>
+    <Paragraph line="2509">编程语言及编程规则</Paragraph>
+    <Paragraph line="2510">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="2511">
+    <Paragraph line="2512">3.9、 3.10</Paragraph>
+    <Paragraph line="2514">开发工具及环境要求</Paragraph>
+    <Paragraph line="2515">5.2</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="2516">
+    <Paragraph line="2517">3.9、 3.10</Paragraph>
+    <Paragraph line="2519">测试工具和环境要求</Paragraph>
+    <Paragraph line="2520">5.3</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2521">
+    <Paragraph line="2522">3.12</Paragraph>
+    <Paragraph line="2524">结构复杂性要求</Paragraph>
+    <Paragraph line="2525">5.4</Paragraph>
+    <Paragraph line="2527">不追踪</Paragraph>
+    <Paragraph line="2528">多版本设计要求</Paragraph>
+    <Paragraph line="2529">5.5</Paragraph>
+    <Paragraph line="2531">不追踪</Paragraph>
+    <Paragraph line="2532">质量控制要求</Paragraph>
+    <Paragraph line="2535">不追踪</Paragraph>
+    <Paragraph line="2536">软件关键等级</Paragraph>
+    <Paragraph line="2537">6.1.</Paragraph>
+    <Paragraph line="2538">设计和实现的约束</Paragraph>
+    <Paragraph line="2539">3.12</Paragraph>
+    <Paragraph line="2541">标准</Paragraph>
+    <Paragraph line="2542">6.2</Paragraph>
+    <Paragraph line="2543">设计和实现的约束</Paragraph>
+    <Paragraph line="2544">3.12</Paragraph>
+    <Paragraph line="2546">文档</Paragraph>
+    <Paragraph line="2547">6.3</Paragraph>
+    <Paragraph line="2548">设计和实现的约束</Paragraph>
+    <Paragraph line="2549">2.12</Paragraph>
+    <Paragraph line="2551">配置管理</Paragraph>
+    <Paragraph line="2552">6.4</Paragraph>
+    <Paragraph line="2554">不追踪</Paragraph>
+    <Paragraph line="2555">测试要求</Paragraph>
+    <Paragraph line="2556">6.5</Paragraph>
+    <Paragraph line="2558">不追踪</Paragraph>
+    <Paragraph line="2559">对分承制方的要求</Paragraph>
+    <Paragraph line="2560">6.6</Paragraph>
+    <Paragraph line="2562">不追踪</Paragraph>
+    <Paragraph line="2563">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2565">
+    <Paragraph line="2567">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2569">
+    <Paragraph line="2570">9.15</Paragraph>
+    <Paragraph line="2572">进度和里程碑</Paragraph>
+    <Paragraph line="2575">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2576">
+    <Paragraph line="2577">10</Paragraph>
+    <Paragraph line="2579">不追踪</Paragraph>
+  </Section>
+  <Table table_id="T_59" type="traceability" title="需求的逆向追踪性" section="6">
+    <Headers>
+      <Cell>本文档名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="1" title="范围" start_line="2587" />
+  <Section section_id="1" title="范围" start_line="2589" />
+  <Section section_id="1.1" title="标识" start_line="2592">
+    <Paragraph line="2593">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2594">
+    <Paragraph line="2595">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2597">
+    <Paragraph line="2598">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2599">
+    <Paragraph line="2600">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="2602">
+    <Paragraph line="2603">1.2.1</Paragraph>
+    <Paragraph line="2604">系统和软件用途</Paragraph>
+    <Paragraph line="2605">1.2.1</Paragraph>
+    <Paragraph line="2607">系统与软件的一般特性</Paragraph>
+    <Paragraph line="2608">1.2.2</Paragraph>
+    <Paragraph line="2609">系统与软件一般特性</Paragraph>
+    <Paragraph line="2610">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2612">
+    <Paragraph line="2613">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2614">
+    <Paragraph line="2615">1.3</Paragraph>
+    <Paragraph line="2617">应用文档</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2619" />
+  <Section section_id="3" title="需求" start_line="2622">
+    <Paragraph line="2624">技术要求</Paragraph>
+    <Paragraph line="2627">需求的状态和方式</Paragraph>
+    <Paragraph line="2628">3.1</Paragraph>
+    <Paragraph line="2629">技术要求</Paragraph>
+    <Paragraph line="2632">软件状态图</Paragraph>
+    <Paragraph line="2633">3.1.1</Paragraph>
+    <Paragraph line="2634">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3.1.1" title="软件活动图" start_line="2637">
+    <Paragraph line="2638">3.1.2</Paragraph>
+    <Paragraph line="2639">技术要求</Paragraph>
+    <Paragraph line="2642">能力需求</Paragraph>
+    <Paragraph line="2643">3.2</Paragraph>
+    <Paragraph line="2644">功能</Paragraph>
+    <Paragraph line="2645">4.1</Paragraph>
+    <Paragraph line="2647">数据同步能力</Paragraph>
+    <Paragraph line="2648">3.2.1</Paragraph>
+    <Paragraph line="2649">数据同步功能</Paragraph>
+    <Paragraph line="2650">4.1.2</Paragraph>
+    <Paragraph line="2652">数据共享能力</Paragraph>
+    <Paragraph line="2653">3.2.2</Paragraph>
+    <Paragraph line="2654">数据共享功能</Paragraph>
+    <Paragraph line="2655">4.1.1</Paragraph>
+    <Paragraph line="2657">数据资源管理能力</Paragraph>
+    <Paragraph line="2658">3.2.3</Paragraph>
+    <Paragraph line="2659">数据资源管理功能</Paragraph>
+    <Paragraph line="2660">4.1.3</Paragraph>
+    <Paragraph line="2662">外部接口需求</Paragraph>
+    <Paragraph line="2663">3.3</Paragraph>
+    <Paragraph line="2664">输入/输出、接口</Paragraph>
+    <Paragraph line="2665">4.3、4.5</Paragraph>
+    <Paragraph line="2667">内部接口需求</Paragraph>
+    <Paragraph line="2668">3.4</Paragraph>
+    <Paragraph line="2669">输入/输出、接口</Paragraph>
+    <Paragraph line="2670">4.3、4.5</Paragraph>
+    <Paragraph line="2672">内部数据需求</Paragraph>
+    <Paragraph line="2673">3.5</Paragraph>
+    <Paragraph line="2674">数据处理要求</Paragraph>
+    <Paragraph line="2675">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2677">
+    <Paragraph line="2678">3.6</Paragraph>
+    <Paragraph line="2679">可靠性</Paragraph>
+    <Paragraph line="2680">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="2682">
+    <Paragraph line="2683">3.7</Paragraph>
+    <Paragraph line="2684">安全性</Paragraph>
+    <Paragraph line="2685">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2687">
+    <Paragraph line="2688">3.8</Paragraph>
+    <Paragraph line="2689">保密性</Paragraph>
+    <Paragraph line="2690">4.7.3</Paragraph>
+    <Paragraph line="2692">环境需求</Paragraph>
+    <Paragraph line="2693">3.9</Paragraph>
+    <Paragraph line="2694">运行环境要求</Paragraph>
+    <Paragraph line="2697">计算资源需求</Paragraph>
+    <Paragraph line="2698">3.10</Paragraph>
+    <Paragraph line="2699">主要运行环境</Paragraph>
+    <Paragraph line="2700">3.1</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="2702">
+    <Paragraph line="2703">3.11</Paragraph>
+    <Paragraph line="2704">质量控制要求</Paragraph>
+    <Paragraph line="2707">设计和构造约束</Paragraph>
+    <Paragraph line="2708">3.12</Paragraph>
+    <Paragraph line="2709">质量控制要求</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求" start_line="2712">
+    <Paragraph line="2713">3.13</Paragraph>
+    <Paragraph line="2715">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="2716">
+    <Paragraph line="2717">3.14</Paragraph>
+    <Paragraph line="2719">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2720">
+    <Paragraph line="2721">3.15</Paragraph>
+    <Paragraph line="2722">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2725">
+    <Paragraph line="2726">3.17</Paragraph>
+    <Paragraph line="2727">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="2730">
+    <Paragraph line="2731">3.18</Paragraph>
+    <Paragraph line="2733">不追踪</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="2734">
+    <Paragraph line="2737">不追踪</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2738">
+    <Paragraph line="2741">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2742">
+    <Paragraph line="2745">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2747">
+    <Paragraph line="2748">无。</Paragraph>
+    <Paragraph line="2750">PAGE   \* MERGEFORMAT4</Paragraph>
+    <Paragraph line="2752">PAGE   \* MERGEFORMAT5</Paragraph>
+  </Section>
+</Document>

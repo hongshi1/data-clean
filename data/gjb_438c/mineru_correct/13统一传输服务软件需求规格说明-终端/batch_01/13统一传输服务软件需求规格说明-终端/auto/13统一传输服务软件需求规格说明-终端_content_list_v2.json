@@ -1,0 +1,637 @@
+[
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/75ce6e2dd8b928c718023721c8a5510fdff9cdcde591d50c385b87c316d29657.jpg"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "<table><tr><td rowspan=\"2\">1.应用软件调用统一传输服务初始化 接口，进行初始化； 3.应用软件调用注册接口，按照接口 要求完成用户标识、软件标识、数据接 收回调函数参数填写；</td><td>2. 系统将应用软件与统一传输服务服 务端建立连接，如果连接成功，即时将 初始化结果反馈给应用软件；如果连接 失败，向应用软件反馈失败原因，执行 异常流E1；</td><td></td></tr><tr><td>4.系统按照用户标识、软件标识对用 户软件进行注册，并建立用户标识、软 件标识到数据接收回调函数的映射关系 并存储，如果映射成功，即时将注册结 果反馈给应用软件；如果失败，向应用 软件反馈失败原因，执行异常流E2，并 在映射关系表中删除对应的映射关系；</td><td>在100M局域网环境下，支持最</td></tr><tr><td rowspan=\"2\">5.应用软件调用数据发送接口，按照 接口要求完成源用户信息、多个目的用 户信息、数据类型、数据内容、数据长 度、传输属性等参数的填写，发送数 据；</td><td>6.系统按照应用软件要求，按照数据 类型调用报文处理服务对数据进行报文 编码处理，若处理失败，则将失败结果 返回给应用软件，执行异常流E3；若处 理成功，按照传输属性选择传输策略和 信道，若传入传输属性等参数有误，则</td><td>大数据传输容量 4M；</td></tr><tr><td>将发送失败结果反馈给应用软件，执行异 常流E4：若传入参数无误，则根据传入 参数选择信道传输服务/三方传输服务将 数据分别发送至所有的目的用户，并将 数据发送结果即时反馈给应用软件； 7.系统收到数据后解析其目的用户、 目的软件标识信息，在用户标识、软件 标识到数据接收回调函数的映射关系表 中查找对应的数据接收回调首地址，若 未找到，则不处理该数据；若找到，则 根据数据类型调用报文处理服务将数据 解码后通过回调函数回传给应用软件；</td><td></td></tr><tr><td>8. 应用软件在数据接收回调函数中处 理接收到的数据。</td><td colspan=\"2\"></td></tr><tr><td>9.应用软件调用数据订阅接口，按照 接口要求完成数据源用户标识、源软件 标识、数据类型参数的的填写，订阅指 定数据来源和数据类型的和数据；</td><td>10. 系统建立订阅的源用户标识、源软 件标识、数据类型到数据接收回调函数 的映射关系并存储，并将订阅信息发送 至统一传输服务的服务端，如果订阅成 功，即时将订阅结果反馈给应用软件； 如果订阅失败，向应用软件反馈失败原 因，执行异常流E5；</td><td></td></tr><tr><td>11. 应用软件调用数据发送接口.按照 接口要求完成源用户信息、数据类型、 数据内容、数据长度、传输属性等参数 的填写，发送数据；</td><td>12. 系统按照应用软件要求，按照数据 类型调用报文处理服务对数据进行报文 编码处理，若处理失败，则将失败结果 返回给应用软件，执行异常流E3：若处 理成功，按照传输属性选择传输策略和 信道，若传入传输属性等参数有误，则 将发送失败结果反馈给应用软件，执行异 常流E4；若传入参数无误，则将数据发</td><td>送至统一传输服务的服务端，并将数据</td></tr><tr><td></td><td>发送结果即时反馈给应用软件； 13. 统一传输服务的服务端收到数据</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>到，则根据数据类型调用报文处理服务</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>后，根据数据的源用户信息、数据类型</td><td></td></tr><tr><td></td><td>信息找到此时网络中订阅了该类型信息 的客户端，并将数据按照应用软件发送 端的传输属性参数选择信道传输服务/三</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>方传输服务将数据分发至这些客户端；</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>14. 系统收到数据后解析其源用户信息</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>中的用户标识、软件标识，并在标识、</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>软件标识与数据接收回调函数的映射关</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>系表中查找对应的数据接收回调首地</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>址，若未找到，则不处理该数据；若找</td></tr><tr><td colspan=\"1\" rowspan=\"1\">15. 应用软件在数据接收回调函数中处理接收到的数据。</td><td colspan=\"1\" rowspan=\"1\">将数据解码后通过回调函数回传给应用软件；</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E1：系统提示初始化失败，向运行支撑服务写入错误日志，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E2：系统提示注册失败，向运行支撑服务写入错误日志，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E3：系统提示数据处理失败，向运行支撑服务写入错误日志，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E4：系统提示传入参数无效，向运行支撑服务写入错误日志，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E5：系统提示订阅失败，向运行支撑服务写入错误日志，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">后置条件：无。</td><td colspan=\"1\" rowspan=\"1\"></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                109,
+                915,
+                897
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "9"
+                    }
+                ]
+            },
+            "bbox": [
+                509,
+                922,
+                522,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                104,
+                108,
+                915,
+                890
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "10"
+                    }
+                ]
+            },
+            "bbox": [
+                507,
+                896,
+                527,
+                910
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                109,
+                915,
+                349
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2.1.3 文件收发（PZXQ-GN-SJSF-WJSF）"
+                    }
+                ],
+                "level": 2
+            },
+            "bbox": [
+                114,
+                374,
+                569,
+                393
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "文件收发用例场景，见表6。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                399,
+                403,
+                418
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/0d4811ab11a353f2ff9ee8606de053b9b918fe5619e78ca5fcc3ce81a3a2ada8.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表6 文件收发用例描述"
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td colspan=\"1\" rowspan=\"1\">Use Case 名称:文件收发</td><td colspan=\"2\" rowspan=\"1\">Actors:应用软件</td></tr><tr><td colspan=\"3\" rowspan=\"1\">概述：本用例是文件收发的用例，描述应用软件收发文件、获取文件发送进度、文件断点续传的过程；</td></tr><tr><td colspan=\"3\" rowspan=\"1\">前置条件：(1)统一传输服务启动正常。(2)应用软件收发端网络连接正常。</td></tr><tr><td colspan=\"3\" rowspan=\"1\">主事件流</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor 的动作</td><td colspan=\"1\" rowspan=\"1\">系统的动作</td><td colspan=\"1\" rowspan=\"1\">动作约束(性能、可靠性、容错等)</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1. 应用软件调用统一传输服务初始化接口，进行初始化；3.应用软件调用注册接口，按照接口要求完成用户标识、软件标识、数据接收回调函数参数填写；</td><td colspan=\"1\" rowspan=\"1\">2. 系统将应用软件与统一传输服务服务端建立连接，如果连接成功，即时将初始化结果反馈给应用软件；如果连接失败，向应用软件反馈失败原因，执行异常流E1；4.系统按照用户标识、软件标识对用户软件进行注册，并建立用户标识、软件标识到数据接收回调函数的映射关系并存储，如果映射成功，即时将注册结果反馈给应用软件；如果失败，向应用</td><td colspan=\"1\" rowspan=\"1\">在100M局域网环境下，支持最大数据传输容量 4M；</td></tr><tr><td>5.应用软件调用数据发送接口，按照 接口要求完成源用户信息、目的用户信 息、数据类型、发送文件名、文件名长 度、传输属性、文件发送回调函数等参 数的填写，发送文件；</td><td>软件反馈失败原因，执行异常流E2，并 在映射关系表中删除对应的映射关系； 6.系统按照应用软件要求，对文件进 行处理，若处理失败，则将发送失败结 果返回给应用软件，执行异常流E3；若 处理成功，按照传输属性选择传输策略 和信道，若传入传输属性等参数有误， 则将发送失败结果反馈给应用软件，执行 异常流E4；若传入参数无误，则根据传 入参数选择信道传输服务/三方传输服 务，将文件拆分成数据流分包发送至目 的用户，并将文件发送结果即时反馈给 应用软件； 7.系统每成功发送一包文件数据，等</td><td></td></tr><tr><td>8. 应用软件在文件发送回调函数中收 到当前文件发送进度，进行后续操作； 10. 应用软件在数据接收回调函数中处 理接收到的文件。</td><td>待收端反馈，收到成功反馈后通过文件 发送回调函数向应用软件返回当前发送 进度； 9.系统每收到一包文件数据，及时向 发端发送反馈信息，直至接收到文件的 最后一包，接收完成后解析其目的用 户、目的软件标识信息，在用户标识、 软件标识到数据接收回调函数的映射关 系表中查找对应的数据接收回调首地 址，若未找到，则不处理该数据；若找 到，则将接收到的文件信息和其他相关 信息通过回调函数回传给应用软件；</td><td></td></tr><tr><td colspan=\"2\">异常流E1：系统提示初始化失败，向运行支撑服务写入错误日志，用例结束。</td><td></td></tr><tr><td colspan=\"3\">异常流E2：系统提示注册失败，向运行支撑服务写入错误日志，用例结束。</td></tr><tr><td colspan=\"2\">异常流E3：系统提示文件处理失败，向运行支撑服务写入错误日志，用例结束。</td><td></td></tr><tr><td colspan=\"2\"></td><td></td></tr><tr><td colspan=\"2\">异常流E4：系统提示传入参数无效，向运行支撑服务写入错误日志，用例结束。</td><td></td></tr><tr><td colspan=\"2\"></td><td></td></tr><tr><td colspan=\"2\"></td><td></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                449,
+                914,
+                901
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "11"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                922,
+                524,
+                934
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                109,
+                914,
+                881
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "12"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                896,
+                527,
+                910
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                109,
+                109,
+                915,
+                139
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2.1.4 群组通信管理（PZXQ-GN-SJSF-QZTXGL）"
+                    }
+                ],
+                "level": 2
+            },
+            "bbox": [
+                114,
+                143,
+                652,
+                162
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "群组通信管理用例场景，见表7。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                170,
+                445,
+                187
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/cd19d2022648fb7de4a0fd07a677fd602ed44d92602f02f05f6ec6916da35a32.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表7 群组通信管理用例描述"
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td colspan=\"1\" rowspan=\"1\">Use Case 名称:群组通信管理</td><td colspan=\"2\" rowspan=\"1\">Actors:应用软件</td></tr><tr><td colspan=\"3\" rowspan=\"1\">概述：本用例是群组通信管理的用例，描述应用软件创建群组、注销群组、加入群组、退出群组、收发群组消息、查询群组成员在线状态和成员列表的过程；</td></tr><tr><td colspan=\"3\" rowspan=\"1\">前置条件：(1)统一传输服务启动正常。(2)群组所有成员之间网络连接正常。</td></tr><tr><td colspan=\"3\" rowspan=\"1\">主事件流</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor 的动作</td><td colspan=\"1\" rowspan=\"1\">系统的动作</td><td colspan=\"1\" rowspan=\"1\">动作约束(性能、可靠性、容错等)</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1. 应用软件调用统一传输服务初始化接口，进行初始化；3.应用软件调用群组创建接口，按照接口要求完成群组名、用户名、群组消息接收回调函数、群组成员上下线状态回调函数等参数的填写，创建群组；</td><td colspan=\"1\" rowspan=\"1\">2. 系统将应用软件与统一传输服务服务端建立连接，如果连接成功，即时将初始化结果反馈给应用软件；如果连接失败，向应用软件反馈失败原因，执行异常流E1；4.系统按照应用软件要求，判断该群组名是否已被创建，若已被创建，则向应用软件返回创建失败的结果，执行异常流E2；若未被创建，则分别建立群组名与群组消息接收回调函数、群组成员上下线状态回调函数的映射关系并存储，同时通知群组中的其他成员该成员上线的信息，若成功，则将创建群组结果反馈给应用软件；若失败，则将失败结果返回给应用软件，执行异常流E2；5. 系统接收到来自其他群组成员发来的上线信息，根据上线信息中的群组名和用户名维护群组成员信息，并在群组名与群组成员上下线状态回调函数的映射关系表中找到对应的回调地址，并将上线用户名、上线群组名、上线状态通</td><td colspan=\"1\" rowspan=\"1\">在 100M 局域网环境下，支持最大数据传输容量4M；</td></tr><tr><td>6.应用软件在群组成员上下线状态回 调函数中接收到群组成员上线通知，进 行后续处理； 7.应用软件调用加入群组接口，按照 接口要求完成群组名、用户名、群组消 息接收回调函数、群组成员上下线状态 回调函数等参数的填写，加入群组；</td><td>过回调函数返回给应用软件； 8.系统按照应用软件要求，判断该成 员是否已经加入该群组，若已被加入， 则向应用软件返回加入失败的结果，执 行异常流E3；若未加入，则分别建立群 组名与群组消息接收回调函数、群组成 员上下线状态回调函数的映射关系并存 储，同时通知群组中的其他成员该成员 上线的信息，若成功，则将加入群组结 果反馈给应用软件；若失败，则将失败 结果返回给应用软件，执行异常流E2；</td><td></td></tr><tr><td>9. 应用软件调用群组消息发送接口， 按照接口要求完成群组名、用户名、数 据内容、数据长度、数据类型、传输属 性等参数的填写，发送群组消息；</td><td>10. 系统按照应用软件要求，按照数据 类型调用报文处理服务对数据进行编码 处理，若处理失败，则将发送失败结果 返回给应用软件，执行异常流E4；若处 理成功，按照传输属性选择传输策略和 信道，若传入传输属性等参数有误，则 将发送失败结果反馈给应用软件.执行异 常流E5；若传入参数无误，则根据传入 参数选择信道传输服务/三方传输服务， 将数据发送至群组中所有成员，并将数 据发送结果即时反馈给应用软件； 11. 系统收到数据后解析其目的群组名 信息，在群组名到群组数据接收回调函 数的映射关系表中查找对应的群组数据 接收回调首地址，若未找到，则不处理 该数据；若找到，则根据数据类型调用 报文处理服务将数据解码后通过回调函</td><td></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                219,
+                914,
+                900
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "13"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                922,
+                527,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                102,
+                108,
+                915,
+                881
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "14"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                896,
+                527,
+                910
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/df425217f962be4e7b134fc8d2fb8da2bcc84ccbd5bc3a4a759b257ff9f5522f.jpg"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "<table><tr><td>12. 应用软件在群组数据接收回调函数 中处理接收到的数据；</td><td>数回传给应用软件；</td></tr><tr><td>13.应用软件调用查询群组成员列表接 口，按照接口要求完成群组名、群组列 表输出首地址等参数的填写，发送查询 请求；</td><td></td></tr><tr><td></td><td>14.系统收到群组成员列表查询请求</td></tr><tr><td></td><td>根据群组名查找本地维护的该群组的成</td></tr><tr><td></td><td>员信息，将群组成员信息通过群组列表</td></tr><tr><td>15. 应用软件调用退出群组接口，按照 接口要求完成群组名、用户名、参数的</td><td>输出首地址返回给应用软件：</td></tr><tr><td>填写，退出群组；</td><td></td></tr><tr><td></td><td>16. 系统按照应用软件要求，判断该成</td></tr><tr><td></td><td>员是否已经加入该群组，若未加入，则</td></tr><tr><td></td><td>向应用软件返回退出群组失败的结果，</td></tr><tr><td></td><td>执行异常流E3；若已加入，则将群组名</td></tr><tr><td></td><td>与群组消息接收回调函数、群组成员上</td></tr><tr><td></td><td></td></tr><tr><td></td><td>下线状态回调函数的映射关系删除，同</td></tr><tr><td></td><td>时通知群组中的其他成员该成员下线的</td></tr><tr><td></td><td>信息，若成功，则将退出群组结果即时 返回给应用软件；若失败，则将失败结</td></tr><tr><td></td><td>果返回给应用软件，执行异常流E3；</td></tr><tr><td></td><td>17. 系统接收到来自其他群组成员发来</td></tr><tr><td></td><td>的下线信息，根据下线信息中的群组名 和用户名维护群组成员信息，并在群组</td></tr><tr><td></td><td></td></tr><tr><td></td><td>名与群组成员上下线状态回调函数的映</td></tr><tr><td></td><td>射关系表中找到对应的回调地址，并将 下线用户名、下线群组名、上下线状态</td></tr><tr><td>18. 应用软件在群组成员上下线状态回</td><td>通过回调函数返回给应用软件；</td></tr><tr><td>调函数中接收到群组成员下线通知，进 行后续处理；</td><td></td></tr><tr><td>19. 应用软件调用注销群组接口，按照 接口要求完成群组名、用户名、参数的</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td>组名是否已被创建，若未被创建，则向</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td>填写，解散该群组；</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td>20. 系统按照应用软件要求，判断该群</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table>",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                107,
+                915,
+                901
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "15"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                922,
+                527,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/5b119e52cba71fec7b4a5c5ba89d3129b255f069e3da21f56a9fd98b6fd04274.jpg"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "<table><tr><td rowspan=1 colspan=1>22. 应用软件在群组成员上下线状态回调函数中接收到群组成员下线通知，进行后续处理。</td><td rowspan=1 colspan=1>应用软件返回注销失败的结果，执行异常流E2；若已被创建，则将群组名与群组消息接收回调函数、群组成员上下线状态回调函数的映射关系删除，同时通知群组中的其他成员群组解散的消息，则将失败结果返回给应用软件，执行异常流 E2；21. 系统接收到群组解散消息，根据消息中携带的群组名信息，将该群组中的所有成员离线状态通过群组上下线回调函数返回给应用软件，并删除本地维护的该群组成员列表，将群组名与群组消息接收回调函数、群组成员上下线状态回调函数的映射关系删除；</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>异常流E1：系统提示初始化失败，向运行支撑服务写入错误日志，用例结束。</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>异常流E2：系统提示群组创建/注销失败，向运行支撑服务写入错误日志，用例结束。</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>异常流E3：系统提示加入/退出群组失败，向运行支撑服务写入错误日志，用例结束。</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>异常流E4：系统提示数据处理失败，向运行支撑服务写入错误日志，用例结束。</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>异常流E5：系统提示传入参数无效，向运行支撑服务写入错误日志，用例结束。</td><td rowspan=1 colspan=1></td></tr><tr><td rowspan=1 colspan=2>后置条件：无。</td><td rowspan=1 colspan=1></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                108,
+                914,
+                643
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2.2传输控制（PZXQ-GN-CSKZ）"
+                    }
+                ],
+                "level": 2
+            },
+            "bbox": [
+                114,
+                665,
+                487,
+                686
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "传输控制功能主要完成业务数据的发送和接收，包含传输策略选择、传输信道选择、策略外部配置、可靠传输、拆包组包、优先级控制、流控策略控制等功能，其功能用例如图4所示。"
+                    }
+                ]
+            },
+            "bbox": [
+                114,
+                693,
+                895,
+                760
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "16"
+                    }
+                ]
+            },
+            "bbox": [
+                507,
+                896,
+                527,
+                910
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/002a2a32a561a24a9d4a61426295eab2bfa0e3e5c8d6db3ba070fad402a54690.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "图4 传输控制功能用例图"
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                260,
+                193,
+                803,
+                381
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "传输控制功能所有能力标识表，见表8。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                504,
+                504,
+                521
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/85088d3262de1bd48f2b7769243ceaf3a3a8339100f475bdcfe8677e5c398363.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表8 传输控制功能所有能力标识"
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td rowspan=1 colspan=1>序号</td><td rowspan=1 colspan=1>Use case 名称</td><td rowspan=1 colspan=1>项目唯一标识符</td><td rowspan=1 colspan=1>需求描述</td><td rowspan=1 colspan=1>需求重用</td><td rowspan=1 colspan=1>方式名称</td><td rowspan=1 colspan=1>运行状态</td><td rowspan=1 colspan=1>对应的任务书功能/性能</td></tr><tr><td rowspan=1 colspan=1>1</td><td rowspan=1 colspan=1>传输信道选择</td><td rowspan=1 colspan=1>PZXQ-GN-CSKZ-CSXDXZ</td><td rowspan=1 colspan=1>提供根据应用需求、网络状态选择三方传输服务软件和传输信道的功能；</td><td rowspan=1 colspan=1>沿用</td><td rowspan=1 colspan=1>桌面版、平板版、手持版</td><td rowspan=1 colspan=1>运行阶段</td><td rowspan=1 colspan=1>4.1.2 a)</td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                552,
+                914,
+                686
+            ]
+        },
+        {
+            "type": "title",
+            "content": {
+                "title_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2.2.1 传输信道选择（PZXQ-GN-CSKZ-CSXDXZ）"
+                    }
+                ],
+                "level": 2
+            },
+            "bbox": [
+                114,
+                709,
+                665,
+                728
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "传输信道选择用例场景，见表9。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                736,
+                443,
+                752
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/10918cfba9c09fc5ed0cf05d2ad7ef27257db1c17e60ef8eecf9bd07891514e5.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表9 传输信道选择用例描述"
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td>Use Case 名称:传输信道选择</td><td colspan=\"2\">Actors:应用软件</td></tr><tr><td colspan=\"3\">概述：本用例是传输信道选择的用例，描述应用软件根据需求选择传输信道发送数据的过程；</td></tr><tr><td colspan=\"3\">前置条件：(1)统一传输服务启动正常。</td></tr><tr><td colspan=\"3\">(2)应用软件收发端网络连接正常。 (3)传输服务正常启动。</td></tr><tr><td colspan=\"3\">主事件流</td></tr><tr><td>Actor 的动作</td><td>系统的动作</td><td>动作约束 (性能、可靠性、容错等)</td></tr><tr><td>1. 应用软件调用统一传输服务初始化 接口，进行初始化；</td><td>2.系统将应用软件与统一传输服务服 务端建立连接，如果连接成功，即时将 初始化结果反馈给应用软件；如果连接</td><td></td></tr><tr><td>3.应用软件调用注册接口，按照接口 要求完成用户标识、软件标识、数据接 收回调函数参数填写；</td><td>失败，向应用软件反馈失败原因，执行 异常流E1； 4.系统按照用户标识、软件标识对用 户软件进行注册，并建立用户标识、软 件标识到数据接收回调函数的映射关系 并存储，如果映射成功，即时将注册结</td><td></td></tr><tr><td rowspan=\"4\">5.应用软件调用数据发送接口，按照 接口要求完成源用户信息、目的用户信 息、数据类型、数据内容、数据长度、 传输属性等参数的填写，填写完成后发 送数据；</td><td>果反馈给应用软件；如果失败，向应用 软件反馈失败原因，执行异常流E2，并 在映射关系表中删除对应的映射关系；</td><td>在 100M 局域网环境下，支持最 大数据传输容量 4M；</td></tr><tr><td>6.系统按照应用软件要求，按照数据 类型调用报文处理服务对数据进行编码 处理，若处理失败，则将发送失败结果 返回给应用软件，执行异常流E3；若处</td><td></td></tr><tr><td>理成功，按照传输属性选择对应的传输 策略，将数据进行封装并发送至传输服 务，通过发送至目的用户，并将数据发 送结果即时反馈给应用软件；</td><td></td></tr><tr><td>7.系统收到来自或实时传输服务的数 据后，解析其目的用户、目的软件标识 信息，在用户标识、软件标识到数据接 收回调函数的映射关系表中查找对应的 数据接收回调首地址，若未找到，则不 处理该数据；若找到，则根据数据类型 调用报文处理服务将数据解码后通过回</td><td></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                784,
+                914,
+                897
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "17"
+                    }
+                ]
+            },
+            "bbox": [
+                505,
+                922,
+                526,
+                934
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                110,
+                915,
+                890
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "18"
+                    }
+                ]
+            },
+            "bbox": [
+                507,
+                896,
+                527,
+                910
+            ]
+        }
+    ]
+]

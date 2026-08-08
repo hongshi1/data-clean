@@ -1,0 +1,3167 @@
+<Document doc_id="04数据统一访问服务软件需求规格说明-终">
+  <Section section_id="1.1" title="标识" start_line="2">
+    <Paragraph line="3">本文档已被批准的标识号：AZ6932.490.0103 SRS；</Paragraph>
+    <Paragraph line="4">本文档所适用的软件名称为：数据统一访问服务；</Paragraph>
+    <Paragraph line="5">本文档的版本号为：V1.00.02/2020年01月03日；</Paragraph>
+    <Paragraph line="6">本文档所适用的软件所属系统为：某级信息系统软件。</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="7" />
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="8">
+    <Paragraph line="9">某级信息系统软件按照国产自主可控要求，进行基础软件环境选型，以及应用软件的新研和国产化迁移改造，对功能要素分散、流程独立的业务功能进行整合优化，研制适应不同使用需求、使用场景的软件，实现信息系统软件的融合、型谱优化和业务提能，推动某信息系统软件向“国产化、服务化、轻量化”方向发展。</Paragraph>
+    <Paragraph line="10">某信息服务环境软件是某信息系统软件的重要组成，是连接底层各类硬件信息基础设施与上层各种应用系统的桥梁，通过基础平台融合汇聚底层资源，规范技术体制、支撑体系运行、促进互通互联等，是支撑构建某信息系统的重要支撑，其软件主要部署运行在各级机构的信息处理设备上，提供系统运维、数据运维、信息传输、信息处理、信息展现等功能，支撑应用软件和用户完成开发、集成、运维、运行全流程的使用。</Paragraph>
+    <Paragraph line="11">数据统一访问服务完成信息服务环境功能域数据存储与访问功能，数据统一访问服务部署在各级节点，主要为各类服务和应用提供统一的数据存储和访问接口，屏蔽数据库管理系统的差异以及数据模型的变化，提供统一的数据访问支撑能力，实现数据模型与应用业务逻辑的相对独立性，提高开发人员编码的效率，增强系统的可用性。统一访问功能包括对象化访问、原生SQL访问、代码自动生成和数据统一访问。其中对象化访问、数据统一访问和原生SQL访问提供桌面版、平板版、手持版三种版本；代码自动生成仅提供桌面版。访问管控功能包括数据源切换、连接池管理、数据缓存和访问审计以及日志记录功能。其中，数据源切换提供平板版，连接池管理、数据缓存仅提供桌面版；访问审计以及日志记录功能提供桌面版、平板版、手持版三种版本。在开发运行阶段提供统一访问功能和访问管控功能。</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统和软件的一般特性" start_line="12">
+    <Paragraph line="13">需方：某单位；</Paragraph>
+    <Paragraph line="14">使用方：某单位；</Paragraph>
+    <Paragraph line="15">开发方：某单位；</Paragraph>
+    <Paragraph line="16">保障机构：某单位；</Paragraph>
+    <Paragraph line="17">运行方案：系统开机后，上层业务软件通过调用数据统一访问服务提供的接口完成数据访问与存储功能。</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="18">
+    <Paragraph line="19">在本文档中，第2章列出了本文档中引用的其它文档的信息，第3章详细描述了数据统一访问服务软件的各种需求以及实现方式，第4章规定了确认第3章各项需求正确实现的合格性验证方法，第5章描述本文档列出的各项需求与相应的系统需求规格说明文档列出的需求的对应关系。其中，第3章是本文档的主要部分。</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="20" />
+  <Section section_id="2" title="本章应列出引用文档的编号、标题、编写单位、修订版及日期，还应标识不能通过正常采购活动得到的文档的来源。" start_line="21" />
+  <Section section_id="2" title="表 SEQ 表 \* ARABIC 1 引用文档" start_line="22">
+    <Paragraph line="23">文档编号</Paragraph>
+    <Paragraph line="24">标题</Paragraph>
+    <Paragraph line="25">修订版本</Paragraph>
+    <Paragraph line="26">修订日期</Paragraph>
+    <Paragraph line="27">编写单位</Paragraph>
+    <Paragraph line="28">GJB 438B-2009</Paragraph>
+    <Paragraph line="29">《军用软件开发文档编制规范》</Paragraph>
+    <Paragraph line="31">2009年5月</Paragraph>
+    <Paragraph line="32">总装备部</Paragraph>
+    <Paragraph line="33">GJB 439A-2013</Paragraph>
+    <Paragraph line="34">《军品软件质量保证通用要求》</Paragraph>
+    <Paragraph line="36">2013年7月</Paragraph>
+    <Paragraph line="37">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="38">GJB 450A-2004</Paragraph>
+    <Paragraph line="39">《装备可靠性工作通用要求》</Paragraph>
+    <Paragraph line="41">2004年7月</Paragraph>
+    <Paragraph line="42">总装备部</Paragraph>
+    <Paragraph line="43">GJB 2786A-2009</Paragraph>
+    <Paragraph line="44">《军用软件开发通用要求》</Paragraph>
+    <Paragraph line="46">2009年5月</Paragraph>
+    <Paragraph line="47">总装备部</Paragraph>
+    <Paragraph line="48">GJB 5235-2004</Paragraph>
+    <Paragraph line="49">《军用软件配置管理》</Paragraph>
+    <Paragraph line="51">2004年9月</Paragraph>
+    <Paragraph line="52">总装备部</Paragraph>
+    <Paragraph line="53">GJB/Z 102A-2012</Paragraph>
+    <Paragraph line="54">《军用软件安全性设计指南》</Paragraph>
+    <Paragraph line="56">2012年7月</Paragraph>
+    <Paragraph line="57">总装备部</Paragraph>
+    <Paragraph line="58">装陆[2011]707号</Paragraph>
+    <Paragraph line="59">《总装备部陆军装备科研订购部装备软件管理规定》</Paragraph>
+    <Paragraph line="61">2011年12月</Paragraph>
+    <Paragraph line="62">总装备部</Paragraph>
+    <Paragraph line="63">总装备部〔2005〕装字第4号</Paragraph>
+    <Paragraph line="64">《军用软件质量管理规定》</Paragraph>
+    <Paragraph line="66">2005年1月</Paragraph>
+    <Paragraph line="67">总装备部</Paragraph>
+    <Paragraph line="68">AZ6932.490.0103 SDTD</Paragraph>
+    <Paragraph line="69">《某信息系统软件数据统一访问服务软件研制任务书》</Paragraph>
+    <Paragraph line="70">V1.00.03/2019年12月25日</Paragraph>
+    <Paragraph line="71">2019年12月</Paragraph>
+    <Paragraph line="72">某单位</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="73" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="74">
+    <Paragraph line="75">数据统一访问服务状态图只有一个运行状态，无需多个运行状态和运行方式。</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="76">
+    <Paragraph line="77">数据统一访问服务按照其功能需求，包含SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存以及连接池管理功能。</Paragraph>
+    <Paragraph line="78">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_1" section="3.2" />
+    <Paragraph line="79">图 SEQ 图 \* ARABIC 1 数据统一访问服务软件功能图（组件图）</Paragraph>
+    <Image image_id="IMG_2" section="3.2" figure_number="1" caption="数据统一访问服务软件功能图（组件图）" />
+    <Paragraph line="80">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_3" section="3.2" />
+    <Paragraph line="81">图 SEQ 图 \* ARABIC 2 数据统一访问服务软件用例图</Paragraph>
+    <Image image_id="IMG_4" section="3.2" figure_number="2" caption="数据统一访问服务软件用例图" />
+  </Section>
+  <Table table_id="T_1" type="other" title="数据统一访问服务软件所有能力标识" section="3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>SQL访问功能</Cell>
+      <Cell>PZXQ-GN-SQLFW</Cell>
+      <Cell>提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BLOB）数据的删除、更新、查询以及添加功能；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1；4.2</Cell>
+      <Cell>2</Cell>
+      <Cell>对象化访问功能</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-DXHFW</Cell>
+      <Cell>提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>3</Cell>
+      <Cell>代码生成</Cell>
+      <Cell>PZXQ-GN-DMSC</Cell>
+    </Row>
+    <Row>
+      <Cell>提供代码自动生成功能，支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载；</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>数据源适配</Cell>
+      <Cell>PZXQ-GN-SJYSP</Cell>
+      <Cell>提供数据源切换功能，支持访问数据源依据场景进行自动切换，根据运行支撑服务软件提供的状态信息，能够在服务器数据库（达梦数据库V7.6）和本地数据库（sqlite3）之间进行自动切换；</Cell>
+      <Cell>新研</Cell>
+    </Row>
+    <Row>
+      <Cell>平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2；4.2</Cell>
+      <Cell>6</Cell>
+      <Cell>热点数据缓存</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-RDSJHC</Cell>
+      <Cell>提供查询数据的缓存功能，支持对查询的结果集进行缓存，支持对缓存大小进行配置，支持当发生修改数据操作时，再次查询数据时，重新从数据库中获取数据并加载至内存中更新缓存；</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2</Cell>
+      <Cell>7</Cell>
+      <Cell>连接池管理</Cell>
+      <Cell>PZXQ-GN-LJCGL</Cell>
+      <Cell>提供连接池管理功能，支持对达梦数据库 V7.6的连接进行管理，支持对连接池的大小进行配置，支持对新增连接的创建、分配以及管理功能；</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.1" title="SQL访问（PZXQ-GN-SQLFW）" start_line="143" req_id="PZXQ-GN-SQLFW">
+    <Paragraph line="144">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_5" section="3.2.1" />
+    <Paragraph line="145">图 SEQ 图 \* ARABIC 3 SQL访问用例图</Paragraph>
+    <Image image_id="IMG_6" section="3.2.1" figure_number="3" caption="SQL访问用例图" />
+    <Paragraph line="146">SQL访问所有能力标识表，见表3所示。</Paragraph>
+  </Section>
+  <Table table_id="T_2" type="other" title="SQL访问所有能力能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>名称</Cell>
+      <Cell>运行</Cell>
+      <Cell>状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库操作</Cell>
+      <Cell>PZXQ-GN-SQLFW-SJKCZ</Cell>
+      <Cell>数据库操作功能包括数据库初始化、读取配置文件连接、数据库连接、数据库关闭功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>修改数据</Cell>
+      <Cell>PZXQ-GN-SQLFW-XGSJ</Cell>
+      <Cell>修改数据功能包括删除数据记录、增加数据记录、修改数据记录功能</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>查询数据</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SQLFW-CXSJ</Cell>
+      <Cell>查询数据功能包括数据查询、获取错误信息、二维数据输出、JSON输出、DML输出功能, 逐行获取数据功能包括逐行拷贝、获取INT、获取STRING、获取FLOAT、获取LOB功能</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>BLOB数据操作</Cell>
+      <Cell>PZXQ-GN-SQLFW-BLOBSJCZ</Cell>
+      <Cell>BLOB数据操作功能包括BLOB数据插入、BLOB删除数据记录、BLOB数据查询功能</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>平板、桌面</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>SQL访问-数据库操作（PZXQ-GN-SQLFW-SJKCZ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图 SEQ 图 \* ARABIC 4 数据库操作用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_3" type="other" title="数据库操作所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>数据库初始化</Cell>
+      <Cell>PZXQ-GN-SJKCZ-SJKCSH</Cell>
+    </Row>
+    <Row>
+      <Cell>初始化数据库</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>读取配置文件连接</Cell>
+      <Cell>PZXQ-GN-SJKCZ-DQPZWJLJ</Cell>
+      <Cell>读取配置文件连接数据库</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>数据库连接</Cell>
+      <Cell>PZXQ-GN-SJKCZ-SJKLJ</Cell>
+      <Cell>连接数据库</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>数据库关闭</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJKCZ-SJKGBGN</Cell>
+      <Cell>关闭数据库</Cell>
+      <Cell>沿用</Cell>
+      <Cell>平板、桌面、手持</Cell>
+      <Cell>运行阶段、开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>数据库操作-数据库初始化（PZXQ-GN-SQLFW-SJKCZ-SJKCSH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_4" type="other" title="数据库初始化用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：数据库初始化</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述数据库初始化的过程；</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据库初始化接口输入相关参数，如软件实体号参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.应用软件输出数据库初始化状态。</Cell>
+      <Cell>2．与数据统一访问服务服务端进行交互，如果连接失败，则执行异常流E1，服务端根据软件实体号计算对应软件ID，如果软件实体号之前在服务端注册过则直接将对应的软件ID返回，不存在则生成软件ID并将软件实体号进行注册，返回生成的软件ID，后续使用该ID与服务端交互；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 5数据库初始化流程图</Cell>
+      <Cell>数据库操作-读取配置文件连接（PZXQ-GN-SQLFW-SJKCZ-DQPZWJLJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_5" type="other" title="读取配置文件连接用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：读取配置文件连接</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述读取配置文件连接的过程；</Cell>
+      <Cell>前置条件：数据库初始化成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用读取配置文件连接接口输入相关参数，如配置文件路径等参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.应用软件输出连接状态，如果返回的连接失败，通过获取错误信息接口，输出具体的连接错误信息。</Cell>
+      <Cell>2．读取配置文件中的的用户名、密码、IP地址连接对应的数据库，如果在桌面版、平板版连接的数据库为服务器上的达梦数据库，如果在手持上连接本地的sqlite3数据库，连接成功则保存连接句柄，连接失败则执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示连接失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 6读取配置文件连接流程图</Cell>
+      <Cell>数据库操作-数据库连接（PZXQ-GN-SQLFW-SJKCZ-SJKLJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_6" type="other" title="数据库连接用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：数据库连接</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述数据库连接的过程；</Cell>
+      <Cell>前置条件：数据库初始化成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据库连接接口输入相关参数，如用户名、密码、IP地址、sqlite3的db文件路径等参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.应用软件输出连接状态，如果返回的连接失败，通过获取错误信息接口，输出具体的连接错误信息。</Cell>
+      <Cell>2．根据应用软件输入的用户名、密码、IP地址连接对应的数据库，如果在桌面版、平板版连接的数据库为服务器上的达梦数据库，如果在手持上连接本地的sqlite3数据库，连接成功则保存连接句柄，则将错误信息返回则执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示连接失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 7数据库连接流程图</Cell>
+      <Cell>数据库操作-数据库关闭（PZXQ-GN-SQLFW-SJKCZ-SJKGB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_7" type="other" title="数据库关闭用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：数据库关闭</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述数据库关闭的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据库关闭接口，传入连接句柄；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.数据库完成断开连接操作。</Cell>
+      <Cell>2．关闭数据库连接句柄并断开与服务端连接，释放连接结构体；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>数据库关闭流程图如图8所示：</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 8数据库关闭用例图</Cell>
+      <Cell>SQL访问-修改数据（PZXQ-GN-SQLFW-XGSJ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 9 修改数据用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_8" type="other" title="修改数据所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>删除数据记录</Cell>
+      <Cell>PZXQ-GN-SQLFW-SJXG</Cell>
+    </Row>
+    <Row>
+      <Cell>支持删除数据记录</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>增加数据记录</Cell>
+      <Cell>PZXQ-GN-SQLFW-ZXSW</Cell>
+      <Cell>支持增加数据记录</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>修改数据记录</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SQLFW-TJSW</Cell>
+      <Cell>支持修改数据记录</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>修改数据-删除数据记录（PZXQ-GN-SQLFW-XGSJ-SJXG）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_9" type="other" title="删除数据记录用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：删除数据记录</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述删除数据记录的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用修改数据记录接口输入相关参数，如删除sql语句；</Cell>
+    </Row>
+    <Row>
+      <Cell>3．数据库完成删除数据记录操作。</Cell>
+      <Cell>2．将sql传输到服务端，服务端从连接池中申请连接句柄，并执行删除sql语句，执行完成释放连接句柄同时如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示删除数据库记录错误，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 10删除数据记录流程图</Cell>
+      <Cell>修改数据-增加数据记录（PZXQ-GN-SQLFW-XGSJ-ZXSW）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_10" type="other" title="增加数据记录业务用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：增加数据记录</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述增加数据记录的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用增加数据记录接口输入相关参数，如修改的sql语句；</Cell>
+    </Row>
+    <Row>
+      <Cell>3．数据库完成增加数据记录操作。</Cell>
+      <Cell>2．将sql传输到服务端，服务端从连接池中申请连接句柄，并执行增加sql语句，执行完成释放连接句柄同时如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示执行失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 11增加数据记录流程图</Cell>
+      <Cell>修改数据-修改数据记录（PZXQ-GN-SQLFW-TJSW）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_11" type="other" title="修改数据记录用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：修改数据记录</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述修改数据记录的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用修改数据记录接口输入相关参数，如增加的sql语句；</Cell>
+    </Row>
+    <Row>
+      <Cell>3．数据库完成增加数据记录操作。</Cell>
+      <Cell>2．将sql传输到服务端，服务端从连接池中申请连接句柄，并执行修改sql语句，执行完成释放连接句柄同时如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示提交失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 12修改数据记录流程图</Cell>
+      <Cell>SQL访问-查询数据（PZXQ-GN-SQLFW-CXSJ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 13 查询数据用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_12" type="other" title="查询数据所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>数据查询</Cell>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-SJCX</Cell>
+    </Row>
+    <Row>
+      <Cell>查询数据</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>获取错误信息</Cell>
+      <Cell>PZXQ-GN-SQLFW- CXSJ-HQCWXX</Cell>
+      <Cell>支持获取数据库操作中的错误信息</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>二维数组输出</Cell>
+      <Cell>PZXQ-GN-SQLFW- CXSJ-EWSZSC</Cell>
+      <Cell>将查询结果以二维数组形式输出</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>JSON输出</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SQLFW- CXSJ-JSONSC</Cell>
+      <Cell>将查询结果以JSON形式输出</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>SQL文件输出</Cell>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-DMLSC</Cell>
+      <Cell>将查询结果以sql文件形式输出</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平版</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>获取INT</Cell>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-HQINT</Cell>
+    </Row>
+    <Row>
+      <Cell>逐行获取INT值</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>获取STRING</Cell>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-HQSTRING</Cell>
+      <Cell>逐行获取STRING值</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>获取FLOAT</Cell>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-HQFLOAT</Cell>
+      <Cell>逐行获取FLOAT值</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>获取LOB</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SQLFW-CXSJ-HQLOB</Cell>
+      <Cell>逐行获取LOB值</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平版、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>查询数据-数据查询（PZXQ-GN-SQLFW-CXSJ-SJCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_13" type="other" title="数据查询用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：数据查询</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述数据查询的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据查询接口输入相关参数，如数据的sql语句；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.数据库完成查询数据操作。</Cell>
+      <Cell>2．将查询sql传输到服务端，服务端从连接池中申请连接句柄，并执行sql语句，执行完成释放连接句柄，同时将查询结果以json的方式返回，如果执行错误将错误信息返回来，执行异常流E1。</Cell>
+      <Cell>查询1000条数据的时间应小于1s。如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示查询失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 14数据查询流程图</Cell>
+      <Cell>查询数据-获取错误信息（PZXQ-GN-SQLFW-HQCWXX）</Cell>
+      <Cell>获取错误信息用例场景，见表15所示。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_14" type="other" title="获取错误信息用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取错误信息</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述获取错误信息的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用错误信息获取接口输入相关参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将执行的错误信息返回给应用软件。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 15获取错误信息流程图</Cell>
+      <Cell>查询数据-二维数组输出（PZXQ-GN-SQLFW-EWSZSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_15" type="other" title="二维数组输出用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：二维数组输出</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述二维数组输出的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用通过二维数据获取数据的接口输入相关参数，如数据库句柄；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询结果组织到二维数组中返回，其中数组的列数对应每条记录的字段数，数组的行数代表共有多少条记录，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 16二维数组输出流程图</Cell>
+      <Cell>查询数据-JSON输出（PZXQ-GN-SQLFW-CXSJ-JSONSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_16" type="other" title="JSON输出用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：JSON输出</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述JSON输出的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用通过JSON获取数据的接口输入相关参数，如数据库句柄；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询的数据组织成JSON中返回，其中JSON中的查询状态关键字表示是否成功获取到数据，记录数关键字表示获取到的记录数，内容关键字表示获取到的具体数据，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 17 JSON输出流程图</Cell>
+      <Cell>查询数据-SQL文件输出（PZXQ-GN-SQLFW-CXSJ-DMLSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_17" type="other" title="SQL文件输出用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：SQL文件输出</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述SQL文件输出的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用SQL文件输出接口输入相关参数，如数据库句柄；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询的数据组织成特定格式的DML语句，并输出到内存或文件中以供其他软件调用，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 18 SQL文件输出流程图</Cell>
+      <Cell>查询数据-获取INT（PZXQ-GN-SQLFW-ZHHQSJ-HQINT）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_18" type="other" title="获取INT用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取INT</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述获取INT的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件在逐行获取数据后，调用获取INT的接口，输入相关参数，如字段名或索引；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询结果数据转换成int格式返回给应用软件，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 19获取INT流程图</Cell>
+      <Cell>查询数据-获取STRING（PZXQ-GN-SQLFW-ZHHQSJ-HQSTRING）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_19" type="other" title="获取STRING用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取STRING</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述获取STRING的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件在逐行获取数据后，调用获取STRING的接口，输入相关参数，如字段名或索引；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询数据转换成string格式返回给应用软件，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 20获取STRING流程图</Cell>
+      <Cell>查询数据-获取FLOAT（PZXQ-GN-SQLFW-ZHHQSJ-HQFLOAT）</Cell>
+      <Cell>获取FLOAT用例场景，见表21所示。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_20" type="other" title="获取FLOAT用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取FLOAT</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述获取FLOAT的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件在逐行获取数据后，调用获取FLOAT的接口，输入相关参数，如字段名或索引；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．将查询数据转换成float格式返回给应用软件，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 21获取FLOAT流程图</Cell>
+      <Cell>查询数据-获取LOB（PZXQ-GN-SQLFW-ZHHQSJ-HQLOB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_21" type="other" title="获取LOB用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：获取LOB</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述获取LOB的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件在逐行获取数据后，调用获取FLOAT的接口，输入相关参数，如字段名或索引；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．系统将指定类型的数据返回给应用软件，如果获取失败，则执行异常流E1</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示获取失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 22获取LOB流程图</Cell>
+      <Cell>SQL访问-BLOB数据操作（PZXQ-GN-SQLFW-BLOBSJCZ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 23 BLOB数据操作用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_22" type="other" title="BLOB数据操作所有能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>Blob数据修改</Cell>
+      <Cell>PZXQ-GN-SQLFW-BLOBSJXG</Cell>
+    </Row>
+    <Row>
+      <Cell>支持对BLOB数据的修改</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>Blob数据查询</Cell>
+      <Cell>PZXQ-GN-SQLFW-BLOBSJCX</Cell>
+      <Cell>支持对BLOB数据的查询</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>BLOB数据插入</Cell>
+      <Cell>PZXQ-GN-SQLFW-BLOBSJCR</Cell>
+      <Cell>支持对BLOB数据的插入</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>BLOB数据操作-BLOB数据插入（PZXQ-GN-SQLFW-BLOBSJCZ-BLOBSJCR）</Cell>
+    </Row>
+    <Row>
+      <Cell>Blob数据插入用例场景，见表24所示。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_23" type="other" title="Blob数据插入用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：Blob数据插入</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述Blob数据插入的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据查询接口输入相关参数，如执行sql语句、插入blob数据数组、插入字段的个数；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.数据库完成插入BLOB数据操作。</Cell>
+      <Cell>2.则将sql语句、blob数据数组组织成json格式传输到服务端，服务端解析接收的json数据，如果解析失败则直接返回错误信息，执行异常流E1，解析成功从连接池中申请连接句柄，并执行sql语句，执行完成释放连接句柄，如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>每个BLOB数据大小应不大于65535字节。如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示BLOB数据插入失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 24 BLOB数据插入流程图</Cell>
+      <Cell>BLOB数据操作-BLOB数据修改（PZXQ-GN-SQLFW-BLOBSJCZ- BLOBSJXG）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_24" type="other" title="Blob数据修改用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：Blob数据修改</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述Blob数据修改的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据查询接口输入相关参数，如执行sql语句、插入blob数据数组、插入字段的个数；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.数据库完成BLOB修改操作。</Cell>
+      <Cell>2．将sql语句、blob数据数组组织成json格式传输到服务端，服务端解析接收的json数据，如果解析失败则直接返回错误信息，执行异常流E1，解析成功从连接池中申请连接句柄，并执行sql语句，执行完成释放连接句柄，如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 25 BLOB数据修改流程图</Cell>
+      <Cell>BLOB数据操作-BLOB数据查询（PZXQ-GN-SQLFW-BLOBSJCZ-BLOBSJCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_25" type="other" title="Blob数据查询用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：Blob数据查询</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是SQL访问的扩展用例，描述数Blob数据查询的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用数据查询接口输入相关参数，如查询的sql语句；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.数据库完成查询BLOB数据操作。</Cell>
+      <Cell>2．将sql传输到服务端，服务端从连接池中申请连接句柄，并执行sql语句，执行完成释放连接句柄，同时将查询结果以json的方式返回，如果执行错误将错误信息返回来，执行异常流E1；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 26 BLOB数据查询流程图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2" title="对象化访问（PZXQ-GN-DXHFW）" start_line="821" req_id="PZXQ-GN-DXHFW">
+    <Paragraph line="822">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_7" section="3.2.2" />
+    <Paragraph line="823">图 SEQ 图 \* ARABIC 27 对象化访问用例图</Paragraph>
+    <Image image_id="IMG_8" section="3.2.2" figure_number="27" caption="对象化访问用例图" />
+  </Section>
+  <Table table_id="T_26" type="other" title="对象化访问所有能力能力标识" section="3.2.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据插入</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-DXHFW-SJCR</Cell>
+      <Cell>通过对象化访问进行数据插入</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>2</Cell>
+      <Cell>数据查询</Cell>
+      <Cell>PZXQ-GN-DXHFW-SJCX</Cell>
+      <Cell>通过对象化访问进行数据查询</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据删除</Cell>
+      <Cell>PZXQ-GN-DXHFW-SJSC</Cell>
+      <Cell>通过对象化访问进行数据删除</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>4</Cell>
+      <Cell>数据更新</Cell>
+      <Cell>PZXQ-GN-DXHFW-SJGX</Cell>
+    </Row>
+    <Row>
+      <Cell>通过对象化访问进行数据更新</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>开发阶段、运行阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>对象化访问-数据插入（PZXQ-GN-DXHFW-SJCR）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_27" type="other" title="数据插入用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：数据插入</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是对象化访问的扩展用例，描述数据插入的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>应用软件调用对象化数据插入接口并输入相应参数，如要插入数据的类；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.数据库完成数据插入操作。</Cell>
+      <Cell>2．将类转换成sql语句；</Cell>
+      <Cell>3．调用数据库句柄执行sql语句。</Cell>
+      <Cell>异常流E1：系统提示插入失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 28数据插入流程图</Cell>
+      <Cell>对象化访问-数据查询（PZXQ-GN-DXHFW-SJCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_28" type="other" title="数据查询用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：数据查询</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是对象化访问的扩展用例，描述数据查询的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用对象化数据查询接口并输入相应参数，如类名，查询数据的类；</Cell>
+    </Row>
+    <Row>
+      <Cell>3．数据库完成数据插入操作。</Cell>
+      <Cell>4.应用软件通过调用“类.属性”的方式进行遍历查询</Cell>
+      <Cell>2．将类转换成sql语句，调用数据库句柄执行sql语句，将查询结果组织成json格式并映射到类。</Cell>
+      <Cell>异常流E1：系统提示查询失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 29数据查询流程图</Cell>
+      <Cell>对象化访问-数据删除（PZXQ-GN-DXHFW-SJSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_29" type="other" title="数据删除用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：数据删除</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是对象化访问的扩展用例，描述数据删除的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用对象化数据删除接口并输入相应参数，如类名，删除数据的类；</Cell>
+    </Row>
+    <Row>
+      <Cell>4、数据库完成数据删除操作。</Cell>
+      <Cell>2．将类转换成sql语句；</Cell>
+      <Cell>3. 调用数据库句柄执行sql语句。</Cell>
+      <Cell>异常流E1：系统提示删除失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 30数据删除流程图</Cell>
+      <Cell>对象化访问-数据更新（PZXQ-GN-DXHFW-SJGX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_30" type="other" title="数据更新用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：数据更新</Cell>
+      <Cell>Actors：应用软件、数据库</Cell>
+      <Cell>概述：本用例是对象化访问的扩展用例，描述数据更新的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用对象化数据删除接口并输入相应参数，如类名，更新数据的类；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.数据库完成更新操作。</Cell>
+      <Cell>2．将类转换成sql语句；</Cell>
+      <Cell>3. 调用数据库句柄执行sql语句。</Cell>
+      <Cell>异常流E1：系统提示更新失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 31数据更新流程图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3" title="热点数据缓存（PZXQ-GN-RDSJHC）" start_line="964" req_id="PZXQ-GN-RDSJHC">
+    <Paragraph line="966">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_9" section="3.2.3" />
+    <Paragraph line="967">图 SEQ 图 \* ARABIC 32 热点数据缓存用例图</Paragraph>
+    <Image image_id="IMG_10" section="3.2.3" figure_number="32" caption="热点数据缓存用例图" />
+  </Section>
+  <Table table_id="T_31" type="other" title="热点数据缓存所有能力能力标识" section="3.2.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>缓存添加</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-RDSJHC-HCTJ</Cell>
+      <Cell>支持将新的查询结果添加到缓存</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2</Cell>
+      <Cell>2</Cell>
+      <Cell>缓存更新</Cell>
+      <Cell>PZXQ-GN-RDSJHC-HCGX</Cell>
+      <Cell>支持更新缓存信息</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>缓存查询</Cell>
+      <Cell>PZXQ-GN-RDSJHC-HCCX</Cell>
+      <Cell>支持将缓存列表中查询缓存信息</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>热点数据缓存-缓存添加（PZXQ-GN-RDSJHC-HCTJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_32" type="other" title="缓存添加用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：缓存添加</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是热点数据缓存的扩展用例，描述缓存添加的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.没有查询到缓存并执行sql查询获取查询结果时，调用缓存添加接口输入相关参数，如sql语句、缓存的内容等参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．解析sql语句，获取对应的表名，申请缓存节点，添加到缓存节点数组中同时以&lt;表名,缓存节点下标&gt;形式插入到表名映射表中，以&lt;sql,缓存节点下标&gt;形式插入到sql映射表中。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 33缓存添加流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>热点数据缓存-缓存更新（PZXQ-GN-RDSJHC-HCGX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_33" type="other" title="缓存更新用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：缓存更新</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是热点数据缓存的扩展用例，描述缓存更新的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.执行修改sql语句，调用缓存更新接口并调用缓存更新接口，如sql；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.查询到的缓存失效并执行sql查询获取查询结果时，调用缓存更新接口输入相关参数，如sql语句、缓存的内容等参数；</Cell>
+      <Cell>2．解析sql语句，获取相关表名，在表名映射表中找到表名映射的缓存节点下标，遍历并修改标志为失效。</Cell>
+      <Cell>4．在sql映射表中找到sql映射的缓存节点下标，先释放空间后添加缓存内容。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 34缓存更新流程图</Cell>
+      <Cell>热点数据缓存-缓存查询（PZXQ-GN-RDSJHC-HCCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_34" type="other" title="缓存查询用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：缓存查询</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是热点数据缓存的扩展用例，描述缓存查询的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.查询数据时，调用缓存查询接口并输入相关参数，如sql；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.如果查询到缓存数据，则返回数据，如果没有查询到缓存或缓存失效，则执行sql查询</Cell>
+      <Cell>2．依据sql在sql映射表查询缓存数据，如果没有查询到则返回NULL，如果查询到判断缓存是否失效，如果失效则返回失效标志，如果没有失效则返回数据。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.4" title="代码生成（PZXQ-GN-DMSC）" start_line="1070" req_id="PZXQ-GN-DMSC">
+    <Paragraph line="1071">EMBED Visio.Drawing.15  s</Paragraph>
+    <Image image_id="IMG_11" section="3.2.4" />
+    <Paragraph line="1072">图 SEQ 图 \* ARABIC 35 代码生成用例图</Paragraph>
+    <Image image_id="IMG_12" section="3.2.4" figure_number="35" caption="代码生成用例图" />
+  </Section>
+  <Table table_id="T_35" type="other" title="代码生成所有能力能力标识" section="3.2.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>模型制作</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-DMSC-MXZZ</Cell>
+      <Cell>制作数据模型</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>2</Cell>
+      <Cell>导出代码</Cell>
+      <Cell>PZXQ-GN-DMSC-DCDM</Cell>
+      <Cell>导出代码</Cell>
+    </Row>
+    <Row>
+      <Cell>沿用</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>代码生成-模型制作（PZXQ-GN-DMSC-MXZZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_36" type="other" title="模型制作用例描述" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：模型制作</Cell>
+      <Cell>Actors：用户</Cell>
+      <Cell>概述：本用例是代码生成的扩展用例，描述模型制作的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1、用户打开集成开发工具，点击数据开发按钮；</Cell>
+    </Row>
+    <Row>
+      <Cell>3、用户在展示的列表中选择先选择分类域，再从分类域中勾选需要的表。</Cell>
+      <Cell>5、用户在表下选择需要的字段，生成模型。</Cell>
+      <Cell>2、系统连接到元数据库，如果连接失败，执行异常流E1。获取到所有表名及其分类域,如果获取失败，则执行异常流E2。将获取到的数据按分类域组织成二级列表，返回到前端页面。</Cell>
+      <Cell>4、系统根据用户选择的表，从元数据库中查询表下所有字段，若查询失败，则执行异常流E3.将获取到的数据组织成列表形式，返回到前端页面。</Cell>
+      <Cell>6．系统判断用户生成的模型中，有没有重复的字段，有重复的字段名称，则执行异常流E4。</Cell>
+    </Row>
+    <Row>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示连接数据库异常，用例结束。</Cell>
+      <Cell>异常流E2：系统提示获取信息失败，用例结束。</Cell>
+      <Cell>异常流E3：系统提示查询字段失败，用例结束。</Cell>
+      <Cell>异常流E4：系统提示有重复性的字段，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 36代码生成流程图</Cell>
+      <Cell>代码生成-导出代码（PZXQ-GN-DMSC-DCDM）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_37" type="other" title="导出代码用例描述" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：导出代码</Cell>
+      <Cell>Actors：用户、文件</Cell>
+      <Cell>概述：本用例是代码生成的扩展用例，描述导出代码的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1. 用户点击提交按钮，选择要导出路径的父节点。</Cell>
+    </Row>
+    <Row>
+      <Cell>3、用户依次在返回的目录中选择需要导出的目录，点击确定。输入要生成模型的类名，点击确定。</Cell>
+      <Cell>5、在指定的路径下生成的文件。</Cell>
+      <Cell>2、系统遍历父节点下的所有目录，如果获取路径失败，则执行异常流E1。将子目录返回给前端页面。</Cell>
+      <Cell>4、系统将用户选择的表、字段及类名生成为类文件，如果生成失败，则执行异常流E2。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示获取子目录失败，用例结束。</Cell>
+      <Cell>异常流E2：系统提示生成文件失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 37导出代码流程图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.5" title="连接池管理（PZXQ-GN-LJCGL）" start_line="1160" req_id="PZXQ-GN-LJCGL">
+    <Paragraph line="1161">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_13" section="3.2.5" />
+    <Paragraph line="1162">图 SEQ 图 \* ARABIC 38 连接池管理用例图</Paragraph>
+    <Image image_id="IMG_14" section="3.2.5" figure_number="38" caption="连接池管理用例图" />
+  </Section>
+  <Table table_id="T_38" type="other" title="连接池管理所有能力能力标识" section="3.2.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>连接池配置</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-LJCGL-LJCPZ</Cell>
+      <Cell>支持配置连接池</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2</Cell>
+      <Cell>2</Cell>
+      <Cell>连接池初始化</Cell>
+      <Cell>PZXQ-GN-LJCGL-LJCCSH</Cell>
+      <Cell>提供初始化连接池的能力</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>连接池销毁</Cell>
+      <Cell>PZXQ-GN-LJCGL-LJCXH</Cell>
+      <Cell>支持销毁连接池并释放资源</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>4</Cell>
+      <Cell>申请句柄</Cell>
+      <Cell>PZXQ-GN-LJCGL-LJCJB</Cell>
+    </Row>
+    <Row>
+      <Cell>提供申请连接句柄的能力</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>释放句柄</Cell>
+      <Cell>PZXQ-GN-LJCGL-SFJB</Cell>
+      <Cell>提供释放连接句柄的能力</Cell>
+      <Cell>新研</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>连接池管理-连接池配置（PZXQ-GN-LJCGL-LJCCSH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_39" type="other" title="连接池配置用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：连接池配置</Cell>
+      <Cell>Actors：用户、文件</Cell>
+      <Cell>概述：本用例是连接池管理的扩展用例，描述连接池配置的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.修改配置文件中的数据库IP、数据库密码、数据库用户名及连接池大小并启动应用软件；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．读取配置文件中的数据库IP、数据库密码、数据库用户名及连接池大小，并按此配置进行数据库连接。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 39连接池配置流程图</Cell>
+      <Cell>连接池管理-连接池初始化（PZXQ-GN-LJCGL-LJCCSH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_40" type="other" title="连接池初始化用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：连接池初始化</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是连接池管理的扩展用例，描述连接池初始化的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务端连接数据库时，调用连接池初始化接口并输入相关参数，如用户名，密码，ip；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．拼接3元组，根据3元组获取连接类型，判断连接句柄个数是否大于指定大小，如果没有大于指定大小，则初始化并连接，失败则执行异常流E1，如果等于指定大小，则直接返回。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 40连接池初始化流程图</Cell>
+      <Cell>连接池管理-连接池销毁（PZXQ-GN-LJCGL-LJCXH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_41" type="other" title="连接池销毁用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：连接池销毁</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是连接池管理的扩展用例，描述连接池销毁的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务端退出时，则调用连接池销毁接口并调用相关参数；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．遍历连接池中的连接句柄，并关闭数据库连接句柄。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 41连接池销毁流程图</Cell>
+      <Cell>连接池管理-申请句柄（PZXQ-GN-LJCGL-SQJB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_42" type="other" title="申请句柄用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：申请句柄</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是热点数据缓存的扩展用例，描述申请句柄的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.执行sql语句时，调用申请句柄接口并输入相关参数，如ID；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.使用连接句柄进行数据库操作</Cell>
+      <Cell>2．根据ID获取对应的句柄类型，如果句柄类型为-1，执行异常流E1；获取该句柄类型对应的连接句柄数组，循环遍历获取空闲句柄，将分配的句柄的状态置使用状态，返回给连接句柄以及下标（释放时使用）；</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 42申请句柄流程图</Cell>
+      <Cell>连接池管理-释放句柄（PZXQ-GN-LJCGL-SFJB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_43" type="other" title="释放句柄用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：释放句柄</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是热点数据缓存的扩展用例，描述释放句柄的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.执行sql语句完成之后，调用释放句柄接口并输入相应的参数，如连接类型以及下标；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．依据连接类型找到连接句柄数组，将连接句柄数组下标置为空闲状态。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 43释放句柄流程图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.6" title="数据源适配（PZXQ-GN-SJYSP）" start_line="1324" req_id="PZXQ-GN-SJYSP">
+    <Paragraph line="1325">EMBED Visio.Drawing.15  s</Paragraph>
+    <Image image_id="IMG_15" section="3.2.6" />
+    <Paragraph line="1326">图 SEQ 图 \* ARABIC 44 数据源适配用例图</Paragraph>
+    <Image image_id="IMG_16" section="3.2.6" figure_number="44" caption="数据源适配用例图" />
+  </Section>
+  <Table table_id="T_44" type="other" title="数据源适配所有能力标识" section="3.2.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>数据源接入</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-SJYSP-SJYJR</Cell>
+      <Cell>提供接入数据源的能力</Cell>
+      <Cell>新研</Cell>
+      <Cell>平板</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2</Cell>
+      <Cell>2</Cell>
+      <Cell>数据源切换</Cell>
+      <Cell>PZXQ-GN-SJYSP-SJYQH</Cell>
+      <Cell>提供切换数据源的能力</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>平板</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>数据源适配-数据源接入（PZXQ-GN-SJYSP-SJYJR）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_45" type="other" title="数据源接入用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：数据源接入</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是数据源适配的扩展用例，描述数据源接入的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.数据库初始化时，应用软件调用数据源接入接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．依据连接模式加载对应的数据库驱动，加载失败则执行异常流E1。</Cell>
+      <Cell>如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 45数据源接入流程图</Cell>
+      <Cell>数据源适配-数据源切换（PZXQ-GN-SJYSP-SJYQH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_46" type="other" title="数据源切换用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：数据源切换</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本用例是数据源适配的扩展用例，描述数据源切换的过程；</Cell>
+      <Cell>前置条件：数据库连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.车上切换到车下时，应用软件调用数据源切换接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2．数据统一访问服务将达梦数据库句柄切换到sqlite3连接句柄。</Cell>
+      <Cell>数据源切换时间不超过2s。如果无法连接到服务端，提示连接错误。</Cell>
+      <Cell>异常流E1：系统提示初始化，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 46数据源切换流程图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="1395" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="1396">
+    <Paragraph line="1397">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_17" section="3.4.1" />
+    <Paragraph line="1398">图 SEQ 图 \* ARABIC 47 数据统一访问服务软件外部接口需求</Paragraph>
+    <Image image_id="IMG_18" section="3.4.1" figure_number="47" caption="数据统一访问服务软件外部接口需求" />
+  </Section>
+  <Table table_id="T_47" type="qualification" title="数据统一访问服务软件外部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>数据统一访问服务与应用软件接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-JK-SJTYFW-YYRJ</Cell>
+      <Cell>API接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>应用软件</Cell>
+      <Cell>数据查询信息</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>应用软件</Cell>
+      <Cell>本系统</Cell>
+      <Cell>删除数据记录信息</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据统一访问服务与运行支撑服务接口</Cell>
+      <Cell>PZXQ-JK-SJTBGX-YXZCFW</Cell>
+      <Cell>API接口</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>服务器信息、</Cell>
+      <Cell>运行状态信息</Cell>
+      <Cell>中</Cell>
+      <Cell>3</Cell>
+      <Cell>数据统一访问服务与界面集成框架接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-JK-SJTBGX-JMJCKJ</Cell>
+      <Cell>人机接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>界面集成框架</Cell>
+      <Cell>数据库表及字段信息</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>界面集成框架</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据模型信息</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>数据统一访问服务与数据库接口</Cell>
+      <Cell>PZXQ-JK-SJTBGX-SJK</Cell>
+      <Cell>数据库接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据库</Cell>
+    </Row>
+    <Row>
+      <Cell>删除数据记录信息</Cell>
+      <Cell>中</Cell>
+      <Cell>数据库</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据查询信息</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.2" title="与应用软件接口（PZXQ-JK-SJTYFW-YYRJ）" start_line="1450" req_id="PZXQ-JK-SJTYFW" />
+  <Table table_id="T_48" type="other" title="应用软件接口数据元素说明" section="3.3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据查询信息</Cell>
+      <Cell>查询到的数据集</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研数据访问规范</Cell>
+    </Row>
+    <Row>
+      <Cell>查询到的数据大小</Cell>
+      <Cell>字符串</Cell>
+      <Cell>查询结果</Cell>
+      <Cell>字符串</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>修改数据信息</Cell>
+      <Cell>数据库句柄</Cell>
+      <Cell>结构体</Cell>
+      <Cell>某试点建设装备配套科研数据访问规范</Cell>
+      <Cell>修改数据语句</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.3" title="与运行支撑服务接口（PZXQ-JK-SJTYFW-YXZCFW）" start_line="1473" req_id="PZXQ-JK-SJTYFW" />
+  <Table table_id="T_49" type="other" title="运行支撑服务接口数据元素说明" section="3.3.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务器信息</Cell>
+      <Cell>本机IP</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研软件集成运维规范</Cell>
+    </Row>
+    <Row>
+      <Cell>服务器IP</Cell>
+      <Cell>字符串</Cell>
+      <Cell>2</Cell>
+      <Cell>运行状态信息</Cell>
+      <Cell>在线离线</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4" title="与界面集成框架接口（PZXQ-JK-SJTYFW-JMJCKJ）" start_line="1491" req_id="PZXQ-JK-SJTYFW" />
+  <Table table_id="T_50" type="other" title="界面集成接口数据元素说明" section="3.3.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据库表及字段信息</Cell>
+      <Cell>分类域信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研数据集成规范</Cell>
+    </Row>
+    <Row>
+      <Cell>表信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>字段信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据模型信息</Cell>
+      <Cell>用户选择的表名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>用户选择的字段名</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.5" title="与数据库接口（PZXQ-JK-SJTYFW-SJK）" start_line="1513" req_id="PZXQ-JK-SJTYFW" />
+  <Table table_id="T_51" type="other" title="数据库接口数据元素说明" section="3.3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>修改数据信息</Cell>
+      <Cell>数据库句柄</Cell>
+      <Cell>结构体</Cell>
+      <Cell>某试点建设装备配套科研数据访问规范</Cell>
+    </Row>
+    <Row>
+      <Cell>修改数据语句</Cell>
+      <Cell>字符串</Cell>
+      <Cell>1</Cell>
+      <Cell>数据查询信息</Cell>
+      <Cell>查询到的数据集</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研数据访问规范</Cell>
+      <Cell>查询到的数据大小</Cell>
+      <Cell>字符串</Cell>
+      <Cell>查询结果</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="1536" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="1537">
+    <Paragraph line="1538">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_19" section="3.4.1" />
+    <Paragraph line="1539">图  SEQ 图 \* ARABIC 48数据统一访问服务软件内部接口需求</Paragraph>
+  </Section>
+  <Table table_id="T_52" type="qualification" title="数据统一访问服务软件内部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>代码生成与对象化访问接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-NBJK-DMSC-DXHFW</Cell>
+      <Cell>API</Cell>
+      <Cell>代码生成</Cell>
+      <Cell>对象化访问</Cell>
+      <Cell>头文件路径信息</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>2</Cell>
+      <Cell>对象化访问与SQL访问接口</Cell>
+      <Cell>PZXQ-NBJK-DXHFW-SQLFW</Cell>
+      <Cell>API</Cell>
+    </Row>
+    <Row>
+      <Cell>对象化访问</Cell>
+      <Cell>SQL访问</Cell>
+      <Cell>SQL语句信息</Cell>
+      <Cell>中</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>SQL访问与代码生成接口</Cell>
+      <Cell>PZXQ-NBJK-SQLFW-DMSC</Cell>
+      <Cell>API</Cell>
+      <Cell>SQL访问</Cell>
+      <Cell>代码生成</Cell>
+    </Row>
+    <Row>
+      <Cell>数据模型信息</Cell>
+      <Cell>中</Cell>
+      <Cell>4</Cell>
+      <Cell>SQL访问与数据源适配接口</Cell>
+      <Cell>PZXQ-NBJK-SQLFW-SJYSP</Cell>
+    </Row>
+    <Row>
+      <Cell>API</Cell>
+      <Cell>SQL访问</Cell>
+      <Cell>数据源适配</Cell>
+      <Cell>数据库连接信息</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>数据源适配与SQL访问接口</Cell>
+      <Cell>PZXQ-NBJK-SJYSP-SQLFW</Cell>
+      <Cell>API</Cell>
+      <Cell>数据源适配</Cell>
+    </Row>
+    <Row>
+      <Cell>SQL访问</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>中</Cell>
+      <Cell>6</Cell>
+      <Cell>数据源适配与连接池管理</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-NBJK-SJYSP-LJCGL</Cell>
+      <Cell>API</Cell>
+      <Cell>数据源适配</Cell>
+      <Cell>连接池管理</Cell>
+      <Cell>数据库连接信息</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>7</Cell>
+      <Cell>数据源适配与热点数据缓存接口</Cell>
+      <Cell>PZXQ-NBJK-SJYSP-RDSJHC</Cell>
+      <Cell>API</Cell>
+    </Row>
+    <Row>
+      <Cell>数据源适配</Cell>
+      <Cell>热点数据缓存</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>中</Cell>
+      <Cell>8</Cell>
+    </Row>
+    <Row>
+      <Cell>热点数据缓存与SQL访问接口</Cell>
+      <Cell>PZXQ-NBJK-RDSJHC-SQLFW</Cell>
+      <Cell>API</Cell>
+      <Cell>热点数据缓存</Cell>
+      <Cell>SQL访问</Cell>
+    </Row>
+    <Row>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>中</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.2" title="代码生成与对象化访问接口（PZXQ-NBJK-DXHFW-DMSC）" start_line="1613" req_id="PZXQ-NBJK-DXHFW" />
+  <Table table_id="T_53" type="other" title="代码生成与对象化访问接口数据元素说明" section="3.4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>头文件路径信息</Cell>
+      <Cell>文件路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.3" title="对象化访问与SQL访问接口（PZXQ-NBJK-DXHFW-SQLFW）" start_line="1625" req_id="PZXQ-NBJK-DXHFW" />
+  <Table table_id="T_54" type="other" title="对象化访问与SQL访问接口数据元素说明" section="3.4.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>SQL语句信息</Cell>
+      <Cell>数据库句柄</Cell>
+      <Cell>结构体</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>表名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>字段名</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>执行条件</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.4" title="SQL访问与代码生成接口（PZXQ-NBJK-SQLFW-DMSC）" start_line="1646" req_id="PZXQ-NBJK-SQLFW" />
+  <Table table_id="T_55" type="other" title="SQL访问与代码生成接口数据元素说明" section="3.4.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据模型信息</Cell>
+      <Cell>类名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>表名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>字段名</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.5" title="SQL访问与数据源适配接口（PZXQ-NBJK-SQLFW-SJYSP）" start_line="1664" req_id="PZXQ-NBJK-SQLFW" />
+  <Table table_id="T_56" type="other" title="SQL访问与数据源适配接口数据元素说明" section="3.4.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据库连接信息</Cell>
+      <Cell>数据库IP</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库用户名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>数据库密码</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>SQLITE3文件路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.6" title="数据源适配与SQL访问接口（PZXQ-NBJK-SJYSP-SQLFW）" start_line="1685" req_id="PZXQ-NBJK-SJYSP" />
+  <Table table_id="T_57" type="other" title="数据源适配与SQL访问接口数据元素说明" section="3.4.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>查询状态</Cell>
+      <Cell>Int</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.7" title="数据源适配与连接池管理（PZXQ-NBJK-SJYSP-LJCGL）" start_line="1700" req_id="PZXQ-NBJK-SJYSP" />
+  <Table table_id="T_58" type="other" title="数据源适配与连接池管理接口数据元素说明" section="3.4.7">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据库连接信息</Cell>
+      <Cell>数据库IP</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库用户名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>数据库密码</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+      <Cell>SQLITE3文件路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.8" title="数据源适配与热点数据缓存接口（PZXQ-NBJK-SJYSP-RDSJHC）" start_line="1721" req_id="PZXQ-NBJK-SJYSP" />
+  <Table table_id="T_59" type="other" title="数据源适配与热点数据缓存接口数据元素说明" section="3.4.8">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>查询状态</Cell>
+      <Cell>Int</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.9" title="热点数据缓存与SQL访问接口（PZXQ-NBJK-RDSJHC-SQLFW）" start_line="1736" req_id="PZXQ-NBJK-RDSJHC" />
+  <Table table_id="T_60" type="other" title="热点数据缓存与SQL访问接口数据元素说明" section="3.4.9">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>查询状态</Cell>
+      <Cell>Int</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>数据内容</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="1751" />
+  <Table table_id="T_61" type="other" title="数据统一访问服务内部数据汇总表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据名称</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>相关功能及标识</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据查询结果信息</Cell>
+      <Cell>查询状态、数据内容</Cell>
+      <Cell>保存数据查询的结果集</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库连接信息</Cell>
+      <Cell>数据库IP、数据库用户名、数据库密码、SQLITE3文件路径</Cell>
+      <Cell>记录用于连接数据库的相关信息</Cell>
+      <Cell>3</Cell>
+      <Cell>数据模型信息</Cell>
+    </Row>
+    <Row>
+      <Cell>类名、表名、字段名</Cell>
+      <Cell>用来生成数据模型类文件</Cell>
+      <Cell>4</Cell>
+      <Cell>SQL语句信息</Cell>
+      <Cell>表名、字段名、执行条件</Cell>
+    </Row>
+    <Row>
+      <Cell>保存要操作的数据信息</Cell>
+      <Cell>5</Cell>
+      <Cell>头文件路径信息</Cell>
+      <Cell>数据模型头文件路径</Cell>
+      <Cell>标识数据模型类文件位置</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_62" type="other" title="数据查询结果信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>查询状态</Cell>
+      <Cell>1</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>2097152</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_63" type="other" title="数据库连接信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>数据库IP</Cell>
+      <Cell>15</Cell>
+      <Cell>7</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>数据库密码</Cell>
+      <Cell>32</Cell>
+      <Cell>9</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>数据库用户名</Cell>
+      <Cell>32</Cell>
+      <Cell>6</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>SQLITE3文件路径</Cell>
+      <Cell>256</Cell>
+      <Cell>2</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_64" type="other" title="数据模型信息数据描述" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>类名</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>表名</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>字段名</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_65" type="other" title="SQL语句信息数据描述" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>表名</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>字段名</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>执行条件</Cell>
+      <Cell>1024</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_66" type="other" title="头文件信息数据描述" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>文件路径</Cell>
+      <Cell>256</Cell>
+      <Cell>5</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.6" title="适应性需求" start_line="1896">
+    <Paragraph line="1897">a）采用跨平台开发工具及开发环境，确保软件能适应不同硬件环境（如桌面平台、手持平台等），具有在多种国产操作系统运行适配能力；</Paragraph>
+    <Paragraph line="1898">b）后台服务按照处理器、操作系统的运行条件，根据自身功能要求分别编译生成桌面、平板、手持等不同形态；</Paragraph>
+    <Paragraph line="1899">c)界面展现按照《界面设计规范》中桌面、平板、手持界面风格进行界面展现的设计，按照《界面开发规范》中的界面自适应规则进行设计，便于在不同尺寸和分辨率的显控终端下实现界面自适应调整；</Paragraph>
+    <Paragraph line="1900">d）系统运行时能够根据系统登录者身份，加载不同的界面和服务，支持业务功能灵活重组；</Paragraph>
+    <Paragraph line="1901">e）提供服务的负载均衡功能，在服务出现异常或访问拥堵时不影响指挥系统正常运转；</Paragraph>
+    <Paragraph line="1902">f）依据在桌面、平板、手持不同硬件形态，通过软件部署管理自动下载、安装相应环境的软件包，实现多平台运行</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1903" />
+  <Section section_id="3.7" title="表 SEQ 表 \* ARABIC 68 数据统一访问服务软件安全性需求" start_line="1904">
+    <Paragraph line="1905">序号</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1906">
+    <Paragraph line="1907">详细说明</Paragraph>
+    <Paragraph line="1909">故障检测与诊断</Paragraph>
+    <Paragraph line="1910">系统自检，检测系统中的故障，阻止错误结果的影响</Paragraph>
+    <Paragraph line="1912">数据库失败重连</Paragraph>
+    <Paragraph line="1913">如果因为网络等原因导致数据库连接失败，则数据库会自动在3s内持续进行重连尝试</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="1914" />
+  <Section section_id="3.8" title="表 SEQ 表 \* ARABIC 69 数据统一访问服务软件保密性需求" start_line="1915">
+    <Paragraph line="1916">序号</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="1917">
+    <Paragraph line="1918">详细说明</Paragraph>
+    <Paragraph line="1920">身份认证</Paragraph>
+    <Paragraph line="1921">用户使用时需输入正确的用户名和密码</Paragraph>
+    <Paragraph line="1923">数据库访问控制</Paragraph>
+    <Paragraph line="1924">在多个用户同时访问数据时，应避免冲突</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="1925" />
+  <Section section_id="3.9.1" title="运行环境需求" start_line="1926" />
+  <Table table_id="T_67" type="other" title="软件运行环境" section="3.9.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备</Cell>
+      <Cell>名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>软件要求</Cell>
+    </Headers>
+    <Row>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>操作系统：元心 V4.1.1/银河锐华V4.0.0.0</Cell>
+      <Cell>数据库：Sqlite3 V3.0.0</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>操作系统：银河麒麟 V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="1982">
+    <Paragraph line="1983">a）操作系统：银河麒麟V4.0.2；</Paragraph>
+    <Paragraph line="1984">b）数据库管理系统：达梦数据库V7.6和Sqlite3 3.0；</Paragraph>
+    <Paragraph line="1985">c）开发工具：VsCodeV1.30.0，QtV5.9.6；</Paragraph>
+    <Paragraph line="1986">d）办公软件：wps-officeV10.1.0.7490。</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="1987" />
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="1988" />
+  <Table table_id="T_68" type="other" title="计算机硬件配置需求" section="3.10.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+    </Headers>
+    <Row>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>2</Cell>
+      <Cell>便携式服务器</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不小于3GB</Cell>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+    </Row>
+    <Row>
+      <Cell>综合信息终端</Cell>
+      <Cell>CPU主频：不低于2.6GHz</Cell>
+      <Cell>内存：不小于6GB</Cell>
+      <Cell>存储：不小于128GB</Cell>
+      <Cell>显示屏尺寸：6.39英寸</Cell>
+    </Row>
+    <Row>
+      <Cell>分辨率：不低于3120×1440</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="2036">
+    <Paragraph line="2037">数据统一访问服务软件无需特殊的计算机硬件资源利用要求。</Paragraph>
+  </Section>
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="2038" />
+  <Section section_id="3.10.3" title="表 SEQ 表 \* ARABIC 72 数据统一访问服务软件计算机软件需求" start_line="2039">
+    <Paragraph line="2040">软件种类</Paragraph>
+    <Paragraph line="2041">软件名称</Paragraph>
+    <Paragraph line="2042">软件版本</Paragraph>
+    <Paragraph line="2043">操作系统</Paragraph>
+    <Paragraph line="2044">银河麒麟</Paragraph>
+    <Paragraph line="2045">4.0.2</Paragraph>
+    <Paragraph line="2046">数据库软件</Paragraph>
+    <Paragraph line="2047">Sqlite3</Paragraph>
+    <Paragraph line="2048">3.0</Paragraph>
+    <Paragraph line="2049">办公软件</Paragraph>
+    <Paragraph line="2050">wps-office</Paragraph>
+    <Paragraph line="2051">V10.1</Paragraph>
+    <Paragraph line="2052">应用支撑软件</Paragraph>
+    <Paragraph line="2053">QT</Paragraph>
+    <Paragraph line="2054">5.9.6</Paragraph>
+  </Section>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="2055">
+    <Paragraph line="2056">数据统一访问服务软件无需特殊的计算机通信要求。</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="2057" />
+  <Table table_id="T_69" type="other" title="数据统一访问服务服务软件质量要求与措施表" section="3.11">
+    <Headers>
+      <Cell>序号</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3.11" title="软件质量因素" start_line="2060" />
+  <Section section_id="3.11" title="软件质量因素描述" start_line="2061">
+    <Paragraph line="2062">要求程度</Paragraph>
+    <Paragraph line="2063">采取的措施</Paragraph>
+    <Paragraph line="2065">功能性</Paragraph>
+    <Paragraph line="2066">实现全部所需功能的能力</Paragraph>
+    <Paragraph line="2067">符合3.2节要求</Paragraph>
+    <Paragraph line="2068">软件设计</Paragraph>
+    <Paragraph line="2070">可维护性</Paragraph>
+    <Paragraph line="2071">易于更正的能力</Paragraph>
+    <Paragraph line="2072">维护人员可快速定位故障</Paragraph>
+    <Paragraph line="2073">运行日志记录文件</Paragraph>
+    <Paragraph line="2075">可用性</Paragraph>
+    <Paragraph line="2076">需要时进行访问和操作的能力</Paragraph>
+    <Paragraph line="2080">灵活性</Paragraph>
+    <Paragraph line="2081">易于适应需求变化的能力</Paragraph>
+    <Paragraph line="2085">可移植性</Paragraph>
+    <Paragraph line="2086">易于修改以适应新环境的能力</Paragraph>
+    <Paragraph line="2090">可重用性</Paragraph>
+    <Paragraph line="2091">可被多个应用使用的能力</Paragraph>
+    <Paragraph line="2095">可测试性</Paragraph>
+    <Paragraph line="2096">易于充分测试的能力</Paragraph>
+    <Paragraph line="2097">可仿真环境下完成主要功能验证</Paragraph>
+    <Paragraph line="2098">依靠操作系统和仿真网络</Paragraph>
+    <Paragraph line="2100">易用性</Paragraph>
+    <Paragraph line="2101">易于学习和使用的能力</Paragraph>
+    <Paragraph line="2102">人机接口友好，易学习培训</Paragraph>
+    <Paragraph line="2103">采用图形用户界面</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2104" />
+  <Table table_id="T_70" type="other" title="数据统一访问服务软件设计与实现约束要求表" section="3.12">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>1</Cell>
+      <Cell>软件体系结构</Cell>
+    </Headers>
+    <Row>
+      <Cell>采用B/S架构</Cell>
+      <Cell>2</Cell>
+      <Cell>输入/输出</Cell>
+      <Cell>标准人机接口，专用屏边键</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>软件平台</Cell>
+      <Cell>国产操作系统</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.13" title="人员需求" start_line="2118" />
+  <Section section_id="3.13" title="表 SEQ 表 \* ARABIC 75 人员需求表" start_line="2119">
+    <Paragraph line="2120">序号</Paragraph>
+    <Paragraph line="2121">人员对象</Paragraph>
+    <Paragraph line="2122">技术水平</Paragraph>
+    <Paragraph line="2124">软件开发人员</Paragraph>
+    <Paragraph line="2125">熟练掌握软件需求分析、设计、编码、测试方法，并熟练使用QT、C/C++ x11、WebStorm、EMSS开发工具</Paragraph>
+    <Paragraph line="2127">软件保障人员</Paragraph>
+    <Paragraph line="2128">了解银河麒麟操作系统、元心/中兴绿地/锐华麒麟操作系统、鼎桥TDOS操作系统的一般操作使用以及达梦数据库/Sqlite3、WPS/永中办公软件的基本管理维护功能，能够熟练操作使用信息系统软件</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="2129" />
+  <Section section_id="3.14" title="表 SEQ 表 \* ARABIC 76 培训需求表" start_line="2130">
+    <Paragraph line="2131">序号</Paragraph>
+    <Paragraph line="2132">所属技能需求</Paragraph>
+    <Paragraph line="2133">培训内容</Paragraph>
+    <Paragraph line="2134">培训对象</Paragraph>
+    <Paragraph line="2135">备注</Paragraph>
+    <Paragraph line="2137">基础软件安装</Paragraph>
+    <Paragraph line="2138">服务器维护指南</Paragraph>
+    <Paragraph line="2139">使用人员</Paragraph>
+    <Paragraph line="2140">根据使用人员对平台软件的熟悉程度适当调整培训时间</Paragraph>
+    <Paragraph line="2142">应用软件安装</Paragraph>
+    <Paragraph line="2143">软件用户手册</Paragraph>
+    <Paragraph line="2144">维护人员</Paragraph>
+    <Paragraph line="2147">软件使用培训</Paragraph>
+    <Paragraph line="2148">集成方提供软件操作使用培训</Paragraph>
+    <Paragraph line="2149">使用人员</Paragraph>
+    <Paragraph line="2152">软件故障排查</Paragraph>
+    <Paragraph line="2153">开发方或集成方提供软件故障排查、状态恢复培训</Paragraph>
+    <Paragraph line="2154">使用人员、维护人员</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2156" />
+  <Section section_id="3.15" title="表 SEQ 表 \* ARABIC 77 软件保障需求表" start_line="2157">
+    <Paragraph line="2158">序号</Paragraph>
+    <Paragraph line="2159">保障需求</Paragraph>
+    <Paragraph line="2160">保障设备</Paragraph>
+    <Paragraph line="2161">保障人员</Paragraph>
+    <Paragraph line="2162">备注</Paragraph>
+    <Paragraph line="2164">软件故障排查</Paragraph>
+    <Paragraph line="2165">便携机，网络调试助手</Paragraph>
+    <Paragraph line="2166">用户维护人员</Paragraph>
+    <Paragraph line="2169">软件升级</Paragraph>
+    <Paragraph line="2170">光驱，软件安装盘</Paragraph>
+    <Paragraph line="2171">开发人员</Paragraph>
+    <Paragraph line="2173">开发方应提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。</Paragraph>
+    <Paragraph line="2174">系统交付后应按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="2175">
+    <Paragraph line="2176">数据统一访问服务软件无其它特殊需求</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2177" />
+  <Section section_id="3.17" title="表 SEQ 表 \* ARABIC 78数据同步共享服务软件验收、交付和包装需求表" start_line="2178">
+    <Paragraph line="2179">序号</Paragraph>
+    <Paragraph line="2180">软件名称</Paragraph>
+    <Paragraph line="2181">数量</Paragraph>
+    <Paragraph line="2182">包装标记</Paragraph>
+    <Paragraph line="2183">说明</Paragraph>
+    <Paragraph line="2185">数据统一访问服务软件</Paragraph>
+    <Paragraph line="2187">光盘 CD-1-207</Paragraph>
+    <Paragraph line="2188">自动安装</Paragraph>
+    <Paragraph line="2190">数据统一访问服务用户手册</Paragraph>
+    <Paragraph line="2192">光盘 CD-1-207</Paragraph>
+    <Paragraph line="2195">数据统一访问服务程序员手册</Paragraph>
+    <Paragraph line="2197">光盘 CD-1-207</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="2199" />
+  <Table table_id="T_71" type="other" title="数据统一访问服务软件重要程度排序表" section="3.18">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求类型</Cell>
+      <Cell>重要性与关键性等级</Cell>
+      <Cell>高级</Cell>
+      <Cell>中级</Cell>
+    </Headers>
+    <Row>
+      <Cell>低级</Cell>
+      <Cell>1</Cell>
+      <Cell>功能需求</Cell>
+      <Cell>3.2.1</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2</Cell>
+      <Cell>3</Cell>
+      <Cell>3.2.3</Cell>
+      <Cell>4</Cell>
+      <Cell>3.2.4</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>3.2.5</Cell>
+      <Cell>6</Cell>
+      <Cell>3.2.6</Cell>
+      <Cell>7</Cell>
+    </Row>
+    <Row>
+      <Cell>接口需求</Cell>
+      <Cell>3.3.2</Cell>
+      <Cell>8</Cell>
+      <Cell>3.3.3</Cell>
+      <Cell>9</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.4</Cell>
+      <Cell>10</Cell>
+      <Cell>3.3.5</Cell>
+      <Cell>11</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.7" title="安全性需求" start_line="2245">
+    <Paragraph line="2247">3.7</Paragraph>
+    <Paragraph line="2248">12</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2249">
+    <Paragraph line="2251">3.8</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="2252">
+    <Paragraph line="2253">对本文档中每个需求指定要使用的合格性方法，以确保需求得到满足。若依靠测试方法验证合格性，可以整体地对测试方法说明，合格性方法可以包括：</Paragraph>
+    <Paragraph line="2254">a)演示：依靠可见的功能操作，直接运行接口实体，而不需要使用仪器、专用测试设备或进行事后分析；</Paragraph>
+    <Paragraph line="2255">b)测试：使用仪器或专用测试设备，运行接口实体，以便采集数据供事后分析使用；</Paragraph>
+    <Paragraph line="2256">c)分析：处理从其他合格性方法获得的累计数据。例如，对测试结果进行简约、解释或推断；</Paragraph>
+    <Paragraph line="2257">d)审查：对接口实体、文档等进行目视检查；</Paragraph>
+    <Paragraph line="2258">e)特殊的合格性方法：任何针对接口实体的特殊合格性方法，例如专用工具、技术、规程、设施、验收限制。</Paragraph>
+  </Section>
+  <Section section_id="4" title="表 SEQ 表 \* ARABIC 80 合格性规定" start_line="2259">
+    <Paragraph line="2260">需求名称/标识</Paragraph>
+    <Paragraph line="2261">本文档的章节号</Paragraph>
+    <Paragraph line="2262">合格性方法</Paragraph>
+    <Paragraph line="2263">合格性级别</Paragraph>
+    <Paragraph line="2264">SQL访问</Paragraph>
+    <Paragraph line="2265">3.2.1</Paragraph>
+    <Paragraph line="2266">A、B、D</Paragraph>
+    <Paragraph line="2267">a、b</Paragraph>
+    <Paragraph line="2268">对象化访问</Paragraph>
+    <Paragraph line="2269">3.2.2</Paragraph>
+    <Paragraph line="2270">A、B、D</Paragraph>
+    <Paragraph line="2271">a、b</Paragraph>
+    <Paragraph line="2272">热点数据缓存</Paragraph>
+    <Paragraph line="2273">3.2.3</Paragraph>
+    <Paragraph line="2274">A、B、D</Paragraph>
+    <Paragraph line="2275">a、b</Paragraph>
+    <Paragraph line="2276">代码生成</Paragraph>
+    <Paragraph line="2277">3.2.4</Paragraph>
+    <Paragraph line="2278">A、B、D</Paragraph>
+    <Paragraph line="2279">a、b</Paragraph>
+    <Paragraph line="2280">连接池管理</Paragraph>
+    <Paragraph line="2281">3.2.5</Paragraph>
+    <Paragraph line="2282">A、B、D</Paragraph>
+    <Paragraph line="2283">a、b</Paragraph>
+    <Paragraph line="2284">数据源适配</Paragraph>
+    <Paragraph line="2285">3.2.6</Paragraph>
+    <Paragraph line="2286">A、B、D</Paragraph>
+    <Paragraph line="2287">a、b</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2288" />
+  <Table table_id="T_72" type="traceability" title="需求的正向追踪性" section="5">
+    <Headers>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>本文档的名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="2300">
+    <Paragraph line="2301">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2302">
+    <Paragraph line="2303">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2305">
+    <Paragraph line="2306">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2307">
+    <Paragraph line="2308">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2310">
+    <Paragraph line="2311">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2312">
+    <Paragraph line="2313">1.3</Paragraph>
+    <Paragraph line="2315">文档引用</Paragraph>
+    <Paragraph line="2317">文档引用</Paragraph>
+    <Paragraph line="2320">软件运行环境</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求、计算机资源需求" start_line="2322">
+    <Paragraph line="2323">3.9、3.10</Paragraph>
+    <Paragraph line="2325">技术要求</Paragraph>
+    <Paragraph line="2328">不追踪</Paragraph>
+    <Paragraph line="2329">功能</Paragraph>
+    <Paragraph line="2330">4.1</Paragraph>
+    <Paragraph line="2332">不追踪</Paragraph>
+    <Paragraph line="2333">对象化数据访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="a)" start_line="2334">
+    <Paragraph line="2335">对象化访问</Paragraph>
+    <Paragraph line="2336">3.2.2</Paragraph>
+    <Paragraph line="2338">原生SQL访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="b）" start_line="2339">
+    <Paragraph line="2340">SQL访问</Paragraph>
+    <Paragraph line="2341">3.2.1</Paragraph>
+    <Paragraph line="2343">代码生成</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="c）" start_line="2344">
+    <Paragraph line="2345">代码生成</Paragraph>
+    <Paragraph line="2346">3.2.4</Paragraph>
+    <Paragraph line="2348">数据统一访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="d）" start_line="2349">
+    <Paragraph line="2350">数据源适配</Paragraph>
+    <Paragraph line="2351">3.2.6.1</Paragraph>
+    <Paragraph line="2353">数据源切换</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="a)" start_line="2354">
+    <Paragraph line="2355">数据源适配</Paragraph>
+    <Paragraph line="2356">3.2.6</Paragraph>
+    <Paragraph line="2358">连接池管理</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="b)" start_line="2359">
+    <Paragraph line="2360">连接池管理</Paragraph>
+    <Paragraph line="2361">3.2.5</Paragraph>
+    <Paragraph line="2363">热点数据缓存</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="c)" start_line="2364">
+    <Paragraph line="2365">热点数据缓存</Paragraph>
+    <Paragraph line="2366">3.2.3</Paragraph>
+    <Paragraph line="2368">访问审计及日志记录</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="d)" start_line="2369">
+    <Paragraph line="2370">获取错误信息</Paragraph>
+    <Paragraph line="2371">3.2.1.7</Paragraph>
+    <Paragraph line="2373">性能</Paragraph>
+    <Paragraph line="2374">4.2</Paragraph>
+    <Paragraph line="2376">不追踪</Paragraph>
+    <Paragraph line="2377">输入/输出</Paragraph>
+    <Paragraph line="2378">4.3</Paragraph>
+    <Paragraph line="2380">不追踪</Paragraph>
+    <Paragraph line="2381">数据处理要求</Paragraph>
+    <Paragraph line="2382">4.4</Paragraph>
+    <Paragraph line="2384">不追踪</Paragraph>
+    <Paragraph line="2385">接口</Paragraph>
+    <Paragraph line="2386">4.5</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求、CSCI内部接口需求" start_line="2387">
+    <Paragraph line="2388">3.3、3.4</Paragraph>
+    <Paragraph line="2389">不追踪</Paragraph>
+    <Paragraph line="2390">固件</Paragraph>
+    <Paragraph line="2391">4.6</Paragraph>
+    <Paragraph line="2393">不追踪</Paragraph>
+    <Paragraph line="2394">关键性要求</Paragraph>
+    <Paragraph line="2395">4.7</Paragraph>
+    <Paragraph line="2397">不追踪</Paragraph>
+    <Paragraph line="2398">可靠性</Paragraph>
+    <Paragraph line="2399">4.7.1</Paragraph>
+    <Paragraph line="2401">不追踪</Paragraph>
+    <Paragraph line="2402">安全性</Paragraph>
+    <Paragraph line="2403">4.7.2</Paragraph>
+    <Paragraph line="2405">不追踪</Paragraph>
+    <Paragraph line="2406">保密性</Paragraph>
+    <Paragraph line="2407">4.7.3</Paragraph>
+    <Paragraph line="2409">不追踪</Paragraph>
+    <Paragraph line="2410">其他要求</Paragraph>
+    <Paragraph line="2411">4.8</Paragraph>
+    <Paragraph line="2413">不追踪</Paragraph>
+    <Paragraph line="2414">设计约束</Paragraph>
+    <Paragraph line="2417">不追踪</Paragraph>
+    <Paragraph line="2418">质量控制要求</Paragraph>
+    <Paragraph line="2421">不追踪</Paragraph>
+    <Paragraph line="2422">验收和交付</Paragraph>
+    <Paragraph line="2425">不追踪</Paragraph>
+    <Paragraph line="2426">软件保障要求</Paragraph>
+    <Paragraph line="2429">不追踪</Paragraph>
+    <Paragraph line="2430">进度和里程碑</Paragraph>
+    <Paragraph line="2433">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2434">
+    <Paragraph line="2435">10</Paragraph>
+    <Paragraph line="2437">不追踪</Paragraph>
+  </Section>
+  <Table table_id="T_73" type="traceability" title="需求的逆向追踪性" section="6">
+    <Headers>
+      <Cell>本文档名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="2449">
+    <Paragraph line="2450">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2451">
+    <Paragraph line="2452">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2454">
+    <Paragraph line="2455">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2456">
+    <Paragraph line="2457">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2459">
+    <Paragraph line="2460">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2461">
+    <Paragraph line="2462">1.3</Paragraph>
+    <Paragraph line="2464">文档引用</Paragraph>
+    <Paragraph line="2466">文档引用</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="2469">
+    <Paragraph line="2472">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.1" title="要求的状态和方式" start_line="2473">
+    <Paragraph line="2474">3.1</Paragraph>
+    <Paragraph line="2476">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="CSCI能力需求" start_line="2477">
+    <Paragraph line="2478">3.2</Paragraph>
+    <Paragraph line="2480">不追踪</Paragraph>
+    <Paragraph line="2481">SQL访问</Paragraph>
+    <Paragraph line="2482">3.2.1</Paragraph>
+    <Paragraph line="2483">原生SQL访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="b)" start_line="2484">
+    <Paragraph line="2486">对象化访问</Paragraph>
+    <Paragraph line="2487">3.2.2</Paragraph>
+    <Paragraph line="2488">对象化数据访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="a)" start_line="2489">
+    <Paragraph line="2491">热点数据缓存</Paragraph>
+    <Paragraph line="2492">3.2.3</Paragraph>
+    <Paragraph line="2493">热点数据缓存</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="c)" start_line="2494">
+    <Paragraph line="2496">代码生成</Paragraph>
+    <Paragraph line="2497">3.2.4</Paragraph>
+    <Paragraph line="2498">对象化数据访问</Paragraph>
+  </Section>
+  <Section section_id="4.1.1" title="a)" start_line="2499">
+    <Paragraph line="2501">连接池管理</Paragraph>
+    <Paragraph line="2502">3.2.5</Paragraph>
+    <Paragraph line="2503">连接池管理</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="b)" start_line="2504">
+    <Paragraph line="2506">数据源适配</Paragraph>
+    <Paragraph line="2507">3.2.6</Paragraph>
+    <Paragraph line="2508">数据库切换</Paragraph>
+  </Section>
+  <Section section_id="4.1.2" title="a)" start_line="2509" />
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2511">
+    <Paragraph line="2512">3.3</Paragraph>
+    <Paragraph line="2513">输入/输出、接口</Paragraph>
+    <Paragraph line="2514">4.3、4.5</Paragraph>
+    <Paragraph line="2516">内部接口需求</Paragraph>
+    <Paragraph line="2517">3.4</Paragraph>
+    <Paragraph line="2518">输入/输出、接口</Paragraph>
+    <Paragraph line="2519">4.3、4.5</Paragraph>
+    <Paragraph line="2521">内部数据需求</Paragraph>
+    <Paragraph line="2522">3.5</Paragraph>
+    <Paragraph line="2523">数据处理要求</Paragraph>
+    <Paragraph line="2524">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2526">
+    <Paragraph line="2527">3.6</Paragraph>
+    <Paragraph line="2529">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="2530">
+    <Paragraph line="2531">3.7</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="2532">
+    <Paragraph line="2533">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2535">
+    <Paragraph line="2536">3.8</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="2537">
+    <Paragraph line="2538">4.7.3</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="2540">
+    <Paragraph line="2541">3.9</Paragraph>
+    <Paragraph line="2543">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="2544">
+    <Paragraph line="2545">3.10</Paragraph>
+    <Paragraph line="2547">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="2548">
+    <Paragraph line="2549">3.10.1</Paragraph>
+    <Paragraph line="2550">运行环境要求</Paragraph>
+  </Section>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="2553">
+    <Paragraph line="2554">3.10.2</Paragraph>
+    <Paragraph line="2556">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="2557">
+    <Paragraph line="2558">3.10.3</Paragraph>
+    <Paragraph line="2559">运行环境要求</Paragraph>
+  </Section>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="2562">
+    <Paragraph line="2563">3.10.4</Paragraph>
+    <Paragraph line="2565">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="2566">
+    <Paragraph line="2567">3.11</Paragraph>
+    <Paragraph line="2569">不追踪</Paragraph>
+    <Paragraph line="2570">设计和实现的约束</Paragraph>
+    <Paragraph line="2571">3.12</Paragraph>
+    <Paragraph line="2573">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="相关人员需求" start_line="2574">
+    <Paragraph line="2575">3.13</Paragraph>
+    <Paragraph line="2577">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="相关培训需求" start_line="2578">
+    <Paragraph line="2579">3.14</Paragraph>
+    <Paragraph line="2581">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2582">
+    <Paragraph line="2583">3.15</Paragraph>
+    <Paragraph line="2585">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="2586">
+    <Paragraph line="2587">3.16</Paragraph>
+    <Paragraph line="2589">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="2590">
+    <Paragraph line="2591">3.17</Paragraph>
+    <Paragraph line="2593">不追踪</Paragraph>
+    <Paragraph line="2594">需求的优先次序和关键程度</Paragraph>
+    <Paragraph line="2595">3.18</Paragraph>
+    <Paragraph line="2597">不追踪</Paragraph>
+    <Paragraph line="2598">合格性归档</Paragraph>
+    <Paragraph line="2601">不追踪</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2602">
+    <Paragraph line="2605">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2606">
+    <Paragraph line="2609">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2610">
+    <Paragraph line="2611">无。</Paragraph>
+    <Paragraph line="2613">PAGE   \* MERGEFORMATII</Paragraph>
+    <Paragraph line="2615">PAGE   \* MERGEFORMATI</Paragraph>
+    <Paragraph line="2617">PAGE   \* MERGEFORMAT2</Paragraph>
+    <Paragraph line="2619">PAGE   \* MERGEFORMAT1</Paragraph>
+  </Section>
+</Document>

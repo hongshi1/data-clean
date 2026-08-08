@@ -1,0 +1,3536 @@
+<Document doc_id="01数据获取转换分系统需求规格说明-终稿">
+  <Table table_id="T_1" type="reference" title="引用文档一览表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>文档标识</Cell>
+      <Cell>标题</Cell>
+      <Cell>修订版本</Cell>
+      <Cell>日期</Cell>
+    </Headers>
+    <Row>
+      <Cell>编写单位/来源</Cell>
+      <Cell>GJB 438C-2021</Cell>
+      <Cell>《军用软件开发文档通用要求》</Cell>
+      <Cell>—</Cell>
+      <Cell>2021年12月</Cell>
+    </Row>
+    <Row>
+      <Cell>装备发展部</Cell>
+      <Cell>GJB439A-2013</Cell>
+      <Cell>《军品软件质量保证通用要求》</Cell>
+      <Cell>—</Cell>
+      <Cell>2013年7月</Cell>
+    </Row>
+    <Row>
+      <Cell>国防科学技术工业委员会</Cell>
+      <Cell>GJB2786A-2009</Cell>
+      <Cell>《军用软件开发通用要求》</Cell>
+      <Cell>—</Cell>
+      <Cell>2009年5月</Cell>
+    </Row>
+    <Row>
+      <Cell>原总装备部</Cell>
+      <Cell>GJB5000B-2021</Cell>
+      <Cell>《军用软件能力成熟度模型》</Cell>
+      <Cell>—</Cell>
+      <Cell>2021年12月</Cell>
+    </Row>
+    <Row>
+      <Cell>装备发展部</Cell>
+      <Cell>GJB5235A-2021</Cell>
+      <Cell>《军用软件配置管理》</Cell>
+      <Cell>—</Cell>
+      <Cell>2021年12月</Cell>
+    </Row>
+    <Row>
+      <Cell>装备发展部</Cell>
+      <Cell>GJB 9001C-2017</Cell>
+      <Cell>《质量管理体系要求》</Cell>
+      <Cell>—</Cell>
+      <Cell>2017年5月</Cell>
+    </Row>
+    <Row>
+      <Cell>总装备部</Cell>
+      <Cell>GJB/Z102A-2012</Cell>
+      <Cell>《军用软件安全性设计指南》</Cell>
+      <Cell>—</Cell>
+      <Cell>2012年7月</Cell>
+    </Row>
+    <Row>
+      <Cell>总装备部</Cell>
+      <Cell>需求</Cell>
+      <Cell>要求的状态和方式</Cell>
+      <Cell>某服务系统包括数据获取、数据转换2部分，主要采用B/S架构进行开发和实现，相关程序部署在服务器端，支持多客户端用户通过浏览器进行访问和相关操作，在服务器不断电的情况下，该服务均处于活动状态。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_2" type="other" title="联合研制开发服务说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>联合研制开发服务</Cell>
+      <Cell>标识符</Cell>
+      <Cell>开发类型</Cell>
+      <Cell>状态</Cell>
+    </Headers>
+    <Row>
+      <Cell>工程包</Cell>
+      <Cell>1</Cell>
+      <Cell>数据获取</Cell>
+      <Cell>ZZSJHQZHFW-GN-SJHQ</Cell>
+      <Cell>新开发</Cell>
+    </Row>
+    <Row>
+      <Cell>活动</Cell>
+      <Cell>某服务</Cell>
+      <Cell>2</Cell>
+      <Cell>数据转换</Cell>
+      <Cell>ZZSJHQZHFW-GN-SJZH</Cell>
+    </Row>
+    <Row>
+      <Cell>新开发</Cell>
+      <Cell>活动</Cell>
+      <Cell>某服务</Cell>
+      <Cell>分系统能力需求</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 1 某分系统组成图</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-GN-SJHQ</Cell>
+      <Cell>数据获取能力</Cell>
+      <Cell>数据获取针对各业务部门的海量多源异构数据资源、其他外部数据资源等，提供精准可靠、自动人工互补、便捷可扩展的数据引接汇聚工具手段，实现全域数据接入能力。通过采用离线数据报送、在线数据抽取、实时数据采集等方式，实现对数据中台结构化数据、半结构化数据、非结构化数据和流式数据资源的引接归集。数据归集根据数据结构、内容、时效性的区别，提供不同的数据归集手段，包括结构化数据归集、半结构化数据归集、非结构化数据归集、流式数据归集。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 2 数据获取功能框架图</Cell>
+      <Cell>所有功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 3 数据获取用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_3" type="other" title="数据获取功能划分" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>功能名称/标识</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>结构化数据归集/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ</Cell>
+      <Cell>结构化数据归集任务制定/ ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJGJRWZD</Cell>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>结构化数据源引接/ ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJYYJ</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>3</Cell>
+      <Cell>半结构化数据归集/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ</Cell>
+      <Cell>半结构化数据上传/ ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJSC</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>半结构化数据源引接/ ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJYYJ</Cell>
+      <Cell>—</Cell>
+      <Cell>5</Cell>
+      <Cell>非结构化数据归集/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ</Cell>
+    </Row>
+    <Row>
+      <Cell>非结构化数据导入/ ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJDR</Cell>
+      <Cell>—</Cell>
+      <Cell>6</Cell>
+      <Cell>非结构化数据源引接/ ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJYYJ</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>流式数据归集/ZZSJHQZHFW-GN-SJHQ-LSSJGJ</Cell>
+      <Cell>流式数据引接/ ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYJ</Cell>
+      <Cell>—</Cell>
+      <Cell>8</Cell>
+    </Row>
+    <Row>
+      <Cell>流式数据源管理/ ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYGL</Cell>
+      <Cell>—</Cell>
+      <Cell>结构化数据归集/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 4 结构化数据归集能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_4" type="other" title="结构化数据归集功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJGJRWZD</Cell>
+      <Cell>支持从某数据中台引接获取静态数据和动态报送数据；支持从特定信源引接获取中台无法及时提供的特色数据；提供结构化数据归集任务制定功能，能够完成结构化数据归集制定，支持以全量、增量方式进行数据采集；支持批量采集存储结构化数据。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJYYJ</Cell>
+    </Row>
+    <Row>
+      <Cell>支持自定义结构化数据源，提供结构化数据源的配置管理和概览功能。其中，数据源配置管理具备管理、添加、变更、删除结构化数据源的功能。</Cell>
+      <Cell>中</Cell>
+      <Cell>结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJGJRWZD</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_5" type="other" title="结构化数据归集任务制定功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJGJRWZD</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述结构化数据归集任务制定的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据获取菜单下结构化数据归集页面；</Cell>
+      <Cell>2.点击创建工单，选择数据源；输入工单名称、描述，选择目的端数据源、目的端模式名，点击下一步；勾选需要采集的目标数据表，并在数据表对应的同步配置中设置读取策略为全量或增量；点击下一步，确认配置后创建结构化数据归集任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在结构化数据归集页面查看成功创建的归集任务，运行该归集任务，查看任务运行状态；</Cell>
+      <Cell>6.进入数据运维管理菜单下数据源管理页面，查看对应数据库下对目标数据表的采集情况；</Cell>
+      <Cell>7.重复上述步骤，将2.中的采集数据分别更换为各类数据，查看对应数据库下对各类数据的的采集情况。</Cell>
+      <Cell>3.将数据归集任务添加到任务列表，若结构化数据归集任务构建失败则执行异常流E1；</Cell>
+      <Cell>5.将源端数据采集到目标数据库中，若结构化数据采集失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：结构化数据归集任务构建失败；</Cell>
+      <Cell>异常流E2：结构化数据采集失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJYYJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_6" type="other" title="结构化数据源引接功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ-JGHSJYYJ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述对结构化数据源的添加、修改、检索、删除等管理功能。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据运维管理菜单下存算引擎管理页面；</Cell>
+      <Cell>2.点击新建存算引擎，选择关系型数据库中某一类型数据库，点击下一步，输入引擎名称、IP地址、端口等参数，进行连通性测试后点击确定，创建结构化数据源引擎；</Cell>
+    </Row>
+    <Row>
+      <Cell>4选择已创建的结构化数据源引擎，点击编辑内容可对该引擎名称、IP地址、端口等参数进行修改，进行连通性测试后点击确定保存修改；点击该结构化数据源引擎对应的删除按钮删除引擎；</Cell>
+      <Cell>6.进入数据运维管理菜单下数据源管理页面，选择需要创建数据源的数据层次，点击新建数据源，输入数据源名称，选择存算引擎类型，保存配置进入下一步，选择结构化数据源引擎，输入用户名、密码、数据库名称等参数，点击保存；</Cell>
+      <Cell>8.在数据源管理页面查看创建的结构化数据源，选择步骤4创建的结构化数据源点击编辑可对该数据源用户名、密码等参数进行修改，进行连通性测试后点击确定保存修改；点击该结构化数据源对应的删除按钮删除数据源；</Cell>
+      <Cell>3.将结构化数据源引擎加入到引擎列表中，若结构化数据源测试不通过则执行异常流E1；</Cell>
+      <Cell>5.修改引擎参数，若结构化数据源引擎测试失败则执行异常流E1；删除结构化数据源引擎，若结构化数据源引擎删除失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.将结构化数据源加入到数据源列表，若结构化数据源创建失败则执行异常流E3；</Cell>
+      <Cell>9.修改数据源参数，若结构化数据源参数修改失败则执行异常流E4；删除结构化数据源，若结构化数据源删除失败则执行异常流E5；</Cell>
+      <Cell>异常流E1：结构化数据源测试失败；</Cell>
+      <Cell>异常流E2：结构化数据源引擎删除失败；</Cell>
+      <Cell>异常流E3：结构化数据源创建失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E4：结构化数据源参数修改失败；</Cell>
+      <Cell>异常流E5：结构化数据源删除失败；</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>半结构化数据归集/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ</Cell>
+      <Cell>所有子功能标识</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 5 半结构化数据归集能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_7" type="other" title="半结构化数据归集功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>半结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJGJRWZD</Cell>
+      <Cell>提供半结构化数据上传功能，能够根据模型应用需要，自主补充采集、导入excel、csv等格式数据。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>半结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJYYJ</Cell>
+    </Row>
+    <Row>
+      <Cell>支持自定义半结构化数据源，提供半结构化数据源的配置管理和概览功能。其中，数据源配置管理具备管理、添加、变更、删除半结构化数据源的功能。</Cell>
+      <Cell>中</Cell>
+      <Cell>半结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJGJRWZD</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_8" type="other" title="半结构化数据归集任务制定功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：半结构化数据归集任务制定/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJGJRWZD</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述半结构化数据归集任务制定的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据获取菜单下半结构化数据归集页面；</Cell>
+      <Cell>2.点击创建工单，选择文件上传路径，选择csv或xls格式的文件进行上传，选择上传的文件，点击下一步；选择目标库、表创建模式、写入方式，点击下一步；输入工单名称、分隔符等参数，点击下一步；点击获取字段查看上传文件的字段信息，点击确定创建半结构化数据归集任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.用户在半结构化数据归集页面查看成功创建的归集任务，运行该归集任务，查看任务运行状态；</Cell>
+      <Cell>6.进入数据运维管理菜单下数据源管理页面，查看对应数据库下对上传文件数据的采集情况。</Cell>
+      <Cell>3.将数据归集任务添加到任务列表，若半结构化数据归集任务构建失败则执行异常流E1；</Cell>
+      <Cell>5.将源端数据采集到目标数据库中，若半结构化数据采集失败则执行异常流E2；</Cell>
+      <Cell>异常流E1：半结构化数据归集任务构建失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：半结构化数据采集失败；</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>半结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJYYJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_9" type="other" title="半结构化数据源引接功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：半结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ-BJGHSJYYJ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述对半结构化数据源的添加、修改、检索、删除等管理功能。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据运维管理菜单下存算引擎管理页面；</Cell>
+      <Cell>2.点击新建存算引擎，选择大数据中某一类型，点击下一步，输入引擎名称，配置连接参数，进行连通性测试后点击确定，创建半结构化数据源引擎；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.选择已创建的半结构化数据源引擎，点击编辑内容可对该引擎名称、配置连接参数进行修改，进行连通性测试后点击确定保存修改；点击该半结构化数据源引擎对应的删除按钮删除引擎；</Cell>
+      <Cell>6.进入数据运维管理菜单下数据源管理页面，选择需要创建数据源的数据层次，点击新建数据源，输入数据源名称，选择存算引擎类型，保存配置进入下一步，选择创建的半结构化数据源引擎，进行连通性测试后，点击保存；</Cell>
+      <Cell>8.在数据源管理页面查看创建的半结构化数据源，选择步骤4创建的半结构化数据源点击编辑可对该数据源进行修改，进行连通性测试后点击确定保存修改；点击该半结构化数据源对应的删除按钮删除数据源；</Cell>
+      <Cell>3.将半结构化数据源引擎加入到引擎列表中，若半结构化数据源引擎测试失败则执行异常流E1；</Cell>
+      <Cell>5.修改引擎参数，若半结构化数据源引擎参数测试失败则执行异常流E1；删除半结构化数据源引擎，若半结构化数据源引擎删除失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.将半结构化数据源加入到数据源列表，若半结构化数据源连接测试失败则执行异常流E3；</Cell>
+      <Cell>9.修改数据源参数，若半结构化数据源参数测试失败则执行异常流E3；删除半结构化数据源，若半结构化数据源删除失败则执行异常流E4；</Cell>
+      <Cell>异常流E1：半结构化数据源引擎测试失败；</Cell>
+      <Cell>异常流E2：半结构化数据源引擎删除失败；</Cell>
+      <Cell>异常流E3：半结构化数据源测试失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E4：半结构化数据源删除失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>非结构化数据归集/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 6 非结构化数据归集能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_10" type="other" title="非结构化数据归集功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>非结构化数据导入/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJDR</Cell>
+      <Cell>支持从某数据中台引接获取地理信息数据；提供非结构化数据导入功能，将非结构化数据导入原始库中。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>非结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJYYJ</Cell>
+    </Row>
+    <Row>
+      <Cell>支持自定义非结构化数据源，提供非结构化数据源的配置管理和概览功能。其中，数据源配置管理具备管理、添加、变更、删除非结构化数据源的功能。</Cell>
+      <Cell>中</Cell>
+      <Cell>非结构化数据导入/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJDR</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_11" type="other" title="非结构化数据归集任务制定功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：非结构化数据导入/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJDR</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述非结构化数据导入的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据获取菜单下非结构化数据归集页面；</Cell>
+      <Cell>2.点击FTP/SFTP文件上传，创建工单，选择地理信息数据源；输入工单名称、源端目录地址，配置目标端目录，点击下一步；确认配置后创建非结构化数据归集任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在非结构化数据归集页面查看成功创建的归集任务，运行该归集任务，在监控日志中查看任务运行状态；</Cell>
+      <Cell>6.登录hadoop管理页面，查看目标端目录下对源端目录地址下非结构化文件的上传情况。</Cell>
+      <Cell>3.将数据归集任务添加到任务列表，若非结构化数据归集任务构建失败则执行异常流E1；</Cell>
+      <Cell>5.将文件从数据源上传到指定目标目录下，若文件上传失败则执行异常流E2；</Cell>
+      <Cell>异常流E1：非结构化数据归集任务构建失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：文件上传失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>非结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJYYJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_12" type="other" title="非结构化数据源引接功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：非结构化数据源引接/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ-FJGHSJYYJ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述对非结构化数据源的添加、修改、检索、删除等管理功能。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据获取菜单下非结构化数据归集页面；</Cell>
+      <Cell>2.点击FTP/SFTP文件上传，创建工单，选择数据源，点击新建FTP/SFTP数据源，输入FTP/SFTP数据源地址、端口、用户名、密码、类型点击确定创建数据源；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.选择已创建的结构化数据源点击编辑，可对FTP/SFTP数据源地址、端口、用户名、密码、类型等参数进行修改，点击确定保存修改；点击该非结构化数据源对应的删除按钮删除数据源。</Cell>
+      <Cell>3.将非结构化数据源加入到数据源列表，若非结构化数据源测试失败则执行异常流E1；</Cell>
+      <Cell>5.修改数据源参数，若非结构化数据源参数修改失败则执行异常流E2；删除非结构化数据源，若非结构化数据源删除失败则执行异常流E3；</Cell>
+      <Cell>异常流E1：非结构化数据源测试失败；</Cell>
+      <Cell>异常流E2：非结构化数据源参数修改失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E3：非结构化数据源删除失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>流式数据归集/ZZSJHQZHFW-GN-SJHQ-LSSJGJ</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 7 流式数据归集能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_13" type="other" title="流式数据归集功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>流式数据引接/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYJ</Cell>
+      <Cell>支持通过特定信源引接获取中台无法及时提供的实时数据；提供流式引接功能，支持对实时数据格式进行自定义协议解析，能够通过消息队列等实现实时数据的接入功能。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>流式数据源管理/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYGL</Cell>
+    </Row>
+    <Row>
+      <Cell>支持自定义消息队列数据源，提供消息队列数据源的配置管理和概览功能。其中，数据源配置管理具备管理、添加、变更、删除消息队列数据源的功能。</Cell>
+      <Cell>高</Cell>
+      <Cell>流式数据引接/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_14" type="other" title="流式数据引接功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：流式数据引接/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYJ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述流式数据引接的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据获取菜单下流式数据归集页面；</Cell>
+      <Cell>2.点击创建工单，选择数据源类型、数据源名称、主题名称、消费模式，配置态势数据中待提取字段的名称、类型、取值方式等参数，点击下一步；点击下一步，配置目标数据源信息，点击下一步；配置流式数据字段和目标数据源表的字段映射关系，点击下一步；确认配置后创建流式数据归集任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在流式数据归集页面查看成功创建的归集任务，运行该归集任务，查看任务运行状态；</Cell>
+      <Cell>6.模拟指定的主题发布态势数据；</Cell>
+      <Cell>7.进入数据运维管理菜单下数据源管理页面，查看对应数据库下对态势数据的采集情况。</Cell>
+      <Cell>3.将数据归集任务添加到任务列表，若流式数据归集任务构建失败则执行异常流E1；</Cell>
+      <Cell>5.将源端消息队列数据采集到目标数据库中，若流式数据采集失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：流式数据归集任务构建失败；</Cell>
+      <Cell>异常流E2：流式数据采集失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>流式数据源管理/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYGL</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_15" type="other" title="流式数据源管理功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：流式数据源管理/ZZSJHQZHFW-GN-SJHQ-LSSJGJ-LSSJYGL</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述对流式数据源的添加、修改、检索、删除等管理功能。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.登录某服务进入数据源管理页面，选中某流式数据源，点击删除；</Cell>
+      <Cell>3.在流式数据源展示页面查看到该数据源已被删除；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在数据源检索输入框中输入数据库名、数据库类型等检索条件，开始检索；</Cell>
+      <Cell>6.显示满足条件的数据源列表信息。</Cell>
+      <Cell>7.选中某流式数据源，点击编辑；</Cell>
+      <Cell>9.修改数据源名称、中文名、IP地址、用户名、密码等信息，保存数据源信息；</Cell>
+      <Cell>11.点击新建流式数据源，输入数据源名称、中文名、IP地址、用户名、密码等信息，保存数据源信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>13.在流式数据源列表展示页面可查看到创建完成的数据源信息。</Cell>
+      <Cell>2.判断此流式数据源是否被其他调度任务依赖，如果没有依赖则直接删除，如果被依赖则弹出提示框，若删除失败则执行异常流E1；</Cell>
+      <Cell>5.查找符合检索条件的数据源返回前端界面；</Cell>
+      <Cell>8.查找该数据源基本信息，并返回；</Cell>
+      <Cell>10.将该数据源信息按照用户输入修改，若数据源信息修改失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>12.创建该数据源并加入数据源列表，若数据源创建失败则执行异常流E3；</Cell>
+      <Cell>异常流E1：流式数据源删除失败；</Cell>
+      <Cell>异常流E2：流式数据源信息修改失败；</Cell>
+      <Cell>异常流E3：流式数据源创建失败。</Cell>
+      <Cell>后置条件：无</Cell>
+    </Row>
+    <Row>
+      <Cell>数据转换/ZZSJHQZHFW-GN-SJZH</Cell>
+      <Cell>数据转换能力</Cell>
+      <Cell>数据转换根据某典型应用的数据使用需求，提供对引接获取的数据进行预处理，实现数据深度治理能力，支撑其他某典型应用对各类数据的高效运用。支持对各类数据进行结构转换等操作；支持将预处理结果转储到相应典型应用专题库；支持数据转换自定义配置和自定义协议解析；支持对数据进行组织，封装形成数据服务；支持将数据发布到数据服务目录，提供服务化访问接口；支持饼状图、柱状图、折线图、雷达图等进行多样化综合统计分析展现；支持数据服务按需订阅、主动推送，为后续某典型应用运用各类数据提供支撑。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 9数据转换功能框架图</Cell>
+    </Row>
+    <Row>
+      <Cell>所有功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.11</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 10 数据转换用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_16" type="other" title="数据转换功能划分" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>功能名称/标识</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>数据结构转换/ ZZSJHQZHFW-GN-SJZH-ZZSJJGZH</Cell>
+      <Cell>清洗转换规则管理/ ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHGZGL</Cell>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>清洗转换任务管理/ ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHRWGL</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>3</Cell>
+      <Cell>典型应用专题库管理/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL</Cell>
+      <Cell>专题库模型构建/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTKMXGJ</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>专题数据生产/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTSJSC</Cell>
+      <Cell>—</Cell>
+      <Cell>5</Cell>
+      <Cell>数据组织发布/ ZZSJHQZHFW-GN-SJZH-ZZSJZZFB</Cell>
+    </Row>
+    <Row>
+      <Cell>服务封装/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFZ</Cell>
+      <Cell>—</Cell>
+      <Cell>6</Cell>
+      <Cell>服务在线测试/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWZXCS</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>服务发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFB</Cell>
+      <Cell>—</Cell>
+      <Cell>8</Cell>
+      <Cell>服务接口管理/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWJKGL</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>9</Cell>
+      <Cell>数据订阅推送/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS</Cell>
+      <Cell>数据按需订阅/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS -SJAXDY</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>数据主动推送/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJZDTS</Cell>
+      <Cell>—</Cell>
+      <Cell>数据结构转换/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH</Cell>
+      <Cell>所有子功能标识</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 11 数据结构转换能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_17" type="other" title="数据结构转换功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>清洗转换规则管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHGZGL</Cell>
+      <Cell>支持查看清洗转换规则，主要包括脱敏、加密、转换、自定义规则，支持对自定义规则进行管理。</Cell>
+      <Cell>中</Cell>
+      <Cell>2</Cell>
+      <Cell>清洗转换任务管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHRWGL</Cell>
+    </Row>
+    <Row>
+      <Cell>支持构建并管理清洗转换任务，支持任务运行日志查看和清洗转换数据量统计。</Cell>
+      <Cell>高</Cell>
+      <Cell>清洗转换规则管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHGZGL</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_18" type="other" title="清洗转换规则管理功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：清洗转换规则管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHGZGL</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述清洗转换规则管理的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下清洗转换页面；</Cell>
+      <Cell>2.点击配置规则，可查看自定义的清洗转换规则列表；点击查看清洗转换规则，可对全部规则包括内置规则和自定义规则进行查看，选中某一规则查看规则描述；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.点击新增规则，输入规则函数、参数、名称等参数，编写规则代码后点击确定，创建规则；</Cell>
+      <Cell>6.点击规则对应的编辑按钮，修改规则函数、参数、名称等参数，点击确定保存；</Cell>
+      <Cell>8.点击规则对应的删除按钮，删除本规则</Cell>
+      <Cell>3.查询内置规则和自定义规则并返回给用户，若查询规则失败则执行异常流E1；</Cell>
+      <Cell>5.将清洗转换规则加入到规则列表，若清洗转换规则创建失败则执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.修改并保存清洗转换规则参数，若清洗转换规则参数修改失败则执行异常流E3；</Cell>
+      <Cell>9.将清洗转换规则从规则列表中删除，若清洗转换规则删除失败则执行异常流E4；</Cell>
+      <Cell>异常流E1：清洗转换规则查询失败；</Cell>
+      <Cell>异常流E2：清洗转换规则创建失败；</Cell>
+      <Cell>异常流E3：清洗转换规则参数修改失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E4：清洗转换规则删除失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>清洗转换任务管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHRWGL</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_19" type="other" title="清洗转换任务管理功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：清洗转换任务管理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-QXZHRWGL</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述清洗转换任务管理的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下清洗转换页面；</Cell>
+      <Cell>2.点击创建工单，输入工单名称，配置源头库、目标库、写入方式、依据字段等参数；在数据清洗转换规则配置区域增加字段的清洗规则，点击确定生成清洗转换任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.点击创建的清洗转换任务立即运行按钮，通过监控日志查看该任务运行情况，选取该任务作业实例，查看本次任务执行数据量统计信息。</Cell>
+      <Cell>3.将清洗转换任务加入到任务列表，若清洗转换任务创建失败则执行异常流E1；</Cell>
+      <Cell>5.返回任务运行情况和数据量统计信息，若任务数据统计失败则执行异常流E2。</Cell>
+      <Cell>异常流E1：清洗转换任务创建失败；</Cell>
+      <Cell>异常流E2：任务数据统计失败。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无</Cell>
+      <Cell>典型应用专题库管理/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 12 典型应用专题库管理能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_20" type="other" title="典型应用专题库管理功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>专题库模型构建/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTKMXGJ</Cell>
+      <Cell>支持构建专题库模型，包括专题库概念模型、逻辑模型和物理模型。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>专题数据生产/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTSJSC</Cell>
+    </Row>
+    <Row>
+      <Cell>支持依据已构建的专题库模型生成专题数据。</Cell>
+      <Cell>高</Cell>
+      <Cell>专题库模型构建/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTKMXGJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_21" type="other" title="专题库模型构建功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：专题库模型构建/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTKMXGJ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述专题库模型构建的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.登录某服务进入数据转换菜单下专题库模型构建页面；</Cell>
+      <Cell>2.选择某一应用系统，进行模型开发，新增概念模型，添加实体和实体间关系；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.新增逻辑模型，添加数据表，配置数据表字段及约束关系，添加表之间关联关系；</Cell>
+      <Cell>6.选中生成的逻辑模型，点击生成为物理模型，输入物理模型名称，数据源类型，点击确定，在物理模型展示区域查看生成结果；</Cell>
+      <Cell>8.选中生成的物理模型，点击生成为库表，选择数据源、数据源类型、物理表，测试数据源连接成功后点击确定将物理模型物化为数据库表；</Cell>
+      <Cell>3.增加概念模型，并关联实体和实体间关系，若添加实体失败则执行异常流E1，若添加实体间关系失败则执行异常流E2；</Cell>
+      <Cell>5.增加逻辑模型，并关联数据表和数据表间关系，若添加数据表失败则执行异常流E3，若添加数据表间关系失败则执行异常流E4；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.将逻辑模型转换为物理模型，若转换失败则执行异常流E5；</Cell>
+      <Cell>9.将物理模型物化为数据库表，若 物化失败则执行异常流E6；</Cell>
+      <Cell>异常流E1：添加实体失败；</Cell>
+      <Cell>异常流E2：添加实体间关系失败；</Cell>
+      <Cell>异常流E3：添加数据表失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E4：添加数据表间关系失败；</Cell>
+      <Cell>异常流E5：物理模型转换失败；</Cell>
+      <Cell>异常流E6：物化失败；</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>专题数据生产/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTSJSC</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_22" type="other" title="专题数据生产功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：专题数据生产/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTSJSC</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述专题数据生产的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1. 打开“某”软件，进入数据转换菜单下专题数据生产页面；</Cell>
+      <Cell>2.点击新增，输入工单名称，配置源头库，目标库选择为已创建的专题库模型构建生成的物化模型，配置源头表与目标表之间的映射关系，点击确定，构建专题数据生产任务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.选中构建的专题数据生产任务点击立即运行，查看该任务运行情况；</Cell>
+      <Cell>6.进入数据运维管理菜单下数据源管理页面，查看对应数据库下专题数据生成情况。</Cell>
+      <Cell>3.构建专题数据生产任务，并将任务添加到列表中，若专题数据生产任务构建失败则执行异常流E1；</Cell>
+      <Cell>5.将源端数据按照字段映射关系存储到目标专题库中，若字段映射失败则执行异常流E2；</Cell>
+      <Cell>异常流E1：专题数据生产任务构建失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：字段映射失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>数据组织发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 13 数据组织发布能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_23" type="other" title="数据组织发布功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>服务封装/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFZ</Cell>
+      <Cell>支持依据某领域数据应用需求，对领域、实体数据进行服务化封装，构建领域数据服务并向上层应用提供统一的战备专题数据服务访问入口。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>服务在线测试/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWZXCS</Cell>
+    </Row>
+    <Row>
+      <Cell>支持提供测试示例，对数据服务进行在线测试。</Cell>
+      <Cell>高</Cell>
+      <Cell>3</Cell>
+      <Cell>服务发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFB</Cell>
+      <Cell>支持发布已封装的数据服务供用户进行申请使用。</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>4</Cell>
+      <Cell>服务接口管理/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWJKGL</Cell>
+      <Cell>支持分类管理数据服务接口，并查看接口详情；支持对数据服务接口进行查询、删除、修改操作，支持以饼状图、柱状图、折线图、雷达图对数据服务访问情况进行统计展现。</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>服务封装/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFZ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_24" type="other" title="服务封装功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：服务封装/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFZ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：本用例是描述对数据进行服务封装的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，服务编目目录已构建，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下数据服务开发页面；</Cell>
+      <Cell>2.点击新增，输入服务编码、服务名称等参数，点击下一步；选择数据源，编写SQL语句，测试成功后点击下一步；确定输入参数和输出参数，点击确定生成数据服务；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.在数据服务开发页面可查看生成的数据服务，点击进入该数据服务，查看该服务的编码、名称、地址、入参、出参等详情参数；</Cell>
+      <Cell>3.将数据服务加入到服务列表，若数据服务创建失败则执行异常流E1；</Cell>
+      <Cell>异常流E1：数据服务创建失败；</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>服务在线测试/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWZXCS</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_25" type="other" title="服务在线测试功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：服务在线测试/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWZXCS</Cell>
+      <Cell>Actors：数据保障人员、应用开发人员</Cell>
+      <Cell>概述：本用例是描述服务在线测试的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，服务编目目录已构建，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下我的服务发布页面；</Cell>
+      <Cell>2.选取已创建的数据服务，点击测试按钮，依据默认的测试示例参数进行测试，查看数据服务响应情况；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.可查看到数据服务响应数据。</Cell>
+      <Cell>3.数据服务根据请求参数返回相应数据，若数据返回失败则执行异常流E1；</Cell>
+      <Cell>异常流E1：数据服务返回数据失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>服务发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFB</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_26" type="other" title="服务发布功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：服务发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWFB</Cell>
+      <Cell>Actors：数据保障人员、应用开发人员</Cell>
+      <Cell>概述：本用例是描述服务发布的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，服务编目目录已构建，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务封装构建的领域数据服务默认为发布状态，用户打开“某”软件，进入数据转换菜单下我的服务发布页面，查看已发布的数据服务</Cell>
+      <Cell>2.选中某一数据服务进行取消发布操作，观察服务发布状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.选中某一数据服务进行发布操作，观察服务发布状态；</Cell>
+      <Cell>3.取消本数据服务发布，并将发布状态修改为未发布，若取消发布失败则执行异常流E1；</Cell>
+      <Cell>5.将本数据服务发布，并将发布状态修改为已发布，若发布失败则执行异常流E1；</Cell>
+      <Cell>异常流E1：数据服务取消发布失败；</Cell>
+      <Cell>异常流E2：数据服务发布失败。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无</Cell>
+      <Cell>服务接口管理/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWJKGL</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_27" type="other" title="服务接口管理功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：服务接口管理/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-FWJKGL</Cell>
+      <Cell>Actors：数据保障人员、应用开发人员</Cell>
+      <Cell>概述：本用例是描述对数据服务接口进行管理的过程。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，服务编目目录已构建，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据运维管理菜单下资产目录管理页面；</Cell>
+      <Cell>2.选择分类目录节点点击添加子分类，输入分类名称、分类编码等参数，提交后查看分类添加结果；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.点击已添加分类进行修改，修改分类名称、分类编码等参数后提交，查看分类修改结果；</Cell>
+      <Cell>6.点击已添加分类进行删除，查看分类删除结果；</Cell>
+      <Cell>8.进入数据转换菜单下数据服务开发页面，进行服务封装，在构建数据服务时选择主题分类为对应分类目录下，查看数据服务关联分类情况；</Cell>
+      <Cell>10.点击进入某一数据服务，查看该服务的编码、名称、地址、入参、出参等详情参数；</Cell>
+      <Cell>12.选择某一数据服务点击修改发布数据源，查看数据源修改结果；选择某一数据服务点击删除，查看数据服务删除结果；</Cell>
+    </Row>
+    <Row>
+      <Cell>14.输入数据服务名称或服务编码对已创建服务进行检索，查看检索结果</Cell>
+      <Cell>3.构建该分类与其他分类的关联层级关系，若分类创建失败则执行异常流E1；</Cell>
+      <Cell>5.修改分类并保存，若分类修改失败则执行异常流E2；</Cell>
+      <Cell>7.删除该分类，若分类删除失败则执行异常流E3；</Cell>
+      <Cell>9.构建数据服务，并将数据服务分类挂接到指定目录下，若数据服务分类失败则执行异常流E4；</Cell>
+    </Row>
+    <Row>
+      <Cell>11.查询该数据服务详情数据返回用户，若数据服务详情数据查询失败则执行异常流E5；</Cell>
+      <Cell>13.修改数据服务关联的数据源，若修改失败则执行异常流E6；删除该数据服务，若数据服务删除失败则执行异常流E7；</Cell>
+      <Cell>15.将符合数据服务名称或服务编码的数据服务返回给用户，若数据服务查询失败则执行异常流E8；</Cell>
+      <Cell>异常流E1：分类创建失败；</Cell>
+      <Cell>异常流E2：分类修改失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E3：分类删除失败；</Cell>
+      <Cell>异常流E4：数据服务分类失败；</Cell>
+      <Cell>异常流E5：数据服务详情数据查询失败；</Cell>
+      <Cell>异常流E6：数据服务关联的数据源修改失败；</Cell>
+      <Cell>异常流E7：数据服务删除失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E8：数据服务查询失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>数据订阅推送/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 14 数据订阅推送能力组成图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_28" type="other" title="数据订阅推送功能需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>子功能名称/标识</Cell>
+      <Cell>功能描述</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>数据按需订阅/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJAXDY</Cell>
+      <Cell>能够提供服务化访问接口，支持按需订阅等方式提供数据服务,为后续某典型应用运用各类数据提供支撑。</Cell>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>数据主动推送/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJZDTS</Cell>
+    </Row>
+    <Row>
+      <Cell>能够提供服务化访问接口，支持主动推送等方式提供数据服务,为后续某典型应用运用各类数据提供支撑。</Cell>
+      <Cell>高</Cell>
+      <Cell>数据按需订阅/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJAXDY</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_29" type="other" title="数据按需订阅功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：数据按需订阅/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJAXDY</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：能够提供服务化访问接口，支持按需订阅等方式提供数据服务,为后续某典型应用运用各类数据提供支撑。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下数据订阅推送页面；</Cell>
+      <Cell>2.在主题列表中选择主题，订阅主题消息，配置数据接收方式为rabbitMQ或者websocket，查看主题订阅状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.等待接收数据。</Cell>
+      <Cell>3.修改主题的订阅状态，并等待接收数据，若主题的订阅状态修改失败则执行异常流E1；</Cell>
+      <Cell>异常流E1：主题的订阅状态修改失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>数据主动推送/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJZDTS</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_30" type="other" title="数据主动推送功能用例" section="">
+    <Headers>
+      <Cell>Use Case 名称：数据主动推送/ ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJZDTS</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员</Cell>
+      <Cell>概述：通过地址信息、登录验证信息对接入数据源进行连接测试。</Cell>
+      <Cell>前置条件：能够提供服务化访问接口，支持主动推送等方式提供数据服务,为后续某典型应用运用各类数据提供支撑。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1.打开“某”软件，进入数据转换菜单下数据订阅推送页面，向订阅成功的主题推送数据；</Cell>
+      <Cell>3.订阅方用户接收到数据。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.根据主题匹配已订阅主题用户，将数据按照用户选择的接收方式rabbitMQ或者websocket推送给用户，若数据推送失败则异常流E1。</Cell>
+      <Cell>异常流E1：数据推送失败。</Cell>
+      <Cell>后置条件：无</Cell>
+      <Cell>分系统性能需求/ZZSJHQZHFW-XN</Cell>
+      <Cell>性能指标</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_31" type="other" title="某服系统性能指标" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>性能指标名称/标识</Cell>
+      <Cell>指标描述</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>优先级</Cell>
+    </Headers>
+    <Row>
+      <Cell>备注</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-XN-ZZSJHQ</Cell>
+      <Cell>获取的数据资源不少于19种</Cell>
+      <Cell>获取的数据资源包括：1类数据、2类数据、3类数据、4类数据、5类数据、6类数据等；</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>数据转换/ZZSJHQZHFW-XN-ZZSJZH</Cell>
+      <Cell>接入数据进行标准转换速度不低于2000条/秒</Cell>
+      <Cell>接入数据进行标准转换速度不低于2000条/秒</Cell>
+      <Cell>中</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-XN-ZZSJHQ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_32" type="other" title="数据获取性能用例描述" section="">
+    <Headers>
+      <Cell>Use Case 名称：数据获取/ZZSJHQZHFW-XN-ZZSJHQ</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员、值勤首长</Cell>
+      <Cell>概述：本用例是验证数据获取性能指标，考查系统获取的数据资源不少于19种，包括1类数据、2类数据、3类数据、4类数据、5类数据、6类数据等。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1．用户进入某分系统，依次选择19种数据资源类型进行资源数据获取；</Cell>
+      <Cell>3．用户查看数据资源获取结果。</Cell>
+    </Row>
+    <Row>
+      <Cell>2．本软件对所选类型数据资源进行获取并展示结果。若获取结果数据展示失败，进入异常流E1；</Cell>
+      <Cell>获取的数据资源不少于19种，包括1类数据、2类数据、3类数据、4类数据、5类数据、6类数据等。</Cell>
+      <Cell>异常流E1：数据资源获取失败，写入错误日志，提示失败信息，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>数据转换/ZZSJHQZHFW-XN-ZZSJZH</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_33" type="other" title="数据转换性能用例描述" section="">
+    <Headers>
+      <Cell>Use Case 名称：数据转换/ZZSJHQZHFW-XN-ZZSJZH</Cell>
+      <Cell>Actors：值勤参谋、数据保障人员、值勤首长</Cell>
+      <Cell>概述：本用例是验证数据转换性能指标，考查系统在网络状态良好的情况下，接入数据进行标准转换速度不低于2000条/秒。</Cell>
+      <Cell>前置条件：系统软件正常启动，本软件正常启动，数据中台运行正常，本地数据库运行正常，网络正常通联。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束（性能、可靠性、容错等）</Cell>
+      <Cell>1．用户进入某分系统，选择一种类型资源进行一分钟的资源数据获取转换；</Cell>
+      <Cell>3．用户查看获取的资源数据条数是否超过120000条。</Cell>
+    </Row>
+    <Row>
+      <Cell>2．本软件对所选类型资源数据进行1分钟获取并展示结果。若获取结果数据展示失败，进入异常流E1；</Cell>
+      <Cell>在网络状态良好的情况下，接入数据进行标准转换速度不低于2000条/秒</Cell>
+      <Cell>异常流E1：资源数据获取失败，写入错误日志，提示失败信息，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>分系统外部接口需求/ZZSJHQZHFW-JK-WB</Cell>
+    </Row>
+    <Row>
+      <Cell>接口标识和接口图</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 15 某服务系统外部接口设计</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_34" type="other" title="外部接口标识" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Cell>
+    </Row>
+    <Row>
+      <Cell>数据统算调用本系统获取通算分析所需的数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据统算</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Cell>
+      <Cell>通用智能应用调用本系统获取应用运行所需数据</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>通用智能应用</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY</Cell>
+      <Cell>本系统与态势数据组织应用之间进行态势数据共享</Cell>
+      <Cell>本系统</Cell>
+      <Cell>态势数据组织应用</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>4</Cell>
+      <Cell>态势数据组织应用</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>5</Cell>
+      <Cell>与能力分析评估交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Cell>
+    </Row>
+    <Row>
+      <Cell>能力分析评估应用调用本系统获取评估所需数据，并将分析评估结果数据回流至本系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>能力分析评估应用</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>6</Cell>
+      <Cell>能力分析评估应用</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>7</Cell>
+      <Cell>与应用集成框架与运维体系交互接口/ ZZSJHQZHFW-JK-WB-YYJCKJYYWTX</Cell>
+      <Cell>本系统将系统监控、日志等信息推送至应用集成框架与运维体系</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>应用集成框架与运维体系</Cell>
+      <Cell>API接口、DLL接口</Cell>
+      <Cell>低</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>8</Cell>
+      <Cell>与指挥信息系统交互接口/ ZZSJHQZHFW -JK-WB-ZHXXXT</Cell>
+      <Cell>本系统与指挥信息系统之间进行态势数据等数据共享</Cell>
+      <Cell>本系统</Cell>
+      <Cell>指挥信息系统</Cell>
+    </Row>
+    <Row>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>9</Cell>
+      <Cell>指挥信息系统</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>10</Cell>
+    </Row>
+    <Row>
+      <Cell>与某信息服务平台交互接口/ ZZSJHQZHFW -JK-WB-QJXXPT</Cell>
+      <Cell>本系统调用某信息服务平台用户管理、统一时空管理、服务调度管理等服务。</Cell>
+      <Cell>某信息服务基础平台</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>11</Cell>
+      <Cell>与某数据中台交互接口/ZZSJHQZHFW -JK-WB-SJZT</Cell>
+      <Cell>本系统与数据中台之间进行基础数据、动态数据、指挥决策数据等数据交互</Cell>
+    </Row>
+    <Row>
+      <Cell>某数据中台</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口、消息队列接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>12</Cell>
+      <Cell>本系统</Cell>
+      <Cell>某数据中台</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>13</Cell>
+      <Cell>与上下级典型应用交互接口/ ZZSJHQZHFW -JK-WB-SXJDXYY</Cell>
+      <Cell>本系统基于下发的通用组件与某典型应用系统之间的业务数据共享交换</Cell>
+      <Cell>某典型应用系统</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>14</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>某某典型应用系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>15</Cell>
+      <Cell>与地方系统交互接口/ ZZSJHQZHFW -JK-WB-DFXT</Cell>
+      <Cell>本系统需要从外部地方系统引接其他领域数据时，使用本接口进行离线数据交换。</Cell>
+      <Cell>地方系统</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>文件接口</Cell>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>16</Cell>
+      <Cell>与用户人机交互接口/ZZSJHQZHFW-JK-WB-ZBCC-RJJH</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统提供人机交互接口，实现用户操作使用软件</Cell>
+      <Cell>本系统</Cell>
+      <Cell>用户</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>17</Cell>
+      <Cell>用户</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>18</Cell>
+      <Cell>与数据库接口/ ZZSJHQZHFW -JK-WB-SJK</Cell>
+      <Cell>本系统与数据库系统进行数据库信息、数据库状态信息的交互</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>数据库系统</Cell>
+      <Cell>数据库访问接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>19</Cell>
+      <Cell>数据库系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据库访问接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>20</Cell>
+      <Cell>与文件系统接口/ ZZSJHQZHFW -JK-WB-WJXT</Cell>
+      <Cell>本系统与文件系统进行文本文件、图片文件、音频文件、视频文件、压缩文件等的数据交互</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>文件系统</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>21</Cell>
+    </Row>
+    <Row>
+      <Cell>文件系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_35" type="other" title="与数据统算交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Cell>
+    </Row>
+    <Row>
+      <Cell>数据统算调用本系统获取统算分析所需数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据统算</Cell>
+      <Cell>API接口</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_36" type="other" title="与数据统算交互接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>结构化数据</Cell>
+      <Cell>结构化物理模型、结构化逻辑模型、数据集合模型、数据处理过程模型、数据产品</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>非结构化数据</Cell>
+      <Cell>文件（文档、图片、音频、视频）、文电</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>流式数据</Cell>
+      <Cell>主题数据服务（流式数据模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>数据模型</Cell>
+      <Cell>数据模型（数据建模模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>数据接口</Cell>
+      <Cell>数据接口（数据接口模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>6</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>数据资源元数据</Cell>
+      <Cell>技术元数据、业务元数据、管理元数据</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_37" type="other" title="与通用智能应用交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Cell>
+    </Row>
+    <Row>
+      <Cell>通用智能应用调用本系统获取所需数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>通用智能应用</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_38" type="other" title="与通用智能应用交互接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>结构化数据</Cell>
+      <Cell>结构化物理模型、结构化逻辑模型、数据集合模型、数据处理过程模型、数据产品</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>非结构化数据</Cell>
+      <Cell>文件（文档、图片、音频、视频）、文电</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>流式数据</Cell>
+      <Cell>主题数据服务（流式数据模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>数据模型</Cell>
+      <Cell>数据模型（数据建模模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>数据接口</Cell>
+      <Cell>数据接口（数据接口模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>6</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>数据资源元数据</Cell>
+      <Cell>技术元数据、业务元数据、管理元数据</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_39" type="other" title="与态势数据组织应用交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与态势数据组织应用交互接口/ ZZSJHQZHFW-JK-WB-TSSJZZYY</Cell>
+    </Row>
+    <Row>
+      <Cell>态势数据组织应用通过调用本系统订阅接口订阅态势相关主题数据，本系统根据应用实际需要主动推送情态势等数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>态势数据组织应用</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>态势数据组织应用</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_40" type="other" title="与态势数据组织应用接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>敌情态势</Cell>
+      <Cell>-</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>我情态势</Cell>
+      <Cell>-</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与能力分析评估交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_41" type="other" title="与能力分析评估交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与能力分析评估交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Cell>
+    </Row>
+    <Row>
+      <Cell>能力分析评估过调用本系统订阅接口订阅能力评估相关主题数据，本系统根据应用实际需要主动推送能力评估数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>能力分析评估</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>能力分析评估</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_42" type="other" title="与能力分析评估交互接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>结构化数据</Cell>
+      <Cell>结构化物理模型、结构化逻辑模型、数据集合模型、数据处理过程模型、数据产品</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>非结构化数据</Cell>
+      <Cell>文件（文档、图片、音频、视频）、文电</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>流式数据</Cell>
+      <Cell>主题数据服务（流式数据模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>数据模型</Cell>
+      <Cell>数据模型（数据建模模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>数据接口</Cell>
+      <Cell>数据接口（数据接口模型）</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>6</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>数据对象</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>7</Cell>
+      <Cell>数据资源元数据</Cell>
+      <Cell>技术元数据、业务元数据、管理元数据</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与应用集成框架与运维体系交互接口/ZZSJHQZHFW-JK-WB-ZBCC-YYJCKJYYWTX</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_43" type="other" title="与应用集成框架与运维体系交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与应用集成框架与运维体系交互接口/JCYY-JK-WB-ZBCC-YYJCKJYYWTX</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统通过调用应用集成框架与运维体系接口向其推送监控信息、告警信息、日志信息、注册信息等数据</Cell>
+      <Cell>本系统</Cell>
+      <Cell>应用集成框架与运维体系</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_44" type="other" title="与应用集成框架与运维体系交互接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>监控信息</Cell>
+      <Cell>系统资源使用情况、程序运行状态信息、用户活动监控信息</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>告警信息</Cell>
+      <Cell>资源使用告警信息、系统健康告警信息、数据库告警信息</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>日志信息</Cell>
+      <Cell>访问日志、应用日志、安全日志、系统日志、数据库日志、错误日志、调试日志</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>注册信息</Cell>
+      <Cell>用户基本信息、应用注册信息</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与指挥信息系统交互接口/ZZSJHQZHFW-JK-WB-ZHXXXT</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_45" type="other" title="与指挥信息系统交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>态势数据融合共享接口/ DXYY-ZBZQ-JK-WB-ZHXXXT-TSGX</Cell>
+    </Row>
+    <Row>
+      <Cell>获取指挥信息系统态势数据， 指挥信息系统的态势文件能够导入到本系统展现。</Cell>
+      <Cell>指挥信息系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>共享本系统的态势文件，本系统生成的态势数据能够共享到指挥信息系统并展现。</Cell>
+      <Cell>本系统</Cell>
+      <Cell>指挥信息系统</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>与某信息服务平台交互接口/ZZSJHQZHFW-JK-WB-QJXXPT</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_46" type="other" title="与某信息服务平台交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>用户管理接口/DXYY-ZBZQ-JK-WB-QJXXPT-YHGL</Cell>
+    </Row>
+    <Row>
+      <Cell>获取用户基本信息数据，用户统一身份认证管理。</Cell>
+      <Cell>某信息服务基础平台</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>统一时空管理接口/DXYY-ZBZQ-JK-WB-QJXXPT-TYSK</Cell>
+      <Cell>获取统一时间、天文事件数据。</Cell>
+      <Cell>某信息服务基础平台</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>与数据中台交互接/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT</Cell>
+    </Row>
+    <Row>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_47" type="other" title="与某数据中台交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与某数据中台交互接口/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT</Cell>
+    </Row>
+    <Row>
+      <Cell>数据获取引接接口</Cell>
+      <Cell>数据中台</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>与地方系统交互接口/ZZSJHQZHFW-JK-WB-DFXT</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_48" type="other" title="与地方系统交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>外部数据获取接口</Cell>
+    </Row>
+    <Row>
+      <Cell>/DXYY-ZBZQ-JK-WB-DFXT-WBSJHQ</Cell>
+      <Cell>从外部地方系统引接其他领域数据时，使用本接口进行离线数据交换。</Cell>
+      <Cell>地方系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>文件接口</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_49" type="other" title="与地方系统交互接口的数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>地方数据</Cell>
+      <Cell>本系统需要从地方系统引接的如气象水文数据、开源情报数据、应急管理数据等。</Cell>
+      <Cell>—</Cell>
+      <Cell>遵循地方系统数据包发布相关标准</Cell>
+    </Row>
+    <Row>
+      <Cell>与用户人机交互接口/ZZSJHQZHFW-JK-WB-ZBCC-RJJH</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_50" type="other" title="与用户人机交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与用户人机交互接口/ZZSJHQZHFW-JK-WB-ZBCC-RJJH</Cell>
+    </Row>
+    <Row>
+      <Cell>界面人机交互接口</Cell>
+      <Cell>用户</Cell>
+      <Cell>本系统</Cell>
+      <Cell>人机交互接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>键鼠人机交互接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>用户</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_51" type="other" title="与用户人机交互接口的数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>键鼠操作数据</Cell>
+      <Cell>键鼠、触控、自然语言输入、语音输入</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>界面展现数据</Cell>
+      <Cell>界面显示、界面布局、窗体风格</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与数据库系统接口/ZZSJHQZHFW-JK-WB-SJK</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_52" type="other" title="与数据库交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与数据库接口/ DXYY-ZBZQ-JK-WB-SJK</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统与数据库系统进行数据库信息、数据库状态信息的交互。</Cell>
+      <Cell>本系统</Cell>
+      <Cell>数据库系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>数据库系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_53" type="other" title="与数据库交互接口的数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>数据库操作数据</Cell>
+      <Cell>数据模型名、分页标志、数据标示字段、过滤条件、页码等</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>数据库状态信息</Cell>
+      <Cell>数据库表空间使用情况、连接句柄情况、各类数据元素的创建情况等</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>与文件系统接口/ZZSJHQZHFW-JK-WB-WJXT</Cell>
+      <Cell>外部接口标识</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_54" type="other" title="与文件系统交互接口需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口描述</Cell>
+      <Cell>发送方</Cell>
+      <Cell>接收方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接口类型</Cell>
+      <Cell>优先级</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>与文件系统接口/ DXYY-ZBZQ-JK-WB-WJXT</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统与文件系统进行文本文件、图片文件、音频文件、视频文件、压缩文件等的数据交互。</Cell>
+      <Cell>本系统</Cell>
+      <Cell>文件系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>文件系统</Cell>
+      <Cell>本系统</Cell>
+      <Cell>API接口</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>接口数据元素说明</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_55" type="other" title="与文件系统接口数据元素说明" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>文件数据信息</Cell>
+      <Cell>文件路径、文件名称、文件类型、文件大小文件上传时间</Cell>
+      <Cell>—</Cell>
+      <Cell>自定义</Cell>
+    </Row>
+    <Row>
+      <Cell>分系统内部接口需求/ZZSJHQZHFW-JK-NB</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 16 某服务内部接口设计</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_56" type="other" title="某服务内部接口详细设计表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口需求描述</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>数据协议解析接口/ZZSJHQZHFW-JK-NB-SJXYJX</Cell>
+      <Cell>对引接获取的数据进行自定义协议配置和解析</Cell>
+    </Row>
+    <Row>
+      <Cell>API接口</Cell>
+      <Cell>数据获取</Cell>
+      <Cell>数据转换</Cell>
+      <Cell>中</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据预处理配置接口/ZZSJHQZHFW-JK-NB-SJYCLPZ</Cell>
+      <Cell>对引接获取的数据进行结构转换配置</Cell>
+      <Cell>API接口</Cell>
+      <Cell>数据获取</Cell>
+      <Cell>数据转换</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>数据获取内部接口/ZZSJHQZHFW-JK-NB-ZZSJHQ</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 17 数据获取内部接口图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_57" type="other" title="数据获取内部接口表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称/标识</Cell>
+      <Cell>接口需求描述</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>1</Cell>
+      <Cell>数据源自定义/配置接口/ZZSJHQZHFW-JK-NB-ZZSJHQ-SJYZDYPZ</Cell>
+      <Cell>对特定信源数据进行自定义配置</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>通用数据引接</Cell>
+      <Cell>精准数据获取</Cell>
+      <Cell>数据转换内部接口/ZZSJHQZHFW-JK-NB-ZZSJZH</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 18 数据转换内部接口图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_58" type="other" title="数据转换内部接口表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口名称</Cell>
+      <Cell>接口需求描述</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>1</Cell>
+      <Cell>处理结果转储接口/ZZSJHQZHFW-JK-NB-ZZSJZH-CLJGZC</Cell>
+      <Cell>将预处理结果转储到相应典型应用专题库</Cell>
+      <Cell>API接口</Cell>
+    </Row>
+    <Row>
+      <Cell>数据结构转换</Cell>
+      <Cell>典型应用专题库管理</Cell>
+      <Cell>2</Cell>
+      <Cell>专题库数据获取接口/ZZSJHQZHFW-JK-NB-ZZSJZH-ZTKSJHQ</Cell>
+      <Cell>专题库数据查询获取</Cell>
+    </Row>
+    <Row>
+      <Cell>API接口</Cell>
+      <Cell>典型应用专题库管理</Cell>
+      <Cell>数据组织发布</Cell>
+      <Cell>3</Cell>
+      <Cell>专题库编辑接口/ZZSJHQZHFW-JK-NB-ZZSJZH-ZTKBJ</Cell>
+    </Row>
+    <Row>
+      <Cell>专题库目录信息编辑、更新</Cell>
+      <Cell>API接口</Cell>
+      <Cell>数据组织发布</Cell>
+      <Cell>典型应用专题库管理</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>数据编目信息获取接口/ZZSJHQZHFW-JK-NB-ZZSJZH-SJBMXXHQ</Cell>
+      <Cell>获取数据服务封装发布信息</Cell>
+      <Cell>API接口</Cell>
+      <Cell>数据组织发布</Cell>
+      <Cell>数据订阅推送</Cell>
+    </Row>
+    <Row>
+      <Cell>分系统内部数据需求/ZZSJHQZHFW-SJ-NB-SJ</Cell>
+      <Cell>无。</Cell>
+      <Cell>适应性需求/ZZSJHQZHFW-SY</Cell>
+      <Cell>无。</Cell>
+      <Cell>保密性需求/ZZSJHQZHFW-BM</Cell>
+    </Row>
+    <Row>
+      <Cell>（1）数据保密需求</Cell>
+      <Cell>a）确保重要数据只有相应权限的用户可读写，其他用户无法得知数据的内容。</Cell>
+      <Cell>b）确保在重要数据使用过程中，当前用户无法得知其他用户对该数据的使用信息。</Cell>
+      <Cell>c）	须对系统中敏感信息采用专用协议或专用数据格式进行传输和存储。</Cell>
+      <Cell>d）	禁止在系统所使用的配置文件中存储敏感数据。</Cell>
+    </Row>
+    <Row>
+      <Cell>e）	内存中存储敏感数据使用后应立即清除。</Cell>
+      <Cell>（2）计算环境保密需求</Cell>
+      <Cell>计算机终端和服务器存在系统漏洞、病毒入侵、木马植入非法入侵、数据外泄等安全威胁，需要采用可信防护、主机管控、漏洞扫描、补丁升级、恶意代码查杀等手段，加强操作系统对病毒及恶意代码的自我免疫能力，有效防止外部黑客攻击和内部人员违规操作、恶意破坏，实现计算环境的安全保密。</Cell>
+      <Cell>（3）应用系统保密需求</Cell>
+      <Cell>为防止电子印章信息被非法篡改，应提供数据签名验签手段，确保电子印章申请及使用过程的不可伪造性和不可否认性；应用系统应对用户操作及办公流转过程进行安全审计，确保操作留痕，有迹可循；针对WEB应用访问，应提供应用层安全攻击的防护措施，避免泄露非授权数据信息及执行非法操作。</Cell>
+    </Row>
+    <Row>
+      <Cell>安全性需求/ZZSJHQZHFW-AQ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_59" type="other" title="安全性需求" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>安全性需求</Cell>
+      <Cell>详细说明</Cell>
+      <Cell>1身份验证a）对登录的账号密码认证识别，确认用户身份的真实性，通过后方可进入系统和执行功能操作。</Cell>
+      <Cell>b）对用户访问特定资源和执行特定操作的权限进行验证，禁止非法越权操作。</Cell>
+    </Headers>
+    <Row>
+      <Cell>2异常管理a）发生异常时应使用通用错误信息对用户进行提示。</Cell>
+      <Cell>b）程序发生异常时，应在服务日志中记录关键的错误信息。4数据库安全a）能够对数据库数据进行导出备份和导入恢复。</Cell>
+      <Cell>b）禁止使用默认的角色、账户与默认数据库口令访问数据库。5软件安全编码a）输入验证：检查输入数据类型、数据长度、数值范围。</Cell>
+      <Cell>b）输出编码：不在软件执行异常时暴露敏感信息；</Cell>
+      <Cell>c）内存管理：防范缓冲区溢出；避免使用已知有漏洞的函数，应尽量避免使用不进行变量检查的、容易导致漏洞的字符串操作函数，如printf、strcat、strcpy，并使用其他函数替代。</Cell>
+    </Row>
+    <Row>
+      <Cell>d）数据库管理：当应用程序访问数据库时，使用参数化的SQL语句和存储过程；访问数据库使用尽可能低权限。软件开发运行环境/ZZSJHQZHFW-RJKFYXHJ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_60" type="other" title="开发运行环境需求" section="">
+    <Headers>
+      <Cell>序号分类类型软件名及基线版本硬件参数选型依据备注1开发支撑环境编程语言后端开发语言Python3—前期开发经验—2Java8（JDK1.8）—前期开发经验—3C++—前期开发经验—4前端开发语言HTML5、CSS3、JavaScript—前期开发经验—5开发框架前端开发工具VsCode—前期开发经验—6后端开发工具idea—前期开发经验—7VS2015—前期开发经验—8Qt5.9.4—前期开发经验—9基础软件操作系统Windows7/Windows 10CPU	：X86</Cell>
+      <Cell>内存：	16G</Cell>
+      <Cell>硬盘	：可用空间200G以上</Cell>
+      <Cell>网卡：	100M/1000M网卡前期开发经验—10某信息服务平台—前期开发经验—11数据库达梦数据库V8、Redis——12运行支撑环境云服务环境银河麒麟云平台软件 V5———13操作系统银河麒麟V10正版操作系统（桌面版操作系统/服务器版操作系统）能够与云或虚拟化平台兼容根据技术验证环境要求选型名录中产品—14数据库达梦数据库V8、Redis等—根据技术验证环境要求选型名录中产品—15办公软件金山麒麟 WPS</Cell>
+      <Cell>办公软件 V11 —根据技术验证环境要求选型名录中产品—其他质量特性/ZZSJHQZHFW-ZLTX</Cell>
+    </Headers>
+  </Table>
+  <Table table_id="T_61" type="other" title="其他质量要求与措施表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>软件质量因素</Cell>
+      <Cell>软件质量因素描述</Cell>
+      <Cell>要求程度</Cell>
+      <Cell>采取的措施</Cell>
+    </Headers>
+    <Row>
+      <Cell>功能性</Cell>
+      <Cell>实现全部所需功能的能力</Cell>
+      <Cell>符合系统能力需求</Cell>
+      <Cell>通过系统需求分析和软件设计满足功能指标</Cell>
+      <Cell>稳定性</Cell>
+    </Row>
+    <Row>
+      <Cell>软件稳定运行，资源占用率保持平稳</Cell>
+      <Cell>无</Cell>
+      <Cell>软件实现中，对内存、cpu等资源精准控制；通过压力测试和重复测试保证软件稳定运行</Cell>
+      <Cell>易用性</Cell>
+      <Cell>易于学习和使用的能力</Cell>
+    </Row>
+    <Row>
+      <Cell>人机接口友好，简洁、一致，并形成闭环反馈</Cell>
+      <Cell>采用统一人机交互规范对人机接口进行一体设计，按业务流程和实装操作进行界面设计和交互设计</Cell>
+      <Cell>计算机资源需求/ZZSJHQZHFW-ZY</Cell>
+      <Cell>计算机硬件需求</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_62" type="other" title="计算机硬件需求一览表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>硬件项名称</Cell>
+      <Cell>硬件配置要求</Cell>
+      <Cell>产品</Cell>
+      <Cell>选型</Cell>
+    </Headers>
+    <Row>
+      <Cell>数量</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>高性能服务器</Cell>
+      <Cell>①CPU：2颗FT2500处理器或同等级别及以上其他国产处理器，符合名录要求，总核数≥128核；②内存：配置≥256GB DDR4内存，内存槽≥16；③存储：4块1TB SSD，2块256GB SSD，所有SSD硬盘存储控制芯片在最新《名录》中；（其中2块256GB硬盘作为云或虚拟化平台底层系统盘，做raid1）④电源：冗余电源，支持热插拔；⑤阵列卡：配置独立raid卡，支持0、1、5、6、10等RAID级；⑥网络适配器：至少4个万兆光口（含光模块），至少2个千兆以太网接口，以太网控制器芯片在最新的《名录》中；⑦操作系统：正版，符合名录要求，且支持将系统迁移到云或虚拟化平台某个节点；⑧产品符合最新的《名录》要求。</Cell>
+    </Row>
+    <Row>
+      <Cell>产品名称：</Cell>
+      <Cell>擎天 EF860；</Cell>
+      <Cell>①CPU：2颗FT2500处理器，总核数128核（每颗处理器64核）；</Cell>
+      <Cell>②内存：配置256GB DDR5内存，内存槽16；</Cell>
+      <Cell>③存储：4块1TB SSD; 2块512GB  SSD;；</Cell>
+    </Row>
+    <Row>
+      <Cell>④操作系统：银河麒麟服务器操作系统V10</Cell>
+      <Cell>1</Cell>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>台式机及显示器</Cell>
+    </Row>
+    <Row>
+      <Cell>①CPU：8核，CPU在最新的《名录》中；②内存：配置≥16GB DDR4内存；③存储：存储≥1TB，SSD硬盘，固态硬盘芯片控制器在最新的《名录》中；④网络适配器：以太网控制器芯片在最新的《名录》中；⑤显示器：1台，分辨率≥1920*1080；⑥图形处理器：支持扩展3屏显示，显存≥4GB；⑦操作系统：预装正版操作系统，操作系统在最新的《名录》中；⑧产品符合最新的《名录》要求。</Cell>
+      <Cell>产品名称： TD120A2；</Cell>
+      <Cell>①CPU：腾锐D2000，8核；</Cell>
+      <Cell>②内存：配置16G ,DDR4内存;</Cell>
+      <Cell>③存储：1TB，SSD硬盘；</Cell>
+    </Row>
+    <Row>
+      <Cell>④操作系统，银河麒麟桌面操作系统</Cell>
+      <Cell>3</Cell>
+      <Cell>—</Cell>
+      <Cell>3</Cell>
+      <Cell>笔记本电脑</Cell>
+    </Row>
+    <Row>
+      <Cell>①CPU：飞腾系列CPU；②内存：配置≥16GB DDR4内存；③存储：存储≥500GB，SSD硬盘；④操作系统：预装正版麒麟操作系统；⑤产品型号及配置符合国产化要求。</Cell>
+      <Cell>产品名称：CN140A2；</Cell>
+      <Cell>①CPU:飞腾腾锐D2000；</Cell>
+      <Cell>②内存：16G，DDR4；</Cell>
+      <Cell>③存储：1TB，SSD硬盘；</Cell>
+    </Row>
+    <Row>
+      <Cell>④操作系统：银河麒麟桌面操作系统V10；</Cell>
+      <Cell>2</Cell>
+      <Cell>—</Cell>
+      <Cell>4</Cell>
+      <Cell>交换机</Cell>
+    </Row>
+    <Row>
+      <Cell>①交换容量：最大交换容量≥1.2Tbps；②包转发率：最大包转发率≥500Mpps；③网络适配器：万兆光口（含光模块）≥40个，网络交换芯片在最新的《名录》中；④电源：冗余电源，支持热插拔；⑤产品符合最新的《名录》要求。</Cell>
+      <Cell>产品名称：</Cell>
+      <Cell>UNIS S6600XP-54XG-EI-G；</Cell>
+      <Cell>1</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>计算机硬件资源利用需求</Cell>
+      <Cell>本软件无需特殊的计算机硬件资源利用要求。</Cell>
+      <Cell>计算机软件需求</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_63" type="other" title="计算机软件需求一览表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>软件项名称</Cell>
+      <Cell>版本型号</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>云或虚拟化平台</Cell>
+      <Cell>银河麒麟云平台软件V5；</Cell>
+      <Cell>—</Cell>
+      <Cell>2</Cell>
+      <Cell>操作系统</Cell>
+    </Row>
+    <Row>
+      <Cell>服务器操作系统：</Cell>
+      <Cell>银河麒麟服务器操作系统（国防版）V10,</Cell>
+      <Cell>台式机/笔记本操作系统：</Cell>
+      <Cell>银河麒麟桌面操作系统（国防版）V10。</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>数据库</Cell>
+      <Cell>达梦数据库管理系统V8.1.1</Cell>
+      <Cell>—</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>办公软件</Cell>
+      <Cell>金山麒麟WPS办公软件V11</Cell>
+      <Cell>—</Cell>
+      <Cell>计算机通信需求</Cell>
+      <Cell>计算机网络支持TCP/IP协议。经过正确连接与配置后，能够为计算机及在其上运行的指控软件提供稳定可靠的通信网络。</Cell>
+    </Row>
+    <Row>
+      <Cell>设计和实现约束/ZZSJHQZHFW-YS</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_64" type="other" title="设计与构造的约束" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>软件设计与实现遵循的标准</Cell>
+      <Cell>GJB438C-2021 军用软件开发文档通用要求</Cell>
+    </Headers>
+    <Row>
+      <Cell>GJB5235-2004 军用软件配置管理</Cell>
+      <Cell>软件开发原则</Cell>
+      <Cell>采用面向对象、面向服务的开发方法</Cell>
+      <Cell>编程语言及规则</Cell>
+      <Cell>前端开发采用HTML+JS开发语言，遵循W3C标准协议，符合HTML开发规范；后端采用Java、Python开发语言，符合Java、Python编码规范；界面设计符合界面设计规范；软件集成遵循服务集成规范、数据集成规范、界面集成规范</Cell>
+    </Row>
+    <Row>
+      <Cell>开发工具及环境要求</Cell>
+      <Cell>开发工具：VsCode、idea、WebStorm、JDK、Node</Cell>
+      <Cell>开发环境：X86架构银河麒麟操作系统</Cell>
+      <Cell>人员相关需求/ZZSJHQZHFW-RY</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_65" type="other" title="人员需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>人员对象</Cell>
+      <Cell>技术水平</Cell>
+      <Cell>1</Cell>
+      <Cell>系统开发人员</Cell>
+    </Headers>
+    <Row>
+      <Cell>熟练掌握系统需求分析、设计、编码、测试方法，并熟练使用WebStorm、Vscode、IntelliJ IEDA、DM8、docker等开发工具和对应开发语言。</Cell>
+      <Cell>2</Cell>
+      <Cell>系统部署人员</Cell>
+      <Cell>熟悉系统流程化部署工具，能够支持对系统进行快速部署，并能够快速解决部署中遇到的各种部署问题。</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据保障人员</Cell>
+      <Cell>熟练掌握数据库基本操作和相关信息系统软件基本操作；了解相关业务数据，并能够进行数据转换、数据服务开发和数据产品制作，能够满足系统使用人员的数据使用需求。</Cell>
+      <Cell>4</Cell>
+      <Cell>系统运维人员</Cell>
+      <Cell>熟悉银河麒麟操作系统的一般操作使用以及达梦数据库、WPS办公软件的基本管理维护功能，能够熟练操作使用信息系统软件，熟悉各类型系统运维工具，能够对系统的状态进行运维保证。</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>系统使用人员</Cell>
+      <Cell>通过系统培训，能够熟悉系统的操作过程；熟悉相关业务流程。</Cell>
+      <Cell>训练相关需求/ZZSJHQZHFW-XL</Cell>
+      <Cell>开发方在开发方或需方现场对系统软件的操作人员进行软件的使用培训；在需方进行培训时，需方提供培训教室及培训所需的计算机设备；在开发方进行培训时，开发方提供培训教室及培训所需的计算机设备；开发方提供培训教师和培训教材。</Cell>
+    </Row>
+    <Row>
+      <Cell>a) 培训所达到的目标：使用户熟悉了解系统设计原理，全面掌握系统软件的操作使用、常见故障排除等基本理论和使用方法，为用户培养系统软件使用、维护方面骨干人员。</Cell>
+      <Cell>b)培训内容：系统原理、系统安装、配置、使用、管理和维护。</Cell>
+      <Cell>c)培训项目：数据基础应用系统软件培训。</Cell>
+      <Cell>d)培训科目：数据获取、数据转换。</Cell>
+      <Cell>e)培训对象与人数：值勤参谋、运维保障人员，集中培训人数每次不少于20人。</Cell>
+    </Row>
+    <Row>
+      <Cell>f)培训时间/频次：集中培训次数不少于2次，培训时间共不少于3天。</Cell>
+      <Cell>g)培训材料:20套。</Cell>
+      <Cell>综合保障需求/ZZSJHQZHFW-BZ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_66" type="other" title="软件保障需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>保障需求</Cell>
+      <Cell>保障设备</Cell>
+      <Cell>保障人员</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>软件故障排查</Cell>
+      <Cell>便携机，网络调试助手</Cell>
+      <Cell>部署运维人员</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>软件升级</Cell>
+      <Cell>光驱，软件安装盘</Cell>
+      <Cell>软件开发人员</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>开发方应提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。质保期内提供7×24小时在线技术支持，派驻售后人员能按照技术总体单位、用户单位和使用总体单位要求在24小时内提供现场技术支持，并排除故障。如派驻人员无法解决，乙方须按照甲方要求，增派技术力量予以解决。</Cell>
+      <Cell>系统交付后应按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Cell>
+      <Cell>包装需求/ZZSJHQZHFW-BZ</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_67" type="modification" title="包装需求表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>软件名称</Cell>
+      <Cell>数量</Cell>
+      <Cell>包装标记</Cell>
+      <Cell>说明</Cell>
+      <Cell>1</Cell>
+      <Cell>数据基础应用软件</Cell>
+      <Cell>1</Cell>
+    </Headers>
+    <Row>
+      <Cell>光盘CD-JCYY-RJ</Cell>
+      <Cell>依据用户手册进行安装</Cell>
+      <Cell>2</Cell>
+      <Cell>数据基础应用与总体集成服务项目建设文档及相关文件资料</Cell>
+      <Cell>1</Cell>
+      <Cell>光盘CD-JCYY-WD</Cell>
+      <Cell>电子版</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>数据基础应用与总体集成服务项目建设文档及相关文件资料</Cell>
+      <Cell>1</Cell>
+      <Cell>-</Cell>
+      <Cell>纸质版</Cell>
+      <Cell>其他需求/ZZSJHQZHFW-QT</Cell>
+      <Cell>无其他特殊需求。</Cell>
+      <Cell>需求的优先顺序和关键程度/ZZSJHQZHFW-YXHGJ</Cell>
+      <Cell>a) 需求的优先顺序分为高、中、低。其中高优先级是指涉及的软件功能需求，直接影响其他软件开发；中优先级是指涉及软件核心功能点或主流程的需求，直接关系到产品能否满足最基本的使用要求以及对软件功能有补充和完善作用的需求，关系到软件功能完整性；低优先级是指对软件功能影响小，是对用户体验的细微改进；</Cell>
+    </Row>
+    <Row>
+      <Cell>b)需求的关键性分为重要、一般。其中重要是指软件某些特性在可预见的合理范围内变化将显著影响软件安全性、保密性和相关质量特性（容错性、稳定性、适应性、恢复性）；一般是指影响用户对软件功能、性能或后续使用过程满意的特性，如果不满足将导致软件不能完成主要任务。</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_68" type="other" title="需求的优先顺序和关键性" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求名称/标识</Cell>
+      <Cell>优先顺序</Cell>
+      <Cell>关键性</Cell>
+      <Cell>分系统能力需求/NL</Cell>
+    </Headers>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-GN-SJHQ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>数据获取能力</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>所有功能标识</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>精准数据获取/ZZSJHQZHFW-GN-SJHQ-JZZZSJHQ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>所有子功能标识</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>静态数据/ZZSJHQZHFW-GN-SJHQ-JZZZSJHQ-JTSJ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>动态报送数据/ZZSJHQZHFW-GN-SJHQ-JZZZSJHQ-DTBSSJ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>特色数据/ZZSJHQZHFW-GN-SJHQ-JZZZSJHQ-TSSJ</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>实时数据/ZZSJHQZHFW-GN-SJHQ-JZZZSJHQ-SSSJ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>通用数据引接/ZZSJHQZHFW-GN-SJHQ-TYZZSJYJ</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>所有子子功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>消息队列数据/ZZSJHQZHFW-GN-SJHQ-TYZZSJYJ-XXDLSJ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>结构化数据/ZZSJHQZHFW-GN-SJHQ-TYZZSJYJ-JGHSJ</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>非结构化数据/ZZSJHQZHFW-GN-SJHQ-TYZZSJYJ-FJGHSJ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据转换/ZZSJHQZHFW-GN-SJZH</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据转换能力</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>所有功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>数据结构转换/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>数据协议解析/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-SJXYJX</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据预处理/ZZSJHQZHFW-GN-SJZH-ZZSJJGZH-SJYCL</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>典型应用专题库管理/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>所有子功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>专题库模型构建/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-ZTKMXGJ</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>处理结果转储/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL-CLJGZC</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据组织发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>所有子功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>数据抽取组织/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-SJCQZZ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据封装发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-SJFZFB</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>数据订阅推送/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>所有子功能标识</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>数据按需订阅/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS-SJAXDY</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>数据主动推送/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB-SJZDTS</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>分系统性能需求/ZZSJHQZHFW-XN</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>系统容量估算</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>性能指标</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-XN-ZZSJHQ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>数据转换/ZZSJHQZHFW-XN-ZZSJZH</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>分系统外部接口需求/ZZSJHQZHFW-JK-WB</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>接口标识和接口图</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>与能力分析评估应用交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>与应用集成框架与运维体系交互接口/ZZSJHQZHFW-JK-WB-YYJCKJYYWTX</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>与某数据中台交互接口/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>与用户人机交互接口/ZZSJHQZHFW-JK-WB-RJJH</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>分系统内部接口需求/ZZSJHQZHFW-JK-NB</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>数据获取内部接口/ZZSJHQZHFW-JK-NB-ZZSJHQ</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>数据转换内部接口/ZZSJHQZHFW-JK-NB-ZZSJZH</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>分系统内部数据需求/ZZSJHQZHFW-SJ</Cell>
+    </Row>
+    <Row>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>业务数据需求/ZZSJHQZHFW-SJ-YW</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>适应性需求/ZZSJHQZHFW-SY</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>保密性需求/ZZSJHQZHFW-BM</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>重要</Cell>
+      <Cell>安全性需求/ZZSJHQZHFW-AQ</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>分系统环境适应性需求/ZZSJHQZHFW-SYX</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>其他质量特性/ZZSJHQZHFW-ZLTX</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+    </Row>
+    <Row>
+      <Cell>计算机资源需求/ZZSJHQZHFW-ZY</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>计算机硬件需求</Cell>
+      <Cell>高</Cell>
+    </Row>
+    <Row>
+      <Cell>重要</Cell>
+      <Cell>计算机硬件资源使用需求</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>计算机软件需求</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+      <Cell>计算机通信需求</Cell>
+      <Cell>高</Cell>
+      <Cell>重要</Cell>
+    </Row>
+    <Row>
+      <Cell>设计和实现约束/ZZSJHQZHFW-YS</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>人员相关需求/ZZSJHQZHFW-RY</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>训练相关需求/ZZSJHQZHFW-XL</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>软件保障需求/ZZSJHQZHFW-BZH</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>包装需求/ZZSJHQZHFW-BZ</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+    </Row>
+    <Row>
+      <Cell>其他需求</Cell>
+      <Cell>中</Cell>
+      <Cell>一般</Cell>
+      <Cell>需求的优先顺序和关键程度/ZZSJHQZHFW-YXHGJ</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>一般</Cell>
+      <Cell>合格性规定</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_69" type="qualification" title="合格性规定" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求名称/标识</Cell>
+      <Cell>合格性方法</Cell>
+      <Cell>测试类</Cell>
+      <Cell>合格性级别</Cell>
+    </Headers>
+    <Row>
+      <Cell>3.2</Cell>
+      <Cell>分系统能力需求</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1</Cell>
+      <Cell>数据获取/ZZSJHQZHFW-GN-SJHQ</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.1</Cell>
+      <Cell>数据获取能力</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.2</Cell>
+      <Cell>所有功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.3</Cell>
+      <Cell>结构化数据归集/ZZSJHQZHFW-GN-SJHQ-JGHSJGJ</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.4</Cell>
+      <Cell>半结构化数据归集/ZZSJHQZHFW-GN-SJHQ-BJGHSJGJ</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.5</Cell>
+      <Cell>非结构化数据归集/ZZSJHQZHFW-GN-SJHQ-FJGHSJGJ</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.6</Cell>
+      <Cell>流式数据归集/ZZSJHQZHFW-GN-SJHQ-LSSJGJ</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2</Cell>
+      <Cell>数据转换/ZZSJHQZHFW-GN-SJZH</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.1</Cell>
+      <Cell>数据转换能力</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.2</Cell>
+      <Cell>所有功能标识</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.3</Cell>
+      <Cell>数据结构转换/ ZZSJHQZHFW-GN-SJZH-ZZSJJGZH</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.4</Cell>
+      <Cell>典型应用专题库管理/ZZSJHQZHFW-GN-SJZH-DXYYZTKGL</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.5</Cell>
+      <Cell>数据组织发布/ZZSJHQZHFW-GN-SJZH-ZZSJZZFB</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.6</Cell>
+      <Cell>数据订阅推送/ZZSJHQZHFW-GN-SJZH-ZZSJDYTS</Cell>
+      <Cell>演示、测试、审查</Cell>
+      <Cell>静态测试、功能测试</Cell>
+      <Cell>部件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.3</Cell>
+      <Cell>分系统性能需求/ZZSJHQZHFW-XN</Cell>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3</Cell>
+      <Cell>分系统外部接口需求/ZZSJHQZHFW-JK-WB</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.1</Cell>
+      <Cell>接口标识和接口图</Cell>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.2</Cell>
+      <Cell>与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.3</Cell>
+      <Cell>与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.4</Cell>
+      <Cell>与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.5</Cell>
+      <Cell>与能力分析评估交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.6</Cell>
+      <Cell>与应用集成框架与运维体系交互接口/JCYY-JK-WB-YYJCKJYYWTX</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.7</Cell>
+      <Cell>与指挥信息系统交互接口/ZZSJHQZHFW-JK-WB-ZHXXXT</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.8</Cell>
+      <Cell>与某信息服务平台交互接口/ZZSJHQZHFW-JK-WB-QJXXPT</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.9</Cell>
+      <Cell>与数据中台交互接/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.10</Cell>
+      <Cell>与上下级某典型应用接口/ZZSJHQZHFW-JK-WB-SXJDXYY</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.11</Cell>
+      <Cell>与地方系统交互接口/ZZSJHQZHFW-JK-WB-DFXT</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.12</Cell>
+      <Cell>与用户人机交互接口/ZZSJHQZHFW-JK-WB-ZBCC-RJJH</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.13</Cell>
+      <Cell>与数据库系统接口/ZZSJHQZHFW-JK-WB-SJK</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.14</Cell>
+      <Cell>与文件系统接口/ZZSJHQZHFW-JK-WB-WJXT</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.4</Cell>
+      <Cell>分系统内部接口需求/ZZSJHQZHFW-JK-NB</Cell>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>系统</Cell>
+    </Row>
+    <Row>
+      <Cell>3.4.1</Cell>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+      <Cell>3.4.2</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>接口测试</Cell>
+      <Cell>系统</Cell>
+      <Cell>3.5</Cell>
+      <Cell>分系统内部数据需求/ZZSJHQZHFW-SJ</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.6</Cell>
+      <Cell>适应性需求/ZZSJHQZHFW-SY</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.7</Cell>
+      <Cell>保密性需求/ZZSJHQZHFW-BM</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.8</Cell>
+      <Cell>安全性需求/ZZSJHQZHFW-AQ</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.9</Cell>
+      <Cell>分系统环境适应性需求/ZZSJHQZHFW-SYX</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.10</Cell>
+      <Cell>其他质量特性/ZZSJHQZHFW-ZLTX</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.11</Cell>
+      <Cell>计算机资源需求/ZZSJHQZHFW-ZY</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.11.1</Cell>
+      <Cell>计算机硬件需求</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.11.2</Cell>
+      <Cell>计算机硬件资源使用需求</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.11.3</Cell>
+      <Cell>计算机软件需求</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.11.4</Cell>
+      <Cell>计算机通信需求</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.12</Cell>
+      <Cell>设计和实现约束/ZZSJHQZHFW-YS</Cell>
+    </Row>
+    <Row>
+      <Cell>审查、测试</Cell>
+      <Cell>非功能性测试</Cell>
+      <Cell>—</Cell>
+      <Cell>3.13</Cell>
+      <Cell>人员相关需求/ZZSJHQZHFW-RY</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.14</Cell>
+      <Cell>训练相关需求/ZZSJHQZHFW-XL</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.15</Cell>
+      <Cell>软件保障需求/ZZSJHQZHFW-BZH</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.16</Cell>
+      <Cell>包装需求/ZZSJHQZHFW-BZ</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.17</Cell>
+      <Cell>其他需求</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>3.18</Cell>
+      <Cell>需求的优先顺序和关键程度/ZZSJHQZHFW-YXHGJ</Cell>
+    </Row>
+    <Row>
+      <Cell>审查</Cell>
+      <Cell>—</Cell>
+      <Cell>—</Cell>
+      <Cell>需求可追踪性</Cell>
+      <Cell>本文档的上级文档为《xx系统规格说明》。</Cell>
+    </Row>
+    <Row>
+      <Cell>正向追踪</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_70" type="other" title="正向追踪表" section="">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>上级文档被追踪内容的名称/标识</Cell>
+      <Cell>本文档中被追踪内容的名称/标识</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="1" title="范围" start_line="2418" />
+  <Section section_id="1" title="范围" start_line="2419">
+    <Paragraph line="2420">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2422" />
+  <Section section_id="1.1" title="标识" start_line="2423">
+    <Paragraph line="2424">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="2426" />
+  <Section section_id="1.2" title="分系统概述" start_line="2427">
+    <Paragraph line="2428">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2.1" title="系统用途" start_line="2430" />
+  <Section section_id="1.2.1" title="分系统用途" start_line="2431">
+    <Paragraph line="2432">追踪</Paragraph>
+    <Paragraph line="2434">1.2.2系统的一般特性</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="分系统的一般特性" start_line="2435">
+    <Paragraph line="2436">追踪</Paragraph>
+    <Paragraph line="2438">1.2.3项目的需方、用户方和保障机构</Paragraph>
+  </Section>
+  <Section section_id="1.2.3" title="项目的需方、用户方和保障机构" start_line="2439">
+    <Paragraph line="2440">追踪</Paragraph>
+    <Paragraph line="2442">1.2.4当前和计划的运行现场</Paragraph>
+  </Section>
+  <Section section_id="1.2.4" title="当前和计划的运行现场" start_line="2443">
+    <Paragraph line="2444">追踪</Paragraph>
+    <Paragraph line="2446">1.3文档概述</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2447">
+    <Paragraph line="2448">追踪</Paragraph>
+    <Paragraph line="2450">2引用文档</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2451">
+    <Paragraph line="2452">追踪</Paragraph>
+    <Paragraph line="2454">3需求</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="2455">
+    <Paragraph line="2456">追踪</Paragraph>
+    <Paragraph line="2458">3.1要求的状态和方式</Paragraph>
+  </Section>
+  <Section section_id="3.1" title="要求的状态和方式" start_line="2459">
+    <Paragraph line="2460">追踪</Paragraph>
+    <Paragraph line="2462">3.2系统能力需求</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="分系统能力需求" start_line="2463">
+    <Paragraph line="2464">追踪</Paragraph>
+    <Paragraph line="2466">3.2.1某服务/JCYY-GN-SJHQZHFW</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="分系统能力需求" start_line="2467">
+    <Paragraph line="2468">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.1.1" title="某服务能力" start_line="2470">
+    <Paragraph line="2471">/JCYY-GN-SJHQZHFWNL</Paragraph>
+  </Section>
+  <Section section_id="3.2" title="分系统能力需求" start_line="2472">
+    <Paragraph line="2473">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.1.2" title="所有功能标识" start_line="2475" />
+  <Section section_id="3.2" title="分系统能力需求" start_line="2476">
+    <Paragraph line="2477">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.1.3" title="数据获取" start_line="2479">
+    <Paragraph line="2480">/JCYY-GN-SJHQ</Paragraph>
+  </Section>
+  <Section section_id="3.2.1" title="数据获取/ZZSJHQZHFW-GN-SJHQ" start_line="2481" req_id="ZZSJHQZHFW-GN-SJHQ">
+    <Paragraph line="2482">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.1.4" title="数据转换" start_line="2484">
+    <Paragraph line="2485">/JCYY-GN-SJZH</Paragraph>
+  </Section>
+  <Section section_id="3.2.2" title="数据转换/ZZSJHQZHFW-GN-SJZH" start_line="2486" req_id="ZZSJHQZHFW-GN-SJZH">
+    <Paragraph line="2487">追踪</Paragraph>
+    <Paragraph line="2489">3.2.2数据统算/JCYY-GN-ZZSJTS</Paragraph>
+    <Paragraph line="2491">不涉及</Paragraph>
+    <Paragraph line="2493">3.2.3通用智能应用JCYY-GN-TYZNYY</Paragraph>
+    <Paragraph line="2495">不涉及</Paragraph>
+    <Paragraph line="2497">3.2.4应用集成框架与运维体系/JCYY-GN-JCYYKJYYWTX</Paragraph>
+    <Paragraph line="2499">不涉及</Paragraph>
+    <Paragraph line="2501">3.2.5态势数据组织应用/JCYY-GN-TSSJZZYY</Paragraph>
+    <Paragraph line="2503">不涉及</Paragraph>
+    <Paragraph line="2505">3.2.6信息查询应用/JCYY-GN-XXCXYY</Paragraph>
+    <Paragraph line="2507">不涉及</Paragraph>
+    <Paragraph line="2509">3.2.7能力分析评估应用/JCYY-GN-NLFXPGYY</Paragraph>
+    <Paragraph line="2511">不涉及</Paragraph>
+    <Paragraph line="2513">3.2.8系统性能需求</Paragraph>
+    <Paragraph line="2514">3.2.4分系统性能需求/ZZSJHQZHFW-XN</Paragraph>
+    <Paragraph line="2515">追踪</Paragraph>
+    <Paragraph line="2517">3.3系统外部接口需求</Paragraph>
+    <Paragraph line="2519">不涉及</Paragraph>
+    <Paragraph line="2521">3.4系统内部接口需求</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="分系统外部接口需求" start_line="2522">
+    <Paragraph line="2523">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.3.1" title="接口标识与接口图" start_line="2524" />
+  <Section section_id="3.3.2" title="与数据通算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS" start_line="2525" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.3" title="与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY" start_line="2526" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.4" title="与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY" start_line="2527" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.5" title="与能力分析评估应用交互接口/ZZSJHQZHFW-JK-WB-NLFXPGYY" start_line="2528" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.6" title="与应用集成框架与运维体系交互接口/ZZSJHQZHFW-JK-WB-YYJCKJYYWTX" start_line="2529" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.7" title="与某数据中台交互接口/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT" start_line="2530" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.3.8" title="与用户人机交互接口/ZZSJHQZHFW-JK-WB-YHRJ" start_line="2531" req_id="ZZSJHQZHFW-JK-WB" />
+  <Section section_id="3.5" title="系统内部数据需求" start_line="2533">
+    <Paragraph line="2534">3.5分系统内部数据需求/ZZSJHQZHFW-SJ</Paragraph>
+    <Paragraph line="2535">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.5.1" title="业务数据需求/ZZSJHQZHFW-SJ-YW" start_line="2537" req_id="ZZSJHQZHFW-SJ-YW">
+    <Paragraph line="2538">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.5.2" title="数据获取内部数据/ZZSJHQZHFW-SJ-ZZSJHQ" start_line="2540" req_id="ZZSJHQZHFW-SJ-ZZSJHQ">
+    <Paragraph line="2541">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.5.3" title="数据转换内部数据/ZZSJHQZHFW-SJ-ZZSJZH" start_line="2543" req_id="ZZSJHQZHFW-SJ-ZZSJZH">
+    <Paragraph line="2544">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="2546">
+    <Paragraph line="2547">3.6适应性需求/ZZSJHQZHFW-SY</Paragraph>
+    <Paragraph line="2548">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="保密性需求" start_line="2550">
+    <Paragraph line="2551">3.7保密性需求/ZZSJHQZHFW-BM</Paragraph>
+    <Paragraph line="2552">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="安全性需求" start_line="2554">
+    <Paragraph line="2555">3.8安全性需求/ZZSJHQZHFW-AQ</Paragraph>
+    <Paragraph line="2556">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="系统环境适用性需求" start_line="2558">
+    <Paragraph line="2559">3.9分系统环境适应性需求/ZZSJHQZHFW-SYX</Paragraph>
+    <Paragraph line="2560">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="其他质量特性需求" start_line="2562">
+    <Paragraph line="2563">3.10其他质量特性/ZZSJHQZHFW-ZLTX</Paragraph>
+    <Paragraph line="2564">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="计算机资源需求" start_line="2566">
+    <Paragraph line="2567">3.11计算机资源需求/ZZSJHQZHFW-ZY</Paragraph>
+    <Paragraph line="2568">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.1" title="计算机硬件需求" start_line="2570" />
+  <Section section_id="3.11.1" title="计算机硬件需求" start_line="2571">
+    <Paragraph line="2572">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.2" title="计算机硬件资源利用需求" start_line="2574" />
+  <Section section_id="3.11.2" title="计算机硬件资源利用需求" start_line="2575">
+    <Paragraph line="2576">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.3" title="计算机软件需求" start_line="2578" />
+  <Section section_id="3.11.3" title="计算机软件需求" start_line="2579">
+    <Paragraph line="2580">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.4" title="计算机通信需求" start_line="2582" />
+  <Section section_id="3.11.4" title="计算机通信需求" start_line="2583">
+    <Paragraph line="2584">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2586" />
+  <Section section_id="3.12" title="设计和实现约束/ZZSJHQZHFW-YS" start_line="2587">
+    <Paragraph line="2588">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求" start_line="2590" />
+  <Section section_id="3.13" title="人员相关需求/ZZSJHQZHFW-RY" start_line="2591">
+    <Paragraph line="2592">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="训练相关需求" start_line="2594" />
+  <Section section_id="3.14" title="训练相关需求/ZZSJHQZHFW-XL" start_line="2595">
+    <Paragraph line="2596">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="2598" />
+  <Section section_id="3.15" title="软件保障需求/ZZSJHQZHFW-RJBZ" start_line="2599">
+    <Paragraph line="2600">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="包装需求" start_line="2602" />
+  <Section section_id="3.16" title="包装需求/ZZSJHQZHFW-BZ" start_line="2603">
+    <Paragraph line="2604">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="其他需求" start_line="2606" />
+  <Section section_id="3.17" title="其他需求" start_line="2607">
+    <Paragraph line="2608">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="2610" />
+  <Section section_id="3.18" title="需求的优先顺序和关键性/ZZSJHQZHFW-YXHGJ" start_line="2611">
+    <Paragraph line="2612">追踪</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="2614" />
+  <Section section_id="4" title="合格性规定" start_line="2615">
+    <Paragraph line="2616">追踪</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2618" />
+  <Section section_id="5" title="需求可追踪性" start_line="2619">
+    <Paragraph line="2620">追踪</Paragraph>
+  </Section>
+  <Section section_id="5.1" title="正向追溯" start_line="2622">
+    <Paragraph line="2624">不涉及</Paragraph>
+  </Section>
+  <Section section_id="5.2" title="逆向追溯" start_line="2626">
+    <Paragraph line="2628">不涉及</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2630">
+    <Paragraph line="2632">不涉及</Paragraph>
+    <Paragraph line="2633">逆向追踪</Paragraph>
+  </Section>
+  <Table table_id="T_71" type="other" title="逆向追踪表" section="6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>本文档中被追踪内容的名称/标识</Cell>
+      <Cell>上级文档被追踪内容的名称/标识</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="1" title="范围" start_line="2640" />
+  <Section section_id="1" title="范围" start_line="2641">
+    <Paragraph line="2642">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="2644" />
+  <Section section_id="1.1" title="标识" start_line="2645">
+    <Paragraph line="2646">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="分系统概述" start_line="2648" />
+  <Section section_id="1.2" title="系统概述" start_line="2649">
+    <Paragraph line="2650">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2.1" title="分系统用途" start_line="2652" />
+  <Section section_id="1.2.1" title="系统用途" start_line="2653">
+    <Paragraph line="2654">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="分系统的一般特性" start_line="2656" />
+  <Section section_id="1.2.2" title="系统的一般特性" start_line="2657">
+    <Paragraph line="2658">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2.3" title="项目的需方、用户方和保障机构" start_line="2660" />
+  <Section section_id="1.2.3" title="项目的需方、用户方和保障机构" start_line="2661">
+    <Paragraph line="2662">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.2.4" title="当前和计划的运行现场" start_line="2664" />
+  <Section section_id="1.2.4" title="当前和计划的运行现场" start_line="2665">
+    <Paragraph line="2666">追踪</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="2668" />
+  <Section section_id="1.3" title="文档概述" start_line="2669">
+    <Paragraph line="2670">追踪</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="2672" />
+  <Section section_id="2" title="引用文档" start_line="2673">
+    <Paragraph line="2674">追踪</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="2676" />
+  <Section section_id="3" title="需求" start_line="2677">
+    <Paragraph line="2678">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.1" title="要求的状态和方式" start_line="2680" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="2681">
+    <Paragraph line="2682">追踪</Paragraph>
+    <Paragraph line="2684">3.2分系统能力需求</Paragraph>
+    <Paragraph line="2685">3.2系统能力需求</Paragraph>
+    <Paragraph line="2686">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.1" title="数据获取/ZZSJHQZHFW-GN-SJHQ" start_line="2688" req_id="ZZSJHQZHFW-GN-SJHQ" />
+  <Section section_id="3.2.1.3" title="数据获取" start_line="2689">
+    <Paragraph line="2690">/JCYY-GN-SJHQ</Paragraph>
+    <Paragraph line="2691">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.2.2" title="数据转换/ZZSJHQZHFW-GN-SJZH" start_line="2693" req_id="ZZSJHQZHFW-GN-SJZH" />
+  <Section section_id="3.2.1.4" title="数据转换" start_line="2694">
+    <Paragraph line="2695">/JCYY-GN-SJZH</Paragraph>
+    <Paragraph line="2696">追踪</Paragraph>
+    <Paragraph line="2698">3.2.4分系统性能需求/ZZSJHQZHFW-GN-XN</Paragraph>
+    <Paragraph line="2699">3.2.8系统性能需求/JCYY-XN</Paragraph>
+    <Paragraph line="2700">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="分系统外部接口需求/ZZSJHQZHFW-GN-JK-WB" start_line="2702" req_id="ZZSJHQZHFW-GN-JK">
+    <Paragraph line="2703">3.4系统内部接口需求/JCYY-JK-NB</Paragraph>
+    <Paragraph line="2704">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.3.1" title="接口标识与接口图" start_line="2706">
+    <Paragraph line="2707">追踪</Paragraph>
+    <Paragraph line="2709">3.3.2与数据统算交互接口/ZZSJHQZHFW-JK-WB-ZZSJTS</Paragraph>
+    <Paragraph line="2710">追踪</Paragraph>
+    <Paragraph line="2712">3.3.3与通用智能应用交互接口/ZZSJHQZHFW-JK-WB-TYZNYY</Paragraph>
+    <Paragraph line="2713">追踪</Paragraph>
+    <Paragraph line="2715">3.3.4与态势数据组织应用交互接口/ZZSJHQZHFW-JK-WB-TSSJZZYY</Paragraph>
+    <Paragraph line="2716">追踪</Paragraph>
+    <Paragraph line="2718">3.3.5与能力分析评估交互接口/ZZSJHQZHFW-JK-WB-NLFXPG</Paragraph>
+    <Paragraph line="2719">追踪</Paragraph>
+    <Paragraph line="2721">3.3.6与应用集成框架与运维体系交互接口/JCYY-JK-WB-YYJCKJYYWTX</Paragraph>
+    <Paragraph line="2722">追踪</Paragraph>
+    <Paragraph line="2724">3.3.7与指挥信息系统交互接口/ZZSJHQZHFW-JK-WB-ZHXXXT</Paragraph>
+    <Paragraph line="2725">追踪</Paragraph>
+    <Paragraph line="2727">3.3.8与某信息服务平台交互接口/ZZSJHQZHFW-JK-WB-QJXXPT</Paragraph>
+    <Paragraph line="2728">追踪</Paragraph>
+    <Paragraph line="2730">3.3.9与数据中台交互接/ZZSJHQZHFW-JK-WB-ZBZQLZZZSJZT</Paragraph>
+    <Paragraph line="2731">追踪</Paragraph>
+    <Paragraph line="2733">3.3.10与地方系统交互接口/ZZSJHQZHFW-JK-WB-DFXT</Paragraph>
+    <Paragraph line="2734">追踪</Paragraph>
+    <Paragraph line="2736">3.3.11与用户人机交互接口/ZZSJHQZHFW-JK-WB-ZBCC-RJJH</Paragraph>
+    <Paragraph line="2737">追踪</Paragraph>
+    <Paragraph line="2739">3.3.12与数据库系统接口/ZZSJHQZHFW-JK-WB-SJK</Paragraph>
+    <Paragraph line="2740">追踪</Paragraph>
+    <Paragraph line="2742">3.3.13与文件系统接口/ZZSJHQZHFW-JK-WB-WJXT</Paragraph>
+    <Paragraph line="2743">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.4" title="分系统内部接口需求/ZZSJHQZHFW-JK-NB" start_line="2745" req_id="ZZSJHQZHFW-JK-NB">
+    <Paragraph line="2747">不涉及</Paragraph>
+  </Section>
+  <Section section_id="3.4.1" title="数据获取内部接口/ZZSJHQZHFW-JK-NB-ZZSJHQ" start_line="2749" req_id="ZZSJHQZHFW-JK-NB">
+    <Paragraph line="2750">不涉及</Paragraph>
+  </Section>
+  <Section section_id="3.4.2" title="数据转换内部接口/ZZSJHQZHFW-JK-NB-ZZSJZH" start_line="2752" req_id="ZZSJHQZHFW-JK-NB">
+    <Paragraph line="2753">不涉及</Paragraph>
+  </Section>
+  <Section section_id="3.5" title="分系统内部数据需求/ZZSJHQZHFW-SJ" start_line="2755" />
+  <Section section_id="3.5" title="系统内部数据需求" start_line="2756">
+    <Paragraph line="2757">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求/ZZSJHQZHFW-GN-SY" start_line="2759" req_id="ZZSJHQZHFW-GN-SY" />
+  <Section section_id="3.6" title="适应性需求" start_line="2760">
+    <Paragraph line="2761">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="保密性需求/ZZSJHQZHFW-GN-BM" start_line="2763" req_id="ZZSJHQZHFW-GN-BM" />
+  <Section section_id="3.7" title="保密性需求" start_line="2764">
+    <Paragraph line="2765">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="安全性需求/ZZSJHQZHFW-GN-AQ" start_line="2767" req_id="ZZSJHQZHFW-GN-AQ" />
+  <Section section_id="3.8" title="安全性需求" start_line="2768">
+    <Paragraph line="2769">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="分系统环境适应性需求/ZZSJHQZHFW-GN-SYX" start_line="2771" req_id="ZZSJHQZHFW-GN-SYX" />
+  <Section section_id="3.9" title="系统环境实用性需求" start_line="2772">
+    <Paragraph line="2773">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="其他质量特性/ZZSJHQZHFW-GN-ZLTX" start_line="2775" req_id="ZZSJHQZHFW-GN-ZLTX" />
+  <Section section_id="3.10" title="其他质量特性需求" start_line="2776">
+    <Paragraph line="2777">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="计算机资源需求/ZZSJHQZHFW-ZY" start_line="2779" />
+  <Section section_id="3.11" title="计算机资源需求" start_line="2780">
+    <Paragraph line="2781">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.1" title="计算机硬件需求" start_line="2783" />
+  <Section section_id="3.11.1" title="计算机硬件需求" start_line="2784">
+    <Paragraph line="2785">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.2" title="计算机硬件资源利用需求" start_line="2787" />
+  <Section section_id="3.11.2" title="计算机硬件资源利用需求" start_line="2788">
+    <Paragraph line="2789">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.3" title="计算机软件需求" start_line="2791" />
+  <Section section_id="3.11.3" title="计算机软件需求" start_line="2792">
+    <Paragraph line="2793">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.11.4" title="计算机通信需求" start_line="2795" />
+  <Section section_id="3.11.4" title="计算机通信需求" start_line="2796">
+    <Paragraph line="2797">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和实现约束/ZZSJHQZHFW-YS" start_line="2799" />
+  <Section section_id="3.12" title="设计和构造的约束" start_line="2800">
+    <Paragraph line="2801">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员相关需求/ZZSJHQZHFW-RY" start_line="2803" />
+  <Section section_id="3.13" title="人员需求" start_line="2804">
+    <Paragraph line="2805">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="训练相关需求/ZZSJHQZHFW-XL" start_line="2807" />
+  <Section section_id="3.14" title="训练相关需求" start_line="2808">
+    <Paragraph line="2809">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求/ZZSJHQZHFW-RJBZ" start_line="2811" />
+  <Section section_id="3.15" title="软件保障需求" start_line="2812">
+    <Paragraph line="2813">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="包装需求/ZZSJHQZHFW-BZ" start_line="2815" />
+  <Section section_id="3.16" title="包装需求" start_line="2816">
+    <Paragraph line="2817">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="其他需求" start_line="2819" />
+  <Section section_id="3.17" title="其他需求" start_line="2820">
+    <Paragraph line="2821">追踪</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性/ZZSJHQZHFW-YXHGJ" start_line="2823" />
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="2824">
+    <Paragraph line="2825">追踪</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="2827" />
+  <Section section_id="4" title="合格性规定" start_line="2828">
+    <Paragraph line="2829">追踪</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="2831" />
+  <Section section_id="5" title="需求可追踪性" start_line="2832">
+    <Paragraph line="2833">追踪</Paragraph>
+  </Section>
+  <Section section_id="5.1" title="正向追溯" start_line="2835">
+    <Paragraph line="2837">不涉及</Paragraph>
+  </Section>
+  <Section section_id="5.2" title="逆向追溯" start_line="2839">
+    <Paragraph line="2841">不涉及</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="2843">
+    <Paragraph line="2845">不涉及</Paragraph>
+    <Paragraph line="2846">注释</Paragraph>
+    <Paragraph line="2847">本节无内容。</Paragraph>
+    <Paragraph line="2849">PAGE   \* MERGEFORMAT3</Paragraph>
+  </Section>
+</Document>

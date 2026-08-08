@@ -272,7 +272,8 @@ def generate_qa_for_scenario3(inst, qa_id_counter, scenario_id):
             "doc_values": [{"name": iface_name, "id": canonical_id, "type": iface_type,
                           "sender": sender, "receiver": receiver, "priority": priority}],
             "image_caption": inst.get('image', {}).get('caption', ''),
-            "table_caption": tbl.get('caption', '')
+            "table_caption": tbl.get('caption', ''),
+            "image_path": inst.get('image', {}).get('path', '')
         }
     })
     qa_id_counter[0] += 1
@@ -298,7 +299,8 @@ def generate_qa_for_scenario3(inst, qa_id_counter, scenario_id):
                 "doc_values": [{"name": iface_name, "id": canonical_id, "type": iface_type,
                               "sender": sender, "receiver": receiver, "priority": priority}],
                 "image_caption": inst.get('image', {}).get('caption', ''),
-                "table_caption": tbl.get('caption', '')
+                "table_caption": tbl.get('caption', ''),
+                "image_path": inst.get('image', {}).get('path', '')
             }
         })
         qa_id_counter[0] += 1

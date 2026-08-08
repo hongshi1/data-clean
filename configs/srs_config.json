@@ -1,0 +1,66 @@
+{
+  "model": {
+    "name": "glm-5",
+    "api_url": "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions",
+    "api_key": "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7",
+    "model_name": "ep-glsztk-1778496696841467392",
+    "temperature": 0.1,
+    "max_tokens": 4096
+  },
+  "data": {
+    "outline_dir": "data/srs_outline",
+    "dataset_dir": "data/gjb_438c/parsed_srs_dataset",
+    "output_dir": "data/srs_detection_results"
+  },
+  "tools": {
+    "syntax_checks": [
+      "duplicate_section",
+      "id_split", 
+      "phantom_requirement",
+      "systematic_offset",
+      "coverage",
+      "section_completeness"
+    ],
+    "enable_z3": true,
+    "enable_semantic_check": true,
+    "enable_constraint_extraction": true
+  },
+  "detection": {
+    "syntax_layer": {
+      "enabled": true,
+      "method": "rule_based",
+      "tools": ["srs_lint"]
+    },
+    "semantic_layer": {
+      "enabled": true,
+      "method": "llm_value_compare",
+      "tools": ["srs_search", "srs_read_section", "srs_read_table"],
+      "llm_prompt": "CONSISTENCY_PROMPT"
+    },
+    "logic_layer": {
+      "enabled": true,
+      "method": "z3_solver",
+      "tools": ["srs_z3_check"],
+      "llm_prompt": "EVIDENCE_CHECK_PROMPT"
+    },
+    "report_synthesis": {
+      "enabled": true,
+      "method": "llm_synthesis",
+      "llm_prompt": "REPORT_SYNTHESIS_PROMPT"
+    }
+  },
+  "tips": {
+    "aggregation": [
+      "需求ID可能不一致(SJCS/SJCSKZ/SJSF三个ID可能指同一需求)",
+      "章节号可能系统性偏移(第4章比第3章整体+1)",
+      "图片为OLE嵌入对象，只能通过章节归属关联",
+      "性能参数埋在用例描述表的'动作约束'列中"
+    ],
+    "detection": [
+      "合理差异: 不同设备形态的配置差异(桌面1.5GHz/平板1.2GHz)",
+      "真实矛盾: 同一参数同一位置的不同值(达梦V7.2 vs V7.6)",
+      "编辑错误: copy-paste导致的用例概述内容错位",
+      "逻辑不可能: A≤5且A≥10"
+    ]
+  }
+}

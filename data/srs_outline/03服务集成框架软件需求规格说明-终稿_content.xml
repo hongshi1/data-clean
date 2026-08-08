@@ -1,0 +1,4759 @@
+<Document doc_id="03服务集成框架软件需求规格说明-终稿">
+  <Section section_id="1.1" title="标识" start_line="2">
+    <Paragraph line="3">本文档已被批准的标识号：AZ6932.490.0101 SRS；</Paragraph>
+    <Paragraph line="4">本文档所适用的软件名称为：服务集成框架；</Paragraph>
+    <Paragraph line="5">本文档的版本号为：V1.00.04/2020年12月31日；</Paragraph>
+    <Paragraph line="6">本文档所适用的软件所属系统为：某级信息系统软件。</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="7" />
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="8">
+    <Paragraph line="9">某级信息系统软件按照国产自主可控要求，进行基础软件环境选型，以及应用软件的新研和国产化迁移改造，对功能要素分散、流程独立的业务功能进行整合优化，研制适应不同使用需求、使用场景的软件，实现信息系统软件的融合、型谱优化和业务提能，推动某信息系统软件向“国产化、服务化、轻量化”方向发展。</Paragraph>
+    <Paragraph line="10">某信息服务环境软件是某信息系统软件的重要组成，是连接底层各类硬件信息基础设施与上层各种应用系统的桥梁，通过基础平台融合汇聚底层资源，规范技术体制、支撑体系运行、促进互通互联等，是支撑构建某信息系统的重要支撑，其软件主要部署运行在各级机构的信息处理设备上，提供系统运维、数据运维、信息传输、信息处理、信息展现等功能，支撑应用软件和用户完成开发、集成、运维、运行全流程的使用。</Paragraph>
+    <Paragraph line="11">服务集成框架支撑完成信息服务环境功能域服务管理的功能，部署在各级节点，提供桌面、平板、手持版形态的软件，主要为上层业务服务提供统一的服务开发、注册、发现、调用、监控、负载均衡等功能,支持服务故障迁移，提供二次开发支撑，支持对静态请求的处理，支持开发基于HTTP协议的业务服务。其中，服务开发支撑功能提供桌面版，包括服务工程管理、服务插件开发、调试及交叉编译等功能；服务部署管理功能提供桌面、平板、手持版本，实现服务的注册、更新、销毁；服务运行控制功能提供桌面、平板、手持版本，能够对服务进行启停控制及状态采集；服务信息管理功能提供桌面、平板、手持版本，实现对服务运行状态、资源占用状态的查询；服务访问代理功能提供桌面、平板、手持版本，实现服务的访问路由、访问会话维护、响应转发功能；服务调度功能提供桌面、平板、手持版本，实现服务的发现、负载均衡功能；服务请求处理功能提供桌面、平板、手持版本，实现文件的上传、下载、静态资源请求的处理、消息的推送。</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="12">
+    <Paragraph line="13">需方：某单位；</Paragraph>
+    <Paragraph line="14">使用方：某单位；</Paragraph>
+    <Paragraph line="15">开发方：某单位；</Paragraph>
+    <Paragraph line="16">保障机构：某单位；</Paragraph>
+    <Paragraph line="17">运行方案：本软件外部形态为后台服务，系统开机后，自动启动；</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="18">
+    <Paragraph line="19">在本文档中，第2章列出了本文档中引用的其它文档的信息，第3章详细描述了服务集成框架的各种需求以及实现方式，第4章规定了确认第3章各项需求正确实现的合格性验证方法，第5章描述本文档列出的各项需求与相应的系统需求规格说明文档列出的需求的对应关系。其中，第3章是本文档的主要部分。</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="20" />
+  <Section section_id="2" title="表 SEQ 表 \* ARABIC 1 引用文档" start_line="21">
+    <Paragraph line="22">文档编号</Paragraph>
+    <Paragraph line="23">标题</Paragraph>
+    <Paragraph line="24">修订版本</Paragraph>
+    <Paragraph line="25">修订日期</Paragraph>
+    <Paragraph line="26">编写单位</Paragraph>
+    <Paragraph line="27">GJB 438B-2009</Paragraph>
+    <Paragraph line="28">《军用软件开发文档编制规范》</Paragraph>
+    <Paragraph line="30">2009年5月</Paragraph>
+    <Paragraph line="31">总装备部</Paragraph>
+    <Paragraph line="32">GJB 439A-2013</Paragraph>
+    <Paragraph line="33">《军品软件质量保证通用要求》</Paragraph>
+    <Paragraph line="35">2013年7月</Paragraph>
+    <Paragraph line="36">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="37">GJB 450A-2004</Paragraph>
+    <Paragraph line="38">《装备可靠性工作通用要求》</Paragraph>
+    <Paragraph line="40">2004年7月</Paragraph>
+    <Paragraph line="41">总装备部</Paragraph>
+    <Paragraph line="42">GJB 2786A-2009</Paragraph>
+    <Paragraph line="43">《军用软件开发通用要求》</Paragraph>
+    <Paragraph line="45">2009年5月</Paragraph>
+    <Paragraph line="46">总装备部</Paragraph>
+    <Paragraph line="47">GJB 5235-2004</Paragraph>
+    <Paragraph line="48">《军用软件配置管理》</Paragraph>
+    <Paragraph line="50">2004年9月</Paragraph>
+    <Paragraph line="51">总装备部</Paragraph>
+    <Paragraph line="52">GJB/Z 102A-2012</Paragraph>
+    <Paragraph line="53">《军用软件安全性设计指南》</Paragraph>
+    <Paragraph line="55">2012年7月</Paragraph>
+    <Paragraph line="56">总装备部</Paragraph>
+    <Paragraph line="57">装陆[2011]707号</Paragraph>
+    <Paragraph line="58">《总装备部陆军装备科研订购部装备软件管理规定》</Paragraph>
+    <Paragraph line="60">2011年12月</Paragraph>
+    <Paragraph line="61">总装备部</Paragraph>
+    <Paragraph line="62">总装备部〔2005〕装字第4号</Paragraph>
+    <Paragraph line="63">《军用软件质量管理规定》</Paragraph>
+    <Paragraph line="65">2005年1月</Paragraph>
+    <Paragraph line="66">总装备部</Paragraph>
+    <Paragraph line="67">AZ6932.490.0101 SDTD</Paragraph>
+    <Paragraph line="68">《服务集成框架软件研制任务书》</Paragraph>
+    <Paragraph line="69">V1.00.03/2019年12月25日</Paragraph>
+    <Paragraph line="70">2019年12月</Paragraph>
+    <Paragraph line="71">某单位</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="72" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="73" />
+  <Section section_id="3.1.1" title="服务集成框架软件状态图有多个运行状态，包括开发阶段、运行阶段；支持多种方式，包括桌面、平板、手持。" start_line="74" />
+  <Section section_id="3.1.1" title="软件状态图" start_line="75" />
+  <Section section_id="3.1.1" title="服务集成框架软件状态图描述了服务集成框架软件所有可能出现的状态，以及各状态之间的相互转移情况。" start_line="76">
+    <Paragraph line="77">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_1" section="3.1.1" />
+  </Section>
+  <Section section_id="3.1.1" title="图  SEQ 图 \* ARABIC 1服务集成框架软件状态图" start_line="78" />
+  <Section section_id="3.1.2" title="软件活动图" start_line="79">
+    <Paragraph line="80">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_2" section="3.1.2" />
+  </Section>
+  <Section section_id="3.1.2" title="图  SEQ 图 \* ARABIC 2 服务集成框架软件活动图" start_line="81" />
+  <Section section_id="3.2" title="CSCI能力需求" start_line="82">
+    <Paragraph line="83">服务集成框架按照其功能需求，包含服务开发支撑、服务部署管理、服务运行控制、服务状态监视、服务调度、服务访问代理、静态请求处理7部分。</Paragraph>
+    <Paragraph line="84">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_3" section="3.2" />
+    <Paragraph line="85">图 SEQ 图 \* ARABIC 3 服务集成框架功能图</Paragraph>
+    <Image image_id="IMG_4" section="3.2" figure_number="3" caption="服务集成框架功能图" />
+    <Paragraph line="86">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_5" section="3.2" />
+    <Paragraph line="87">图 SEQ 图 \* ARABIC 4服务集成框架用例图</Paragraph>
+    <Image image_id="IMG_6" section="3.2" figure_number="4" caption="服务集成框架用例图" />
+  </Section>
+  <Table table_id="T_1" type="other" title="服务集成框架软件所有能力标识" section="3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3" title="需求" start_line="93">
+    <Paragraph line="94">重用</Paragraph>
+    <Paragraph line="95">方式</Paragraph>
+    <Paragraph line="96">名称</Paragraph>
+    <Paragraph line="97">运行状态</Paragraph>
+    <Paragraph line="98">对应的任务书功能/性能</Paragraph>
+    <Paragraph line="100">服务开发支撑</Paragraph>
+    <Paragraph line="101">PZXQ-GN-FWKFZC</Paragraph>
+    <Paragraph line="102">提供服务开发基础为用户提供服务开发必须的工程管理、程序生成、程序调试等基础性功能；</Paragraph>
+    <Paragraph line="103">服务提供对服务请求、响应进行处理的常用开发接口以及消息推送、初始化；</Paragraph>
+    <Paragraph line="104">新增</Paragraph>
+    <Paragraph line="105">桌面</Paragraph>
+    <Paragraph line="106">开发阶段</Paragraph>
+    <Paragraph line="107">4.1.1</Paragraph>
+    <Paragraph line="109">服务部署管理</Paragraph>
+    <Paragraph line="110">PZXQ-GN-FWBSGL</Paragraph>
+    <Paragraph line="111">提供服务注册、服务多实例部署、服务更新和服务注销功能。</Paragraph>
+    <Paragraph line="112">改进</Paragraph>
+    <Paragraph line="113">平板、桌面、手持</Paragraph>
+    <Paragraph line="114">运行阶段</Paragraph>
+    <Paragraph line="115">4.1.2/4.2 a)</Paragraph>
+    <Paragraph line="117">服务运行控制</Paragraph>
+    <Paragraph line="118">PZXQ-GN-FWYXKZ</Paragraph>
+    <Paragraph line="119">支持手动、自动、按需三种服务启动策略；</Paragraph>
+    <Paragraph line="120">服务启动顺序控制功能，支持根据优先级配置文件按顺序启动服务；</Paragraph>
+    <Paragraph line="121">服务启动依赖控制功能，支持在某个服务启动之前先启动它所依赖的服务；</Paragraph>
+    <Paragraph line="122">服务启停控制功能，支持接收服务启停指令完成服务的启动、停止状态切换；</Paragraph>
+    <Paragraph line="123">提供服务异常重启功能，能够在检测到服务故障退出后，自动重启服务；</Paragraph>
+    <Paragraph line="124">服务状态采集，支持对服务的启动、停止状态进行监视。</Paragraph>
+    <Paragraph line="125">改进</Paragraph>
+    <Paragraph line="126">平板、桌面、手持</Paragraph>
+    <Paragraph line="127">运行阶段</Paragraph>
+    <Paragraph line="128">4.1.3/4.2 b)</Paragraph>
+    <Paragraph line="130">服务信息管理</Paragraph>
+    <Paragraph line="131">PZXQ-GN-FWXXGL</Paragraph>
+    <Paragraph line="132">支持对服务的启动、停止状态进行监视；服务占用资源监视功能，支持对服务运行占用的CPU、内存、磁盘信息的监视。</Paragraph>
+    <Paragraph line="133">改进</Paragraph>
+    <Paragraph line="134">平板、桌面、手持</Paragraph>
+    <Paragraph line="135">运行阶段</Paragraph>
+    <Paragraph line="136">4.1.4/4.2 c)</Paragraph>
+    <Paragraph line="138">服务调度</Paragraph>
+    <Paragraph line="139">PZXQ-GN-FWDD</Paragraph>
+    <Paragraph line="140">提供服务发现、服务负载均衡功能、基于优先级的负载均衡、基于主机负载的负载均衡；支持服务故障迁移功能，将访问故障服务的请求调度到运行正常的服务。</Paragraph>
+    <Paragraph line="141">新增</Paragraph>
+    <Paragraph line="142">平板、桌面、手持</Paragraph>
+    <Paragraph line="143">运行阶段</Paragraph>
+    <Paragraph line="144">4.1.5</Paragraph>
+    <Paragraph line="146">服务访问代理</Paragraph>
+    <Paragraph line="147">PZXQ-GN-FWFWDL</Paragraph>
+    <Paragraph line="148">提供服务访问路由功能，支持将服务请求发送到具体的服务实例；</Paragraph>
+    <Paragraph line="149">服务响应转发功能，支持将服务响应发给服务访问发起者；</Paragraph>
+    <Paragraph line="150">服务访问信息记录功能，可在文件中查看服务调用发起的时间、调用方法、响应状态码等信息。</Paragraph>
+    <Paragraph line="151">新增</Paragraph>
+    <Paragraph line="152">平板、桌面、手持</Paragraph>
+    <Paragraph line="153">运行阶段</Paragraph>
+    <Paragraph line="154">4.1.5</Paragraph>
+    <Paragraph line="156">静态请求处理</Paragraph>
+    <Paragraph line="157">PZXQ-GN-JTQQCL</Paragraph>
+    <Paragraph line="158">提供静态资源的处理、文件上传和文件下载功能</Paragraph>
+    <Paragraph line="159">新增</Paragraph>
+    <Paragraph line="160">平板、桌面、手持</Paragraph>
+    <Paragraph line="161">运行阶段</Paragraph>
+    <Paragraph line="162">4.1.6</Paragraph>
+  </Section>
+  <Section section_id="3.2.1" title="服务开发支撑（PZXQ-GN-FWKFZC）" start_line="163" req_id="PZXQ-GN-FWKFZC">
+    <Paragraph line="164">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_7" section="3.2.1" />
+    <Paragraph line="165">图 SEQ 图 \* ARABIC 5 服务开发用例图</Paragraph>
+    <Image image_id="IMG_8" section="3.2.1" figure_number="5" caption="服务开发用例图" />
+    <Paragraph line="166">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_9" section="3.2.1" />
+    <Paragraph line="167">图 SEQ 图 \* ARABIC 6 服务二次开发支撑用例图</Paragraph>
+    <Image image_id="IMG_10" section="3.2.1" figure_number="6" caption="服务二次开发支撑用例图" />
+  </Section>
+  <Table table_id="T_2" type="other" title="服务开发支撑所有能力能力标识" section="3.2.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>创建服务工程</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWKFZC-CJFWGC</Cell>
+      <Cell>新建服务工程</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>2</Cell>
+      <Cell>打开服务工程</Cell>
+      <Cell>PZXQ-GN-FWKFZC-DKFWGC</Cell>
+      <Cell>打开新建的服务工程</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>关闭服务工程</Cell>
+      <Cell>PZXQ-GN-FWKFZC-GBFWGC</Cell>
+      <Cell>关闭选中的服务工程</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>4</Cell>
+      <Cell>服务插件生成</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWCJSC</Cell>
+    </Row>
+    <Row>
+      <Cell>服务工程插件生成</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>服务插件编译</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWCJBY</Cell>
+      <Cell>插件信息编译</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>6</Cell>
+      <Cell>服务工程编译</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWGCBY</Cell>
+      <Cell>服务工程的编译</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>7</Cell>
+      <Cell>服务程序运行</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWCSYX</Cell>
+      <Cell>运行服务程序</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>8</Cell>
+    </Row>
+    <Row>
+      <Cell>服务程序调试</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWCXTS</Cell>
+      <Cell>调试服务程序</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>9</Cell>
+      <Cell>服务交叉编译</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWJCBY</Cell>
+    </Row>
+    <Row>
+      <Cell>服务交叉编译</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>插件初始化函数定义</Cell>
+      <Cell>PZXQ-GN-FWKFZC-CJCSH</Cell>
+      <Cell>插件创建与初始</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>11</Cell>
+      <Cell>插件销毁函数定义</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWKFZC-CJXH</Cell>
+      <Cell>插件销毁与资源回收</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>12</Cell>
+      <Cell>调用服务响应发送类接口</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWXYFS</Cell>
+      <Cell>服务响应发送</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>13</Cell>
+    </Row>
+    <Row>
+      <Cell>调用服务请求处理类接口</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWQQCL</Cell>
+      <Cell>服务请求处理</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+    </Row>
+    <Row>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>14</Cell>
+      <Cell>调用服务消息推送接口</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWXXTS</Cell>
+    </Row>
+    <Row>
+      <Cell>服务消息推送</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+    </Row>
+    <Row>
+      <Cell>15</Cell>
+      <Cell>服务定时器接口</Cell>
+      <Cell>PZXQ-GN-FWKFZC-FWCL</Cell>
+      <Cell>通过定时器处理定时任务</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>16</Cell>
+      <Cell>调用服务响应接收类接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWKFZC-FWXYJS</Cell>
+      <Cell>服务程序接收请求并解析</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1</Cell>
+      <Cell>17</Cell>
+      <Cell>调用服务请求发送类接口</Cell>
+      <Cell>PZXQ-GN-FWKFZC-QQFS</Cell>
+      <Cell>提供服务请求发送</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面</Cell>
+      <Cell>开发阶段</Cell>
+      <Cell>4.1.1</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图 SEQ 图 \* ARABIC 7 服务开发流程图</Cell>
+      <Cell>创建服务工程（PZXQ-GN-FWKFZC-CJFWGC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_3" type="other" title="创建服务工程用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：创建服务工程</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：服务开发过程创建服务工程。</Cell>
+      <Cell>前置条件：服务开发框架安装成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员双击桌面图标打开服务开发支撑；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员选择服务开发向导，点击确定；</Cell>
+      <Cell>5.开发人员填写服务工程名称；</Cell>
+      <Cell>6.开发人员选择服务工程路径；</Cell>
+      <Cell>8.开发人员点击完成；</Cell>
+      <Cell>2.系统提示选择服务开发向导和服务插件开发向导选择；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.系统提示填写服务工程名称和选择服务工程路径；</Cell>
+      <Cell>7.系统校验路径是否合理，不合理进入异常流E1，合理提示开发人员创建完成；</Cell>
+      <Cell>9.系统提示信息汇总，包括服务工程.pro文件、相应的服务工程目录和配置文件；</Cell>
+      <Cell>校验工程路径的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：系统提示选择正确的工程路径。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>打开服务工程（PZXQ-GN-FWKFZC-DKFWGC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_4" type="other" title="打开服务工程用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：打开服务工程</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：服务创建成功过，打开新建的服务工程</Cell>
+      <Cell>前置条件：（1）服务开发框架安装成功。</Cell>
+      <Cell>（2）服务工程创建成功。</Cell>
+    </Headers>
+    <Row>
+      <Cell>主事件流</Cell>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+    </Row>
+    <Row>
+      <Cell>1.开发人员打开服务开发支撑；</Cell>
+      <Cell>3.开发人员点击查看服务工程下的目录；</Cell>
+      <Cell>5.开发人员双击查看服务工程下的文件；</Cell>
+      <Cell>7.开发人员修改服务工程文件中的配置内容；</Cell>
+      <Cell>2.系统自动将项目导入到服务开发框架中，工程导入错误，执行异常流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.系统展开该目录，显示目录下的文件；</Cell>
+      <Cell>6.系统打开文件，显示文件内容。</Cell>
+      <Cell>8.系统保存更改。</Cell>
+      <Cell>校验工程导入的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：系统提示工程导入异常。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>关闭服务工程（PZXQ-GN-FWKFZC-GBFWGC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_5" type="other" title="关闭服务工程用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：关闭服务工程</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：服务打开成功后，需要关闭服务工程</Cell>
+      <Cell>前置条件：服务工程打开成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选中某个服务工程，点击右键；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员点击关闭选项；</Cell>
+      <Cell>2.系统弹出操作选择菜单；</Cell>
+      <Cell>4.系统关闭服务工程；</Cell>
+      <Cell>5.系统界面不再显示该服务工程。</Cell>
+      <Cell>异常流E1  无。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务插件生成（PZXQ-GN-FWKFZC-FWCJSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_6" type="other" title="服务插件生生成用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务插件生成</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：服务插件工程的添加，新建插件到服务工程下。</Cell>
+      <Cell>前置条件：服务工程创建成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员双击桌面图标打开服务开发支撑；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员选择插件开发向导，确定；</Cell>
+      <Cell>5.开发人员填写插件名称；</Cell>
+      <Cell>6.开发人员选择服务工程路径；</Cell>
+      <Cell>。</Cell>
+      <Cell>11.开发人员输入插件名称；</Cell>
+    </Row>
+    <Row>
+      <Cell>12.开发人员选择插件类型；</Cell>
+      <Cell>13．开发人员选择插件启动方式；</Cell>
+      <Cell>14．开发人员输入插件初始化参数；</Cell>
+      <Cell>15.开发人员输入插件描述信息；</Cell>
+      <Cell>16.开发人员点击下一步；</Cell>
+    </Row>
+    <Row>
+      <Cell>19.开发人员选择依赖；</Cell>
+      <Cell>20.开发人员点击下一步；</Cell>
+      <Cell>2.系统提示选择服务开发向导和服务插件开发向导；</Cell>
+      <Cell>4.系统提示填写插件名称和选择服务工程路径；</Cell>
+      <Cell>7.系统校验所选路径下是否存在已经创建的服务工程，如果不存在，进入异常流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>8.系统弹出插件信息编辑界面；</Cell>
+      <Cell>9.系统自动识别所选服务，在服务名称处显示服务工程名；</Cell>
+      <Cell>10.插件信息编辑界面显示插件名称、插件描述信息、插件初始化参数、插件启动方式、插件类型输入框；</Cell>
+      <Cell>17.系统检验输入信息的合法性，发现非法输入进入异常流E2；</Cell>
+      <Cell>18.系统弹出插件依赖选择界面；</Cell>
+    </Row>
+    <Row>
+      <Cell>21.系统提示正在初始化插件信息；</Cell>
+      <Cell>22.系统生成插件描述文件，在文件中写入插件编辑界面输入的信息；</Cell>
+      <Cell>23.系统生成插件头文件，在文件中自动生成服务插件模板代码头文件内容；</Cell>
+      <Cell>24.系统生成插件逻辑实现文件，在文件中自动写入服务插件模板代码；</Cell>
+      <Cell>25.系统生成插件依赖描述文件，在文件自动写入插件依赖相关的内容；</Cell>
+    </Row>
+    <Row>
+      <Cell>26.系统提示插件创建完成。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：系统提示选择正确的服务工程路径。</Cell>
+      <Cell>异常流E2：系统提示输入信息非法。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>服务插件编译（PZXQ-GN-FWKFZC-FWCJBY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_7" type="other" title="服务插件编译用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务插件编译</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：对服务插件代码进行编译，生成服务插件动态库</Cell>
+      <Cell>前置条件：服务插件代码开发完成。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选中某个服务插件工程，双击服务插件构建文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员修改服务插件构建文件，增加、删除、修改服务插件编译时使用的参数；</Cell>
+      <Cell>4.开发人员点击保存</Cell>
+      <Cell>6.开发人员继续选中同一个服务插件工程，右键点击；</Cell>
+      <Cell>8.开发人员点击“执行qmake”；</Cell>
+      <Cell>11.开发人员继续选中同一个服务插件工程，右键点击；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统打开服务插件构建文件，显示内容；</Cell>
+      <Cell>5.系统保存服务插件构建文件；</Cell>
+      <Cell>7．系统弹出操作选择菜单；</Cell>
+      <Cell>9.系统执行qmake操作，生成构建文件；</Cell>
+      <Cell>10.系统显示执行结果，执行出错进入异常流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>12.系统弹出操作选择菜单；</Cell>
+      <Cell>13.系统开始执行构建操作；</Cell>
+      <Cell>14.系统提输出构建过程信息，如果构建出错，进入异常流E1。</Cell>
+      <Cell>15.系统输出构建成功，显示构建完成的服务插件动态库的路径等信息；</Cell>
+      <Cell>校验输出的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：输出错误提示信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务工程编译（PZXQ-GN-FWKFZC-FWGCBY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_8" type="other" title="服务插件编译用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务工程编译</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：对服务插件代码进行编译，生成服务插件动态库</Cell>
+      <Cell>前置条件：服务插件代码开发完成，</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选中某个服务工程，双击服务工程构建文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员修改服务工程构建文件，增加、删除、修改服务插件编译时使用的参数；</Cell>
+      <Cell>4.开发人员点击保存</Cell>
+      <Cell>6.开发人员继续选中同一个服务工程，右键点击；</Cell>
+      <Cell>8.开发人员点击“执行qmake”；</Cell>
+      <Cell>11.开发人员继续选中同一个服务工程，右键点击；</Cell>
+    </Row>
+    <Row>
+      <Cell>13.开发人员点击“构建”；</Cell>
+      <Cell>2.系统打开服务工程构建文件，显示内容；</Cell>
+      <Cell>5.系统保存服务工程构建文件；</Cell>
+      <Cell>7.系统弹出操作选择菜单；</Cell>
+      <Cell>9.系统执行qmake操作，生成构建文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>10.系统显示执行结果，执行出错进入异常流E1；</Cell>
+      <Cell>12.系统弹出操作选择菜单；</Cell>
+      <Cell>14.系统开始执行构建操作；</Cell>
+      <Cell>15.系统提输出构建过程信息，如果构建出错，进入异常流E1；</Cell>
+      <Cell>16.系统输出构建成功，显示构建消耗时间，构建完成的应用程序所在路径。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输出的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：输出错误提示信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务程序运行（PZXQ-GN-FWKFZC-FWXXYX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_9" type="other" title="服务程序运行用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务程序运行</Cell>
+      <Cell>Actors：开发人员、应用软件</Cell>
+      <Cell>概述：开发人员运行服务程序，查看运行结果。</Cell>
+      <Cell>前置条件：服务开发完成，服务工程编译成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选中某个服务工程，右键点击；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员点击“运行”；</Cell>
+      <Cell>6.应用软件依据插件描述文件，加载服务插件，插件描述文件读取失败，进入异常流E2；</Cell>
+      <Cell>7.加载成功，在运行日志中记录插件加在成功信息，加载失败，在运行日志中记录插件加载失败信息</Cell>
+      <Cell>8.开发人员查看终端输出内容，确认服务启动结果；</Cell>
+      <Cell>9.开发人员进入服务插件运行目录下的日志文件夹；</Cell>
+    </Row>
+    <Row>
+      <Cell>10.开发人员打开服务运行日志，查看服务插件加载信息；</Cell>
+      <Cell>11.开发人员点击“关闭”按钮；</Cell>
+      <Cell>13.开发人员点击确认；</Cell>
+      <Cell>2.系统弹出操作选择菜单；</Cell>
+      <Cell>4.系统启动应用软件，启动失败，进入异常处理流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.系统弹出终端，在终端输出应用软件启动过程；</Cell>
+      <Cell>12.系统弹出提示框，询问开发人员是否退出运行；</Cell>
+      <Cell>14.系统关闭应用软件</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：输出启动失败提示信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：在运行日志中，输出插件描述文件读取失败信息</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务程序调试（PZXQ-GN-FWKFZC-FWCXTS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_10" type="other" title="服务程序调试用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务程序调试</Cell>
+      <Cell>Actors：开发人员、应用软件</Cell>
+      <Cell>概述：开发人员采用常见的程序调试手端，对服务程序进行调试。</Cell>
+      <Cell>前置条件：服务开发完成，服务工程编译成功</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选择某个服务工程，双击待调试的代码文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员在需要进行调试的代码出设置断点；</Cell>
+      <Cell>5. 开发人员点击“开始调试”按钮；</Cell>
+      <Cell>7.应用软件开始执行；</Cell>
+      <Cell>9.开发人员查看当前断点处应用软件的变量值；</Cell>
+      <Cell>10.开发人员点击“单步执行”；</Cell>
+    </Row>
+    <Row>
+      <Cell>13.开发人员再次设置断点；</Cell>
+      <Cell>15.开发人员点击“调到下个断点”；</Cell>
+      <Cell>17.开发人员点击“停止调试”；</Cell>
+      <Cell>2.系统打开该代码文件，显示代码内容；</Cell>
+      <Cell>4.系统对设置断点处的代码进行突出显示；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.系统以调试模式启动服务工程中的应用软件，启动失败，进入异常流E1；</Cell>
+      <Cell>8.系统在断点处停止应用软件的执行；</Cell>
+      <Cell>11.系统控制应用软件执行一条程序语句；</Cell>
+      <Cell>12.系统继续控制应用软件再次停止；</Cell>
+      <Cell>14.系统突出显示新设置的断点；</Cell>
+    </Row>
+    <Row>
+      <Cell>16.系统控制应用软件执行到断点处；</Cell>
+      <Cell>18.系统停止应用软件，退出调试模式；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：输出启动失败提示信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>服务交叉编译（PZXQ-GN-FWKFZC-FWJCBY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_11" type="other" title="服务交叉编译用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务交叉编译</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：服务代码开发完成后，针对不同的操作环境，可以选择相应的交叉编译环境进行编译，生成适配不同操作系统的程序</Cell>
+      <Cell>前置条件：服务代码开发完成</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员双击交叉编译工具图标；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员选择目标平台类型；</Cell>
+      <Cell>4.开发人员选择交叉编译工具链路径；</Cell>
+      <Cell>5.开发人员选择交叉编译环境路径；</Cell>
+      <Cell>6．开发人员输入密码；</Cell>
+      <Cell>7．开发人员点击确认按钮；</Cell>
+    </Row>
+    <Row>
+      <Cell>9.开发人员创建服务工程；</Cell>
+      <Cell>12.开发人员点击添加插件；</Cell>
+      <Cell>15.开发人员选择编译线程数；</Cell>
+      <Cell>17.开发人员点击构建按钮；</Cell>
+      <Cell>19.开发人员点击重新构建按钮；</Cell>
+    </Row>
+    <Row>
+      <Cell>21．开发人员点击导出工程，可推送到手机直接运行；</Cell>
+      <Cell>23.开发人员选择导出手机入口软件工程，可推送到手机通过界面控制服务启停；</Cell>
+      <Cell>24．开发人员点击构建按钮；</Cell>
+      <Cell>26.开发人员点击清除按钮；</Cell>
+      <Cell>2.系统弹出对话框，提示选择需要交叉编译目标平台类型，包括不同操作系统（银河锐华、元心、TDOS）、交叉编译工具链的路径、输入管理员权限密码和交叉编译环境路径；</Cell>
+    </Row>
+    <Row>
+      <Cell>8.系统进入工具主界面，若密码输入错误，执行异常流E1；</Cell>
+      <Cell>10.系统弹出对话框，可输入服务名程；</Cell>
+      <Cell>11.系统自动生成服务主程序的Makefile文件;</Cell>
+      <Cell>13.系统自动生成编译插件的Makefile文件；</Cell>
+      <Cell>14.系统生成插件描述文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>16.系统设置编译线程数；</Cell>
+      <Cell>18.系统构建完成，如果构建失败则执行异常流E2；</Cell>
+      <Cell>20.系统完成重新构建，如果构建失败则执行异常流E2；</Cell>
+      <Cell>22.系统导出工程，如果导出失败则进入异常流E3；</Cell>
+      <Cell>25.系统构建入口软件完成，如果构建失败则进入异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>27.系统清除生成的中间文件、可执行程序文件和动态库文件，如果清除失败则进入异常流E4</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：非有效密码，系统提示重新输入密码。</Cell>
+      <Cell>异常流E2：服务工程构建失败，系统提示构建失败。</Cell>
+      <Cell>异常流E3：服务工程导出失败，系统提示导出失败。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E4：清除失败，系统提示清除失败。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>插件初始化函数定义（PZXQ-GN-FWKFZC-CSHSDY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_12" type="other" title="插件初始化函数定义用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：插件初始化函数定义</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：开发人员自定义服务插件的初始化过程。</Cell>
+      <Cell>前置条件：（1）服务工程创建成功。</Cell>
+      <Cell>（2）服务插件生成成功。</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.开发人员选中某个服务插件下的plugincore.cpp文件，双击；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.开发人员在plugincore.cpp文件内容中定位到初始化函数；</Cell>
+      <Cell>4.开发人员修改初始化函数注释；</Cell>
+      <Cell>5.开发人员修改初始化函数中的代码，添加插件初始化逻辑代码；</Cell>
+      <Cell>6.开发人员添加日志记录代码；</Cell>
+      <Cell>7.开发人员添加初始化函数返回值代码；</Cell>
+    </Row>
+    <Row>
+      <Cell>8.开发人员点击保存；</Cell>
+      <Cell>2.系统打开该文件，显示该文件中的内容，内容为服务插件生成时写入到文件中的插件模板代码，若打开失败，进入异常流E1；</Cell>
+      <Cell>9.系统保存开发人员更改到文件中，若保存失败，进入异常流E2。</Cell>
+      <Cell>校验输入的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：输出打开失败的报错信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：输出保存失败的报错信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>插件销毁函数定义（PZXQ-GN-FWKFZC-XHHSDY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_13" type="other" title="插件销毁函数定义用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：插件销毁函数定义</Cell>
+      <Cell>Actors：开发人员</Cell>
+      <Cell>概述：开发人员自定义服务插件的销毁过程。</Cell>
+      <Cell>前置条件：（1）服务工程创建成功。</Cell>
+      <Cell>（2）插件创建成功。</Cell>
+    </Headers>
+    <Row>
+      <Cell>主事件流</Cell>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+    </Row>
+    <Row>
+      <Cell>1.开发人员选中某个服务插件下的plugincore.cpp文件，双击；</Cell>
+      <Cell>3.开发人员在plugincore.cpp文件内容中定位到销毁函数；</Cell>
+      <Cell>4.开发人员修改销毁函数注释；</Cell>
+      <Cell>5.开发人员修改销毁函数中的代码，添加插件销毁逻辑代码；</Cell>
+      <Cell>6.开发人员添加日志记录代码；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.开发人员添加销毁函数返回值代码；.</Cell>
+      <Cell>8.开发人员点击保存；</Cell>
+      <Cell>2.系统打开该文件，显示该文件中的内容，内容为服务插件生成时写入到文件中的插件模板代码，若打开失败，进入异常流E1；</Cell>
+      <Cell>9．系统保存开发人员更改到文件中，若保存失败，进入异常流E2。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：输出打开失败的报错信息。</Cell>
+      <Cell>异常流E2：输出保存失败的报错信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用服务请求处理类接口（PZXQ-GN-FWKFZC-FWQQCL）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_14" type="other" title="调用服务请求处理类接口用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：调用服务请求处理类接口</Cell>
+      <Cell>Actors 应用软件</Cell>
+      <Cell>概述：应用程序调用服务请求处理类接口，获取请求数据、获取请求参数、获取请求数据长度、进行请求参数解码。</Cell>
+      <Cell>前置条件：服务插件生成成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用程序进入请求处理流程；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.应用程序调用获取参数接口；</Cell>
+      <Cell>4.应用程序接收返回数据，根据返回数据内容，进行进一步处理；</Cell>
+      <Cell>5.应用程序调用服务请求数据长度获取接口；</Cell>
+      <Cell>7.应用程序接收返回数据，根据返回数据内容，进行进一步处理；</Cell>
+      <Cell>8.应用程序调用服务请求数据获取接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>10.应用程序接收返回数据，根据返回数据内容，进行进一步处理；</Cell>
+      <Cell>11.应用程序调用请求数据处理回调函数注册接口；</Cell>
+      <Cell>14.应用程序调用服务请求参数解码接口；</Cell>
+      <Cell>3.系统接受到请求参数获取调用，解析服务请求数据，提取请求参数，返回，提取失败，进入异常处理流E1；</Cell>
+      <Cell>6.系统接收到请求数据长度获取接口，解析服务请求数据，提取数据长度，返回，提取失败，进入异常处理流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>9.系统接收到请求数据获取接口，解析服务请求数据，提取数据实体，返回，提取失败，进入异常处理流E1；</Cell>
+      <Cell>12.系统接收回调函数注册，返回；</Cell>
+      <Cell>13.系统接收请求数据，接收完整后，调用回调函数进行数据处理；</Cell>
+      <Cell>15.系统接收到请求参数解码接口，进行参数解码处理，返回解码结果，解码失败，进入异常处理流E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：运行日志中记录失败报错信息，返回错误码。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用服务响应发送类接口（PZXQ-GN-FWKFZC-FWXYFS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_15" type="other" title="调用服务响应发送类接口用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：服务响应发送</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：应用程序调用服务响应发送类接口，设置响应类型、设置响应数据长度、发送响应数据头、发送响应数据体。</Cell>
+      <Cell>前置条件：服务插件生成成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1．应用程序调用服务响应类型设置接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.应用程序获取到服务的响应结果，根据响应结果作进一步处理；</Cell>
+      <Cell>4.应用程序调用设置响应数据长度接口；</Cell>
+      <Cell>6.应用程序获取到服务响应结果，根据响应结果作进一步处理；</Cell>
+      <Cell>7.应用程序调用发送响应数据头接口；</Cell>
+      <Cell>9.应用程序获取到服务响应结果，根据响应作进一步处理；</Cell>
+    </Row>
+    <Row>
+      <Cell>10.应用程序调用发送响应数据体接口;</Cell>
+      <Cell>12.应用程序获取到服务响应结果，根据响应作进一步处理。</Cell>
+      <Cell>2.系统接收到服务响应设置调用，解析请求参数，提取服务响应设置参数，返回，失败则执行异常流E1；</Cell>
+      <Cell>5.系统接收到设置响应数据长度调用，解析请求参数，提取服务响应数据长度参数，返回，失败则执行异常流程E1；</Cell>
+      <Cell>8.系统接收到发送响应数据头调用，解析请求参数，提取响应数据头数据参数，打包发送数据，向客户端发送响应数据头，返回，发送失败则执行异常流程E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>11.系统接收到发送响应数据体调用，解析请求参数，提取响应数据体数据参数，打包发送数据，向客户端发送响应数据体，返回，发送失败则执行异常流程E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1:服务响应错误码；</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用定时器接口（PZXQ-GN-FWKFZC-DSRW）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_16" type="other" title="调用定时器接口用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：调用定时器接口</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：服务处理业务逻辑过程中，调用定时器接口设置定时任务。</Cell>
+      <Cell>前置条件：服务插件生成成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用程序调用定时器设置接口，注册回调函数；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用程序获取到服务的请求结束，应用程序根据响应结果作进一步处理；</Cell>
+      <Cell>2.系统收到定时器接口，解析请求，提取定时器接口参数，注册定时器事件及事件的回调函数；</Cell>
+      <Cell>3.等待定时器超时，事件循环根据定时器的id找到对应的定时器处理函数，并调用它，若执行失败则执行异常流E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1:服务响应错误码；</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用消息推送接口（PZXQ-GN-FWKFZC-XXTS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_17" type="other" title="调用消息推接口送用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：调用消息推送接口</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：应用程序调用消息推送接口，获取向界面推送数据的能力。</Cell>
+      <Cell>前置条件：服务插件生成成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用程序调用消息推送接口，把需要推送到前端的内容进行封装;</Cell>
+    </Row>
+    <Row>
+      <Cell>2.应用程序把封装数据通过websocket把消息推送到服务程序；</Cell>
+      <Cell>4.接收方应用程序接收到推送消息，根据业务定义，解析消息数据，并在前端显示消息。</Cell>
+      <Cell>3.系统接受到消息推送接口调用，解析接口数据，提取推送参数，根据推送的接收方，查找与接收方建立的连接，如果未创建连接，则创建连接；然后，把数据推送到前端；如果接受失败，则执行异常流E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1: websocket连接失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用服务请求发送类接口（PZXQ-GN-FWKFZC-FWQQFS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_18" type="other" title="服务请求发送用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：调用服务请求发送类接口</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：应用程序调用服务访问请求发送类接口，进行请求参数设置，请求方法选择、请求数据发送、请求失败信息获取、请求超时设置。</Cell>
+      <Cell>前置条件：（1）服务创建成功。</Cell>
+      <Cell>（2）插件新建成功。</Cell>
+    </Headers>
+    <Row>
+      <Cell>主事件流</Cell>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+    </Row>
+    <Row>
+      <Cell>1.应用程序调用服务请求参数设置接口；</Cell>
+      <Cell>3.应用程序获取服务处理响应结果，根据响应作进一步处理；</Cell>
+      <Cell>4.应用程序调用服务请求方法选择接口；</Cell>
+      <Cell>6.应用程序获取服务处理响应结果，根据响应作进一步处理；</Cell>
+      <Cell>7.应用程序调用服务请求数据发送接口;</Cell>
+    </Row>
+    <Row>
+      <Cell>9.应用程序获取服务处理响应结果，根据响应作进一步处理；</Cell>
+      <Cell>10.应用程序调用服务请求失败信息获取接口;</Cell>
+      <Cell>12.应用程序获取服务处理响应结果，根据响应作进一步处理；</Cell>
+      <Cell>13.应用程序调用服务请求超时设置接口;</Cell>
+      <Cell>15.应用程序获取服务处理响应结果，根据响应作进一步处理。</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统收取服务请求参数设置的接口调用，解析参数设置数据，提取参数设置参数，返回，失败，则执行异常流E1；</Cell>
+      <Cell>5.系统收取服务请求方法选择的接口调用，解析请求方法选择数据，提取方法选择参数，返回，失败，则执行异常流E1；</Cell>
+      <Cell>8.系统收取服务请求数据发送的接口调用，解析发送数据，提取参数，打包发送数据，向客户端发送，返回，发送失败，则执行异常流E1；</Cell>
+      <Cell>11.系统收取服务请求失败信息获取 的接口调用，解析服务失败信息数据，提取失败信息参数，返回，失败则执行异常流E1；</Cell>
+      <Cell>14.系统收取服务请求超时设置的接口调用，解析超时设置请求数据，提取超时设置参数，返回，失败则执行异常流E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：服务发送请求失败。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>调用服务响应接收类接口（PZXQ-GN-FWKFZC-FWXYJS）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_19" type="other" title="调用服务响应接收类接口用例描述" section="3.2.1">
+    <Headers>
+      <Cell>Use Case 名称：调用服务响应接收类接口</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：应用程序调用服务响应接收类接口，进行响应处理回调函数注册。</Cell>
+      <Cell>前置条件：（1）服务创建成功。</Cell>
+      <Cell>（2）插件新建成功。</Cell>
+    </Headers>
+    <Row>
+      <Cell>（3）服务请求发送成功。</Cell>
+      <Cell>主事件流</Cell>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+    </Row>
+    <Row>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用程序发送服务访问请求，被访问的服务根据处理结果等待返回响应的处理；</Cell>
+      <Cell>4.应用程序服务响应接受成功，服务响应结束，若接受失败，执行异常流E1；</Cell>
+      <Cell>2系统成功处理完服务访问请求后，注册响应回调函数；</Cell>
+      <Cell>3.收到服务响应后，调用响应回调函数，并把响应数据以参数传给回调函数；返回，失败则执行异常流程E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：服务响应返回值接受失败。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.2" title="服务部署管理（PZXQ-GN-FWBSGL）" start_line="1030" req_id="PZXQ-GN-FWBSGL">
+    <Paragraph line="1031">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_11" section="3.2.2" />
+    <Paragraph line="1032">图 SEQ 图 \* ARABIC 8 软件安装部署用例图</Paragraph>
+    <Image image_id="IMG_12" section="3.2.2" figure_number="8" caption="软件安装部署用例图" />
+  </Section>
+  <Table table_id="T_20" type="other" title="服务部署管理所有能力能力标识" section="3.2.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务注册</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWBSGL-FWZC</Cell>
+      <Cell>需要通过服务描述信息完成服务注册，使得服务全局可知</Cell>
+      <Cell>改进</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.2/4.2 a)</Cell>
+      <Cell>2</Cell>
+      <Cell>服务更新</Cell>
+      <Cell>PZXQ-GN-FWBSGL-FWGX</Cell>
+      <Cell>对服务的信息更新</Cell>
+    </Row>
+    <Row>
+      <Cell>改进</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务监控注册</Cell>
+      <Cell>PZXQ-GN-FWBSGL-FWJKZC</Cell>
+      <Cell>调用接口注册对某个服务进行资源占用和状态监控</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+      <Cell>4</Cell>
+      <Cell>服务注销</Cell>
+      <Cell>PZXQ-GN-FWBSGL-FWZX</Cell>
+    </Row>
+    <Row>
+      <Cell>通过服务描述信息完成服务注册信息的删除</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 9 服务部署管理流程图</Cell>
+      <Cell>服务注册（PZXQ-GN-FWBSGL-FWZC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_21" type="other" title="服务注册用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：服务注册</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述服务运行控制将服务注册信息上报的过程。</Cell>
+      <Cell>前置条件：服务运行控制与服务信息管理正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务部署管理生成服务清单信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统读取服务清单信息，解析服务清单；</Cell>
+      <Cell>3.系统解析服务清单内容，并读取服务名称信息，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>4.系统解析服务清单内容，并读取服务类型，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>5.系统解析服务清单内容，并读取可执行文件名称，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>6.系统解析服务清单内容，并读取启动参数，解析并存储，失败则执行异常流程E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.系统解析服务清单内容，并读取启动方式，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>8.系统解析服务清单内容，并读取工作路径，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>9.系统解析服务清单内容，并读取启动环境变量，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>10.系统解析服务清单内容，并读取依赖服务，解析并存储，失败则执行异常流程E1；</Cell>
+      <Cell>11.系统解析服务清单内容，并读取启动优先级，解析并存储，失败则执行异常流程E1；</Cell>
+    </Row>
+    <Row>
+      <Cell>12.系统把解析后的清单信息打包存储在本地内存中；</Cell>
+      <Cell>13.服务部署程序通知服务运行监控。</Cell>
+      <Cell>桌面版，支持不少于1000个服务的注册；</Cell>
+      <Cell>平板版，支持不少于200个服务注册；</Cell>
+      <Cell>手持版，支持不少于100个服务注册；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：与服务运行控制程序连接断开了。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务更新（PZXQ-GN-FWBSGL-FWGX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_22" type="other" title="服务更新用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：服务注册信息读取</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述用户更新服务，系统读取新的服务注册信息的过程。</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务部署管理生成服务更新清单信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>2. 服务部署管理发出服务更新通知；</Cell>
+      <Cell>3.系统扫描清单文件目录，对比时间，如果发信文件内容有更新，则解析，解析服务若参数错误执行异常流E1；</Cell>
+      <Cell>4．系统读取服务注册文件，并解析文件内容。若文件内容格式错误，执行异常流E1;</Cell>
+      <Cell>5.注册文件中解析出服务的注册信息，如果服务注册信息错误，则执行异常流E1;</Cell>
+      <Cell>6.使用该服务新的的注册信息替换旧的信息,上报服务信息给服务控制程序。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：接口调用返回错误，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务监控注册（PZXQ-GN-FWBSGL-FWJKZC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_23" type="other" title="服务监控注册用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：服务监控注册</Cell>
+      <Cell>Actors：应用软件</Cell>
+      <Cell>概述：本实例支持通过接口向服务集成框架注册一个服务，对其进行监控</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.代监控应用软件启动；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.调用监控注册接口，向服务集成框架注册待监控服务的信息；</Cell>
+      <Cell>3.系统接收监控注册接口的信息，校验信息格式，如果格式错误，执行异常流 E1；</Cell>
+      <Cell>4.系统从注册信息中解析出待检测服务的具体名称，加入到监控队列，如果服务名称为空，则执行异常流E2；</Cell>
+      <Cell>5.循环采集服务的资源占用信息、运行状态。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：日志输出错误内容，跳过该文件，解析下一个注册文件。</Cell>
+      <Cell>异常流E2：服务名称错误。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务注销（PZXQ-GN-FWBSGL-FWZX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_24" type="other" title="服务注销用例描述" section="3.2.2">
+    <Headers>
+      <Cell>Use Case 名称：服务注销</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述用户读取服务清单文件完成服务注册信息的删除。</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.软件部署管理调用服务注销接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统接收到服务注销请求，解析参数。若参数错误执行异常流E1；</Cell>
+      <Cell>3.系统查询待注销服务是否存在，若不存在，执行异常流E2；</Cell>
+      <Cell>4．如果服务存在，将服务的注册信息删除清空；</Cell>
+      <Cell>5.服务注销成功后，上报服务控制程序。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：接口调用返回错误，用例结束。</Cell>
+      <Cell>异常流E2：接口调用返回服务不存在，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.3" title="服务运行控制（PZXQ-GN-FWYXKZ）" start_line="1207" req_id="PZXQ-GN-FWYXKZ">
+    <Paragraph line="1208">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_13" section="3.2.3" />
+    <Paragraph line="1209">图 SEQ 图 \* ARABIC 10 服务运行控制用例图</Paragraph>
+    <Image image_id="IMG_14" section="3.2.3" figure_number="10" caption="服务运行控制用例图" />
+  </Section>
+  <Table table_id="T_25" type="other" title="服务运行控制所有能力能力标识" section="3.2.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务启停控制</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWYXKZ-FWQTKZ</Cell>
+      <Cell>控制服务进程的启动与停止。</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.3</Cell>
+      <Cell>2</Cell>
+      <Cell>服务启动控制方式控制</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-FWQTKZ</Cell>
+      <Cell>根据启动方式对服务控制</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务启动优先级控制</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-FWQDYXJKZ</Cell>
+      <Cell>根据启动优先级对服务控制</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>4</Cell>
+      <Cell>服务启动依赖控制</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-FWQDYLKZ</Cell>
+    </Row>
+    <Row>
+      <Cell>启动依赖对服务控制</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>服务异常重启</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-FWYCCQ</Cell>
+      <Cell>服务异常,服务管控重启</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>6</Cell>
+      <Cell>服务状态采集</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWYXKZ-FWZTCJ</Cell>
+      <Cell>采集服务的运行状态信息</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.3/4.2 b)</Cell>
+      <Cell>7</Cell>
+      <Cell>服务占用资源采集</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-FWZYZYCJ</Cell>
+      <Cell>采集服务占用资源的相关信息，包括CPU占用率、内存占用率和磁盘使用率等信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>8</Cell>
+    </Row>
+    <Row>
+      <Cell>节点信息采集</Cell>
+      <Cell>PZXQ-GN-FWYXKZ-JDXXCJ</Cell>
+      <Cell>采集节点的CPU使用率、内存使用率、磁盘使用率和某时段的平均网速信息</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.3</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 11 服务运行控制流程图</Cell>
+      <Cell>服务启停控制（PZXQ-GN-FWYXKZ-FWQTKZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_26" type="other" title="服务启停控制用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务启停控制</Cell>
+      <Cell>Actors：运行支撑服务</Cell>
+      <Cell>概述：本用例描述服务的启动与停止的控制过程。</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.运行支撑服务调用启动服务接口，填入要启动的服务名；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.运行支撑服务调用停止服务接口，填入要停止的服务名；</Cell>
+      <Cell>2.系统接收到请求后，解析服务名；</Cell>
+      <Cell>3.从服务清单中查询该服务的注册信息，如果无该服务，执行异常流E1；</Cell>
+      <Cell>4.然后查询服务的运行状态，如果服务正在运行中，则执行异常流E2；</Cell>
+      <Cell>5.使用服务的注册信息中的可执行程序信息与参数信息启动服务进程。如果启动失败，执行异常流E4。启动成功，更新服务状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.系统接收到请求后，解析服务名；</Cell>
+      <Cell>8.查询服务是否在运行中，如未查询到服务则执行异常流E1。如果服务未运行，执行异常流E3；</Cell>
+      <Cell>9.向服务进程发送结束信号，停止服务进程，更新服务状态。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：日志输出无服务，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：日志输出服务运行中，无需启动，用例结束。</Cell>
+      <Cell>异常流E3：日志记录启动失败，用例结束。</Cell>
+      <Cell>异常流E4：无需停止服务，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务启动方式控制（PZXQ-GN-FWYXKZ-FWQDFSKZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_27" type="other" title="服务启动方式控制用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务启动方式控制</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述服务的不同的启动方式的控制过程。</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.软件部署管理设定服务启动方式的参数为自动；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.软件部署管理设定服务启动方式的参数为手动；</Cell>
+      <Cell>2.系统解析传入的参数；</Cell>
+      <Cell>3.系统遍历服务，服务启动方式为自动的服务，进行正常启动；</Cell>
+      <Cell>4.系统启动服务,如果服务启动失败,执行异常流E1；</Cell>
+      <Cell>6.系统遍历服务，服务启动方式为手动的，跳过不启动；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.系统更新服务运行状态。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：日志输出服务启动失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务启动优先级控制（PZXQ-GN-FWYXKZ-FWQDYXJKZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_28" type="other" title="服务启动优先级控制用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务启动优先级控制</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述服务按启动优先级启动的过程。</Cell>
+      <Cell>前置条件：。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.软件部署管理设置服务启动优先级，配置服务启动的优先级文件；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统启动后读取服务启动优先级文件；</Cell>
+      <Cell>3.系统解析出服务启动信息的服务名称；</Cell>
+      <Cell>4.系统自动启动服务时根据启动优先级信息优先启动优先级高的服务，如果服务启动失败，执行异常流E1。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：日志输出服务启动失败，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务启动依赖控制（PZXQ-GN-FWYXKZ-FWQDYLKZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_29" type="other" title="服务依赖方式控制用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务启动依赖控制</Cell>
+      <Cell>Actors：软件部署管理</Cell>
+      <Cell>概述：本用例描述服务的启动依赖的控制过程。</Cell>
+      <Cell>前置条件：服务清单配置完成，服务运行控制正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.软件部署管理设置服务启动的依赖，并写入服务启动配置中；</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统扫描服务启动设置，解析服务依赖，得到服务启动所依赖的服务列表；</Cell>
+      <Cell>3.查询依赖服务列表中各服务运行状态；</Cell>
+      <Cell>4.若依赖的服务有未运行服务，则不启动，执行异常流E1，若所有依赖的服务都已运行则启动该服务；</Cell>
+      <Cell>5.查询服务进程的运行状态，启动成功，则更新服务运行状态；</Cell>
+      <Cell>6.服务控制程序上报服务状态到服务信息管理程序。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：日志输出服务启动失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务异常重启（PZXQ-GN-FWYXKZ-FWYCCQ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_30" type="other" title="服务异常重启用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务异常重启</Cell>
+      <Cell>Actors：运行支撑服务、应用软件</Cell>
+      <Cell>概述：本用例描述服务运行控制监控到服务异常退出，并自动重启的过程。</Cell>
+      <Cell>前置条件：服务运行控制与服务应用正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件异常退出；</Cell>
+    </Row>
+    <Row>
+      <Cell>3. 向运行支撑服务上报异常退出的服务状态异常，正在重启；</Cell>
+      <Cell>2.系统监控到服务进程退出，回收进程资源，并修改服务的状态为未启动；</Cell>
+      <Cell>4.系统将服务放入重启列表中，等待重启；</Cell>
+      <Cell>5.系统启动服务。如果启动失败，执行异常流E1；</Cell>
+      <Cell>6.完成服务异常重启，更新服务状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.服务控制程序上报服务状态到服务信息管理程序。</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：再次将服务放入重启列表，等待下次重启，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务状态采集（PZXQ-GN-FWYXKZ-FWZTCJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_31" type="other" title="服务状态采集用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务状态采集</Cell>
+      <Cell>Actors：服务信息管理</Cell>
+      <Cell>概述：本用例描述服务运行控制监控服务的运行状态过程。</Cell>
+      <Cell>前置条件：服务运行控制与服务应用正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>5.服务信息管理汇总服务的运行状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.服务信息管理汇总服务的运行状态；。</Cell>
+      <Cell>1.系统启动后遍历服务清单并依次启动服务；</Cell>
+      <Cell>2.服务启动成功，如果启动失败,执行异常流E1；</Cell>
+      <Cell>3.系统获取服务的进程ID，并记录，更新服务的状态为运行中；</Cell>
+      <Cell>4.系统使用进程ID周期地查询并更新服务的进程状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.系统查询到服务进程已退出，回收子进程，更新服务状态为未启动；</Cell>
+      <Cell>桌面版、平板版、手持版，系统对服务异常状态检测时间不大于10秒；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+      <Cell>异常流E1：跳过该服务。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>服务占用资源采集（PZXQ-GN-FWYXKZ-FWZYZYCJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_32" type="other" title="服务占用资源用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：服务占用资源采集</Cell>
+      <Cell>Actors：服务信息管理</Cell>
+      <Cell>概述：本用例描述服务运行控制监控服务的资源状态过程。</Cell>
+      <Cell>前置条件：服务运行控制与服务应用正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>5. 服务信息管理汇总服务的CPU占用率和内存使用量；</Cell>
+    </Row>
+    <Row>
+      <Cell>1.系统启动后遍历服务清单并依次启动服务；</Cell>
+      <Cell>2.服务启动成功，如果启动失败,执行异常流E1；</Cell>
+      <Cell>3.系统根据服务的进程ID，查询当前进程的CPU使用率，如果查询失败，执行异常流E1；</Cell>
+      <Cell>4. 系统根据服务的进程ID，查询当前进程的内存使用量，如果查询失败，执行异常流E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：修改cpu和内存使用率的值为异常，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>节点信息采集（PZXQ-GN-FWYXKZ-JDXXCJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_33" type="other" title="节点信息采集用例描述" section="3.2.3">
+    <Headers>
+      <Cell>Use Case 名称：节点信息采集</Cell>
+      <Cell>Actors：服务信息管理</Cell>
+      <Cell>概述：本用例描述服务运行控制监控本机节点的资源状态过程。</Cell>
+      <Cell>前置条件：服务运行控制正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>4. 服务信息管理汇总各节点CPU占用率；</Cell>
+    </Row>
+    <Row>
+      <Cell>6. 服务信息管理汇总各节点内存使用率；</Cell>
+      <Cell>8.服务信息管理汇总各节点磁盘使用率；</Cell>
+      <Cell>10服务信息管理汇总各节点网络速率。</Cell>
+      <Cell>1.系统成功启动，周期触发系统资源监控；</Cell>
+      <Cell>2.系统获取本机节点ip信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.系统根据节点ip查询CPU使用时间，如果查询失败，执行异常流E1。计算并更新主机的CPU使用率；</Cell>
+      <Cell>5.系统根据节点ip查询内存使用值和系统的总内存值，如果查询失败，执行异常流E2,计算并更新内存使用率；</Cell>
+      <Cell>7.系统根据节点ip查询磁盘的使用量和磁盘空间总量，如果查询失败执行异常流E3.计算并更新磁盘使用率；</Cell>
+      <Cell>9.系统根据节点ip查询网络上传流量和下载流量，如果查询失败执行异常流E4，计算并更新该时段的平均网速；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：修改cpu使用率的值为异常，CPU监控结束。</Cell>
+      <Cell>异常流E2：修改内存占用率的值为异常，内存监控结束。</Cell>
+      <Cell>异常流E3：修改磁盘使用率的值为异常，磁盘监控结束。</Cell>
+      <Cell>异常流E4：修改网速的值为异常，网络监控结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.4" title="服务信息管理（PZXQ-GN-FWXXGL）" start_line="1537" req_id="PZXQ-GN-FWXXGL">
+    <Paragraph line="1538">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_15" section="3.2.4" />
+    <Paragraph line="1539">图 SEQ 图 \* ARABIC 12 服务信息管理用例图</Paragraph>
+    <Image image_id="IMG_16" section="3.2.4" figure_number="12" caption="服务信息管理用例图" />
+  </Section>
+  <Table table_id="T_34" type="other" title="服务信息管理所有能力能力标识" section="3.2.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务运行状态查询</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWXXGL-FWYXZTCX</Cell>
+      <Cell>监控节点主机的资源使用信息。</Cell>
+      <Cell>改进</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.4/4.2 c)</Cell>
+      <Cell>2</Cell>
+      <Cell>服务占用资源查询</Cell>
+      <Cell>PZXQ-GN-FWXXGL-FWZYZYCX</Cell>
+      <Cell>通过服务名称获取服务的资源占用信息</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4/4.2 c)</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务注册信息查询</Cell>
+      <Cell>PZXQ-GN-FWXXGL-FWZCXXCX</Cell>
+      <Cell>通过服务名称获取服务注册信息</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4/4.2 c)</Cell>
+      <Cell>4</Cell>
+      <Cell>服务注册信息汇总</Cell>
+      <Cell>PZXQ-GN-FWXXGL-FWZCXXHZ</Cell>
+    </Row>
+    <Row>
+      <Cell>汇总服务注册的所有信息</Cell>
+      <Cell>沿用</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>服务运行状态汇总</Cell>
+      <Cell>PZXQ-GN-FWXXGL-FWYXZTHZ</Cell>
+      <Cell>汇总控制程序上报的服务信息</Cell>
+      <Cell>沿用</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4</Cell>
+      <Cell>6</Cell>
+      <Cell>服务占用资源汇总</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWXXGL-FWZYZYHZ</Cell>
+      <Cell>汇总所有控制程序上报的监控信息</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.4</Cell>
+      <Cell>7</Cell>
+      <Cell>节点信息汇总</Cell>
+      <Cell>PZXQ-GN-FWXXGL-JDXXHZ</Cell>
+      <Cell>汇总所有连接到信息管理服务的节点信息</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.4</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 13 服务信息管理运行流程图</Cell>
+      <Cell>服务运行状态查询（PZXQ-GN-FWXXGL-FWYXZTCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_35" type="other" title="服务运行状态查询用例描述" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：服务运行状态查询</Cell>
+      <Cell>Actors： 运行支撑服务</Cell>
+      <Cell>概述：本用例描述根据服务名称查询服务运行状态或者根据节点查询该节点上所有服务运行状态，服务运行状态信息包括启动是否正常、端口是否监听和配置文件是否正常打开等。</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.运行支撑服务调用服务运行状态查询接口，传入服务名称作为查询参数，设置查询类型；</Cell>
+    </Row>
+    <Row>
+      <Cell>5. 运行支撑服务接收到服务运行状态的响应后，解析服务运行状态信息，进一步进行处理；</Cell>
+      <Cell>6.运行支撑服务调用服务运行状态查询接口，传入节点IP作为查询参数；</Cell>
+      <Cell>10.运行支撑服务接收到服务运行状态的响应后，解析服务运行状态信息，进一步进行处理。</Cell>
+      <Cell>2．系统收到查询请求，解析参数,如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2，如果存在此服务查询类型则通过参数获取服务名称；</Cell>
+      <Cell>3.系统根据服务名称，查询本地数据结构，如果不存在服务名则进入异常流E3；如果存在则获取服务运行状态；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.系统封装服务运行状态数据，返回服务运行状态结果；</Cell>
+      <Cell>7.系统收到查询请求，解析参数，如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2。如果存在此服务查询类型则通过参数获取服务IP；</Cell>
+      <Cell>8.系统根据节点IP，查询本地数据结构，如果不存在服务名则进入异常流E4；如果存在则获取服务运行状态；</Cell>
+      <Cell>9.系统封装服务运行状态数据，返回服务运行状态结果；</Cell>
+      <Cell>异常流E1：服务查询请求格式错误，解析失败返回格式错误信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：查询服务类型不存在，返回查询类型不存在错误信息。</Cell>
+      <Cell>异常流E3：没有该服务名的服务，返回服务不存在错误信息。</Cell>
+      <Cell>异常流E4：没有该IP的节点，返回节点不存在错误信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务占用资源查询（PZXQ-GN-FWXXGL-FWZYZYCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_36" type="other" title="服务资源状态监控用例描述" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：服务占用资源查询</Cell>
+      <Cell>Actors： 运行支撑服务</Cell>
+      <Cell>概述：本用例描述根据服务名称查询服务资源占用信息或者根据节点IP查询该节点上所有服务资源占用信息，资源占用信息包括CPU占用率、内存使用率、磁盘使用率等。</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.运行支撑服务调用服务运行状态查询接口，传入服务名称作为查询参数，设置查询类型；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.运行支撑服务接收到服务资源占用信息的响应后，解析服务资源占用信息，进一步进行处理；</Cell>
+      <Cell>6.运行支撑服务调用服务资源占用信息查询接口，传入节点IP作为查询参数；</Cell>
+      <Cell>10.运行支撑服务接收到服务资源占用信息的响应后，解析服务资源占用信息，进一步进行处理。</Cell>
+      <Cell>2．系统收到查询请求，解析参数,如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2，如果存在此服务查询类型则通过参数获取服务名称；</Cell>
+      <Cell>3.系统根据服务名称，查询本地数据结构，如果不存在服务名则进入异常流E3；如果存在则获取服务占用资源信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.系统封装服务资源占用信息数据，返回服务资源占用信息结果；</Cell>
+      <Cell>7.系统收到查询请求，解析参数，如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2。如果存在此服务查询类型则通过参数获取服务IP；</Cell>
+      <Cell>8.系统根据节点IP，查询本地数据结构，如果不存在服务名则进入异常流E4；如果存在则获取服务资源占用信息；</Cell>
+      <Cell>9.系统封装服务资源占用信息数据，返回服务资源占用信息结果；</Cell>
+      <Cell>异常流E1：服务查询请求格式错误，解析失败返回格式错误信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：查询服务类型不存在，返回查询类型不存在错误信息。</Cell>
+      <Cell>异常流E3：没有该服务名的服务，返回服务不存在错误信息。</Cell>
+      <Cell>异常流E4：没有该IP的节点，返回节点不存在错误信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务注册信息查询（PZXQ-GN-FWXXGL-FWZCXXCX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_37" type="other" title="服务注册信息查询" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：服务注册信息查询</Cell>
+      <Cell>Actors：运行支撑服务</Cell>
+      <Cell>概述：本用例描述根据服务名称查询服务注册信息或者根据节点IP查询该节点上所有服务注册信息，注册信息包括服务是否为自启动、服务类型、服务负载均衡类型等。</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.运行支撑服务调用服务注册信息查询接口，传入服务名称作为查询参数，设置查询类型；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.运行支撑服务接收到服务注册信息的响应后，解析服务注册信息，进一步进行处理；</Cell>
+      <Cell>6.运行支撑服务调用服务注册信息查询接口，传入节点IP作为查询参数；</Cell>
+      <Cell>10.运行支撑服务接收到服务注册信息的响应后，解析服务注册信息，进一步进行处理。</Cell>
+      <Cell>2．系统收到查询请求，解析参数,如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2，如果存在此服务查询类型则通过参数获取服务名称；</Cell>
+      <Cell>3.系统根据服务名称，查询本地数据结构，如果不存在服务名则进入异常流E3；如果存在则获取服务注册信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.系统封装服务注册信息数据，返回服务注册信息结果；</Cell>
+      <Cell>7.系统收到查询请求，解析参数，如果解析失败则进入异常流E1；如果参数解析成功判断查询类型，如果系统判断无此查询类型则进入异常流E2。如果存在此服务查询类型则通过参数获取服务IP；</Cell>
+      <Cell>8.系统根据节点IP，查询本地数据结构，如果不存在服务名则进入异常流E4；如果存在则获取服务注册信息；</Cell>
+      <Cell>9.系统封装服务注册信息数据，返回服务注册信息结果；</Cell>
+      <Cell>异常流E1：服务查询请求格式错误，解析失败返回格式错误信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：查询服务类型不存在，返回查询类型不存在错误信息。</Cell>
+      <Cell>异常流E3：没有该服务名的服务，返回服务不存在错误信息。</Cell>
+      <Cell>异常流E4：没有该IP的节点，返回节点不存在错误信息。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务注册信息汇总（PZXQ-GN-FWXXGL-FWZCXXHZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_38" type="other" title="服务注册信息汇总" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：服务注册信息汇总</Cell>
+      <Cell>Actors：服务运行控制</Cell>
+      <Cell>概述：本用例是服务运行控制在服务启动成功后，对服务预先配置的注册信息向系统上报相关数据，系统对服务注册信息进行汇总；</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务运行控制构造服务注册信息数据结构；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.服务运行控制调用服务注册信息上报接口；</Cell>
+      <Cell>1.系统启动监听端口，如果端口监听失败则进入异常流E1；如果端口监听成功，等待服务注册信息上报；</Cell>
+      <Cell>4.系统接收上报的服务注册信息，否则进入异常流E2；</Cell>
+      <Cell>5.系统解析上报服务注册信息数据结构，提取服务id、服务启动类型、服务负载均衡类型和服务启动位置等服务注册信息，如果解析提取失败进入异常流E3；</Cell>
+      <Cell>6.以服务id作为key值，服务注册信息作为键值，在本地数据结构中存储服务注册信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：端口被占用，端口监听失败，绑定新端口。</Cell>
+      <Cell>异常流E2：接收数据异常，检查网络连接是否正常。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务运行状态汇总（PZXQ-GN-FWXXGL-FWYXZTHZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_39" type="other" title="服务运行状态汇总" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：服务运行状态汇总</Cell>
+      <Cell>Actors：服务运行控制</Cell>
+      <Cell>概述：本用例是服务运行控制在服务启动成功后，对服务的运行状态信息向系统上报相关数据，系统对服务运行状态信息进行实时汇总；</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务运行控制构造服务运行状态信息数据结构；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.服务运行控制调用服务运行状态信息上报接口；</Cell>
+      <Cell>1.系统启动监听端口，如果端口监听失败则进入异常流E1；如果端口监听成功，等待服务注册信息上报；</Cell>
+      <Cell>4.系统接收上报的服务运行状态信息，否则进入异常流E2；</Cell>
+      <Cell>5.系统解析上报服务运行状态信息数据结构，提取服务id，如果解析提取失败进入异常流E3；</Cell>
+      <Cell>6.以服务id作为key值，服务运行状态信息作为键值，在本地数据结构中存储服务运行状态信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：端口被占用，端口监听失败，绑定新端口。</Cell>
+      <Cell>异常流E2：接收数据异常，检查网络连接是否正常。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务占用资源汇总（PZXQ-GN-FWXXGL-FWZYZYHZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_40" type="other" title="服务占用资源信息汇总" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：节点信息汇总</Cell>
+      <Cell>Actors：服务运行控制</Cell>
+      <Cell>概述：本用例是服务运行控制在系统运行过程中，对服务占用资源信息向系统上报相关数据，系统对服务资源占用信息进行汇总；</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务运行控制构造服务资源占用信息数据结构；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.服务运行控制调用服务资源占用信息上报接口；</Cell>
+      <Cell>1.系统启动监听端口，如果端口监听失败则进入异常流E1；如果端口监听成功，等待服务资源占用信息上报；</Cell>
+      <Cell>4.系统接收上报的服务资源占用信息，否则进入异常流E2；</Cell>
+      <Cell>5.系统解析上报服务资源占用信息数据结构，提取服务id，如果解析提取失败进入异常流E3；</Cell>
+      <Cell>6.以服务id作为key值，服务资源占用信息作为键值，在本地数据结构中存储服务资源占用信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：端口被占用，端口监听失败，绑定新端口。</Cell>
+      <Cell>异常流E2：接收数据异常，检查网络连接是否正常。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>节点信息汇总（PZXQ-GN-FWXXGL-JDXXHZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_41" type="other" title="节点信息汇总" section="3.2.4">
+    <Headers>
+      <Cell>Use Case 名称：节点信息汇总</Cell>
+      <Cell>Actors：服务运行控制</Cell>
+      <Cell>概述：本用例是在系统运行过程中，服务运行控制对节点状态信息向系统实时上报相关数据，系统对节点状态信息进行汇总；</Cell>
+      <Cell>前置条件：服务运行控制启动成功。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务运行控制构造节点信息数据结构；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.服务运行控制调用节点信息上报接口；</Cell>
+      <Cell>1.系统启动监听端口，如果端口监听失败则进入异常流E1；如果端口监听成功，等待服务注册信息上报；</Cell>
+      <Cell>4.系统接收上报的节点信息，否则进入异常流E2；</Cell>
+      <Cell>5.系统解析上报节点信息数据结构，提取服务id，如果解析提取失败进入异常流E3；</Cell>
+      <Cell>6.以服务id作为key值，节点信息作为键值，在本地数据结构中存储节点信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：端口被占用，端口监听失败，绑定新端口。</Cell>
+      <Cell>异常流E2：接收数据异常，检查网络连接是否正常。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.5" title="服务调度（PZXQ-GN-FWDD）" start_line="1854" req_id="PZXQ-GN-FWDD">
+    <Paragraph line="1856">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_17" section="3.2.5" />
+    <Paragraph line="1857">图 SEQ 图 \* ARABIC 14 服务调度用例图</Paragraph>
+    <Image image_id="IMG_18" section="3.2.5" figure_number="14" caption="服务调度用例图" />
+  </Section>
+  <Table table_id="T_42" type="other" title="服务信息管理所有能力能力标识" section="3.2.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务发现</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-FWDD-FWFX</Cell>
+      <Cell>服务访问代理向服务信息管理查询，自动发现所有服务信息和所有服务提供者位置</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.5</Cell>
+      <Cell>2</Cell>
+      <Cell>基于轮询的负载均衡</Cell>
+      <Cell>PZXQ-GN-FWDD-FWLXFZ</Cell>
+      <Cell>服务访问代理以轮询的方式将服务分发到不同主机，具有同一类服务的节点获得服务请求的概率相同</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>基于优先级的负载均衡</Cell>
+      <Cell>PZXQ-GN-FWDD-FWYXJFZ</Cell>
+      <Cell>按照预先配置的服务优先级将服务按比例分发到不同主机上，具有同一种服务的节点过的服务请求的概率与优先级成正比</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>4</Cell>
+      <Cell>基于主机负载的负载均衡</Cell>
+      <Cell>PZXQ-GN-FWDD-FWZJFZ</Cell>
+    </Row>
+    <Row>
+      <Cell>通过比较服务主机负载将服务分发到负载最小的主机上</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>服务故障迁移</Cell>
+      <Cell>PZXQ-GN-FWDD-FWGZQY</Cell>
+      <Cell>出现服务访问故障的请求自动调度到运行正常的服务</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 15 服务调度运行流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>服务发现（PZXQ-GN-FWDD-FWFX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_43" type="other" title="服务发现用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：服务发现</Cell>
+      <Cell>Actors： 服务访问代理、服务信息管理</Cell>
+      <Cell>概述：本用例描述通过服务名称获取服务的运行地址。</Cell>
+      <Cell>前置条件：服务访问代理与服务信息管理正常运行。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.服务访问代理发送服务请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.服务信息管理查询所有服务信息与服务提供者信息，将结果发送到系统；</Cell>
+      <Cell>8.服务访问代理接收到结果，对服务请求向目标服务提供者进行请求转发。</Cell>
+      <Cell>2.系统接收到服务请求；</Cell>
+      <Cell>3.系统解析参数，如果解析错误执行异常流E1；如果解析成功，提取出服务名称；</Cell>
+      <Cell>4.通过服务名称调用服务调度接口，如果调用失败执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.系统接收到服务提供者信息，通过负载均衡策略对节点进行选择；</Cell>
+      <Cell>7.将选择结果返回；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：系统解析参数失败，返回解析失败信息。</Cell>
+      <Cell>异常流E2：服务调度接口失败，返回调用失败信息。</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：无。</Cell>
+      <Cell>基于轮询的负载均衡（PZXQ-GN-FWDD-FWLXFZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_44" type="other" title="基于轮询的负载均衡用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：基于轮询的负载均衡</Cell>
+      <Cell>Actors：服务访问代理、服务信息管理</Cell>
+      <Cell>概述：本用例是将服务访问代理发送的请求按照轮询的方式分发到服务主机，实现负载均衡；</Cell>
+      <Cell>前置条件：数据库连接正常，服务管控程序连接正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务信息管理收到查询请求，返回服务的所有信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.服务访问代理发起服务地址查询请求；</Cell>
+      <Cell>9.服务访问代理接收到结果，提取服务实例主机IP和端口号.如果提取失败则进入异常流E2；</Cell>
+      <Cell>10.服务访问代理向该IP和端口号的服务转发请求；</Cell>
+      <Cell>11.服务访问代理接收到服务响应结果。</Cell>
+      <Cell>1.系统向服务信息管理查询所有服务的相关信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.系统解析数据，形成服务实例列表，为每个服务记录负载均衡策略以及调用信息，调用信息包括每个服务示例被调用的次数；</Cell>
+      <Cell>5.系统接收到查询请求，从参数中解析服务名称提取并存储数据结构，如果解析失败则进入异常流E1；</Cell>
+      <Cell>6.系统根据服务名称发现该服务使用基于轮询的服务负载均衡调度请求；</Cell>
+      <Cell>7.系统从实例列表中按序选择一个服务实例；</Cell>
+      <Cell>8.系统将该实例的相关信息返回给服务访问代理；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：参数解析失败。</Cell>
+      <Cell>异常流E2：主机IP端口异常。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>基于优先级的负载均衡（PZXQ-GN-FWDD-FWYXJFZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_45" type="other" title="基于优先级的负载均衡用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：基于优先级的负载均衡</Cell>
+      <Cell>Actors：服务访问代理、服务信息管理</Cell>
+      <Cell>概述：本用例是将服务访问代理发送的请求按照优先级的方式分发到服务主机，实现负载均衡；</Cell>
+      <Cell>前置条件：服务访问代理、服务信息管理正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务信息管理收到查询请求，返回服务的所有信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.服务访问代理发起服务地址查询请求；</Cell>
+      <Cell>9.服务访问代理接收到结果，提取服务实例主机IP和端口号.如果提取失败则进入异常流E2；</Cell>
+      <Cell>10.服务访问代理向该IP和端口号的服务转发请求；</Cell>
+      <Cell>11.服务访问代理接收到服务响应结果。</Cell>
+      <Cell>1.系统向服务信息管理查询所有服务的相关信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.系统解析数据，形成服务实例列表，为每个服务记录负载均衡策略以及调用信息，调用信息包括每个服务示例被调用的优先级；</Cell>
+      <Cell>5.系统接收到查询请求，提取服务名称，如果参数解析失败执行异常流E1；</Cell>
+      <Cell>6.系统根据服务名称发现该服务使用基于优先级的服务负载均衡调度请求；</Cell>
+      <Cell>7.系统按照优先级大小决定调用服务实例的概率，服务的优先级越高被调用的概率越高；服务的优先级越低则被调用的概率越低；</Cell>
+      <Cell>8.系统将实例返回给服务访问代理；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：请求解析失败，返回错误代码。</Cell>
+      <Cell>异常流E2：服务访问代理解析数据失败，返回错误码。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>基于主机负载的负载均衡（PZXQ-GN-FWDD-FWZJFZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_46" type="other" title="基于主机负载的负载均衡用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：基于主机负载的负载均衡</Cell>
+      <Cell>Actors：服务访问代理、服务信息管理</Cell>
+      <Cell>概述：本用例是将服务访问代理发送的请求分发到主机负载最小的服务主机，实现负载均衡；</Cell>
+      <Cell>前置条件：服务访问代理、服务信息管理正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.服务信息管理收到查询请求，返回服务的所有信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.服务访问代理发起服务地址查询请求；</Cell>
+      <Cell>9.服务访问代理接收到结果，提取服务实例主机IP和端口号.如果提取失败则进入异常流E2；</Cell>
+      <Cell>10.服务访问代理向该IP和端口号的服务转发请求；</Cell>
+      <Cell>11.服务访问代理接收到服务响应结果。</Cell>
+      <Cell>1.系统向服务信息管理查询所有服务的相关信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.系统解析数据，形成服务实例列表，为每个服务记录负载均衡策略以及调用信息，调用信息包括每个服务示例主机负载，能够反映CPU占用率、内存占用大小、线程数大小以及端口的占用情况；</Cell>
+      <Cell>5.系统接收到查询请求，提取服务名称，如果解析失败执行异常流E1</Cell>
+      <Cell>6.系统根据服务名称发现所有等于该服务名称且使用基于主机负载的服务负载均衡调度请求；</Cell>
+      <Cell>7.系统查找主机负载最小的服务实例；如果主机负载相同，则从中随机选择服务实例；</Cell>
+      <Cell>8.系统返回服务实例；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：请求解析失败，返回错误代码。</Cell>
+      <Cell>异常流E2：服务访问代理解析数据失败，返回错误码。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务故障迁移（PZXQ-GN-FWDD-FWGZQY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_47" type="other" title="服务故障迁移用例描述" section="3.2.5">
+    <Headers>
+      <Cell>Use Case 名称：服务故障迁移</Cell>
+      <Cell>Actors：服务访问代理、服务信息管理</Cell>
+      <Cell>概述：本用例是在用户无感知的情况下，将访问故障服务的请求调度到运行正常的服务器上，从而不影响用户的使用体验提高服务的质量；</Cell>
+      <Cell>前置条件：服务访问代理和服务信息管理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>3.服务访问代理访问服务发现服务响应异常；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.服务访问代理向系统上报错误信息，包括服务位置、服务名称等；</Cell>
+      <Cell>5.服务访问代理发出服务地址查询信息；</Cell>
+      <Cell>7.服务访问代理接收包含服务地址的响应；</Cell>
+      <Cell>8.服务访问代理再次访问服务</Cell>
+      <Cell>9.服务访问代理接收到正常响应，如果响应异常则进入异常流E2。</Cell>
+    </Row>
+    <Row>
+      <Cell>1.系统向服务信息管理查询所有服务的相关信息；</Cell>
+      <Cell>2.系统解析查询到的服务信息，生成可用服务列表，解析失败进行异常流E1；</Cell>
+      <Cell>6.系统接收到信息，查询可用的服务信息，构造服务名称和服务位置的数据结构返回；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：数据解析失败，返回错误码。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：服务响应失败，进行服务迁移。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.6" title="服务访问代理（PZXQ-GN-FWFWDL）" start_line="2102" req_id="PZXQ-GN-FWFWDL">
+    <Paragraph line="2103">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_19" section="3.2.6" />
+    <Paragraph line="2104">图 SEQ 图 \* ARABIC 16 服务访问代理用例图</Paragraph>
+    <Image image_id="IMG_20" section="3.2.6" figure_number="16" caption="服务访问代理用例图" />
+  </Section>
+  <Table table_id="T_48" type="other" title="服务访问代理所有能力标识" section="3.2.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>服务访问路由</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-FWJCKJ-GN-FWFWLY</Cell>
+      <Cell>支持将服务请求发送到具体的服务实例</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.5</Cell>
+      <Cell>2</Cell>
+      <Cell>服务响应转发</Cell>
+      <Cell>PZXQ-FWJCKJ-GN-FWXYZF</Cell>
+      <Cell>支持将服务响应发给服务访问发起者</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务访问信息记录</Cell>
+      <Cell>PZXQ-FWJCKJ-GN-FWFWJL</Cell>
+      <Cell>服务调用发起的时间、调用方法、响应状态码进行记录</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>4</Cell>
+      <Cell>服务访问信息维护</Cell>
+      <Cell>PZXQ-FWJCKJ-GN-FWFWWH</Cell>
+    </Row>
+    <Row>
+      <Cell>服务请求数据中提取会话信息进行维护</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>向前端推送消息</Cell>
+      <Cell>PZXQ-FWJCKJ-GN-QDTSXX</Cell>
+      <Cell>支持后台程序主动向前端界面推送数据</Cell>
+      <Cell>新增</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.5</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 17 服务访问代理运行流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>服务访问路由（PZXQ-GN-FWFWDL-FWFWLY）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_49" type="other" title="服务访问路由生成用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：服务访问路由</Cell>
+      <Cell>Actors：界面集成框架、服务调度</Cell>
+      <Cell>概述：本用例是界面集成框架调用服务，通过服务访问代理查询服务进行透明统一访问；</Cell>
+      <Cell>前置条件：网络正常，服务运行控制、服务访问代理、服务信息管理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.界面集成框架向服务访问代理发送服务访问请求，内容包括服务标识、服务名称、插件名称和调用服务接口；</Cell>
+    </Row>
+    <Row>
+      <Cell>7.服务调度接收服务发现请求，运行负载均衡算法，返回结果；</Cell>
+      <Cell>10.界面集成框架接收到响应结果进行下一步处理。</Cell>
+      <Cell>1.系统循环向本地控制器进行服务的信息查询，不断更新服务清单和状态信息；</Cell>
+      <Cell>3.系统接收到服务访问请求，进行内容解析；如果内容解析错误，执行异常流E1；</Cell>
+      <Cell>4.通过解析出的服务名称，进行本地服务查询，如果查询到服务在本地，将转发地址设置为本地服务地址；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.如果本地不存在访问的服务名称，则向服务调度进行服务发现，查询远端服务地址；</Cell>
+      <Cell>8.系统接收服务调度返回的结果，将转发地址设置为返回的服务地址；</Cell>
+      <Cell>9.系统将请求的响应返回；如果查询不到服务执行异常流E2，如果服务返回结果异常，则执行异常流E3；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：日志输出HTTP请求错误，用例结束。</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E2：日志输出服务不存在，访问失败，用例结束。</Cell>
+      <Cell>异常流E3：日志输出返回结果失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务响应转发（PZXQ-GN-FWFWDL-FWXYZF）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_50" type="other" title="访问响应转发生成用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：服务响应转发</Cell>
+      <Cell>Actors：界面集成框架、应用软件</Cell>
+      <Cell>概述：本用例是服务访问响应转发用例场景；</Cell>
+      <Cell>前置条件：网络正常，服务运行控制、服务访问代理、服务信息管理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架发出服务访问请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.应用软件接收服务访问请求，返回响应结果；</Cell>
+      <Cell>7.界面集成框架接收到响应内容进行业务逻辑处理。</Cell>
+      <Cell>2.系统接收到请求，进行服务发现，查询服务地址；</Cell>
+      <Cell>3．系统转发请求到应用程序需，如果没有查询到服务，执行异常流E1；</Cell>
+      <Cell>5.系统接收到响应头和响应体，通过服务访问的频率对内容进行缓存；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.系统将响应内容进行转发，转发过程中如果发生异常则执行异常流E2；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：日志输出服务不存在，访问失败，用例结束。</Cell>
+      <Cell>异常流E2：日志输出返回结果失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>服务访问信息记录（PZXQ-GN-FWFWDL-FWFWJL）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_51" type="other" title="服务访问信息记录用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：服务访问信息记录</Cell>
+      <Cell>Actors：界面集成框架</Cell>
+      <Cell>概述：本用例是对服务访问的基本信息进行记录保存；</Cell>
+      <Cell>前置条件：网络正常，服务访问代理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架发送服务访问请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.用户打开信息记录文件，可以查看到每一次服务访问请求的基本信息。</Cell>
+      <Cell>2.系统收到请求，接收请求体，对请求体进行解析，然后对服务访问做逻辑处理和判断，调用处理函数；</Cell>
+      <Cell>3.系统获取服务调用的发起时间、调用方法、响应状态码等信息；</Cell>
+      <Cell>4.系统将请求访问信息保存到指定的地址文件中，如果保存过程中失败，执行异常流E1；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示信息记录保存失败，文件不存在。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>服务访问信息维护（PZXQ-GN-FWFWDL-FWFWWH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_52" type="other" title="服务访问信息维护用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：服务访问信息维护</Cell>
+      <Cell>Actors：界面集成框架、应用软件</Cell>
+      <Cell>概述：本用例是对服务响应的数据中加入会话信息；</Cell>
+      <Cell>前置条件：网络正常，服务访问代理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架发送服务访问请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>3.应用软件接收到访问请求，调用会话信息植入接口,将会话信息随响应数据写入响应信息中；</Cell>
+      <Cell>5.界面集成框架根据业务需求在服务响应数据中获取植入的会话信息。</Cell>
+      <Cell>2.系统收到请求，转发服务访问请求到应用程序，若访问请求处理异常,执行异常流E1；</Cell>
+      <Cell>4.系统将服务响应返回；如果数据返回异常，执行异常流E2；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：日志输出请求处理失败，用例结束。</Cell>
+      <Cell>异常流E2：日志输出返回结果失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>向前端推送消息（PZXQ-GN-FWFWDL-QDTSXX）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_53" type="other" title="向前端推送消息发生成用例描述" section="3.2.6">
+    <Headers>
+      <Cell>Use Case 名称：向前端推送消息</Cell>
+      <Cell>Actors：界面集成框架、应用软件</Cell>
+      <Cell>概述：本用例是服务访问代理向前端推送消息的过程；</Cell>
+      <Cell>前置条件：网络正常，服务访问代理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.应用软件调用向前端推送消息的操作；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.界面集成框架获得数据，执行下一步操作；</Cell>
+      <Cell>2.系统对需要推送的消息数据进行json封装；</Cell>
+      <Cell>3.系统调用消息推送接口，按照推送消息数据的内容，长度和上下文推送到指定目标地址和端口上；</Cell>
+      <Cell>4.系统通过推送通道向界面集成框架发送数据；</Cell>
+      <Cell>6.系统产生网络IO错误则执行异常流E1；如果推送成功，清除缓冲区关闭网络端口资源。</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：系统提示IO错误，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.2.7" title="静态请求处理（PZXQ-GN-JTQQCL）" start_line="2308" req_id="PZXQ-GN-JTQQCL">
+    <Paragraph line="2309">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_21" section="3.2.7" />
+    <Paragraph line="2310">图 SEQ 图 \* ARABIC 18 静态请求处理用例图</Paragraph>
+    <Image image_id="IMG_22" section="3.2.7" figure_number="18" caption="静态请求处理用例图" />
+  </Section>
+  <Table table_id="T_54" type="other" title="静态请求处理所有能力标识" section="3.2.7">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>静态资源请求处理</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-JTQQCL-JTQQCL</Cell>
+      <Cell>接收获取HTML、CSS等资源的请求，进行处理，返回静态资源文件</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.6</Cell>
+      <Cell>2</Cell>
+      <Cell>文件上传</Cell>
+      <Cell>PZXQ-GN-JTQQCL-WJSC</Cell>
+      <Cell>支持对文件上传到指定位置，包括文件的大小和名称等信息</Cell>
+    </Row>
+    <Row>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.6</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>文件下载</Cell>
+      <Cell>PZXQ-GN-JTQQCL-WJXZ</Cell>
+      <Cell>通过文件资源路径下载文件</Cell>
+      <Cell>新增</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.6</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 19 静态请求处理运行流程图</Cell>
+      <Cell>静态资源请求处理（PZXQ-GN-JTQQCL-JTQQCL）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_55" type="other" title="静态资源请求处理发生成用例描述" section="3.2.7">
+    <Headers>
+      <Cell>Use Case 名称：静态资源请求处理</Cell>
+      <Cell>Actors：界面集成框架</Cell>
+      <Cell>概述：本用例是根据请求信息返回对应的静态资源文件；</Cell>
+      <Cell>前置条件：静态资源正常、网络正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架发送静态资源访问请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.界面集成框架接收资源内容；</Cell>
+      <Cell>2.系统接收静态资源请求，解析接收到的服务请求；</Cell>
+      <Cell>3.系统通过请求标识识别出请求的静态资源，在配置好的静态资源路径下进行查找；</Cell>
+      <Cell>4.如果发现静态资源，查找成功；如果未找到静态资源，则执行异常流E1；</Cell>
+      <Cell>5.系统对静态资源数据进行返回；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：日志输出静态资源不存在，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>文件上传（PZXQ-GN-JTQQCL-WJSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_56" type="other" title="文件上传用例描述" section="3.2.7">
+    <Headers>
+      <Cell>Use Case 名称：文件上传</Cell>
+      <Cell>Actors：界面集成框架</Cell>
+      <Cell>概述：本用例是文件上传的过程；</Cell>
+      <Cell>前置条件：网络正常，服务访问代理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架触发文件上传功能；</Cell>
+    </Row>
+    <Row>
+      <Cell>6.界面集成框架收到上传文件信息进行下一步操作。</Cell>
+      <Cell>2.系统根据文件的上传配置文件，对上传文件的大小、上传速度进行控制；</Cell>
+      <Cell>3.系统收到请求，接收请求体，对请求体进行解析，同时将获取上传文件的位置、大小、名称等信息；</Cell>
+      <Cell>4.系统将文件存储在磁盘中，如果存储过程中失败，执行异常流E1；</Cell>
+      <Cell>5. 将上传文件的基本信息保存返回给发送请求端；</Cell>
+    </Row>
+    <Row>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+      <Cell>异常流E1：系统提示上传失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>文件下载（PZXQ-GN-JTQQCL-WJXZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_57" type="other" title="文件下载用例描述" section="3.2.7">
+    <Headers>
+      <Cell>Use Case 名称：文件下载</Cell>
+      <Cell>Actors：界面集成框架</Cell>
+      <Cell>概述：本用例是文件下载的过程；</Cell>
+      <Cell>前置条件：网络正常，服务访问代理运行正常。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.界面集成框架发送文件下载请求；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.界面集成框架获取下载的文件进行下一步操作。</Cell>
+      <Cell>2.系统收到下载请求，解析下载的路由地址；如果路由地址解析正确，进行文件查找，如果解析错误，执行异常流E1；</Cell>
+      <Cell>3.系统查询下载文件是否存在磁盘中，如果存在，从磁盘中读文件数据，如果文件不存在，执行异常流E2；</Cell>
+      <Cell>4.系统将请求下载的文件返回；</Cell>
+      <Cell>校验输入参数的合法性，并在错误发生时，提供详细的错误信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示下载地址不正确，用例结束。</Cell>
+      <Cell>异常流E2：系统提示下载失败，文件不存在，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="2430" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="2431">
+    <Paragraph line="2432">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_23" section="3.4.1" />
+    <Paragraph line="2433">图 SEQ 图 \* ARABIC 20 服务集成框架外部接口需求</Paragraph>
+    <Image image_id="IMG_24" section="3.4.1" figure_number="20" caption="服务集成框架外部接口需求" />
+  </Section>
+  <Table table_id="T_58" type="qualification" title="服务集成框架外部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>与运行支撑服务的接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-WBJK-FWJCKJ-YXZC</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>本系统</Cell>
+      <Cell>查询指令</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>本系统</Cell>
+      <Cell>管控指令</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>API接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>日志信息</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+      <Cell>与界面集成框架的接口</Cell>
+      <Cell>PZXQ-WBJK-FWJCKJ-JMJC</Cell>
+      <Cell>网络接口</Cell>
+    </Row>
+    <Row>
+      <Cell>界面集成框架</Cell>
+      <Cell>本系统</Cell>
+      <Cell>服务访问请求</Cell>
+      <Cell>高</Cell>
+      <Cell>网络接口</Cell>
+    </Row>
+    <Row>
+      <Cell>界面集成框架</Cell>
+      <Cell>本系统</Cell>
+      <Cell>静态资源请求</Cell>
+      <Cell>高</Cell>
+      <Cell>网络接口</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>界面集成框架</Cell>
+      <Cell>推送数据</Cell>
+      <Cell>高</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>与软件部署管理的接口</Cell>
+      <Cell>PZXQ-WBJK-FWJCKJ-BSGL</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>软件部署管理</Cell>
+    </Row>
+    <Row>
+      <Cell>服务清单信息</Cell>
+      <Cell>高</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>软件部署管理</Cell>
+    </Row>
+    <Row>
+      <Cell>服务启动优先级信息</Cell>
+      <Cell>高</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>软件部署管理</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>服务更新信息</Cell>
+      <Cell>高</Cell>
+      <Cell>4</Cell>
+      <Cell>与用户之间接口</Cell>
+      <Cell>PZXQ-WBJK-FWJCKJ-RJJH</Cell>
+    </Row>
+    <Row>
+      <Cell>人机接口</Cell>
+      <Cell>用户</Cell>
+      <Cell>本系统</Cell>
+      <Cell>键盘输入信息</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>与应用软件接口</Cell>
+      <Cell>PZXQ-WBJK-FWJCKJ-YYRJ</Cell>
+      <Cell>API接口</Cell>
+      <Cell>应用软件</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>请求数据</Cell>
+      <Cell>中</Cell>
+      <Cell>API接口</Cell>
+      <Cell>应用软件</Cell>
+    </Row>
+    <Row>
+      <Cell>本系统</Cell>
+      <Cell>响应数据</Cell>
+      <Cell>中</Cell>
+      <Cell>API接口</Cell>
+      <Cell>本系统</Cell>
+    </Row>
+    <Row>
+      <Cell>应用软件</Cell>
+      <Cell>推送数据</Cell>
+      <Cell>中</Cell>
+      <Cell>6</Cell>
+      <Cell>与文件系统接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-WBJK-FWJCKJ-JTWJ</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>本系统</Cell>
+      <Cell>文件系统</Cell>
+      <Cell>静态资源文件</Cell>
+    </Row>
+    <Row>
+      <Cell>中</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.2" title="与运行支撑服务接口（PZXQ-WBJK-FWJCKJ-YXZC）" start_line="2531" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_59" type="other" title="与运行支撑服务接口数据元素说明" section="3.3.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>查询指令</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研服务运行调度规范</Cell>
+    </Row>
+    <Row>
+      <Cell>节点IP</Cell>
+      <Cell>字符串</Cell>
+      <Cell>查询类型</Cell>
+      <Cell>整型</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>管控指令</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>动作类型</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>日志信息</Cell>
+      <Cell>日志级别</Cell>
+      <Cell>整型</Cell>
+      <Cell>日志消息</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>格式信息</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.3" title="与软件部署管理接口（PZXQ-WBJK-FWJCKJ-BSGL）" start_line="2561" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_60" type="other" title="与软件部署管理接口数据元素说明" section="3.3.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务清单</Cell>
+      <Cell>适用平台</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研服务运行调度规范</Cell>
+    </Row>
+    <Row>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>服务中文名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>服务类型</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>可执行程序名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>启动参数</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>启动方式</Cell>
+      <Cell>字符串</Cell>
+      <Cell>版本号</Cell>
+      <Cell>字符串</Cell>
+      <Cell>访问优先级</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>负载策略</Cell>
+      <Cell>字符串</Cell>
+      <Cell>工作路径</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>启动环境变量</Cell>
+      <Cell>字符串</Cell>
+      <Cell>依赖库</Cell>
+      <Cell>字符串</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>服务启动优先级</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>启动优先级</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>服务更新信息</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>整型</Cell>
+      <Cell>操作类型</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.4" title="与界面集成框架接口（PZXQ-WBJK-FWJCKJ-JMJC）" start_line="2609" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_61" type="other" title="与界面集成框架接口数据元素说明" section="3.3.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务访问请求</Cell>
+      <Cell>请求方法</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研界面集成规范</Cell>
+    </Row>
+    <Row>
+      <Cell>请求参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>服务请求URL</Cell>
+      <Cell>字符串</Cell>
+      <Cell>服务请求数据</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>2</Cell>
+      <Cell>静态资源请求</Cell>
+      <Cell>请求方法</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>请求参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>请求URL</Cell>
+      <Cell>字符串</Cell>
+      <Cell>请求数据</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>3</Cell>
+      <Cell>推送数据</Cell>
+      <Cell>推送数据</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>通道标识</Cell>
+      <Cell>整型</Cell>
+      <Cell>数据长度</Cell>
+      <Cell>整型</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.5" title="与应用软件接口（PZXQ-WBJK-FWJCKJ-YYRJ）" start_line="2645" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_62" type="other" title="与应用软件接口数据元素说明" section="3.3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>请求数据</Cell>
+      <Cell>请求方法</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>请求参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>请求数据</Cell>
+      <Cell>字符串</Cell>
+      <Cell>请求数据长度</Cell>
+    </Row>
+    <Row>
+      <Cell>整型</Cell>
+      <Cell>2</Cell>
+      <Cell>响应数据</Cell>
+      <Cell>响应类型</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>响应长度</Cell>
+      <Cell>整型</Cell>
+      <Cell>响应数据</Cell>
+      <Cell>字符串</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>推送数据</Cell>
+      <Cell>推送数据</Cell>
+      <Cell>字符串</Cell>
+      <Cell>数据长度</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>通道标识</Cell>
+      <Cell>整型</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.6" title="与用户接口（PZXQ-WBJK-FWJCKJ-RJJK）" start_line="2679" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_63" type="other" title="与用户接口数据元素说明" section="3.3.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>键盘输入数据</Cell>
+      <Cell>输入数据</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研界面设计规范</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3.7" title="与文件系统接口（PZXQ-WBJK-FWJCKJ-JTWJ）" start_line="2692" req_id="PZXQ-WBJK-FWJCKJ" />
+  <Table table_id="T_64" type="other" title="与文件系统接口数据元素说明" section="3.3.7">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>静态资源文件</Cell>
+      <Cell>静态资源描述</Cell>
+      <Cell>字符串</Cell>
+      <Cell>某试点建设装备配套科研界面集成规范</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="2704" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="2705">
+    <Paragraph line="2706">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_25" section="3.4.1" />
+    <Paragraph line="2707">图 SEQ 图 \* ARABIC 21服务集成框架内部接口需求</Paragraph>
+    <Image image_id="IMG_26" section="3.4.1" figure_number="21" caption="服务集成框架内部接口需求" />
+  </Section>
+  <Table table_id="T_65" type="qualification" title="服务集成框架内部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>服务部署管理与服务运行控制接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-NBJK-FWJCKJ-FWQD</Cell>
+      <Cell>API接口</Cell>
+      <Cell>服务部署管理</Cell>
+      <Cell>服务运行控制</Cell>
+      <Cell>服务启动信息</Cell>
+    </Row>
+    <Row>
+      <Cell>低</Cell>
+      <Cell>2</Cell>
+      <Cell>服务部署管理与服务信息管理接口</Cell>
+      <Cell>PZXQ-NBJK-FWJCKJ-FWZC</Cell>
+      <Cell>网络接口</Cell>
+    </Row>
+    <Row>
+      <Cell>服务部署管理</Cell>
+      <Cell>服务运行控制</Cell>
+      <Cell>服务描述信息</Cell>
+      <Cell>低</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务运行控制与服务信息管理接口</Cell>
+      <Cell>PZXQ-NBJK-FWJCKJ-ZTJS</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>服务运行控制</Cell>
+      <Cell>服务状态监视</Cell>
+    </Row>
+    <Row>
+      <Cell>运行状态信息</Cell>
+      <Cell>低</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>服务运行控制</Cell>
+      <Cell>服务状态监视</Cell>
+    </Row>
+    <Row>
+      <Cell>资源占用信息</Cell>
+      <Cell>低</Cell>
+      <Cell>4</Cell>
+      <Cell>服务信息管理与服务调度的关系</Cell>
+      <Cell>PZXQ-NBJK-FWJCKJ-FWDD</Cell>
+    </Row>
+    <Row>
+      <Cell>API接口</Cell>
+      <Cell>服务状态监视</Cell>
+      <Cell>服务调度</Cell>
+      <Cell>服务汇总信息</Cell>
+      <Cell>低</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>服务访问代理与服务调度的关系</Cell>
+      <Cell>PZXQ-NBJK-FWJCKJ-FWDL</Cell>
+      <Cell>网络接口</Cell>
+      <Cell>服务访问代理</Cell>
+    </Row>
+    <Row>
+      <Cell>服务调度</Cell>
+      <Cell>服务运行地址</Cell>
+      <Cell>低</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.2" title="服务部署与运行控制接口（PZXQ-NBJK-FWJCKJ-FWQD）" start_line="2763" req_id="PZXQ-NBJK-FWJCKJ" />
+  <Table table_id="T_66" type="other" title="服务部署与运行控制数据元素说明" section="3.4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务启动信息</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>服务类型</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>可执行程序名</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>启动参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动方式</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>工作路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>启动环境变量</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>依赖服务</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>启动优先级</Cell>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.3" title="运行控制与信息管理接口（PZXQ-NBJK-FWJCKJ-ZTJS）" start_line="2799" req_id="PZXQ-NBJK-FWJCKJ" />
+  <Table table_id="T_67" type="other" title="服务部署与运行控制数据元素说明" section="3.4.3">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>运行状态信息</Cell>
+      <Cell>服务id</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>状态</Cell>
+      <Cell>枚举型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动次数</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>运行地址</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>监听端口</Cell>
+    </Row>
+    <Row>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>2</Cell>
+      <Cell>资源占用信息</Cell>
+      <Cell>服务id</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>进程id</Cell>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU占用率</Cell>
+      <Cell>浮点型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>内存占用率</Cell>
+      <Cell>浮点型</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>3</Cell>
+      <Cell>节点信息</Cell>
+      <Cell>地址</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>系统类型</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>平台类型</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>服务数量</Cell>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>启动时间</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>节点CPU占用率</Cell>
+      <Cell>浮点型</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>节点磁盘占用率</Cell>
+      <Cell>浮点型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>节点内存占用率</Cell>
+    </Row>
+    <Row>
+      <Cell>浮点型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.4" title="服务部署与信息管理接口（PZXQ-NBJK-FWJCKJ-FWZC）" start_line="2863" req_id="PZXQ-NBJK-FWJCKJ" />
+  <Table table_id="T_68" type="other" title="服务部署与状态监视数据元素说明" section="3.4.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务描述信息</Cell>
+      <Cell>适用平台</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>服务中文名称</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>服务类型</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>可执行程序名</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>启动方式</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>版本号</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>访问优先级</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>负载策略</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>工作路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>启动环境变量</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>依赖库</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.5" title="信息管理与服务调度接口（PZXQ-NBJK-FWJCKJ-FWDD）" start_line="2911" req_id="PZXQ-NBJK-FWJCKJ" />
+  <Table table_id="T_69" type="other" title="服务部署与运行控制数据元素说明" section="3.4.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>服务汇总信息</Cell>
+      <Cell>适用平台</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>服务id</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>服务中文名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>服务类型</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>可执行程序名</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>启动参数</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动方式</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>版本号</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>访问优先级</Cell>
+    </Row>
+    <Row>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>负载策略</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>工作路径</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动环境变量</Cell>
+      <Cell>字符串</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>依赖服务</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>状态</Cell>
+    </Row>
+    <Row>
+      <Cell>枚举型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>启动次数</Cell>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>运行地址</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>监听端口</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>进程id</Cell>
+      <Cell>整型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>CPU占用率</Cell>
+    </Row>
+    <Row>
+      <Cell>浮点型</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>内存占用率</Cell>
+      <Cell>浮点型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.6" title="服务代理与服务调度接口（PZXQ-NBJK-FWJCKJ-FWDL）" start_line="2984" req_id="PZXQ-NBJK-FWJCKJ" />
+  <Table table_id="T_70" type="other" title="服务代理与服务调度接口数据元素说明" section="3.4.6">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>运行状态信息</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+    <Row>
+      <Cell>服务运行地址</Cell>
+      <Cell>字符串</Cell>
+      <Cell>自定义标准</Cell>
+      <Cell>监听端口</Cell>
+      <Cell>整型</Cell>
+    </Row>
+    <Row>
+      <Cell>自定义标准</Cell>
+      <Cell>服务状态</Cell>
+      <Cell>枚举型</Cell>
+      <Cell>自定义标准</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="3005" />
+  <Table table_id="T_71" type="modification" title="服务集成框架内部数据汇总表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据名称</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>相关功能及标识</Cell>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>服务部署信息</Cell>
+      <Cell>服务名称、适用平台、服务中文名称、服务类型、可执行程序名、启动参数、启动方式、版本号、访问优先级、负载策略、工作路径、启动环境变量、运行依赖库</Cell>
+    </Headers>
+    <Row>
+      <Cell>服务描述</Cell>
+      <Cell>-</Cell>
+      <Cell>2</Cell>
+      <Cell>节点监视信息</Cell>
+      <Cell>地址、系统类型、平台类型、负载值、启动时间</Cell>
+      <Cell>节点监视</Cell>
+      <Cell>-</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>服务监视信息</Cell>
+      <Cell>服务名称、启动位置、运行地址、运行端口、启动次数、状态、进程id、CPU占用率、内存占用率</Cell>
+      <Cell>服务监视</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_72" type="other" title="服务部署信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>备注</Cell>
+      <Cell>适用平台</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>64</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>服务中文名称</Cell>
+    </Row>
+    <Row>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>服务类型</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>可执行程序名</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>启动参数</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>启动方式</Cell>
+      <Cell>64</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>版本号</Cell>
+    </Row>
+    <Row>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+    </Row>
+    <Row>
+      <Cell>访问优先级</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>负载策略</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>工作路径</Cell>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>启动环境变量</Cell>
+      <Cell>256</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+      <Cell>依赖库</Cell>
+    </Row>
+    <Row>
+      <Cell>256</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+      <Cell>字符</Cell>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_73" type="other" title="服务监视信息数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>服务名称</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>启动位置</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>运行地址</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>运行端口</Cell>
+      <Cell>65535</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>启动次数</Cell>
+      <Cell>256</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>状态</Cell>
+      <Cell>8</Cell>
+      <Cell>-1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>进程id</Cell>
+      <Cell>100</Cell>
+      <Cell>1024</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>CPU使用率</Cell>
+      <Cell>1600</Cell>
+      <Cell>0</Cell>
+      <Cell>0.01</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>内存占用率</Cell>
+      <Cell>100</Cell>
+      <Cell>0</Cell>
+      <Cell>0.01</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_74" type="other" title="节点监视信息数据描述" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>最大值</Cell>
+      <Cell>最小值</Cell>
+      <Cell>精度</Cell>
+    </Headers>
+    <Row>
+      <Cell>单位</Cell>
+      <Cell>地址</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>系统类型</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>平台类型</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>服务类型</Cell>
+      <Cell>64</Cell>
+      <Cell>1</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>字符</Cell>
+      <Cell>服务数量</Cell>
+      <Cell>200</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>运行时间</Cell>
+      <Cell>4294967295</Cell>
+      <Cell>0</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>秒</Cell>
+      <Cell>节点CPU占用率</Cell>
+      <Cell>1600</Cell>
+      <Cell>0</Cell>
+      <Cell>0.01</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>节点内存使用率</Cell>
+      <Cell>100</Cell>
+      <Cell>0</Cell>
+      <Cell>0.01</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+      <Cell>节点磁盘使用率</Cell>
+      <Cell>100</Cell>
+      <Cell>0</Cell>
+      <Cell>0.01</Cell>
+    </Row>
+    <Row>
+      <Cell>-</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.6" title="适应性需求" start_line="3248">
+    <Paragraph line="3249">a）采用跨平台开发工具及开发环境，确保软件能适应不同硬件环境（如桌面平台、手持平台等），具有在多种国产操作系统运行适配能力；</Paragraph>
+    <Paragraph line="3250">b）后台服务按照处理器、操作系统的运行条件，根据自身功能要求分别编译生成桌面、平板、手持等不同形态；</Paragraph>
+    <Paragraph line="3251">c）系统运行时能够根据系统登录者席位身份，加载不同的界面和服务，支持业务功能灵活重组；</Paragraph>
+    <Paragraph line="3252">d）依据在桌面、平板、手持不同硬件形态，通过软件部署管理自动下载、安装相应环境的软件包，实现多平台运行。</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="3253" />
+  <Section section_id="3.7" title="表 SEQ 表 \* ARABIC 76 服务集成框架安全性需求" start_line="3254">
+    <Paragraph line="3255">序号</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="3256">
+    <Paragraph line="3257">详细说明</Paragraph>
+    <Paragraph line="3259">服务管控接口</Paragraph>
+    <Paragraph line="3260">接收信息合法性检查</Paragraph>
+    <Paragraph line="3262">服务信息查询</Paragraph>
+    <Paragraph line="3263">接口信息合法性检查</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="3264" />
+  <Section section_id="3.8" title="服务集成框架无特殊保密性需求，在服务集成框架集成为系统后，随系统所集成的保密相关功能完成加密存储或加密交互，同时在系统安装和软件运行时设定权限密码。" start_line="3265" />
+  <Section section_id="3.9" title="CSCI环境需求" start_line="3266" />
+  <Section section_id="3.9.1" title="运行环境需求" start_line="3267" />
+  <Table table_id="T_75" type="other" title="软件运行环境" section="3.9.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备</Cell>
+      <Cell>名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>软件要求</Cell>
+    </Headers>
+    <Row>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>操作系统：元心 V4.1.1</Cell>
+      <Cell>数据库：SQLite V3.0.0</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>操作系统：银河麒麟 V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="3323">
+    <Paragraph line="3324">a）操作系统：银河麒麟V4.0.2；</Paragraph>
+    <Paragraph line="3325">b）开发工具：QtV5.9.6；</Paragraph>
+    <Paragraph line="3326">c）办公软件：wps-officeV10.1.0.7490。</Paragraph>
+    <Paragraph line="3327">d ) 数据库管理系统：达梦数据库V7.6和SQLite 3.0；</Paragraph>
+    <Paragraph line="3328">e ) 编程语言：C/C++。</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="3329" />
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="3330" />
+  <Table table_id="T_76" type="other" title="计算机硬件配置需求" section="3.10.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+      <Cell>处理器：16核</Cell>
+    </Headers>
+    <Row>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+    </Row>
+    <Row>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+    </Row>
+    <Row>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+    </Row>
+    <Row>
+      <Cell>存储：不小于256GB</Cell>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>综合信息终端</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.6GHz</Cell>
+      <Cell>内存：不小于6GB</Cell>
+      <Cell>存储：不小于128GB</Cell>
+      <Cell>显示屏尺寸：6.39英寸</Cell>
+      <Cell>分辨率：不低于3120×1440</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="3378" />
+  <Section section_id="3.10.2" title="服务集成框架无需特殊计算机硬件资源利用需求。" start_line="3379" />
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="3380" />
+  <Section section_id="3.10.3" title="表 SEQ 表 \* ARABIC 79 服务集成框架计算机软件需求" start_line="3381">
+    <Paragraph line="3382">软件种类</Paragraph>
+    <Paragraph line="3383">软件名称</Paragraph>
+    <Paragraph line="3384">部署位置</Paragraph>
+    <Paragraph line="3385">软件版本</Paragraph>
+    <Paragraph line="3386">操作系统</Paragraph>
+    <Paragraph line="3387">银河麒麟服务器版</Paragraph>
+    <Paragraph line="3388">轻量化服务器</Paragraph>
+    <Paragraph line="3389">V4.0.2</Paragraph>
+    <Paragraph line="3390">便携式服务器</Paragraph>
+    <Paragraph line="3391">V4.0.2</Paragraph>
+    <Paragraph line="3392">银河麒麟桌面版</Paragraph>
+    <Paragraph line="3393">便携式计算机</Paragraph>
+    <Paragraph line="3394">V4.0.2</Paragraph>
+    <Paragraph line="3395">元心</Paragraph>
+    <Paragraph line="3396">携行作业设备</Paragraph>
+    <Paragraph line="3397">V4.0.0.0</Paragraph>
+    <Paragraph line="3398">银河锐华</Paragraph>
+    <Paragraph line="3399">V4.1.1</Paragraph>
+    <Paragraph line="3400">TDOS</Paragraph>
+    <Paragraph line="3401">综合信息终端</Paragraph>
+    <Paragraph line="3402">V1.0.1</Paragraph>
+    <Paragraph line="3403">数据库管理系统</Paragraph>
+    <Paragraph line="3404">达梦数据库</Paragraph>
+    <Paragraph line="3405">轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Paragraph>
+    <Paragraph line="3406">V7.6</Paragraph>
+    <Paragraph line="3407">SQLLite</Paragraph>
+    <Paragraph line="3408">综合信息终端</Paragraph>
+    <Paragraph line="3409">V3.0</Paragraph>
+    <Paragraph line="3410">文字处理系统</Paragraph>
+    <Paragraph line="3411">WPS</Paragraph>
+    <Paragraph line="3412">轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Paragraph>
+    <Paragraph line="3413">V10.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="3414" />
+  <Section section_id="3.10.4" title="服务集成框架无需特殊计算机通信需求。" start_line="3415" />
+  <Section section_id="3.11" title="软件质量因素" start_line="3416" />
+  <Table table_id="T_77" type="other" title="服务集成框架质量要求与措施表" section="3.11">
+    <Headers>
+      <Cell>序号</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3.11" title="软件质量因素" start_line="3419" />
+  <Section section_id="3.11" title="软件质量因素描述" start_line="3420">
+    <Paragraph line="3421">要求程度</Paragraph>
+    <Paragraph line="3422">采取的措施</Paragraph>
+    <Paragraph line="3424">功能性</Paragraph>
+    <Paragraph line="3425">实现全部所需功能的能力</Paragraph>
+    <Paragraph line="3426">符合3.2节系统能力需求</Paragraph>
+    <Paragraph line="3427">通过系统需求分析和软件设计满足功能指标</Paragraph>
+    <Paragraph line="3429">容错性</Paragraph>
+    <Paragraph line="3430">对软件输入输出信息进行数据处理范围和规则检验</Paragraph>
+    <Paragraph line="3431">软件能识别异常值，提示用户</Paragraph>
+    <Paragraph line="3432">软件缺陷密度（FD）低于3.6（缺陷数/千行）</Paragraph>
+    <Paragraph line="3433">通过软件设计、单元测试、集成测试控制缺陷密度</Paragraph>
+    <Paragraph line="3435">易恢复性</Paragraph>
+    <Paragraph line="3436">当软件模块运行发生错误时，可查看错误提示，软件运行异常中止情况下，软件应能重新启动运行</Paragraph>
+    <Paragraph line="3437">平均失效恢复时间（MTTR）：不大于0.5小时</Paragraph>
+    <Paragraph line="3438">组件化设计，降低软件之间耦合度；软件服务化、对象化，实现软件负载均衡、可恢复</Paragraph>
+    <Paragraph line="3440">易分析性</Paragraph>
+    <Paragraph line="3441">提供日志功能，用于记录软件运行过程中关键处理和运行情况；</Paragraph>
+    <Paragraph line="3442">软件异常时，可根据日志记录定位软件异常位置和原因；</Paragraph>
+    <Paragraph line="3443">软件程序代码注释率：不小于20%</Paragraph>
+    <Paragraph line="3444">采用统一代码规范，对代码进行静态检查；分析代码中关键处理逻辑、异常控制逻辑，打印日志</Paragraph>
+    <Paragraph line="3446">稳定性</Paragraph>
+    <Paragraph line="3447">软件稳定运行，资源占用率保持平稳</Paragraph>
+    <Paragraph line="3449">软件实现中，对内存、cpu等资源精准控制；通过压力测试和重复测试保证软件稳定运行</Paragraph>
+    <Paragraph line="3451">可测试性</Paragraph>
+    <Paragraph line="3452">易于充分测试的能力</Paragraph>
+    <Paragraph line="3453">可仿真环境下完成主要功能验证</Paragraph>
+    <Paragraph line="3454">提供日志记录功能</Paragraph>
+    <Paragraph line="3456">易用性</Paragraph>
+    <Paragraph line="3457">易于学习和使用的能力</Paragraph>
+    <Paragraph line="3458">人机接口友好，简洁、一致，并形成闭环反馈</Paragraph>
+    <Paragraph line="3459">采用统一人机交互规范对人机接口进行一体设计，按业务流程和实装操作进行界面设计和交互设计</Paragraph>
+    <Paragraph line="3461">结构复杂性</Paragraph>
+    <Paragraph line="3462">软件开发代码的结构复杂性</Paragraph>
+    <Paragraph line="3463">软件程序代码注释率不小于20%。</Paragraph>
+    <Paragraph line="3464">采用统一代码规范，对代码进行静态检查；</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="3465" />
+  <Table table_id="T_78" type="other" title="服务集成框架设计与实现约束要求表" section="3.12">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>1</Cell>
+      <Cell>软件体系结构</Cell>
+    </Headers>
+    <Row>
+      <Cell>采用B/S架构</Cell>
+      <Cell>2</Cell>
+      <Cell>输入/输出</Cell>
+      <Cell>标准人机接口，专用屏边键</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>软件平台</Cell>
+      <Cell>国产操作系统</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.13" title="人员需求" start_line="3479" />
+  <Section section_id="3.13" title="表 SEQ 表 \* ARABIC 82 人员需求表" start_line="3480">
+    <Paragraph line="3481">序号</Paragraph>
+    <Paragraph line="3482">人员对象</Paragraph>
+    <Paragraph line="3483">技术水平</Paragraph>
+    <Paragraph line="3485">软件开发人员</Paragraph>
+    <Paragraph line="3486">熟练掌握软件需求分析、设计、编码、测试方法，并熟练使用QT、C/C++ x11、WebStorm、EMSS开发工具</Paragraph>
+    <Paragraph line="3488">软件保障人员</Paragraph>
+    <Paragraph line="3489">了解银河麒麟操作系统、元心/中兴绿地/锐华麒麟操作系统、鼎桥TDOS操作系统的一般操作使用以及达梦数据库/SQLite、WPS/永中办公软件的基本管理维护功能，能够熟练操作使用信息系统软件</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="3490" />
+  <Section section_id="3.14" title="表 SEQ 表 \* ARABIC 83 培训需求表" start_line="3491">
+    <Paragraph line="3492">序号</Paragraph>
+    <Paragraph line="3493">所属技能需求</Paragraph>
+    <Paragraph line="3494">培训内容</Paragraph>
+    <Paragraph line="3495">培训对象</Paragraph>
+    <Paragraph line="3496">备注</Paragraph>
+    <Paragraph line="3498">基础软件安装</Paragraph>
+    <Paragraph line="3499">服务器维护指南</Paragraph>
+    <Paragraph line="3500">使用人员</Paragraph>
+    <Paragraph line="3501">根据使用人员对平台软件的熟悉程度适当调整培训时间</Paragraph>
+    <Paragraph line="3503">应用软件安装</Paragraph>
+    <Paragraph line="3504">软件用户手册</Paragraph>
+    <Paragraph line="3505">维护人员</Paragraph>
+    <Paragraph line="3508">软件使用培训</Paragraph>
+    <Paragraph line="3509">集成方提供软件操作使用培训</Paragraph>
+    <Paragraph line="3510">使用人员</Paragraph>
+    <Paragraph line="3513">软件故障排查</Paragraph>
+    <Paragraph line="3514">开发方或集成方提供软件故障排查、状态恢复培训</Paragraph>
+    <Paragraph line="3515">使用人员、维护人员</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="3517" />
+  <Section section_id="3.15" title="表 SEQ 表 \* ARABIC 84 软件保障需求表" start_line="3518">
+    <Paragraph line="3519">序号</Paragraph>
+    <Paragraph line="3520">保障需求</Paragraph>
+    <Paragraph line="3521">保障设备</Paragraph>
+    <Paragraph line="3522">保障人员</Paragraph>
+    <Paragraph line="3523">备注</Paragraph>
+    <Paragraph line="3525">软件故障排查</Paragraph>
+    <Paragraph line="3526">便携机，网络调试助手</Paragraph>
+    <Paragraph line="3527">用户维护人员</Paragraph>
+    <Paragraph line="3530">软件升级</Paragraph>
+    <Paragraph line="3531">光驱，软件安装盘</Paragraph>
+    <Paragraph line="3532">开发人员</Paragraph>
+    <Paragraph line="3534">开发方应提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。</Paragraph>
+    <Paragraph line="3535">系统交付后应按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="3536">
+    <Paragraph line="3537">服务集成框架无其它特殊需求</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="3538" />
+  <Section section_id="3.17" title="表 SEQ 表 \* ARABIC 85 服务集成框架验收、交付和包装需求表" start_line="3539">
+    <Paragraph line="3540">序号</Paragraph>
+    <Paragraph line="3541">软件名称</Paragraph>
+    <Paragraph line="3542">数量</Paragraph>
+    <Paragraph line="3543">包装标记</Paragraph>
+    <Paragraph line="3544">说明</Paragraph>
+    <Paragraph line="3546">服务集成框架</Paragraph>
+    <Paragraph line="3548">光盘 CD-1-207</Paragraph>
+    <Paragraph line="3549">自动安装</Paragraph>
+    <Paragraph line="3551">服务集成框架用户手册</Paragraph>
+    <Paragraph line="3553">光盘 CD-1-207</Paragraph>
+    <Paragraph line="3556">服务集成框架程序员手册</Paragraph>
+    <Paragraph line="3558">光盘 CD-1-207</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="3560" />
+  <Table table_id="T_79" type="other" title="服务集成框架需求重要程度排序表" section="3.18">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求类型</Cell>
+      <Cell>重要性与关键性等级</Cell>
+      <Cell>高级</Cell>
+      <Cell>中级</Cell>
+    </Headers>
+    <Row>
+      <Cell>低级</Cell>
+      <Cell>1</Cell>
+      <Cell>功能需求</Cell>
+      <Cell>3.2.1</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2</Cell>
+      <Cell>3</Cell>
+      <Cell>3.2.3</Cell>
+      <Cell>4</Cell>
+      <Cell>3.2.4</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>3.2.5</Cell>
+      <Cell>6</Cell>
+      <Cell>3.2.6</Cell>
+      <Cell>7</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.7</Cell>
+      <Cell>8</Cell>
+      <Cell>接口需求</Cell>
+      <Cell>3.3.2</Cell>
+      <Cell>9</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.3</Cell>
+      <Cell>13</Cell>
+      <Cell>3.3.4</Cell>
+      <Cell>3.3.5</Cell>
+      <Cell>3.2.6</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.7</Cell>
+      <Cell>3.4.2</Cell>
+      <Cell>3.4.3</Cell>
+      <Cell>3.4.4</Cell>
+      <Cell>3.4.5</Cell>
+    </Row>
+    <Row>
+      <Cell>3.4.6</Cell>
+      <Cell>14</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.7" title="安全性需求" start_line="3619">
+    <Paragraph line="3621">3.7</Paragraph>
+    <Paragraph line="3622">15</Paragraph>
+    <Paragraph line="3624">3.8</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="3625">
+    <Paragraph line="3626">对本文档中每个需求指定要使用的合格性方法，以确保需求得到满足。若依靠测试方法验证合格性，可以整体地对测试方法说明，合格性方法可以包括：</Paragraph>
+    <Paragraph line="3627">a)演示：依靠可见的功能操作，直接运行接口实体，而不需要使用仪器、专用测试设备或进行事后分析；</Paragraph>
+    <Paragraph line="3628">b)测试：使用仪器或专用测试设备，运行接口实体，以便采集数据供事后分析使用；</Paragraph>
+    <Paragraph line="3629">c)分析：处理从其他合格性方法获得的累计数据。例如，对测试结果进行简约、解释或推断；</Paragraph>
+    <Paragraph line="3630">d)审查：对接口实体、文档等进行目视检查；</Paragraph>
+    <Paragraph line="3631">e)特殊的合格性方法：任何针对接口实体的特殊合格性方法，例如专用工具、技术、规程、设施、验收限制。</Paragraph>
+  </Section>
+  <Section section_id="4" title="表 SEQ 表 \* ARABIC 87 合格性规定" start_line="3632">
+    <Paragraph line="3633">需求名称/标识</Paragraph>
+    <Paragraph line="3634">本文档的章节号</Paragraph>
+    <Paragraph line="3635">合格性方法</Paragraph>
+    <Paragraph line="3636">合格性级别</Paragraph>
+    <Paragraph line="3637">创建服务工程</Paragraph>
+    <Paragraph line="3638">3.2.1.1</Paragraph>
+    <Paragraph line="3639">ABD</Paragraph>
+    <Paragraph line="3641">打开服务工程</Paragraph>
+    <Paragraph line="3642">3.2.1.2</Paragraph>
+    <Paragraph line="3643">ABD</Paragraph>
+    <Paragraph line="3645">关闭服务工程</Paragraph>
+    <Paragraph line="3646">3.2.1.3</Paragraph>
+    <Paragraph line="3647">ABD</Paragraph>
+    <Paragraph line="3649">服务插件生成</Paragraph>
+    <Paragraph line="3650">3.2.1.4</Paragraph>
+    <Paragraph line="3651">ABD</Paragraph>
+    <Paragraph line="3653">服务插件编译</Paragraph>
+    <Paragraph line="3654">3.2.1.5</Paragraph>
+    <Paragraph line="3655">ABD</Paragraph>
+    <Paragraph line="3657">服务工程编译</Paragraph>
+    <Paragraph line="3658">3.2.1.6</Paragraph>
+    <Paragraph line="3659">ABD</Paragraph>
+    <Paragraph line="3661">服务程序运行</Paragraph>
+    <Paragraph line="3662">3.2.1.7</Paragraph>
+    <Paragraph line="3663">ABD</Paragraph>
+    <Paragraph line="3665">服务程序调试</Paragraph>
+    <Paragraph line="3666">3.2.1.8</Paragraph>
+    <Paragraph line="3667">ABD</Paragraph>
+    <Paragraph line="3669">服务交叉编译</Paragraph>
+    <Paragraph line="3670">3.2.1.9</Paragraph>
+    <Paragraph line="3671">ABD</Paragraph>
+    <Paragraph line="3673">插件初始化函数定义</Paragraph>
+    <Paragraph line="3674">3.2.1.10</Paragraph>
+    <Paragraph line="3675">ABD</Paragraph>
+    <Paragraph line="3677">插件销毁函数定义</Paragraph>
+    <Paragraph line="3678">3.2.1.11</Paragraph>
+    <Paragraph line="3679">ABD</Paragraph>
+    <Paragraph line="3681">调用服务请求处理类接口</Paragraph>
+    <Paragraph line="3682">3.2.1.12</Paragraph>
+    <Paragraph line="3683">ABD</Paragraph>
+    <Paragraph line="3685">调用服务响应发送类接口</Paragraph>
+    <Paragraph line="3686">3.2.1.13</Paragraph>
+    <Paragraph line="3687">ABD</Paragraph>
+    <Paragraph line="3689">调用定时器接口</Paragraph>
+    <Paragraph line="3690">3.2.1.14</Paragraph>
+    <Paragraph line="3691">ABD</Paragraph>
+    <Paragraph line="3693">调用消息推送接口</Paragraph>
+    <Paragraph line="3694">3.2.1.15</Paragraph>
+    <Paragraph line="3695">ABD</Paragraph>
+    <Paragraph line="3697">调用服务请求发送类接口</Paragraph>
+    <Paragraph line="3698">3.2.1.16</Paragraph>
+    <Paragraph line="3699">ABD</Paragraph>
+    <Paragraph line="3701">调用服务响应接收类接口</Paragraph>
+    <Paragraph line="3702">3.2.1.17</Paragraph>
+    <Paragraph line="3703">ABD</Paragraph>
+    <Paragraph line="3705">服务信息注册</Paragraph>
+    <Paragraph line="3706">3.2.2.1</Paragraph>
+    <Paragraph line="3707">ABD</Paragraph>
+    <Paragraph line="3709">服务信息更新</Paragraph>
+    <Paragraph line="3710">3.2.2.2</Paragraph>
+    <Paragraph line="3711">ABD</Paragraph>
+    <Paragraph line="3713">服务列表刷新</Paragraph>
+    <Paragraph line="3714">3.2.2.3</Paragraph>
+    <Paragraph line="3715">ABD</Paragraph>
+    <Paragraph line="3717">服务备份</Paragraph>
+    <Paragraph line="3718">3.2.2.4</Paragraph>
+    <Paragraph line="3719">ABD</Paragraph>
+    <Paragraph line="3721">服务注销</Paragraph>
+    <Paragraph line="3722">3.2.2.5</Paragraph>
+    <Paragraph line="3723">ABD</Paragraph>
+    <Paragraph line="3725">服务启停控制</Paragraph>
+    <Paragraph line="3726">3.2.3.1</Paragraph>
+    <Paragraph line="3727">ABD</Paragraph>
+    <Paragraph line="3729">服务启动方式控制</Paragraph>
+    <Paragraph line="3730">3.2.3.1</Paragraph>
+    <Paragraph line="3731">ABD</Paragraph>
+    <Paragraph line="3733">服务启动优先级控制</Paragraph>
+    <Paragraph line="3734">3.2.3.2</Paragraph>
+    <Paragraph line="3735">ABD</Paragraph>
+    <Paragraph line="3737">服务启动依赖控制</Paragraph>
+    <Paragraph line="3738">3.2.3.3</Paragraph>
+    <Paragraph line="3739">ABD</Paragraph>
+    <Paragraph line="3741">服务异常重启</Paragraph>
+    <Paragraph line="3742">3.2.3.4</Paragraph>
+    <Paragraph line="3743">ABD</Paragraph>
+    <Paragraph line="3745">服务状态采集</Paragraph>
+    <Paragraph line="3746">3.2.3.5</Paragraph>
+    <Paragraph line="3747">ABD</Paragraph>
+    <Paragraph line="3749">服务占用资源采集</Paragraph>
+    <Paragraph line="3750">3.2.3.6</Paragraph>
+    <Paragraph line="3751">ABD</Paragraph>
+    <Paragraph line="3753">节点信息采集</Paragraph>
+    <Paragraph line="3754">3.2.3.7</Paragraph>
+    <Paragraph line="3755">ABD</Paragraph>
+    <Paragraph line="3757">服务运行状态查询</Paragraph>
+    <Paragraph line="3758">3.2.4.1</Paragraph>
+    <Paragraph line="3759">ABD</Paragraph>
+    <Paragraph line="3761">服务占用资源查询</Paragraph>
+    <Paragraph line="3762">3.2.4.1</Paragraph>
+    <Paragraph line="3763">ABD</Paragraph>
+    <Paragraph line="3765">服务注册信息查询</Paragraph>
+    <Paragraph line="3766">3.2.4.2</Paragraph>
+    <Paragraph line="3767">ABD</Paragraph>
+    <Paragraph line="3769">服务注册信息汇总</Paragraph>
+    <Paragraph line="3770">3.2.4.3</Paragraph>
+    <Paragraph line="3771">ABD</Paragraph>
+    <Paragraph line="3773">服务运行状态汇总</Paragraph>
+    <Paragraph line="3774">3.2.4.4</Paragraph>
+    <Paragraph line="3775">ABD</Paragraph>
+    <Paragraph line="3777">服务占用资源汇总</Paragraph>
+    <Paragraph line="3778">3.2.4.5</Paragraph>
+    <Paragraph line="3779">ABD</Paragraph>
+    <Paragraph line="3781">节点信息汇总</Paragraph>
+    <Paragraph line="3782">3.2.4.6</Paragraph>
+    <Paragraph line="3783">ABD</Paragraph>
+    <Paragraph line="3785">服务发现</Paragraph>
+    <Paragraph line="3786">3.2.5.1</Paragraph>
+    <Paragraph line="3787">ABD</Paragraph>
+    <Paragraph line="3789">基于轮询的负载均衡</Paragraph>
+    <Paragraph line="3790">3.2.5.2</Paragraph>
+    <Paragraph line="3791">ABD</Paragraph>
+    <Paragraph line="3793">基于优先级的负载均衡</Paragraph>
+    <Paragraph line="3794">3.2.5.3</Paragraph>
+    <Paragraph line="3795">ABD</Paragraph>
+    <Paragraph line="3797">基于主机负载的负载均衡</Paragraph>
+    <Paragraph line="3798">3.2.5.4</Paragraph>
+    <Paragraph line="3799">ABD</Paragraph>
+    <Paragraph line="3801">服务故障迁移</Paragraph>
+    <Paragraph line="3802">3.2.5.5</Paragraph>
+    <Paragraph line="3803">ABD</Paragraph>
+    <Paragraph line="3805">服务访问路由</Paragraph>
+    <Paragraph line="3806">3.2.6.1</Paragraph>
+    <Paragraph line="3807">ABD</Paragraph>
+    <Paragraph line="3809">访问响应转发</Paragraph>
+    <Paragraph line="3810">3.2.6.2</Paragraph>
+    <Paragraph line="3811">ABD</Paragraph>
+    <Paragraph line="3813">服务访问信息记录</Paragraph>
+    <Paragraph line="3814">3.2.6.3</Paragraph>
+    <Paragraph line="3815">ABD</Paragraph>
+    <Paragraph line="3817">服务访问信息维护</Paragraph>
+    <Paragraph line="3818">3.2.6.4</Paragraph>
+    <Paragraph line="3819">ABD</Paragraph>
+    <Paragraph line="3821">向前端推送信息</Paragraph>
+    <Paragraph line="3822">3.2.6.5</Paragraph>
+    <Paragraph line="3823">ABD</Paragraph>
+    <Paragraph line="3825">静态资源请求处理</Paragraph>
+    <Paragraph line="3826">3.2.7.1</Paragraph>
+    <Paragraph line="3827">ABD</Paragraph>
+    <Paragraph line="3829">文件上传</Paragraph>
+    <Paragraph line="3830">3.2.7.2</Paragraph>
+    <Paragraph line="3831">ABD</Paragraph>
+    <Paragraph line="3833">文件下载</Paragraph>
+    <Paragraph line="3834">3.2.7.3</Paragraph>
+    <Paragraph line="3835">ABD</Paragraph>
+    <Paragraph line="3837">运行支撑服务接口</Paragraph>
+    <Paragraph line="3838">3.3.2</Paragraph>
+    <Paragraph line="3839">ABD</Paragraph>
+    <Paragraph line="3841">软件部署服务接口</Paragraph>
+    <Paragraph line="3842">3.3.3</Paragraph>
+    <Paragraph line="3843">ABD</Paragraph>
+    <Paragraph line="3845">界面集成框架接口</Paragraph>
+    <Paragraph line="3846">3.3.4</Paragraph>
+    <Paragraph line="3847">ABD</Paragraph>
+    <Paragraph line="3849">应用软件接口</Paragraph>
+    <Paragraph line="3850">3.3.5</Paragraph>
+    <Paragraph line="3851">ABD</Paragraph>
+    <Paragraph line="3853">用户接口</Paragraph>
+    <Paragraph line="3854">3.3.6</Paragraph>
+    <Paragraph line="3855">ABD</Paragraph>
+    <Paragraph line="3857">文件系统接口</Paragraph>
+    <Paragraph line="3858">3.3.7</Paragraph>
+    <Paragraph line="3859">ABD</Paragraph>
+  </Section>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="3861">
+    <Paragraph line="3862">3.4</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="3865">
+    <Paragraph line="3866">3.5</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="3869">
+    <Paragraph line="3870">3.6</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="3873">
+    <Paragraph line="3874">3.7</Paragraph>
+    <Paragraph line="3877">系统环境需求</Paragraph>
+    <Paragraph line="3878">3.8</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="3881">
+    <Paragraph line="3882">3.9</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="3885">
+    <Paragraph line="3886">3.10</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="3889">
+    <Paragraph line="3890">3.11</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求" start_line="3893">
+    <Paragraph line="3894">3.12</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="3897">
+    <Paragraph line="3898">3.13</Paragraph>
+    <Paragraph line="3901">保障需求</Paragraph>
+    <Paragraph line="3902">3.14</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="3905">
+    <Paragraph line="3906">3.15</Paragraph>
+    <Paragraph line="3909">包装需求</Paragraph>
+    <Paragraph line="3910">3.16</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="3913" />
+  <Table table_id="T_80" type="traceability" title="需求的正向追踪性" section="5">
+    <Headers>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>本文档的名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="3925">
+    <Paragraph line="3926">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="3927">
+    <Paragraph line="3928">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="3930">
+    <Paragraph line="3931">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="3932">
+    <Paragraph line="3933">1.2</Paragraph>
+    <Paragraph line="3935">系统和软件用途</Paragraph>
+    <Paragraph line="3936">1.2.1</Paragraph>
+    <Paragraph line="3937">系统和软件用途</Paragraph>
+    <Paragraph line="3938">1.2.1</Paragraph>
+    <Paragraph line="3940">系统与软件一般特性</Paragraph>
+    <Paragraph line="3941">1.2.2</Paragraph>
+    <Paragraph line="3942">系统与软件一般特性</Paragraph>
+    <Paragraph line="3943">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="3945">
+    <Paragraph line="3946">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="3947">
+    <Paragraph line="3948">1.3</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="3950" />
+  <Section section_id="2" title="引用文档" start_line="3952">
+    <Paragraph line="3955">运行环境要求</Paragraph>
+    <Paragraph line="3957">运行环境要求</Paragraph>
+    <Paragraph line="3958">3.9.1</Paragraph>
+    <Paragraph line="3960">硬件环境</Paragraph>
+    <Paragraph line="3961">3.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="3962">
+    <Paragraph line="3963">3.10.1</Paragraph>
+    <Paragraph line="3965">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="3967">
+    <Paragraph line="3970">功能</Paragraph>
+    <Paragraph line="3971">4.1</Paragraph>
+    <Paragraph line="3972">能力需求</Paragraph>
+    <Paragraph line="3973">3.2</Paragraph>
+    <Paragraph line="3975">服务开发支撑功能</Paragraph>
+    <Paragraph line="3976">4.1.1</Paragraph>
+    <Paragraph line="3977">创建服务工程</Paragraph>
+    <Paragraph line="3978">3.2.1.1</Paragraph>
+    <Paragraph line="3980">打开服务工程</Paragraph>
+    <Paragraph line="3981">3.2.1.2</Paragraph>
+    <Paragraph line="3983">关闭服务工程</Paragraph>
+    <Paragraph line="3984">3.2.1.3</Paragraph>
+    <Paragraph line="3986">服务插件生成</Paragraph>
+    <Paragraph line="3987">3.2.1.4</Paragraph>
+    <Paragraph line="3989">服务插件编译</Paragraph>
+    <Paragraph line="3990">3.2.1.5</Paragraph>
+    <Paragraph line="3992">服务工程编译</Paragraph>
+    <Paragraph line="3993">3.2.1.6</Paragraph>
+    <Paragraph line="3995">服务程序运行</Paragraph>
+    <Paragraph line="3996">3.2.1.7</Paragraph>
+    <Paragraph line="3998">服务程序调试</Paragraph>
+    <Paragraph line="3999">3.2.1.8</Paragraph>
+    <Paragraph line="4001">服务交叉编译</Paragraph>
+    <Paragraph line="4002">3.2.1.9</Paragraph>
+    <Paragraph line="4004">插件初始化函数定义</Paragraph>
+    <Paragraph line="4005">3.2.1.10</Paragraph>
+    <Paragraph line="4007">插件销毁函数定义</Paragraph>
+    <Paragraph line="4008">3.2.1.11</Paragraph>
+    <Paragraph line="4010">调用服务请求处理类接口</Paragraph>
+    <Paragraph line="4011">3.2.1.12</Paragraph>
+    <Paragraph line="4013">调用服务响应发送类接口</Paragraph>
+    <Paragraph line="4014">3.2.1.13</Paragraph>
+    <Paragraph line="4016">调用定时器接口</Paragraph>
+    <Paragraph line="4017">3.2.1.14</Paragraph>
+    <Paragraph line="4019">调用消息推送接口</Paragraph>
+    <Paragraph line="4020">3.2.1.15</Paragraph>
+    <Paragraph line="4022">调用服务请求发送类接口</Paragraph>
+    <Paragraph line="4023">3.2.1.16</Paragraph>
+    <Paragraph line="4025">调用服务响应结束类接口</Paragraph>
+    <Paragraph line="4026">3.2.1.17</Paragraph>
+    <Paragraph line="4028">服务部署管理功能</Paragraph>
+    <Paragraph line="4029">4.1.2</Paragraph>
+    <Paragraph line="4030">服务信息注册</Paragraph>
+    <Paragraph line="4031">3.2.2.1</Paragraph>
+    <Paragraph line="4033">服务信息更新</Paragraph>
+    <Paragraph line="4034">3.2.2.2</Paragraph>
+    <Paragraph line="4036">服务列表刷新</Paragraph>
+    <Paragraph line="4037">3.2.2.3</Paragraph>
+    <Paragraph line="4039">服务监控注册</Paragraph>
+    <Paragraph line="4040">3.2.2.4</Paragraph>
+    <Paragraph line="4042">服务注销</Paragraph>
+    <Paragraph line="4043">3.2.2.5</Paragraph>
+    <Paragraph line="4045">服务运行控制功能</Paragraph>
+    <Paragraph line="4046">4.1.3</Paragraph>
+    <Paragraph line="4047">服务启停控制</Paragraph>
+    <Paragraph line="4048">3.2.3.1</Paragraph>
+    <Paragraph line="4050">服务启动方式控制</Paragraph>
+    <Paragraph line="4051">3.2.3.2</Paragraph>
+    <Paragraph line="4053">服务启动优先级控制</Paragraph>
+    <Paragraph line="4054">3.2.3.3</Paragraph>
+    <Paragraph line="4056">服务启依赖控制</Paragraph>
+    <Paragraph line="4057">3.2.3.4</Paragraph>
+    <Paragraph line="4059">服务异常重启</Paragraph>
+    <Paragraph line="4060">3.2.3.5</Paragraph>
+    <Paragraph line="4062">服务状态监视功能</Paragraph>
+    <Paragraph line="4063">4.1.4</Paragraph>
+    <Paragraph line="4064">服务状态采集</Paragraph>
+    <Paragraph line="4065">3.2.3.6</Paragraph>
+    <Paragraph line="4067">服务占用资源采集</Paragraph>
+    <Paragraph line="4068">3.2.3.7</Paragraph>
+    <Paragraph line="4070">节点信息采集</Paragraph>
+    <Paragraph line="4071">3.2.3.8</Paragraph>
+    <Paragraph line="4073">服务运行状态查询</Paragraph>
+    <Paragraph line="4074">3.2.4.1</Paragraph>
+    <Paragraph line="4076">服务占用资源查询</Paragraph>
+    <Paragraph line="4077">3.2.4.2</Paragraph>
+    <Paragraph line="4079">服务注册信息查询</Paragraph>
+    <Paragraph line="4080">3.2.4.3</Paragraph>
+    <Paragraph line="4082">服务注册信息汇总</Paragraph>
+    <Paragraph line="4083">3.2.4.4</Paragraph>
+    <Paragraph line="4085">服务运行状态汇总</Paragraph>
+    <Paragraph line="4086">3.2.4.5</Paragraph>
+    <Paragraph line="4088">服务占用资源汇总</Paragraph>
+    <Paragraph line="4089">3.2.4.6</Paragraph>
+    <Paragraph line="4091">节点信息汇总</Paragraph>
+    <Paragraph line="4092">3.2.4.7</Paragraph>
+    <Paragraph line="4094">服务访问调度功能</Paragraph>
+    <Paragraph line="4095">4.1.5</Paragraph>
+    <Paragraph line="4096">服务发现</Paragraph>
+    <Paragraph line="4097">3.2.5.1</Paragraph>
+    <Paragraph line="4099">基于轮询的负载均衡</Paragraph>
+    <Paragraph line="4100">3.2.5.1</Paragraph>
+    <Paragraph line="4102">基于优先级负载均衡</Paragraph>
+    <Paragraph line="4103">3.2.5.2</Paragraph>
+    <Paragraph line="4105">基于主机负载的负载均衡</Paragraph>
+    <Paragraph line="4106">3.2.5.3</Paragraph>
+    <Paragraph line="4108">服务故障迁移</Paragraph>
+    <Paragraph line="4109">3.2.5.4</Paragraph>
+    <Paragraph line="4111">服务访问路由</Paragraph>
+    <Paragraph line="4112">3.2.6.1</Paragraph>
+    <Paragraph line="4114">服务响应转发</Paragraph>
+    <Paragraph line="4115">3.2.6.2</Paragraph>
+    <Paragraph line="4117">服务访问信息记录</Paragraph>
+    <Paragraph line="4118">3.2.6.3</Paragraph>
+    <Paragraph line="4120">服务访问信息维护</Paragraph>
+    <Paragraph line="4121">3.2.6.4</Paragraph>
+    <Paragraph line="4123">向前端推送消息</Paragraph>
+    <Paragraph line="4124">3.2.6.5</Paragraph>
+    <Paragraph line="4126">静态请求处理功能</Paragraph>
+    <Paragraph line="4127">4.1.6</Paragraph>
+    <Paragraph line="4128">静态资源请求处理</Paragraph>
+    <Paragraph line="4129">3.2.7.1</Paragraph>
+    <Paragraph line="4131">文件上传</Paragraph>
+    <Paragraph line="4132">3.2.7.2</Paragraph>
+    <Paragraph line="4134">文件下载</Paragraph>
+    <Paragraph line="4135">3.2.7.3</Paragraph>
+    <Paragraph line="4137">性能</Paragraph>
+    <Paragraph line="4138">4.2</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="4139">
+    <Paragraph line="4140">3.3</Paragraph>
+    <Paragraph line="4142">输入/输出</Paragraph>
+    <Paragraph line="4143">4.3</Paragraph>
+  </Section>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="4144">
+    <Paragraph line="4145">3.5</Paragraph>
+    <Paragraph line="4147">数据处理要求</Paragraph>
+    <Paragraph line="4148">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="4149">
+    <Paragraph line="4150">3.3</Paragraph>
+    <Paragraph line="4152">接口</Paragraph>
+    <Paragraph line="4153">4.5</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="4154">
+    <Paragraph line="4155">3.3</Paragraph>
+    <Paragraph line="4157">固件</Paragraph>
+    <Paragraph line="4158">4.6</Paragraph>
+    <Paragraph line="4160">不追踪</Paragraph>
+    <Paragraph line="4161">关键性要求</Paragraph>
+    <Paragraph line="4162">4.7</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求、安全性需求、保密性需求" start_line="4163">
+    <Paragraph line="4164">3.6、3.7、3.8</Paragraph>
+    <Paragraph line="4166">可靠性</Paragraph>
+    <Paragraph line="4167">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="4168">
+    <Paragraph line="4169">3.6</Paragraph>
+    <Paragraph line="4171">安全性</Paragraph>
+    <Paragraph line="4172">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="4173">
+    <Paragraph line="4174">3.7</Paragraph>
+    <Paragraph line="4176">保密性</Paragraph>
+    <Paragraph line="4177">4.7.3</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="4178">
+    <Paragraph line="4179">3.8</Paragraph>
+    <Paragraph line="4181">设计约束</Paragraph>
+    <Paragraph line="4183">设计和构造约束</Paragraph>
+    <Paragraph line="4184">3.12</Paragraph>
+    <Paragraph line="4186">编程语言及编程规则</Paragraph>
+    <Paragraph line="4187">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="4188">
+    <Paragraph line="4189">3.9、 3.10</Paragraph>
+    <Paragraph line="4191">开发工具及环境要求</Paragraph>
+    <Paragraph line="4192">5.2</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="4193">
+    <Paragraph line="4194">3.9、 3.10</Paragraph>
+    <Paragraph line="4196">测试工具和环境要求</Paragraph>
+    <Paragraph line="4197">5.3</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="4198">
+    <Paragraph line="4199">3.12</Paragraph>
+    <Paragraph line="4201">结构复杂性要求</Paragraph>
+    <Paragraph line="4202">5.4</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="4203">
+    <Paragraph line="4204">3.10</Paragraph>
+    <Paragraph line="4206">多版本设计要求</Paragraph>
+    <Paragraph line="4207">5.5</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="4208">
+    <Paragraph line="4209">3.10</Paragraph>
+    <Paragraph line="4211">质量控制要求</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="4213">
+    <Paragraph line="4214">3.11</Paragraph>
+    <Paragraph line="4216">软件关键等级</Paragraph>
+    <Paragraph line="4217">6.1.</Paragraph>
+    <Paragraph line="4218">设计和实现的约束</Paragraph>
+    <Paragraph line="4219">3.12</Paragraph>
+    <Paragraph line="4221">标准</Paragraph>
+    <Paragraph line="4222">6.2</Paragraph>
+    <Paragraph line="4223">设计和实现的约束</Paragraph>
+    <Paragraph line="4224">3.12</Paragraph>
+    <Paragraph line="4226">文档</Paragraph>
+    <Paragraph line="4227">6.3</Paragraph>
+    <Paragraph line="4228">设计和实现的约束</Paragraph>
+    <Paragraph line="4229">2.12</Paragraph>
+    <Paragraph line="4231">配置管理</Paragraph>
+    <Paragraph line="4232">6.4</Paragraph>
+    <Paragraph line="4234">不追踪</Paragraph>
+    <Paragraph line="4235">测试要求</Paragraph>
+    <Paragraph line="4236">6.5</Paragraph>
+    <Paragraph line="4238">不追踪</Paragraph>
+    <Paragraph line="4239">对分承制方的要求</Paragraph>
+    <Paragraph line="4240">6.6</Paragraph>
+    <Paragraph line="4242">不追踪</Paragraph>
+    <Paragraph line="4243">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="4245">
+    <Paragraph line="4247">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="4249">
+    <Paragraph line="4250">9.15</Paragraph>
+    <Paragraph line="4252">进度和里程碑</Paragraph>
+    <Paragraph line="4255">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="4256">
+    <Paragraph line="4257">10</Paragraph>
+    <Paragraph line="4259">不追踪</Paragraph>
+  </Section>
+  <Table table_id="T_81" type="traceability" title="需求的逆向追踪性" section="6">
+    <Headers>
+      <Cell>本文档名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="1.1" title="标识" start_line="4272">
+    <Paragraph line="4273">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.1" title="标识" start_line="4274">
+    <Paragraph line="4275">1.1</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="4277">
+    <Paragraph line="4278">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2" title="系统概述" start_line="4279">
+    <Paragraph line="4280">1.2</Paragraph>
+  </Section>
+  <Section section_id="1.2.1" title="系统和软件的用途" start_line="4282">
+    <Paragraph line="4283">1.2.1</Paragraph>
+    <Paragraph line="4284">系统和软件用途</Paragraph>
+    <Paragraph line="4285">1.2.1</Paragraph>
+  </Section>
+  <Section section_id="1.2.2" title="系统与软件的一般特性" start_line="4287">
+    <Paragraph line="4288">1.2.2</Paragraph>
+    <Paragraph line="4289">系统与软件一般特性</Paragraph>
+    <Paragraph line="4290">1.2.2</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="4292">
+    <Paragraph line="4293">1.3</Paragraph>
+  </Section>
+  <Section section_id="1.3" title="文档概述" start_line="4294">
+    <Paragraph line="4295">1.3</Paragraph>
+    <Paragraph line="4297">应用文档</Paragraph>
+  </Section>
+  <Section section_id="2" title="引用文档" start_line="4299" />
+  <Section section_id="3" title="需求" start_line="4302">
+    <Paragraph line="4304">技术要求</Paragraph>
+    <Paragraph line="4307">需求的状态和方式</Paragraph>
+    <Paragraph line="4308">3.1</Paragraph>
+    <Paragraph line="4309">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3.1.1" title="软件状态图" start_line="4312">
+    <Paragraph line="4313">3.1.1</Paragraph>
+    <Paragraph line="4314">技术要求</Paragraph>
+  </Section>
+  <Section section_id="3.1.2" title="软件活动图" start_line="4317">
+    <Paragraph line="4318">3.1.2</Paragraph>
+    <Paragraph line="4319">技术要求</Paragraph>
+    <Paragraph line="4322">能力需求</Paragraph>
+    <Paragraph line="4323">3.2</Paragraph>
+    <Paragraph line="4324">功能</Paragraph>
+    <Paragraph line="4325">4.1</Paragraph>
+    <Paragraph line="4327">服务开发支撑</Paragraph>
+    <Paragraph line="4328">3.2.1</Paragraph>
+    <Paragraph line="4329">服务开发支撑功能</Paragraph>
+    <Paragraph line="4330">4.1.1</Paragraph>
+    <Paragraph line="4332">服务部署管理</Paragraph>
+    <Paragraph line="4333">3.2.2</Paragraph>
+    <Paragraph line="4334">服务部署管理功能</Paragraph>
+    <Paragraph line="4335">4.1.2</Paragraph>
+    <Paragraph line="4337">服务运行控制</Paragraph>
+    <Paragraph line="4338">3.2.3</Paragraph>
+    <Paragraph line="4339">服务运行控制功能</Paragraph>
+    <Paragraph line="4340">4.1.3</Paragraph>
+    <Paragraph line="4342">服务信息管理</Paragraph>
+    <Paragraph line="4343">3.2.4</Paragraph>
+    <Paragraph line="4344">服务状态监视功能</Paragraph>
+    <Paragraph line="4345">4.1.4</Paragraph>
+    <Paragraph line="4347">服务调度</Paragraph>
+    <Paragraph line="4348">3.2.5</Paragraph>
+    <Paragraph line="4349">服务访问调度功能</Paragraph>
+    <Paragraph line="4350">4.1.5</Paragraph>
+    <Paragraph line="4352">服务访问代理</Paragraph>
+    <Paragraph line="4353">3.2.6</Paragraph>
+    <Paragraph line="4354">服务访问调度功能</Paragraph>
+    <Paragraph line="4355">4.1.5</Paragraph>
+    <Paragraph line="4357">静态请求处理</Paragraph>
+    <Paragraph line="4358">3.2.7</Paragraph>
+    <Paragraph line="4359">静态资源处理功能</Paragraph>
+    <Paragraph line="4360">4.1.6</Paragraph>
+    <Paragraph line="4362">外部接口需求</Paragraph>
+    <Paragraph line="4363">3.3</Paragraph>
+    <Paragraph line="4364">输入/输出、接口</Paragraph>
+    <Paragraph line="4365">4.3、4.5</Paragraph>
+    <Paragraph line="4367">内部接口需求</Paragraph>
+    <Paragraph line="4368">3.4</Paragraph>
+    <Paragraph line="4369">输入/输出、接口</Paragraph>
+    <Paragraph line="4370">4.3、4.5</Paragraph>
+    <Paragraph line="4372">内部数据需求</Paragraph>
+    <Paragraph line="4373">3.5</Paragraph>
+    <Paragraph line="4374">数据处理要求</Paragraph>
+    <Paragraph line="4375">4.4</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="4377">
+    <Paragraph line="4378">3.6</Paragraph>
+    <Paragraph line="4379">可靠性</Paragraph>
+    <Paragraph line="4380">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="4382">
+    <Paragraph line="4383">3.7</Paragraph>
+    <Paragraph line="4384">安全性</Paragraph>
+    <Paragraph line="4385">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.8" title="保密性需求" start_line="4387">
+    <Paragraph line="4388">3.8</Paragraph>
+    <Paragraph line="4389">保密性</Paragraph>
+    <Paragraph line="4390">4.7.3</Paragraph>
+    <Paragraph line="4392">环境需求</Paragraph>
+    <Paragraph line="4393">3.9</Paragraph>
+    <Paragraph line="4394">运行环境要求</Paragraph>
+    <Paragraph line="4397">计算资源需求</Paragraph>
+    <Paragraph line="4398">3.10</Paragraph>
+    <Paragraph line="4399">主要运行环境</Paragraph>
+    <Paragraph line="4400">3.1</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="4402">
+    <Paragraph line="4403">3.11</Paragraph>
+    <Paragraph line="4404">质量控制要求</Paragraph>
+    <Paragraph line="4407">设计和构造约束</Paragraph>
+    <Paragraph line="4408">3.12</Paragraph>
+    <Paragraph line="4409">质量控制要求</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求" start_line="4412">
+    <Paragraph line="4413">3.13</Paragraph>
+    <Paragraph line="4414">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="4417">
+    <Paragraph line="4418">3.14</Paragraph>
+    <Paragraph line="4419">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="4422">
+    <Paragraph line="4423">3.15</Paragraph>
+    <Paragraph line="4424">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="4427">
+    <Paragraph line="4428">3.17</Paragraph>
+    <Paragraph line="4429">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="4432">
+    <Paragraph line="4433">3.18</Paragraph>
+    <Paragraph line="4434">质量控制要求</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="4437">
+    <Paragraph line="4440">不追踪</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="4441">
+    <Paragraph line="4444">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="4445">
+    <Paragraph line="4448">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="4449">
+    <Paragraph line="4450">无。</Paragraph>
+    <Paragraph line="4452">PAGE   \* MERGEFORMATII</Paragraph>
+    <Paragraph line="4454">PAGE   \* MERGEFORMATI</Paragraph>
+    <Paragraph line="4456">PAGE   \* MERGEFORMAT2</Paragraph>
+    <Paragraph line="4458">PAGE   \* MERGEFORMAT1</Paragraph>
+  </Section>
+</Document>

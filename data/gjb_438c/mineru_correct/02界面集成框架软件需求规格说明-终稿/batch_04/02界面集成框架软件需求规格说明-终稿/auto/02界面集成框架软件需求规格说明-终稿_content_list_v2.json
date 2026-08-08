@@ -1,0 +1,624 @@
+[
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/849a3e082fa59355adbb62ddd63eb1a1bba6ee7c293b954f1f6b4397c139ac15.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表16 故障隔离检测用例描述"
+                    }
+                ],
+                "table_footnote": [
+                    {
+                        "type": "text",
+                        "content": "故障隔离检测流程图如图 20。"
+                    }
+                ],
+                "html": "<table><tr><td colspan=\"1\" rowspan=\"1\">Use Case 名称:故障隔离检测</td><td colspan=\"2\" rowspan=\"1\">Actors:开发人员</td></tr><tr><td colspan=\"3\" rowspan=\"1\">概述：本用例是故障隔离检测的扩展用例，描述故障隔离检测的过程；</td></tr><tr><td colspan=\"3\" rowspan=\"1\">前置条件：数据库连接正常。</td></tr><tr><td colspan=\"3\" rowspan=\"1\">主事件流</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor 的动作</td><td colspan=\"1\" rowspan=\"1\">系统的动作</td><td colspan=\"1\" rowspan=\"1\">动作约束(性能、可靠性、容错等)</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1.用户打开开发模板工程，新建界面组件。2.用户在 main.js 中进行界面组件的全局注册。3.用户在 esplug.json 中进行界面组件的类型配置，将界面组件配置到菜单栏中，并且分别将组件配置为弹窗类型组件、底部显控类型组件、右侧缩略显控组件类型、公共信息栏组件类型等不同组件类型。5.用户运行 npm run dev 执行运行命令。6.用户输入测试用户 test，输入密码后点击登录。7.用户将两个组件分别写重名的相同样式。然后在另外一个组件中以局部注册的方式进行注册，在每个组件的&lt;style&gt;标签中分别加上 scoped 属性，组件1的样式内容为 background:red，组件 2的样式内容为 background:blue。8.用户打开浏览器，在菜单中打开此组件。10.用户在组件A 中新增一个函数名为test 的函数，并且在组件 B 中新增一个函数名同为 test 的函数，两个 test 函数执行的分别是打印一串字符串。</td><td colspan=\"1\" rowspan=\"1\">4.界面开发工具校验用户填写的esplug.json 配置信息。9.界面集成框架对组件进行加载，对组件的界面进行渲染，将不同的 cSs 样式进行解析和加载，如果组件没有被正常加载，则执行事件流E1，用例结束。</td><td colspan=\"1\" rowspan=\"1\">如果输入参数不合法，则提示用户，修改输入参数，如果用户输入参数合法，界面上不出现具体提示。</td></tr><tr><td>11.用户打开浏览器，在菜单中打开此组 件，分别触发两个组件中的 test事件。 13.用户在组件A中定义一个全局变量</td><td>12.界面集成框架对组件进行加载和渲 染，并且执行组件内定义的函数和时 间，分别调用函数中所定义的事件，如 果组件中的事件均未被触发，则执行异 常流E6，如果界面空白，则执行异常流 E1，用例结束。</td><td></td></tr><tr><td>A,在组件 B 中同样定义一个相同名称的 全局变量B，然后绑定到组件的界面 上，组件A在某个函数中进行改变其变 量的操作，将初始值为1的A，改为 2，组件B则不需要进行进一步操作。 14.用户打开浏览器，在菜单中打开此组 件，分别触发两个组件中的 test事件。 16.用户在组件A中请求一个test 接口的 后端服务，此服务在后端故意关闭或者</td><td>15.界面集成框架对组件进行加载和渲 染，并且执行组件A中的函数事件，组 件A 中的全局变量被改为 2，而组件B 中的全局变量A则不会发生任何变化。 如果组件A中的事件均未被触发，则执 行异常流E6，如果界面空白，则执行异 常流E1 如果B组件中的全局变量A被改变，则 执行异常流E7，用例结束。</td><td></td></tr><tr><td>直接不予提供。 17.用户打开浏览器，在菜单中打开此组 件，执行调用 test 接口的事件。</td><td>18.界面集成框架对组件进行加载和渲 染，并且执行组件中的触发 test 接口的 事件，接口调用失败，控制台打印相应 的错误信息。界面空白，没有任何组件</td><td></td></tr><tr><td>19.用户打开其他组件，在界面集成框架 上进行其他操作。例如点击菜单、点击 工具栏、点击消息通知界面、拖动地图 等。</td><td>被加载，则执行异常流事件E1，用例结 束。 20.界面集成框架正确的执行用户的操作 指令，并且界面不会出现卡死，假死等</td><td></td></tr><tr><td>异常流E1：界面空白，没有任何组件被加载，用例结束。</td><td>现象，如果打开其他组件界面空白，没 有任何组件被加载，则进入异常流事件 E1，如果界面被卡死，无法进行进一步 操作则进入异常流E8，用例结束。</td><td></td></tr><tr><td>异常流E2：接口无法正常连接，出现404，、502等错误码，用例结束。 异常流E3：界面路由无法跳转，用例结束。 异常流E4：输入的用户信息与界面集成框架上显示的信息不符合，用例结束。 异常流E5：组件被加载出来，配置信息无效，用例结束。 异常流E6：事件未被触发，用例结束。 异常流E7：变量被污染，用例结束。</td><td></td><td></td></tr><tr><td>异常流E8：界面卡死，界面集成框架不相应用户操作，用例结束。 后置条件：无。</td><td></td><td></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                131,
+                914,
+                900
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLI"
+                    }
+                ]
+            },
+            "bbox": [
+                509,
+                920,
+                542,
+                934
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                110,
+                914,
+                903
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLII"
+                    }
+                ]
+            },
+            "bbox": [
+                507,
+                920,
+                546,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                109,
+                914,
+                386
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/fc39ee69a1512ccf898fafdfd43cb15ceccb3e88100d79836fd0bebddd8f93e1.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "图 20故障隔离检测流程图"
+                    },
+                    {
+                        "type": "text",
+                        "content": "3.2.2.7 数据状态管理（PZXQ-GN-JMJCKJ-JMJC-SJZTGL）"
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                388,
+                501,
+                672,
+                717
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "数据状态管理提供界面数据共享功能，支持界面组件之间、组件与框架之间的事件交互和数据传递。"
+                    }
+                ]
+            },
+            "bbox": [
+                114,
+                860,
+                887,
+                903
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLIII"
+                    }
+                ]
+            },
+            "bbox": [
+                504,
+                920,
+                547,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "数据状态管理用例场景，见表17。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                116,
+                455,
+                134
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/91d3cbc97e73cebc9fdf8a3d2ffc210ef0df155affbc14014a2698acaa8c9261.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表17 数据状态管理描述"
+                    }
+                ],
+                "table_footnote": [
+                    {
+                        "type": "text",
+                        "content": "数据状态管理流程图如图 21。"
+                    }
+                ],
+                "html": "<table><tr><td>Use Case 名称:数据状态管理 概述：本用例是数据状态管理的扩展用例，描述数据状态管理的过程；</td><td colspan=\"2\">Actors：开发人员</td></tr><tr><td colspan=\"3\">前置条件：数据库连接正常。 主事件流</td></tr><tr><td>Actor 的动作 1.用户打开开发模板工程，新建界面组 件。</td><td>系统的动作</td><td>动作约束 (性能、可靠性、容错等)</td></tr><tr><td>2.用户在 main.js 中进行界面组件的全局 注册。 3.用户在 esplug.json 中进行界面组件的 类型配置，将界面组件配置到菜单栏</td><td></td><td></td></tr><tr><td>中，并且分别将组件配置为弹窗类型组 件、底部显控类型组件、右侧缩略显控 组件类型、公共信息栏组件类型等不同 组件类型。</td><td>4界面开发工具校验用户填写的</td><td></td></tr><tr><td>5 用户运行 npm run dev 执行运行命 令。</td><td>esplug.json 配置信息。</td><td>如果输入参数不合法，则提示用 户，修改输入参数，如果用户输</td></tr><tr><td>6 用户输入测试用户 test，输入密码后 点击登录。 7用户在工程中的 store 文件夹下的 index.js 中创建数据变量 test1，test2，</td><td></td><td>入参数合法，界面上不出现具体 提示。</td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>同时创建 mutation 方法，在 editTest1</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>函数中对 test1的值进行修改，在 editTest2函数中对 test2的值进行修 改，并且在组件A、B中分别调用两个</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>函数，但是在 A 组件中显示 test2 的</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>值，在组件 B 中显示 test1 的值。</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>8界面集成框架对组件进行加载和渲染，</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>并且执行组件中的触发两个函数的操</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>作，A B 组件中的界面中两个 state 变量</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>会在组件执行函数后发生改变，如果A</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>组件执行 editTest1 后，B组件中的 test1</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>没有发生改变，则执行异常流E6，如果</td><td></td></tr><tr><td>Use Case 名称:数据状态管理</td><td colspan=\"2\">Actors:开发人员</td></tr><tr><td>9 用户在组件 B 中创建函数 test，事件 内容为改变 B 组件中的数据 testB，并 且在A组件中，以局部注册的方式将组 件B作为子组件引入，同时A组件中创 建函数 testA，在组件 A 中执行父组件 调用子组件 testB 方法，并且组件 B 通 过 this.$emit的方式调用父组件A的 test1 方法，组件 A 通过 props 的方式直 接向组件B进行参数传递。 染，当在组件A 中触发执行子组件B的</td><td>test1没有发生改变，则执行异常流 E6，用例结束。 10界面集成框架对组件进行加载和渲</td><td></td></tr><tr><td rowspan=\"2\">11 用户将组件 A 在 esplug.json 中设置 成弹窗类型的组件，并且在 A 的 test 函 数中，调用框架提供的最大化、最小 化、隐藏弹出窗等接口。</td><td>函数时，组件B中的函数事件被正确执 行， 当子组件B中触发调用父组件A的函数 时间是，组件A中的函数事件被正确执 行 组件 A 通过 props 向 B 组件传参时，B 正确接收参数，如果界面没有被加载出 来，则执行异常流事件E1，如果事件没 有被正确执行，变量灭有改变则执行异 常流E6，用例结束。</td><td></td></tr><tr><td>11 界面集成框架对组件进行加载和渲 染，并且根据组件A的函数的调用，对 当前组件的窗口进行最大化、最小化、 隐藏等操作。</td><td></td></tr><tr><td>12用户在组件A 中订阅框架退出登录的 事件login，点击界面集成框架的退出登 录按钮。 14用户执行调用框架当前登录用户信息</td><td>13界面集成框架退出登录，并且在 localStorage 中清空用户的信息，同时在 退出登录的过程中，将退出登录事件分 发给订阅此事件的组件，如果当框架退 出登录时，用户的组件没有正常接收到 事件，则执行异常流事件E5，用例结 束。</td><td></td></tr><tr><td colspan=\"1\" rowspan=\"1\">的接口。</td><td colspan=\"1\" rowspan=\"1\">14界面集成框架将用户信息返回给用户组件，如果接口返回无内容，且调用失败，则执行异常流E5，用例结束。15用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E1：界面空白，没有任何组件被加载，用例结束。异常流E2：接口无法正常连接，出现404，、502等错误码，用例结束。异常流E3：界面路由无法跳转，用例结束异常流E4：输入的用户信息与界面集成框架上显示的信息不符合，用例结束异常流E5：接口未被调用，用例结束。异常流E6：变量没有改变，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">后置条件：无。</td><td colspan=\"1\" rowspan=\"1\"></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                156,
+                914,
+                906
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLIV"
+                    }
+                ]
+            },
+            "bbox": [
+                502,
+                920,
+                549,
+                934
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                109,
+                914,
+                915
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLV"
+                    }
+                ]
+            },
+            "bbox": [
+                504,
+                920,
+                547,
+                934
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                109,
+                914,
+                376
+            ]
+        },
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/45bbe7dc55c5517a4228bd16f876562db62391451ada4f0ae410afe03c3addc9.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "图 21数据状态管理流程图"
+                    },
+                    {
+                        "type": "text",
+                        "content": "3.2.2.8 消息通知（PZXQ-GN-JMJCKJ-JMJC-XXTZ）"
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                507,
+                510,
+                549,
+                699
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "消息通知提供消息通知功能，支持对服务推送到界面数据的统一接收处理和统一组织显示。"
+                    }
+                ]
+            },
+            "bbox": [
+                112,
+                859,
+                887,
+                902
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLVI"
+                    }
+                ]
+            },
+            "bbox": [
+                502,
+                920,
+                549,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "消息通知用例场景，见表18。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                116,
+                415,
+                134
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/6dcb967869717999046ee89452e65c02a40d875b49c41e29f8498fd75a57efa3.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表18 消息通知用例描述"
+                    }
+                ],
+                "table_footnote": [],
+                "html": "<table><tr><td colspan=\"1\" rowspan=\"1\">Use Case 名称:消息通知</td><td colspan=\"2\" rowspan=\"1\">Actors：开发人员</td></tr><tr><td colspan=\"3\" rowspan=\"1\">概述：本用例是消息通知的扩展用例，描述消息通知的过程；</td></tr><tr><td colspan=\"3\" rowspan=\"1\">前置条件：数据库连接正常。</td></tr><tr><td colspan=\"3\" rowspan=\"1\">主事件流</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor 的动作</td><td colspan=\"1\" rowspan=\"1\">系统的动作</td><td colspan=\"1\" rowspan=\"1\">动作约束(性能、可靠性、容错等)</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1 用户打开开发模板工程，新建界面组件组件。2 用户在 main.js 中进行界面组件的全局注册。3 用户在 esplug.json 中进行界面组件的类型配置，将界面组件配置到菜单栏中，并且分别将组件配置为弹窗类型组件、底部显控类型组件、右侧缩略显控组件类型、公共信息栏组件类型等不同组件类型。5 用户运行 npm run dev 执行运行命令。6 用户输入测试用户 test，输入密码后点击登录。7用户在组件A中，创建消息通知的实例。将端口号、域名、通道号、主题填写正确，同时在后端接口按照规范格式进行消息推送。9用户在控制台查看消息通知的回调函数内是否有后端推送的消息进行打印。10用户点击消息中心，查看消息、点击已读消息、删除消息。</td><td colspan=\"1\" rowspan=\"1\">4 界面开发工具校验用户填写的esplug.json 配置信息。8界面集成框架对组件进行加载和渲染，当后端进行消息推送后，界面集成框架将消息分发至订阅了消息通知的组件应用。11当用户点击消息中心，界面集成框架会显示所有已接收的消息，当用户查看某一个具体消息时，该消息详情会具体</td><td colspan=\"1\" rowspan=\"1\">如果输入参数不合法，则提示用户，修改输入参数，如果用户输入参数合法，界面上不出现具体提示。</td></tr><tr><td colspan=\"1\" rowspan=\"1\">12用户按照程序员手册进行自定义消息通道的建立。将端口号、域名、通道号、主题填写正确，同时在后端接口按照规范格式进行消息推送。14用户在控制台查看消息通知的回调函数内是否有后端推送的消息进行打印。</td><td colspan=\"1\" rowspan=\"1\">显示，当用户删除消息时，消息会从消息列表消失。如果websocket无法正常建立连接，则执行异常流事件E2，如果消息未在控制台打印，则执行异常流E6，用例结束。13界面集成框架收到后端推送的消息后，会将消息分发至用户的回调函数中。15用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">异常流E1：界面空白，没有任何组件被加载，用例结束。异常流E2：接口无法正常连接，出现404，、502等错误码，用例结束。异常流E3：界面路由无法跳转，用例结束。异常流E4：输入的用户信息与界面集成框架上显示的信息不符合，用例结束。异常流E5：接口未被调用，用例结束。异常流E6：控制台没有消息答应，用例结束。</td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"2\" rowspan=\"1\">后置条件：无。</td><td colspan=\"1\" rowspan=\"1\"></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                155,
+                914,
+                906
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLVII"
+                    }
+                ]
+            },
+            "bbox": [
+                500,
+                920,
+                551,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                109,
+                914,
+                557
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "消息通知流程图如图 22。"
+                    }
+                ]
+            },
+            "bbox": [
+                149,
+                564,
+                373,
+                581
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLVIII"
+                    }
+                ]
+            },
+            "bbox": [
+                499,
+                920,
+                552,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "image",
+            "content": {
+                "image_source": {
+                    "path": "images/86346dc85786fbbd54ae79f54eed724e913dbf8240db5b412f42c7914c9e00bd.jpg"
+                },
+                "image_caption": [
+                    {
+                        "type": "text",
+                        "content": "图 22消息通知流程图"
+                    }
+                ],
+                "image_footnote": []
+            },
+            "bbox": [
+                485,
+                200,
+                571,
+                369
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "3.2.2.9 服务请求（PZXQ-GN-JMJCKJ-JMJC-FWQQ）"
+                    }
+                ]
+            },
+            "bbox": [
+                184,
+                480,
+                754,
+                500
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "服务请求提供服务请求功能，支持通过Restful接口对服务资源的新建、获取、更新、删除操作。"
+                    }
+                ]
+            },
+            "bbox": [
+                114,
+                513,
+                905,
+                556
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": {
+                "paragraph_content": [
+                    {
+                        "type": "text",
+                        "content": "服务请求用例场景，见表19。"
+                    }
+                ]
+            },
+            "bbox": [
+                154,
+                563,
+                415,
+                581
+            ]
+        },
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/fa77c20d73421df618258ff484991a7589c572fca8297ab53c51878ece5a962f.jpg"
+                },
+                "table_caption": [
+                    {
+                        "type": "text",
+                        "content": "表19 服务请求用例描述"
+                    }
+                ],
+                "table_footnote": [
+                    {
+                        "type": "text",
+                        "content": "服务请求流程图如图 23。"
+                    }
+                ],
+                "html": "<table><tr><td colspan=\"1\" rowspan=\"1\">Use Case 名称:服务请求</td><td colspan=\"2\" rowspan=\"1\">Actors:界面集成框架</td></tr><tr><td colspan=\"3\" rowspan=\"1\">概述：本用例是服务请求的扩展用例，描述服务请求的过程；</td></tr><tr><td colspan=\"3\" rowspan=\"1\">前置条件：数据库连接正常。</td></tr><tr><td colspan=\"3\" rowspan=\"1\">主事件流</td></tr><tr><td colspan=\"1\" rowspan=\"1\">Actor 的动作</td><td colspan=\"1\" rowspan=\"1\">系统的动作</td><td colspan=\"1\" rowspan=\"1\">动作约束(性能、可靠性、容错等)</td></tr><tr><td colspan=\"1\" rowspan=\"1\">1 用户打开开发模板工程，新建界面组件。2 用户在 main.js 中进行界面组件的全局注册。3 用户在 esplug.json 中进行界面组件的类型配置，将界面组件配置到菜单档中，并且分别将组件配置为弹窗类型组件、底部显控类型组件、右侧缩略显控</td><td colspan=\"1\" rowspan=\"1\"></td><td colspan=\"1\" rowspan=\"1\"></td></tr><tr><td colspan=\"3\">组件类型、公共信息栏组件类型等不同 组件类型。</td></tr><tr><td></td><td>4界面开发工具校验用户填写的 esplug.json 配置信息。</td><td></td></tr><tr><td>5 用户运行 npm run dev 执行运行命</td><td></td><td></td></tr><tr><td>令。</td><td></td><td>如果输入参数不合法，则提示用</td></tr><tr><td>6 用户输入测试用户 test，输入密码后 点击登录。</td><td></td><td>户，修改输入参数，如果用户输 入参数合法，界面上不出现具体</td></tr><tr><td>7用户在组件中调用界面集成框架提供</td><td>提示。</td><td></td></tr><tr><td>的$ajaxGet 接口。创建 get 类型的 restful接口请求。用户在组件中调用界 面集成框架提供的$ajaxPost接口。创 建 get 类型的 restful 接口请求用户在组</td><td></td><td></td></tr><tr><td>件中调用界面集成框架提供的$ajaxPut 接口。创建 put类型的 restful 接口请求 用户在组件中调用界面集成框架提供的</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>$ajaxDelete 接口。创建 delete 类型的</td><td></td><td></td></tr><tr><td>restful接口请求。</td><td></td><td></td></tr><tr><td>8用户在后端利用服务开发框架创建类</td><td></td><td></td></tr><tr><td>型为 get 类型的 restful 接口，对应资源</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>的获取用户在后端利用服务开发框架创</td><td></td><td></td></tr><tr><td>建类型为 post 类型的 restful 接口，对应</td><td></td><td></td></tr><tr><td>数据的存储用户在后端利用服务开发框</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>架创建类型为 put 类型的 restful 接口，</td><td></td><td></td></tr><tr><td>对应数据的存储用户在后端利用服务开</td><td></td><td></td></tr><tr><td>发框架创建类型为 delete 类型的 restful</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>接口，对应资源的删除。</td><td></td><td></td></tr><tr><td></td><td>9 界面集成框架接收步骤 8 中 4 中类型接</td><td></td></tr><tr><td></td><td>口所返回的数据，并且将数据回调回用</td><td></td></tr><tr><td></td><td>户的组件接口中。如果接口无法正确连</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td>接则执行异常流E1，用例结束。</td><td></td></tr><tr><td></td><td>10用例结束。</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>异常流E1：接口无法正常连接，出现404，、502等错误码，用例结束。</td><td></td><td></td></tr><tr><td>后置条件：无。</td><td></td><td></td></tr></table>",
+                "table_type": "complex_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                107,
+                601,
+                912,
+                898
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "XLIX"
+                    }
+                ]
+            },
+            "bbox": [
+                504,
+                920,
+                549,
+                935
+            ]
+        }
+    ],
+    [
+        {
+            "type": "table",
+            "content": {
+                "image_source": {
+                    "path": "images/"
+                },
+                "table_caption": [],
+                "table_footnote": [],
+                "html": "",
+                "table_type": "simple_table",
+                "table_nest_level": 1
+            },
+            "bbox": [
+                105,
+                110,
+                914,
+                821
+            ]
+        },
+        {
+            "type": "page_number",
+            "content": {
+                "page_number_content": [
+                    {
+                        "type": "text",
+                        "content": "L"
+                    }
+                ]
+            },
+            "bbox": [
+                519,
+                921,
+                532,
+                934
+            ]
+        }
+    ]
+]

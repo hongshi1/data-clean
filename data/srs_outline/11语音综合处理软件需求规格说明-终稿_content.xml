@@ -1,0 +1,1735 @@
+<Document doc_id="11语音综合处理软件需求规格说明-终稿">
+  <Section section_id="2" title="引用文档" start_line="13" />
+  <Section section_id="2" title="表 SEQ 表 \* ARABIC 1 引用文档" start_line="14">
+    <Paragraph line="15">文档编号</Paragraph>
+    <Paragraph line="16">标题</Paragraph>
+    <Paragraph line="17">修订版本</Paragraph>
+    <Paragraph line="18">修订日期</Paragraph>
+    <Paragraph line="19">编写单位</Paragraph>
+    <Paragraph line="20">GJB 438B-2009</Paragraph>
+    <Paragraph line="21">《军用软件开发文档编制规范》</Paragraph>
+    <Paragraph line="23">2009年5月</Paragraph>
+    <Paragraph line="24">总装备部</Paragraph>
+    <Paragraph line="25">GJB 439A-2013</Paragraph>
+    <Paragraph line="26">《军品软件质量保证通用要求》</Paragraph>
+    <Paragraph line="28">2013年7月</Paragraph>
+    <Paragraph line="29">国防科学技术工业委员会</Paragraph>
+    <Paragraph line="30">GJB 450A-2004</Paragraph>
+    <Paragraph line="31">《装备可靠性工作通用要求》</Paragraph>
+    <Paragraph line="33">2004年7月</Paragraph>
+    <Paragraph line="34">总装备部</Paragraph>
+    <Paragraph line="35">GJB 2786A-2009</Paragraph>
+    <Paragraph line="36">《军用软件开发通用要求》</Paragraph>
+    <Paragraph line="38">2009年5月</Paragraph>
+    <Paragraph line="39">总装备部</Paragraph>
+    <Paragraph line="40">GJB 5235-2004</Paragraph>
+    <Paragraph line="41">《军用软件配置管理》</Paragraph>
+    <Paragraph line="43">2004年9月</Paragraph>
+    <Paragraph line="44">总装备部</Paragraph>
+  </Section>
+  <Section section_id="3" title="需求" start_line="45" />
+  <Section section_id="3.1" title="要求的状态和方式" start_line="46">
+    <Paragraph line="47">语音综合处理软件包括语音合成、语音识别和识别短语定制三个模块。语音综合处理运行在便携式计算机、携行作业设备、便携式计算机（国产化）、综合信息终端等目标使用环境。</Paragraph>
+  </Section>
+  <Section section_id="3.1.1" title="软件状态图" start_line="48" />
+  <Section section_id="3.1.1" title="语音综合处理软件状态图有多个运行状态，包括开发阶段、集成阶段、运行阶段；支持多种方式，包括桌面、平板、手持。" start_line="49" />
+  <Section section_id="3.1.2" title="软件活动图" start_line="50">
+    <Paragraph line="52">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_1" section="3.1.2" />
+  </Section>
+  <Section section_id="3.1.2" title="图 SEQ 图 \* ARABIC 1 语音综合处理软件活动图" start_line="53" />
+  <Section section_id="3.2" title="CSCI能力需求" start_line="54">
+    <Paragraph line="55">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_2" section="3.2" />
+    <Paragraph line="56">图 SEQ 图 \* ARABIC 2 语音综合处理软件功能图</Paragraph>
+    <Image image_id="IMG_3" section="3.2" figure_number="2" caption="语音综合处理软件功能图" />
+    <Paragraph line="57">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_4" section="3.2" />
+    <Paragraph line="58">图 SEQ 图 \* ARABIC 3 语音综合处理软件用例图</Paragraph>
+    <Image image_id="IMG_5" section="3.2" figure_number="3" caption="语音综合处理软件用例图" />
+  </Section>
+  <Table table_id="T_1" type="other" title="语音综合处理软件所有能力标识" section="3.2">
+    <Headers>
+      <Cell>序号Use case名称项目唯一标识符需求描述需求重用方式名称运行状态对应的任务书功能/性能1语音合成PZXQ-GN-YYZHCL -YYHC提供格式化文本信息向语音信息转换的语音合成功能，能够实现根据标点停顿；</Cell>
+      <Cell>提供音频文件生成和存储功能，能够将合成的语音转换成wav格式音频文件进行记录和存储；</Cell>
+      <Cell>提供语音播报功能，能够对本地wav音频和合成的wav音频进行播报；</Cell>
+      <Cell>提供语音设置功能，可进行人声选择（男声、女声），进行语音播报开启、关闭设置；新研手持、桌面、平板运行阶段4.1.12语音识别PZXQ-GN-YYZHCL -YYSB提供语音录入功能，能够将语音信息转换为wav格式音频文件；</Cell>
+      <Cell>提供语音转换为短语文本的功能，实现在无网络连接的情况下特定格式语音向短语文本的转换；</Cell>
+    </Headers>
+    <Row>
+      <Cell>对语音转换成的文本格式进行规范化定义，实现格式化输出。无手持、桌面、平板运行阶段4.1.2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="4.2" title="a)" start_line="66">
+    <Paragraph line="67">3识别短语定制PZXQ-GN-YYZHCL -SBDYDZ提供识别短语的管理功能，支持用户按照需求进行识别短语的配置和扩展；</Paragraph>
+    <Paragraph line="68">提供识别短语语法文件的生成功能，依据语法规则构建用于语言解码的BNF文件；</Paragraph>
+    <Paragraph line="69">支持本地特定识别短语数不小于200条。无桌面集成阶段、运行阶段4.1.3</Paragraph>
+  </Section>
+  <Section section_id="4.2" title="b）3.2.1语音合成（PZXQ-GN-YYZHCL-YYHC）" start_line="70" req_id="PZXQ-GN-YYZHCL">
+    <Paragraph line="71">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_6" section="4.2" />
+    <Paragraph line="72">图 SEQ 图 \* ARABIC 4 语音合成用例图</Paragraph>
+    <Image image_id="IMG_7" section="4.2" figure_number="4" caption="语音合成用例图" />
+  </Section>
+  <Table table_id="T_2" type="other" title="语音合成能力标识" section="4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式</Cell>
+      <Cell>名称</Cell>
+      <Cell>运行</Cell>
+      <Cell>状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>格式化文本语音合成</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYHC-GSHWBYYHC</Cell>
+      <Cell>提供格式化文本信息向语音信息转换的语音合成功能</Cell>
+      <Cell>新研</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1a)</Cell>
+      <Cell>2</Cell>
+      <Cell>音频文件生成和存储</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-YYZHCL-YYHC-YPWJSCHCC</Cell>
+      <Cell>能够将合成的语音转换成wav格式音频文件进行记录和存储</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.1b)</Cell>
+      <Cell>3</Cell>
+      <Cell>语音播报</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYHC-YYBB</Cell>
+      <Cell>能够对本地wav音频和合成的wav音频进行播报</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1c)</Cell>
+      <Cell>4</Cell>
+    </Row>
+    <Row>
+      <Cell>语音设置</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYHC-YYSZ</Cell>
+      <Cell>可进行人声选择（男声、女声），进行语音播报开启、关闭设置</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.1d)</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 5 语音合成流程图</Cell>
+      <Cell>3.2.1.1格式化文本语音合成（PZXQ-GN-YYZHCL-YYHC-GSHWBYYHC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_3" type="other" title="格式化文本语音合成用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：格式化文本语音合成</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的格式化文本语音合成用例，描述用户使进行格式化文本信息语音合成的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>2.用户在界面上选择或输入格式化文本信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>5.用户点击语音转换按钮</Cell>
+      <Cell>1.系统初始化语音合成引擎，开始加载资源文件</Cell>
+      <Cell>3.系统接收格式化文本信息；</Cell>
+      <Cell>4.系统检测文本信息是否符合规范，若不符合格式化规范返回错误，执行异常流E1；</Cell>
+      <Cell>6.系统开始根据文本信息进行语音转换，并按照默认语音风格进行语音播放，根据标点进行停顿；若转换失败，执行异常流E2；</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示格式化文本不符合规范，需重新输入；</Cell>
+      <Cell>异常流E2：系统提示格式化文本转语音失败，用例结束。</Cell>
+      <Cell>后置条件：生成wav格式的音频文件。</Cell>
+      <Cell>3.2.1.2音频文件生成和存储（PZXQ-GN-YYZHCL-YYHC-YPWJSCHCC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_4" type="other" title="音频文件生成和存储用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：音频文件生成和存储</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的音频文件生成和存储用例，描述用户将合成的语音信息生成音频文件并存储的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户在界面上选择或输入格式化文本信息；</Cell>
+    </Row>
+    <Row>
+      <Cell>4.用户点击音频文件转换按钮</Cell>
+      <Cell>6.用户选择文件保存位置，点击确定</Cell>
+      <Cell>2.系统接收格式化文本信息；</Cell>
+      <Cell>3.系统检测文本信息是否符合规范，若不符合格式化规范返回错误，执行异常流E1；</Cell>
+      <Cell>5.弹出选择音频文件保存路径的界面</Cell>
+    </Row>
+    <Row>
+      <Cell>7.系统开始音频转换，若错误，执行异常流E2</Cell>
+      <Cell>异常流E1：系统提示格式化文本不符合规范，需重新输入；</Cell>
+      <Cell>异常流E2：系统提示音频文件转换失败，用例结束。</Cell>
+      <Cell>后置条件：生成wav格式的音频文件。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图 SEQ 图 \* ARABIC 6 音频文件生成和存储用例流程图</Cell>
+      <Cell>3.2.1.3语音播报（PZXQ-GN-YYZHCL-YYHC-YYBB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_5" type="other" title="语音播报用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：语音播报</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的语音播报用例，描述用户对本地音频文件进行语音播报的过程。</Cell>
+      <Cell>前置条件：语音播报功能开启，wav格式的音频文件</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户在界面选择需要语音播报的wav格式的音频文件</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统以默认语音模式开始播报音频文件的语音信息，如果播放失败，执行异常流E1</Cell>
+      <Cell>异常流E1：系统提示播报失败，用例结束。</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 7 语音播报用例流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.4语音设置（PZXQ-GN-YYZHCL-YYHC-YYSZ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_6" type="other" title="语音设置用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：语音设置</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的语音设置用例，描述用户在语音播放过程中进行语音设置的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户在主界面打开语音设置页面</Cell>
+    </Row>
+    <Row>
+      <Cell>3.选择语音播报开启/关闭单选框</Cell>
+      <Cell>5.人声选择单选框中选择男声/女声</Cell>
+      <Cell>2.弹出语音设置界面</Cell>
+      <Cell>4.系统会根据单选框状态开启或关闭语音播报功能，若开启/关闭失败，执行异常流E1</Cell>
+      <Cell>6.系统根据单选框内容在语音播报时通过男声/女声进行播报,若设置失败，执行异常流E2</Cell>
+    </Row>
+    <Row>
+      <Cell>异常流E1：系统提示开启/关闭失败</Cell>
+      <Cell>异常流E2：系统提示执行失败</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 8语音设置用例流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2语音识别（PZXQ-GN-YYZHCL-YYSB）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 9语音识别用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_7" type="other" title="语音识别能力标识" section="4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行</Cell>
+      <Cell>状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>语音录入</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYSB-YYLR</Cell>
+      <Cell>提供语音录入的功能</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板、手持</Cell>
+    </Row>
+    <Row>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2a)</Cell>
+      <Cell>2</Cell>
+      <Cell>文本规范化</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYSB-WBGFH</Cell>
+    </Row>
+    <Row>
+      <Cell>对语音转换成的文本格式进行规范化定义，实现格式化输出</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2c)</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>离线语音识别</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYSB-LXYYSB</Cell>
+      <Cell>支持离线条件下实时语音识别</Cell>
+      <Cell>新研</Cell>
+    </Row>
+    <Row>
+      <Cell>桌面、平板、手持</Cell>
+      <Cell>运行阶段</Cell>
+      <Cell>4.1.2b)</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图  SEQ 图 \* ARABIC 10 语音识别流程图</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.1语音录入（PZXQ-GN-YYZHCL-YYSB-YYLR）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_8" type="other" title="语音录入用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：语音录入</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的语音录入用例，描述用户进行语音录入的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1.用户在界面点击语音录入按钮</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统出现开始接收语音的界面</Cell>
+      <Cell>3.用户对着话筒开始录入语音，完成后点击确定按钮</Cell>
+      <Cell>4.系统提示接收成功；若接收失败，执行异常流E1</Cell>
+      <Cell>5.系统生成wav格式的音频文件保存到指定位置</Cell>
+      <Cell>异常流E1：系统提示接收语音失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：生成wav格式的音频文件。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 11 语音录入用例流程图</Cell>
+      <Cell>3.2.2.2离线语音识别（PZXQ-GN-YYZHCL-YYSB-LXYYSB）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_9" type="other" title="离线语音识别用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：离线语音识别</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的离线语音识别的用例，描述用户在离线环境下进行语音识别的过程。</Cell>
+      <Cell>前置条件：识别短语已配置</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>离线条件下，用户在界面点击语音录入按钮</Cell>
+    </Row>
+    <Row>
+      <Cell>系统出现开始接收语音的界面</Cell>
+      <Cell>用户对着话筒开始录入语音，完成后点击确定按钮</Cell>
+      <Cell>系统提示接收成功；若接收失败，执行异常流E1</Cell>
+      <Cell>用户点击语音转换按钮</Cell>
+      <Cell>系统出现将录入的语音转为指定格式化文本；如果转换失败，执行异常流E2</Cell>
+    </Row>
+    <Row>
+      <Cell>离线条件下，用户在界面点击语音录入按钮</Cell>
+      <Cell>系统出现开始接收语音的界面</Cell>
+      <Cell>用户对着话筒开始录入语音，完成后点击确定按钮</Cell>
+      <Cell>系统提示接收成功；若接收失败，执行异常流E1</Cell>
+      <Cell>用户点击语音转换按钮</Cell>
+    </Row>
+    <Row>
+      <Cell>系统出现将录入的语音转为指定格式化文本信息；如果转换失败，执行异常流E2</Cell>
+      <Cell>离线条件下，用户在界面点击语音录入按钮</Cell>
+      <Cell>系统出现开始接收语音的界面</Cell>
+      <Cell>用户对着话筒开始录入语音，完成后点击确定按钮</Cell>
+      <Cell>系统提示接收成功；若接收失败，执行异常流E1</Cell>
+    </Row>
+    <Row>
+      <Cell>用户点击语音转换按钮</Cell>
+      <Cell>系统出现将录入的语音转为指定格式化文本信息；如果转换失败，执行异常流E2</Cell>
+      <Cell>异常流E1：系统提示语音接收失败，需重新录入</Cell>
+      <Cell>异常流E2：系统提示语音转换失败，用例结束</Cell>
+      <Cell>后置条件：无。</Cell>
+    </Row>
+    <Row>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 12 离线语音识别用例流程图</Cell>
+      <Cell>3.2.2.3文本规范化（PZXQ-GN-YYZHCL-YYSB-WBGFH）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_10" type="other" title="文本规范化用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：文本规范化</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的文本规范化用例，描述用户将录入语音转化固定格式文本信息的过程。</Cell>
+      <Cell>前置条件：用户已经完成语音录入操作，识别短语已配置</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>1. 使用人员在成功录入语音后，选择文本格式后点击语音转换按钮</Cell>
+    </Row>
+    <Row>
+      <Cell>2.系统出现将录入的语音转为指定格式化数据信息；如果转换失败，执行异常流E1</Cell>
+      <Cell>输出在界面显示</Cell>
+      <Cell>异常流E1：系统提示转换失败，用例结束</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图 SEQ 图 \* ARABIC 13 文本规范化用例流程图</Cell>
+      <Cell>3.2.3识别短语定制（PZXQ-GN-YYZHCL-SBDYDZ）</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 14 识别短语定制功能用例图</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_11" type="other" title="识别短语定制能力标识" section="4.2">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>Use case名称</Cell>
+      <Cell>项目唯一标识符</Cell>
+      <Cell>需求描述</Cell>
+      <Cell>需求重用</Cell>
+    </Headers>
+    <Row>
+      <Cell>方式名称</Cell>
+      <Cell>运行状态</Cell>
+      <Cell>对应的任务书功能/性能</Cell>
+      <Cell>1</Cell>
+      <Cell>识别短语管理</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-GN-YYZHCL-YYSB-SBDYGL</Cell>
+      <Cell>提供识别短语的管理功能，支持用户按照需求进行识别短语的配置和扩展</Cell>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>集成阶段、运行阶段</Cell>
+    </Row>
+    <Row>
+      <Cell>4.1.3a)</Cell>
+      <Cell>2</Cell>
+      <Cell>识别短语生成</Cell>
+      <Cell>PZXQ-GN-YYZHCL-YYSB-SBDYSC</Cell>
+      <Cell>依据语法规则构建用于语言解码的BNF文件</Cell>
+    </Row>
+    <Row>
+      <Cell>新研</Cell>
+      <Cell>桌面</Cell>
+      <Cell>集成阶段、运行阶段</Cell>
+      <Cell>4.1.3b)</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+    </Row>
+    <Row>
+      <Cell>图  SEQ 图 \* ARABIC 15 语音短语识别流程图</Cell>
+      <Cell>3.2.3.1识别短语管理（PZXQ-GN-YYZHCL-YYSB-SBDYGL）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_12" type="other" title="识别短语管理用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：识别短语管理</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的识别短语管理用例，描述用户进行识别短语管理的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>打开语法规则文件</Cell>
+    </Row>
+    <Row>
+      <Cell>用户添加识别短语“今天天气真不错”</Cell>
+      <Cell>支持本地特定命令词数不小于200条。</Cell>
+      <Cell>系统加载识别短语文件并添加“今天天气真不错”</Cell>
+      <Cell>用户对着话筒开始录入语音：“今天天气真不错”，完成后击确定按钮</Cell>
+      <Cell>系统给出识别结果：今天天气真不错，若识别失败，进入异常流E1</Cell>
+    </Row>
+    <Row>
+      <Cell>用户修改“今天天气真不错”为“今天天气不太好”</Cell>
+      <Cell>系统加载识别短语文件并将“今天天气真不错”修改为“今天天气不太好”</Cell>
+      <Cell>用户对着话筒开始录入语音：“今天天气不太好”，完成后击确定按钮</Cell>
+      <Cell>系统给出识别结果：今天天气不太好，若识别失败，进入异常流E1</Cell>
+      <Cell>用户删除“今天天气不太好”</Cell>
+    </Row>
+    <Row>
+      <Cell>系统加载识别短语文件并将“今天天气不太好”删除</Cell>
+      <Cell>异常流E1：系统提示语音识别失败；</Cell>
+      <Cell>后置条件：无。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 16 识别短语管理用例图</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.3.2识别短语生成（PZXQ-GN-YYZHCL-YYSB-SBDYSC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_13" type="other" title="识别短语生成用例描述" section="4.2">
+    <Headers>
+      <Cell>Use Case 名称：识别短语语法文件生成</Cell>
+      <Cell>Actors：使用人员</Cell>
+      <Cell>概述：本用例是语音综合处理的识别短语语法文件生成用例，描述用户进行识别短语语法文件生成的过程。</Cell>
+      <Cell>前置条件：无。</Cell>
+      <Cell>主事件流</Cell>
+    </Headers>
+    <Row>
+      <Cell>Actor的动作</Cell>
+      <Cell>系统的动作</Cell>
+      <Cell>动作约束</Cell>
+      <Cell>（性能、可靠性、容错等）</Cell>
+      <Cell>用户在前端输入需要添加的识别</Cell>
+    </Row>
+    <Row>
+      <Cell>添加短语语法文件基本内容（文档标示头、语法名称、槽声明、主规则、文档主体）和一条识别短语（“星期一”）</Cell>
+      <Cell>保存文件并将文件格式后缀修改为.bnf</Cell>
+      <Cell>用户对着话筒开始录入语音：“星期一”，完成后击确定按钮</Cell>
+      <Cell>系统给出识别结果：星期一，若识别失败，进入异常流E1</Cell>
+      <Cell>异常流E1：系统提示语音识别失败；</Cell>
+    </Row>
+    <Row>
+      <Cell>后置条件：生成识别短语bnf文件。</Cell>
+      <Cell>EMBED Visio.Drawing.15</Cell>
+      <Cell>图 SEQ 图 \* ARABIC 17 识别短语生成用例图</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="471" />
+  <Section section_id="3.4.1" title="3.3.1接口标识和接口图" start_line="472">
+    <Paragraph line="473">EMBED Visio.Drawing.15</Paragraph>
+    <Image image_id="IMG_8" section="3.4.1" />
+    <Paragraph line="474">图 SEQ 图 \* ARABIC 18 语音综合处理软件外部接口需求图</Paragraph>
+    <Image image_id="IMG_9" section="3.4.1" figure_number="18" caption="语音综合处理软件外部接口需求图" />
+  </Section>
+  <Table table_id="T_14" type="qualification" title="语音综合处理软件外部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口</Cell>
+      <Cell>优先级</Cell>
+      <Cell>1</Cell>
+    </Row>
+    <Row>
+      <Cell>与用户的接口</Cell>
+      <Cell>PZXQ-WBJK-YYZHCL-RJJK</Cell>
+      <Cell>人机接口</Cell>
+      <Cell>用户</Cell>
+      <Cell>本软件</Cell>
+    </Row>
+    <Row>
+      <Cell>语音录入、文本输入、语音播放</Cell>
+      <Cell>中</Cell>
+      <Cell>本软件</Cell>
+      <Cell>用户</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>与应用软件的接口</Cell>
+      <Cell>PZXQ-WBJK-YYZHCL-YYRJ</Cell>
+      <Cell>API接口</Cell>
+      <Cell>本软件</Cell>
+      <Cell>语音应用软件</Cell>
+    </Row>
+    <Row>
+      <Cell>语音识别、语音合成二次开发接口</Cell>
+      <Cell>中</Cell>
+      <Cell>3</Cell>
+      <Cell>与运行支撑服务的接口</Cell>
+      <Cell>PZXQ-WBJK-YYZHCL-YXZC</Cell>
+    </Row>
+    <Row>
+      <Cell>Restful接口</Cell>
+      <Cell>运行支撑服务</Cell>
+      <Cell>本软件</Cell>
+      <Cell>日志记录</Cell>
+      <Cell>中</Cell>
+    </Row>
+    <Row>
+      <Cell>4</Cell>
+      <Cell>与文件的接口</Cell>
+      <Cell>PZXQ-WBJK-YYZHCL-WJJK</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>本软件</Cell>
+    </Row>
+    <Row>
+      <Cell>音频文件</Cell>
+      <Cell>音频文件</Cell>
+      <Cell>中</Cell>
+      <Cell>音频文件</Cell>
+      <Cell>本软件</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>与文本的接口</Cell>
+      <Cell>PZXQ-WBJK-YYZHCL-WBJK</Cell>
+      <Cell>文件接口</Cell>
+      <Cell>本软件</Cell>
+    </Row>
+    <Row>
+      <Cell>文本文件</Cell>
+      <Cell>文本</Cell>
+      <Cell>中</Cell>
+      <Cell>文本文件</Cell>
+      <Cell>本软件</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.2与用户的接口（PZXQ-WBJK-YYZHCL-RJJK）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_15" type="other" title="与用户的接口数据元素说明" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>识别短语模型</Cell>
+      <Cell>格式化的文本信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>试点建设装备配套科研信息交换格式</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.3与应用软件的接口（PZXQ-WBJK-YYZHCL-YYRJ）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_16" type="other" title="与应用软件的接口数据元素说明" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>文本信息</Cell>
+      <Cell>格式化的文本信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>语音信息</Cell>
+      <Cell>语音短语</Cell>
+      <Cell>字符串</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>3</Cell>
+      <Cell>音频文件</Cell>
+      <Cell>wav格式的音频文件</Cell>
+      <Cell>wav格式</Cell>
+      <Cell>wav格式</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.4与运行支撑服务的接口（PZXQ-WBJK-YYZHCL-YXZC）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_17" type="other" title="与运行支撑服务的接口数据元素说明" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>日志信息</Cell>
+      <Cell>日志级别</Cell>
+      <Cell>字符串</Cell>
+      <Cell>试点建设装备配套科研软件集成运维规范</Cell>
+    </Row>
+    <Row>
+      <Cell>日志消息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>格式信息</Cell>
+      <Cell>字符串</Cell>
+      <Cell>3.3.5与文件的接口（PZXQ-WBJK-YYZHCL-WJJK）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_18" type="other" title="与文件的接口数据元素说明" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>音频文件</Cell>
+      <Cell>音频文件</Cell>
+      <Cell>Wav文件</Cell>
+      <Cell>WAV格式</Cell>
+    </Row>
+    <Row>
+      <Cell>2</Cell>
+      <Cell>录音文件</Cell>
+      <Cell>录音文件</Cell>
+      <Cell>Wav文件</Cell>
+      <Cell>WAV格式</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.6与文本的接口（PZXQ-WBJK-YYZHCL-WBJK）</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_19" type="other" title="与文本的接口数据元素说明" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>文本数据</Cell>
+      <Cell>识别结果</Cell>
+      <Cell>字符串</Cell>
+      <Cell>--</Cell>
+    </Row>
+    <Row>
+      <Cell>语音合成所需的文本</Cell>
+      <Cell>字符串</Cell>
+      <Cell>--</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="621" />
+  <Section section_id="3.4.1" title="接口标识和接口图" start_line="622">
+    <Paragraph line="624">EMBED Visio.Drawing.15  图 SEQ 图 \* ARABIC 19 语音综合处理软件内部接口图</Paragraph>
+    <Image image_id="IMG_10" section="3.4.1" figure_number="19" caption="语音综合处理软件内部接口图" />
+  </Section>
+  <Table table_id="T_20" type="qualification" title="语音综合处理软件内部接口需求" section="3.4.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>接口需求名称</Cell>
+      <Cell>接口需求标识</Cell>
+      <Cell>接口类型</Cell>
+      <Cell>发送方</Cell>
+    </Headers>
+    <Row>
+      <Cell>接收方</Cell>
+      <Cell>接口内容</Cell>
+      <Cell>接口优先级</Cell>
+      <Cell>1</Cell>
+      <Cell>语音识别与识别短语定制的接口</Cell>
+    </Row>
+    <Row>
+      <Cell>PZXQ-YYSB-DYDZ</Cell>
+      <Cell>文件</Cell>
+      <Cell>识别短语定制</Cell>
+      <Cell>语音识别</Cell>
+      <Cell>识别短语生成的Bnf文件</Cell>
+    </Row>
+    <Row>
+      <Cell>高</Cell>
+      <Cell>2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.4.2" title="语音识别与语音合成的接口" start_line="643">
+    <Paragraph line="644">PZXQ-YYSB-YYHC</Paragraph>
+    <Paragraph line="645">文件</Paragraph>
+    <Paragraph line="646">语音合成</Paragraph>
+    <Paragraph line="647">语音识别</Paragraph>
+    <Paragraph line="648">音频文件</Paragraph>
+    <Paragraph line="650">语音识别</Paragraph>
+    <Paragraph line="651">语音合成</Paragraph>
+    <Paragraph line="652">语音文本</Paragraph>
+  </Section>
+  <Section section_id="3.4.2" title="语音识别与语音合成的接口" start_line="655" />
+  <Section section_id="3.4.2" title="表  SEQ 表 \* ARABIC 22 语音识别与语音合成的接口数据描述说明" start_line="656">
+    <Paragraph line="657">序号</Paragraph>
+    <Paragraph line="658">数据集名称</Paragraph>
+    <Paragraph line="659">数据组成</Paragraph>
+    <Paragraph line="660">数据约束</Paragraph>
+    <Paragraph line="661">数据标准</Paragraph>
+    <Paragraph line="663">语音文本</Paragraph>
+    <Paragraph line="664">存放识别结果或准备合成的文字</Paragraph>
+    <Paragraph line="665">文件</Paragraph>
+    <Paragraph line="668">音频文件</Paragraph>
+    <Paragraph line="669">录音文件</Paragraph>
+    <Paragraph line="670">文件</Paragraph>
+  </Section>
+  <Section section_id="3.4.3" title="语音合成与语音识别的接口" start_line="672" />
+  <Section section_id="3.4.3" title="表  SEQ 表 \* ARABIC 23 语音合成与语音识别的接口数据描述说明" start_line="673">
+    <Paragraph line="674">序号</Paragraph>
+    <Paragraph line="675">数据集名称</Paragraph>
+    <Paragraph line="676">数据组成</Paragraph>
+    <Paragraph line="677">数据约束</Paragraph>
+    <Paragraph line="678">数据标准</Paragraph>
+    <Paragraph line="680">音频文件</Paragraph>
+    <Paragraph line="681">录音文件</Paragraph>
+    <Paragraph line="682">文件</Paragraph>
+    <Paragraph line="685">语音文本</Paragraph>
+    <Paragraph line="686">存放识别结果或准备合成的文字</Paragraph>
+    <Paragraph line="687">文件</Paragraph>
+  </Section>
+  <Section section_id="3.4.4" title="语音识别与识别短语定制接口" start_line="689" />
+  <Table table_id="T_21" type="other" title="语音识别与识别短语定制的接口数据描述说明" section="3.4.4">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据集名称</Cell>
+      <Cell>数据组成</Cell>
+      <Cell>数据约束</Cell>
+      <Cell>数据标准</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>Bnf文件</Cell>
+      <Cell>文档标示头、语法名称、槽声明、主规则、文档主题</Cell>
+      <Cell>文件</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="701" />
+  <Table table_id="T_22" type="other" title="语音综合处理软件内部数据汇总表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据名称</Cell>
+      <Cell>数据内容</Cell>
+      <Cell>相关功能及标识</Cell>
+      <Cell>备注</Cell>
+    </Headers>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>Bnf文件</Cell>
+      <Cell>文档标示头、语法名称、槽声明、主规则、文档主题</Cell>
+      <Cell>以供语音识别匹配使用</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>语音文本</Cell>
+      <Cell>存放识别结果或准备合成的文字</Cell>
+      <Cell>语音合成将语音文本合成为音频文件</Cell>
+      <Cell>3</Cell>
+      <Cell>音频文件</Cell>
+    </Row>
+    <Row>
+      <Cell>录音文件</Cell>
+      <Cell>语音识别将音频文件中的内容识别成文字</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_23" type="other" title="Bnf文件数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>内容示例</Cell>
+      <Cell>是否必须</Cell>
+      <Cell>数量</Cell>
+    </Headers>
+    <Row>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>文档标示头</Cell>
+      <Cell>#BNF+IAT 1.0 UTF-8</Cell>
+      <Cell>是</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>2</Cell>
+      <Cell>语法名称</Cell>
+      <Cell>!grammar name</Cell>
+      <Cell>是</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+      <Cell>3</Cell>
+      <Cell>槽声明</Cell>
+      <Cell>!solt &lt;name&gt;</Cell>
+      <Cell>是</Cell>
+    </Row>
+    <Row>
+      <Cell>&gt;=1</Cell>
+      <Cell>4</Cell>
+      <Cell>主规则</Cell>
+      <Cell>!start &lt;rulename&gt;</Cell>
+      <Cell>&lt;rulename&gt;:&lt;controlTV&gt;|&lt;controlAir&gt;</Cell>
+    </Row>
+    <Row>
+      <Cell>是</Cell>
+      <Cell>1</Cell>
+      <Cell>5</Cell>
+      <Cell>文档主题</Cell>
+      <Cell>&lt;controlTV&gt;:&lt;open&gt;&lt;TV&gt;</Cell>
+    </Row>
+    <Row>
+      <Cell>&lt;TV&gt;：电视|电视机；</Cell>
+      <Cell>&lt;open&gt;：打开|开了|开起来|开|开一下</Cell>
+      <Cell>是</Cell>
+      <Cell>&gt;=1</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_24" type="other" title="语音文本数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>内容示例</Cell>
+      <Cell>是否必须</Cell>
+      <Cell>数量</Cell>
+    </Headers>
+    <Row>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>字符串</Cell>
+      <Cell>“天气好”</Cell>
+      <Cell>是</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Table table_id="T_25" type="other" title="音频文件数据描述表" section="3.5">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>数据项</Cell>
+      <Cell>内容示例</Cell>
+      <Cell>是否必须</Cell>
+      <Cell>数量</Cell>
+    </Headers>
+    <Row>
+      <Cell>备注</Cell>
+      <Cell>1</Cell>
+      <Cell>wav文件</Cell>
+      <Cell>上传wav文件</Cell>
+      <Cell>是</Cell>
+    </Row>
+    <Row>
+      <Cell>1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.6" title="适应性需求" start_line="789">
+    <Paragraph line="790">a）采用跨平台开发工具及开发环境，确保软件能适应不同硬件环境（如桌面平台、手持平台等），具有在多种国产操作系统运行适配能力；</Paragraph>
+    <Paragraph line="791">b）语音识别以及语音合成服务按照处理器、操作系统的运行条件，根据自身功能要求分别编译生成桌面、平板、手持等不同形态；</Paragraph>
+    <Paragraph line="792">c)界面展现按照《界面设计规范》中桌面、平板、手持界面风格进行界面展现的设计，按照《界面开发规范》中的界面自适应规则进行设计，便于在不同尺寸和分辨率的显控终端下实现界面自适应调整；</Paragraph>
+    <Paragraph line="793">d）系统运行时能够根据系统登录者席位身份，加载不同的界面和服务，支持业务功能灵活重组；</Paragraph>
+    <Paragraph line="794">e）提供服务的负载均衡功能，在服务出现异常或访问拥堵时不影响指挥系统正常运转；</Paragraph>
+    <Paragraph line="795">f）依据在桌面、平板、手持不同硬件形态，通过软件部署管理自动下载、安装相应环境的软件包，实现多平台运行。</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="796">
+    <Paragraph line="797">为保障软件的运行安全，防止用户误操作或其他原因给系统软件的运行和重要数据造成破坏，语音综合处理软件应采取的防护错误如下：</Paragraph>
+    <Paragraph line="798">a）语音综合处理软件在对输入输出信息进行加工处理时应检验其是否符合数据处理的范围、规则；</Paragraph>
+    <Paragraph line="799">b）语音综合处理软件应对用户输入的信息进行边界值、数据类型进行控制，应能识别异常值，据此判断判断用户的输入操作是否合理；</Paragraph>
+    <Paragraph line="800">c）语音综合处理软件在遇到不正确的输入操作时拒绝该操作的执行并提示用户；</Paragraph>
+    <Paragraph line="801">d）在语音综合处理软件中，设置专门的异常处理模块，识别运行中产生的错误信息或信息中断，设计错误信息隔离或数据还原等容错设计措施（如数据库连接中断后，需进行保护，并给出信息提示，软件不能异常退出）；</Paragraph>
+    <Paragraph line="802">e）语音综合处理软件应使用运维支撑服务提供的日志接口，记录软件的运行过程关键处理功能和运行情况；</Paragraph>
+    <Paragraph line="803">f）语音综合处理软件异常时，可根据日志中记录的失效原因、标识等，定位软件异常位置、原因；</Paragraph>
+    <Paragraph line="804">g）删除确认设计：对于重要参数的删除增加确认要求，避免人员的误操作；</Paragraph>
+    <Paragraph line="805">h）系统重要工作参数需要及时保存，避免系统意外掉电时重要工作参数不丢失；</Paragraph>
+    <Paragraph line="806">i）接口调用应保持数据的一致性和完整性；</Paragraph>
+    <Paragraph line="807">j）数据的处理严格遵循协议和设计约束；</Paragraph>
+    <Paragraph line="808">k）用户误操作防护；</Paragraph>
+    <Paragraph line="809">l) 信息删除警示；</Paragraph>
+    <Paragraph line="810">m) 关键操作的提示。</Paragraph>
+    <Paragraph line="811">3.8保密性需求</Paragraph>
+    <Paragraph line="812">无。</Paragraph>
+  </Section>
+  <Section section_id="3.9" title="CSCI环境需求" start_line="813" />
+  <Section section_id="3.9.1" title="运行环境需求" start_line="814" />
+  <Table table_id="T_26" type="other" title="软件运行环境" section="3.9.1">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>设备名称</Cell>
+      <Cell>硬件要求</Cell>
+      <Cell>软件要求</Cell>
+      <Cell>轻量化服务器</Cell>
+    </Headers>
+    <Row>
+      <Cell>处理器：16核</Cell>
+      <Cell>CPU主频：不低于1.5GHz</Cell>
+      <Cell>内存：不小于16GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式服务器</Cell>
+      <Cell>便携式服务器具有2个服务器单元。</Cell>
+      <Cell>每个服务单元的处理器：i7四核</Cell>
+    </Row>
+    <Row>
+      <Cell>CPU主频：不低于2.0GHz</Cell>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024（VGA）</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+    </Row>
+    <Row>
+      <Cell>数据库：达梦数据库V7.6</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机</Cell>
+      <Cell>处理器：i7双核</Cell>
+      <Cell>CPU主频：不低于2.5GHz</Cell>
+    </Row>
+    <Row>
+      <Cell>内存：不低于8GB</Cell>
+      <Cell>存储：不低于500GB。</Cell>
+      <Cell>显示分辨率：不低于1280×1024</Cell>
+      <Cell>操作系统：银河麒麟V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+    <Row>
+      <Cell>携行作业设备</Cell>
+      <Cell>处理器：四核</Cell>
+      <Cell>CPU主频：不低于1.2GHz</Cell>
+      <Cell>内存：不小于3GB</Cell>
+      <Cell>存储：不小于256GB</Cell>
+    </Row>
+    <Row>
+      <Cell>显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Cell>
+      <Cell>操作系统：元心 V4.1.1/银河锐华V4.0.0.0</Cell>
+      <Cell>数据库：SQLite V3.0.0</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+      <Cell>便携式计算机（国产化）</Cell>
+    </Row>
+    <Row>
+      <Cell>处理器：不低于4核</Cell>
+      <Cell>CPU主频：不低于2.2Hz</Cell>
+      <Cell>内存：不小于8GB</Cell>
+      <Cell>存储：不小于512GB</Cell>
+      <Cell>显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Cell>
+    </Row>
+    <Row>
+      <Cell>显存：不低于2GB</Cell>
+      <Cell>操作系统：银河麒麟 V4.0.2</Cell>
+      <Cell>办公软件：WPS V10.1</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.9.2" title="开发环境需求" start_line="869">
+    <Paragraph line="870">编程语言：C/C++。</Paragraph>
+    <Paragraph line="871">开发编译环境： QtV5.9.6、达梦数据库V7.2和SQLiteV3.0。</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="872" />
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="873" />
+  <Section section_id="3.10.1" title="表 SEQ 表 \* ARABIC 30 计算机硬件需求表" start_line="874">
+    <Paragraph line="875">序号</Paragraph>
+    <Paragraph line="876">设备名称</Paragraph>
+    <Paragraph line="877">硬件要求</Paragraph>
+    <Paragraph line="878">软件要求</Paragraph>
+    <Paragraph line="880">轻量化服务器</Paragraph>
+    <Paragraph line="881">处理器：16核</Paragraph>
+    <Paragraph line="882">CPU主频：不低于1.5GHz</Paragraph>
+    <Paragraph line="883">内存：不小于16GB</Paragraph>
+    <Paragraph line="884">存储：不小于512GB</Paragraph>
+    <Paragraph line="885">操作系统：银河麒麟V4.0.2</Paragraph>
+    <Paragraph line="886">数据库：达梦数据库V7.6</Paragraph>
+    <Paragraph line="887">办公软件：WPS V10.1</Paragraph>
+    <Paragraph line="889">便携式服务器</Paragraph>
+    <Paragraph line="890">便携式服务器具有2个服务器单元。</Paragraph>
+    <Paragraph line="891">每个服务单元的处理器：i7四核</Paragraph>
+    <Paragraph line="892">CPU主频：不低于2.0GHz</Paragraph>
+    <Paragraph line="893">内存：不低于8GB</Paragraph>
+    <Paragraph line="894">存储：不低于500GB。</Paragraph>
+    <Paragraph line="895">显示分辨率：不低于1280×1024（VGA）</Paragraph>
+    <Paragraph line="896">操作系统：银河麒麟V4.0.2</Paragraph>
+    <Paragraph line="897">数据库：达梦数据库V7.6</Paragraph>
+    <Paragraph line="898">办公软件：WPS V10.1</Paragraph>
+    <Paragraph line="900">便携式计算机</Paragraph>
+    <Paragraph line="901">处理器：i7双核</Paragraph>
+    <Paragraph line="902">CPU主频：不低于2.5GHz</Paragraph>
+    <Paragraph line="903">内存：不低于8GB</Paragraph>
+    <Paragraph line="904">存储：不低于500GB。</Paragraph>
+    <Paragraph line="905">显示分辨率：不低于1280×1024</Paragraph>
+    <Paragraph line="906">操作系统：银河麒麟V4.0.2</Paragraph>
+    <Paragraph line="907">办公软件：WPS V10.1</Paragraph>
+    <Paragraph line="909">携行作业设备</Paragraph>
+    <Paragraph line="910">处理器：四核</Paragraph>
+    <Paragraph line="911">CPU主频：不低于1.2GHz</Paragraph>
+    <Paragraph line="912">内存：不小于3GB</Paragraph>
+    <Paragraph line="913">存储：不小于256GB</Paragraph>
+    <Paragraph line="914">显示分辨率：10吋分辨率不低于1920×1080，14吋分辨率不低于1920×1080</Paragraph>
+    <Paragraph line="915">操作系统：元心 V4.1.1/银河锐华V4.0.0.0</Paragraph>
+    <Paragraph line="916">数据库：SQLite V3.0.0</Paragraph>
+    <Paragraph line="917">办公软件：WPS V10.1</Paragraph>
+    <Paragraph line="919">便携式计算机（国产化）</Paragraph>
+    <Paragraph line="920">处理器：不低于4核</Paragraph>
+    <Paragraph line="921">CPU主频：不低于2.2Hz</Paragraph>
+    <Paragraph line="922">内存：不小于8GB</Paragraph>
+    <Paragraph line="923">存储：不小于512GB</Paragraph>
+    <Paragraph line="924">显示分辨率：15吋LED背光屏，分辨率不低于1920*1080</Paragraph>
+    <Paragraph line="925">显存：不低于2GB</Paragraph>
+    <Paragraph line="926">操作系统：银河麒麟 V4.0.2</Paragraph>
+    <Paragraph line="927">办公软件：WPS V10.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.2" title="计算机硬件资源利用需求" start_line="928">
+    <Paragraph line="929">CPU为16KHz以上。内存大于64MB。</Paragraph>
+  </Section>
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="930" />
+  <Section section_id="3.10.3" title="表 SEQ 表 \* ARABIC 31 计算机软件需求" start_line="931">
+    <Paragraph line="932">软件种类</Paragraph>
+    <Paragraph line="933">软件名称</Paragraph>
+    <Paragraph line="934">部署位置</Paragraph>
+    <Paragraph line="935">软件版本</Paragraph>
+    <Paragraph line="936">操作系统</Paragraph>
+    <Paragraph line="937">银河麒麟服务器版</Paragraph>
+    <Paragraph line="938">轻量化服务器</Paragraph>
+    <Paragraph line="939">V4.0.2</Paragraph>
+    <Paragraph line="940">便携式服务器</Paragraph>
+    <Paragraph line="941">V4.0.2</Paragraph>
+    <Paragraph line="942">银河麒麟桌面版</Paragraph>
+    <Paragraph line="943">便携式计算机</Paragraph>
+    <Paragraph line="944">V4.0.2</Paragraph>
+    <Paragraph line="945">元心</Paragraph>
+    <Paragraph line="946">携行作业设备</Paragraph>
+    <Paragraph line="947">V4.0.0.0</Paragraph>
+    <Paragraph line="948">银河锐华</Paragraph>
+    <Paragraph line="949">V4.1.1</Paragraph>
+    <Paragraph line="950">TDOS</Paragraph>
+    <Paragraph line="951">综合信息终端</Paragraph>
+    <Paragraph line="952">V1.0.1</Paragraph>
+    <Paragraph line="953">数据库管理系统</Paragraph>
+    <Paragraph line="954">达梦数据库</Paragraph>
+    <Paragraph line="955">轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Paragraph>
+    <Paragraph line="956">V7.2</Paragraph>
+    <Paragraph line="957">文字处理系统</Paragraph>
+    <Paragraph line="958">WPS</Paragraph>
+    <Paragraph line="959">轻量化服务器/便携式服务器/携行作业设备/便携式计算机</Paragraph>
+    <Paragraph line="960">V10.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.4" title="计算机通信需求" start_line="961">
+    <Paragraph line="962">语音综合处理软件无需特殊的计算机通信要求。</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="963" />
+  <Table table_id="T_27" type="other" title="语音综合处理软件质量要求与措施表" section="3.11">
+    <Headers>
+      <Cell>序号</Cell>
+    </Headers>
+  </Table>
+  <Section section_id="3.11" title="软件质量因素" start_line="966" />
+  <Section section_id="3.11" title="软件质量因素描述" start_line="967">
+    <Paragraph line="968">要求程度</Paragraph>
+    <Paragraph line="969">采取的措施</Paragraph>
+    <Paragraph line="971">功能性</Paragraph>
+    <Paragraph line="972">实现全部所需功能的能力</Paragraph>
+    <Paragraph line="973">符合3.2节要求</Paragraph>
+    <Paragraph line="974">软件设计</Paragraph>
+    <Paragraph line="976">可靠性</Paragraph>
+    <Paragraph line="977">产生正确、一致结果的能力</Paragraph>
+    <Paragraph line="978">连续工作24小时</Paragraph>
+    <Paragraph line="979">依靠硬件能力</Paragraph>
+    <Paragraph line="981">可维护性</Paragraph>
+    <Paragraph line="982">易于更正的能力</Paragraph>
+    <Paragraph line="983">维护人员可快速定位故障</Paragraph>
+    <Paragraph line="984">运行日志记录文件</Paragraph>
+    <Paragraph line="986">可用性</Paragraph>
+    <Paragraph line="987">需要时进行访问和操作的能力</Paragraph>
+    <Paragraph line="991">灵活性</Paragraph>
+    <Paragraph line="992">易于适应需求变化的能力</Paragraph>
+    <Paragraph line="996">可移植性</Paragraph>
+    <Paragraph line="997">易于修改以适应新环境的能力</Paragraph>
+    <Paragraph line="1001">可重用性</Paragraph>
+    <Paragraph line="1002">可被多个应用使用的能力</Paragraph>
+    <Paragraph line="1006">可测试性</Paragraph>
+    <Paragraph line="1007">易于充分测试的能力</Paragraph>
+    <Paragraph line="1008">可仿真环境下完成主要功能验证</Paragraph>
+    <Paragraph line="1009">依靠操作系统和仿真网络</Paragraph>
+    <Paragraph line="1011">易用性</Paragraph>
+    <Paragraph line="1012">易于学习和使用的能力</Paragraph>
+    <Paragraph line="1013">人机接口友好，易学习培训</Paragraph>
+    <Paragraph line="1014">采用图形用户界面</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="1015" />
+  <Table table_id="T_28" type="other" title="语音综合处理软件设计与实现约束要求表" section="3.12">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>约束类型</Cell>
+      <Cell>具体要求</Cell>
+      <Cell>1</Cell>
+      <Cell>软件体系结构</Cell>
+    </Headers>
+    <Row>
+      <Cell>采用B/S架构</Cell>
+      <Cell>2</Cell>
+      <Cell>输入/输出</Cell>
+      <Cell>耳机/音响，麦克风</Cell>
+      <Cell>3</Cell>
+    </Row>
+    <Row>
+      <Cell>软件平台</Cell>
+      <Cell>国产操作系统</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.13" title="人员需求" start_line="1029" />
+  <Section section_id="3.13" title="表 SEQ 表 \* ARABIC 34 人员需求表" start_line="1030">
+    <Paragraph line="1031">序号</Paragraph>
+    <Paragraph line="1032">人员对象</Paragraph>
+    <Paragraph line="1033">人员数量</Paragraph>
+    <Paragraph line="1034">技术水平</Paragraph>
+    <Paragraph line="1035">具体要求</Paragraph>
+    <Paragraph line="1037">软件操作人员</Paragraph>
+    <Paragraph line="1039">了解中标麒麟、银河麒麟操作系统，比较熟练地操作各操作系统下的一班应用程序</Paragraph>
+    <Paragraph line="1040">应熟悉软件作战条令等相关业务流程和工作内容</Paragraph>
+    <Paragraph line="1042">软件维护人员</Paragraph>
+    <Paragraph line="1044">掌握中标麒麟、银河麒麟操作系统和达梦数据库管理系统的管理与维护操作</Paragraph>
+    <Paragraph line="1045">了解软件的主要功能和数据库结构</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="1046" />
+  <Section section_id="3.14" title="表 SEQ 表 \* ARABIC 35 培训需求表" start_line="1047">
+    <Paragraph line="1048">序号</Paragraph>
+    <Paragraph line="1049">所属技能需求</Paragraph>
+    <Paragraph line="1050">培训内容</Paragraph>
+    <Paragraph line="1051">培训对象</Paragraph>
+    <Paragraph line="1052">备注</Paragraph>
+    <Paragraph line="1054">基础软件安装</Paragraph>
+    <Paragraph line="1055">服务器维护指南</Paragraph>
+    <Paragraph line="1056">使用人员</Paragraph>
+    <Paragraph line="1057">根据使用人员对平台软件的熟悉程度适当调整培训时间</Paragraph>
+    <Paragraph line="1059">应用软件安装</Paragraph>
+    <Paragraph line="1060">软件用户手册</Paragraph>
+    <Paragraph line="1061">维护人员</Paragraph>
+    <Paragraph line="1064">软件使用培训</Paragraph>
+    <Paragraph line="1065">集成方提供软件操作使用培训</Paragraph>
+    <Paragraph line="1066">使用人员</Paragraph>
+    <Paragraph line="1069">软件故障排查</Paragraph>
+    <Paragraph line="1070">开发方或集成方提供软件故障排查、状态恢复培训</Paragraph>
+    <Paragraph line="1071">使用人员、维护人员</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="软件保障需求" start_line="1073">
+    <Paragraph line="1074">提供用户系详细的软件安装、维护手册，当系统出现问题时，首先由用户根据软件维护手册自行解决问题，如解决不了，用户应能定位故障，接受开放方的指导解决问题，如果问题仍解决不了，则需开发方到现场解决。</Paragraph>
+    <Paragraph line="1075">系统交付后按合同规定提供完整的图表、技术手册、安装手册、用户手册等文档。</Paragraph>
+  </Section>
+  <Section section_id="3.15" title="表 SEQ 表 \* ARABIC 36 软件保障需求表" start_line="1076">
+    <Paragraph line="1077">序号</Paragraph>
+    <Paragraph line="1078">保障需求</Paragraph>
+    <Paragraph line="1079">保障设备</Paragraph>
+    <Paragraph line="1080">保障人员</Paragraph>
+    <Paragraph line="1081">备注</Paragraph>
+    <Paragraph line="1083">软件故障排查</Paragraph>
+    <Paragraph line="1084">便携机，耳机/音响，麦克风</Paragraph>
+    <Paragraph line="1085">用户维护人员</Paragraph>
+    <Paragraph line="1088">软件升级</Paragraph>
+    <Paragraph line="1089">光驱，软件安装盘</Paragraph>
+    <Paragraph line="1090">开发人员</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="1092">
+    <Paragraph line="1093">语音综合处理软件无其它特殊需求。</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="1094">
+    <Paragraph line="1095">使用光盘存储和包装语音综合处理软件的安装系统，并对安装光盘进行必要的标识、封装、防震等保护处理。可以人工携带光盘介质移交用户安装、检查、测试、验收</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="表 SEQ 表 \* ARABIC 37 语音综合处理软件验收、交付和包装需求表" start_line="1096">
+    <Paragraph line="1097">序号</Paragraph>
+    <Paragraph line="1098">软件名称</Paragraph>
+    <Paragraph line="1099">数量</Paragraph>
+    <Paragraph line="1100">包装标记</Paragraph>
+    <Paragraph line="1101">说明</Paragraph>
+    <Paragraph line="1103">语音综合处理</Paragraph>
+    <Paragraph line="1105">光盘 CD-1-207</Paragraph>
+    <Paragraph line="1106">自动安装</Paragraph>
+    <Paragraph line="1108">语音综合处理用户手册</Paragraph>
+    <Paragraph line="1110">光盘 CD-1-207</Paragraph>
+    <Paragraph line="1113">语音综合处理程序员手册</Paragraph>
+    <Paragraph line="1115">光盘 CD-1-207</Paragraph>
+  </Section>
+  <Section section_id="3.18" title="需求的优先顺序和关键性" start_line="1117" />
+  <Table table_id="T_29" type="other" title="语音综合处理软件重要程度排序表" section="3.18">
+    <Headers>
+      <Cell>序号</Cell>
+      <Cell>需求类型</Cell>
+      <Cell>重要性与关键性等级</Cell>
+      <Cell>高级</Cell>
+      <Cell>中级</Cell>
+    </Headers>
+    <Row>
+      <Cell>低级</Cell>
+      <Cell>1</Cell>
+      <Cell>功能需求</Cell>
+      <Cell>3.2.1.1</Cell>
+      <Cell>2</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.1.2</Cell>
+      <Cell>3</Cell>
+      <Cell>3.2.1.3</Cell>
+      <Cell>4</Cell>
+      <Cell>3.2.1.4</Cell>
+    </Row>
+    <Row>
+      <Cell>5</Cell>
+      <Cell>3.2.1.5</Cell>
+      <Cell>6</Cell>
+      <Cell>3.2.2.1</Cell>
+      <Cell>7</Cell>
+    </Row>
+    <Row>
+      <Cell>3.2.2.2</Cell>
+      <Cell>8</Cell>
+      <Cell>3.2.2.3</Cell>
+      <Cell>9</Cell>
+      <Cell>3.2.2.4</Cell>
+    </Row>
+    <Row>
+      <Cell>10</Cell>
+      <Cell>3.2.2.5</Cell>
+      <Cell>11</Cell>
+      <Cell>3．2.3.1</Cell>
+      <Cell>12</Cell>
+    </Row>
+    <Row>
+      <Cell>3．2.3.2</Cell>
+      <Cell>13</Cell>
+      <Cell>3．2.3.3</Cell>
+      <Cell>4</Cell>
+      <Cell>接口需求</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.2</Cell>
+      <Cell>5</Cell>
+      <Cell>3.3.3</Cell>
+      <Cell>3.3.4</Cell>
+      <Cell>6</Cell>
+    </Row>
+    <Row>
+      <Cell>3.3.5</Cell>
+      <Cell>7</Cell>
+    </Row>
+  </Table>
+  <Section section_id="3.7" title="安全性需求" start_line="1186">
+    <Paragraph line="1187">3.7</Paragraph>
+    <Paragraph line="1190">保密性需求</Paragraph>
+    <Paragraph line="1191">3.8</Paragraph>
+  </Section>
+  <Section section_id="4" title="合格性规定" start_line="1193">
+    <Paragraph line="1194">对本文档中每个需求指定要使用的合格性方法，以确保需求得到满足。若依靠测试方法验证合格性，可以整体地对测试方法说明，合格性方法可以包括：</Paragraph>
+    <Paragraph line="1195">a)演示：依靠可见的功能操作，直接运行接口实体，而不需要使用仪器、专用测试设备或进行事后分析；</Paragraph>
+    <Paragraph line="1196">b)测试：使用仪器或专用测试设备，运行接口实体，以便采集数据供事后分析使用；</Paragraph>
+    <Paragraph line="1197">c)分析：处理从其他合格性方法获得的累计数据。例如，对测试结果进行简约、解释或推断；</Paragraph>
+    <Paragraph line="1198">d)审查：对接口实体、文档等进行目视检查；</Paragraph>
+    <Paragraph line="1199">e)特殊的合格性方法：任何针对接口实体的特殊合格性方法，例如专用工具、技术、规程、设施、验收限制。</Paragraph>
+  </Section>
+  <Section section_id="4" title="表 SEQ 表 \* ARABIC 39 合格性规定" start_line="1200">
+    <Paragraph line="1201">需求名称/标识</Paragraph>
+    <Paragraph line="1202">本文档的章节号</Paragraph>
+    <Paragraph line="1203">合格性方法</Paragraph>
+    <Paragraph line="1204">合格性级别</Paragraph>
+    <Paragraph line="1205">格式化文本语音合成</Paragraph>
+    <Paragraph line="1206">3.2.1.1</Paragraph>
+    <Paragraph line="1207">AD</Paragraph>
+    <Paragraph line="1209">音频文件生成和存储</Paragraph>
+    <Paragraph line="1210">3.2.1.2</Paragraph>
+    <Paragraph line="1211">AD</Paragraph>
+    <Paragraph line="1213">语音播报</Paragraph>
+    <Paragraph line="1214">3.2.1.3</Paragraph>
+    <Paragraph line="1215">AD</Paragraph>
+    <Paragraph line="1217">语音设置</Paragraph>
+    <Paragraph line="1218">3.2.1.4</Paragraph>
+    <Paragraph line="1219">AD</Paragraph>
+    <Paragraph line="1221">语音录入</Paragraph>
+    <Paragraph line="1222">3.2.2.1</Paragraph>
+    <Paragraph line="1223">AD</Paragraph>
+    <Paragraph line="1225">文本规范化</Paragraph>
+    <Paragraph line="1226">3.2.2.3</Paragraph>
+    <Paragraph line="1227">AD</Paragraph>
+    <Paragraph line="1229">离线语音识别</Paragraph>
+    <Paragraph line="1230">3.2.2.2</Paragraph>
+    <Paragraph line="1231">AD</Paragraph>
+    <Paragraph line="1233">识别短语管理</Paragraph>
+    <Paragraph line="1234">3.2.3.1</Paragraph>
+    <Paragraph line="1235">AD</Paragraph>
+    <Paragraph line="1237">识别短语生成</Paragraph>
+    <Paragraph line="1238">3.2.3.2</Paragraph>
+    <Paragraph line="1239">AD</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="1241">
+    <Paragraph line="1242">3.3.1</Paragraph>
+    <Paragraph line="1243">AD</Paragraph>
+    <Paragraph line="1245">3.3.2</Paragraph>
+    <Paragraph line="1246">AD</Paragraph>
+    <Paragraph line="1248">3.3.3</Paragraph>
+    <Paragraph line="1249">AD</Paragraph>
+    <Paragraph line="1251">3.3.4</Paragraph>
+    <Paragraph line="1252">AD</Paragraph>
+  </Section>
+  <Section section_id="3.4" title="CSCI内部接口需求" start_line="1254">
+    <Paragraph line="1255">3.4.1</Paragraph>
+    <Paragraph line="1258">3.4.2</Paragraph>
+  </Section>
+  <Section section_id="3.5" title="CSCI内部数据需求" start_line="1261">
+    <Paragraph line="1262">3.5</Paragraph>
+  </Section>
+  <Section section_id="3.6" title="适应性需求" start_line="1265">
+    <Paragraph line="1266">3.6</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1269">
+    <Paragraph line="1270">3.7</Paragraph>
+    <Paragraph line="1273">保密性需求</Paragraph>
+    <Paragraph line="1274">3.8</Paragraph>
+    <Paragraph line="1277">系统环境需求</Paragraph>
+    <Paragraph line="1278">3.9</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="1281">
+    <Paragraph line="1282">3.10</Paragraph>
+  </Section>
+  <Section section_id="3.11" title="软件质量因素" start_line="1285">
+    <Paragraph line="1286">3.11</Paragraph>
+    <Paragraph line="1289">设计和实现的约束</Paragraph>
+    <Paragraph line="1290">3.12</Paragraph>
+  </Section>
+  <Section section_id="3.13" title="人员需求" start_line="1293">
+    <Paragraph line="1294">3.13</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="培训需求" start_line="1297">
+    <Paragraph line="1298">3.14</Paragraph>
+    <Paragraph line="1301">保障需求</Paragraph>
+    <Paragraph line="1302">3.15</Paragraph>
+  </Section>
+  <Section section_id="3.16" title="其他需求" start_line="1305">
+    <Paragraph line="1306">3.16</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="1309">
+    <Paragraph line="1310">3.17</Paragraph>
+    <Paragraph line="1313">需求的优先顺序和关键程度</Paragraph>
+    <Paragraph line="1314">3.18</Paragraph>
+  </Section>
+  <Section section_id="5" title="需求可追踪性" start_line="1317" />
+  <Table table_id="T_30" type="traceability" title="需求的正向追踪性" section="5">
+    <Headers>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>本文档的名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>标识</Cell>
+    </Row>
+    <Row>
+      <Cell>1.1</Cell>
+      <Cell>标识</Cell>
+      <Cell>1.1</Cell>
+      <Cell>系统概述</Cell>
+      <Cell>1.2</Cell>
+    </Row>
+    <Row>
+      <Cell>系统概述</Cell>
+      <Cell>1.2</Cell>
+    </Row>
+  </Table>
+  <Section section_id="2" title="引用文档" start_line="1339" />
+  <Section section_id="2" title="引用文档" start_line="1341">
+    <Paragraph line="1344">软件运行环境</Paragraph>
+    <Paragraph line="1346">系统运行环境</Paragraph>
+    <Paragraph line="1347">3.9、3.10</Paragraph>
+    <Paragraph line="1349">硬件环境</Paragraph>
+    <Paragraph line="1350">3.1</Paragraph>
+  </Section>
+  <Section section_id="3.10.1" title="计算机硬件需求" start_line="1351">
+    <Paragraph line="1352">3.9.1</Paragraph>
+    <Paragraph line="1354">软件环境</Paragraph>
+    <Paragraph line="1355">3.2</Paragraph>
+  </Section>
+  <Section section_id="3.10.3" title="计算机软件需求" start_line="1356">
+    <Paragraph line="1357">3.10.3</Paragraph>
+    <Paragraph line="1359">技术要求</Paragraph>
+    <Paragraph line="1361">能力需求</Paragraph>
+    <Paragraph line="1362">3.2</Paragraph>
+    <Paragraph line="1364">功能</Paragraph>
+    <Paragraph line="1365">4.1</Paragraph>
+    <Paragraph line="1367">语音合成功能</Paragraph>
+    <Paragraph line="1368">4.1.1</Paragraph>
+    <Paragraph line="1369">格式化文本语音合成</Paragraph>
+    <Paragraph line="1370">3.2.1.1</Paragraph>
+    <Paragraph line="1372">音频文件生成和存储</Paragraph>
+    <Paragraph line="1373">3.2.1.2</Paragraph>
+    <Paragraph line="1374">语音播报</Paragraph>
+    <Paragraph line="1375">3.2.1.3</Paragraph>
+    <Paragraph line="1376">语音设置</Paragraph>
+    <Paragraph line="1377">3.2.1.4</Paragraph>
+    <Paragraph line="1378">语音识别功能</Paragraph>
+    <Paragraph line="1379">4.1.2</Paragraph>
+    <Paragraph line="1380">语音录入</Paragraph>
+    <Paragraph line="1381">3.2.2.1</Paragraph>
+    <Paragraph line="1383">文本规范化</Paragraph>
+    <Paragraph line="1384">3.2.2.3</Paragraph>
+    <Paragraph line="1385">离线语音识别</Paragraph>
+    <Paragraph line="1386">3.2.2.2</Paragraph>
+    <Paragraph line="1387">识别短语定制</Paragraph>
+    <Paragraph line="1388">4.1.3</Paragraph>
+    <Paragraph line="1389">识别短语管理</Paragraph>
+    <Paragraph line="1390">3.2.3.1</Paragraph>
+    <Paragraph line="1392">识别短语生成</Paragraph>
+    <Paragraph line="1393">3.2.3.2</Paragraph>
+    <Paragraph line="1394">性能</Paragraph>
+    <Paragraph line="1395">4.2</Paragraph>
+    <Paragraph line="1396">性能需求</Paragraph>
+    <Paragraph line="1397">3.2.2.6</Paragraph>
+    <Paragraph line="1399">输入/输出</Paragraph>
+    <Paragraph line="1400">4.3</Paragraph>
+    <Paragraph line="1401">能力需求</Paragraph>
+    <Paragraph line="1402">3.2</Paragraph>
+    <Paragraph line="1404">数据处理要求</Paragraph>
+    <Paragraph line="1405">4.4</Paragraph>
+    <Paragraph line="1407">不追踪</Paragraph>
+    <Paragraph line="1408">接口</Paragraph>
+    <Paragraph line="1409">4.5</Paragraph>
+  </Section>
+  <Section section_id="3.3" title="CSCI外部接口需求" start_line="1410">
+    <Paragraph line="1411">3.3</Paragraph>
+    <Paragraph line="1413">固件</Paragraph>
+    <Paragraph line="1414">4.6</Paragraph>
+    <Paragraph line="1416">不追踪</Paragraph>
+    <Paragraph line="1417">关键性要求</Paragraph>
+    <Paragraph line="1418">4.7</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1419">
+    <Paragraph line="1420">3.7</Paragraph>
+    <Paragraph line="1422">可靠性</Paragraph>
+    <Paragraph line="1423">4.7.1</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1424">
+    <Paragraph line="1425">3.7</Paragraph>
+    <Paragraph line="1427">安全性</Paragraph>
+    <Paragraph line="1428">4.7.2</Paragraph>
+  </Section>
+  <Section section_id="3.7" title="安全性需求" start_line="1429">
+    <Paragraph line="1430">3.7</Paragraph>
+    <Paragraph line="1432">保密性</Paragraph>
+    <Paragraph line="1433">4.7.3</Paragraph>
+    <Paragraph line="1434">保密性需求</Paragraph>
+    <Paragraph line="1435">3.8</Paragraph>
+    <Paragraph line="1437">设计约束</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="1439">
+    <Paragraph line="1440">3.12</Paragraph>
+    <Paragraph line="1442">编程语言及编程规则</Paragraph>
+    <Paragraph line="1443">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="1444">
+    <Paragraph line="1445">3.9、 3.10</Paragraph>
+    <Paragraph line="1447">开发工具及环境要求</Paragraph>
+    <Paragraph line="1448">5.2</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="1449">
+    <Paragraph line="1450">3.9、 3.10</Paragraph>
+    <Paragraph line="1452">测试工具和环境要求</Paragraph>
+    <Paragraph line="1453">5.3</Paragraph>
+    <Paragraph line="1455">不追踪</Paragraph>
+    <Paragraph line="1456">其他要求</Paragraph>
+    <Paragraph line="1457">5.4</Paragraph>
+    <Paragraph line="1459">不追踪</Paragraph>
+    <Paragraph line="1460">质量控制要求</Paragraph>
+    <Paragraph line="1463">不追踪</Paragraph>
+    <Paragraph line="1464">软件关键等级</Paragraph>
+    <Paragraph line="1465">6.1</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="1466">
+    <Paragraph line="1467">3.12</Paragraph>
+    <Paragraph line="1469">标准</Paragraph>
+    <Paragraph line="1470">6.2</Paragraph>
+  </Section>
+  <Section section_id="3.12" title="设计和构造的约束" start_line="1471">
+    <Paragraph line="1472">3.12</Paragraph>
+    <Paragraph line="1474">编程语言及编程规则</Paragraph>
+    <Paragraph line="1475">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="系统环境需求、计算机资源需求" start_line="1476">
+    <Paragraph line="1477">3.9、 3.10</Paragraph>
+    <Paragraph line="1479">文档</Paragraph>
+    <Paragraph line="1480">6.3</Paragraph>
+    <Paragraph line="1482">不追踪</Paragraph>
+    <Paragraph line="1483">配置管理</Paragraph>
+    <Paragraph line="1484">6.4</Paragraph>
+    <Paragraph line="1486">不追踪</Paragraph>
+    <Paragraph line="1487">测试要求</Paragraph>
+    <Paragraph line="1488">6.5</Paragraph>
+    <Paragraph line="1490">不追踪</Paragraph>
+    <Paragraph line="1491">对分承制方的要求</Paragraph>
+    <Paragraph line="1492">6.6</Paragraph>
+    <Paragraph line="1494">不追踪</Paragraph>
+    <Paragraph line="1495">验收和交付</Paragraph>
+  </Section>
+  <Section section_id="3.17" title="验收、交付和包装需求" start_line="1497">
+    <Paragraph line="1498">3.17</Paragraph>
+    <Paragraph line="1500">软件保障要求</Paragraph>
+  </Section>
+  <Section section_id="3.14" title="相关培训需求" start_line="1502">
+    <Paragraph line="1503">3.14</Paragraph>
+    <Paragraph line="1505">进度和里程碑</Paragraph>
+    <Paragraph line="1508">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="1509">
+    <Paragraph line="1510">10</Paragraph>
+    <Paragraph line="1512">不追踪</Paragraph>
+  </Section>
+  <Table table_id="T_31" type="traceability" title="需求的逆向追踪性" section="6">
+    <Headers>
+      <Cell>本文档名称/标识</Cell>
+      <Cell>本文档的章节号</Cell>
+      <Cell>软件研制任务书名称/标识</Cell>
+      <Cell>软件研制任务书的章节号</Cell>
+      <Cell>跟踪说明</Cell>
+    </Headers>
+    <Row>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>范围</Cell>
+      <Cell>1</Cell>
+      <Cell>标识</Cell>
+    </Row>
+    <Row>
+      <Cell>1.1</Cell>
+      <Cell>标识</Cell>
+      <Cell>1.1</Cell>
+      <Cell>系统概述</Cell>
+      <Cell>1.2</Cell>
+    </Row>
+    <Row>
+      <Cell>系统概述</Cell>
+      <Cell>1.2</Cell>
+      <Cell>文档概述</Cell>
+      <Cell>1.3</Cell>
+      <Cell>文档概述</Cell>
+    </Row>
+    <Row>
+      <Cell>1.3</Cell>
+    </Row>
+  </Table>
+  <Section section_id="2" title="引用文档" start_line="1539" />
+  <Section section_id="2" title="引用文档" start_line="1541" />
+  <Section section_id="3" title="需求" start_line="1544">
+    <Paragraph line="1547">不追踪</Paragraph>
+  </Section>
+  <Section section_id="3.1" title="要求的状态和方式" start_line="1548">
+    <Paragraph line="1549">3.1</Paragraph>
+    <Paragraph line="1551">不追踪</Paragraph>
+    <Paragraph line="1552">能力需求</Paragraph>
+    <Paragraph line="1553">3.2</Paragraph>
+    <Paragraph line="1554">输入/输出</Paragraph>
+    <Paragraph line="1555">4.3</Paragraph>
+    <Paragraph line="1557">格式化文本语音合成</Paragraph>
+    <Paragraph line="1558">3.2.1.1</Paragraph>
+    <Paragraph line="1559">语音合成</Paragraph>
+    <Paragraph line="1560">4.1.1</Paragraph>
+    <Paragraph line="1562">音频文件生成和存储</Paragraph>
+    <Paragraph line="1563">3.2.1.2</Paragraph>
+    <Paragraph line="1565">语音播报</Paragraph>
+    <Paragraph line="1566">3.2.1.3</Paragraph>
+    <Paragraph line="1568">语音设置</Paragraph>
+    <Paragraph line="1569">3.2.1.4</Paragraph>
+    <Paragraph line="1571">语音录入</Paragraph>
+    <Paragraph line="1572">3.2.2.1</Paragraph>
+    <Paragraph line="1573">语音识别</Paragraph>
+    <Paragraph line="1574">4.1.2</Paragraph>
+    <Paragraph line="1576">离线语音识别</Paragraph>
+    <Paragraph line="1577">3.2.2.2</Paragraph>
+    <Paragraph line="1579">文本规范化</Paragraph>
+    <Paragraph line="1580">3.2.2.3</Paragraph>
+    <Paragraph line="1582">识别短语管理</Paragraph>
+    <Paragraph line="1583">3.2.3.1</Paragraph>
+    <Paragraph line="1584">识别短语定制</Paragraph>
+    <Paragraph line="1585">4.1.3</Paragraph>
+    <Paragraph line="1587">识别短语生成</Paragraph>
+    <Paragraph line="1588">3.2.3.2</Paragraph>
+    <Paragraph line="1590">3.3</Paragraph>
+    <Paragraph line="1591">输入/输出、接口</Paragraph>
+    <Paragraph line="1592">4.5</Paragraph>
+    <Paragraph line="1594">3.4</Paragraph>
+    <Paragraph line="1596">不追踪</Paragraph>
+    <Paragraph line="1597">3.5</Paragraph>
+    <Paragraph line="1598">数据处理要求</Paragraph>
+    <Paragraph line="1599">4.4</Paragraph>
+    <Paragraph line="1601">3.6</Paragraph>
+    <Paragraph line="1602">可靠性</Paragraph>
+    <Paragraph line="1603">4.7.1</Paragraph>
+    <Paragraph line="1604">不追踪</Paragraph>
+    <Paragraph line="1605">3.7</Paragraph>
+    <Paragraph line="1606">安全性</Paragraph>
+    <Paragraph line="1607">4.7.2</Paragraph>
+    <Paragraph line="1609">保密性需求</Paragraph>
+    <Paragraph line="1610">3.8</Paragraph>
+    <Paragraph line="1611">保密性</Paragraph>
+    <Paragraph line="1612">4.7.3</Paragraph>
+    <Paragraph line="1614">3.9</Paragraph>
+    <Paragraph line="1615">编程语言及编程规则</Paragraph>
+    <Paragraph line="1616">5.1</Paragraph>
+  </Section>
+  <Section section_id="3.10" title="计算机资源需求" start_line="1618">
+    <Paragraph line="1619">3.10</Paragraph>
+    <Paragraph line="1621">3.10.1</Paragraph>
+    <Paragraph line="1623">3.10.2</Paragraph>
+    <Paragraph line="1624">开发工具及环境要求</Paragraph>
+    <Paragraph line="1625">5.2</Paragraph>
+    <Paragraph line="1627">3.10.3</Paragraph>
+    <Paragraph line="1629">3.10.4</Paragraph>
+    <Paragraph line="1631">3.11</Paragraph>
+    <Paragraph line="1633">不追踪</Paragraph>
+    <Paragraph line="1634">3.12</Paragraph>
+    <Paragraph line="1635">软件关键等级</Paragraph>
+    <Paragraph line="1636">6.1</Paragraph>
+    <Paragraph line="1638">标准</Paragraph>
+    <Paragraph line="1639">6.2</Paragraph>
+    <Paragraph line="1641">3.13</Paragraph>
+    <Paragraph line="1643">软件保障要求</Paragraph>
+    <Paragraph line="1646">3.14</Paragraph>
+    <Paragraph line="1648">3.15</Paragraph>
+    <Paragraph line="1650">3.16</Paragraph>
+    <Paragraph line="1651">其他要求</Paragraph>
+    <Paragraph line="1652">5.4</Paragraph>
+    <Paragraph line="1654">3.17</Paragraph>
+    <Paragraph line="1655">验收和交付</Paragraph>
+    <Paragraph line="1658">3.18</Paragraph>
+    <Paragraph line="1660">不追踪</Paragraph>
+    <Paragraph line="1663">不追踪</Paragraph>
+    <Paragraph line="1666">不追踪</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="1668">
+    <Paragraph line="1669">10</Paragraph>
+  </Section>
+  <Section section_id="6" title="注释" start_line="1671">
+    <Paragraph line="1672">无。</Paragraph>
+    <Paragraph line="1674">PAGE   \* MERGEFORMATII</Paragraph>
+    <Paragraph line="1676">PAGE   \* MERGEFORMATI</Paragraph>
+    <Paragraph line="1678">PAGE   \* MERGEFORMAT2</Paragraph>
+    <Paragraph line="1680">PAGE   \* MERGEFORMAT1</Paragraph>
+  </Section>
+</Document>

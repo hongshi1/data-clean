@@ -1,0 +1,175 @@
+{
+  "doc_name": "11语音综合处理软件需求规格说明-终稿",
+  "pipeline_date": "2026-08-03T14:55:13.035906",
+  "pipeline": "DataFlow Core (OperatorABC) — 关联与检测分离",
+  "statistics": {
+    "sections": 35,
+    "tables": 41,
+    "images": 19,
+    "constraints": 46,
+    "versions": 24,
+    "req_ids": 4,
+    "pairs": 63,
+    "pair_types": {
+      "same_version": 2,
+      "text_table": 19,
+      "image_text": 18,
+      "same_param": 24
+    }
+  },
+  "violations": {
+    "total": 10,
+    "by_layer": {
+      "syntax": 8,
+      "semantic": 2
+    },
+    "syntax": 8,
+    "semantic": 2,
+    "logic": 0,
+    "pending_semantic": 37
+  },
+  "pair_samples": [
+    {
+      "pair_id": "P-0001",
+      "type": "same_version",
+      "signal": "software:达梦",
+      "src": "3.9.1",
+      "tgt": "3.9.2"
+    },
+    {
+      "pair_id": "P-0002",
+      "type": "same_version",
+      "signal": "software:达梦",
+      "src": "3.9.2",
+      "tgt": "3.10.1"
+    },
+    {
+      "pair_id": "P-0003",
+      "type": "text_table",
+      "signal": "section:4",
+      "src": "4",
+      "tgt": "4"
+    },
+    {
+      "pair_id": "P-0004",
+      "type": "text_table",
+      "signal": "section:4",
+      "src": "4",
+      "tgt": "4"
+    },
+    {
+      "pair_id": "P-0005",
+      "type": "text_table",
+      "signal": "section:4",
+      "src": "4",
+      "tgt": "4"
+    },
+    {
+      "pair_id": "P-0006",
+      "type": "text_table",
+      "signal": "section:4",
+      "src": "4",
+      "tgt": "4"
+    },
+    {
+      "pair_id": "P-0007",
+      "type": "text_table",
+      "signal": "section:5",
+      "src": "5",
+      "tgt": "5"
+    },
+    {
+      "pair_id": "P-0008",
+      "type": "text_table",
+      "signal": "section:5",
+      "src": "5",
+      "tgt": "5"
+    },
+    {
+      "pair_id": "P-0009",
+      "type": "text_table",
+      "signal": "section:5",
+      "src": "5",
+      "tgt": "5"
+    },
+    {
+      "pair_id": "P-0010",
+      "type": "text_table",
+      "signal": "section:5",
+      "src": "5",
+      "tgt": "5"
+    }
+  ],
+  "violation_details": [
+    {
+      "layer": "syntax",
+      "rule": "R-001",
+      "gjb_clause": "附录J 1.1 (L2179)",
+      "severity": "HIGH",
+      "description": "1.1标识不完整(缺标识/名称/版本)"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-004",
+      "gjb_clause": "附录J 5 a)",
+      "severity": "MEDIUM",
+      "description": "缺少正向追溯(a): CSCI需求→系统需求"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-004",
+      "gjb_clause": "附录J 5 b)",
+      "severity": "MEDIUM",
+      "description": "缺少逆向追溯(b): 系统需求→CSCI需求"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-005",
+      "gjb_clause": "附录J 3 (L2195)",
+      "severity": "LOW",
+      "description": "第3章缺少子章节: ['3.8']"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-006",
+      "gjb_clause": "附录J 3.3 (L2217)",
+      "severity": "MEDIUM",
+      "description": "接口3.4.1(接口标识和接口图)缺少唯一标识符"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-006",
+      "gjb_clause": "附录J 3.3 (L2217)",
+      "severity": "MEDIUM",
+      "description": "接口3.4.2(语音识别与语音合成的接口)缺少唯一标识符"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-006",
+      "gjb_clause": "附录J 3.3 (L2217)",
+      "severity": "MEDIUM",
+      "description": "接口3.4.3(语音合成与语音识别的接口)缺少唯一标识符"
+    },
+    {
+      "layer": "syntax",
+      "rule": "R-006",
+      "gjb_clause": "附录J 3.3 (L2217)",
+      "severity": "MEDIUM",
+      "description": "接口3.4.4(语音识别与识别短语定制接口)缺少唯一标识符"
+    },
+    {
+      "layer": "semantic",
+      "check": "version_conflict",
+      "severity": "HIGH",
+      "description": "版本冲突: 3.9.1=V7.6 vs 3.9.2=V7.2 (software:达梦)",
+      "pair_id": "P-0001"
+    },
+    {
+      "layer": "semantic",
+      "check": "version_conflict",
+      "severity": "HIGH",
+      "description": "版本冲突: 3.9.2=V7.2 vs 3.10.1=V7.6 (software:达梦)",
+      "pair_id": "P-0002"
+    }
+  ]
+}
