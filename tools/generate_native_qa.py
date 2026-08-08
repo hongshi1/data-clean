@@ -103,20 +103,40 @@ def generate_qa_for_scenario1_4_5(inst, qa_id_counter, scenario_id):
         if id_col is None and ('标识' in h_str or '唯一' in h_str):
             id_col = i
 
-    if name_col is None:
+    if name_col is None or id_col is None:
         return qa_pairs
 
     doc_short = inst['doc'][:15]
     section_title = inst.get('section_title', '')[:20]
 
+    # 名称合法性: 纯中文名(可含字母数字但不得含ID模式和描述特征)
+    def is_valid_name(name):
+        if not name or len(name) > 30:
+            return False
+        if re.search(r'[A-Z]{4,}-[A-Z]{2,}-', name):  # 名称含ID
+            return False
+        if re.match(r'^[A-Z]{4,}-', name):  # 名称以ID开头
+            return False
+        if re.match(r'^[a-zA-Z]', name):  # 名称以字母开头(如a)提供...)
+            return False
+        if re.search(r'^[一二三四五六七八九十\d]+[)）]', name):  # 编号列表开头
+            return False
+        if name.endswith('为') or len(name) < 2:
+            return False
+        return True
+
     # 收集所有数据行
     data_rows = []
     for row in rows[1:]:
         func_name = str(row[name_col]).strip() if name_col < len(row) else ""
-        func_id = str(row[id_col]).strip() if id_col and id_col < len(row) else ""
+        func_id = str(row[id_col]).strip() if id_col < len(row) else ""
         req_id_match = REQ_ID_RE.search(func_id)
         canonical_id = req_id_match.group(0) if req_id_match else func_id
-        if not func_name:
+        if not is_valid_name(func_name):
+            continue
+        if not req_id_match:  # ID必须是标准REQ格式
+            continue
+        if canonical_id.endswith('-') or '--' in canonical_id:
             continue
         data_rows.append((func_name, canonical_id))
 
@@ -220,10 +240,20 @@ def generate_qa_for_scenario3(inst, qa_id_counter, scenario_id):
     receiver = gc('receiver')
     priority = gc('priority')
 
+    # 名称/标识同格时("数据协议解析接口/ZZSJHQZHFW-..."), 取"/"前的纯名称
+    if '/' in iface_name and re.search(r'[A-Z]{4,}', iface_name):
+        iface_name = iface_name.split('/')[0].strip()
+    # 从名称/标识同格中提取ID(若有)
+    if not iface_id and '/' in gc('name_id'):
+        m = re.search(r'[A-Z]{4,}-[A-Z]{2,}[\w-]*', gc('name_id'))
+        if m: iface_id = m.group(0)
+
     id_match = REQ_ID_RE.search(iface_id)
     canonical_id = id_match.group(0) if id_match else iface_id
 
     if not iface_name or not iface_type:
+        return qa_pairs
+    if len(iface_name) > 30 or iface_name.endswith('-') or not re.search(r'[\u4e00-\u9fff]', iface_name):
         return qa_pairs
 
     # 正例
