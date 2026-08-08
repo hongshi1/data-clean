@@ -1,0 +1,2315 @@
+{
+  "version": "2.0",
+  "description": "语法层校验数据 — 不依赖上下文，直接与GJB标准一对一校验",
+  "created": "2026-08-06",
+  "data_sources": {
+    "real_gjb_srs": "16份GJB 438C SRS (data/gjb_438c/mineru_correct/)",
+    "gjb_standard": "GJB 438C-2021标准 (knowledge/gjb_438c_rules_full.json)",
+    "stage0_assets": "data/gjb_438c/data_assets/stage0_assets.json",
+    "stage1_features": "data/gjb_438c/data_assets/stage1_features.json"
+  },
+  "A_class_regex_detectors": {
+    "description": "A类: 正则表达式检测，一个正则=一个检测器，不依赖上下文，不依赖GJB知识",
+    "detectors": [
+      {
+        "detector_id": "A01_id_format",
+        "name": "ID格式校验",
+        "regex": "[A-Z]{4,}-[A-Z]{2,}-[A-Z0-9-]+",
+        "check_target": "answer",
+        "description": "回答中的需求ID格式是否符合'前缀-类别-子系统-功能'模式",
+        "negative_example": "回答写'PZXQ-GN-FWGC'(层级不足，应有4段以上)",
+        "positive_example": "回答写'PZXQ-GN-FWKFZC-CJFWGC'(格式正确)"
+      },
+      {
+        "detector_id": "A02_id_placeholder",
+        "name": "ID占位符检测",
+        "regex": "X{4,}",
+        "check_target": "answer",
+        "description": "回答中的ID是否含XXXX占位符",
+        "negative_example": "回答引用'PZXQ-YXZCFW-GN-XTYXZTJK-JSJCPUZTXXXX'",
+        "positive_example": "回答引用'PZXQ-YXZCFW-GN-XTYXZTJK-JSJCPUZT001'"
+      },
+      {
+        "detector_id": "A03_section_number",
+        "name": "章节号格式校验",
+        "regex": "^(\\d+(?:\\.\\d+)*)\\s+(.+)",
+        "check_target": "answer",
+        "description": "回答引用的章节号格式是否正确(数字.数字.数字 空格 标题)",
+        "negative_example": "回答写'3.2.1'(应写完整'3.2.1.1')",
+        "positive_example": "回答写'3.2.1.1 创建服务工程'"
+      },
+      {
+        "detector_id": "A04_figure_reference",
+        "name": "图号引用校验",
+        "regex": "(?:如图|见图|图)\\s*(\\d+)",
+        "check_target": "answer_vs_document",
+        "description": "回答引用的图号是否在文档figure_index中存在",
+        "negative_example": "回答'如图4所示'但文档中无图4",
+        "positive_example": "回答'如图2所示'且文档有图2",
+        "requires": "figure_index"
+      },
+      {
+        "detector_id": "A05_table_reference",
+        "name": "表号引用校验",
+        "regex": "(?:如表|见表|表)\\s*(\\d+)",
+        "check_target": "answer_vs_document",
+        "description": "回答引用的表号是否在文档table_index中存在",
+        "negative_example": "回答'见表37'但文档中无表37",
+        "positive_example": "回答'见表4'且文档有表4",
+        "requires": "table_index"
+      },
+      {
+        "detector_id": "A06_caption_format",
+        "name": "caption格式校验",
+        "regex": "(图|表)\\s*(\\d+)\\s*(.*)",
+        "check_target": "answer",
+        "description": "回答中的图表编号格式是否为'图N 标题'或'表N 标题'",
+        "negative_example": "回答写'图3-1'(应为'图3')",
+        "positive_example": "回答写'图3 服务集成框架用例图'"
+      },
+      {
+        "detector_id": "A07_version_format",
+        "name": "版本号格式校验",
+        "regex": "(达梦|Oracle|MySQL|Linux|内核|GCC|CentOS|Ubuntu|Windows|Qt|银河麒麟|WPS|wps|Redis|Nginx)[^。]*?(V?\\d+\\.?\\d*(?:\\.\\d+)?)",
+        "check_target": "answer",
+        "description": "回答中的版本号格式是否规范(软件名+V+数字)",
+        "negative_example": "回答'达梦7.6'(应为'达梦V7.6')",
+        "positive_example": "回答'达梦数据库V7.6'"
+      },
+      {
+        "detector_id": "A08_constraint_format",
+        "name": "约束格式校验",
+        "regex": "(?:不低于|不小于|至少|最少|≥|>=)\\s*(\\d+\\.?\\d*)\\s*(ms|s|秒|KB|MB|GB|TB|MHz|GHz|%|V|A|W|次|个|层|块|台|路|屏|核|维|分钟|小时|天|字节|条/秒|次/秒|笔/秒|Mpps|Tbps|Gbps|Mbps)?",
+        "check_target": "answer",
+        "description": "回答中的约束表达是否含单位",
+        "negative_example": "回答'≥256'(缺单位)",
+        "positive_example": "回答'≥256GB'"
+      },
+      {
+        "detector_id": "A09_exception_def_format",
+        "name": "异常流定义格式校验",
+        "regex": "异常流\\s*(E\\d+)\\s*[：:]",
+        "check_target": "answer",
+        "description": "回答中的异常流定义格式是否为'异常流EN：'",
+        "negative_example": "回答'异常流E1'(缺少冒号)",
+        "positive_example": "回答'异常流E1：系统提示路径错误'"
+      },
+      {
+        "detector_id": "A10_exception_ref_format",
+        "name": "异常流引用格式校验",
+        "regex": "(?:进入|执行|转(?:至)?|触发)\\s*异常流\\s*(E\\d+)",
+        "check_target": "answer_vs_document",
+        "description": "回答引用的异常流编号是否在用例表定义集中存在",
+        "negative_example": "回答'执行异常流E2'但用例表只定义了E1",
+        "positive_example": "回答'执行异常流E1'且用例表定义了E1",
+        "requires": "exception_flows"
+      }
+    ]
+  },
+  "B_class_gjb_rules": {
+    "description": "B类: GJB标准规则校验，依赖GJB 438C规则库120条",
+    "source_file": "knowledge/gjb_438c_rules_full.json",
+    "rules": [
+      {
+        "rule_id": "GJB-RULE-001",
+        "type": "format",
+        "source": "4.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "applies_role": "订购方",
+        "description": "订购方应在合同中规定所交付文档的载体以及文档的具体格式。",
+        "original_text": "附录 A～附录T规定的文档格式主要适用于军用软件合同、技术协议或研制任务书等(以下简称“合同”)签订时提出软件开发过程中文档或数据的要求，订购方应在合同中规定所交付文档的载体以及文档的具体格式。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-002",
+        "type": "structure",
+        "source": "4.3.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档一般由封面、修改页、目录、正文和附录组成（文档构成的默认组成要素）。",
+        "original_text": "文档一般由封面、修改页、目录、正文和附录组成。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-004",
+        "type": "format",
+        "source": "4.3.2",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "DATABASE",
+          "ELECTRONIC"
+        ],
+        "description": "对于数据库或其他格式的文档，封面信息可包含在外部和内部的标记中，也可采用其他等效方法进行标记。",
+        "original_text": "对于数据库或其他格式的文档，封面信息可包含在外部和内部的标记中，也可采用其他等效方法进行标记。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-008",
+        "type": "format",
+        "source": "4.3.4",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "DATABASE",
+          "ELECTRONIC"
+        ],
+        "description": "对于数据库或其他格式的文档，目录可为包含章、条和附录（需要时包括图表、注释）等的指针或访问命令的外部和内部的目录表。",
+        "original_text": "对于数据库或其他格式的文档，目录可为包含章、条和附录(需要时包括图表、注释)等的指针或访问命令的外部和内部的目录表。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-010",
+        "type": "structure",
+        "source": "4.3.6",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "每个附录都应在文档的正文中被引用。",
+        "original_text": "每个附录都应在文档的正文中被引用。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-011",
+        "type": "format",
+        "source": "4.3.6",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "附录以A、B等大写字母标记。",
+        "original_text": "附录以A、B等大写字母标记。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-012",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档的每一页应有唯一的页号。",
+        "original_text": "文档的每一页应有唯一的页号，适用时每页还可有文档号、版本/修订号和卷号等。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-013",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "适用时每页还可有文档号、版本/修订号和卷号等。",
+        "original_text": "适用时每页还可有文档号、版本/修订号和卷号等。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-014",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档正文前的页使用小写罗马数字顺序编号。",
+        "original_text": "文档正文前的页使用小写罗马数字顺序编号；文档正文和附录的页使用阿拉伯数字顺序编号；若一个文档分为若干卷，则每一卷应重新开始按顺序编号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-015",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档正文和附录的页使用阿拉伯数字顺序编号。",
+        "original_text": "文档正文和附录的页使用阿拉伯数字顺序编号；若一个文档分为若干卷，则每一卷应重新开始按顺序编号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-016",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "若一个文档分为若干卷，则每一卷应重新开始按顺序编号。",
+        "original_text": "若一个文档分为若干卷，则每一卷应重新开始按顺序编号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-017",
+        "type": "format",
+        "source": "4.3.7.1",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "DATABASE",
+          "ELECTRONIC"
+        ],
+        "description": "对于数据库或其他格式的文档，应以方便访问或检索的方式，对文件、图或其他内容指定名称或编号。",
+        "original_text": "对于数据库或其他格式的文档，应以方便访问或检索的方式，对文件、图或其他内容指定名称或编号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-018",
+        "type": "structure",
+        "source": "4.3.7.2",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档的条或子条均可拆分为若干条或子条。",
+        "original_text": "文档的条或子条均可拆分为若干条或子条。附录A～附录T中字母X和Y为各文档条或子条编号的自变量，标题上圆括号中的文字在编写时应用实际内容替换。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-019",
+        "type": "format",
+        "source": "4.3.7.2",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "附录A～附录T中标题上圆括号中的文字在编写时应用实际内容替换（字母X和Y为各文档条或子条编号的自变量）。",
+        "original_text": "附录A～附录T中字母X和Y为各文档条或子条编号的自变量，标题上圆括号中的文字在编写时应用实际内容替换。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-020",
+        "type": "format",
+        "source": "4.3.7.3",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "为使各文档章条的信息更加清晰可读，可采用图、表或其他形式的表示方式进行说明。",
+        "original_text": "为使各文档章条的信息更加清晰可读，可采用图、表或其他形式的表示方式进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-021",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "MEDIUM",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "applies_role": "承制方",
+        "description": "承制方可根据项目所选择的生存周期模型、合同的要求以及实际活动，确定项目产生的文档种类，并根据实际情况对文档的种类进行合并、拆分。",
+        "original_text": "承制方可根据项目所选择的生存周期模型、合同的要求以及实际活动，确定项目产生的文档种类，并根据实际情况对文档的种类进行合并、拆分。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-022",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "若两个或多个文档合并，组合后形成的文档的要素应保持完整不遗漏，并在注释中进行说明。",
+        "original_text": "若两个或多个文档合并，以其中一个文档为主文档，将其他文档的内容有机地组合到主文档中，组合后形成的文档的要素应保持完整不遗漏，并在注释中进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-023",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "若一个文档拆分为两个或多个文档，拆分后的各文档的结构应符合4.3的要求。",
+        "original_text": "若一个文档拆分为两个或多个文档，拆分后的各文档的结构应符合4.3的要求，拆分前后文档的要素应保持一致，可在其中的一个文档的注释中对拆分情况进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer_vs_document"
+      },
+      {
+        "rule_id": "GJB-RULE-024",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档拆分前后文档的要素应保持一致。",
+        "original_text": "拆分前后文档的要素应保持一致，可在其中的一个文档的注释中对拆分情况进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-025",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "LOW",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "文档拆分时可在其中的一个文档的注释中对拆分情况进行说明。",
+        "original_text": "可在其中的一个文档的注释中对拆分情况进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-026",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "MEDIUM",
+        "modality": "MAY",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "根据需要，也可以对文档内容进行剪裁。",
+        "original_text": "根据需要，也可以对文档内容进行剪裁。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-027",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "按文档标题顺序与本标准规定标题顺序相同的原则，若剪裁了某章或某条，则在被裁去的章条的标题下标识为“本章无内容”或“本条无内容”，并说明理由。",
+        "original_text": "按文档标题顺序与本标准规定的标题顺序相同的原则，若剪裁了某章或某条，则在被裁去的章条的标题下标识为“本章无内容”或“本条无内容”，并说明理由。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-028",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "ALL"
+        ],
+        "description": "若剪裁的是整章条（包括其下所有小条），则仅需在最高层的章条标题下标识为“本章无内容”或“本条无内容”，并说明理由。",
+        "original_text": "若剪裁的是整章条(包括其下所有小条)，则仅需在最高层的章条标题下标识为“本章无内容”或“本条无内容”，并说明理由。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-029",
+        "type": "structure",
+        "source": "4.4",
+        "severity": "HIGH",
+        "modality": "MUST",
+        "applies_to": [
+          "DATABASE",
+          "ELECTRONIC"
+        ],
+        "description": "对于数据库或其他格式的文档，仅需在目录表中标出被剪裁的部分。",
+        "original_text": "对于数据库或其他格式的文档，仅需在目录表中标出被剪裁的部分。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-030",
+        "type": "structure",
+        "source": "第5章 5.10",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "SRS应描述对CSCI的需求，以及确保满足每个需求所使用的方法。SRS可由IRS补充，共同构成CSCI设计与合格性测试的基础。",
+        "original_text": "《软件需求规格说明》(SRS)描述对计算机软件配置项(CSCI)的需求，以及确保满足每个需求所使用的方法。与 CSCI 外部接口有关的需求既可在 SRS 中描述，也可在 SRS 所引用的一个或多个《接口需求规格说明》中描述。SRS可由《接口需求规格说明》补充，共同构成CSCI设计与合格性测试的基础。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-031",
+        "type": "structure",
+        "source": "第5章 5.10",
+        "severity": "MEDIUM",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "与CSCI外部接口有关的需求既可在SRS中描述，也可在SRS所引用的一个或多个IRS中描述。",
+        "original_text": "与 CSCI 外部接口有关的需求既可在 SRS 中描述，也可在 SRS 所引用的一个或多个《接口需求规格说明》中描述。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-032",
+        "type": "structure",
+        "source": "附录J 1.1",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "标识应描述文档所适用系统和软件的完整标识，包括标识号、名称、缩略名、版本号和发布号。",
+        "original_text": "本条应描述本文档所适用系统和软件的完整标识，适用时，包括其标识号、名称、缩略名、版本号和发布号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-035",
+        "type": "format",
+        "source": "附录J 2",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "引用文档应列出引用文档的编号、标题、编写单位、修订版及日期，还应给出不能通过正常渠道得到的文档的来源。",
+        "original_text": "本章应列出引用文档的编号、标题、编写单位修订版及日期，还应给出不能通过正常渠道得到的文档的来源。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-036",
+        "type": "structure",
+        "source": "附录J 3",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "每条CSCI需求应指定项目唯一的标识符以便测试和追踪，且应以能为其定义具体测试对象的方式描述。需求作为CSCI验收条件的CSCI特征。",
+        "original_text": "本章应分为如下小条规定CSCI需求，即作为CSCI验收条件的CSCI特征。CSCI需求是为满足分配给该CSCI的系统需求而形成的软件需求。每条需求应指定项目唯一的标识符以便测试和追踪，而且应以一种能为其定义具体测试对象的方式来描述。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-039",
+        "type": "structure",
+        "source": "附录J 3.2",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "CSCI能力需求应逐一列出与CSCI各个能力相关的需求，可分为若干子条。能力为一组相关需求，可用功能、主题、目标等替代。",
+        "original_text": "本条应逐一列出与CSCI各个能力相关的需求，可分为若干子条。\"CSCI能力需求\"中的\"能力\"为一组相关需求，可用\"功能\"、\"主题\"、\"目标\"、或其他适合表示需求的词替代。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-042",
+        "type": "structure",
+        "source": "附录J 3.3",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "CSCI外部接口需求可分若干小条规定，可引用一个或多个接口需求规格说明(IRS)或包含这些需求的其他文档。",
+        "original_text": "本条可分为若干个小条来规定关于CSCI的外部接口的需求(若有)。本条可引用一个或多个接口需求规格说明(IRS)或包含这些需求的其他文档。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-082",
+        "type": "structure",
+        "source": "附录J 3.2.X",
+        "severity": "HIGH",
+        "applies_to": [
+          "SRS"
+        ],
+        "description": "每个CSCI能力应标识出所要求的能力，并逐一列出与该能力有关的需求。如果该能力可以更清晰地分解成若干子能力，则应分条对子能力进行说明。",
+        "original_text": "本条应标识出所要求的每一个CSC能力，并逐一列出与该能力有关的需求。如果该能力可以更清晰地分解成若干子能力，则应分条对子能力进行说明。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-083",
+        "type": "structure",
+        "source": "附录G 整体结构",
+        "severity": "HIGH",
+        "applies_to": [
+          "IRS"
+        ],
+        "description": "IRS(接口需求规格说明)必须包含以下章节:1范围(1.1标识/1.2系统概述/1.3文档概述)、2引用文档、3需求(3.1接口标识和接口图/3.X接口/3.Y需求优先顺序和关键性)、4合格性规定、5需求可追踪性、6注释。该结构与SRS(附录J)高度对应,可类比校验。",
+        "original_text": "《接口需求规格说明》的正文格式如下：1 范围…2 引用文档…3 需求…4 合格性规定…5 需求可追踪性…6 注释",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer_vs_document"
+      },
+      {
+        "rule_id": "GJB-RULE-093",
+        "type": "structure",
+        "source": "附录F 整体结构",
+        "severity": "HIGH",
+        "applies_to": [
+          "SSS"
+        ],
+        "description": "SSS(系统/子系统规格说明)必须包含:1范围、2引用文档、3需求(3.1状态和方式/3.2系统能力需求/3.3系统外部接口需求/3.4系统内部接口需求/3.5系统内部数据需求/3.6适应性需求/3.7保密性/3.8安全性/3.9环境适应性/3.10其他质量特性/3.11计算机资源需求/3.12设计和构造约束/3.13人员/3.14训练/3.15综合保障/3.16包装/3.17其他/3.18优先顺序和关键性)、4合格性规定、5需求可追踪性、6注释。该章节体系与SRS第3章一一对应(系统级vs CSCI级),是层级一致性校验基础。",
+        "original_text": "《系统/子系统规格说明》的正文格式如下：1 范围…3 需求…3.1 要求的状态和方式…3.2 系统能力需求…3.3 系统外部接口需求…3.18 需求的优先顺序和关键性…4 合格性规定…5 需求可追踪性…6 注释",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer_vs_document"
+      },
+      {
+        "rule_id": "GJB-RULE-104",
+        "type": "structure",
+        "source": "附录K 4.2",
+        "severity": "MEDIUM",
+        "applies_to": [
+          "SDD",
+          "SRS"
+        ],
+        "description": "SDD执行方案(4.2)应说明软件单元间的动态关系,包括执行控制流程、数据流、动态控制序列、状态转换图、时序图、优先关系、中断处理、时序/排序、例外处理、并发执行、动态分配等。此规则关联SRS:执行方案中描述的行为应与SRS 3.2.X CSCI能力需求中规定的行为(含异常条件处理)一致。",
+        "original_text": "本条应说明软件单元间的执行方案，可采用图表和描述，来说明软件单元间的动态关系，即CSCI运行期间软件单元间的相互作用情况，(若适用)应包括执行控制流程、数据流、动态控制序列、状态转换图、时序图、单元间的优先关系、中断处理、时序/排序关系、例外处理、并发执行、动态分配/去除分配…",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-115",
+        "type": "structure",
+        "source": "附录A/D/E/F/G/H/I/J/K 1.1",
+        "severity": "HIGH",
+        "applies_to": [
+          "SDP",
+          "STP",
+          "OCD",
+          "SSS",
+          "IRS",
+          "SSDD",
+          "IDD",
+          "SRS",
+          "SDD"
+        ],
+        "description": "所有GJB 438C规格说明/计划类文档的1.1标识条必须包含文档所适用系统/软件的完整标识,适用时包括:标识号、名称、缩略名、版本号、发布号。此为跨附录通用结构规则,可类比应用到SRS:SRS的1.1条必须包含这5个标识要素,缺失任一即不合规。",
+        "original_text": "本条应描述本文档所适用的系统和软件的完整标识，适用时，包括其标识号、名称、缩略名、版本号和发布号。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer_vs_document"
+      },
+      {
+        "rule_id": "GJB-RULE-116",
+        "type": "structure",
+        "source": "附录A/D/E/F/G/H/I/J/K 2",
+        "severity": "MEDIUM",
+        "applies_to": [
+          "SDP",
+          "STP",
+          "OCD",
+          "SSS",
+          "IRS",
+          "SSDD",
+          "IDD",
+          "SRS",
+          "SDD"
+        ],
+        "description": "所有GJB 438C文档的第2章引用文档必须列出引用文档的编号、标题、编写单位、修订版及日期,并给出不能通过正常渠道得到的文档来源。此为跨附录通用规则,可类比校验SRS第2章:若SRS引用了IRS/SSS,则这些文档的编号/标题/修订版/日期须完整列出。",
+        "original_text": "本章应列出引用文档的编号、标题、编写单位修订版及日期，还应给出不能通过正常渠道得到的文档的来源。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      },
+      {
+        "rule_id": "GJB-RULE-120",
+        "type": "format",
+        "source": "附录A/D/E/F/G/H/I/J/K 1.2-1.3",
+        "severity": "MEDIUM",
+        "applies_to": [
+          "SDP",
+          "STP",
+          "OCD",
+          "SSS",
+          "IRS",
+          "SSDD",
+          "IDD",
+          "SRS",
+          "SDD"
+        ],
+        "description": "所有GJB 438C文档的1.2系统概述必须概述系统/软件用途、描述一般特性(规模/安全性/可靠性/实时性/技术风险等)、概述开发运行维护历史、标识需方/用户/开发方/保障机构、标识运行现场、列出其他有关文档;1.3文档概述必须概述文档用途和内容并描述安全保密要求。此为跨附录通用格式规则,可类比校验SRS 1.2/1.3的完整性。",
+        "original_text": "1.2 本条应概述本文档适用的系统和软件的用途；描述系统和软件的一般特性(如规模、安全性、可靠性、实时性、技术风险等特性)；概述系统开发、运行和维护的历史；标识项目的需方、用户开发方和保障机构等；标识当前和计划的运行现场；列出其他有关文档。1.3 本条应概述本文档的用途和内容，并描述与它的使用有关的安全保密方面的要求。",
+        "check_layer": "syntax",
+        "check_type": "B_rule",
+        "context_dependency": false,
+        "check_target": "answer"
+      }
+    ],
+    "total": 38
+  },
+  "document_indices": {
+    "description": "从16份SRS提取的文档索引，用于A04/A05/A10的引用校验",
+    "source_file": "data/gjb_438c/data_assets/stage0_assets.json",
+    "contents": {
+      "section_registry": "章节号→{title, req_id, doc_id} — 用于校验回答引用的章节是否存在",
+      "table_index": "表号→表格条目 — 用于校验回答引用的表号是否存在",
+      "figure_index": "图号→图片条目 — 用于校验回答引用的图号是否存在",
+      "exception_flows": "用例表异常流定义集/引用集 — 用于校验回答引用的异常流是否存在"
+    }
+  },
+  "gold_standard_syntax": {
+    "description": "语法层Gold Standard — 从16份真实SRS中确认的语法层不一致",
+    "source_file": "data/gjb_438c/data_assets/stage1_features.json",
+    "items": [
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "组件配置填写",
+        "section_ref": "3.2.1.2",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'组件配置填写'引用章节3.2.1.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "公共组件管理",
+        "section_ref": "3.2.1.3",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'公共组件管理'引用章节3.2.1.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "组件下载管理",
+        "section_ref": "3.2.1.4",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'组件下载管理'引用章节3.2.1.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "组件打包发布",
+        "section_ref": "3.2.1.5",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'组件打包发布'引用章节3.2.1.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "组件开发接口",
+        "section_ref": "3.2.1.6",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'组件开发接口'引用章节3.2.1.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "路由集成",
+        "section_ref": "3.2.2.4",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'路由集成'引用章节3.2.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "生命周期管理",
+        "section_ref": "3.2.2.5",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'生命周期管理'引用章节3.2.2.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "故障隔离检测",
+        "section_ref": "3.2.2.6",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'故障隔离检测'引用章节3.2.2.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "数据状态管理",
+        "section_ref": "3.2.2.7",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'数据状态管理'引用章节3.2.2.7但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "消息通知",
+        "section_ref": "3.2.2.8",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'消息通知'引用章节3.2.2.8但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "服务请求",
+        "section_ref": "3.2.2.9",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'服务请求'引用章节3.2.2.9但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "布局控制",
+        "section_ref": "3.2.3.1",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'布局控制'引用章节3.2.3.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "分屏管理",
+        "section_ref": "3.2.3.2",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'分屏管理'引用章节3.2.3.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "主题管理",
+        "section_ref": "3.2.3.3",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'主题管理'引用章节3.2.3.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "快捷操控",
+        "section_ref": "3.2.3.4",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'快捷操控'引用章节3.2.3.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "生命周期监控",
+        "section_ref": "3.2.4.1",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'生命周期监控'引用章节3.2.4.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "服务连接监控",
+        "section_ref": "3.2.4.2",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'服务连接监控'引用章节3.2.4.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "资源占用监控",
+        "section_ref": "3.2.4.3",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'资源占用监控'引用章节3.2.4.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "界面自适应调整",
+        "section_ref": "3.2.5.2",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'界面自适应调整'引用章节3.2.5.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "req_name": "触摸操控",
+        "section_ref": "3.2.5.4",
+        "methods": [
+          "A",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "02界面集成框架软件需求规格说明-终稿 合格性表'触摸操控'引用章节3.2.5.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "服务注销",
+        "section_ref": "3.2.2.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'服务注销'引用章节3.2.2.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "服务运行状态查询",
+        "section_ref": "3.2.4.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'服务运行状态查询'引用章节3.2.4.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "服务占用资源查询",
+        "section_ref": "3.2.4.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'服务占用资源查询'引用章节3.2.4.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "服务运行状态汇总",
+        "section_ref": "3.2.4.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'服务运行状态汇总'引用章节3.2.4.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "基于主机负载的负载均衡",
+        "section_ref": "3.2.5.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'基于主机负载的负载均衡'引用章节3.2.5.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "服务故障迁移",
+        "section_ref": "3.2.5.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'服务故障迁移'引用章节3.2.5.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "界面集成框架接口",
+        "section_ref": "3.3.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'界面集成框架接口'引用章节3.3.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "应用软件接口",
+        "section_ref": "3.3.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'应用软件接口'引用章节3.3.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "req_name": "用户接口",
+        "section_ref": "3.3.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "03服务集成框架软件需求规格说明-终稿 合格性表'用户接口'引用章节3.3.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "req_name": "SQL 访问",
+        "section_ref": "3.2.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 合格性表'SQL 访问'引用章节3.2.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "req_name": "热点数据缓存",
+        "section_ref": "3.2.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 合格性表'热点数据缓存'引用章节3.2.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "req_name": "代码生成",
+        "section_ref": "3.2.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 合格性表'代码生成'引用章节3.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "req_name": "数据源适配",
+        "section_ref": "3.2.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 合格性表'数据源适配'引用章节3.2.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "05软件部署管理软件需求规格说明-终稿",
+        "req_name": "坐位分配",
+        "section_ref": "3.2.4.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "05软件部署管理软件需求规格说明-终稿 合格性表'坐位分配'引用章节3.2.4.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "05软件部署管理软件需求规格说明-终稿",
+        "req_name": "软件本地安装",
+        "section_ref": "3.2.5.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "05软件部署管理软件需求规格说明-终稿 合格性表'软件本地安装'引用章节3.2.5.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "05软件部署管理软件需求规格说明-终稿",
+        "req_name": "软件在线升级",
+        "section_ref": "3.2.5.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "05软件部署管理软件需求规格说明-终稿 合格性表'软件在线升级'引用章节3.2.5.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "05软件部署管理软件需求规格说明-终稿",
+        "req_name": "应用软件接口",
+        "section_ref": "3.3.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "05软件部署管理软件需求规格说明-终稿 合格性表'应用软件接口'引用章节3.3.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "req_name": "系统运行状态监控",
+        "section_ref": "3.2.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 合格性表'系统运行状态监控'引用章节3.2.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "req_name": "参数配置管理",
+        "section_ref": "3.2.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 合格性表'参数配置管理'引用章节3.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "req_name": "日志采集与管理",
+        "section_ref": "3.2.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 合格性表'日志采集与管理'引用章节3.2.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "req_name": "运维管理",
+        "section_ref": "3.2.7",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 合格性表'运维管理'引用章节3.2.7但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "req_name": "消息提示与管理",
+        "section_ref": "3.2.8",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a",
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 合格性表'消息提示与管理'引用章节3.2.8但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "07报文处理服务软件需求规格说明-终稿",
+        "req_name": "应用注销",
+        "section_ref": "3.2.1.6",
+        "methods": [
+          "B",
+          "D"
+        ],
+        "level": "ab",
+        "evidence": "07报文处理服务软件需求规格说明-终稿 合格性表'应用注销'引用章节3.2.1.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "基础数据录入",
+        "section_ref": "3.2.3.1.1",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'基础数据录入'引用章节3.2.3.1.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "基础数据修改",
+        "section_ref": "3.2.3.1.3",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'基础数据修改'引用章节3.2.3.1.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "基础数据删除",
+        "section_ref": "3.2.3.1.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'基础数据删除'引用章节3.2.3.1.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "知识分类存储",
+        "section_ref": "3.2.3.2.2",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'知识分类存储'引用章节3.2.3.2.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "知识检索",
+        "section_ref": "3.2.3.2.3",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'知识检索'引用章节3.2.3.2.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "知识关联",
+        "section_ref": "3.2.3.2.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'知识关联'引用章节3.2.3.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "模板数据修改",
+        "section_ref": "3.2.3.3.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'模板数据修改'引用章节3.2.3.3.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "模板数据导入",
+        "section_ref": "3.2.3.3.5",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'模板数据导入'引用章节3.2.3.3.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "模板数据导出",
+        "section_ref": "3.2.3.3.6",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'模板数据导出'引用章节3.2.3.3.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "数据库登录",
+        "section_ref": "3.2.3.4.1",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'数据库登录'引用章节3.2.3.4.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "数据库注销",
+        "section_ref": "3.2.3.4.2",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'数据库注销'引用章节3.2.3.4.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "动态添加维护菜单",
+        "section_ref": "3.2.3.4.3",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'动态添加维护菜单'引用章节3.2.3.4.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "动态删除维护菜单",
+        "section_ref": "3.2.3.4.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'动态删除维护菜单'引用章节3.2.3.4.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "req_name": "登录达梦数据库",
+        "section_ref": "3.2.5.1",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 合格性表'登录达梦数据库'引用章节3.2.5.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步任务删除",
+        "section_ref": "3.2.1.1.1.2",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步任务删除'引用章节3.2.1.1.1.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步任务启动",
+        "section_ref": "3.2.1.1.1.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步任务启动'引用章节3.2.1.1.1.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步任务列表展示",
+        "section_ref": "3.2.1.1.1.5",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步任务列表展示'引用章节3.2.1.1.1.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步任务详情展示",
+        "section_ref": "3.2.1.1.1.6",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步任务详情展示'引用章节3.2.1.1.1.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步表添加",
+        "section_ref": "3.2.1.1.2.2",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步表添加'引用章节3.2.1.1.2.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "同步表删除",
+        "section_ref": "3.2.1.1.2.3",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'同步表删除'引用章节3.2.1.1.2.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "备达梦库同步异常",
+        "section_ref": "3.2.1.1.3.3",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'备达梦库同步异常'引用章节3.2.1.1.3.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "执行 sql 语句异常",
+        "section_ref": "3.2.1.1.3.4",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'执行 sql 语句异常'引用章节3.2.1.1.3.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "数据下载初始化",
+        "section_ref": "3.2.1.2.1",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'数据下载初始化'引用章节3.2.1.2.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "req_name": "数据下载",
+        "section_ref": "3.2.1.2.2",
+        "methods": [
+          "A",
+          "B"
+        ],
+        "level": "a、b",
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 合格性表'数据下载'引用章节3.2.1.2.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "生成名录/PZXQ-GN-MLXXWH-SCML",
+        "section_ref": "3.2.1.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'生成名录/PZXQ-GN-MLXXWH-SCML'引用章节3.2.1.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录信息添加/PZXQ-GN-MLXXWH-MLXXTJ",
+        "section_ref": "3.2.1.2",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录信息添加/PZXQ-GN-MLXXWH-MLXXTJ'引用章节3.2.1.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录信息删除/PZXQ-GN-MLXXWH-MLXXSC",
+        "section_ref": "3.2.1.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录信息删除/PZXQ-GN-MLXXWH-MLXXSC'引用章节3.2.1.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录数据导出/PZXQ-GN-MLXXWH-MLSJDC",
+        "section_ref": "3.2.1.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录数据导出/PZXQ-GN-MLXXWH-MLSJDC'引用章节3.2.1.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录数据导入/PZXQ-GN-MLXXWH-MLSJDR",
+        "section_ref": "3.2.1.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录数据导入/PZXQ-GN-MLXXWH-MLSJDR'引用章节3.2.1.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "查询名录结构信息/PZXQ-GN-MLXXCX-CXMLJGXX",
+        "section_ref": "3.2.2.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'查询名录结构信息/PZXQ-GN-MLXXCX-CXMLJGXX'引用章节3.2.2.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "查询名录属性信息/PZXQ-GN-MLXXCX-CXMLSXXX",
+        "section_ref": "3.2.2.2",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'查询名录属性信息/PZXQ-GN-MLXXCX-CXMLSXXX'引用章节3.2.2.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "查询本地信息/PZXQ-GN-MLXXCX-CXBDXX",
+        "section_ref": "3.2.2.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'查询本地信息/PZXQ-GN-MLXXCX-CXBDXX'引用章节3.2.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "查询上下级/PZXQ-GN-MLXXCX-CXSXJ",
+        "section_ref": "3.2.2.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'查询上下级/PZXQ-GN-MLXXCX-CXSXJ'引用章节3.2.2.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "用户状态更新/PZXQ-GN-MLXXTB-YHZTGX",
+        "section_ref": "3.2.3.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'用户状态更新/PZXQ-GN-MLXXTB-YHZTGX'引用章节3.2.3.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录增量同步/PZXQ-GN-MLXXTB-MLZLTB",
+        "section_ref": "3.2.3.2",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录增量同步/PZXQ-GN-MLXXTB-MLZLTB'引用章节3.2.3.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录全网同步/PZXQ-GN-MLXXTB-MLQWTB",
+        "section_ref": "3.2.3.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录全网同步/PZXQ-GN-MLXXTB-MLQWTB'引用章节3.2.3.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录公共组件/PZXQ-GN-MLFWJK-MLGGZJ",
+        "section_ref": "3.2.4.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录公共组件/PZXQ-GN-MLFWJK-MLGGZJ'引用章节3.2.4.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "req_name": "名录 Restrul 接口/PZXQ-GN-MLFWJK-MLRESTJK",
+        "section_ref": "3.2.4.2",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "10动态名录软件需求规格说明-终稿 合格性表'名录 Restrul 接口/PZXQ-GN-MLFWJK-MLRESTJK'引用章节3.2.4.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "12文电处理需求规格说明-终端",
+        "req_name": "查询收件箱和发件箱接口（PZXQ-WBJK-WDCLFW-RJJH-CXSF)",
+        "section_ref": "3.3.5",
+        "methods": [
+          "B"
+        ],
+        "level": "a,b,c",
+        "evidence": "12文电处理需求规格说明-终端 合格性表'查询收件箱和发件箱接口（PZXQ-WBJK-WDCLFW-RJJH-CXSF)'引用章节3.3.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "12文电处理需求规格说明-终端",
+        "req_name": "管理用户接口（PZXQ-NBJK-WDCLFW-GJWDSF)",
+        "section_ref": "3.4.7",
+        "methods": [
+          "B"
+        ],
+        "level": "a,b,c",
+        "evidence": "12文电处理需求规格说明-终端 合格性表'管理用户接口（PZXQ-NBJK-WDCLFW-GJWDSF)'引用章节3.4.7但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "数据收发/PZXQ-GN-SJSF",
+        "section_ref": "3.2.1",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'数据收发/PZXQ-GN-SJSF'引用章节3.2.1但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "传输控制/PZXQ-GN-CSKZ",
+        "section_ref": "3.2.2",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'传输控制/PZXQ-GN-CSKZ'引用章节3.2.2但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "数据缓存/PZXQ-GN-SJHC",
+        "section_ref": "3.2.3",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'数据缓存/PZXQ-GN-SJHC'引用章节3.2.3但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "主从备份/PZXQ-GN-ZCBF",
+        "section_ref": "3.2.4",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'主从备份/PZXQ-GN-ZCBF'引用章节3.2.4但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "三方传输服务接入/PZXQ-GN-SFCSFWJR",
+        "section_ref": "3.2.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'三方传输服务接入/PZXQ-GN-SFCSFWJR'引用章节3.2.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "设备接入/PZXQ-GN-SBJR",
+        "section_ref": "3.2.6",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'设备接入/PZXQ-GN-SBJR'引用章节3.2.6但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "req_name": "数据监控/PZXQ-GN-SJJK",
+        "section_ref": "3.2.7",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "13统一传输服务软件需求规格说明-终端 合格性表'数据监控/PZXQ-GN-SJJK'引用章节3.2.7但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "qualification_section_mismatch",
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "req_name": "拆包重组/PZXQ-GN-SJCS-CBCZ",
+        "section_ref": "3.2.1.5",
+        "methods": [
+          "A",
+          "B",
+          "D"
+        ],
+        "level": "a、b",
+        "evidence": "14传输服务软件需求规格说明-终稿 合格性表'拆包重组/PZXQ-GN-SJCS-CBCZ'引用章节3.2.1.5但该章节不存在",
+        "confidence": "high",
+        "detector": "B_class_section_existence"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "01数据获取转换分系统需求规格说明-终稿",
+        "ghost_count": 86,
+        "forward_count": 52,
+        "reverse_count": 24,
+        "evidence": "01数据获取转换分系统需求规格说明-终稿 追踪表有86个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "ghost_count": 85,
+        "forward_count": 41,
+        "reverse_count": 0,
+        "evidence": "02界面集成框架软件需求规格说明-终稿 追踪表有85个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "ghost_count": 83,
+        "forward_count": 82,
+        "reverse_count": 0,
+        "evidence": "03服务集成框架软件需求规格说明-终稿 追踪表有83个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "ghost_count": 63,
+        "forward_count": 22,
+        "reverse_count": 37,
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 追踪表有63个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "05软件部署管理软件需求规格说明-终稿",
+        "ghost_count": 72,
+        "forward_count": 43,
+        "reverse_count": 35,
+        "evidence": "05软件部署管理软件需求规格说明-终稿 追踪表有72个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "06运行支撑服务软件需求规格说明-终稿",
+        "ghost_count": 105,
+        "forward_count": 45,
+        "reverse_count": 39,
+        "evidence": "06运行支撑服务软件需求规格说明-终稿 追踪表有105个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "07报文处理服务软件需求规格说明-终稿",
+        "ghost_count": 82,
+        "forward_count": 22,
+        "reverse_count": 23,
+        "evidence": "07报文处理服务软件需求规格说明-终稿 追踪表有82个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "ghost_count": 99,
+        "forward_count": 17,
+        "reverse_count": 34,
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 追踪表有99个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "ghost_count": 56,
+        "forward_count": 47,
+        "reverse_count": 34,
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 追踪表有56个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "ghost_count": 109,
+        "forward_count": 22,
+        "reverse_count": 47,
+        "evidence": "10动态名录软件需求规格说明-终稿 追踪表有109个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "11语音综合处理软件需求规格说明-终稿",
+        "ghost_count": 22,
+        "forward_count": 38,
+        "reverse_count": 23,
+        "evidence": "11语音综合处理软件需求规格说明-终稿 追踪表有22个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "12文电处理需求规格说明-终端",
+        "ghost_count": 36,
+        "forward_count": 45,
+        "reverse_count": 48,
+        "evidence": "12文电处理需求规格说明-终端 追踪表有36个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "ghost_count": 97,
+        "forward_count": 62,
+        "reverse_count": 55,
+        "evidence": "13统一传输服务软件需求规格说明-终端 追踪表有97个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "ghost_count": 59,
+        "forward_count": 51,
+        "reverse_count": 0,
+        "evidence": "14传输服务软件需求规格说明-终稿 追踪表有59个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "15实时信息传输服务软件需求规格说明-终稿",
+        "ghost_count": 47,
+        "forward_count": 50,
+        "reverse_count": 52,
+        "evidence": "15实时信息传输服务软件需求规格说明-终稿 追踪表有47个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "ghost_reference",
+        "doc": "16流媒体传输服务软件需求规格说明-终稿",
+        "ghost_count": 50,
+        "forward_count": 37,
+        "reverse_count": 40,
+        "evidence": "16流媒体传输服务软件需求规格说明-终稿 追踪表有50个ghost引用(引用了不存在的章节号)",
+        "confidence": "high",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "01数据获取转换分系统需求规格说明-终稿",
+        "forward_count": 52,
+        "reverse_count": 24,
+        "evidence": "01数据获取转换分系统需求规格说明-终稿 追踪表正逆向不对称: 正向52行 vs 逆向24行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "02界面集成框架软件需求规格说明-终稿",
+        "forward_count": 41,
+        "reverse_count": 0,
+        "evidence": "02界面集成框架软件需求规格说明-终稿 追踪表正逆向不对称: 正向41行 vs 逆向0行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "03服务集成框架软件需求规格说明-终稿",
+        "forward_count": 82,
+        "reverse_count": 0,
+        "evidence": "03服务集成框架软件需求规格说明-终稿 追踪表正逆向不对称: 正向82行 vs 逆向0行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "04数据统一访问服务软件需求规格说明-终稿",
+        "forward_count": 22,
+        "reverse_count": 37,
+        "evidence": "04数据统一访问服务软件需求规格说明-终稿 追踪表正逆向不对称: 正向22行 vs 逆向37行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+        "forward_count": 17,
+        "reverse_count": 34,
+        "evidence": "08数据运行维护管理工具软件需求规格说明-终稿 追踪表正逆向不对称: 正向17行 vs 逆向34行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "09数据同步共享服务软件需求规格说明-终稿",
+        "forward_count": 47,
+        "reverse_count": 34,
+        "evidence": "09数据同步共享服务软件需求规格说明-终稿 追踪表正逆向不对称: 正向47行 vs 逆向34行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "forward_count": 22,
+        "reverse_count": 47,
+        "evidence": "10动态名录软件需求规格说明-终稿 追踪表正逆向不对称: 正向22行 vs 逆向47行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "11语音综合处理软件需求规格说明-终稿",
+        "forward_count": 38,
+        "reverse_count": 23,
+        "evidence": "11语音综合处理软件需求规格说明-终稿 追踪表正逆向不对称: 正向38行 vs 逆向23行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      },
+      {
+        "type": "traceability_asymmetry",
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "forward_count": 51,
+        "reverse_count": 0,
+        "evidence": "14传输服务软件需求规格说明-终稿 追踪表正逆向不对称: 正向51行 vs 逆向0行",
+        "confidence": "medium",
+        "detector": "B_class_traceability_completeness"
+      }
+    ],
+    "total": 116
+  }
+}

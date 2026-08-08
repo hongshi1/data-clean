@@ -1,0 +1,112 @@
+{
+  "description": "数据增强: 基于doc03场景3(接口图+interface表)生成的QA对",
+  "source": "03服务集成框架软件需求规格说明-终稿",
+  "scenario": 3,
+  "qa_pairs": [
+    {
+      "id": "qa_s3_001",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架的外部接口有哪些？",
+      "output": "服务集成框架的外部接口包括：与运行支撑服务的接口、与软件部署管理的接口、与界面集成框架的接口、与应用软件的接口、人机交互接口和文件系统接口。其中与运行支撑服务的接口为网络接口，发送方为运行支撑服务，接收方为本系统，传输查询指令和管控指令，优先级为高。",
+      "label": "positive",
+      "layer": null,
+      "inconsistency_type": null,
+      "evidence": {
+        "recall_sections": ["3.3.1"],
+        "doc_values": [
+          {"interface": "与运行支撑服务的接口", "id": "PZXQ-WBJK-FWJCKJ-YXZC", "type": "网络接口", "sender": "运行支撑服务", "receiver": "本系统", "content": "查询指令", "priority": "高"}
+        ]
+      }
+    },
+    {
+      "id": "qa_s3_002",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架与运行支撑服务的接口类型是什么？",
+      "output": "服务集成框架与运行支撑服务的接口类型为API接口，发送方为运行支撑服务，接收方为本系统。",
+      "label": "negative",
+      "layer": "semantic",
+      "inconsistency_type": "interface_type_mismatch",
+      "inconsistency_type_detail": "回答称接口类型为API接口，但文档表59标注为网络接口",
+      "evidence": {
+        "recall_sections": ["3.3.1"],
+        "doc_values": [
+          {"interface": "与运行支撑服务的接口", "id": "PZXQ-WBJK-FWJCKJ-YXZC", "type": "网络接口", "sender": "运行支撑服务", "receiver": "本系统", "content": "查询指令", "priority": "高"}
+        ]
+      }
+    },
+    {
+      "id": "qa_s3_003",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架内部接口中，服务部署管理与服务运行控制之间的接口是什么类型？",
+      "output": "服务部署管理与服务运行控制之间的接口为API接口，发送方为服务部署管理，接收方为服务运行控制，传输服务启动信息，优先级为低。",
+      "label": "positive",
+      "layer": null,
+      "inconsistency_type": null,
+      "evidence": {
+        "recall_sections": ["3.4.1"],
+        "doc_values": [
+          {"interface": "服务部署管理与服务运行控制接口", "id": "PZXQ-NBJK-FWJCKJ-FWQD", "type": "API接口", "sender": "服务部署管理", "receiver": "服务运行控制", "content": "服务启动信息", "priority": "低"}
+        ]
+      }
+    },
+    {
+      "id": "qa_s3_004",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架内部接口中，服务部署管理与服务运行控制之间的接口是什么类型？",
+      "output": "服务部署管理与服务运行控制之间的接口类型为API接口，接口标识为PZXQ-NBJK-FWJCKJ-FWQD，发送方为服务部署管理，接收方为服务运行控制，传输服务启动信息，优先级为高。",
+      "label": "negative",
+      "layer": "semantic",
+      "inconsistency_type": "priority_mismatch",
+      "inconsistency_type_detail": "回答称优先级为高，但文档表66标注为低",
+      "evidence": {
+        "recall_sections": ["3.4.1"],
+        "doc_values": [
+          {"interface": "服务部署管理与服务运行控制接口", "id": "PZXQ-NBJK-FWJCKJ-FWQD", "type": "API接口", "sender": "服务部署管理", "receiver": "服务运行控制", "content": "服务启动信息", "priority": "低"}
+        ]
+      }
+    },
+    {
+      "id": "qa_s3_005",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架的外部接口需求见图20所示，请列出与运行支撑服务的接口标识。",
+      "output": "与运行支撑服务的接口标识为PZXQ-WBJK-FWJCKJ-YXZC。",
+      "label": "positive",
+      "layer": null,
+      "inconsistency_type": null,
+      "evidence": {
+        "recall_sections": ["3.3.1"],
+        "doc_values": [
+          {"interface": "与运行支撑服务的接口", "id": "PZXQ-WBJK-FWJCKJ-YXZC", "type": "网络接口", "sender": "运行支撑服务", "receiver": "本系统", "content": "查询指令", "priority": "高"}
+        ]
+      }
+    },
+    {
+      "id": "qa_s3_006",
+      "source": "real",
+      "doc_ref": "03服务集成框架",
+      "scenario": 3,
+      "instruction": "服务集成框架的外部接口需求见图20所示，请列出与运行支撑服务的接口标识。",
+      "output": "与运行支撑服务的接口标识为PZXQ-WBJK-FWJCKJ-YXZ，该接口为API接口。",
+      "label": "negative",
+      "layer": "syntax",
+      "inconsistency_type": "id_format_error",
+      "inconsistency_type_detail": "回答中接口标识PZXQ-WBJK-FWJCKJ-YXZ不完整(应为PZXQ-WBJK-FWJCKJ-YXZC)，且回答称接口类型为API接口但文档标注为网络接口",
+      "evidence": {
+        "recall_sections": ["3.3.1"],
+        "doc_values": [
+          {"interface": "与运行支撑服务的接口", "id": "PZXQ-WBJK-FWJCKJ-YXZC", "type": "网络接口", "sender": "运行支撑服务", "receiver": "本系统", "content": "查询指令", "priority": "高"}
+        ]
+      }
+    }
+  ]
+}
