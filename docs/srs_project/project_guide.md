@@ -119,24 +119,23 @@
 ### 1.2 问答对（已生成）
 
 - **格式**：`{id, instruction, output, label, layer, inconsistency_type, evidence}`
-- **总量**：1850条（原生901 + 增强946 + 多模态3）
-  - **原生QA对**（901条，来自16份GJB SRS，caption级多模态）：
-    - 正例464 / 负例437
-    - 场景分布：0:188 / 1:175 / 2:120 / 3:50 / 4:250 / 5:105 / 7:13
-    - 负例类型：name_inconsistency(261) + dangling_exception(59) + interface_type_mismatch(23) + version_conflict(4) + qualification_section_mismatch(91)
-    - 负例层：semantic 288 / logic 59 / syntax 91
-    - 多模态：713条含image_caption+table_caption（caption级，非图片内容级）
+- **总量**：2170条（原生1221 + 增强946 + 多模态3）
+  - **原生QA对**（1221条，来自16份GJB SRS，8场景多模态）：
+    - 正例592 / 负例629
+    - 场景分布：0:188 / 1:691 / 2:173 / 3:54 / 4:54 / 5:14 / 7:18 / 8:29（8场景全覆盖）
+    - 负例类型：name_inconsistency(376) + dangling_exception(117) + qualification_mismatch(91) + interface_type_mismatch(27) + image_caption_mismatch(14) + version_conflict(4)
+    - 三层：semantic 850(正429/负421) / logic 191(正74/负117) / syntax 180(正89/负91)
+    - image_path完整：除sc0(纯文本)外全部100%覆盖
   - **增强QA对**（946条，来自4个外部数据集）：
     - ContractNLI 546条（正432/负114）— 合同NLI，场景0(纯文本)
     - Fault-prone SRS 200条（正49/负151）— 需求歧义，场景0(纯文本)
     - FinBalance 200条（正100/负100）— 会计不一致，场景0(纯文本)
     - ScholScan 3条（正2/负1）— 学术论文，场景6/8(内容级多模态)
   - **场景0(纯文本)**：946条外部数据，无图片/表格模态
-  - **场景1-8(多模态)**：904条（原生901 caption级 + ScholScan 3 内容级）
-  - **多模态分级**：caption级901条(有图片标题文本) + 内容级3条(有实际图片,VLM可处理)
-  - **ContractNLI平衡修复**：补充43条正例（only include 34N/34P、may retain 23N/23P对称化），消除"记忆假设→判负"捷径；剩余正例偏斜(如1N/46P)为数据固有属性，非泄漏
-  - **审计记录**：全库0重复、0假负例；doc_ref全部为完整文件名(503/503修复)；15条doc13指令后缀已修复(终稿→终端)；Fault-prone指令截断修复(153条,含完整需求文本)；mm output统一化(消除标签泄漏)；9条ID冲突重命名
-- **正负比**：1:0.77（正1047/负803）
+  - **场景1-8(多模态)**：1221条原生（8场景全覆盖，caption级+image_path） + ScholScan 3 内容级
+  - **8场景定义(按精确模态组合)**：sc1用例图+capability表 / sc2流程图+usecase表 / sc3接口图+interface表 / sc4流程图+capability表 / sc5功能图+capability表 / sc6功能框架图+其他表 / sc7用例图+usecase表 / sc8纯图片+正文
+  - **数据集划分**：train 832条(文档01-08) / test 389条(文档09-16)，0指令跨split泄漏
+- **正负比**：1:0.85（正1175/负995）
 - **设计原则**：外部数据正负例output统一(不泄露标签)，模型必须查文档判断claim是否成立
 - **警示**：负例必须人工验证（Korn 2026, arXiv:2606.25550 证明LLM无法可靠生成requirement smells）
 - **数据路径**：`data/gjb_438c/data_assets/native_qa_pairs.json` + `external_qa_pairs.json` + `external_multimodal_qa.json`
@@ -327,7 +326,7 @@ RequirementItem = {
 | 语义层评测 | 按场景分别评测，claim三态标注（entailed/contradicted/baseless） |
 | 逻辑层评测 | 二分类（有逻辑漏洞/无漏洞），P/R/F1 |
 | 消融实验 | 有无上下文召回对比 / 有无图片对比 / 纯LLM vs 混合方法 |
-| 数据集划分 | 原生901条(训练/测试) + 增强949条(泛化测试) |
+| 数据集划分 | 原生1221条(train 832/test 389, 文档级隔离) + 增强949条(泛化测试) |
 
 ---
 
