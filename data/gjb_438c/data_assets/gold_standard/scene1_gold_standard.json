@@ -1,0 +1,2440 @@
+{
+  "description": "场景1 Gold Standard v1.0 — 真实矛盾 + 一致正例 + 受控注入",
+  "build_date": "2026-08-10",
+  "scene": "场景1: 用例图+capability表+正文",
+  "stats": {
+    "real_conflicts": 16,
+    "consistent_positives": 23,
+    "injected_negatives": 72,
+    "total": 111
+  },
+  "negatives": {
+    "tier1_real": {
+      "count": 16,
+      "description": "从文档中提取的真实不一致(经mineru_standard交叉验证)",
+      "items": [
+        {
+          "id": "PZXQ-GN-JMJCKJ-JMJC-KJCK",
+          "doc": "02界面集成框架软件需求规格说明-终稿",
+          "correct_name": "快捷操控",
+          "wrong_names": [
+            {
+              "wrong_name": "触摸操控",
+              "type": "typo",
+              "verdict": "real_conflict",
+              "reason": "错字: \"快捷操控\" vs \"触摸操控\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "快捷操控",
+              "触摸操控"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-JMJCKJ-JMJC-JMPZBC",
+          "doc": "02界面集成框架软件需求规格说明-终稿",
+          "correct_name": "语音交互",
+          "wrong_names": [
+            {
+              "wrong_name": "界面配置保存",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"语音交互\" vs \"界面配置保存\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "资源占用监控",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"语音交互\" vs \"资源占用监控\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "语音交互",
+              "界面配置保存",
+              "资源占用监控"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-WBJK-YYRJ",
+          "doc": "05软件部署管理软件需求规格说明-终稿",
+          "correct_name": "与应用软件接口",
+          "wrong_names": [
+            {
+              "wrong_name": "应用软件接口",
+              "type": "truncation",
+              "verdict": "real_conflict",
+              "reason": "截断在非功能词: \"与\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "与应用软件接口",
+              "应用软件接口"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-FW",
+          "doc": "03服务集成框架软件需求规格说明-终稿",
+          "correct_name": "服务监控注册",
+          "wrong_names": [
+            {
+              "wrong_name": "服务更新",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"服务监控注册\" vs \"服务更新\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "服务注册",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"服务监控注册\" vs \"服务注册\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "服务注销",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"服务监控注册\" vs \"服务注销\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "服务监控注册",
+              "服务更新",
+              "服务注册",
+              "服务注销"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-SQLFW-BLOBSJCZ",
+          "doc": "04数据统一访问服务软件需求规格说明-终稿",
+          "correct_name": "数据修改",
+          "wrong_names": [
+            {
+              "wrong_name": "数据操作",
+              "type": "typo",
+              "verdict": "real_conflict",
+              "reason": "错字: \"数据修改\" vs \"数据操作\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "数据修改",
+              "数据操作"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-LJCGL-LJCCSH",
+          "doc": "04数据统一访问服务软件需求规格说明-终稿",
+          "correct_name": "连接池初始化",
+          "wrong_names": [
+            {
+              "wrong_name": "连接池配置",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"连接池初始化\" vs \"连接池配置\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "连接池初始化",
+              "连接池配置"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-WBJK-YXZCFW-SJTYFWFW",
+          "doc": "06运行支撑服务软件需求规格说明-终稿",
+          "correct_name": "与服务集成框架接口",
+          "wrong_names": [
+            {
+              "wrong_name": "与数据统一访问服务接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"与服务集成框架接口\" vs \"与数据统一访问服务接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "与服务集成框架接口",
+              "与数据统一访问服务接口"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-NBJK-YXZCFW",
+          "doc": "06运行支撑服务软件需求规格说明-终稿",
+          "correct_name": "基础信息服务与环境运行保障接口",
+          "wrong_names": [
+            {
+              "wrong_name": "基础信息服务与日志服务接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"基础信息服务与环境运行保障接口\" vs \"基础信息服务与日志服务接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "基础信息服务与系统运行监控接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"基础信息服务与环境运行保障接口\" vs \"基础信息服务与系统运行监控接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "基础信息服务与环境运行保障接口",
+              "基础信息服务与日志服务接口",
+              "基础信息服务与系统运行监控接口"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-BWMB-JBDC",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "模板脚本文件导出",
+          "wrong_names": [
+            {
+              "wrong_name": "脚本文件导出",
+              "type": "truncation",
+              "verdict": "real_conflict",
+              "reason": "截断在非功能词: \"模板\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "模板脚本文件导出"
+            ],
+            "table_unknown": [
+              "脚本文件导出"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-JK-BWCS",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文传输接口",
+          "wrong_names": [
+            {
+              "wrong_name": "文件接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"报文传输接口\" vs \"文件接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "数据库接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"报文传输接口\" vs \"数据库接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "报文传输接口",
+              "文件接口",
+              "数据库接口"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-NBJK-WDCLFW",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "删除名录实体接口",
+          "wrong_names": [
+            {
+              "wrong_name": "域挂接接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"删除名录实体接口\" vs \"域挂接接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "名录解析接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"删除名录实体接口\" vs \"名录解析接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "增加名录实体接口",
+              "type": "typo",
+              "verdict": "real_conflict",
+              "reason": "错字: \"删除名录实体接口\" vs \"增加名录实体接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "管理用户接口",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"删除名录实体接口\" vs \"管理用户接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "修改名录实体接口",
+              "type": "typo",
+              "verdict": "real_conflict",
+              "reason": "错字: \"删除名录实体接口\" vs \"修改名录实体接口\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "删除名录实体接口",
+              "域挂接接口",
+              "名录解析接口",
+              "增加名录实体接口",
+              "管理用户接口",
+              "修改名录实体接口"
+            ],
+            "table_qualification": [
+              "删除名录实体接口",
+              "域挂接接口",
+              "名录解析接口",
+              "增加名录实体接口",
+              "管理用户接口",
+              "修改名录实体接口"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-SJHC-SJBDHC",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "主从服务自动发现",
+          "wrong_names": [
+            {
+              "wrong_name": "主从服务互为备份",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"主从服务自动发现\" vs \"主从服务互为备份\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            },
+            {
+              "wrong_name": "数据本地缓存",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"主从服务自动发现\" vs \"数据本地缓存\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "主从服务自动发现",
+              "主从服务互为备份",
+              "数据本地缓存"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-CSPZ",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "流媒体参数配置",
+          "wrong_names": [
+            {
+              "wrong_name": "参数配置",
+              "type": "truncation",
+              "verdict": "real_conflict",
+              "reason": "截断在非功能词: \"流媒体\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "流媒体参数配置",
+              "参数配置"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-SJCS-YXJGK",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "优先级管控",
+          "wrong_names": [
+            {
+              "wrong_name": "格式化数据收发",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"优先级管控\" vs \"格式化数据收发\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "table_qualification": [
+              "优先级管控",
+              "格式化数据收发"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-SSSJCSKZ",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据传输控制",
+          "wrong_names": [
+            {
+              "wrong_name": "位置控制报文收发",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"实时数据传输控制\" vs \"位置控制报文收发\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "实时数据传输控制"
+            ],
+            "table_unknown": [
+              "位置控制报文收发",
+              "实时数据传输控制"
+            ]
+          }
+        },
+        {
+          "id": "PZXQ-GN-LMTCSKZ",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "流媒体传输控制",
+          "wrong_names": [
+            {
+              "wrong_name": "流媒体参数配置",
+              "type": "multiname",
+              "verdict": "real_conflict",
+              "reason": "完全不同: \"流媒体传输控制\" vs \"流媒体参数配置\"",
+              "correct_in_md": true,
+              "wrong_in_md": true
+            }
+          ],
+          "overall_verdict": "real_conflict",
+          "locations": {
+            "text": [
+              "流媒体传输控制"
+            ],
+            "table_traceability": [
+              "流媒体参数配置",
+              "流媒体传输控制"
+            ]
+          }
+        }
+      ]
+    },
+    "tier2_injected": {
+      "count": 72,
+      "description": "基于一致ID受控注入的负例(5种子类型)",
+      "by_type": {
+        "truncation": 23,
+        "multiname": 23,
+        "charorder": 23,
+        "typo": 3
+      },
+      "items": [
+        {
+          "id": "inj_0000",
+          "entity_id": "ZZSJHQZHFW-GN-SJHQ",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据获取",
+          "injected_name": "数据",
+          "injection_type": "truncation",
+          "description": "名称\"数据获取\"被截断为\"数据\"",
+          "locations": {
+            "text": [
+              "数据获取"
+            ],
+            "table_unknown": [
+              "数据获取"
+            ],
+            "table_qualification": [
+              "数据获取"
+            ],
+            "table_traceability": [
+              "数据获取"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0001",
+          "entity_id": "ZZSJHQZHFW-GN-SJHQ",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据获取",
+          "injected_name": "数据转换",
+          "injection_type": "multiname",
+          "description": "名称\"数据获取\"被替换为\"数据转换\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "数据获取"
+            ],
+            "table_unknown": [
+              "数据获取"
+            ],
+            "table_qualification": [
+              "数据获取"
+            ],
+            "table_traceability": [
+              "数据获取"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0002",
+          "entity_id": "ZZSJHQZHFW-GN-SJHQ",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据获取",
+          "injected_name": "数获据取",
+          "injection_type": "charorder",
+          "description": "名称\"数据获取\"字序颠倒为\"数获据取\"",
+          "locations": {
+            "text": [
+              "数据获取"
+            ],
+            "table_unknown": [
+              "数据获取"
+            ],
+            "table_qualification": [
+              "数据获取"
+            ],
+            "table_traceability": [
+              "数据获取"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0003",
+          "entity_id": "ZZSJHQZHFW-GN-SJZH",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据转换",
+          "injected_name": "数据",
+          "injection_type": "truncation",
+          "description": "名称\"数据转换\"被截断为\"数据\"",
+          "locations": {
+            "text": [
+              "数据转换"
+            ],
+            "table_unknown": [
+              "数据转换"
+            ],
+            "table_qualification": [
+              "数据转换"
+            ],
+            "table_traceability": [
+              "数据转换"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0004",
+          "entity_id": "ZZSJHQZHFW-GN-SJZH",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据转换",
+          "injected_name": "数据获取",
+          "injection_type": "multiname",
+          "description": "名称\"数据转换\"被替换为\"数据获取\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "数据转换"
+            ],
+            "table_unknown": [
+              "数据转换"
+            ],
+            "table_qualification": [
+              "数据转换"
+            ],
+            "table_traceability": [
+              "数据转换"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0005",
+          "entity_id": "ZZSJHQZHFW-GN-SJZH",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "数据转换",
+          "injected_name": "数转据换",
+          "injection_type": "charorder",
+          "description": "名称\"数据转换\"字序颠倒为\"数转据换\"",
+          "locations": {
+            "text": [
+              "数据转换"
+            ],
+            "table_unknown": [
+              "数据转换"
+            ],
+            "table_qualification": [
+              "数据转换"
+            ],
+            "table_traceability": [
+              "数据转换"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0006",
+          "entity_id": "ZZSJHQZHFW-JK-NB",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "分系统内部接口需求",
+          "injected_name": "分系统内部接口",
+          "injection_type": "truncation",
+          "description": "名称\"分系统内部接口需求\"被截断为\"分系统内部接口\"",
+          "locations": {
+            "text": [
+              "分系统内部接口需求"
+            ],
+            "table_unknown": [
+              "分系统内部接口需求"
+            ],
+            "table_qualification": [
+              "分系统内部接口需求"
+            ],
+            "table_traceability": [
+              "分系统内部接口需求"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0007",
+          "entity_id": "ZZSJHQZHFW-JK-NB",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "分系统内部接口需求",
+          "injected_name": "数据转换",
+          "injection_type": "multiname",
+          "description": "名称\"分系统内部接口需求\"被替换为\"数据转换\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "分系统内部接口需求"
+            ],
+            "table_unknown": [
+              "分系统内部接口需求"
+            ],
+            "table_qualification": [
+              "分系统内部接口需求"
+            ],
+            "table_traceability": [
+              "分系统内部接口需求"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0008",
+          "entity_id": "ZZSJHQZHFW-JK-NB",
+          "doc": "01数据获取转换分系统需求规格说明-终稿",
+          "correct_name": "分系统内部接口需求",
+          "injected_name": "分系统部内接口需求",
+          "injection_type": "charorder",
+          "description": "名称\"分系统内部接口需求\"字序颠倒为\"分系统部内接口需求\"",
+          "locations": {
+            "text": [
+              "分系统内部接口需求"
+            ],
+            "table_unknown": [
+              "分系统内部接口需求"
+            ],
+            "table_qualification": [
+              "分系统内部接口需求"
+            ],
+            "table_traceability": [
+              "分系统内部接口需求"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0009",
+          "entity_id": "PZXQ-GN-BWBJ-BWBM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文编码",
+          "injected_name": "报文",
+          "injection_type": "truncation",
+          "description": "名称\"报文编码\"被截断为\"报文\"",
+          "locations": {
+            "text": [
+              "报文编码"
+            ],
+            "table_unknown": [
+              "报文编码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0010",
+          "entity_id": "PZXQ-GN-BWBJ-BWBM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文编码",
+          "injected_name": "报文解码",
+          "injection_type": "multiname",
+          "description": "名称\"报文编码\"被替换为\"报文解码\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "报文编码"
+            ],
+            "table_unknown": [
+              "报文编码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0011",
+          "entity_id": "PZXQ-GN-BWBJ-BWBM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文编码",
+          "injected_name": "报编文码",
+          "injection_type": "charorder",
+          "description": "名称\"报文编码\"字序颠倒为\"报编文码\"",
+          "locations": {
+            "text": [
+              "报文编码"
+            ],
+            "table_unknown": [
+              "报文编码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0012",
+          "entity_id": "PZXQ-GN-BWBJ-BWJM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文解码",
+          "injected_name": "报文",
+          "injection_type": "truncation",
+          "description": "名称\"报文解码\"被截断为\"报文\"",
+          "locations": {
+            "text": [
+              "报文解码"
+            ],
+            "table_unknown": [
+              "报文解码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0013",
+          "entity_id": "PZXQ-GN-BWBJ-BWJM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文解码",
+          "injected_name": "报文编码",
+          "injection_type": "multiname",
+          "description": "名称\"报文解码\"被替换为\"报文编码\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "报文解码"
+            ],
+            "table_unknown": [
+              "报文解码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0014",
+          "entity_id": "PZXQ-GN-BWBJ-BWJM",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文解码",
+          "injected_name": "报解文码",
+          "injection_type": "charorder",
+          "description": "名称\"报文解码\"字序颠倒为\"报解文码\"",
+          "locations": {
+            "text": [
+              "报文解码"
+            ],
+            "table_unknown": [
+              "报文解码"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0015",
+          "entity_id": "PZXQ-GN-BWBJ-BWJY",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文数据校验",
+          "injected_name": "报文数据",
+          "injection_type": "truncation",
+          "description": "名称\"报文数据校验\"被截断为\"报文数据\"",
+          "locations": {
+            "text": [
+              "报文数据校验"
+            ],
+            "table_unknown": [
+              "报文数据校验"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0016",
+          "entity_id": "PZXQ-GN-BWBJ-BWJY",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文数据校验",
+          "injected_name": "报文编码",
+          "injection_type": "multiname",
+          "description": "名称\"报文数据校验\"被替换为\"报文编码\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "报文数据校验"
+            ],
+            "table_unknown": [
+              "报文数据校验"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0017",
+          "entity_id": "PZXQ-GN-BWBJ-BWJY",
+          "doc": "07报文处理服务软件需求规格说明-终稿",
+          "correct_name": "报文数据校验",
+          "injected_name": "报文据数校验",
+          "injection_type": "charorder",
+          "description": "名称\"报文数据校验\"字序颠倒为\"报文据数校验\"",
+          "locations": {
+            "text": [
+              "报文数据校验"
+            ],
+            "table_unknown": [
+              "报文数据校验"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0018",
+          "entity_id": "PZXQ-GN-MLXXWH-SCML",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "生成名录",
+          "injected_name": "生成",
+          "injection_type": "truncation",
+          "description": "名称\"生成名录\"被截断为\"生成\"",
+          "locations": {
+            "text": [
+              "生成名录"
+            ],
+            "table_qualification": [
+              "生成名录"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0019",
+          "entity_id": "PZXQ-GN-MLXXWH-SCML",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "生成名录",
+          "injected_name": "查询上下级",
+          "injection_type": "multiname",
+          "description": "名称\"生成名录\"被替换为\"查询上下级\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "生成名录"
+            ],
+            "table_qualification": [
+              "生成名录"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0020",
+          "entity_id": "PZXQ-GN-MLXXWH-SCML",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "生成名录",
+          "injected_name": "生名成录",
+          "injection_type": "charorder",
+          "description": "名称\"生成名录\"字序颠倒为\"生名成录\"",
+          "locations": {
+            "text": [
+              "生成名录"
+            ],
+            "table_qualification": [
+              "生成名录"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0021",
+          "entity_id": "PZXQ-GN-MLXXCX-CXSXJ",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "查询上下级",
+          "injected_name": "查询上",
+          "injection_type": "truncation",
+          "description": "名称\"查询上下级\"被截断为\"查询上\"",
+          "locations": {
+            "text": [
+              "查询上下级"
+            ],
+            "table_qualification": [
+              "查询上下级"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0022",
+          "entity_id": "PZXQ-GN-MLXXCX-CXSXJ",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "查询上下级",
+          "injected_name": "生成名录",
+          "injection_type": "multiname",
+          "description": "名称\"查询上下级\"被替换为\"生成名录\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "查询上下级"
+            ],
+            "table_qualification": [
+              "查询上下级"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0023",
+          "entity_id": "PZXQ-GN-MLXXCX-CXSXJ",
+          "doc": "10动态名录软件需求规格说明-终稿",
+          "correct_name": "查询上下级",
+          "injected_name": "查上询下级",
+          "injection_type": "charorder",
+          "description": "名称\"查询上下级\"字序颠倒为\"查上询下级\"",
+          "locations": {
+            "text": [
+              "查询上下级"
+            ],
+            "table_qualification": [
+              "查询上下级"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0024",
+          "entity_id": "PZXQ-GN-ZYDW-MLFW",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录访问",
+          "injected_name": "名录",
+          "injection_type": "truncation",
+          "description": "名称\"名录访问\"被截断为\"名录\"",
+          "locations": {
+            "text": [
+              "名录访问"
+            ],
+            "table_qualification": [
+              "名录访问"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0025",
+          "entity_id": "PZXQ-GN-ZYDW-MLFW",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录访问",
+          "injected_name": "名录管理",
+          "injection_type": "multiname",
+          "description": "名称\"名录访问\"被替换为\"名录管理\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "名录访问"
+            ],
+            "table_qualification": [
+              "名录访问"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0026",
+          "entity_id": "PZXQ-GN-ZYDW-MLFW",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录访问",
+          "injected_name": "名访录问",
+          "injection_type": "charorder",
+          "description": "名称\"名录访问\"字序颠倒为\"名访录问\"",
+          "locations": {
+            "text": [
+              "名录访问"
+            ],
+            "table_qualification": [
+              "名录访问"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0027",
+          "entity_id": "PZXQ-GN-ZYDW-MLYX",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录影像",
+          "injected_name": "名录",
+          "injection_type": "truncation",
+          "description": "名称\"名录影像\"被截断为\"名录\"",
+          "locations": {
+            "text": [
+              "名录影像"
+            ],
+            "table_qualification": [
+              "名录影像"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0028",
+          "entity_id": "PZXQ-GN-ZYDW-MLYX",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录影像",
+          "injected_name": "名录访问",
+          "injection_type": "multiname",
+          "description": "名称\"名录影像\"被替换为\"名录访问\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "名录影像"
+            ],
+            "table_qualification": [
+              "名录影像"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0029",
+          "entity_id": "PZXQ-GN-ZYDW-MLYX",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录影像",
+          "injected_name": "名影录像",
+          "injection_type": "charorder",
+          "description": "名称\"名录影像\"字序颠倒为\"名影录像\"",
+          "locations": {
+            "text": [
+              "名录影像"
+            ],
+            "table_qualification": [
+              "名录影像"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0030",
+          "entity_id": "PZXQ-GN-ZYDW-MLGL",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录管理",
+          "injected_name": "名录",
+          "injection_type": "truncation",
+          "description": "名称\"名录管理\"被截断为\"名录\"",
+          "locations": {
+            "text": [
+              "名录管理"
+            ],
+            "table_qualification": [
+              "名录管理"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0031",
+          "entity_id": "PZXQ-GN-ZYDW-MLGL",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录管理",
+          "injected_name": "名录访问",
+          "injection_type": "multiname",
+          "description": "名称\"名录管理\"被替换为\"名录访问\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "名录管理"
+            ],
+            "table_qualification": [
+              "名录管理"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0032",
+          "entity_id": "PZXQ-GN-ZYDW-MLGL",
+          "doc": "12文电处理需求规格说明-终端",
+          "correct_name": "名录管理",
+          "injected_name": "名管录理",
+          "injection_type": "charorder",
+          "description": "名称\"名录管理\"字序颠倒为\"名管录理\"",
+          "locations": {
+            "text": [
+              "名录管理"
+            ],
+            "table_qualification": [
+              "名录管理"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0033",
+          "entity_id": "PZXQ-GN-SJSF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "数据收发",
+          "injected_name": "数据",
+          "injection_type": "truncation",
+          "description": "名称\"数据收发\"被截断为\"数据\"",
+          "locations": {
+            "text": [
+              "数据收发"
+            ],
+            "table_qualification": [
+              "数据收发"
+            ],
+            "table_traceability": [
+              "数据收发"
+            ],
+            "table_unknown": [
+              "数据收发"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0034",
+          "entity_id": "PZXQ-GN-SJSF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "数据收发",
+          "injected_name": "传输控制",
+          "injection_type": "multiname",
+          "description": "名称\"数据收发\"被替换为\"传输控制\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "数据收发"
+            ],
+            "table_qualification": [
+              "数据收发"
+            ],
+            "table_traceability": [
+              "数据收发"
+            ],
+            "table_unknown": [
+              "数据收发"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0035",
+          "entity_id": "PZXQ-GN-SJSF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "数据收发",
+          "injected_name": "数收据发",
+          "injection_type": "charorder",
+          "description": "名称\"数据收发\"字序颠倒为\"数收据发\"",
+          "locations": {
+            "text": [
+              "数据收发"
+            ],
+            "table_qualification": [
+              "数据收发"
+            ],
+            "table_traceability": [
+              "数据收发"
+            ],
+            "table_unknown": [
+              "数据收发"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0036",
+          "entity_id": "PZXQ-GN-CSKZ",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "传输控制",
+          "injected_name": "传输",
+          "injection_type": "truncation",
+          "description": "名称\"传输控制\"被截断为\"传输\"",
+          "locations": {
+            "text": [
+              "传输控制"
+            ],
+            "table_qualification": [
+              "传输控制"
+            ],
+            "table_traceability": [
+              "传输控制"
+            ],
+            "table_unknown": [
+              "传输控制"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0037",
+          "entity_id": "PZXQ-GN-CSKZ",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "传输控制",
+          "injected_name": "传输控控",
+          "injection_type": "typo",
+          "description": "名称\"传输控制\"错字为\"传输控控\"(差1字)",
+          "locations": {
+            "text": [
+              "传输控制"
+            ],
+            "table_qualification": [
+              "传输控制"
+            ],
+            "table_traceability": [
+              "传输控制"
+            ],
+            "table_unknown": [
+              "传输控制"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0038",
+          "entity_id": "PZXQ-GN-CSKZ",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "传输控制",
+          "injected_name": "数据收发",
+          "injection_type": "multiname",
+          "description": "名称\"传输控制\"被替换为\"数据收发\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "传输控制"
+            ],
+            "table_qualification": [
+              "传输控制"
+            ],
+            "table_traceability": [
+              "传输控制"
+            ],
+            "table_unknown": [
+              "传输控制"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0039",
+          "entity_id": "PZXQ-GN-CSKZ",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "传输控制",
+          "injected_name": "传控输制",
+          "injection_type": "charorder",
+          "description": "名称\"传输控制\"字序颠倒为\"传控输制\"",
+          "locations": {
+            "text": [
+              "传输控制"
+            ],
+            "table_qualification": [
+              "传输控制"
+            ],
+            "table_traceability": [
+              "传输控制"
+            ],
+            "table_unknown": [
+              "传输控制"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0040",
+          "entity_id": "PZXQ-GN-ZCBF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "主从备份",
+          "injected_name": "主从",
+          "injection_type": "truncation",
+          "description": "名称\"主从备份\"被截断为\"主从\"",
+          "locations": {
+            "text": [
+              "主从备份"
+            ],
+            "table_qualification": [
+              "主从备份"
+            ],
+            "table_traceability": [
+              "主从备份"
+            ],
+            "table_unknown": [
+              "主从备份"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0041",
+          "entity_id": "PZXQ-GN-ZCBF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "主从备份",
+          "injected_name": "数据收发",
+          "injection_type": "multiname",
+          "description": "名称\"主从备份\"被替换为\"数据收发\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "主从备份"
+            ],
+            "table_qualification": [
+              "主从备份"
+            ],
+            "table_traceability": [
+              "主从备份"
+            ],
+            "table_unknown": [
+              "主从备份"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0042",
+          "entity_id": "PZXQ-GN-ZCBF",
+          "doc": "13统一传输服务软件需求规格说明-终端",
+          "correct_name": "主从备份",
+          "injected_name": "主备从份",
+          "injection_type": "charorder",
+          "description": "名称\"主从备份\"字序颠倒为\"主备从份\"",
+          "locations": {
+            "text": [
+              "主从备份"
+            ],
+            "table_qualification": [
+              "主从备份"
+            ],
+            "table_traceability": [
+              "主从备份"
+            ],
+            "table_unknown": [
+              "主从备份"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0043",
+          "entity_id": "PZXQ-GN-ZTJK",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "通信设备状态监控",
+          "injected_name": "通信设备状态",
+          "injection_type": "truncation",
+          "description": "名称\"通信设备状态监控\"被截断为\"通信设备状态\"",
+          "locations": {
+            "text": [
+              "通信设备状态监控"
+            ],
+            "table_qualification": [
+              "通信设备状态监控"
+            ],
+            "table_traceability": [
+              "通信设备状态监控"
+            ],
+            "table_unknown": [
+              "通信设备状态监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0044",
+          "entity_id": "PZXQ-GN-ZTJK",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "通信设备状态监控",
+          "injected_name": "通信设备状态监制",
+          "injection_type": "typo",
+          "description": "名称\"通信设备状态监控\"错字为\"通信设备状态监制\"(差1字)",
+          "locations": {
+            "text": [
+              "通信设备状态监控"
+            ],
+            "table_qualification": [
+              "通信设备状态监控"
+            ],
+            "table_traceability": [
+              "通信设备状态监控"
+            ],
+            "table_unknown": [
+              "通信设备状态监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0045",
+          "entity_id": "PZXQ-GN-ZTJK",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "通信设备状态监控",
+          "injected_name": "数据接入",
+          "injection_type": "multiname",
+          "description": "名称\"通信设备状态监控\"被替换为\"数据接入\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "通信设备状态监控"
+            ],
+            "table_qualification": [
+              "通信设备状态监控"
+            ],
+            "table_traceability": [
+              "通信设备状态监控"
+            ],
+            "table_unknown": [
+              "通信设备状态监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0046",
+          "entity_id": "PZXQ-GN-ZTJK",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "通信设备状态监控",
+          "injected_name": "通信设状备态监控",
+          "injection_type": "charorder",
+          "description": "名称\"通信设备状态监控\"字序颠倒为\"通信设状备态监控\"",
+          "locations": {
+            "text": [
+              "通信设备状态监控"
+            ],
+            "table_qualification": [
+              "通信设备状态监控"
+            ],
+            "table_traceability": [
+              "通信设备状态监控"
+            ],
+            "table_unknown": [
+              "通信设备状态监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0047",
+          "entity_id": "PZXQ-GN-SJJR",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "数据接入",
+          "injected_name": "数据",
+          "injection_type": "truncation",
+          "description": "名称\"数据接入\"被截断为\"数据\"",
+          "locations": {
+            "text": [
+              "数据接入"
+            ],
+            "table_qualification": [
+              "数据接入"
+            ],
+            "table_traceability": [
+              "数据接入"
+            ],
+            "table_unknown": [
+              "数据接入"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0048",
+          "entity_id": "PZXQ-GN-SJJR",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "数据接入",
+          "injected_name": "通信设备状态监控",
+          "injection_type": "multiname",
+          "description": "名称\"数据接入\"被替换为\"通信设备状态监控\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "数据接入"
+            ],
+            "table_qualification": [
+              "数据接入"
+            ],
+            "table_traceability": [
+              "数据接入"
+            ],
+            "table_unknown": [
+              "数据接入"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0049",
+          "entity_id": "PZXQ-GN-SJJR",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "数据接入",
+          "injected_name": "数接据入",
+          "injection_type": "charorder",
+          "description": "名称\"数据接入\"字序颠倒为\"数接据入\"",
+          "locations": {
+            "text": [
+              "数据接入"
+            ],
+            "table_qualification": [
+              "数据接入"
+            ],
+            "table_traceability": [
+              "数据接入"
+            ],
+            "table_unknown": [
+              "数据接入"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0050",
+          "entity_id": "PZXQ-GN-SJJK-BWSX",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "报文筛选",
+          "injected_name": "报文",
+          "injection_type": "truncation",
+          "description": "名称\"报文筛选\"被截断为\"报文\"",
+          "locations": {
+            "table_qualification": [
+              "报文筛选"
+            ],
+            "table_traceability": [
+              "报文筛选"
+            ],
+            "table_unknown": [
+              "报文筛选"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0051",
+          "entity_id": "PZXQ-GN-SJJK-BWSX",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "报文筛选",
+          "injected_name": "数据接入",
+          "injection_type": "multiname",
+          "description": "名称\"报文筛选\"被替换为\"数据接入\"(完全不同功能)",
+          "locations": {
+            "table_qualification": [
+              "报文筛选"
+            ],
+            "table_traceability": [
+              "报文筛选"
+            ],
+            "table_unknown": [
+              "报文筛选"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0052",
+          "entity_id": "PZXQ-GN-SJJK-BWSX",
+          "doc": "14传输服务软件需求规格说明-终稿",
+          "correct_name": "报文筛选",
+          "injected_name": "报筛文选",
+          "injection_type": "charorder",
+          "description": "名称\"报文筛选\"字序颠倒为\"报筛文选\"",
+          "locations": {
+            "table_qualification": [
+              "报文筛选"
+            ],
+            "table_traceability": [
+              "报文筛选"
+            ],
+            "table_unknown": [
+              "报文筛选"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0053",
+          "entity_id": "PZXQ-GN-SSSJBWJK",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据报文监控",
+          "injected_name": "实时数据报文",
+          "injection_type": "truncation",
+          "description": "名称\"实时数据报文监控\"被截断为\"实时数据报文\"",
+          "locations": {
+            "text": [
+              "实时数据报文监控"
+            ],
+            "table_traceability": [
+              "实时数据报文监控"
+            ],
+            "table_unknown": [
+              "实时数据报文监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0054",
+          "entity_id": "PZXQ-GN-SSSJBWJK",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据报文监控",
+          "injected_name": "实时数据报文监制",
+          "injection_type": "typo",
+          "description": "名称\"实时数据报文监控\"错字为\"实时数据报文监制\"(差1字)",
+          "locations": {
+            "text": [
+              "实时数据报文监控"
+            ],
+            "table_traceability": [
+              "实时数据报文监控"
+            ],
+            "table_unknown": [
+              "实时数据报文监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0055",
+          "entity_id": "PZXQ-GN-SSSJBWJK",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据报文监控",
+          "injected_name": "实时数据传输",
+          "injection_type": "multiname",
+          "description": "名称\"实时数据报文监控\"被替换为\"实时数据传输\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "实时数据报文监控"
+            ],
+            "table_traceability": [
+              "实时数据报文监控"
+            ],
+            "table_unknown": [
+              "实时数据报文监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0056",
+          "entity_id": "PZXQ-GN-SSSJBWJK",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据报文监控",
+          "injected_name": "实时数报据文监控",
+          "injection_type": "charorder",
+          "description": "名称\"实时数据报文监控\"字序颠倒为\"实时数报据文监控\"",
+          "locations": {
+            "text": [
+              "实时数据报文监控"
+            ],
+            "table_traceability": [
+              "实时数据报文监控"
+            ],
+            "table_unknown": [
+              "实时数据报文监控"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0057",
+          "entity_id": "PZXQ-GN-SSSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据传输",
+          "injected_name": "实时数据",
+          "injection_type": "truncation",
+          "description": "名称\"实时数据传输\"被截断为\"实时数据\"",
+          "locations": {
+            "text": [
+              "实时数据传输"
+            ],
+            "table_unknown": [
+              "实时数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0058",
+          "entity_id": "PZXQ-GN-SSSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据传输",
+          "injected_name": "实时可靠数据传输",
+          "injection_type": "multiname",
+          "description": "名称\"实时数据传输\"被替换为\"实时可靠数据传输\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "实时数据传输"
+            ],
+            "table_unknown": [
+              "实时数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0059",
+          "entity_id": "PZXQ-GN-SSSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时数据传输",
+          "injected_name": "实时据数传输",
+          "injection_type": "charorder",
+          "description": "名称\"实时数据传输\"字序颠倒为\"实时据数传输\"",
+          "locations": {
+            "text": [
+              "实时数据传输"
+            ],
+            "table_unknown": [
+              "实时数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0060",
+          "entity_id": "PZXQ-GN-SSKKSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时可靠数据传输",
+          "injected_name": "实时可靠数据",
+          "injection_type": "truncation",
+          "description": "名称\"实时可靠数据传输\"被截断为\"实时可靠数据\"",
+          "locations": {
+            "text": [
+              "实时可靠数据传输"
+            ],
+            "table_unknown": [
+              "实时可靠数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0061",
+          "entity_id": "PZXQ-GN-SSKKSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时可靠数据传输",
+          "injected_name": "实时数据传输",
+          "injection_type": "multiname",
+          "description": "名称\"实时可靠数据传输\"被替换为\"实时数据传输\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "实时可靠数据传输"
+            ],
+            "table_unknown": [
+              "实时可靠数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0062",
+          "entity_id": "PZXQ-GN-SSKKSJCS",
+          "doc": "15实时信息传输服务软件需求规格说明-终稿",
+          "correct_name": "实时可靠数据传输",
+          "injected_name": "实时可数靠据传输",
+          "injection_type": "charorder",
+          "description": "名称\"实时可靠数据传输\"字序颠倒为\"实时可数靠据传输\"",
+          "locations": {
+            "text": [
+              "实时可靠数据传输"
+            ],
+            "table_unknown": [
+              "实时可靠数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0063",
+          "entity_id": "PZXQ-GN-LMTSJCS-PXCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "并行传输",
+          "injected_name": "并行",
+          "injection_type": "truncation",
+          "description": "名称\"并行传输\"被截断为\"并行\"",
+          "locations": {
+            "text": [
+              "并行传输"
+            ],
+            "table_qualification": [
+              "并行传输"
+            ],
+            "table_unknown": [
+              "并行传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0064",
+          "entity_id": "PZXQ-GN-LMTSJCS-PXCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "并行传输",
+          "injected_name": "乱序重组",
+          "injection_type": "multiname",
+          "description": "名称\"并行传输\"被替换为\"乱序重组\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "并行传输"
+            ],
+            "table_qualification": [
+              "并行传输"
+            ],
+            "table_unknown": [
+              "并行传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0065",
+          "entity_id": "PZXQ-GN-LMTSJCS-PXCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "并行传输",
+          "injected_name": "并传行输",
+          "injection_type": "charorder",
+          "description": "名称\"并行传输\"字序颠倒为\"并传行输\"",
+          "locations": {
+            "text": [
+              "并行传输"
+            ],
+            "table_qualification": [
+              "并行传输"
+            ],
+            "table_unknown": [
+              "并行传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0066",
+          "entity_id": "PZXQ-GN-LMTCSKZ-LXCZ",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "乱序重组",
+          "injected_name": "乱序",
+          "injection_type": "truncation",
+          "description": "名称\"乱序重组\"被截断为\"乱序\"",
+          "locations": {
+            "text": [
+              "乱序重组"
+            ],
+            "table_qualification": [
+              "乱序重组"
+            ],
+            "table_unknown": [
+              "乱序重组"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0067",
+          "entity_id": "PZXQ-GN-LMTCSKZ-LXCZ",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "乱序重组",
+          "injected_name": "并行传输",
+          "injection_type": "multiname",
+          "description": "名称\"乱序重组\"被替换为\"并行传输\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "乱序重组"
+            ],
+            "table_qualification": [
+              "乱序重组"
+            ],
+            "table_unknown": [
+              "乱序重组"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0068",
+          "entity_id": "PZXQ-GN-LMTCSKZ-LXCZ",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "乱序重组",
+          "injected_name": "乱重序组",
+          "injection_type": "charorder",
+          "description": "名称\"乱序重组\"字序颠倒为\"乱重序组\"",
+          "locations": {
+            "text": [
+              "乱序重组"
+            ],
+            "table_qualification": [
+              "乱序重组"
+            ],
+            "table_unknown": [
+              "乱序重组"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0069",
+          "entity_id": "PZXQ-GN-LMTSJCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "流媒体数据传输",
+          "injected_name": "流媒体数据",
+          "injection_type": "truncation",
+          "description": "名称\"流媒体数据传输\"被截断为\"流媒体数据\"",
+          "locations": {
+            "text": [
+              "流媒体数据传输"
+            ],
+            "table_traceability": [
+              "流媒体数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0070",
+          "entity_id": "PZXQ-GN-LMTSJCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "流媒体数据传输",
+          "injected_name": "乱序重组",
+          "injection_type": "multiname",
+          "description": "名称\"流媒体数据传输\"被替换为\"乱序重组\"(完全不同功能)",
+          "locations": {
+            "text": [
+              "流媒体数据传输"
+            ],
+            "table_traceability": [
+              "流媒体数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        },
+        {
+          "id": "inj_0071",
+          "entity_id": "PZXQ-GN-LMTSJCS",
+          "doc": "16流媒体传输服务软件需求规格说明-终稿",
+          "correct_name": "流媒体数据传输",
+          "injected_name": "流媒数体据传输",
+          "injection_type": "charorder",
+          "description": "名称\"流媒体数据传输\"字序颠倒为\"流媒数体据传输\"",
+          "locations": {
+            "text": [
+              "流媒体数据传输"
+            ],
+            "table_traceability": [
+              "流媒体数据传输"
+            ]
+          },
+          "verified": true,
+          "is_injected": true
+        }
+      ]
+    }
+  },
+  "positives": {
+    "count": 23,
+    "description": "多位置名称完全一致的ID(经验证无矛盾)",
+    "items": [
+      {
+        "id": "ZZSJHQZHFW-GN-SJHQ",
+        "name": "数据获取",
+        "locations": {
+          "text": [
+            "数据获取"
+          ],
+          "table_unknown": [
+            "数据获取"
+          ],
+          "table_qualification": [
+            "数据获取"
+          ],
+          "table_traceability": [
+            "数据获取"
+          ]
+        },
+        "doc": "01数据获取转换分系统需求规格说明-终稿",
+        "location_count": 4
+      },
+      {
+        "id": "ZZSJHQZHFW-GN-SJZH",
+        "name": "数据转换",
+        "locations": {
+          "text": [
+            "数据转换"
+          ],
+          "table_unknown": [
+            "数据转换"
+          ],
+          "table_qualification": [
+            "数据转换"
+          ],
+          "table_traceability": [
+            "数据转换"
+          ]
+        },
+        "doc": "01数据获取转换分系统需求规格说明-终稿",
+        "location_count": 4
+      },
+      {
+        "id": "ZZSJHQZHFW-JK-NB",
+        "name": "分系统内部接口需求",
+        "locations": {
+          "text": [
+            "分系统内部接口需求"
+          ],
+          "table_unknown": [
+            "分系统内部接口需求"
+          ],
+          "table_qualification": [
+            "分系统内部接口需求"
+          ],
+          "table_traceability": [
+            "分系统内部接口需求"
+          ]
+        },
+        "doc": "01数据获取转换分系统需求规格说明-终稿",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-BWBJ-BWBM",
+        "name": "报文编码",
+        "locations": {
+          "text": [
+            "报文编码"
+          ],
+          "table_unknown": [
+            "报文编码"
+          ]
+        },
+        "doc": "07报文处理服务软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-BWBJ-BWJM",
+        "name": "报文解码",
+        "locations": {
+          "text": [
+            "报文解码"
+          ],
+          "table_unknown": [
+            "报文解码"
+          ]
+        },
+        "doc": "07报文处理服务软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-BWBJ-BWJY",
+        "name": "报文数据校验",
+        "locations": {
+          "text": [
+            "报文数据校验"
+          ],
+          "table_unknown": [
+            "报文数据校验"
+          ]
+        },
+        "doc": "07报文处理服务软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-MLXXWH-SCML",
+        "name": "生成名录",
+        "locations": {
+          "text": [
+            "生成名录"
+          ],
+          "table_qualification": [
+            "生成名录"
+          ]
+        },
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-MLXXCX-CXSXJ",
+        "name": "查询上下级",
+        "locations": {
+          "text": [
+            "查询上下级"
+          ],
+          "table_qualification": [
+            "查询上下级"
+          ]
+        },
+        "doc": "10动态名录软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-ZYDW-MLFW",
+        "name": "名录访问",
+        "locations": {
+          "text": [
+            "名录访问"
+          ],
+          "table_qualification": [
+            "名录访问"
+          ]
+        },
+        "doc": "12文电处理需求规格说明-终端",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-ZYDW-MLYX",
+        "name": "名录影像",
+        "locations": {
+          "text": [
+            "名录影像"
+          ],
+          "table_qualification": [
+            "名录影像"
+          ]
+        },
+        "doc": "12文电处理需求规格说明-终端",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-ZYDW-MLGL",
+        "name": "名录管理",
+        "locations": {
+          "text": [
+            "名录管理"
+          ],
+          "table_qualification": [
+            "名录管理"
+          ]
+        },
+        "doc": "12文电处理需求规格说明-终端",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-SJSF",
+        "name": "数据收发",
+        "locations": {
+          "text": [
+            "数据收发"
+          ],
+          "table_qualification": [
+            "数据收发"
+          ],
+          "table_traceability": [
+            "数据收发"
+          ],
+          "table_unknown": [
+            "数据收发"
+          ]
+        },
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-CSKZ",
+        "name": "传输控制",
+        "locations": {
+          "text": [
+            "传输控制"
+          ],
+          "table_qualification": [
+            "传输控制"
+          ],
+          "table_traceability": [
+            "传输控制"
+          ],
+          "table_unknown": [
+            "传输控制"
+          ]
+        },
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-ZCBF",
+        "name": "主从备份",
+        "locations": {
+          "text": [
+            "主从备份"
+          ],
+          "table_qualification": [
+            "主从备份"
+          ],
+          "table_traceability": [
+            "主从备份"
+          ],
+          "table_unknown": [
+            "主从备份"
+          ]
+        },
+        "doc": "13统一传输服务软件需求规格说明-终端",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-ZTJK",
+        "name": "通信设备状态监控",
+        "locations": {
+          "text": [
+            "通信设备状态监控"
+          ],
+          "table_qualification": [
+            "通信设备状态监控"
+          ],
+          "table_traceability": [
+            "通信设备状态监控"
+          ],
+          "table_unknown": [
+            "通信设备状态监控"
+          ]
+        },
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-SJJR",
+        "name": "数据接入",
+        "locations": {
+          "text": [
+            "数据接入"
+          ],
+          "table_qualification": [
+            "数据接入"
+          ],
+          "table_traceability": [
+            "数据接入"
+          ],
+          "table_unknown": [
+            "数据接入"
+          ]
+        },
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "location_count": 4
+      },
+      {
+        "id": "PZXQ-GN-SJJK-BWSX",
+        "name": "报文筛选",
+        "locations": {
+          "table_qualification": [
+            "报文筛选"
+          ],
+          "table_traceability": [
+            "报文筛选"
+          ],
+          "table_unknown": [
+            "报文筛选"
+          ]
+        },
+        "doc": "14传输服务软件需求规格说明-终稿",
+        "location_count": 3
+      },
+      {
+        "id": "PZXQ-GN-SSSJBWJK",
+        "name": "实时数据报文监控",
+        "locations": {
+          "text": [
+            "实时数据报文监控"
+          ],
+          "table_traceability": [
+            "实时数据报文监控"
+          ],
+          "table_unknown": [
+            "实时数据报文监控"
+          ]
+        },
+        "doc": "15实时信息传输服务软件需求规格说明-终稿",
+        "location_count": 3
+      },
+      {
+        "id": "PZXQ-GN-SSSJCS",
+        "name": "实时数据传输",
+        "locations": {
+          "text": [
+            "实时数据传输"
+          ],
+          "table_unknown": [
+            "实时数据传输"
+          ]
+        },
+        "doc": "15实时信息传输服务软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-SSKKSJCS",
+        "name": "实时可靠数据传输",
+        "locations": {
+          "text": [
+            "实时可靠数据传输"
+          ],
+          "table_unknown": [
+            "实时可靠数据传输"
+          ]
+        },
+        "doc": "15实时信息传输服务软件需求规格说明-终稿",
+        "location_count": 2
+      },
+      {
+        "id": "PZXQ-GN-LMTSJCS-PXCS",
+        "name": "并行传输",
+        "locations": {
+          "text": [
+            "并行传输"
+          ],
+          "table_qualification": [
+            "并行传输"
+          ],
+          "table_unknown": [
+            "并行传输"
+          ]
+        },
+        "doc": "16流媒体传输服务软件需求规格说明-终稿",
+        "location_count": 3
+      },
+      {
+        "id": "PZXQ-GN-LMTCSKZ-LXCZ",
+        "name": "乱序重组",
+        "locations": {
+          "text": [
+            "乱序重组"
+          ],
+          "table_qualification": [
+            "乱序重组"
+          ],
+          "table_unknown": [
+            "乱序重组"
+          ]
+        },
+        "doc": "16流媒体传输服务软件需求规格说明-终稿",
+        "location_count": 3
+      },
+      {
+        "id": "PZXQ-GN-LMTSJCS",
+        "name": "流媒体数据传输",
+        "locations": {
+          "text": [
+            "流媒体数据传输"
+          ],
+          "table_traceability": [
+            "流媒体数据传输"
+          ]
+        },
+        "doc": "16流媒体传输服务软件需求规格说明-终稿",
+        "location_count": 2
+      }
+    ]
+  }
+}
