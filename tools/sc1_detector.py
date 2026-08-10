@@ -458,12 +458,10 @@ class SC1Detector:
                 if sim >= 0.5:
                     G_hetero.add_edge(f'M:{a}', f'M:{b}', type='similar', weight=sim)
 
-        # metapath随机游走嵌入(固定seed保证可复现)
-        random.seed(self.seed)
-        np.random.seed(self.seed)
-        random.seed(self.seed)
+        # 用独立Random实例, 彻底隔离全局state(保证可复现)
+        rng = random.Random(self.seed)
 
-        def metapath_walk(start, walk_len=10):
+        def metapath_walk(start, walk_len=10, rng=rng):
             walk = [start]
             curr = start
             for _ in range(walk_len - 1):
@@ -474,14 +472,14 @@ class SC1Detector:
                 candidates = [n for n in nbrs if G_hetero.nodes[n]['type'] != curr_type]
                 if not candidates:
                     candidates = nbrs
-                curr = random.choice(candidates)
+                curr = rng.choice(candidates)
                 walk.append(curr)
             return walk
 
         entity_nodes = [n for n, d in G_hetero.nodes(data=True) if d['type'] == 'entity']
         walks = []
         for _ in range(30):
-            random.shuffle(entity_nodes)
+            rng.shuffle(entity_nodes)
             for e in entity_nodes[:100]:
                 walks.append(metapath_walk(e, 12))
 
