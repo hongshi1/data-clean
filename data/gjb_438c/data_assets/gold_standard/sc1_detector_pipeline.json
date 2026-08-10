@@ -1,0 +1,16 @@
+{
+  "description": "sc1 3层检测管线: 字符级+规则级+NLI语义级",
+  "layers": {
+    "L0": "identical: 完全一致",
+    "L1": "char_level: typo(编辑距离≤2)/charorder/truncation",
+    "L2": "rule_level: 功能词归一化/suffix_diff",
+    "L3": "nli_level: 双模型(kimi+claude)判断编辑距离3-8的语义"
+  },
+  "eval_l1l2": {
+    "TP": 23,
+    "FP": 0,
+    "TN": 119,
+    "FN": 3,
+    "F1": 0.988
+  }
+}
