@@ -341,3 +341,75 @@ def detect_usecase_nodes_robust(img_path):
         if not any(abs(e['cx'] - d['cx']) < 25 and abs(e['cy'] - d['cy']) < 25 for d in deduped):
             deduped.append(e)
     return deduped
+
+
+# ========== 语义图方法: 名称文本相似度连边 + 连通分量矛盾检测 ==========
+def semantic_graph_detection(threshold=0.6):
+    """语义图: 名称节点按文本相似度连边, 实体名称分裂成多分量=矛盾"""
+    s0 = json.loads(open(STAGE0).read())
+    id_reg = s0['id_registry']
+
+    def _extract_name(ctx, rid):
+        m = re.search(r'([\u4e00-\u9fff][\u4e00-\u9fff\w ]{1,25})[/(（]?' + re.escape(rid), ctx)
+        if m:
+            return m.group(1).strip().rstrip(' /（(')
+        return None
+
+    def _text_sim(a, b):
+        if a == b:
+            return 1.0
+        dist = levenshtein(a, b)
+        return 1 - dist / max(len(a), len(b)) if max(len(a), len(b)) > 0 else 0
+
+    # 实体→名称
+    entity_names = {}
+    for rid, entries in id_reg.items():
+        if len(entries) < 2:
+            continue
+        names = set()
+        for e in entries:
+            n = _extract_name(e.get('context', ''), rid)
+            if n and len(n) >= 2:
+                names.add(n)
+        if names:
+            entity_names[rid] = names
+
+    # 语义图
+    all_names = sorted(set(n for names in entity_names.values() for n in names))
+    G = nx.Graph()
+    for n in all_names:
+        G.add_node(n)
+    for i, a in enumerate(all_names):
+        for j in range(i + 1, len(all_names)):
+            b = all_names[j]
+            if abs(len(a) - len(b)) > 4:
+                continue
+            if _text_sim(a, b) >= threshold:
+                G.add_edge(a, b)
+
+    # 矛盾检测: 实体名称的连通分量数
+    conflicts = []
+    for rid, names in entity_names.items():
+        if len(names) < 2:
+            continue
+        sub = G.subgraph(names)
+        comps = list(nx.connected_components(sub))
+        if len(comps) > 1:
+            conflicts.append({
+                'entity': rid,
+                'components': [sorted(c) for c in comps],
+                'component_count': len(comps),
+                'severity': 'high' if len(comps) >= 3 else 'medium',
+            })
+
+    out = os.path.join(GRAPH_DIR, "semantic_graph_results.json")
+    json.dump({
+        "description": "语义图方法: 名称文本相似度连边, 连通分量=矛盾",
+        "threshold": threshold,
+        "name_nodes": len(all_names),
+        "semantic_edges": G.number_of_edges(),
+        "conflicts": len(conflicts),
+        "items": conflicts,
+    }, open(out, 'w'), ensure_ascii=False, indent=2)
+    print(f"[语义图] {len(conflicts)}个矛盾实体(连通分量分裂) → {out}")
+    return conflicts
