@@ -197,3 +197,46 @@ sc1 Gold Standard(242条) + 分层 + 真实单独 + hold-out
 例: '资源占用监控' vs '界面配置保存'
   topo=1.0 (同一实体), text=0.0 (完全不同) → 矛盾
 ```
+
+---
+
+## 十、SC1检测工具（规范化实现）
+
+### 10.1 工具文件
+
+`tools/sc1_detector.py` — 场景1名称一致性检测的统一工具
+
+```
+用法:
+  python tools/sc1_detector.py --all                    # 运行全部7种方法
+  python tools/sc1_detector.py --method dual_space      # 单方法
+  python tools/sc1_detector.py --method louvain
+  python tools/sc1_detector.py --method attention
+```
+
+### 10.2 7种方法统一评测结果
+
+| 方法 | 类别 | P | R | F1 |
+|------|------|---|---|-----|
+| B1 连通分量 | 规则图 | 1.000 | 0.750 | 0.857 |
+| B2 Louvain | 无监督图 | 1.000 | 0.688 | 0.815 |
+| B3 谱聚类 | 谱方法 | 0.625 | 0.625 | 0.625 |
+| B4 学习LR | 监督学习 | 0.571 | 1.000 | 0.727 |
+| B5 手写GCN | 图神经网络 | 1.000 | 0.500 | 0.667 |
+| **O1 图注意力** | **本文方法** | **1.000** | **0.812** | **0.897** |
+| **O2 双空间** | **本文方法** | **1.000** | **0.812** | **0.897** |
+
+### 10.3 代码规范
+
+1. `SC1Detector` 类封装: 图构建/评测/方法统一接口
+2. 参数传递预测器(非闭包): 修复作用域污染
+3. 固定seed: 可复现
+4. 统一evaluate: P/R/F1 + TP/FP/FN
+5. 输出: `graph/sc1_all_methods_eval.json`
+
+### 10.4 配套工具
+
+| 工具 | 用途 |
+|------|------|
+| tools/id_graph.py | ID锚定图 + 语义图 + 视觉互校 |
+| tools/cove_verifier.py | sc1 CoVe证据验证(名称级/描述级) |
