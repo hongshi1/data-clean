@@ -1,0 +1,130 @@
+{
+  "title": "图方法一致性检测实验",
+  "settings": {
+    "data": "16份GJB 438C SRS, 508个多位置实体",
+    "gold_standard": "sc1 16真实矛盾 + sc3 15接口矛盾 + sc2 28异常流矛盾",
+    "evaluation": "P/R/F1, 分层, 真实矛盾单独"
+  },
+  "table1_name_consistency": {
+    "description": "sc1名称一致性: 8种方法对比(vs 16真实矛盾)",
+    "methods": [
+      {
+        "name": "B0 多数类",
+        "P": 0,
+        "R": 0,
+        "F1": 0
+      },
+      {
+        "name": "B1 字符级(编辑距离)",
+        "P": 1.0,
+        "R": 0.75,
+        "F1": 0.857
+      },
+      {
+        "name": "B2 Louvain社区",
+        "P": 1.0,
+        "R": 0.688,
+        "F1": 0.815
+      },
+      {
+        "name": "B3 谱聚类",
+        "P": 0.625,
+        "R": 0.625,
+        "F1": 0.625
+      },
+      {
+        "name": "B4 学习检测器(LR)",
+        "P": 0.571,
+        "R": 1.0,
+        "F1": 0.727
+      },
+      {
+        "name": "B5 手写GCN",
+        "P": 1.0,
+        "R": 0.5,
+        "F1": 0.667
+      },
+      {
+        "name": "Ours-1 图注意力(学习边权重)",
+        "P": 1.0,
+        "R": 0.812,
+        "F1": 0.897
+      },
+      {
+        "name": "Ours-2 双空间(拓扑+文本)",
+        "P": 1.0,
+        "R": 0.812,
+        "F1": 0.897
+      }
+    ]
+  },
+  "table2_multi_scene": {
+    "description": "跨场景检测结果",
+    "scenes": [
+      {
+        "scene": "sc1 名称一致性",
+        "method": "双空间",
+        "P": 1.0,
+        "R": 0.812,
+        "F1": 0.897
+      },
+      {
+        "scene": "sc3 接口属性",
+        "method": "属性一致性图",
+        "P": 1.0,
+        "R": 1.0,
+        "F1": 1.0
+      },
+      {
+        "scene": "sc2 异常流dangling",
+        "method": "定义-引用比对",
+        "P": 1.0,
+        "R": 0.286,
+        "F1": 0.444
+      },
+      {
+        "scene": "sc2 死异常",
+        "method": "定义-引用比对",
+        "P": 0.225,
+        "R": 1.0,
+        "F1": 0.367
+      }
+    ]
+  },
+  "case_study_dual_space": {
+    "description": "双空间可解释性案例",
+    "examples": [
+      {
+        "entity": "PZXQ-GN-JMJCKJ-JMJC-JMPZBC",
+        "names": [
+          "界面配置保存",
+          "资源占用监控",
+          "语音交互"
+        ],
+        "finding": "3个完全不同的功能共用一个ID(3分量, 深度矛盾)",
+        "explanation": "topo=1.0(同实体) + text=0.0(完全不同) → 矛盾"
+      },
+      {
+        "entity": "PZXQ-NBJK-WDCLFW",
+        "names": [
+          "名录解析接口",
+          "增加名录实体接口",
+          "修改名录实体接口",
+          "域挂接接口",
+          "管理用户接口"
+        ],
+        "finding": "6个不同的接口共用一个ID",
+        "explanation": "多分量, 深度矛盾"
+      },
+      {
+        "entity": "PZXQ-GN-LJCGL-LJCCSH",
+        "names": [
+          "连接池初始化",
+          "连接池配置"
+        ],
+        "finding": "语义相近但不同功能(编辑距离3)",
+        "explanation": "topo=1.0 + text=0.5 → 矛盾(字符级会误判为typo)"
+      }
+    ]
+  }
+}
