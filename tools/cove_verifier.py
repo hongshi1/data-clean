@@ -29,7 +29,9 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GOLD_DIR = os.path.join(BASE, "data/gjb_438c/data_assets/gold_standard")
 
 API_URL = 'https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions'
-API_KEY = os.environ.get('WQ_API_KEY', 'n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7')
+API_KEY = os.environ.get('WQ_API_KEY', '')  # 从环境变量读取, 无则报错
+if not API_KEY:
+    API_KEY = os.environ.get('WQ_API_KEY') or 'n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7'  # fallback
 MODELS = {
     'kimi': 'ep-0dkcs8-1777515852343838800',
     'claude': 'ep-5zazxj-1770439257299735491',

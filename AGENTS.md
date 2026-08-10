@@ -164,7 +164,7 @@ data_clean/
 
 - MinerU venv: `~/mineru-env/bin/python`
 - GLM-5 API: `https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions`
-- API_KEY: `n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7`
+- API_KEY: 见.env(不提交明文)
 - MODEL: `ep-glsztk-1778496696841467392`
 
 ## 当前状态
