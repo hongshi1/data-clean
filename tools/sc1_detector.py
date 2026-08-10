@@ -458,9 +458,10 @@ class SC1Detector:
                 if sim >= 0.5:
                     G_hetero.add_edge(f'M:{a}', f'M:{b}', type='similar', weight=sim)
 
-        # metapath随机游走嵌入
+        # metapath随机游走嵌入(固定seed保证可复现)
         random.seed(self.seed)
         np.random.seed(self.seed)
+        random.seed(self.seed)
 
         def metapath_walk(start, walk_len=10):
             walk = [start]
