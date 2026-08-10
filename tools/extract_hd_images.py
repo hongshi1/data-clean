@@ -14,7 +14,6 @@ import json
 import shutil
 from pathlib import Path
 from PIL import Image
-import sys
 
 BASE = Path(__file__).resolve().parent.parent
 DATASET = BASE / "data/软件需归样例数据集"

@@ -18,7 +18,6 @@ ID-Graph: 规则锚定的异构文档图一致性校验工具
 import json
 import os
 import re
-import sys
 from collections import Counter, defaultdict
 
 import networkx as nx
@@ -284,7 +283,6 @@ if __name__ == "__main__":
 # ========== 多通道视觉互校(可选模块) ==========
 def visual_cross_validation():
     """OpenCV节点定位 vs VLM提取 的交叉验证(检测VLM漏检)"""
-    import glob
     vlm_file = os.path.join(BASE, "data/gjb_438c/data_assets/vlm_usecase_extract.jsonl")
     if not os.path.exists(vlm_file):
         print("[视觉互校] 无VLM提取结果, 跳过")
