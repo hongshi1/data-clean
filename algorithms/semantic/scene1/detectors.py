@@ -23,8 +23,8 @@ from algorithms.common import (
     evaluate_detection,
 )
 
-ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-                      "data/gjb_438c/data_assets")
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ASSETS = os.path.join(PROJECT_ROOT, "data/gjb_438c/data_assets")
 GOLD_DIR = os.path.join(ASSETS, "gold_standard")
 
 
