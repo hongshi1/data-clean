@@ -1,0 +1,32 @@
+{
+  "description": "评测协议 v2.0 (防假高重构)",
+  "date": "2026-08-10",
+  "principles": [
+    "1. 分层报告: F1按 easy/medium/hard 分别报告",
+    "2. 真实矛盾单独报告: F1_real(只看双源确认+双模型一致的真实矛盾)",
+    "3. hold-out矛盾集: 检测器开发时保留10%真实矛盾不解封",
+    "4. 5基线强制对比: B0多数类/B1字符级/B2 LLM零样本/B3 NLI/B4组合",
+    "5. 统计检验: bootstrap 95%CI + McNemar",
+    "6. 争议样本标记: 双模型分歧的注入样本标记为disputed, 不参与主指标"
+  ],
+  "gold_standard_trust": {
+    "real_conflicts": {
+      "total": 31,
+      "dual_source_confirmed": 31,
+      "dual_source_rate": "100%",
+      "dual_model_agreed": 41,
+      "dual_model_rate": "100%"
+    },
+    "injected": {
+      "total": 91,
+      "dual_model_agreed": 81,
+      "dual_model_disputed": 10,
+      "disputed_rate": "11%"
+    }
+  },
+  "holdout": {
+    "policy": "随机保留10%真实矛盾作为hold-out, 检测器开发完成前不解封",
+    "holdout_count": 3,
+    "seed": 42
+  }
+}
