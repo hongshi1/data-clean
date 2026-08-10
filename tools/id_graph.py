@@ -279,3 +279,65 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ========== 多通道视觉互校(可选模块) ==========
+def visual_cross_validation():
+    """OpenCV节点定位 vs VLM提取 的交叉验证(检测VLM漏检)"""
+    import glob
+    vlm_file = os.path.join(BASE, "data/gjb_438c/data_assets/vlm_usecase_extract.jsonl")
+    if not os.path.exists(vlm_file):
+        print("[视觉互校] 无VLM提取结果, 跳过")
+        return
+
+    results = []
+    with open(vlm_file) as f:
+        for line in f:
+            vlm = json.loads(line)
+            img_path = vlm.get('image_path', '')
+            if not os.path.exists(img_path):
+                continue
+            nodes = detect_usecase_nodes_robust(img_path)
+            vlm_uc = len(vlm.get('usecases', []))
+            results.append({
+                'doc': vlm.get('doc', '')[:20],
+                'cv_nodes': len(nodes),
+                'vlm_usecases': vlm_uc,
+                'needs_review': abs(len(nodes) - vlm_uc) > 2
+            })
+
+    match = sum(1 for r in results if not r['needs_review'])
+    print(f"[视觉互校] 共{len(results)}张: {match}张CV与VLM一致, {len(results)-match}张需复核")
+    return results
+
+
+def detect_usecase_nodes_robust(img_path):
+    """OpenCV检测用例图节点(兼容深浅背景)"""
+    import cv2
+    import numpy as np
+    img = cv2.imread(img_path)
+    if img is None:
+        return []
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    bg_dark = (gray < 128).mean() > 0.5
+    if bg_dark:
+        gray = 255 - gray
+    _, binary = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY_INV)
+    contours, _ = cv2.findContours(binary, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    ellipses = []
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area < 500 or area > 100000:
+            continue
+        if len(cnt) >= 5:
+            ellipse = cv2.fitEllipse(cnt)
+            (cx, cy), (major, minor), angle = ellipse
+            ratio = major / minor if minor > 0 else 0
+            fill = area / (np.pi * major / 2 * minor / 2) if major > 0 and minor > 0 else 0
+            if 0.5 <= ratio <= 2.5 and 0.3 <= fill <= 1.2:
+                ellipses.append({'cx': float(cx), 'cy': float(cy)})
+    deduped = []
+    for e in ellipses:
+        if not any(abs(e['cx'] - d['cx']) < 25 and abs(e['cy'] - d['cy']) < 25 for d in deduped):
+            deduped.append(e)
+    return deduped
