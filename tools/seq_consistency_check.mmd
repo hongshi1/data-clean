@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    participant CTX as 上下文关联智能体
+    participant SYN as 语法层校验组件
+    participant SEM as 语义层校验组件
+    participant LOG as 逻辑层校验组件
+    participant DIF as 差异判别组件
+    participant RPT as 不一致性报告生成组件
+    participant DEV as 设计人员/开发人员
+
+    CTX->>SYN: 聚合条目对
+    CTX->>SEM: 聚合条目对
+    CTX->>LOG: 聚合条目对
+    SYN->>SYN: 检查格式/编号/结构合规性
+    SEM->>SEM: 比对同参数跨位置一致性
+    LOG->>LOG: 约束逻辑可满足性求解
+    SYN-->>DIF: 语法检测结果
+    SEM-->>DIF: 语义检测结果
+    LOG-->>DIF: 逻辑检测结果
+    DIF->>DIF: 区分合理差异与真实矛盾
+    DIF-->>RPT: 不一致性清单
+    RPT-->>DEV: 不一致性报告
+    DEV->>DIF: 确认/反馈
+    DIF-->>DEV: 复检结果
