@@ -21,7 +21,7 @@ SRS文档中，同一个需求/实体分布在多个位置——3.2.1节的文�
 └─────────────┘   └──────────────┘   └──────────────┘
 ```
 
-本文档覆盖：数据层构建（第1节）+ 召回层方法（第2节）+ 评测方法（第3节）+ 质量保证（第4节）+ 演进与局限（第5节）。
+本文档覆盖：数据层构建（第1节）+ 召回层方法（第2节）+ 评测方法（第3节）+ 语义层数据集构建（第6节）+ 质量保证（第4节）+ 演进与局限（第5节）。
 
 ---
 
@@ -213,9 +213,134 @@ srs_chunks → kimi-k2.6实体/关系抽取(JSON模式, 7s/chunk)
 
 ---
 
-## 四、质量保证体系
+## 四、语义层数据集构建 (方向B检测对象)
 
-### 4.1 不一致性Gold Standard的三重互证（已完成）
+> 语义层 = 检测"同一参数/概念在不同位置的值/含义是否一致"，如正文与表格矛盾、同实体不同名称。
+> 数据集 = 不一致性Gold Standard（负例=矛盾，正例=一致）+ 对应的检测评测框架。
+
+### 4.1 总体结构：3场景 Gold Standard (multi_scene_gold_standard.json)
+
+**223条 = 170负例(矛盾) + 53正例(一致)**，按场景划分：
+
+| 场景 | 负例 | 正例 | 检测对象 | 子类型 |
+|------|:---:|:---:|---------|--------|
+| scene1 名称不一致 | 122 | 23 | 同一需求ID在不同位置的名称 | typo错字24 / multiname多名34 / truncation截断26 / semantic_conflict语义冲突15 / charorder字序23 |
+| scene2 异常流 | 28 | 20 | 用例图的异常流描述 | dangling_exception悬挂引用8 / dead_exception死引用20 |
+| scene3 接口属性 | 20 | 10 | 接口属性(如接收方)跨位置矛盾 | interface_attr_conflict |
+
+**来源构成**：real真实矛盾79 + injected注入91（人工构造但符合文档语境）
+**难度分层**：easy 113 / medium 22 / hard 35
+**划分**：train 98（文档01-08）/ test 125（文档09-16）——**按文档划分防止数据泄漏**
+
+### 4.2 scene1 名称不一致（核心场景）构建方法
+
+**构建流程**：
+
+```
+① ID-Graph构建 (id_graph.py)
+   - 从16份文档提取需求ID(正则 [A-Z]{2,8}(-[A-Z0-9]{2,8}){2,})
+   - ID → 所有mention位置(正文/能力表/接口表/合格性表/追溯表)
+   - 产出: 2181节点(568实体+1613mention) + appearance边
+
+② 实体名称提取 (load_entity_names)
+   - 同一ID的每个mention提取名称(正则从context提取)
+   - 过滤出现<2次的ID
+   - 产出: 实体→名称集合映射(如 PZXQ-...-KJCK → {快捷操控, 触摸操控})
+
+③ 矛盾标注 (真实+注入)
+   - real: 同一ID出现≥2个不同名称 → 人工确认为矛盾
+   - injected: 选取一致实体, 注入错字/截断/字序变化等名称
+   - 子类型: typo(触摸→触摸操控) / multiname(多名) / truncation(截断) / semantic_conflict(语义冲突) / charorder(字序)
+
+④ 双重质量验证 (见4.5)
+```
+
+**样例**：
+```json
+{"scenario": 1, "type": "name_inconsistency", "subtype": "typo",
+ "entity_id": "PZXQ-GN-JMJCKJ-JMJC-KJCK", "doc": "02界面集成框架...",
+ "correct_name": "快捷操控", "wrong_names": ["触摸操控"],
+ "difficulty": "easy", "source": "real"}
+```
+
+### 4.3 描述级数据集 (desc_full_entries → sc1_desc_full_samples)
+
+**动机**：名称级矛盾本质是"字符级可解"（对比实验证明Ours≡B1_char），需要更难的任务——**描述级一致性**（名称相同但描述矛盾）。
+
+**构建流程**：
+```
+① desc_full_entries.json (273条)
+   - 从16份文档提取capability全量描述条目 {name, desc, doc}
+   - 每条 = 功能名 + 其完整描述文本
+
+② sc1_desc_full_samples.json (546条)
+   - 从273条中构造配对: 正例(描述一致) + 负例(描述矛盾)
+   - 负例构造: 修改描述中的参数/行为(如"支持FTP"→"不支持FTP")
+   - 难度: hard为主(描述级比名称级难)
+```
+
+**样例**：
+```json
+{"name": "界面开发功能",
+ "desc": "提供包括界面开发模板、二次开发接口、公共组件库...",
+ "label": "consistent", "source": "real", "difficulty": "hard",
+ "type": "desc_consistency"}
+```
+
+### 4.4 scene2/scene3 构建方法
+
+**scene2 异常流**（28负+20正）：
+```
+- 从用例描述中提取异常流引用(E1/E2/...)
+- dangling_exception: 引用了不存在的异常流编号
+- dead_exception: 异常流存在但从未被任何用例引用
+- 验证: 与文档用例图/用例描述交叉核对
+```
+
+**scene3 接口属性**（20负+10正）：
+```
+- 从接口描述中提取属性(发送方/接收方/类型/方向)
+- 同一接口在不同位置(3.3.1 vs 3.3.4.1)属性值矛盾
+- 样例: 态势数据组织应用接口的接收方在3.3.1是"高"、3.3.4.1是"中"
+```
+
+### 4.5 语义层质量验证（三重互证）
+
+| 验证 | 方法 | 结果 |
+|------|------|------|
+| V1 双源交叉 | MinerU + textutil独立解析, 两个源都出现才标真实 | 31/31 = 100% |
+| V2 双模型标注 | kimi-k2.6 + claude独立判断132名称对 | 92%一致(122/132), 真实子集100% |
+| V3 VLM-OCR | tesseract独立OCR验证图片实体 | 52%支持, 抽样10/10无幻觉 |
+| V5 语法×GS交叉 | S2重复ID检测 vs GS矛盾实体 | 8/15命中(含KJCK明星样本) |
+| V6 评测协议v2 | 防假高: 分层+holdout(10%解封前不可见) | 综合97.5%, 真实矛盾37/37=100% |
+| V7 基线对比 | vs B1_char字符级基线 | **完全相同F1=0.969 → 名称级问题字符级可解** |
+
+**关键警示（V7）**：名称级检测与字符级基线无差异——论文创新必须转向**描述级**(4.3)或**逻辑级**(见下)才有区分度。
+
+### 4.6 逻辑层检测对象（专家知识+知识图谱）
+
+```
+L1 参数约束冲突: 专家词典(23参数+4硬件参数)识别 → 区间交集 → 矛盾
+   · 检出: "存储" 下界256GB > 上界56GB (同一表格内)
+L2 允许/禁止矛盾: 规则初筛 → kimi LLM语义验证(消除语境差异误报)
+   · 候选2条均判定为"语境差异" → 0误报
+L3 阈值越界: 文档取值 vs 专家词典值域
+   · 检出: 存储8GB低于词典下限10GB 等4条
+```
+
+**语义层与方向A的关系**：
+```
+方向A(聚合条目) → 方向B(检测)
+  聚合出实体所有位置 → 名称/描述/属性/约束跨位置对比
+  如: KJCK实体聚合出{快捷操控(1.8.3.4), 触摸操控(1.8.5.4)}
+      → 检测层判定名称不一致 ✓
+```
+
+---
+
+## 五、质量保证体系
+
+### 5.1 不一致性Gold Standard的三重互证（已完成）
 
 | 验证 | 方法 | 结果 | 局限 |
 |------|------|------|------|
@@ -226,7 +351,7 @@ srs_chunks → kimi-k2.6实体/关系抽取(JSON模式, 7s/chunk)
 | V5 语法×GS交叉 | S2重复ID vs GS实体 | 8/15命中 | 覆盖不全 |
 | V7 基线对比 | vs B1_char | **完全相同F1=0.969** | **名称级问题字符级可解** |
 
-### 4.2 检索评测集的质量风险（新体系）
+### 5.2 检索评测集的质量风险（新体系）
 
 | 风险 | 说明 | 修复方向 |
 |------|------|---------|
@@ -235,7 +360,7 @@ srs_chunks → kimi-k2.6实体/关系抽取(JSON模式, 7s/chunk)
 | M4错配 | ID方法无ID测试场景 | 分层报告+扩充含ID查询 |
 | 无人类仲裁 | 全链无需求工程师介入 | 人工抽检+Kappa |
 
-### 4.3 已验证的质量成果（对照原文）
+### 5.3 已验证的质量成果（对照原文）
 
 - 语法层S2检出`PZXQ-GN-JMJCKJ-JMJC-KJCK`重复定义 → **正是Gold Standard矛盾对**(快捷操控/触摸操控)
 - 逻辑层L1检出"存储256GB vs 56GB" → 同表内真实矛盾
@@ -244,9 +369,9 @@ srs_chunks → kimi-k2.6实体/关系抽取(JSON模式, 7s/chunk)
 
 ---
 
-## 五、技术演进与已知局限
+## 六、技术演进与已知局限
 
-### 5.1 演进路线
+### 6.1 演进路线
 
 ```
 v1 Agentic RAG (Planner-Researcher-Aggregator)
@@ -256,7 +381,7 @@ v2 双图融合 (KGContextMatcher 4通道)
 v3 (规划) 评测公平性修复 + 跨文档召回
 ```
 
-### 5.2 已知局限
+### 6.2 已知局限
 
 1. **名称清洗正则脆弱**：依赖问句模板穷举，未覆盖句式导致实体名含噪
 2. **向量通道死代码**：`channel_vector`未接入aggregate（声称4通道实为3.5通道）
@@ -267,7 +392,7 @@ v3 (规划) 评测公平性修复 + 跨文档召回
 7. **LightRAG邻居召回结构错配**：full_relations按文档名组织，代码按关系ID遍历
 8. **API key硬编码**：4个脚本含同一moonshot key
 
-### 5.3 下一步（P0优先级）
+### 6.3 下一步（P0优先级）
 
 - [ ] 修复评测公平性（分层报告/ID正则/结构化loc_recall）
 - [ ] 打破循环评估（textutil独立期望+双LLM交叉）
@@ -283,11 +408,17 @@ v3 (规划) 评测公平性修复 + 跨文档召回
 |------|------|
 | algorithms/semantic/scene1/kg_context_matcher.py | 双图融合聚合器(4通道) |
 | algorithms/semantic/scene1/agentic_rag.py | 旧版Agentic RAG(v1) |
+| algorithms/semantic/scene1/detectors.py | 方向B语义检测器(7种图方法) |
+| algorithms/syntax/syntax_checker.py | 语法层校验 |
+| algorithms/logic/logic_checker.py | 逻辑层校验(专家知识+LLM) |
+| algorithms/common/__init__.py | 共享工具(load_entity_names/load_gold_conflicts) |
 | tools/srs_chunker.py | 结构化切片器 |
 | tools/vlm_image_analyzer.py | VLM图片分析 |
 | tools/gen_retrieval_evalset.py | 检索评测集生成 |
 | tools/gen_multimodal_qa.py | 多模态QA生成 |
 | tools/eval_retrieval.py | 5方法评测 |
-| algorithms/syntax/syntax_checker.py | 语法层校验 |
-| algorithms/logic/logic_checker.py | 逻辑层校验 |
+| tools/id_graph.py | ID-Graph构建 |
 | data/gjb_438c/data_assets/ | 所有数据资产 |
+| data/gjb_438c/data_assets/gold_standard/ | 语义层Gold Standard(223条主GS+描述级546) |
+| data/gjb_438c/data_assets/retrieval_evalset.json | 300查询对(方向A评测) |
+| data/gjb_438c/data_assets/multimodal_qa_evalset.json | 48图文QA(端到端) |
