@@ -252,14 +252,155 @@ async def gen_vlm_qa(pair):
     return []
 
 
-async def gen_for_pair(pair):
+# ── T7 矛盾检测类QA(图文不一致检测) ─────────────────────
+def gen_consistency_check_qa(pair):
+    """T7: 检查图/表/文之间的功能名是否一致
+
+    3种子类型:
+    a) 图文计数对比: 表格功能数 vs 正文提到的功能数
+    b) 功能名缺失: 表里有但正文没提到的功能
+    c) 功能名匹配: 正文功能名 vs 表格功能名
+    """
+    qas = []
+    func_names = pair["meta"].get("func_names", [])
+    text = pair["text"]
+    table_rows = pair["table_rows"]
+
+    # a) 计数对比
+    if func_names and text:
+        text_hits = sum(1 for n in func_names if n in text)
+        qas.append({
+            "type": "T7_consistency",
+            "question": f"表格「{pair['meta'].get('table_caption','')}」列出了{len(func_names)}个功能，"
+                        f"正文是否全部提到了这些功能？如有缺失请指出。",
+            "answer": (f"正文提到了{text_hits}/{len(func_names)}个功能。"
+                       + (f"缺失：{', '.join(n for n in func_names if n not in text)}"
+                          if text_hits < len(func_names) else "全部提到，一致。")),
+            "evidence": f"表格功能: {', '.join(func_names[:5])}",
+        })
+
+    # b) 功能名匹配检查(找表格里和正文不一致的名称)
+    if func_names and text and len(func_names) >= 2:
+        # 找正文里提到但不在表格功能名里的疑似功能名
+        # (简单启发: 正文"包括：A、B、C"格式的A/B/C)
+        import re
+        m = re.search(r"包括[：:]\s*([^。]+)", text)
+        if m:
+            text_funcs = [f.strip() for f in re.split(r"[、,，]", m.group(1)) if len(f.strip()) >= 2]
+            if text_funcs:
+                only_in_text = [f for f in text_funcs if f not in func_names]
+                only_in_table = [f for f in func_names if f not in text_funcs]
+                if only_in_text or only_in_table:
+                    qas.append({
+                        "type": "T7_consistency",
+                        "question": f"正文和表格的功能名是否完全一致？请对比分析。",
+                        "answer": (f"正文提到{len(text_funcs)}个功能，表格列出{len(func_names)}个。"
+                                   + (f"仅正文有：{', '.join(only_in_text[:3])}；" if only_in_text else "")
+                                   + (f"仅表格有：{', '.join(only_in_table[:3])}。" if only_in_table else "")
+                                   + "一致。" if not only_in_text and not only_in_table else ""),
+                        "evidence": f"正文: {m.group(1)[:60]}",
+                    })
+
+    # c) 表格内部一致性(同一ID是否重复)
+    if len(table_rows) >= 3:
+        ids = []
+        for row in table_rows[1:]:
+            for cell in row:
+                if len(cell.strip()) > 10 and any(c.isupper() for c in cell):
+                    import re
+                    m = re.search(r"[A-Z]{2,8}(?:-[A-Z0-9]{2,8}){2,}", cell)
+                    if m:
+                        ids.append(m.group(0))
+                        break
+        if ids:
+            from collections import Counter
+            dup = {k: v for k, v in Counter(ids).items() if v > 1}
+            if dup:
+                qas.append({
+                    "type": "T7_consistency",
+                    "question": f"表格「{pair['meta'].get('table_caption','')}」中是否存在重复的需求标识符？",
+                    "answer": f"存在重复：{'; '.join(f'{k}出现{v}次' for k, v in dup.items())}",
+                    "evidence": f"表格ID列表: {', '.join(ids[:5])}",
+                })
+    return qas
+
+
+# ── T8 跨场景/跨文档QA ──────────────────────────────────
+def gen_cross_reference_qa(pair, all_pairs):
+    """T8: 跨场景/跨文档的关联QA
+
+    找同一文档里其他场景的pair, 生成跨章节关联问题
+    """
+    qas = []
+    meta = pair["meta"]
+    doc = meta["doc"]
+    func_names = meta.get("func_names", [])
+    if not func_names:
+        return qas
+
+    # 找同文档的其他pair
+    same_doc = [p for p in all_pairs if p["meta"]["doc"] == doc
+                and p["meta"]["instance_id"] != meta["instance_id"]]
+    if not same_doc:
+        return qas
+
+    # 找功能名在其他pair的正文/表格里出现的
+    other_sections = []
+    for other in same_doc[:20]:  # 限制搜索范围
+        other_text = other["text"]
+        other_funcs = other["meta"].get("func_names", [])
+        for fn in func_names[:2]:  # 只查前2个功能名
+            if fn in other_text or fn in other_funcs:
+                other_sections.append({
+                    "func": fn,
+                    "section": other["meta"]["section"],
+                    "caption": other["meta"].get("image_caption", "") or other["meta"].get("table_caption", ""),
+                })
+                break
+
+    if other_sections:
+        os_info = other_sections[0]
+        qas.append({
+            "type": "T8_cross_reference",
+            "question": f"{os_info['func']}除了在章节{meta['section']}出现外，"
+                        f"还在文档的其他哪些位置有描述？",
+            "answer": f"在章节{os_info['section']}的{os_info['caption']}中也有出现。",
+            "evidence": f"跨章节: {meta['section']} → {os_info['section']}",
+        })
+    return qas
+
+
+# ── 难度自动分级 ────────────────────────────────────────
+def assign_difficulty(qa):
+    """根据QA类型和内容自动分级难度
+
+    easy:   单一事实检索(T2/T4), 答案在单一位置
+    medium: 跨模态/计数/理解(T3/T5/T7), 需要对比或计数
+    hard:   VLM视觉推理(T1)/跨文档(T8), 需要看图或跨章节推理
+    """
+    t = qa.get("type", "")
+    if t in ("T2_table_factual", "T4_tracing"):
+        return "easy"
+    elif t in ("T1_visual_consistency", "T8_cross_reference"):
+        return "hard"
+    elif t == "T7_consistency":
+        # 矛盾检测: 如果发现了不一致 → hard, 否则 medium
+        return "hard" if "缺失" in qa.get("answer", "") or "重复" in qa.get("answer", "") else "medium"
+    else:
+        return "medium"
+
+
+async def gen_for_pair(pair, all_pairs=None):
     """为单个pair生成全部类型QA"""
     qas = []
-    # 确定性QA(T2/T4/T5/T3)
+    # 确定性QA(T2/T4/T5/T3/T7/T8)
     qas.extend(gen_table_factual_qa(pair))
     qas.extend(gen_tracing_qa(pair))
     qas.extend(gen_text_evidence_qa(pair))
     qas.extend(gen_counting_qa(pair))
+    qas.extend(gen_consistency_check_qa(pair))      # T7矛盾检测
+    if all_pairs:
+        qas.extend(gen_cross_reference_qa(pair, all_pairs))  # T8跨场景
     # VLM QA(T1/T6)
     vlm_qas = await gen_vlm_qa(pair)
     qas.extend(vlm_qas)
@@ -280,7 +421,7 @@ async def gen_for_pair(pair):
             "question": qa["question"],
             "answer": qa["answer"],
             "evidence": qa.get("evidence", ""),
-            "difficulty": "easy" if qa.get("type") in ("T2", "T4") else "medium",
+            "difficulty": assign_difficulty(qa),
         })
     return result
 
@@ -291,6 +432,7 @@ async def main(limit=None, vlm_limit=50):
     if limit:
         pairs = pairs[:limit]
 
+    all_pairs = pairs
     all_qa = []
     vlm_count = 0
     for i, pair in enumerate(pairs):
@@ -300,7 +442,7 @@ async def main(limit=None, vlm_limit=50):
         else:
             vlm_count += 1
 
-        qas = await gen_for_pair(pair)
+        qas = await gen_for_pair(pair, all_pairs)
         all_qa.extend(qas)
         if (i + 1) % 20 == 0:
             print(f"  已处理 {i+1}/{len(pairs)} pair, 生成{len(all_qa)}个QA")
