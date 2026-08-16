@@ -1,44 +1,47 @@
 # GJB SRS数据一致性校验项目指导文档
 
-> 版本：v2.0 | 日期：2026-08-07
-> 状态：数据资产已完成，检测方法待设计
-> 数据源：16份真实GJB 438C SRS + MinerU正确解析 + 多Agent调研验证
+> 版本：v3.0 | 日期：2026-08-12
+> 状态：四类不一致框架确立 + Pair Dataset重建(366实例) + QA数据集(6189条)
+> 数据源：16份真实GJB 438C SRS + MinerU标准解析 + 温老师会议反馈
+> 更新: 根据温老师8/12会议反馈, 项目范围聚焦四类不一致合规
 
 ---
 
-## 项目全貌
+## 项目全貌（v3.0 更新）
 
 ```
-输入: SRS文档(16份) + 问答对{id,instruction,output,label,...} + GJB专家知识(7个标准)
+输入: SRS文档(16份) + 问答对(含{image}/{table}/{text}占位符) + 专家知识(规则形式)
   ↓
 问题 → 上下文召回(从SRS文档召回相关的图+表+正文)
   ↓
-三层校验:
-  语法层: 回答 vs GJB标准(正则+规则, 不依赖上下文)
-  语义层: 回答 vs 召回的多模态上下文(文本+表格+图片)
-  逻辑层: 回答 vs 专家知识(GJB 7个标准的领域规则)
+四类不一致校验:
+  1.术语层面: 同名实体/多实体映射 (图/表/文功能名一致性)
+  2.参数指标: 参数/单位/数字一致 (接口属性/数值/单位对比)
+  3.业务逻辑: 时序/流程一致 (流程图步骤vs正文/表描述)
+  4.GJB合规: 模板/接口定义规范 (表头字段/ID格式/章节结构)
   ↓
-输出: 三层一致性校验结果(每层含issues列表, 每个issue含类型/证据/修复建议)
+输出: 四类一致性校验结果(每类含issues列表, 每个issue含类型/证据/修复建议)
 ```
 
-### 输入输出格式
+### 输入输出格式（v3.0 更新）
 
-**输入（问答对）**：
+**输入（问答对，含多模态占位符）**：
 ```json
 {
-  "id": "native_s1_0001",
-  "instruction": "根据03服务集成框架的3.2.1.1节，布局控制的功能标识是什么？",
-  "output": "布局控制的功能标识为PZXQ-GN-JMJCKJ-JMJC-BJKZ",
-  "label": "positive",
-  "layer": null,
-  "inconsistency_type": null,
-  "evidence": {
-    "recall_sections": ["3.2.1.1"],
-    "doc_values": [{"func_name": "布局控制", "req_id": "PZXQ-GN-JMJCKJ-JMJC-BJKZ"}],
-    "image_caption": "图5 界面集成框架用例图",
-    "table_caption": "表5 界面集成功能需求"
-  }
+  "id": "qa_0001_01",
+  "inconsistency_type": "terminology",
+  "label": "inconsistent",
+  "is_injected": true,
+  "question": "表{table}中功能「结操化数据归集」与图{image}中的用例名称是否一致？",
+  "placeholders": {
+    "image": "data/.../image.png",
+    "table": "data/.../table.csv",
+    "text": "data/.../text.txt"
+  },
+  "answer": "不一致。图中为「结构化数据归集」，表中写为「结操化数据归集」，第2字错字。",
+  "evidence": {"image_caption": "图3...", "table_caption": "表3...", "section": "3.2.1.2"}
 }
+```
 ```
 
 **输出（一致性校验结果）**：
@@ -392,3 +395,135 @@ RequirementItem = {
 ---
 
 *本文档基于多Agent调研（6组arXiv检索+8篇竞品深挖+3篇方法论专题+Agentic RAG前沿调研）+ 16份真实GJB SRS数据验证。所有真实例子可通过.venv-srs/bin/python从content_list.json复现。*
+
+---
+
+## ★ 四类不一致框架（v3.0 核心 — 温老师8/12会议反馈）
+
+### 背景
+
+2026-08-12与温老师会议确认，项目范围聚焦**四个合规方向**的不一致性校验：
+
+| # | 合规方向 | 检测内容 | 对应现有工作 | Pair Dataset场景 |
+|---|---------|---------|-------------|-----------------|
+| 1 | **术语层面** | 同名实体(上下文中)、多实体映射为一个 | scene1名称不一致 + 语法层S2 | sc1用例图+能力表 |
+| 2 | **参数指标** | 前后文参数数据/单位/数字是否一致 | 逻辑层L1/L3 | sc3接口表 |
+| 3 | **业务逻辑** | 时序逻辑(文本流程与时序是否一致) | scene2异常流(部分) | sc2流程图+用例表 |
+| 4 | **GJB合规** | 根据模板的接口定义等规范 | 语法层S1-S7 | sc3接口表 |
+
+### 待同步项
+
+1. **温老师将分享目标文档** — 进一步同步项目范围
+2. **207所前驱合同/约束** — 207所会尝试提供部分前驱合同，是否使用留作后续讨论（已在规则库预留接口）
+3. **6个GJB附加标准PDF** — 待老师提供，到后补充为规则
+
+---
+
+## ★ 专家知识规则库（v3.0 — 规则形式存放）
+
+**文件**: `knowledge/inconsistency_rules.json`
+**格式**:
+```json
+{
+  "rule_id": "TERM-001",
+  "type": "terminology",           // 四类之一
+  "description": "同一需求ID在不同位置的名称应完全一致",
+  "check_method": "字符串精确匹配",    // 检测方法
+  "inject_methods": ["typo改一字", "truncation截断", ...],  // 注入方法
+  "applies_to": ["capability_table", "usecase_diagram"],     // 适用模态
+  "severity": "HIGH",
+  "example": "ID=KJCK, 1.8.3.4='快捷操控', 1.8.5.4='触摸操控'"
+}
+```
+
+**规则统计**: 14条 = 术语3 + 参数3 + 逻辑3 + GJB合规5
+**207所预留**: `reserved.207所前驱合同` 字段待材料到位后追加
+
+---
+
+## ★ QA数据集（v3.0 — 含多模态占位符 + 四类注入）
+
+**文件**: `data/gjb_438c/data_assets/srs_qa_final.json`
+**规模**: 6189条 = 3481(pair生成) + 2708(四类注入)
+
+### QA格式（含占位符）
+```json
+{
+  "id": "qa_0001_01",
+  "pair_id": "1_001",
+  "inconsistency_type": "terminology",    // 四类之一
+  "subtype": "name_typo",
+  "label": "inconsistent",                // consistent / inconsistent
+  "is_injected": true,                    // 是否注入
+  "inject_detail": "功能名「结构化数据归集」被改为「结操化数据归集」",
+  "rule_id": "TERM-001",
+  "question": "表{table}中功能「结操化数据归集」与图{image}中的用例名称是否一致？",
+  "placeholders": {                       // 多模态占位符
+    "image": "data/.../image.png",
+    "table": "data/.../table.csv",
+    "text": "data/.../text.txt"
+  },
+  "answer": "不一致。图中为「结构化数据归集」，表中为「结操化数据归集」，错字。",
+  "evidence": {"image_caption": "图3...", "table_caption": "表3...", "section": "3.2.1.2"},
+  "difficulty": "medium"
+}
+```
+
+### 四类注入QA统计
+
+| 类型 | 正例 | 注入(不一致) | 合计 |
+|------|:---:|:---:|:---:|
+| 术语层面 | 366 | 589 | 955 |
+| 参数指标 | 37 | 51 | 88 |
+| 业务逻辑 | 366 | 360 | 726 |
+| GJB合规 | 223 | 716 | 939 |
+| **合计** | **992** | **1716** | **2708** |
+
+### 现有pair生成QA统计（3481条）
+
+| 类型 | 数量 | 说明 |
+|------|:---:|------|
+| T2 表格事实检索 | 1623 | 功能名↔ID/描述 |
+| T7 矛盾检测 | 462 | 图文计数/功能缺失/ID重复 |
+| T4 功能溯源 | 346 | 功能在表/图/文位置 |
+| T3 跨模态计数 | 336 | 功能数量 |
+| T5 正文理解 | 265 | 功能列表 |
+| T8 跨场景关联 | 251 | 跨章节引用 |
+| T1 视觉一致性 | 198 | VLM看图→参与者/用例 |
+
+---
+
+## ★ Pair Dataset（v3.0 — 多模态配对数据）
+
+**路径**: `data/gjb_438c/pair_dataset/`
+**规模**: 366实例 × 4文件(image.png + table.csv + text.txt + meta.json)
+
+| 场景 | 配对组合 | 实例数 |
+|------|---------|:---:|
+| sc1 | 用例图+能力表+正文 | 141 |
+| sc2 | 流程图+用例表+正文 | 90 |
+| sc3 | 接口图+接口表+正文 | 30 |
+| sc4 | 流程图+能力表+正文 | 49 |
+| sc5 | 功能图+能力表+正文 | 27 |
+| sc7 | 用例图+用例表+正文 | 9 |
+| sc8 | 纯图片+正文 | 20 |
+
+**构建脚本**: `tools/build_pair_dataset.py`（从mineru_standard重建，表格清洗+正文兄弟章节补全+质量分级）
+
+---
+
+## 文件索引（v3.0 更新）
+
+| 文件 | 说明 |
+|------|------|
+| knowledge/inconsistency_rules.json | ★四类不一致专家知识规则(14条) |
+| data/gjb_438c/data_assets/srs_qa_final.json | ★最终QA数据集(6189条) |
+| data/gjb_438c/data_assets/injected_qa.json | 四类注入QA(2708条) |
+| data/gjb_438c/data_assets/srs_multimodal_qa.json | pair生成QA(3481条) |
+| data/gjb_438c/pair_dataset/ | 多模态配对数据(366实例) |
+| tools/build_pair_dataset.py | Pair Dataset构建脚本 |
+| tools/gen_srs_qa.py | pair生成QA脚本(8类型) |
+| tools/gen_injected_qa.py | ★四类注入QA脚本 |
+| algorithms/syntax/syntax_checker.py | 语法层校验(112条) |
+| algorithms/logic/logic_checker.py | 逻辑层校验(专家知识+Z3+LLM) |
+| algorithms/semantic/scene1/kg_context_matcher.py | 双图融合聚合器(方向A) |

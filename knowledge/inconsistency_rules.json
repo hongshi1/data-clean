@@ -1,0 +1,146 @@
+{
+  "version": "1.0",
+  "description": "SRS四类不一致专家知识规则库 — 术语/参数/逻辑/GJB合规",
+  "source": "温老师会议反馈(2026-08-12) + GJB 438C标准 + 项目积累",
+  "rules": [
+    {
+      "rule_id": "TERM-001",
+      "type": "terminology",
+      "description": "同一需求ID在不同位置(章节标题/能力表/用例图)的名称应完全一致",
+      "check_method": "字符串精确匹配(归一化后比较)",
+      "inject_methods": ["typo改一字", "truncation截断", "charorder字序颠倒", "multiname完全换名"],
+      "applies_to": ["capability_table", "usecase_diagram", "section_title", "usecase_table"],
+      "severity": "HIGH",
+      "example": "ID=PZXQ-GN-JMJCKJ-JMJC-KJCK, 1.8.3.4节='快捷操控', 1.8.5.4节='触摸操控'"
+    },
+    {
+      "rule_id": "TERM-002",
+      "type": "terminology",
+      "description": "多个需求ID不应映射到同一功能名(多实体映射冲突)",
+      "check_method": "功能名→ID集合, 集合大小>1则冲突",
+      "inject_methods": ["给两个不同ID赋相同功能名"],
+      "applies_to": ["capability_table", "interface_table"],
+      "severity": "MEDIUM",
+      "example": "ID-A和ID-B都叫'数据获取'"
+    },
+    {
+      "rule_id": "TERM-003",
+      "type": "terminology",
+      "description": "图中的用例名称应与能力表/用例表中的功能名称对应",
+      "check_method": "VLM提取图内文字 vs 表格功能名交叉匹配",
+      "inject_methods": ["图中用例名改一字", "表里功能名改一字"],
+      "applies_to": ["usecase_diagram", "capability_table", "flowchart"],
+      "severity": "HIGH"
+    },
+    {
+      "rule_id": "PARAM-001",
+      "type": "parameter",
+      "description": "同一参数在不同位置的数值应一致",
+      "check_method": "正则提取数值+单位, 归一化后比较",
+      "inject_methods": ["改数值", "改单位(如ms→s不换算)", "改操作符(≥→≤)"],
+      "applies_to": ["interface_table", "environment_table", "text"],
+      "severity": "HIGH",
+      "example": "表格'内存≥8GB', 正文'内存<3GB' → 矛盾"
+    },
+    {
+      "rule_id": "PARAM-002",
+      "type": "parameter",
+      "description": "参数的单位应统一(同一参数不可一处用GB一处用MB且不换算)",
+      "check_method": "单位归一化(用srs_kb的unit_dictionary换算后比较)",
+      "inject_methods": ["换单位不换数值(如8GB→8MB)"],
+      "applies_to": ["environment_table", "text"],
+      "severity": "MEDIUM"
+    },
+    {
+      "rule_id": "PARAM-003",
+      "type": "parameter",
+      "description": "接口属性(发送方/接收方/接口类型)在同一文档不同位置应一致",
+      "check_method": "同一接口名跨表属性值对比",
+      "inject_methods": ["改接收方", "改接口类型(API→DLL)"],
+      "applies_to": ["interface_table"],
+      "severity": "HIGH",
+      "example": "接口'态势数据组织应用', 3.3.1节接收方='高', 3.3.4.1节='中'"
+    },
+    {
+      "rule_id": "LOGIC-001",
+      "type": "business_logic",
+      "description": "流程图的步骤顺序应与正文/用例表描述的步骤顺序一致",
+      "check_method": "VLM提取流程图步骤序列 vs 正文/表描述步骤序列对比",
+      "inject_methods": ["打乱步骤顺序", "删除中间步骤", "插入多余步骤"],
+      "applies_to": ["flowchart", "usecase_table", "text"],
+      "severity": "MEDIUM"
+    },
+    {
+      "rule_id": "LOGIC-002",
+      "type": "business_logic",
+      "description": "用例图的前置条件应与用例表的前置条件描述一致",
+      "check_method": "前置条件文本对比",
+      "inject_methods": ["删前置条件", "改前置条件内容"],
+      "applies_to": ["usecase_diagram", "usecase_table"],
+      "severity": "MEDIUM"
+    },
+    {
+      "rule_id": "LOGIC-003",
+      "type": "business_logic",
+      "description": "异常流引用(E1/E2)必须指向已定义的异常流",
+      "check_method": "引用编号集合 ⊆ 定义编号集合",
+      "inject_methods": ["引用不存在的E编号", "定义了但没人引用"],
+      "applies_to": ["usecase_table", "text"],
+      "severity": "MEDIUM"
+    },
+    {
+      "rule_id": "GJB-001",
+      "type": "gjb_compliance",
+      "description": "接口表必须包含GJB 438C要求的字段: 接口名称/标识/描述/发送方/接收方/接口类型",
+      "check_method": "表头字段完整性检查(对照GJB模板)",
+      "inject_methods": ["删除'接口类型'列", "删除'接收方'列"],
+      "applies_to": ["interface_table"],
+      "severity": "HIGH"
+    },
+    {
+      "rule_id": "GJB-002",
+      "type": "gjb_compliance",
+      "description": "能力标识表必须包含: 序号/功能名称/项目唯一标识符/需求描述",
+      "check_method": "表头字段完整性检查",
+      "inject_methods": ["删除'项目唯一标识符'列"],
+      "applies_to": ["capability_table"],
+      "severity": "HIGH"
+    },
+    {
+      "rule_id": "GJB-003",
+      "type": "gjb_compliance",
+      "description": "SRS文档必须包含GJB 438C规定的6章结构(1范围/2引用文档/3需求/4合格性/5可追踪性/6注解)",
+      "check_method": "一级章节集合 ⊇ {1,2,3,4,5,6}",
+      "inject_methods": ["删除某章"],
+      "applies_to": ["document_structure"],
+      "severity": "HIGH"
+    },
+    {
+      "rule_id": "GJB-004",
+      "type": "gjb_compliance",
+      "description": "每个CSCI能力需求应指定项目唯一标识符(需求ID), 格式为[A-Z]{2,8}(-[A-Z0-9]{2,8}){2,}",
+      "check_method": "正则匹配ID格式",
+      "inject_methods": ["改ID格式(如小写)", "删ID"],
+      "applies_to": ["capability_table", "section_title"],
+      "severity": "HIGH"
+    },
+    {
+      "rule_id": "GJB-005",
+      "type": "gjb_compliance",
+      "description": "图/表应在正文中被引用(正文应提及'见图N'或'见表N')",
+      "check_method": "图/表编号 ∈ 正文引用编号集合",
+      "inject_methods": ["删正文中的引用"],
+      "applies_to": ["text", "image", "table"],
+      "severity": "LOW"
+    }
+  ],
+  "stats": {
+    "total": 14,
+    "by_type": {"terminology": 3, "parameter": 3, "business_logic": 3, "gjb_compliance": 5},
+    "by_severity": {"HIGH": 9, "MEDIUM": 4, "LOW": 1}
+  },
+  "reserved": {
+    "207所前驱合同": "待207所提供合同/约束文件后, 在此处追加合同条款类规则",
+    "additional_standards": "温老师将分享6个GJB附加标准PDF, 到后补充为规则"
+  }
+}
