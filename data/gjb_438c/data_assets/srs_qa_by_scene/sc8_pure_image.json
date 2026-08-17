@@ -1,0 +1,1322 @@
+[
+ {
+  "qid": "srs_sc8_00656",
+  "pair_id": "8_001",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我想确认一下{image}中的分系统名称和文档标题是否一致？{text}中提到的是\"01数据获取转换分系统\"，{image}中显示的是\"某分系统\"，这两个名称是否指向同一个分系统？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_001/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，两者一致。文档标题为\"01数据获取转换分系统需求规格说明\"，{image}图1标题为\"某分系统组成图\"，其中\"某分系统\"是文档标题中\"01数据获取转换分系统\"的代称，属于同一实体的不同表述方式，在文档语境中指向同一个分系统，不存在术语不一致问题。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 1 某分系统组成图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00657",
+  "pair_id": "8_001",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在核对文档时发现{image}中的分系统名称好像有问题，{text}里说的是\"01数据获取转换分系统\"，但{image}标注的是\"数据预处理分系统\"，这两个名称是同一个分系统吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_001/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您提出了一个很好的问题。实际上，根据inject_detail描述的假设场景，这里存在一个术语不一致：文档标题及正文使用的是\"01数据获取转换分系统\"，而{image}图1中错误地标注为\"数据预处理分系统\"。\"数据获取转换\"与\"数据预处理\"是两个不同的功能概念，前者强调数据的获取与格式转换，后者侧重于数据的清洗与预处理，属于不同的分系统命名。这种不一致会导致读者误解该分系统的核心功能边界，建议统一修改为\"01数据获取转换分系统\"以与文档其他部分保持一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在{image}图1中，将原标题\"某分系统组成图\"错误替换为\"数据预处理分系统组成图\"，导致图片中的分系统名称\"数据预处理分系统\"与文档标题及正文中的\"01数据获取转换分系统\"形成同名实体映射不一致，两个名称指向不同功能内涵的分系统。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 1 某分系统组成图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00658",
+  "pair_id": "8_002",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图2数据获取功能框架图中，数据获取模块的输入接口参数与系统整体数据流规格是否一致？比如数据采集频率、数据格式类型这些参数指标在{table}和{text}中是否有明确统一的定义？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_002/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，图2数据获取功能框架图中各模块的输入输出参数指标保持一致。数据采集频率统一规定为实时/准实时（≤1秒），数据格式类型采用JSON/XML双模式，这些参数在文档的图表和文字描述中均无冲突，单位统一为毫秒级时间戳和UTF-8编码，属性定义完整且一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2.1.1",
+   "image_caption": "图 2 数据获取功能框架图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00659",
+  "pair_id": "8_002",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在核对{image}图2数据获取功能框架图时发现，数据采集模块的缓存容量标注为1024MB，但{table}参数表中同一项写的是512MB，{text}正文中又提到\"采用1GB大容量缓存设计\"——这三个地方的缓存容量参数好像对不上，到底以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_002/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您发现了一处确实需要澄清的参数不一致。经核实，图2框架图中的1024MB（即1GB）为正确设计值；{table}参数表的512MB是旧版本遗留错误，未同步更新；{text}正文的\"1GB\"表述正确但单位写法不统一（未用MB）。建议以1024MB/1GB为准，并修正参数表保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将原一致的正确参数'1024MB/1GB'故意在表格位置改为'512MB'，正文位置保留'1GB'但去掉'1024MB'的明确对应，造成图、表、文三处缓存容量参数数值不一致（1024MB vs 512MB vs 1GB表述模糊），单位呈现方式也不统一（MB vs GB）。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2.1.1",
+   "image_caption": "图 2 数据获取功能框架图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00660",
+  "pair_id": "8_003",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在章节3.2.2.1中，{image}展示了数据转换功能框架图，请问该图中数据转换的完整流程是否与{text}中描述的处理步骤一致？具体包括数据解析、格式转换、数据校验、结果输出这几个环节的顺序是否匹配？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_003/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，图8数据转换功能框架图与章节3.2.2.1的描述一致。图中展示的数据转换流程依次为：数据解析→格式转换→数据校验→结果输出，该顺序与正文中定义的标准处理流程完全匹配，各环节之间的数据流向和控制逻辑不存在矛盾。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2.2.1",
+   "image_caption": "图 8数据转换功能框架图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00661",
+  "pair_id": "8_003",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "章节3.2.2.1的{image}中，数据转换功能框架图是否完整覆盖了异常处理流程？比如当数据校验失败时，图中标注的是直接终止流程还是进入异常数据缓存通道？这与{text}中的异常处理机制描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_003/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "不一致。根据图8数据转换功能框架图，数据校验失败时标注的是直接进入异常数据缓存通道，等待后续人工干预或批量重处理；但正文中描述的异常处理机制是校验失败时立即终止流程并返回错误码至上游系统。两者在异常流处理策略上存在明显矛盾：图中采用'缓存续流'模式，而正文要求'立即中断'模式。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将图8中的异常流从'校验失败→终止流程并返回错误码'修改为'校验失败→进入异常数据缓存通道'，与正文描述的立即中断机制形成不一致",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.2.2.1",
+   "image_caption": "图 8数据转换功能框架图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00662",
+  "pair_id": "8_004",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "请检查文档1.7.2节中{image}的编号格式是否符合GJB标准？图1界面集成框架软件活动图的编号和命名是否规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_004/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核查，文档1.7.2节中的图片编号为\"图1界面集成框架软件活动图\"，符合GJB标准中关于图号格式的规范要求。图号采用\"图+阿拉伯数字\"的连续编号方式，图名简洁明确反映了图的内容（界面集成框架软件活动图），编号与章节号无强制关联但保持全文连续性，符合GJB软件需求规格说明文档模板的要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "template_compliance",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.7.2",
+   "image_caption": "图1界面集成框架软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00663",
+  "pair_id": "8_004",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "文档1.7.2节中{image}的图号标识是否符合GJB规范？我注意到图号似乎有些异常，能否确认一下？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_004/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核查，文档1.7.2节中的图片编号存在不符合GJB规范的问题。该图当前编号为\"图1-1界面集成框架软件活动图\"，但按照GJB软件需求规格说明文档的ID格式规范，图号应采用\"图+阿拉伯数字\"的连续编号方式（如\"图1\"、\"图2\"），而非\"章节号-序号\"的层级编号格式（如\"图1-1\"）。这种\"图1-1\"的编号方式混淆了图号与表号的编制规则，不符合GJB模板中关于插图编号应保持全文连续统一的要求，需要修正为\"图1界面集成框架软件活动图\"。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "id_format_specification",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将原文正确的\"图1界面集成框架软件活动图\"修改为不符合GJB规范的\"图1-1界面集成框架软件活动图\"，即采用'章节号-序号'的层级编号格式替代了要求的连续编号格式",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.7.2",
+   "image_caption": "图1界面集成框架软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00664",
+  "pair_id": "8_005",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在章节3.1.1中，{image}图1服务集成框架软件状态图里标注的各个状态名称，与{text}正文中提到的状态定义是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_005/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，图1服务集成框架软件状态图中标注的状态名称与正文中的状态定义完全一致。图中展示的所有状态在正文中都有对应的术语解释和定义，不存在同名异义或术语不匹配的情况。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图 1服务集成框架软件状态图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00665",
+  "pair_id": "8_005",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在核对章节3.1.1时发现，{image}图1服务集成框架软件状态图中有一个'就绪态'，但{text}正文里描述的是'准备态'，这两个术语指的是同一个状态吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_005/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "根据文档实际内容，图1和正文中应该使用统一的术语。但按照您描述的假设场景，如果图中标注为'就绪态'而正文使用'准备态'，这属于术语不一致问题——同一实体存在两个不同的名称，容易造成理解歧义，需要在文档修订时统一为单一术语。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将图1状态图中的某个状态标注为'就绪态'，但正文对应描述中同一状态被称为'准备态'，人为制造同名实体的术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图 1服务集成框架软件状态图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00666",
+  "pair_id": "8_006",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图2服务集成框架软件活动图中，活动节点'服务编排'到'服务路由'的转换条件中标注的响应时间阈值参数，与文档其他部分是否一致？我注意到{text}正文区域没有额外说明，{table}也没有相关表格，想确认这个≤500ms的指标是否准确。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_006/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核对，图2活动图中'服务编排'到'服务路由'转换条件的响应时间阈值标注为≤500ms，该参数在文档第3.1.2章节范围内无其他冲突描述。由于该章节{text}正文未定义额外指标、{table}无相关表格，图像中的参数为独立有效定义，数值、单位（ms）及属性（响应时间上限）均自洽一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图 2 服务集成框架软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00667",
+  "pair_id": "8_006",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在核对{image}图2服务集成框架软件活动图时发现，'协议转换'活动的处理耗时标注为≤200ms，但记得之前在{text}某处看到过≤300ms的要求，{table}表格里好像也有不同数值——这两个参数以哪个为准？是否存在文档不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_006/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您的质疑成立，确实存在参数不一致。经核查，{image}图2中'协议转换'活动标注的处理耗时为≤200ms，但假设在{text}正文第3.1.2节前文描述中该指标被定义为≤300ms，且{table}相关性能指标表格中记录为300ms/次，则出现数值冲突（200ms vs 300ms）。按照SRS规范，应以最新修订或更高优先级章节为准，建议以正文{text}的300ms为基准修正图像标注，或明确区分场景条件（如同步/异步模式差异）。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在text正文描述中将'协议转换'处理耗时定义为≤300ms，同时在table性能指标表中记录为300ms/次，与image图2中标注的≤200ms形成数值不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图 2 服务集成框架软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00668",
+  "pair_id": "8_007",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在章节3.1.1中，{image}图1展示了软件部署管理软件的状态图，请问该状态图中定义的状态转换流程是否与{table}表格中描述的功能需求以及{text}正文中的业务规则保持一致？特别是关于'待部署'→'部署中'→'已部署'的正常流程，以及异常情况下回退到'部署失败'状态的转换逻辑。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_007/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，图1状态图与文档其他部分保持一致。图1中定义了完整的软件部署管理状态机：从'待部署'状态开始，触发部署操作后进入'部署中'状态；部署成功则转换为'已部署'状态；若部署过程中发生异常（如网络中断、目标环境不可用、部署包校验失败等），则转换为'部署失败'状态，并支持从'部署失败'状态重新发起部署或回退到初始状态。该流程与章节3.1.1描述的业务逻辑完全吻合，正常流程和异常处理路径清晰，状态转换条件明确。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图1 软件部署管理软件状态图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00669",
+  "pair_id": "8_007",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在评审时发现一个问题：{image}图1状态图中显示'部署中'状态在超时后会进入'部署失败'状态，但{text}正文中提到超时异常应该触发自动回滚并进入'已回滚'状态。请问以哪个为准？另外{table}表格中是否应该有对应的异常处理功能项来支撑这个逻辑？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_007/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您提出了一个关键的不一致问题。经核实，应以{text}正文描述为准：超时异常应触发自动回滚机制，系统需撤销已部分完成的部署操作，并将状态置为'已回滚'，而非图1所示的'部署失败'。图1状态图遗漏了'已回滚'这一关键状态，且未绘制从'部署中'经超时异常到'已回滚'的转换路径。此外，{table}表格确实缺少'超时自动回滚'这一功能需求项，导致需求追溯不完整。建议同步修正图1状态图（增加'已回滚'状态及转换路径）并补充{table}表格中的异常处理功能描述，确保三者一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：图1状态图中'部署中'状态的超时异常流转目标为'部署失败'状态，但正文描述要求超时后应自动回滚至'已回滚'状态；同时表格中缺失'超时自动回滚'功能项，造成状态图、正文、表格三者不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图1 软件部署管理软件状态图",
+   "table_caption": ""
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00670",
+  "pair_id": "8_008",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "请帮我检查一下，这份SRS文档的章节3.1.2中，{image}图2软件部署管理软件活动图是否符合GJB438B模板要求？活动图的编号和命名格式是否规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_008/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核查，章节3.1.2中的{image}图2软件部署管理软件活动图符合GJB438B模板要求。图编号采用\"图2\"格式，符合GJB规定的\"图+阿拉伯数字\"编号规范；图名\"软件部署管理软件活动图\"清晰表明了图的类型和主题内容，命名规范完整。该活动图作为软件部署管理功能的行为描述，放置在3.1.2节功能需求章节下，位置安排符合GJB438B模板对活动图放置位置的要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "template_compliance",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图2 软件部署管理软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00671",
+  "pair_id": "8_008",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在审核这份SRS文档时发现，章节3.1.2中的{image}活动图编号似乎有点问题，这个\"图2-软件部署管理\"的写法是否符合GJB438B关于图号格式的规定？还是必须改成\"图2\"这种纯数字编号？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_008/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您观察得很准确。根据GJB438B标准规定，图的编号应采用\"图+阿拉伯数字\"的格式，即\"图2\"、\"图3\"等，不允许使用\"图2-软件部署管理\"这种带连字符和文字的后缀形式。正确的做法是将图号规范为\"图2\"，图名独立写为\"软件部署管理软件活动图\"。当前文档中{image}的编号格式\"图2-软件部署管理\"违反了GJB438B的ID格式规范，需要修正为标准的编号与图名分离的格式。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "id_format_violation",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将图编号从规范的\"图2\"改为违规的\"图2-软件部署管理\"，引入连字符和文字后缀，违反GJB438B图号格式\"图+阿拉伯数字\"的纯数字编号规范",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图2 软件部署管理软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00672",
+  "pair_id": "8_009",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在文档06运行支撑服务软件需求规格说明-终稿的3.1.2章节中，{image}图1运行支撑服务软件活动图里出现的\"运行支撑服务\"这一术语，与章节标题\"3.1.2 运行支撑服务软件\"中的命名是否保持一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_009/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，两者保持一致。图1活动图标题为\"运行支撑服务软件活动图\"，与章节标题\"3.1.2 运行支撑服务软件\"中的核心术语\"运行支撑服务软件\"命名完全一致，不存在同名实体不一致的问题。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图1 运行支撑服务软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00673",
+  "pair_id": "8_009",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在文档06运行支撑服务软件需求规格说明-终稿的3.1.2章节中，{image}图1的标题写的是\"运行支撑服务软件活动图\"，但我在正文中看到一处描述写的是\"运维支撑服务软件活动图\"，这两个名称指的是同一个东西吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_009/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "根据您描述的情况，这里存在术语不一致的问题。{image}图1标题使用的是\"运行支撑服务软件\"，而{text}正文中某处写成了\"运维支撑服务软件\"——\"运行\"与\"运维\"是两个不同的术语。正确的术语应为\"运行支撑服务软件\"，\"运维\"属于错误表述，需要修正以与图注及章节标题保持一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在正文中将\"运行支撑服务\"错误写为\"运维支撑服务\"，造成同名实体不一致——图注用\"运行\"而正文某处用\"运维\"，两者指称同一软件但术语不同。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图1 运行支撑服务软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00674",
+  "pair_id": "8_010",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图1 报文处理服务软件活动图中，报文处理各活动节点的处理超时时间参数设置是否统一？请确认与文档其他部分的一致性。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_010/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核查，图1 报文处理服务软件活动图中未明确标注各活动节点的具体超时时间参数数值及单位。由于{text}正文和{table}表格部分均未提供相关参数定义，当前文档在该参数指标上不存在显性冲突，属于信息缺失状态，无法判定不一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图1 报文处理服务软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00675",
+  "pair_id": "8_010",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在评审时发现{image}图1 报文处理服务软件活动图中标注了报文缓存队列的最大长度为1000条，但文档{table}表格或{text}正文中似乎有另一处提到了500条，请问以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_010/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核实，图1 报文处理服务软件活动图中确实标注了报文缓存队列最大长度为1000条，但文档其他部分（表格或正文）并未实际出现500条的参数定义。该不一致属于假设注入场景：若{table}性能参数表中定义缓存队列最大长度为500条，而{image}活动图中标注为1000条，则存在数值不一致。应以需求规格说明中经过正式评审的{table}参数表为准，图1需修正为500条，或发起变更申请统一为1000条。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图1活动图中注入报文缓存队列最大长度为1000条，同时在表格中定义该参数为500条，造成数值不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.1.1",
+   "image_caption": "图1 报文处理服务软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00676",
+  "pair_id": "8_011",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图1数据同步服务车上状态时活动图中，数据同步服务从'车上状态'启动后，完整的业务流程是否包含：初始化本地缓存→检测网络连接→网络可用时上传缓存数据→网络不可用时继续缓存新数据的循环处理逻辑？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_011/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，根据{image}图1数据同步服务车上状态时活动图，该流程描述一致。数据同步服务在车上状态启动后，首先进行本地缓存初始化，然后进入网络连接检测判断节点：当网络可用时执行缓存数据上传操作，上传完成后返回继续检测网络；当网络不可用时，新产生的数据继续写入本地缓存，并同样返回网络检测节点，形成完整的循环处理闭环。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 1数据同步服务车上状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00677",
+  "pair_id": "8_011",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图1数据同步服务车上状态时活动图中，当网络连接检测失败或上传过程中发生异常时，活动图是否描述了数据同步服务会立即切换至'车下状态'并终止当前所有缓存操作？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_011/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "不是的，根据{image}图1数据同步服务车上状态时活动图，该描述与文档不一致。图中异常处理流程为：当网络检测失败或上传异常时，服务不会切换至车下状态，而是保持在车上状态，将异常信息记录到本地日志，并将未成功上传的数据保留在本地缓存队列中，随后返回网络检测节点继续循环尝试，直至网络恢复后自动重传。车上状态与车下状态的切换由独立的车辆状态检测模块触发，而非由网络异常直接驱动。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设引入的不一致：将异常流修改为'网络异常时立即切换至车下状态并终止缓存操作'，这与原活动图中'异常时保持车上状态、记录日志、保留缓存并循环重试'的设计相矛盾，混淆了网络异常处理与车辆状态切换两个独立触发条件。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 1数据同步服务车上状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00678",
+  "pair_id": "8_012",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "请帮我确认一下，在章节3.1.1.1中，{image}图2数据同步服务下车状态时活动图是否符合GJB标准模板要求？该图在文档中的编号格式是否规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_012/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "经核查，章节3.1.1.1中的{image}图2数据同步服务下车状态时活动图符合GJB标准模板要求。图的编号采用\"图 2\"格式，符合GJB规范中\"图+空格+阿拉伯数字\"的编号规则；图题\"数据同步服务下车状态时活动图\"表述清晰，能够准确反映图的内容；图在章节中的引用位置恰当，位于3.1.1.1节下，层级关系明确。整体符合GJB软件需求规格说明文档的模板规范要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "template_compliance",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 2 数据同步服务下车状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00679",
+  "pair_id": "8_012",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在审查文档时发现，章节3.1.1.1引用的{image}图2数据同步服务下车状态时活动图，这个编号好像有点问题。GJB标准里对图的编号是不是有特别的规定？这个\"图 2\"的写法合规吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_012/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您提出的质疑是正确的。经核查，该文档中{image}图2的编号格式\"图 2\"不符合GJB标准规范。根据GJB软件需求规格说明编制要求，图的编号应采用\"图X-Y\"或\"图X.Y-Z\"的层级编号格式，其中X为章号，Y为节号，Z为图在该节中的顺序号。正确的编号应为\"图3-1-1-2\"或\"图3.1.1-2\"，表示第3章第1节第1小节第2幅图。当前使用的\"图 2\"这种简单顺序编号方式，无法体现图的层级归属关系，在文档结构复杂时容易造成引用混乱，不符合GJB对ID格式的规范要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "id_format_specification",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将原本符合GJB规范的层级编号\"图3-1-1-2\"错误地简化为\"图 2\"，违反了GJB标准中关于图编号应采用层级编号格式（包含章、节、小节信息）的规定，导致ID格式不规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 2 数据同步服务下车状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00680",
+  "pair_id": "8_013",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在文档章节3.1.1.1中，{image}图3数据同步服务上车状态时活动图里提到的\"数据同步服务\"这个术语，与文档标题\"09数据同步共享服务软件需求规格说明\"中的\"数据同步共享服务\"是否指的是同一个实体？{table}是否有相关术语定义表来明确说明？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_013/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，指的是同一实体。图3中的\"数据同步服务\"是文档标题中\"数据同步共享服务\"的简称或核心功能组件，两者在上下文中均指代数据同步共享服务系统。该章节{table}无单独术语定义表，但文档标题与活动图描述在术语使用上保持一致，\"数据同步服务\"作为\"数据同步共享服务\"的核心功能模块出现，属于合理的术语简化使用。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 3 数据同步服务上车状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00681",
+  "pair_id": "8_013",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在看文档章节3.1.1.1时，发现{image}图3的标题是\"数据同步服务上车状态时活动图\"，但文档标题是\"数据同步共享服务\"。{text}正文里好像没有解释这两个名称的关系，{table}也没有术语对照表。请问这里的\"数据同步服务\"和\"数据同步共享服务\"是同一个东西吗？会不会是文档把两个不同的服务混在一起了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_013/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您的质疑是合理的。根据假设的注入场景，此处存在术语不一致：图3中的\"数据同步服务\"实际上应指独立的\"数据同步服务\"子系统，而文档标题中的\"数据同步共享服务\"是包含\"数据同步\"和\"数据共享\"两大功能的综合服务。两者并非同一实体，而是包含与被包含的关系。文档在{image}图3中错误地将子系统名称简化为\"数据同步服务\"，且未在{text}正文或{table}表格中提供术语映射说明，导致术语层面的同名实体歧义——读者无法判断\"数据同步服务\"是简称还是独立子系统。正确的做法应在{table}增加术语定义表，明确\"数据同步服务\"为\"数据同步共享服务\"的子模块，或统一使用全称避免混淆。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入场景：将原文中\"数据同步服务\"作为\"数据同步共享服务\"简称的合理简化，篡改为两者实际代表不同层级实体（子系统vs综合服务），且文档未提供任何术语映射说明，造成同名实体歧义。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.1",
+   "image_caption": "图 3 数据同步服务上车状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00682",
+  "pair_id": "8_014",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在{image}图4数据共享服务在数据发布状态时活动图中，数据发布状态涉及的数据同步频率参数是多少？{table}中是否有对应的参数指标说明？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_014/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "根据图4数据共享服务在数据发布状态时活动图，数据发布状态的数据同步频率为实时同步（每5秒触发一次）。由于本章3.1.1.2节无表格，该参数指标仅在{image}中通过活动图的动作节点和转换条件进行描述，未在{table}中重复出现，但图文描述一致，不存在矛盾。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.2",
+   "image_caption": "图 4 数据共享服务在数据发布状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00683",
+  "pair_id": "8_014",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我注意到{image}图4中数据发布状态的缓存超时时间标注为300秒，但{table}中写的是5分钟，这两个地方是同一个参数吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_014/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您提出了一个很好的问题。经核查，{image}图4中数据发布状态的缓存超时时间标注为300秒，而假设{table}中存在一行参数说明将同一指标写为5分钟。实际上300秒等于5分钟，数值上是等价的。但如果严格按照文档一致性校验标准，若{table}中同时存在另一行将缓存超时时间写为300s（带单位s），而{image}中未标注单位仅写'300'，则可能引发单位理解歧义。不过根据当前注入场景，{table}中若明确写'5分钟'与{image}中'300秒'属于单位换算一致，但若{table}中实际写为'300分钟'则存在严重不一致——即数值相同但单位量级差异导致实际参数相差60倍。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在{table}中注入一行参数：缓存超时时间=300分钟（单位错误，应为秒而非分钟），与{image}图4中标注的'300秒'形成数值相同但单位不一致，实际参数值相差60倍",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.2",
+   "image_caption": "图 4 数据共享服务在数据发布状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00684",
+  "pair_id": "8_015",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在章节3.1.1.2中，{image}描述了数据共享服务在主题订阅状态下的活动流程，请问这个流程图与文档中其他部分描述的主题订阅机制是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_015/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，图5数据共享服务在主题订阅状态时活动图与文档整体描述的主题订阅机制保持一致。该活动图准确展示了从订阅请求、主题匹配、状态确认到数据推送的完整业务流程，包括正常流和异常处理路径，与系统其他功能模块的接口定义和状态转换规则相互吻合。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.2",
+   "image_caption": "图 5 数据共享服务在主题订阅状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00685",
+  "pair_id": "8_015",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在章节3.1.1.2的{image}中，数据共享服务在主题订阅状态下的活动图是否包含了订阅超时后的异常处理流程？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_015/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "根据图5的标注，活动图中未包含订阅超时后的异常处理流程。但按照需求规格说明的整体设计要求，主题订阅状态应当具备超时重试和降级机制。经核查，该活动图遗漏了订阅超时异常分支，与文档第3.2节'异常处理策略'中定义的超时处理规范不一致，需要补充超时判断节点及相应的异常处理路径。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图5活动图中遗漏了订阅超时异常处理分支，与文档其他章节定义的超时处理策略形成不一致",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.2",
+   "image_caption": "图 5 数据共享服务在主题订阅状态时活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00686",
+  "pair_id": "8_016",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "请确认本文档的章节编号格式是否符合GJB要求？我在{image}附近看到章节编号为3.1.1.3，这种四级编号格式是否符合GJB软件需求规格说明模板的规定？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_016/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，章节编号3.1.1.3符合GJB软件需求规格说明模板的四级编号规范。GJB模板要求采用层次化的十进制编号体系，本文档从第3章开始，向下细分为3.1、3.1.1、3.1.1.3，层级清晰，符合GJB对文档结构编号的要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "template_compliance",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.3",
+   "image_caption": "图 6 数据资源管理中目录展现活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00687",
+  "pair_id": "8_016",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我发现文档中{image}的图号标注为'图 6 数据资源管理中目录展现活动图'，但正文位置{text}和表格位置{table}都为空。请问这个图号编号是否符合GJB标准？我注意到图号前面好像没有按GJB要求标注章节号？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_016/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您观察得很仔细。根据GJB软件需求规格说明的规范要求，图的编号应采用'章-节-序号'的格式，即如'图3-1-1-3-6'或'图3.1.1.3-6'的形式，以明确标识该图所属的章节位置。但本文档中{image}仅标注为'图 6'，缺少章节号前缀，这与GJB模板中关于图号编号应包含章节标识的规定不一致。正确的编号应为'图3.1.1.3-6'或'图3-1-1-3-6 数据资源管理中目录展现活动图'。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "id_format_specification",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将原本符合GJB规范的图号'图3.1.1.3-6'错误地简化为'图 6'，删除了章节号前缀，导致图号ID格式不符合GJB模板中'图号应包含章节编号以明确归属位置'的格式规范要求。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.3",
+   "image_caption": "图 6 数据资源管理中目录展现活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00688",
+  "pair_id": "8_017",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在3.1.1.3节中，{image}图7数据资源管理中数据资源修改活动图与{table}表格内容、{text}正文描述中，对'数据资源'这一实体的定义和引用是否保持一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_017/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，文档内容一致。图7数据资源修改活动图、表格及正文均围绕'数据资源'这一核心实体展开，未出现同名异义或异名同义的情况。活动图中的'数据资源'与章节主题'数据同步共享服务'中的数据资源概念保持一致，均指代需要被管理和修改的数据资源对象。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.3",
+   "image_caption": "图 7数据资源管理中数据资源修改活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00689",
+  "pair_id": "8_017",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "我在核对3.1.1.3节时发现，{image}图7的标题写的是'数据资源管理中数据资源修改活动图'，但{table}表格里的功能名和{text}正文都提到了'数据资产修改'，这里的'数据资源'和'数据资产'是同一个东西吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_017/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "根据您描述的假设场景，这里存在术语不一致的问题。图7中使用的是'数据资源'，而表格和正文中使用的是'数据资产'，虽然两者在某些语境下可能相关，但在本SRS文档中属于术语混用。'数据资源'通常指原始或加工后的数据集合，而'数据资产'更强调具有经济价值的数据，二者概念范畴不同。建议统一术语，若确为同一实体应全部使用'数据资源'以与章节标题和图7保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表格中的功能名和正文中的表述从'数据资源'替换为'数据资产'，造成图7标题中的'数据资源'与表格、正文中的'数据资产'形成同名异义/术语混用的不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.1.1.3",
+   "image_caption": "图 7数据资源管理中数据资源修改活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00690",
+  "pair_id": "8_018",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "在图2动态名录活动图中，活动节点\"更新名录记录\"的处理时限参数与{table}中对应的性能指标要求是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_018/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "text"
+  ],
+  "answer": "一致。图2动态名录活动图中\"更新名录记录\"活动节点标注的处理时限为2秒，与性能指标表格中\"名录更新响应时间\"要求的≤2秒完全匹配，单位和数值属性均一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图 2 动态名录活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00691",
+  "pair_id": "8_018",
+  "scene": "sc8_pure_image",
+  "split": "train",
+  "question": "图2动态名录活动图中\"批量导入名录\"活动的并发用户数参数，与{table}中系统性能指标表格里的并发处理能力指标是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_018/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "text"
+  ],
+  "answer": "不一致。根据inject_detail假设，图2动态名录活动图中\"批量导入名录\"活动标注的并发用户数为500人，但{table}系统性能指标表格中\"最大并发用户数\"指标要求为1000人，两者数值存在差异，活动图中的参数未能满足表格中的设计指标。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图2中\"批量导入名录\"活动节点标注的并发用户数为500人，但性能指标表格中要求最大并发用户数为1000人，引入数值不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图 2 动态名录活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00692",
+  "pair_id": "8_019",
+  "scene": "sc8_pure_image",
+  "split": "dev",
+  "question": "在3.1.2节中，{image}语音综合处理软件活动图描述的业务流程与{table}功能需求以及{text}正文描述是否一致？活动图中各活动节点的执行顺序是否与文档其他部分的功能描述相符？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_019/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "是的，一致。图1语音综合处理软件活动图所描述的业务流程与章节3.1.2的功能需求描述保持一致。活动图中展示了语音综合处理的主要活动节点及其流转顺序，包括语音采集、预处理、特征提取、识别/合成处理、结果输出等关键步骤，这些活动节点的执行顺序与文档中对该软件功能模块的描述完全吻合，异常处理路径也在活动图中通过决策节点和异常流进行了正确表示。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图1 语音综合处理软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00693",
+  "pair_id": "8_019",
+  "scene": "sc8_pure_image",
+  "split": "dev",
+  "question": "在3.1.2节中，{image}语音综合处理软件活动图是否完整描述了异常处理流程？我注意到活动图中似乎缺少网络中断时的重试机制，但{text}正文中提到了该场景，{table}中也有相关功能说明，能否确认一下？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_019/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "您的观察是正确的，确实存在不一致。根据假设场景，图1活动图中未包含网络中断异常处理的分支流，即当语音数据传输过程中发生网络中断时，活动图直接终止于异常结束节点，未展示{text}正文中描述的重试3次机制，也未体现{table}中列出的「网络异常自动重连」功能。正确的活动图应在「语音上传/下载」活动后增加决策节点，判断网络状态，若中断则进入重试循环（最多3次），3次失败后转入人工干预或本地缓存分支。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：在活动图中删除网络中断时的重试机制分支，使活动图呈现为遇到网络异常直接终止流程；但正文和表格中保留「网络中断后自动重试3次，失败则转入离线缓存模式」的描述，造成活动图与文字描述在异常处理流程上的不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.1.2",
+   "image_caption": "图1 语音综合处理软件活动图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00694",
+  "pair_id": "8_020",
+  "scene": "sc8_pure_image",
+  "split": "dev",
+  "question": "请确认本文档的章节编号是否符合GJB标准模板要求？{text}中3.1节作为功能需求章节的子节编号是否规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_020/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "text"
+  ],
+  "answer": "文档章节编号符合GJB标准模板要求。3.1节作为功能需求章节的子节编号规范，采用'章.节'的层级编号格式，符合GJB 438B等标准对需求规格说明文档的结构要求。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "template_format",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "12文电处理需求规格说明-终端",
+   "section": "3.1",
+   "image_caption": "图 1  使用模式流程",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc8_00695",
+  "pair_id": "8_020",
+  "scene": "sc8_pure_image",
+  "split": "dev",
+  "question": "文档中{image}图1的编号格式是否符合GJB标准？图中'使用模式流程'的命名规范吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc8_pure_image/8_020/image.png",
+   "table": "",
+   "text": ""
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "图1的编号格式不符合GJB标准规范。按照GJB 438B要求，图的编号应采用'章-图号'格式（如'图 3-1'），而非简单的'图 1'；同时图名'使用模式流程'缺少功能模块前缀，规范命名应为'图 3-1 终端使用模式流程图'。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "id_format",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将原本符合GJB规范的'图 3-1 终端使用模式流程图'改为不符合规范的'图 1  使用模式流程'，去掉了章节前缀、缺少功能模块标识、图名未以'图'字结尾",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "12文电处理需求规格说明-终端",
+   "section": "3.1",
+   "image_caption": "图 1  使用模式流程",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ }
+]

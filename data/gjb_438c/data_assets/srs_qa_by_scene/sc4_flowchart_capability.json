@@ -1,0 +1,3125 @@
+[
+ {
+  "qid": "srs_sc4_00494",
+  "pair_id": "4_001",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档中{table}列出了'开发工程生成'等界面开发功能，{text}也提到了界面开发功能包括'开发工程生成、组件配置填写、公共组件管理、组件下载管理、组件打包发布'，请问这两个地方描述的功能名称是否完全一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不完全一致但核心功能一致。{table}中列出的功能有：开发工程生成、组件配置填写、公共组件管理、组件下载管理（共4项）；{text}中提到的功能包括：开发工程生成、组件配置填写、公共组件管理、组件下载管理、组件打包发布、组件开发接口功能（共6项）。{table}中缺少'组件打包发布'和'组件开发接口功能'这两项，但表格标题为'界面开发能力标识'，可能仅列出了部分核心能力。两者共有的四项功能名称完全一致，术语使用统一。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1",
+   "image_caption": "图5 界面开发流程图",
+   "table_caption": "表3 界面开发能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00495",
+  "pair_id": "4_001",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中有个功能叫'组件下载管理'，但{text}里好像写的是'组件包下载管理'，这两个名称指的是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_001/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据您描述的假设场景，如果{text}中确实写作'组件包下载管理'，而{table}中为'组件下载管理'，则存在术语不一致。两者可能指向同一功能（均涉及组件/组件包的下载管理），但命名不统一：{table}使用'组件下载管理'，而假设的{text}使用了'组件包下载管理'（多了'包'字）。这种差异可能导致理解歧义，建议统一术语，以{table}中的'组件下载管理'为准，或核查{image}中的流程图标注以确认标准名称。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文中的'组件下载管理'改为'组件包下载管理'，与表格中的'组件下载管理'形成术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1",
+   "image_caption": "图5 界面开发流程图",
+   "table_caption": "表3 界面开发能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00496",
+  "pair_id": "4_002",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档{table}中列出的功能用例（用户登录、配置信息解析、组件集成、路由集成）与{text}中描述的界面集成功能列表是否一致？具体功能的适用平台范围是否统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中的4个功能用例（用户登录、配置信息解析、组件集成、路由集成）均包含在{text}所述的界面集成功能中；且{table}中所有功能的适用平台均为\"平板、桌面、手持\"，与{text}中\"在桌面版、平板版、手持版功能保持一致\"的描述完全吻合。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.2",
+   "image_caption": "图14 界面集成流程图",
+   "table_caption": "表10 界面开发能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00497",
+  "pair_id": "4_002",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现{table}中路由集成的需求重用方式标注为\"新研\"，但其他几个功能都是\"沿用\"。这与{text}中说的\"功能保持一致\"是否矛盾？另外，{table}里路由集成的适用平台好像少了手持版？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_002/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。关于需求重用方式，\"新研\"与\"沿用\"属于开发实现方式的差异，与{text}中\"功能保持一致\"指的是各平台功能表现一致，并非指实现方式必须相同，所以这不构成矛盾。但关于适用平台，经核查{table}中路由集成一行确实标注为\"平板、桌面、手持\"，与您的描述不符，手持版是包含在内的，不存在缺失。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表格中路由集成的\"方式\"列被错误填写为\"平板、桌面\"，遗漏了\"手持\"，与正文中\"桌面版、平板版、手持版功能保持一致\"形成参数不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.2",
+   "image_caption": "图14 界面集成流程图",
+   "table_caption": "表10 界面开发能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00498",
+  "pair_id": "4_003",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下界面定制功能的具体范围。{text}中提到界面定制功能包括布局控制、分屏管理、主题管理、快捷操控、界面配置保存功能，{table}中列出了布局控制、分屏管理、主题管理、快捷操控这四项的详细需求，但没看到界面配置保存的表格条目。请问界面配置保存功能是否在{table}中有对应描述，还是仅作为其他功能的附属能力？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据文档内容，界面配置保存功能在{text}中被明确列为界面定制功能的五大组成部分之一，但在{table}「表20 界面定制能力标识」中确实仅列出了布局控制、分屏管理、主题管理、快捷操控四项，未单独列出界面配置保存的条目。这表明界面配置保存可能作为上述功能的附属能力（如布局保存、主题保存等）分散在各功能项中实现，而非独立的Use case。文档整体功能范围描述一致，只是表格粒度未覆盖到该子功能级别。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "功能范围一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.3",
+   "image_caption": "图25 界面开发流程图",
+   "table_caption": "表20 界面定制能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00499",
+  "pair_id": "4_003",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "关于界面开发流程，{text}说功能用例如图24所示，但文档中实际引用的是{image}「图25 界面开发流程图」。请问图24和图25是什么关系？另外，{table}中分屏管理标注为「新研」方式，而布局控制为「改进」方式，按照{image}的流程，新研功能是否应该先于改进功能进行设计评审？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_003/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个关键的不一致点。首先，{text}中引用的是「图24」，但文档实际章节1.8.3中的图片是{image}「图25 界面开发流程图」，存在图号引用不一致的问题。其次，关于流程时序：根据inject_detail假设的场景，若{image}「图25 界面开发流程图」中明确规定「新研功能需在改进功能之前完成架构设计评审」，则{table}中分屏管理（新研）与布局控制（改进）的执行顺序应与该流程一致。但实际业务逻辑中，布局控制作为基础改进功能，往往是分屏管理（新研）的前置依赖——分屏管理需要基于布局控制的组件位置能力进行扩展。若严格遵循图25假设的「新研先于改进」流程，会导致分屏管理缺乏布局控制的基础支撑，形成时序矛盾。正确的流程应允许改进功能与新研功能存在依赖关系时，按技术依赖而非单纯研发方式排序。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程时序一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{image}「图25 界面开发流程图」中规定「新研功能必须优先于改进功能完成设计评审」，这与分屏管理（新研）依赖布局控制（改进）组件位置能力的实际技术逻辑相矛盾，导致流程时序不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.3",
+   "image_caption": "图25 界面开发流程图",
+   "table_caption": "表20 界面定制能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00500",
+  "pair_id": "4_004",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我确认一下，{table}中生命周期监控和资源占用监控的项目唯一标识符是否符合GJB标准中关于需求标识符的编码规范？特别是前缀和分层结构是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中两个功能的项目唯一标识符分别为\"PZXQ-GN-JMJCKJ-JMJC-SMZQJK\"和\"PZXQ-GN-JMJCKJ-JMDZ-ZYZYJK\"，均符合GJB需求标识符编码规范：统一采用\"PZXQ-GN-\"作为需求类型前缀，\"JMJCKJ\"为界面集成框架子系统标识，第三层\"JMJC\"/\"JMDZ\"为功能模块区分，末段为功能缩写（SMZQJK/YZYJK）。两层标识符在层级结构、分隔符使用及编码长度上保持一致，符合模板规范要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.4",
+   "image_caption": "图32界面监控流程图",
+   "table_caption": "表26 界面定制能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00501",
+  "pair_id": "4_004",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对{table}和{text}时发现，资源占用监控的项目唯一标识符好像有点问题，{text}里提到的是\"资源占用监控\"，但{table}里的标识符是\"PZXQ-GN-JMJCKJ-JMDZ-ZYZYJK\"，这个\"JMDZ\"和\"YZYJK\"的缩写给对不上？是不是标识符命名规则不统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_004/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。经核查，{table}中资源占用监控的标识符\"PZXQ-GN-JMJCKJ-JMDZ-ZYZYJK\"确实存在不一致问题：功能模块缩写\"JMDZ\"应为\"JMJC\"（与生命周期监控的模块标识保持一致，同属界面监控功能），且功能缩写\"YZYJK\"应为\"ZYZYJK\"（\"资源占用监控\"的正确拼音首字母缩写应为ZYZYJK，而非YZYJK，遗漏了首字母Z且顺序有误）。该标识符违反了GJB标准中\"标识符应与功能名称拼音缩写严格对应\"的编码规范，需修正为\"PZXQ-GN-JMJCKJ-JMJC-ZYZYJK\"以与{table}中生命周期监控的模块层级及{text}中的功能命名保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将资源占用监控的原标识符\"PZXQ-GN-JMJCKJ-JMJC-ZYZYJK\"篡改为\"PZXQ-GN-JMJCKJ-JMDZ-YZYJK\"：①功能模块码由\"JMJC\"改为\"JMDZ\"（与生命周期监控不一致）；②功能缩写由\"ZYZYJK\"改为\"YZYJK\"（遗漏首字母Z，且与\"资源占用监控\"拼音不对应），造成同一表格内模块标识不统一、标识符与功能名称映射关系断裂。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.4",
+   "image_caption": "图32界面监控流程图",
+   "table_caption": "表26 界面定制能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00502",
+  "pair_id": "4_005",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请确认文档中关于生命周期监控的功能描述是否一致：{text}提到生命周期监控包括组件加载、组件运行、组件卸载等功能，而{table}中表27也列出了组件加载、组件运行、组件卸载三个用例。这两处描述的功能名称和数量是否完全对应？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处描述完全一致。{text}正文明确指出生命周期监控包括\"组件加载、组件运行、组件卸载\"三个功能；{table}表27中同样列出了序号1-3的三个用例，名称分别为\"组件加载\"\"组件运行\"\"组件卸载\"。功能名称完全相同，数量一致（均为3个），且顺序一致，属于同名实体映射一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.4.1",
+   "image_caption": "图 33布局控制流程图",
+   "table_caption": "表 27生命周期监控标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00503",
+  "pair_id": "4_005",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现一个疑问：{text}中说生命周期监控包括组件加载、组件运行、组件卸载，但{table}表27里好像有个用例名称不太一样。能帮我确认一下表27中的功能名称和正文描述是否完全一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_005/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经过仔细比对，发现存在不一致。{text}正文描述的生命周期监控功能为\"组件加载、组件运行、组件卸载\"；但在{table}表27中，序号2的用例名称被写成了\"组件挂载\"而非\"组件运行\"，其余两项（组件加载、组件卸载）与正文一致。这是一个术语层面的同名实体映射不一致问题——同一功能在正文和表格中使用了不同的名称（\"组件运行\"vs\"组件挂载\"），可能导致理解歧义，建议统一术语。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射不一致",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表27中序号2的用例名称由\"组件运行\"改为\"组件挂载\"，与正文中的\"组件运行\"形成术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.4.1",
+   "image_caption": "图 33布局控制流程图",
+   "table_caption": "表 27生命周期监控标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00504",
+  "pair_id": "4_006",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中界面展示功能列出了5项功能，但{table}里只显示了4条记录，想确认一下语音交互这项功能是否遗漏了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{text}正文明确说明界面展示功能包括'界面自适应调整、主界面组件展现、鼠标操控、触摸交互、语音交互'共5项，但{table}（表33）确实只列出了4项，缺少'语音交互'的条目。不过您提到的是{table}中'列出5项功能'，实际上{table}本身只有4行数据。这里需要注意的是，正文中的'鼠标操控'在{table}中实际对应的是'鼠键操控'（第3项），名称略有差异但属同一功能。语音交互功能在{table}中确实缺失，这是一个文档不一致问题，建议补充语音交互的表项或确认该功能是否在其他表格中定义。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.5",
+   "image_caption": "图37 界面展示功能流程图",
+   "table_caption": "表33 界面展示功能标识表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00505",
+  "pair_id": "4_006",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在检查{table}时发现，第4项'触摸交互'的'方式名称'列写的是'平板、手持'，但{image}（图37）中的流程似乎支持桌面端的触摸操作，想确认一下触摸交互的终端支持范围是否包含桌面？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "经核实，{table}中第4项'触摸交互'的'方式名称'明确标注为'平板、手持'，不包含桌面。虽然部分桌面设备支持触摸屏，但根据{table}的参数定义，该功能的需求范围仅限于平板和手持终端。{image}（图37）若显示桌面端触摸操作，则属于图示与表格参数不一致，应以{table}的明确标注为准。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{table}中第4项'触摸交互'的'方式名称'由'平板、手持'注入修改为'平板、手持、桌面'，但{image}流程图实际未变更，制造表格与图示在终端支持范围上的不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.5",
+   "image_caption": "图37 界面展示功能流程图",
+   "table_caption": "表33 界面展示功能标识表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00506",
+  "pair_id": "4_007",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请问文档中{table}表34列出的主界面组件展现功能，与{text}正文描述的主界面组件展现功能范围是否一致？具体包含哪些功能项？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}表34列出了菜单栏展现、工具栏展现、分屏展现、公共信息展现共4项功能，{text}正文描述的主界面组件展现功能包括菜单栏展现、工具栏展现、分屏展现、公共信息展现、消息通知展现、弹窗展现、背景板展现、表格显控展现、缩略显控展现、任务切换展现共10项功能。表34是部分列举，正文是完整功能清单，两者不存在矛盾，表34列出的4项功能均包含在正文描述的10项功能范围内，属于子集关系，逻辑一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.5.1",
+   "image_caption": "图39 主界面展现开发流程",
+   "table_caption": "表34 主界面组件展现标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00507",
+  "pair_id": "4_007",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{table}表34中分屏展现功能支持一屏、二屏、四屏和六屏，但{image}图39主界面展现开发流程中显示分屏设置流程只包含一屏、二屏、四屏三种分支，没有六屏的处理分支，这里是否存在功能描述与流程图不一致的问题？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "是的，存在不一致。{table}表34中明确说明分屏展现支持一屏、二屏、四屏和六屏共四种设置，但{image}图39主界面展现开发流程中分屏设置流程仅包含一屏、二屏、四屏三种分支，缺少六屏的处理流程。这会导致六屏功能在开发流程中无对应实现路径，属于功能需求与开发流程之间的业务逻辑不一致，需要补充六屏的分支流程或修正功能描述。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图39主界面展现开发流程中，分屏设置流程故意遗漏了六屏分支，仅展示一屏、二屏、四屏三种情况，与表34中明确支持一屏、二屏、四屏、六屏的功能描述形成矛盾",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.5.1",
+   "image_caption": "图39 主界面展现开发流程",
+   "table_caption": "表34 主界面组件展现标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00508",
+  "pair_id": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请检查{table}中各功能用例的项目唯一标识符是否符合GJB标准规定的编码格式要求？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，表3中4个功能用例的项目唯一标识符格式统一为\"PZXQ-GN-FWKFZC-XXXXXX\"结构，采用\"项目代号-功能分类-子系统缩写-功能缩写\"的四段式编码规则，符合GJB软件需求规格说明中对需求标识符的格式规范要求。各标识符与Use case名称语义对应一致：CJFWGC对应创建服务工程、DKFWGC对应打开服务工程、GBFWGC对应关闭服务工程、FWCJSC对应服务插件生成，编码具有可读性和可追溯性。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图7 服务开发流程图",
+   "table_caption": "表3 服务开发支撑所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00509",
+  "pair_id": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对{table}时发现，\"服务插件编译\"这个功能在表3中似乎找不到对应条目，而且现有标识符的编号规则也不太一样，能帮我确认一下吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_008/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "您观察得很准确。经核查，{table}中确实存在不一致：表3仅列出了4个功能用例（序号1-4），缺少\"服务插件编译\"功能对应的条目；更严重的是，假设该功能若存在，其标识符被错误编制为\"FWKFZC-FWBJ-004\"，这与表中现有标识符采用的\"PZXQ-GN-FWKFZC-XXXXXX\"四段式格式严重不符——缺失项目代号\"PZXQ\"和功能分类\"GN\"字段，且采用了数字序号结尾而非功能缩写结尾，违反了GJB标准中对需求标识符格式统一性和语义可读性的要求。正确的标识符格式应为\"PZXQ-GN-FWKFZC-FWBJ\"或类似结构。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表3中隐藏添加第5行\"服务插件编译\"，但其项目唯一标识符被错误设置为\"FWKFZC-FWBJ-004\"，与表中其他条目的\"PZXQ-GN-FWKFZC-XXXXXX\"格式不一致，同时正文{image}图7中可能包含该功能但表格缺失对应条目",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图7 服务开发流程图",
+   "table_caption": "表3 服务开发支撑所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00510",
+  "pair_id": "4_009",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档中{table}列出了服务部署管理的四个功能：服务注册、服务更新、服务监控注册、服务注销，而{text}描述的功能包括服务注册、服务多实例部署、服务更新和服务注销，另外还提到了服务监控注册。请问表格和正文对这几个功能的命名是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中的四个功能（服务注册、服务更新、服务监控注册、服务注销）与{text}中描述的功能完全对应。虽然{text}在列举时提到了\"服务多实例部署\"，但仔细阅读正文可以发现，服务多实例部署是服务注册功能的一个特性（\"服务注册支持通过读取服务清单文件完成服务注册\"隐含多实例部署能力），而服务监控注册在正文中也有明确描述（\"服务监控注册支持调用接口注册对某个服务进行资源占用和状态的监控\"）。因此表格与正文在核心功能术语上是完全一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图 9 服务部署管理流程图",
+   "table_caption": "表21 服务部署管理所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00511",
+  "pair_id": "4_009",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中有一个功能叫\"服务监控注册\"，但{text}里好像写的是\"服务监控\"，没有\"注册\"两个字。这两个是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_009/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不是同一个功能，这里存在术语不一致的问题。根据文档实际内容，{table}中明确使用\"服务监控注册\"作为功能名称，而{text}中实际写的是\"服务监控注册支持调用接口注册对某个服务进行资源占用和状态的监控\"，确实包含\"注册\"二字。但如果假设{text}中遗漏了\"注册\"而仅称为\"服务监控\"，则会造成术语不一致——\"服务监控\"可能被理解为仅指监控行为本身，而\"服务监控注册\"则强调注册监控这一动作，二者在语义范围和功能边界上存在差异，可能导致需求理解偏差和实现歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射不一致",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{text}中将\"服务监控注册\"误写为\"服务监控\"，删除了\"注册\"二字，导致表格与正文功能名称不一致，产生同名实体映射偏差。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图 9 服务部署管理流程图",
+   "table_caption": "表21 服务部署管理所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00512",
+  "pair_id": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下文档中关于服务启动方式控制的需求描述是否一致。在{table}表26中，第2项「服务启动控制方式控制」的需求描述是「根据启动方式对服务控制」，而在{text}正文中描述为「支持手动、自动、按需三种服务启动策略」。请问表格和正文对服务启动方式控制功能的描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表格中「服务启动控制方式控制」的标识符为PZXQ-GN-FWYXKZ-FWQTKZ，需求描述为「根据启动方式对服务控制」；正文明确说明该功能「支持手动、自动、按需三种服务启动策略」。两者描述一致，正文是对表格中「根据启动方式对服务控制」的具体展开说明，三种启动策略（手动、自动、按需）即对应「启动方式」的具体内容。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图 11 服务运行控制流程图",
+   "table_caption": "表26 服务运行控制所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00513",
+  "pair_id": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现一个疑问：{table}表26中第3项「服务启动优先级控制」的标识符是PZXQ-GN-FWYXKZ-FWQDYXJKZ，但我在{text}正文中看到描述的是「服务启动优先级控制功能，支持根据启动顺序按优先级启动服务」。这里正文说的是「启动顺序」，而表格标题是「启动优先级」，这两个概念是否一致？另外我注意到{table}第1项和第2项的标识符都是PZXQ-GN-FWYXKZ-FWQTKZ，这是否正常？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_010/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。关于标识符重复问题：{table}表26中第1项「服务启停控制」和第2项「服务启动控制方式控制」确实都使用了相同的标识符PZXQ-GN-FWYXKZ-FWQTKZ，这在需求文档中是不正常的，每个功能应有唯一标识符。关于「启动顺序」与「启动优先级」的问题：经核实，正文原文应为「支持根据配置文件按优先级启动服务」，您提到的「启动顺序」版本与表格中的「优先级」存在概念差异——「启动顺序」强调先后次序，而「优先级」强调权重等级，二者不完全等价。若正文确实为「启动顺序」，则与表格存在不一致，需以设计意图为准进行修正。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文中的「支持根据配置文件按优先级启动服务」篡改为「支持根据启动顺序按优先级启动服务」，造成「配置文件」与「启动顺序」两个属性的不一致，同时保留表格第1、2项标识符重复的真实问题作为干扰项。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图 11 服务运行控制流程图",
+   "table_caption": "表26 服务运行控制所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00514",
+  "pair_id": "4_011",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下服务信息管理模块的查询功能逻辑。{table}中列出了服务运行状态查询、服务占用资源查询、服务注册信息查询三个功能，都支持通过服务名称进行查询；{text}也描述了这些功能支持通过服务名称获取相应信息。请问表格和正文描述的功能触发方式是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，表格和正文描述一致。{table}中明确三个查询功能的触发方式均为通过服务名称查询（服务运行状态查询、服务占用资源查询、服务注册信息查询），{text}中也明确描述\"支持通过服务名称的方式获取服务的运行状态\"\"支持通过服务名称的方式获取服务的资源占用信息\"\"支持通过服务名称的方式获取服务的注册信息\"，两者在功能触发方式上完全保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图 13 服务信息管理运行流程图",
+   "table_caption": "表35 服务信息管理所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00515",
+  "pair_id": "4_011",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在评审需求时发现一个疑问：{table}中\"服务运行状态查询\"的需求描述是\"监控节点主机的资源使用信息\"，但{table}中其他查询功能如服务占用资源查询、服务注册信息查询都明确写了\"通过服务名称获取...\"，而{text}中又说服务运行状态查询\"支持通过服务名称的方式获取服务的运行状态\"。这里是不是存在矛盾？表格里说的是监控节点主机资源，正文里说的是通过服务名称查询服务运行状态，到底应该以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_011/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。根据inject_detail描述的假设场景，这里确实存在不一致：{table}中\"服务运行状态查询\"的需求描述被错误地写成了\"监控节点主机的资源使用信息\"，这与该功能的实际定位不符——该功能应该是查询服务的运行状态，而非节点主机的资源使用信息；同时{table}中缺少\"通过服务名称获取\"的触发方式描述，而{text}中正确描述了\"支持通过服务名称的方式获取服务的运行状态\"。正确的需求描述应该与功能名称保持一致，即\"通过服务名称获取服务的运行状态信息\"。这种不一致会导致开发人员对功能范围产生歧义，需要以{text}和{image}中的流程定义为准进行修正。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设场景：将{table}中第1行\"服务运行状态查询\"的\"需求描述\"从原本的\"通过服务名称获取服务的运行状态信息\"篡改为\"监控节点主机的资源使用信息\"，使其与功能名称及{text}描述产生矛盾。节点主机资源监控应属于其他功能（如节点管理）的范畴，而非服务运行状态查询的功能定义。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图 13 服务信息管理运行流程图",
+   "table_caption": "表35 服务信息管理所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00516",
+  "pair_id": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我检查一下，{table}中服务发现功能的项目唯一标识符是否符合GJB标准中关于需求标识的命名规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中服务发现功能的项目唯一标识符为\"PZXQ-GN-FWDD-FWFX\"，符合GJB标准中\"项目代号-功能域-子系统-功能模块\"的层次化命名规范。其中PZXQ为项目代号，GN表示功能需求，FWDD表示服务调度子系统，FWFX表示服务发现功能模块，格式规范、层次清晰，与文档其他需求标识保持一致的编码规则。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图 15 服务调度运行流程图",
+   "table_caption": "表43服务信息管理所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00517",
+  "pair_id": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对需求追溯时发现，{table}中基于主机负载的负载均衡功能标识是\"PZXQ-GN-FWDD-FWZJFZ\"，但{table}里其他负载均衡功能的标识都是\"FWDD\"开头第四层，这个\"FWZJFZ\"是不是写错了？另外{text}提到的服务故障迁移功能在{table}里怎么找不到对应条目？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_012/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。经核查，{table}中基于主机负载的负载均衡标识\"PZXQ-GN-FWDD-FWZJFZ\"确实存在异常——按照GJB规范及文档内统一编码规则，第四层应采用\"FWDD-功能模块缩写\"结构，但该标识将\"主机负载\"缩写为\"ZJFZ\"后错误拼接成了\"FWZJFZ\"，正确格式应为\"PZXQ-GN-FWDD-FWZJFZ\"（即FWDD-FW-ZJFZ的变体需保持分隔符一致）。更严重的是，{text}明确声明支持\"服务故障迁移功能\"，但{table}中确实缺失该功能的条目，导致需求追溯链断裂，违反GJB关于\"功能描述与需求条目一一对应\"的完整性要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将基于主机负载的负载均衡标识从\"PZXQ-GN-FWDD-FWZJFZ\"篡改为\"PZXQ-GN-FWDD-FWZJFZ\"（第四层丢失功能模块分隔结构），并假设{text}中提到的\"服务故障迁移功能\"在{table}中完全缺失对应条目，造成ID格式违规与需求遗漏双重不一致。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图 15 服务调度运行流程图",
+   "table_caption": "表43服务信息管理所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00518",
+  "pair_id": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}表格第1行的\"服务访问路由\"功能，和{text}正文中提到的\"服务访问路由功能\"描述一致，都提到了\"支持将服务请求发送到具体的服务实例\"。请问这两个地方对同一功能的描述是否完全一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两个地方对\"服务访问路由\"功能的描述完全一致。{table}表格中需求描述为\"支持将服务请求发送到具体的服务实例\"，{text}正文中描述为\"支持将服务请求发送到具体的服务实例\"，术语名称和功能描述完全对应，不存在不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.6",
+   "image_caption": "图 17 服务访问代理运行流程图",
+   "table_caption": "表49 服务访问代理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00519",
+  "pair_id": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在审核文档时发现一个问题：{table}表格第4行有一个\"服务访问信息维护\"功能，需求描述是\"服务请求数据中提取会话信息进行维护\"；但{text}正文中提到的是\"服务访问会话信息维护功能\"，并且描述为\"可在服务响应数据中植入会话信息，可在服务请求数据中提取会话信息\"。请问表格和正文对同一功能的描述是否存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_013/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，存在不一致。根据假设的注入场景，{table}表格中的功能名称为\"服务访问信息维护\"，仅涉及\"服务请求数据中提取会话信息\"；而{text}正文中的功能名称为\"服务访问会话信息维护\"，且功能范围更大，包含\"在服务响应数据中植入会话信息\"和\"在服务请求数据中提取会话信息\"两个方面。两者在术语名称上存在差异（缺少\"会话\"二字），在功能范围上也不一致，正文描述比表格多了\"响应数据植入\"的能力。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射不一致",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表格中，第4行功能名称被错误写为\"服务访问信息维护\"（缺少\"会话\"二字），且需求描述仅保留\"服务请求数据中提取会话信息进行维护\"，遗漏了正文中\"在服务响应数据中植入会话信息\"的功能点，导致同名实体（功能标识PZXQ-FWJCKJ-GN-FWFWWH对应的实际功能）在表格和正文中的名称与描述不一致。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.6",
+   "image_caption": "图 17 服务访问代理运行流程图",
+   "table_caption": "表49 服务访问代理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00520",
+  "pair_id": "4_014",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请确认{table}中文件上传功能的需求描述与{text}正文描述是否一致？正文提到文件上传可对上传文件的大小、上传速度进行控制，表格中是否也包含了这些信息？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中序号2文件上传的需求描述为\"支持对文件上传到指定位置，包括文件的大小和名称等信息\"，{text}正文描述为\"可对上传文件的大小、上传速度进行控制，可支持服务获取上传文件的位置、大小信息\"。两者都包含了文件大小和位置（指定位置/文件位置）信息，描述一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.7",
+   "image_caption": "图 19 静态请求处理运行流程图",
+   "table_caption": "表55 静态请求处理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00521",
+  "pair_id": "4_014",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我发现{table}中文件上传功能的需求描述与{text}正文有些出入，正文提到可以控制\"上传速度\"，但表格里好像没提到这个参数，是不是文档不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_014/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。实际上，如果严格对比，{table}中文件上传的需求描述确实只提到了\"文件的大小和名称等信息\"以及\"指定位置\"，而{text}正文额外提到了\"上传速度进行控制\"。但根据inject_detail的假设场景，这是文档编写时的有意设计：表格作为高层需求摘要只列举核心属性（大小、名称、位置），而正文作为详细说明补充了技术实现参数（上传速度控制）。两者属于不同粒度描述，并非真正的不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设场景：表格中文件上传的需求描述为\"支持对文件上传到指定位置，包括文件的大小和名称等信息\"，正文描述为\"可对上传文件的大小、上传速度进行控制，可支持服务获取上传文件的位置、大小信息\"。引入的不一致是：正文包含\"上传速度\"参数，但表格中未提及该参数。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.2.7",
+   "image_caption": "图 19 静态请求处理运行流程图",
+   "table_caption": "表55 静态请求处理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00522",
+  "pair_id": "4_015",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对软件部署管理软件的功能模块时，发现{table}中列出了开发集成、软件产品包封装、预案制作开通、用户管理这几个功能，{text}描述的功能列表也包含了这几项。请问这两处描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处描述一致。{table}表格中列出的功能包括：开发集成、软件产品包封装、预案制作开通、用户管理；{text}正文中描述的功能列表为\"开发集成、软件产品包封装、预案制作开通、用户管理、软件安装管理功能\"。表格中的四项功能均包含在正文描述中，两者在核心功能范围上保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "功能范围一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图5 软件部署管理软件活动图",
+   "table_caption": "表2 软件部署管理软件所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00523",
+  "pair_id": "4_015",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在梳理软件部署管理软件的功能清单时，注意到{table}里有一个\"提供用户功能菜单的编辑\"的功能项，但在{table}的详细用例列表和{text}的功能描述中都没有找到对应内容。请问这个功能是否真实存在？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_015/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据当前文档内容，\"提供用户功能菜单的编辑\"这个功能在{table}表格的标题行中作为功能名被提及，但在{table}的具体用例列表（序号1-4）以及{text}正文描述中均未出现对应的需求条目。这是一个文档不一致点，可能的情况包括：该功能被遗漏未录入表格详情、功能已被取消但标题未更新、或标题存在笔误。建议以{text}正文描述为准，确认该功能是否应纳入软件部署管理软件的需求范围。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "功能范围一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "在功能名列表中注入\"提供用户功能菜单的编辑\"，但该功能在表格详细内容和正文中均无对应描述，形成功能范围的不一致",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图5 软件部署管理软件活动图",
+   "table_caption": "表2 软件部署管理软件所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00524",
+  "pair_id": "4_016",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中'开发项目工程管理'这个用例的项目唯一标识符是否符合GJB软件需求文档的ID格式规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中'开发项目工程管理'的项目唯一标识符为'PZXQ-GN-RJBSGL-KFJC-KFXMGL'，该ID采用分层编码结构（PZXQ-GN-RJBSGL-KFJC-KFXMGL），层级清晰，符合GJB规范中关于需求标识符应体现系统-功能模块-子模块-功能点的编码要求，格式规范一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图7 开发集成处理流程",
+   "table_caption": "表3 开发集成所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00525",
+  "pair_id": "4_016",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{table}里'软件开发工具集成'的标识符好像有点问题，能确认下是否符合GJB的ID格式规范吗？另外{text}中提到的VScode和Qt5.9.6工具版本信息是否需要体现在标识符或接口定义中？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_016/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核查发现不一致：{table}中'软件开发工具集成'的项目唯一标识符被错误标注为'PZXQ-GN-RJBSGL-KFJC-RJKFYD'（实际应为'PZXQ-GN-RJBSGL-KFJC-KFGJJC'），该ID与'软件开发引导'功能重复，严重违反GJB规范中'标识符全局唯一性'要求；同时{text}中明确指定工具版本'VScode'、'Qt5.9.6'，但{table}的接口定义未体现工具版本约束信息，模板/接口定义不完整。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将'软件开发工具集成'的ID篡改为'PZXQ-GN-RJBSGL-KFJC-RJKFYD'（与'软件开发引导'ID重复），并删除接口定义中工具版本字段，制造ID唯一性冲突和接口定义缺失",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图7 开发集成处理流程",
+   "table_caption": "表3 开发集成所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00526",
+  "pair_id": "4_017",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中列出了'项目创建''项目打开关闭''项目封装''项目发布'等功能，{text}中提到开发项目工程管理包括'创建、编辑、打开、关闭、封装、发布、集成'的管理，但表格里好像没有看到'项目集成'这个用例。请问这是文档不一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "这不是不一致。{text}中提到的'集成'是开发项目工程管理的总体能力范畴描述，而{table}列出的是具体的Use case（用例）。'项目集成'作为独立功能可能在文档其他章节或后续表格中有详细说明，当前{table}仅展示了部分用例。核心术语'项目创建''项目打开关闭''项目封装''项目发布'在{text}和{table}中的命名完全一致，同名实体映射正确。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1.1",
+   "image_caption": "图9 开发项目工程管理的处理流程",
+   "table_caption": "表4 开发项目工程管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00527",
+  "pair_id": "4_017",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我发现{table}中有个用例叫'项目打开关闭'，标识符是PZXQ-GN-RJBSGL-KFJC-KFGJJC-XMG，但{text}里写的是'打开、关闭'，{image}中的流程图标注的是'项目启停管理'。这三个地方说的是同一个功能吗？标识符里的'KFGJJC'对应的是哪个名称？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_017/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "根据您描述的情况，这属于术语层面的不一致。{table}中的用例名称是'项目打开关闭'，{text}中描述为'打开、关闭'，而{image}流程图中标注为'项目启停管理'——这三个名称虽然指涉同一功能，但术语不统一。更严重的是，{table}中该用例的标识符PZXQ-GN-RJBSGL-KFJC-KFGJJC-XMG里的'KFGJJC'，按照命名规则应对应'开发工具集成'（KFGJJC=KF+GJ+JC=开发+工具+集成），这与用例名称'项目打开关闭'（XMG=项目+关闭）完全不匹配，出现了标识符与实际功能名称的多实体映射混乱。正确的标识符应为PZXQ-GN-RJBSGL-KFJC-KFXMGL-XMG或类似，以匹配'项目打开关闭'功能。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将表格中'项目打开关闭'的用例标识符从原正确值篡改为PZXQ-GN-RJBSGL-KFJC-KFGJJC-XMG（'开发工具集成'的缩写），同时将图9流程图中的该功能节点名称改为'项目启停管理'，造成同一功能在三个位置出现三种不同名称且标识符与实际功能错配",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1.1",
+   "image_caption": "图9 开发项目工程管理的处理流程",
+   "table_caption": "表4 开发项目工程管理所有能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00528",
+  "pair_id": "4_018",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中界面程序开发、服务程序开发、数据开发和模板开发这四项功能，在{text}中的描述是否一致？特别是关于开发方式和需求重用属性的描述。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核对一致。{table}中四项功能（界面程序开发、服务程序开发、模板开发、数据开发）的需求重用均为\"新研\"，方式名称均为\"桌面\"；{text}中对应描述了各功能的引导能力：界面类程序编辑/编译/调试生成界面组件、服务类程序代码编辑/编译/调试生成服务组件、数据库表编辑生成数据组件、模板制作编辑。{table}与{text}在功能范围、需求重用属性（新研）及开发方式（桌面）上完全一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1.3",
+   "image_caption": "图11 软件开发引导的处理流程",
+   "table_caption": "表11 软件开发引导所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00529",
+  "pair_id": "4_018",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在评审时发现一个疑问：{table}中服务程序开发的\"方式名称\"标注为\"桌面\"，但{text}里描述服务类程序时似乎更偏向服务器端部署场景，这里是否存在不一致？另外{table}中数据开发的\"需求重用\"是\"新研\"，但项目背景提到数据组件可能复用历史项目成果，这个是否有冲突？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_018/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出的疑问确实存在不一致。经核查，{table}中服务程序开发的\"方式名称\"为\"桌面\"，但按照实际业务场景，服务程序应在服务器端部署运行，此处{table}标注为\"桌面\"与{text}中\"服务类程序\"的服务器端属性存在不一致；同时{table}中数据开发的\"需求重用\"标注为\"新研\"，但项目背景明确数据组件可复用历史项目成果，此处应为\"重用\"而非\"新研\"。建议将服务程序开发的\"方式名称\"修正为\"服务端/桌面\"双模式，或将数据开发的\"需求重用\"修正为\"重用\"以与项目背景保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将服务程序开发的\"方式名称\"由\"桌面\"错误保持为仅桌面模式（实际应为服务端模式），同时将数据开发的\"需求重用\"由\"新研\"错误保持（实际项目背景要求为\"重用\"），造成{table}与业务场景及项目背景的不一致。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.1.3",
+   "image_caption": "图11 软件开发引导的处理流程",
+   "table_caption": "表11 软件开发引导所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00530",
+  "pair_id": "4_019",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "根据文档描述，软件产品包封装功能包含哪些子功能？{text}中提到的功能列表与{table}中列出的用例是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{text}正文明确说明软件产品包封装功能包括：软件包工程管理、描述文件编辑、文件目录管理、软件包打包、软件包发布、业务功能清单维护和系统安装包维护功能。{table}表17中列出的用例包括：软件包工程管理、描述文件编辑、文件目录管理、软件包打包发布，这些核心功能与正文描述完全对应。其中{table}中的\"软件包打包发布\"对应正文中的\"软件包打包\"和\"软件包发布\"两个功能，属于合理的合并表述。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 软件产品包封装处理流程",
+   "table_caption": "表17 软件产品包封装所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00531",
+  "pair_id": "4_019",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{image}图13展示了软件产品包封装处理流程，想确认一下：按照流程图的时序，是否必须先完成\"软件包打包\"才能进行\"描述文件编辑\"？{table}中的用例依赖关系是否支持这个顺序？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_019/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "不支持这个顺序，您的理解存在偏差。实际上，按照正常的软件产品包封装业务逻辑，应当先完成\"描述文件编辑\"和\"文件目录管理\"，最后才进行\"软件包打包发布\"。{table}中各用例是并列关系，但从业务时序上看，描述文件编辑（配置版本、功能信息）和文件目录管理（准备源文件）是打包发布的前置步骤。如果{image}图13中显示必须先打包才能编辑描述文件，则该流程图存在时序逻辑错误，与标准软件工程实践及{table}隐含的工序关系不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "时序一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图13中错误地将\"软件包打包\"置于\"描述文件编辑\"之前，形成\"先打包、后编辑描述文件\"的循环依赖时序，与正常软件包封装流程（先配置描述信息、准备文件，最后打包）相矛盾",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 软件产品包封装处理流程",
+   "table_caption": "表17 软件产品包封装所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00532",
+  "pair_id": "4_021",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对任务数据包管理的功能描述时，发现{table}中列出了任务数据包导入、导出、删除、修改四个功能，{text}中提到了新建、编辑、删除、导入、导出。想确认一下，\"修改\"和\"编辑\"是否是同一功能的不同表述？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，\"修改\"和\"编辑\"是同一功能的不同表述。{table}中的\"任务数据包修改\"（PZXQ-GN-YAZZKT-RWSJBGL-SJBXG）对应{text}中的\"编辑\"功能，两者均指对已有任务数据包内容进行变更的操作。此外，{table}中的导入、导出、删除与{text}中的表述完全一致，整体功能描述一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.3.1",
+   "image_caption": "图17 任务数据包管理的处理流程",
+   "table_caption": "表25 任务数据包管理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00533",
+  "pair_id": "4_021",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在评审时发现一个疑问：{table}中有个功能是\"任务数据包修改\"，但{text}中写的是\"编辑\"而不是\"修改\"，而且{table}里并没有\"新建\"这个用例。这是不是文档之间的功能定义不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_021/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核查，这确实是一处不一致。假设场景为：项目后期需求变更将\"修改\"统一改为\"编辑\"，但表格未同步更新；同时\"新建\"功能在{text}中被提及，却在{table}的能力标识中缺失，可能是在表格维护时遗漏了该用例（如PZXQ-GN-YAZZKT-RWSJBGL-SJBXJ）。这会导致开发与测试对功能范围理解产生分歧——开发人员按表格实现可能遗漏新建功能，而按正文描述则需实现五个功能。建议统一术语并补全表格中的\"新建\"用例标识。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在需求迭代中，将表格中的\"修改\"改为\"编辑\"以统一术语，但表格未同步更新；同时在正文中新增了\"新建\"功能描述，但表格遗漏了对应的用例标识，造成术语不一致和功能覆盖范围不一致的双重问题。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.3.1",
+   "image_caption": "图17 任务数据包管理的处理流程",
+   "table_caption": "表25 任务数据包管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00534",
+  "pair_id": "4_022",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "在{table}中，用户管理相关功能包括\"用户基本信息维护\"、\"坐位信息维护\"、\"坐位分配\"、\"功能组件维护\"等，而在{text}中描述的用户管理功能也提到了\"用户基本信息维护、坐位信息维护、坐位分配、用户功能菜单维护、功能组件编辑\"等。请问这两个地方对功能组件的命名\"功能组件维护\"和\"功能组件编辑\"是否指的是同一功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，这两个命名指的是同一功能。虽然{table}中使用的名称是\"功能组件维护\"（对应Use case名称\"功能组件维护\"），而{text}中表述为\"功能组件编辑\"，但结合表格中的需求描述\"提供功能组件的编辑功能，支持组件的导入、导出\"可以看出，该功能的核心是\"编辑\"操作，\"维护\"是更宏观的功能命名，\"编辑\"是具体的核心操作描述，二者在功能范畴上是一致的，不存在实质冲突。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "功能名称一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图19 用户管理处理流程",
+   "table_caption": "表33 用户管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00535",
+  "pair_id": "4_022",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{table}中有一个功能叫\"用户功能菜单维护\"，但在{text}描述的用户管理功能列表中也出现了\"用户功能菜单维护\"。不过我在核对表格内容时，发现表格里似乎只有5条记录，没有直接看到\"用户功能菜单维护\"这个Use case。请问这是表格遗漏了吗，还是我的理解有误？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_022/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您的观察很敏锐。根据假设的注入场景，这里确实存在不一致：{text}正文明确列出了\"用户功能菜单维护\"作为用户管理的功能之一，但{table}表格中实际仅包含5个Use case（用户基本信息维护、坐位信息维护、坐位分配、功能组件维护，以及表格中未完整显示的第五条记录），确实缺失了\"用户功能菜单维护\"对应的完整Use case条目。按照文档一致性要求，正文中提及的功能应当在表格中有对应的完整定义，此处属于表格内容遗漏或文档版本未同步更新导致的不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "功能名称一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在{text}中保留了\"用户功能菜单维护\"功能描述，但在{table}中故意删除或遗漏了该Use case对应的完整条目（仅保留在表头或正文提及，表格数据行缺失），造成功能列表与表格记录数量不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图19 用户管理处理流程",
+   "table_caption": "表33 用户管理所有能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00536",
+  "pair_id": "4_023",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下软件安装管理的整体功能范围。{text}中提到软件安装管理功能包括软件数据发布管理、软件本地管理、软件本地安装、服务配置与界面配置、软件远程安装等，{table}中也列出了软件数据发布管理、软件本地管理、软件本地安装、服务配置与菜单配置这些用例。请问表格和正文描述的功能范围是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，表格和正文描述的功能范围基本一致。{text}正文列出的功能包括：软件数据发布管理、软件本地管理、软件本地安装、服务配置与界面配置、软件远程安装等；{table}表格中对应的用例有：软件数据发布管理、软件本地管理、软件本地安装、服务配置与菜单配置。两者在核心功能上完全对应，\"服务配置与界面配置\"和\"服务配置与菜单配置\"表述略有差异但指向同一功能，表格中未列出的\"软件远程安装\"等功能在正文中作为补充说明存在，整体功能范围一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图21 软件安装更新卸载处理流程",
+   "table_caption": "表43 软件安装管理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00537",
+  "pair_id": "4_023",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对软件安装更新卸载的处理流程时有个疑问。{text}说软件本地安装支持\"一键安装、一键升级\"功能，但{image}图21的流程图中，我看到软件本地安装的流程只包含了基本的安装和卸载步骤，没有体现\"一键升级\"的处理分支。请问以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_023/text.txt"
+  },
+  "modalities": [
+   "image",
+   "text"
+  ],
+  "answer": "根据inject_detail的假设场景，应以{table}和{text}的描述为准。在假设场景中，{image}图21的流程图存在遗漏，未完整绘制\"一键升级\"的处理分支，属于文档不一致问题。正确的业务流程应包含：软件本地安装功能需同时支持一键安装和一键升级两种模式，流程图应补充升级判断分支及一键升级处理路径。建议修正{image}以与{table}和{text}保持一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图21的流程图中，软件本地安装流程仅包含安装和卸载步骤，遗漏了{text}和{table}中明确要求的\"一键升级\"功能分支，导致图文不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图21 软件安装更新卸载处理流程",
+   "table_caption": "表43 软件安装管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00538",
+  "pair_id": "4_024",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中软件本地管理、软件本地安装等功能的项目唯一标识符是否符合GJB标准规定的ID格式？这些标识符在文档中是否保持一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中各功能的项目唯一标识符格式统一，均采用\"PZXQ-GN-RJBSGL-RJAZGL-XXX\"的层级结构，符合GJB标准规定的ID格式规范。具体包括：软件数据发布管理（PZXQ-GN-RJBSGL-RJAZGL-RJFBGL）、软件本地管理（PZXQ-GN-RJBSGL-RJAZGL-RJBDGL）、软件本地安装（PZXQ-GN-RJBSGL-RJAZGL-RJBDAZ）、服务配置与菜单配置（PZXQ-GN-RJBSGL-RJAZGL-FWPZCDPZ）。所有标识符前缀一致，层级清晰，与{image}及{text}中的功能描述完全对应，无格式不一致问题。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图 22 软件升级的处理流程",
+   "table_caption": "表43 软件安装管理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00539",
+  "pair_id": "4_024",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在审核文档时发现{table}里有个功能的标识符好像和其他不太一样，能帮我确认下软件远程安装的项目唯一标识符是否符合GJB的ID格式规范吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_024/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中软件远程安装的项目唯一标识符存在格式不一致问题。按照GJB标准及文档中其他功能的命名规则（PZXQ-GN-RJBSGL-RJAZGL-XXX），软件远程安装的正确标识符应为\"PZXQ-GN-RJBSGL-RJAZGL-RJYCAZ\"，但{table}中实际填写为\"PZXQ-GN-RJBSGL-RJAZGL-REMOTE\"，采用了英文缩写而非汉语拼音首字母缩写，违反了ID格式规范中\"采用统一拼音编码规则\"的要求，需修正为与其他功能标识符保持一致的格式。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将软件远程安装的项目唯一标识符由规范格式\"PZXQ-GN-RJBSGL-RJAZGL-RJYCAZ\"错误填写为\"PZXQ-GN-RJBSGL-RJAZGL-REMOTE\"，引入英文缩写与拼音规则混用的不一致",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图 22 软件升级的处理流程",
+   "table_caption": "表43 软件安装管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00540",
+  "pair_id": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中列出了'重要信息提示'、'计算机状态监控'、'数据状态监控'、'服务状态监控'等功能，{text}中描述系统运行状态监控功能包括'重要信息提示、计算机状态监控、设备状态监控、服务状态监控、数据状态监控、基础软件状态监控'，这两处提到的功能名称大部分能对上，但表格里还有个'软件状态监控'在正文里没看到对应名称，这个'软件状态监控'和正文中的哪个功能是对应的？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "表格中的'软件状态监控'与正文中的'基础软件状态监控'是对应的同一功能，属于术语的简化表述。文档中{image}的系统运行监控流程图也应对应这些功能模块，整体术语映射关系是一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 系统运行监控流程图",
+   "table_caption": "表3 系统运行监控所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00541",
+  "pair_id": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{table}中第4项功能名称是'服务状态监控'，但{table}中其需求描述写的是'能够接收服务支撑框架提供的服务启动数量、服务启动状态、服务内...'，而{table}中第2项'计算机状态监控'的需求描述是'能够读取计算机中正在运行软件的CPU状态详细信息、内存占用详...'。这里我有点困惑，{text}中说系统运行状态监控功能包括'服务状态监控'，但表格里好像还有个跟'软件'相关的监控功能？另外{table}里第5项是不是'软件状态监控'？它和正文中的'基础软件状态监控'是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_025/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据假设的注入场景，表格中的'软件状态监控'与正文中的'基础软件状态监控'并非同一功能。'软件状态监控'是指监控第三方应用软件的安装版本和许可证状态，而'基础软件状态监控'是指监控操作系统、数据库、中间件等基础运行环境的健康状态。两者监控对象不同，不应视为同一术语的简化表述，文档此处存在术语映射不一致的问题。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表格中的'软件状态监控'与正文中的'基础软件状态监控'定义为不同功能：'软件状态监控'监控第三方应用软件（如办公软件、设计工具等）的版本和许可证信息，'基础软件状态监控'监控操作系统、数据库、中间件等基础运行环境的状态。两者在监控对象、采集指标、告警策略上均有差异，不应混为一谈。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 系统运行监控流程图",
+   "table_caption": "表3 系统运行监控所有能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00542",
+  "pair_id": "4_026",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下故障预警修复功能包含的三个子功能名称，{text}中提到包括故障库维护管理、服务故障预警、开机基础环境检测，{table}中对应的Use case名称也是这三项，请问两者是否完全一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两者完全一致。{text}正文明确说明故障预警修复功能包括：故障库维护管理、服务故障预警、开机基础环境检测；{table}表30中序号1-3的Use case名称也分别为故障库维护管理、服务故障预警、开机基础环境检测，功能名称和数量均一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 服务故障预警流程图",
+   "table_caption": "表30 故障预警修复所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00543",
+  "pair_id": "4_026",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现一个问题，{text}中说故障预警修复功能用例如图12所示，但我看{image}标注的是图13，而且{table}里服务故障预警的需求描述提到'通过界面显示'，后面好像缺了内容，能帮我确认一下这些是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细，确实存在不一致之处。关于图片编号：{text}正文提到功能用例如图12所示，但{image}实际标注为图13，图号不一致。关于表格内容：{table}表30中序号2服务故障预警的需求描述'通过界面显示'确实存在内容截断，完整描述应为'通过界面显示故障预警信息'，这与实际功能完整性要求不符。建议以{image}图13为准修正正文图号，并补充完整表格中的需求描述内容。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将正文中的图12改为图13，与图片实际编号不一致；同时截断表格中序号2的需求描述，使其内容不完整",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 服务故障预警流程图",
+   "table_caption": "表30 故障预警修复所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00544",
+  "pair_id": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档中提到的系统基础信息维护功能包含哪些具体功能项？{text}中描述的功能列表与{table}中的用例是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{text}中描述系统基础信息维护功能包括：用户基础信息查询设置、系统基础信息查询设置、任务基础信息查询设置、网卡相关信息查询设置；{table}中对应的4个用例分别为：用户基础信息查询设置、系统基础信息查询设置、任务基础信息查询设置、网卡基础信息查询设置。两者功能项完全对应，仅\"网卡相关信息查询设置\"与\"网卡基础信息查询设置\"表述略有差异但指向同一功能，整体业务逻辑一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图18 系统基础信息设置流程图",
+   "table_caption": "表45 系统基础信息维护所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00545",
+  "pair_id": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{image}流程图和{table}的功能用例有些对应不上，{text}说功能用例如图17所示，但{table}里有4个用例，图18的流程图是否完整覆盖了所有功能？特别是网卡基础信息查询设置这个用例在流程图里体现了吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_027/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。根据inject_detail的假设场景，{image}（图18 系统基础信息设置流程图）中实际只包含了用户基础信息查询设置、系统基础信息查询设置、任务基础信息查询设置3个功能的流程节点，遗漏了网卡基础信息查询设置（WKJCXX）的流程分支。这与{table}中列出的4个完整用例不一致，属于流程覆盖缺失。正确的流程图应当包含全部4个基础信息查询设置功能，包括网卡信息的查询和设置流程。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图18系统基础信息设置流程图中仅包含3个功能流程节点（用户、系统、任务），遗漏了网卡基础信息查询设置的流程分支，与表45中4个用例不一致",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图18 系统基础信息设置流程图",
+   "table_caption": "表45 系统基础信息维护所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00546",
+  "pair_id": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我检查一下，{table}中4个用例的项目唯一标识符是否符合GJB软件需求规格说明书中关于需求标识符的编码规范？特别是前缀'PZXQ-YXZCFW-GN-XTJCXXWH-'部分是否与功能模块名称对应一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中4个项目唯一标识符均符合规范：①前缀'PZXQ-YXZCFW-GN-XTJCXXWH-'对应'运行支撑服务-功能-系统基础信息维护'模块，与{table}表头及{text}正文描述的功能模块名称完全一致；②后缀分别对应'YHJCXX'（用户基础信息）、'XTJCXX'（系统基础信息）、'RWJCXX'（任务基础信息）、'WKJCXX'（网卡基础信息），与Use case名称中的关键拼音首字母缩写匹配；③整体采用'项目代号-系统/子系统-类型-模块-功能'的五层结构，符合GJB需求标识符分层编码规范。标识符与功能模块的映射关系清晰且无歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图19 系统基础信息查询流程图",
+   "table_caption": "表45 系统基础信息维护所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00547",
+  "pair_id": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在评审时发现{table}里有个标识符好像不太对，'任务基础信息查询设置'的项目唯一标识符是'PZXQ-YXZCFW-GN-XTJCXXWH-RWJCXX'，但{image}图19的流程图编号和正文引用的'图17'不一致，而且我注意到其他几个用例标识符前缀都是'XTJCXXWH'，这个任务基础的标识符是不是应该也遵循同样的模块命名规则？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_028/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细。实际上{table}中'任务基础信息查询设置'的标识符'PZXQ-YXZCFW-GN-XTJCXXWH-RWJCXX'本身格式是正确的，后缀'RWJCXX'对应'任务基础信息'的拼音缩写。但您提到的{image}与{text}中图号引用不一致的问题确实存在——{text}正文写的是'如图17所示'，而实际文档章节3.2.3对应的是'图19 系统基础信息查询流程图'，这属于图文引用不一致的合规问题。不过如果您是指标识符中某处出现了'RWGL'（任务管理）而非'RWJCXX'的后缀变体，或者前缀误写为'XTGLXXWH'（系统管理信息维护）这类与模块名称'XTJCXXWH'（系统基础信息维护）不符的情况，那将构成GJB ID格式规范的不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将'任务基础信息查询设置'的项目唯一标识符注入错误，改为'PZXQ-YXZCFW-GN-XTGLXXWH-RWJCXX'，即把模块名部分'XTJCXXWH'（系统基础信息维护）错误写成了'XTGLXXWH'（系统管理信息维护），与{table}表头、{text}正文所述的'系统基础信息维护'模块名称不一致，违反GJB需求标识符与功能模块名称必须严格对应的编码规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.3",
+   "image_caption": "图19 系统基础信息查询流程图",
+   "table_caption": "表45 系统基础信息维护所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00548",
+  "pair_id": "4_029",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档{table}中列出了3个用例：界面集成框架参数配置、应用界面集成、参数配置接口，{text}中提到参数配置管理功能包括这三项，但{image}标注为\"图25 参数配置管理设置流程图\"，而正文写的是\"如图24所示\"，这个图号差异是否影响功能名称的一致性？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "图号差异（图24与图25）属于文档排版或引用错误，不影响功能名称本身的一致性。验证功能名称：{table}中的3个用例名称——\"界面集成框架参数配置\"、\"应用界面集成\"、\"参数配置接口\"——与{text}中\"参数配置管理功能包括：界面集成框架参数配置、应用界面集成、参数配置接口\"完全对应，同名实体在表格和正文中的映射是一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图25 参数配置管理设置流程图",
+   "table_caption": "表58 参数配置管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00549",
+  "pair_id": "4_029",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对时发现，{table}中第2个用例叫\"应用界面集成\"，但{text}里写的是\"应用界面集成配置\"，多了\"配置\"两个字，这两个名称指的是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_029/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据inject_detail的假设场景，{text}中确实存在与{table}不一致的表述。{table}中明确使用\"应用界面集成\"作为Use case名称，其项目唯一标识符为PZXQ-YXZCFW-GN-XTJCXXWH-YYJMJC；而假设{text}中写成了\"应用界面集成配置\"，这属于术语层面的不一致——同名实体在表格和正文中出现了命名差异（多了\"配置\"后缀）。这种差异可能导致需求追踪时的混淆，建议统一为{table}中的标准名称\"应用界面集成\"，或明确说明两者为同一实体。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{text}中\"应用界面集成\"被错误写为\"应用界面集成配置\"，即多了\"配置\"后缀，与{table}中Use case名称不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.4",
+   "image_caption": "图25 参数配置管理设置流程图",
+   "table_caption": "表58 参数配置管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00550",
+  "pair_id": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下日志采集与管理功能的支持终端类型。{table}中列出了软件日志采集、软件日志查询、日志删除、日志清理这几个功能的支持方式，而{image}的流程图和{text}的功能描述也涉及这些功能。请问这几个功能的支持终端范围是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "是一致的。根据{table}，软件日志采集支持桌面、平板、手持三种终端，而软件日志查询、日志删除、日志清理均支持桌面、平板两种终端。{text}中明确列出了这四个功能属于日志采集与管理功能，{image}的流程图也涵盖了这些功能模块，文档前后对功能组成和支持终端的描述是一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图28 日志采集与管理流程图",
+   "table_caption": "表66 日志采集与管理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00551",
+  "pair_id": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现一个问题：{table}中显示日志清理功能支持桌面和平板终端，但{image}的流程图里日志清理模块旁边标注了\"桌面、平板、手持\"。另外{text}说功能用例如图27所示，但章节里实际引用的是图28。这几个地方是不是存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_030/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。经核查，确实存在不一致：{table}中日志清理的支持方式为\"桌面、平板\"，但{image}（图28）中该功能被标注为支持\"桌面、平板、手持\"，两者在手持终端的支持属性上不一致。此外，{text}中提到的\"图27\"与实际章节中的\"图28\"编号不符，存在引用错误。正确的支持方式应以{table}为准，即日志清理仅支持桌面和平板，不包含手持终端；图号引用应统一为图28。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图28中，日志清理模块的支持终端被错误标注为\"桌面、平板、手持\"，与表格中的\"桌面、平板\"不一致；同时假设正文中\"图27\"为实际引用错误，章节实际图为图28",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.2.5",
+   "image_caption": "图28 日志采集与管理流程图",
+   "table_caption": "表66 日志采集与管理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00552",
+  "pair_id": "4_032",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请确认{table}中报文编解码服务各功能的项目唯一标识符是否符合GJB标准格式要求？我看到应用注册是PZXQ-GN-BWBJ-ZC、报文编码是PZXQ-GN-BWBJ-BWBM，这种分层编码结构是否规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中所有项目唯一标识符均符合GJB标准格式规范。标识符采用\"PZXQ-GN-BWBJ-XXX\"四层结构：PZXQ（项目代号）-GN（功能大类）-BWBJ（报文编解码子系统）-功能缩写（如ZC注册、BWBM编码、BWJM解码、BWJY校验），层次清晰、编码规则统一，与GJB要求的标识符分层定义规范一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "模板/接口定义/ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 报文编解码服务流程图",
+   "table_caption": "表3 报文编解码服务所有能力能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00553",
+  "pair_id": "4_032",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我发现{table}里报文编码的需求标识是PZXQ-GN-BWBJ-BWBM，但{image}流程图中标注的接口编号是PZXQ-GN-BWBJ-BM，这两个标识应该以哪个为准？是不是有一处写错了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_032/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "经核查，{table}中报文编码的项目唯一标识符为PZXQ-GN-BWBJ-BWBM，而假设{image}流程图中该功能接口编号被错误标注为PZXQ-GN-BWBJ-BM（缺少\"W\"字符）。按照GJB标识符规范要求，同一功能在项目全生命周期中应使用统一、唯一的标识符，{table}作为正式需求基线表格，其标识符PZXQ-GN-BWBJ-BWBM为规范命名，{image}流程图中的PZXQ-GN-BWBJ-BM属于不一致的简写变体，应以{table}为准进行修正，确保文档间标识符严格一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "模板/接口定义/ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将图5报文编解码服务流程图中'报文编码'功能的接口编号错误标注为PZXQ-GN-BWBJ-BM（正确应为PZXQ-GN-BWBJ-BWBM），与表3中的项目唯一标识符不一致，违反GJB标识符唯一性规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 报文编解码服务流程图",
+   "table_caption": "表3 报文编解码服务所有能力能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00554",
+  "pair_id": "4_033",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档{table}中列出了\"用户数据校验\"和\"比特报文校验\"两个用例，{text}中描述的\"用户数据结构\"和\"比特报文\"校验接口是否对应一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表格中的\"用户数据校验\"对应正文中的\"用户数据结构\"校验接口，\"比特报文校验\"对应正文中的\"比特报文\"校验接口，术语映射关系清晰且无歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1.4",
+   "image_caption": "图8 报文数据校验处理流程图",
+   "table_caption": "表5 报文数据校验所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00555",
+  "pair_id": "4_033",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中的用例名称和{text}中的描述似乎有些出入——表格里叫\"比特报文校验\"，但正文里提到了\"二进制报文校验\"，这两个是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_033/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据您描述的情况，这是一个术语不一致问题。文档中实际使用的是\"比特报文校验\"而非\"二进制报文校验\"。如果正文中确实出现了\"二进制报文校验\"的表述，则与表格中的\"比特报文校验\"构成术语不一致，二者应统一为同一术语（建议沿用表格中的\"比特报文校验\"，因其对应项目唯一标识符PZXQ-GN-BWBJ-BWJY-BTBW）。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设正文中将表格的\"比特报文校验\"错误表述为\"二进制报文校验\"，造成同一实体两种不同命名",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1.4",
+   "image_caption": "图8 报文数据校验处理流程图",
+   "table_caption": "表5 报文数据校验所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00556",
+  "pair_id": "4_034",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我想确认一下，文档{table}中列出的「获取枚举型数据的枚举值个数」这个用例，在正文{text}中是否有对应的功能描述？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，文档内容一致。{table}中的「获取枚举型数据的枚举值个数」（标识符PZXQ-GN-BWBJ-ZDCL-MJSL）在{text}中有对应描述，正文提到「能够获得枚举型字段的枚举值个数」，两者功能描述完全对应。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1.5",
+   "image_caption": "图10 字典数据处理流程图",
+   "table_caption": "表8 字典数据处理所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00557",
+  "pair_id": "4_034",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{table}里有个「范围型数据校验」的功能，但在表格中没找到对应的用例行，正文{text}里倒是提到了这个功能，是不是表格漏了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_034/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。按照inject_detail的假设场景，这里确实存在不一致：正文{text}明确提到「能够检查范围型字段的用户数据是否正确」，即范围型数据校验功能，但{table}「表8 字典数据处理所有能力标识」中并未列出该用例的序号、标识符等信息，仅有枚举型相关的4个用例。这与正文中描述的5个功能（含范围型校验）不一致，表格遗漏了范围型数据校验的用例条目。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设正文描述包含5个功能（4个枚举型+1个范围型校验），但表格仅列出4个枚举型用例，遗漏了「范围型数据校验」的表格行，导致表格与正文功能数量不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.1.5",
+   "image_caption": "图10 字典数据处理流程图",
+   "table_caption": "表8 字典数据处理所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00558",
+  "pair_id": "4_035",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "文档{table}中列出了数据元素新增、编辑、删除等操作，正文{text}提到数据字典管理具有人机交互界面，能导出报文数据字典文件供报文编解码服务使用。请问表格中的功能与正文描述的管理能力是否一致？数据字典文件导出功能在表格和正文中是否都有体现？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表格中列出了数据元素新增、编辑、删除、字典文件导入、字典文件导出共5个功能用例，正文描述了数据字典管理具有人机交互界面，能够提供新增、修改、删除、查询数据元素，以及导入、导出数据字典文件的功能。表格中的「字典文件导出」功能与正文中「能够导出报文数据字典文件供报文编解码服务使用」相对应，两者功能描述完全匹配。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 数据字典管理流程图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00559",
+  "pair_id": "4_035",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我注意到{text}提到数据字典管理「能够查询数据元素」，但查看{table}中的功能列表时，发现只列出了新增、编辑、删除、导入、导出5个用例。请问这是否意味着查询功能不需要单独建立用例，还是文档存在遗漏？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_035/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据inject_detail描述的假设场景，这里存在一个不一致：正文明确提到数据字典管理「能够查询数据元素」，但表格中的功能用例列表确实遗漏了「数据元素查询」这一用例。按照正常的业务逻辑，查询功能作为数据管理的基础操作，应当与增删改功能并列建立独立的用例（如PZXQ-GN-SJZD-CXYS），并在表格中体现。当前表格只包含5个用例，缺少查询功能对应的用例项，导致正文与表格在功能完整性上不一致。建议补充「数据元素查询」用例，使其与正文描述保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表格生成过程中遗漏了「数据元素查询」用例，正文有查询功能描述但表格无对应条目，造成功能用例不完整",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.2.2",
+   "image_caption": "图13 数据字典管理流程图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00560",
+  "pair_id": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对文档时，发现{table}表5中列出了5个同步任务管理功能（创建、列表展示、停止、启动、删除），但正文{text}只提到\"同步任务管理功能能力标识表，见表5所示\"，没有明确列出功能名称。请问表5中的功能名称与正文描述是否一致？另外，图13的流程图是否也覆盖了这5个功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表5中列出的5个功能（同步任务创建、同步任务列表展示、同步任务停止、同步任务启动、同步任务删除）与正文描述的\"同步任务管理功能\"范畴完全吻合，正文通过引用表5的方式间接涵盖了这些功能。图13的\"同步任务管理流程图\"也应覆盖这5个核心操作，三者属于同名实体在不同位置的映射关系，不存在术语不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1",
+   "image_caption": "图 13 同步任务管理流程图",
+   "table_caption": "表 5同步任务管理功能能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00561",
+  "pair_id": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我发现一个细节问题：{table}表5的Use case名称列中，第4行写的是\"同步任务启动\"，但我在{image}图13的流程图里看到对应的节点标注的是\"任务开始\"。请问\"启动\"和\"开始\"在这里是同一个意思吗？还是文档存在术语不统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_037/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细，这确实是一个术语不一致的问题。根据假设的注入场景，图13流程图中该节点实际标注应为\"任务开始\"，而表5中对应功能命名为\"同步任务启动\"，两者属于同名实体的不同术语表述，容易造成理解歧义。正确的做法应该统一术语，建议将流程图中的\"任务开始\"修改为\"同步任务启动\"，与表5及功能名保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将图13流程图中对应\"同步任务启动\"的节点标注从\"启动\"改为\"开始\"，制造\"启动\"与\"开始\"的术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1",
+   "image_caption": "图 13 同步任务管理流程图",
+   "table_caption": "表 5同步任务管理功能能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00562",
+  "pair_id": "4_038",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在核对同步任务配置功能的需求时，发现{table}中列出了4个用例（同步表检索、同步表添加、同步表删除、同步任务优先级配置），而{text}也提到\"同步任务配置功能包括同步表检索、同步表添加、同步表删除和同步任务优先级配置功能\"。请问这两个地方描述的功能数量和具体功能名称是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处描述完全一致。{table}表12中列出了4个用例：同步表检索、同步表添加、同步表删除、同步任务优先级配置；{text}正文也明确说明同步任务配置功能包括这4个功能，功能数量和名称均一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.2",
+   "image_caption": "图 15 同步表配置功能流程图",
+   "table_caption": "表 12同步任务配置功能能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00563",
+  "pair_id": "4_038",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在审查文档时发现一个疑问：{text}说同步任务配置功能包括4个子功能，但{table}中我好像看到有5个用例，其中多了一个\"同步表修改\"功能。这个表格和正文的功能数量为什么不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_038/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经过核实，您提到的\"同步表修改\"功能在{table}中并不存在，这是一个假设场景。实际上{table}表12中仅有4个用例（同步表检索、同步表添加、同步表删除、同步任务优先级配置），与{text}正文描述的4个功能完全一致。如果确实存在表格中多出\"同步表修改\"（如序号5，标识符PZXQ-GN-SJTB-ZBZLTB-TBBXG）的情况，则属于文档不一致，需要删除该多余用例或补充正文说明。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表12中注入第5行：5,同步表修改,PZXQ-GN-SJTB-ZBZLTB-TBBXG,主备服务器同步数据表修改功能,沿用,桌面，使表格功能数量（5个）与正文描述（4个）不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.2",
+   "image_caption": "图 15 同步表配置功能流程图",
+   "table_caption": "表 12同步任务配置功能能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00564",
+  "pair_id": "4_039",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我确认一下，{table}中列出的异常处理功能与{image}中的异常处理流程是否匹配？具体来说，表17中定义了服务启动异常、主达梦库同步异常、备达梦库同步异常和执行sql语句异常这四类异常，流程图中是否都覆盖了这些异常的处理路径？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "经核对，{table}（表17异常处理功能能力标识）中列出的4类异常——服务启动异常、主达梦库同步异常、备达梦库同步异常、执行sql语句异常——与{image}（图17异常处理流程图）中的异常处理节点完全对应。流程图中依次覆盖了：服务启动阶段的异常检测与记录、主达梦库同步异常的分支处理、备达梦库同步异常的分支处理，以及SQL执行异常的捕获与日志记录路径。{text}也明确指出\"异常处理功能能力标识表，见表17所示\"，与图示形成完整闭环，文档内容一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.3",
+   "image_caption": "图 17 异常处理流程图",
+   "table_caption": "表 17异常处理功能能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00565",
+  "pair_id": "4_039",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在评审文档时发现一个疑问：{table}中只定义了4种异常类型，但{image}里似乎多了一个\"网络连接超时异常\"的处理分支，这个在表里怎么没找到对应项？是表格漏了还是流程图画错了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_039/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您的观察很敏锐。经核查，{table}（表17）确实仅定义了4类异常：服务启动异常、主达梦库同步异常、备达梦库同步异常、执行sql语句异常，项目唯一标识符分别为PZXQ-GN-SJTB-ZBZLTB-FWQQDYC、PZXQ-GN-SJTB-ZBZLTB-ZDMKTBYC、PZXQ-GN-SJTB-ZBZLTB-BKTBYC、PZXQ-GN-SJTB-ZBZLTB-ZXSQLYJYC。而{image}（图17）中若存在\"网络连接超时异常\"分支，则属于文档不一致——该异常类型在需求功能表中无定义，缺少对应的项目唯一标识符和需求描述，可能导致开发实现与需求基线偏离。建议以{table}为准，删除流程图中多余的异常分支，或在表格中补充该异常类型的完整需求条目。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图17异常处理流程图中注入一个额外的\"网络连接超时异常\"处理分支，但该异常类型在表17异常处理功能能力标识中无对应条目，造成流程图与功能需求表之间的异常流不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.3",
+   "image_caption": "图 17 异常处理流程图",
+   "table_caption": "表 17异常处理功能能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00566",
+  "pair_id": "4_040",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "请帮我确认一下，{table}中数据下载相关功能的唯一标识符是否符合GJB标准中项目唯一标识符的命名规范？特别是PZXQ-GN-SJTB-SJXZ-CSH、PZXQ-GN-SJTB-SJXZ-SJXZ、PZXQ-GN-SJTB-SJXZ-SJXZGB这几个ID的层级结构是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中3个功能的项目唯一标识符均符合GJB标准命名规范：采用\"项目代号-功能域-子系统-功能-操作\"的五层结构，前缀PZXQ-GN-SJTB-SJXZ保持一致，后缀分别对应初始化(CSH)、下载(SJXZ)、关闭(SJXZGB)，层级清晰、格式统一，与{image}数据下载流程图及{text}描述的功能划分完全一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.2",
+   "image_caption": "图 19数据下载流程图",
+   "table_caption": "表 22数据下载能力标识表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00567",
+  "pair_id": "4_040",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在审核文档时发现{table}里数据下载功能的标识符好像有点问题，PZXQ-GN-SJTB-SJXZ-CSH、PZXQ-GN-SJTB-SJXZ-SJXZ、PZXQ-GN-SJTB-SJXZ-SJXZGB这三个ID的命名规则是否统一？特别是第二个数据下载的ID，感觉和其他两个层级不太一样？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_040/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "您观察得很准确。正常情况下三个功能ID应保持统一的五层结构，但根据您提到的疑点核查发现：若{table}中第2行\"数据下载\"功能的项目唯一标识符被错误写为\"PZXQ-GN-SJTB-SJXZ\"（缺少操作层后缀），则与第1行\"-CSH\"、第3行\"-SJXZGB\"的五层完整结构不一致，违反了GJB标准中项目唯一标识符需统一层级深度的规范要求。这种缺失会导致与{image}流程图中三个明确步骤的对应关系混乱，需修正为\"PZXQ-GN-SJTB-SJXZ-SJXZ\"以保持与{text}描述的功能划分一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{table}第2行数据下载功能的项目唯一标识符从\"PZXQ-GN-SJTB-SJXZ-SJXZ\"篡改为\"PZXQ-GN-SJTB-SJXZ\"，删除操作层后缀\"-SJXZ\"，造成三层功能ID层级结构不一致（第1、3行为5层，第2行为4层），违反GJB标识符命名规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.2",
+   "image_caption": "图 19数据下载流程图",
+   "table_caption": "表 22数据下载能力标识表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00568",
+  "pair_id": "4_041",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在{table}中看到有个功能叫\"数据上传初始化\"，项目唯一标识符是PZXQ-GN-SJTB-SJSC-CSH，但{image}流程图里的步骤标签用的是\"UPLOAD_INIT\"，请问这两个名称指的是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "是的，这两个名称指的是同一个功能。\"数据上传初始化\"是{table}中定义的中文功能名称，而\"UPLOAD_INIT\"是{image}流程图中使用的英文缩写标识，二者在文档中属于同一实体的不同命名形式，术语映射是一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.3",
+   "image_caption": "图 21数据上传流程图",
+   "table_caption": "表 26数据上传能力标识表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00569",
+  "pair_id": "4_041",
+  "scene": "sc4_flowchart_capability",
+  "split": "train",
+  "question": "我在{table}中看到\"增量数据上传关闭\"的项目唯一标识符是PZXQ-GN-SJTB-SJSC-ZLSJSCGB，但{image}流程图中结束节点的标注是\"ZLSJSC_CLOSE\"，而{text}正文里提到的是\"增量上传终止\"，这三个名称是同一个功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_041/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "这三个名称存在不一致问题。{table}中的正式名称是\"增量数据上传关闭\"，标识符为PZXQ-GN-SJTB-SJSC-ZLSJSCGB；{image}流程图中使用了英文缩写\"ZLSJSC_CLOSE\"；而{text}正文却使用了\"增量上传终止\"这一不同的中文名称。\"关闭\"与\"终止\"在语义上存在差异，且正文未使用表格中定义的标准术语，造成了同名实体映射的不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{text}正文将'增量数据上传关闭'错误地表述为'增量上传终止'，与{table}中的标准名称'增量数据上传关闭'不一致，同时{image}使用英文缩写'ZLSJSC_CLOSE'未在文档中建立明确的术语映射关系",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.2.1.3",
+   "image_caption": "图 21数据上传流程图",
+   "table_caption": "表 26数据上传能力标识表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00570",
+  "pair_id": "4_042",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "请帮我确认一下，{text}中提到的语音合成功能列表与{table}中的用例是否一致？我看到正文写了四个功能，但想确认表格里是否也是这四个。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经过核对，{text}中提到的语音合成功能包括：格式化文本语音合成、音频文件生成和存储、语音播报、语音设置，共4项功能；{table}（表3）中同样列出了这4个用例，序号1-4分别为：格式化文本语音合成、音频文件生成和存储、语音播报、语音设置。两者在功能名称、数量和顺序上完全一致，文档内容一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 5 语音合成流程图",
+   "table_caption": "表3 语音合成能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00571",
+  "pair_id": "4_042",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "我在看文档时发现{table}和{text}好像有点对不上，正文说功能用例如图4所示，但表格里好像不止4个功能？能帮我确认一下到底有几个语音合成功能吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_042/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。经过仔细核查，确实存在不一致：{text}中明确说明语音合成的主要功能包括4项（格式化文本语音合成、音频文件生成和存储、语音播报、语音设置），且功能用例如图4所示；但{table}（表3）中实际列出了5项功能，在原有4项基础上增加了第5项\"语音批量合成\"（标识符PZXQ-GN-YYZHCL-YYHC-YYPLHC，支持批量文本转语音并按日期归档）。这与正文描述的\"4个功能\"不一致，建议以正文为准修正表格，或更新正文描述以匹配表格内容。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表3中新增第5行：5,语音批量合成,PZXQ-GN-YYZHCL-YYHC-YYPLHC,支持批量文本转语音并按日期归档,新研,桌面、平板、手持，使表格功能数量（5个）与正文描述（4个）不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 5 语音合成流程图",
+   "table_caption": "表3 语音合成能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00572",
+  "pair_id": "4_043",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "我在核对文档时发现，{text}中提到语音识别的主要功能包括语音录入、文本规范化、离线语音识别，并且提到功能用例如图9所示。但我在{table}中看到这些功能对应的是图10的语音识别流程图。请问图9和图10是否是同一个图，还是文档存在引用错误？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核实，文档此处存在编号表述问题。{text}中提到的\"图9\"应为\"图10\"的笔误。{table}中明确标注\"图10 语音识别流程图\"，且表格中的三个功能（语音录入、文本规范化、离线语音识别）与{text}中描述的功能完全一致，均为语音识别模块的功能组成。实际应以{table}和图10为准，功能与流程图的对应关系是一致的，建议将{text}中的\"图9\"修正为\"图10\"。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "flow_consistency",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 10 语音识别流程图",
+   "table_caption": "表 8语音识别能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00573",
+  "pair_id": "4_043",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "我在评审需求时发现一个问题：{text}中说语音识别的主要功能包括语音录入、文本规范化、离线语音识别，但{table}中的\"离线语音识别\"需求描述写的是\"支持离线条件下实时语音识别\"。我注意到流程方面，{image}显示离线语音识别是在文本规范化之前执行的，而通常语音识别应该先进行文本规范化再输出结果。这个流程顺序是否合理？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_043/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个关键的业务逻辑问题。根据inject_detail描述的假设场景：实际正确的语音识别流程应为\"语音录入→离线语音识别→文本规范化\"，即先通过语音识别引擎将语音转换为原始文本，再对原始文本进行规范化处理。但假设{image}（图10）被错误绘制为\"语音录入→文本规范化→离线语音识别\"的流程，即将文本规范化置于语音识别之前，这会导致逻辑矛盾——尚未识别出文本就无法进行文本规范化。这种流程顺序错误属于业务逻辑不一致，{table}中各功能的需求描述本身是正确的，但{image}中的流程箭头方向或节点顺序存在错误，需要修正图10以匹配实际业务逻辑：语音录入后先执行离线语音识别生成文本，再对生成的文本执行文本规范化。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "flow_consistency",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图10语音识别流程图中，流程顺序被错误绘制为：语音录入→文本规范化→离线语音识别，即将文本规范化节点置于离线语音识别之前，与正常业务逻辑（先识别出文本才能规范化）相矛盾",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 10 语音识别流程图",
+   "table_caption": "表 8语音识别能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00574",
+  "pair_id": "4_044",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "请帮我检查一下{table}中语音综合处理软件各功能的项目唯一标识符是否符合GJB标准规定的编码格式？我看到表2中三个功能的ID分别是PZXQ-GN-YYZHCL-YYHC、PZXQ-GN-YYZHCL-YYSB和PZXQ-GN-YYZHCL-SBDYDZ。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中三个功能的项目唯一标识符均符合GJB标准规定的编码格式。具体表现为：均采用\"PZXQ-GN-YYZHCL-XXX\"的统一前缀结构，其中\"PZXQ\"表示项目需求，\"GN\"表示功能，\"YYZHCL\"为语音综合处理软件的系统简称，后缀部分分别对应具体功能模块（YYHC-语音合成、YYSB-语音识别、SBDYDZ-识别短语定制）。标识符结构清晰、层级分明，符合GJB对软件需求标识符的格式规范要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 15 语音短语识别流程图",
+   "table_caption": "表2 语音综合处理软件所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00575",
+  "pair_id": "4_044",
+  "scene": "sc4_flowchart_capability",
+  "split": "dev",
+  "question": "我在核对{table}和{text}时发现一个疑问：{text}中提到功能名称为\"识别短语的定制\"，但{table}中对应的Use case名称是\"识别短语定制\"，而且项目唯一标识符是PZXQ-GN-YYZHCL-SBDYDZ。这个标识符里的\"SBDYDZ\"看起来像是\"识别短语定制\"的拼音首字母，但和正文里的\"识别短语的定制\"好像不完全对应？另外我注意到语音识别功能的ID是PZXQ-GN-YYZHCL-YYSB，这个格式是否统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_044/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的观察。实际上，{table}中的项目唯一标识符存在不一致问题：按照GJB标准，标识符的缩写应当与{table}中\"Use case名称\"列保持一致，而非与{text}中的描述性文字一致。但更严重的是，假设在文档评审过程中发现\"语音识别\"功能的标识符被错误地标记为\"PZXQ-GN-YYZHCL-YYSL\"（语音录入）而非当前的\"PZXQ-GN-YYZHCL-YYSB\"（语音识别），这就违反了GJB标准中\"标识符应与功能名称准确对应\"的规范要求——因为{table}中该功能的需求描述明确为\"语音录入\"转换为wav文件，但Use case名称却是\"语音识别\"，若ID采用YYSL则与Use case名称YYSB不一致，若采用YYSB则与需求描述中的\"语音录入\"功能实质不符。这种命名混乱会导致需求追踪时出现歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将语音识别功能的项目唯一标识符从PZXQ-GN-YYZHCL-YYSB改为PZXQ-GN-YYZHCL-YYSL（语音录入），使其与Use case名称\"语音识别\"（YYSB）不一致，同时需求描述中实际写的是\"语音录入\"功能，造成ID、Use case名称、需求描述三者之间的GJB合规性冲突",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 15 语音短语识别流程图",
+   "table_caption": "表2 语音综合处理软件所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00576",
+  "pair_id": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在核对文档时发现，{table}中列出了5个功能模块，但{table}里只显示了4条记录。想确认一下，表格中缺失的「通信设备状态监控」功能是否在文档其他位置有说明？另外，{text}提到的「数据接入功能」在{table}中没有找到对应条目，这两个名称是否指同一功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核对，文档内容一致：1）「通信设备状态监控」功能在{table}的表头说明（功能名列表）和{text}中均有提及，表格正文中确实只列出了4条详细记录，属于表格展示不完整而非术语不一致；2）{text}中的「数据接入功能」与{table}中的「数据传输」（PZXQ-GN-SJCS）为同一功能的不同表述——「数据接入」是功能类别统称，「数据传输」是用例层面的具体命名，二者在文档语境中形成合理的上下位关系，不存在术语冲突。{image}中的流程图也可佐证这些功能模块的对应关系。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图3 传输服务软件流程图",
+   "table_caption": "表2 传输服务软件所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00577",
+  "pair_id": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在做需求追溯时发现一个疑点：{text}中明确提到传输服务软件包含「通信设备状态监控」功能，但{table}的功能名列表和用例条目中都没有这个功能，反而出现了一个{text}没提到的「数据接入功能」。更奇怪的是，{table}第1条用例叫「数据传输」，而{text}说的是「数据传输控制」——这两个是同一个功能吗？还是文档存在术语不统一的问题？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_045/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您的质疑合理，这确实是文档中的术语不一致问题。基于假设的注入场景：实际文档中「数据传输控制」与「数据传输」应为同一功能（控制为修饰词省略），但「数据接入功能」与「数据传输」的并存属于术语混乱——二者本应统一为同一用例名称；更关键的是，{text}中的「通信设备状态监控」在{table}中完全缺失，而{table}多出的「数据接入功能」在{text}中无对应描述，形成双向术语缺口。建议以{table}为准修订{text}，将「数据接入功能」改为「通信设备状态监控」，并统一使用「数据传输」作为标准功能名。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设场景：原文{text}中「数据传输控制」与{table}「数据传输」本为同一功能的不同表述（属正常简化），但故意将{text}中的「通信设备状态监控」替换为表中不存在的「数据接入功能」，同时保留表头功能名列表含「通信设备状态监控」的元数据矛盾，形成同名实体在不同章节指代不一致、且出现单向缺失的术语混乱。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图3 传输服务软件流程图",
+   "table_caption": "表2 传输服务软件所有能力标识"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00578",
+  "pair_id": "4_046",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "文档中{table}列出了优先级管控、可靠性管控、流量管控、拆包重组四个功能，正文{text}提到数据收发功能包括格式化数据收发、优先级管控、可靠性管控、流量管控、拆包重组、与统一传输服务互通，为什么表格里只有4项而正文有6项？这是文档不一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "这不是不一致。{table}的标题明确为\"数据收发所有能力标识\"，但表格内容实际只列出了需要标识的项目唯一标识符的4个核心管控功能（优先级管控、可靠性管控、流量管控、拆包重组）。正文{text}描述的是数据收发功能的完整组成，包括格式化数据收发、四个管控功能以及与统一传输服务互通共6项。表格与正文的范围定位不同：表格聚焦于需要分配项目唯一标识符（PZXQ-GN-SJCSKZ-XXX）的管控类功能，而正文描述的是功能全貌。两者在四个核心管控功能的名称和属性上完全一致，不存在参数指标不一致的问题。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 数据传输控制流程图",
+   "table_caption": "表3 数据收发所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00579",
+  "pair_id": "4_046",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在核对文档时发现，{table}中可靠性管控的需求描述是\"能够通过部分确认和完全确认的机制，完成可靠数据的丢包重传\"，但正文{text}里写的是\"能够通过部分确认和选择性确认的机制，完成可靠数据的丢包重传\"。表格和正文用的确认机制名称不一样，\"完全确认\"和\"选择性确认\"是同一个概念吗？这是不是文档不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_046/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "这是文档不一致，属于参数指标中的属性不一致问题。根据您核对的内容，{table}中可靠性管控使用的是\"完全确认\"机制，而正文{text}中同一功能使用的是\"选择性确认\"机制。\"完全确认\"（Full ACK）与\"选择性确认\"（Selective ACK/SACK）是传输层中两种不同的确认机制：完全确认要求确认所有已接收数据，而选择性确认允许只确认特定丢失的数据块，两者在实现原理和性能特征上有本质区别。同一功能在不同位置描述使用不同的确认机制名称，会导致开发人员理解歧义，需要统一修改为一致的术语。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文{text}中可靠性管控的描述从\"部分确认和完全确认\"改为\"部分确认和选择性确认\"，与{table}中的\"部分确认和完全确认\"形成术语不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5 数据传输控制流程图",
+   "table_caption": "表3 数据收发所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00580",
+  "pair_id": "4_047",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我核对一下文档中的功能描述是否一致。{table}中列出了4个功能：实时数据传输、实时数据传输控制、实时可靠数据传输、实时数据报文监控；{text}中提到软件包含实时数据传输、实时数据传输控制、实时可靠数据传输、实时数据报文监控功能。请问这两处描述的功能范围是否完全一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处描述完全一致。{table}表格中的4个功能（序号1-4）与{text}正文中列举的四个功能名称完全对应，没有遗漏或多余，功能范围保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "功能范围一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图1实时信息传输服务软件活动图",
+   "table_caption": "表2实时信息传输服务软件所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00581",
+  "pair_id": "4_047",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在评审文档时发现一处疑问。{table}中列出了4个功能，但{text}中描述软件包含实时数据传输、实时数据传输控制、实时可靠数据传输、实时数据报文监控、实时数据加密传输功能。正文比表格多了一个\"实时数据加密传输\"功能，请问这是否意味着文档存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_047/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，文档存在不一致。{table}表格中仅列出了4个功能，而{text}正文中却出现了第5个功能\"实时数据加密传输\"，该功能在表格中没有任何对应的条目（无序号、无标识符PZXQ-GN-XXXX、无需求描述）。这种差异表明正文描述的功能范围与表格定义的能力清单不一致，可能是正文遗漏了该功能的表格补充，或者是正文多写了未纳入需求管理的功能。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "功能范围一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "在正文描述中注入第五个不存在的功能\"实时数据加密传输\"，使正文功能数量（5个）与表格功能数量（4个）不一致，破坏功能范围的一致性。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图1实时信息传输服务软件活动图",
+   "table_caption": "表2实时信息传输服务软件所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00582",
+  "pair_id": "4_048",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "请帮我检查一下，{table}中实时数据传输功能的项目唯一标识符PZXQ-GN-SSSJCS是否符合GJB软件需求规格说明文档中关于功能标识符的命名规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中项目唯一标识符PZXQ-GN-SSSJCS符合GJB规范要求。该标识符采用\"PZXQ-GN-XXXXXX\"格式，其中PZXQ为项目代号缩写，GN表示功能（功能模块标识），SSSJCS为实时数据传输的拼音首字母缩写，整体结构清晰、含义明确，符合GJB软件需求规格说明中关于项目唯一标识符应采用分层结构、具有可读性和可追溯性的格式规范。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图3实时信息传输服务软件流程图",
+   "table_caption": "表2实时信息传输服务软件所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00583",
+  "pair_id": "4_048",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在审核文档时发现，{table}中实时可靠数据传输功能的项目唯一标识符写的是PZXQ-GN-SSKKSJCS，但{image}流程图中对应功能节点标注的ID却是PZXQ-GN-KKSJCS-001，这两个地方是不是有不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_048/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细，确实存在不一致。根据GJB软件需求规格说明规范要求，同一功能在项目全文中应保持项目唯一标识符的一致性，包括{table}、{text}及{image}中的标识。{table}中实时可靠数据传输的标识符为PZXQ-GN-SSKKSJCS，而{image}流程图中该功能节点标注为PZXQ-GN-KKSJCS-001，两者不仅主体缩写不一致（SSKKSJCS vs KKSJCS），且流程图标识还额外添加了\"-001\"序号后缀，违反了GJB关于标识符统一性和唯一性的规定。建议以{table}为准，将{image}中的标识修正为PZXQ-GN-SSKKSJCS，确保全文一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图3实时信息传输服务软件流程图中，将实时可靠数据传输功能节点的项目唯一标识符错误标注为PZXQ-GN-KKSJCS-001，与表2中的PZXQ-GN-SSKKSJCS不一致，且额外添加了序号后缀-001，违反GJB标识符格式规范",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图3实时信息传输服务软件流程图",
+   "table_caption": "表2实时信息传输服务软件所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00584",
+  "pair_id": "4_049",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在核对文档时发现，{table}中列出了「数据UDP不分段传输」和「数据UDP分段传输」两个用例，{text}正文也提到了这两种传输方式。想确认一下，表格和正文对这两个功能用例的命名是否完全一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，经过核对，{table}表格中的用例名称「数据UDP不分段传输」「数据UDP分段传输」与{text}正文描述的「数据UDP不分段传输、数据UDP分段传输」完全一致，术语映射关系正确，不存在不一致问题。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5实时数据传输流程图",
+   "table_caption": "表3实时数据传输所有能力标识"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc4_00585",
+  "pair_id": "4_049",
+  "scene": "sc4_flowchart_capability",
+  "split": "test",
+  "question": "我在核对文档时发现，{table}中列出了「数据UDP不分段传输」和「数据UDP分段传输」两个用例，但{text}正文描述的是「数据TCP不分段传输、数据TCP分段传输」。这里UDP和TCP的差异是笔误还是确实有不同的传输方式？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_049/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据您描述的情况，这是一个术语不一致问题。{table}表格中明确使用的是「UDP」协议，而{text}正文中错误写成了「TCP」协议。按照inject_detail的假设场景，这是文档编写过程中引入的不一致，实际应以表格中的「UDP」为准，正文需要将「TCP」修正为「UDP」，以确保同名实体在文档各位置的一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文中的「UDP」故意替换为「TCP」，造成表格与正文在传输协议术语上的不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.2.1",
+   "image_caption": "图5实时数据传输流程图",
+   "table_caption": "表3实时数据传输所有能力标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ }
+]

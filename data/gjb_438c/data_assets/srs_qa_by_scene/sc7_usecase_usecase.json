@@ -1,0 +1,622 @@
+[
+ {
+  "qid": "srs_sc7_00638",
+  "pair_id": "7_001",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "我想确认一下，{table}中提到的'开发工程生成'用例和{text}中描述的'开发工程生成'功能是否是同一个功能？表格里说Actors是开发人员，正文里说提供用户进行基于界面框架二次开发的模板工程，这两个描述能对应上吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，{table}和{text}中描述的'开发工程生成'是同一个功能，描述一致。{table}中明确Actors为'开发人员'，{text}中说明是'提供用户进行基于界面框架二次开发的模板工程'，这里的'用户'即指开发人员，两者指向同一类角色。同时，{table}中的用例名称'开发工程生成'与{text}中的功能名称完全一致，且都涉及模板工程的生成，术语使用统一，不存在歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00639",
+  "pair_id": "7_001",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "我注意到{table}里有个'开发工程生成'用例，但{text}正文里写的是'开发工程生成是提供用户进行基于界面框架二次开发的模板工程'，这里说的'用户'是不是和表格里的'开发人员'不一致？另外，{image}中的用例图是否也支持'开发人员'这个Actor？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的观察。实际上，根据inject_detail的假设场景，这里存在一个术语不一致的问题：{text}正文中使用的是泛指的'用户'一词，而{table}表格中明确将Actors定义为'开发人员'，{image}用例图中也标注的是'开发人员'。如果严格按照术语一致性要求，{text}中的'用户'应统一为'开发人员'，以避免角色指代模糊——因为'用户'可能包含最终用户、测试人员等其他角色，与用例图中特指的'开发人员'Actor不完全等价。这种不一致可能导致需求理解偏差，建议将正文中的'用户'修改为'开发人员'以保持全文术语统一。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{text}正文中的'用户'未与{table}及{image}中的'开发人员'保持术语统一，将特指角色泛化为通用称呼，造成同名实体（开发人员/用户）映射不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00640",
+  "pair_id": "7_002",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "在{table}中，数据库关闭用例的Actors被定义为'应用软件'，而在{text}中描述为'数据库关闭用例场景，见表8所示'，请问这两个地方对参与者的描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处描述一致。{table}中明确Actors为'应用软件'，{text}虽然未重复列出Actors名称，但通过引用'见表8所示'指向了同一表格内容，且{image}图8数据库关闭用例图也与表格中的Actors定义保持一致，均表明数据库关闭用例由应用软件发起。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00641",
+  "pair_id": "7_002",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中数据库关闭用例的Actors是'应用软件'，但{image}图8数据库关闭用例图中似乎显示Actors为'系统管理员'，这和正文描述是否矛盾？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细。根据inject_detail假设的场景，这里确实存在不一致：{table}表格中明确Actors为'应用软件'，但假设{image}图8中错误地将Actors标注为'系统管理员'，而{text}正文又引用表8说'见表8所示'。这种不一致会导致读者对数据库关闭操作的发起主体产生困惑——到底是应用软件自动关闭还是系统管理员手动关闭。正确的应该是以{table}为准，Actors为'应用软件'，{image}需要修正为与表格一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将图8数据库关闭用例图中的Actors错误标注为'系统管理员'，与表格中的'应用软件'不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00642",
+  "pair_id": "7_003",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "我在看文档的{table}和{text}，表22说人员数据录入的前置条件是'达梦数据库连接正常'，正文3.2.3.1.1又说基础数据录入包括人员录入、装备录入等九项功能。想确认一下：人员数据录入作为基础数据录入的子功能，其前置条件是否适用于所有基础数据录入类型？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，文档内容一致。{text}明确指出人员录入是基础数据录入能力的一部分，而{table}中人员数据录入用例的前置条件为'达梦数据库连接正常'。结合图7基础数据录入用例图的整体架构，可以推断该前置条件作为基础数据录入的通用前提，适用于包括人员录入、装备录入、物资录入等在内的所有基础数据录入类型，保持了业务逻辑的一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00643",
+  "pair_id": "7_003",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "question": "我发现文档的{table}和{text}好像有点对不上。表22里人员数据录入的前置条件写的是'达梦数据库连接正常'，但正文3.2.3.1.1描述基础数据录入能力时，最后提到'多条记录同时录入'。我想确认：人员数据录入用例是否支持批量录入多条记录？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "根据您指出的内容，这里确实存在不一致。{text}明确列出基础数据录入能力包括'多条记录同时录入'，但{table}表22中人员数据录入用例的主事件流描述里并未体现批量录入的处理流程，前置条件也未提及批量录入所需的特殊准备（如事务控制、批量校验等）。若严格按表22的用例描述执行，人员数据录入仅能实现单条记录录入，与正文宣称的'多条记录同时录入'能力存在业务逻辑上的流程断裂。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入不一致：正文声称基础数据录入支持'多条记录同时录入'，但表22人员数据录入用例的主事件流中未描述批量录入流程，导致单条录入与批量录入的能力声明不匹配",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00644",
+  "pair_id": "7_004",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "请帮我确认一下，文档中{table}的用例描述格式是否符合GJB标准模板要求？我看表5中包含了Use Case名称、Actors、概述、前置条件、主事件流这些要素，和正文{text}中提到的功能用例是否对应？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核对，{table}表5的用例描述格式符合GJB标准模板规范。表格完整包含Use Case名称（音频文件生成和存储）、Actors（使用人员）、概述、前置条件、主事件流等必需要素，与{image}图6的音频文件生成和存储用例流程图形成配套。同时{text}正文明确指出语音合成主要功能包括音频文件生成和存储，三者内容一致，符合GJB文档编制中关于用例描述模板的要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "模板格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00645",
+  "pair_id": "7_004",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在审核文档时发现，{table}表5的编号和{image}图6的引用似乎有问题。表5写的是「音频文件生成和存储」，但图号标的是图6，而正文{text}里说的是「功能用例如图4所示」。这个图号引用是不是不一致？另外表5的用例ID好像也没有按GJB要求的「UC-模块号-序号」格式来编号？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出的质疑部分成立。关于图号引用：{text}正文「功能用例如图4所示」确实与{table}表5配套{image}图6存在不一致，但这是因为图4是总功能用例图（包含格式化文本语音合成、音频文件生成和存储、语音播报、语音设置四个功能），而图6是音频文件生成和存储的详细流程图，属于不同层级的图，引用关系需结合上下文理解。关于用例ID格式：您指出的问题确实存在，按照GJB标准，用例ID应采用「UC-模块号-序号」格式（如UC-3.2-01），但{table}表5中仅显示「Use Case 名称：音频文件生成和存储」，缺少规范的用例标识符（ID），这不符合GJB关于软件需求规格说明中用例标识的规定。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表5中，用例名称栏实际填写为「Use Case 名称：音频文件生成和存储」，但未按GJB要求添加标准用例ID（如UC-3.2-02），同时假设审查者误认为图号引用也存在冲突",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00646",
+  "pair_id": "7_005",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在核对需求文档时发现，{table}中语音播报用例的Actors是\"使用人员\"，而{image}的流程图和{table}中的用例描述都围绕\"语音播报\"展开。请问文档中\"语音播报\"这个用例名称在表格、图片和正文之间是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "是的，文档中\"语音播报\"这个用例名称在各处保持一致。{table}表6明确标注Use Case名称为\"语音播报\"，Actors为\"使用人员\"；{image}图7是语音播报用例流程图；{text}正文也提到\"语音播报\"是语音合成的主要功能之一，并指出功能用例如图4所示（含语音播报）。用例名称、参与者和功能描述在多实体间映射一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00647",
+  "pair_id": "7_005",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在评审文档时发现一个疑问：{table}表6中语音播报用例的Actors写的是\"使用人员\"，但{image}图7流程图里标注的参与者是\"操作人员\"，而{text}正文描述的是\"用户\"对本地音频进行操作。这三个称呼——\"使用人员\"、\"操作人员\"、\"用户\"——是否指的是同一类角色？文档是否存在术语不一致的问题？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您的观察很敏锐，这确实是一个术语不一致的问题。按照文档原本内容，{table}表6、{image}图7和{text}正文应该统一使用\"使用人员\"作为语音播报用例的Actors。但您描述的场景中出现了三个不同术语：表格用\"使用人员\"、流程图用\"操作人员\"、正文用\"用户\"，这属于同名实体多映射的不一致，会导致需求理解歧义，建议统一为单一术语。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{image}图7流程图中的参与者标注从\"使用人员\"改为\"操作人员\"，并将{text}正文中的描述从\"用户\"改为未统一的状态，从而制造\"使用人员\"/\"操作人员\"/\"用户\"三个术语并存的不一致场景",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00648",
+  "pair_id": "7_006",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在核对文档时发现，{table}中语音设置用例的Actors是'使用人员'，{text}中提到语音设置是语音合成的主要功能之一，{image}图8也展示了语音设置用例流程。请问这三处关于'语音设置'功能的使用者描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "是的，三处描述一致。{table}表7明确标注语音设置用例的Actors为'使用人员'；{text}正文将语音设置列为语音合成的主要功能之一，面向用户；{image}图8语音设置用例流程图与表格描述配套，均体现该功能由使用人员操作。三者无矛盾。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00649",
+  "pair_id": "7_006",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在审核文档时发现一个问题：{table}表7中语音设置用例的Actors写的是'使用人员'，但{image}图8的流程图里第一个动作节点标注的执行者是'系统管理员'，而{text}正文又提到'用户在语音播放'。这三处关于操作者身份的描述是不是存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细，确实存在不一致。{table}表7和{text}正文均指向'使用人员'/'用户'作为操作主体，但{image}图8若标注为'系统管理员'则与表格、正文矛盾。根据inject_detail的假设场景，图8被错误注入为'系统管理员'执行，实际应与表格保持一致为'使用人员'。建议修正{image}图8中的执行者标注，统一为'使用人员'。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{image}图8语音设置用例流程图中的执行者错误标注为'系统管理员'，与{table}表7和{text}正文中的'使用人员'/'用户'形成不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00650",
+  "pair_id": "7_007",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我想确认一下语音录入功能的流程描述是否一致。{table}中语音录入用例的主事件流和概述描述，与{image}图11的用例流程图是否匹配？前置条件写的是\"无\"，这个在流程图中有体现吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "经过核对，{table}表9中语音录入用例的描述与{image}图11的流程图是一致的。表9中概述描述用户进行语音录入，前置条件为\"无\"，主事件流在流程图中有对应的步骤呈现；流程图完整反映了从使用人员发起语音录入到完成的业务过程，与表格中的Actors（使用人员）和用例名称完全对应。前置条件\"无\"在流程图中体现为无需额外的预置步骤或判断节点，流程直接从用户操作开始。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00651",
+  "pair_id": "7_007",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在评审文档时发现一个问题：{table}表9的语音录入用例描述里，主事件流中是否包含了\"语音合成\"的步骤？因为我看{text}正文部分提到语音合成有\"格式化文本语音合成、音频文件生成和存储\"这些功能，而{image}图11的流程图似乎显示录入后会直接进行语音合成处理。这几个地方能帮我确认一下是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个关键的不一致点。实际上，{table}表9语音录入用例的主事件流中**不包含**语音合成步骤——该用例仅描述语音采集录入功能；但{text}正文描述的\"语音合成\"是独立的功能模块（包含格式化文本语音合成、音频文件生成等）；而{image}图11若被假设为在录入流程末尾增加了\"语音合成处理\"步骤，则与表格定义产生冲突。正确的业务逻辑应为：语音录入和语音合成是两个独立用例，录入后的音频可作为合成输入，但录入用例本身不应包含合成处理。建议核查图11是否错误地合并了这两个用例的流程，或表格是否遗漏了与合成模块的交互说明。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图11语音录入用例流程图中，在语音录入完成后增加了一个\"调用语音合成引擎进行音频合成处理\"的步骤节点，但表9的用例描述和主事件流中并未提及该步骤，且正文明确将\"语音合成\"列为独立功能模块（如图4所示），导致用例边界模糊、流程与描述不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00652",
+  "pair_id": "7_008",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "请检查{table}中离线语音识别用例的填写格式是否符合GJB软件需求规格说明模板要求？用例名称、参与者、概述、前置条件、主事件流等要素是否完整？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核查，{table}中离线语音识别用例的填写格式符合GJB模板规范。用例名称明确为\"离线语音识别\"，参与者（Actors）标注为\"使用人员\"，概述部分完整描述了本用例的功能定位，前置条件\"识别短语已配置\"清晰，主事件流结构完整，各要素齐全且格式统一，符合GJB软件需求规格说明的用例描述模板要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "模板格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00653",
+  "pair_id": "7_008",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我发现{table}中离线语音识别用例的编号似乎有问题，{image}图12的编号和{table}表10的编号能对应上吗？另外正文{text}里提到的图4和其他图表编号是否存在跳号或重号现象？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。经核查，{table}表10与{image}图12的编号确实存在问题：根据GJB规范要求，同一用例的图号、表号应保持一致性编号体系，但此处图12与表10编号不对应，存在编号错位。更严重的是，{text}中提到的\"功能用例如图4所示\"与当前章节3.2的图12、表10出现跳号（从图4直接跳到图12），且同一文档中\"图12\"与\"表10\"的序号基准不一致，违反了GJB关于图表编号应连续统一、同一用例的图/表/正文引用应保持编号一致性的规定。正确的做法应是将离线语音识别相关的图、表统一编号，如均使用\"图/表3-X\"的章节内连续编号格式。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设引入的不一致：将原文中可能统一的编号体系故意打乱，使图12与表10编号不匹配，且正文图4与当前章节图12出现跳号，违反GJB关于\"同一章节内图表编号应连续，同一用例的图号表号应协调一致\"的格式规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00654",
+  "pair_id": "7_009",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在核对需求文档时发现，{table}中的用例名称是\"文本规范化\"，而{image}是\"文本规范化用例流程图\"，{text}里提到的功能概述也与文本处理相关。请问这三个地方提到的\"文本规范化\"是否指的是同一个功能模块？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "是的，这三个地方提到的\"文本规范化\"指的是同一个功能模块。{table}表11明确标注Use Case名称为\"文本规范化\"，{image}图13标题为\"文本规范化用例流程图\"，是对该用例的可视化描述，{text}中描述的语音合成功能与文本规范化处理属于同一语音综合处理软件的功能范畴，三者术语使用一致，均指向用户将录入语音进行文本规范化处理的功能模块。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc7_00655",
+  "pair_id": "7_009",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "question": "我在审核文档时发现一个疑问：{table}中Use Case名称写的是\"文本规范化\"，但{image}的标题是\"文本规范化用例流程图\"，而{text}正文开头却写的是\"语音合成的主要功能包括...\"，没有提到\"文本规范化\"。这里是否存在术语不一致的问题？是不是\"文本规范化\"和\"语音合成\"其实是同一个功能的不同叫法？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的观察。实际上，这里确实存在术语不一致的问题。根据假设的注入场景，{text}正文开头描述的\"语音合成\"功能与{table}和{image}中的\"文本规范化\"并非同一功能：\"文本规范化\"是语音综合处理的前置处理步骤（将识别结果进行规范化处理），而\"语音合成\"是将文本转换为语音的独立功能模块。正确的文档应该将{table}中的Use Case名称与{image}、{text}统一为各自独立的术语，或在正文中明确说明两者的关系。当前文档混用了这两个术语，容易造成需求理解偏差。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在{text}正文中将原本应与'文本规范化'并列或关联描述的内容，错误替换为'语音合成'的功能描述，导致{table}和{image}中的'文本规范化'与{text}中的'语音合成'形成术语不一致，让读者误以为两者是同一功能或存在命名混淆。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ }
+]

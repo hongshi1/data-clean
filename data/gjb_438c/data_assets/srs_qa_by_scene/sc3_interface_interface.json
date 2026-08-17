@@ -1,0 +1,2038 @@
+[
+ {
+  "qid": "srs_sc3_00434",
+  "pair_id": "3_001",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}表34中第3行的接口名称是\"与态势数据组织应用交互接口\"，而功能名列表中也出现了\"与态势数据组织应用交互接口\"和\"态势数据组织应用\"两个相关条目。请问这两个名称在文档中是否指的是同一个接口实体？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "是的，文档内容一致。{table}表34中第3行的接口名称\"与态势数据组织应用交互接口\"（标识：ZZSJHQZHFW-JK-WB）与功能名列表中的\"与态势数据组织应用交互接口\"是同一接口实体。功能名列表中的\"态势数据组织应用\"则是指该接口的接收方/交互对象，并非接口本身的名称。表34中该接口的发送方为本系统，接收方为\"态势数据组织应用\"，这与功能名列表中的表述完全对应，不存在术语歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图 14 某服务系统外部接口设计",
+   "table_caption": "表34 外部接口标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00435",
+  "pair_id": "3_001",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审核文档时发现一个疑问：{table}表34第4行的接口名称写的是\"态势数据组织应用\"，但功能名列表中同时出现了\"与态势数据组织应用交互接口\"和\"态势数据组织应用\"。请问表34第4行是否遗漏了\"交互接口\"字样，还是说这是两个不同的接口？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_001/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "根据当前文档内容，这确实是一个不一致问题。{table}表34第4行将接口名称列为\"态势数据组织应用\"，但按照同一表格的命名规范（如第1-3行均采用\"与XXX交互接口\"的格式），此处应为\"与态势数据组织应用交互接口\"。功能名列表中同时存在\"与态势数据组织应用交互接口\"和\"态势数据组织应用\"两个条目，若表34第4行确实指同一接口，则名称缺失\"与...交互接口\"前缀，违反了术语一致性；若指不同实体，则表34缺少\"与态势数据组织应用交互接口\"的对应条目，且第4行缺少接口标识。建议核查{image}图14的接口设计以确认实际定义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表34第4行的接口名称从\"态势数据组织应用\"改为\"与态势数据组织应用交互接口\"，但功能名列表中仍保留\"态势数据组织应用\"作为独立条目，造成同一表格内命名规范不统一，且功能名列表与表格条目无法一一对应。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图 14 某服务系统外部接口设计",
+   "table_caption": "表34 外部接口标识"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00436",
+  "pair_id": "3_002",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中数据协议解析接口的发送方和接收方分别是'数据获取'和'数据转换'，而{text}中提到该服务系统内部接口包括数据协议解析接口和数据预处理配置接口。请问这两个接口在正文和表格中的名称是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两者一致。{text}中提到的两个接口名称'数据协议解析接口'和'数据预处理配置接口'，与{table}表56中序号1和序号2的接口名称完全一致，且{table}中接口标识分别为ZZSJHQZHFW-JK-NB-SJXY和ZZSJHQZHFW-JK-NB-SJY，属性信息匹配无误。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4",
+   "image_caption": "图 15 某服务内部接口设计",
+   "table_caption": "表56 某服务内部接口详细设计表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00437",
+  "pair_id": "3_002",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审核文档时发现一个疑问：{table}中序号2的数据预处理配置接口，其接口标识写的是'ZZSJHQZHFW-JK-NB-SJY'，但{text}中描述该接口时似乎用了另一个标识。请问表格和正文中的接口标识是否一致？如果不一致，应该以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_002/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核查，{table}中数据预处理配置接口的接口标识为'ZZSJHQZHFW-JK-NB-SJY'，但{text}中若按假设场景描述为'ZZSJHQZHFW-JK-NB-SJXY'（与序号1的接口标识相同），则两者存在不一致。应以{table}表56中的标识'ZZSJHQZHFW-JK-NB-SJY'为准，因为表格是详细设计表，属于更细粒度的设计规范；而{text}正文中的'ZZSJHQZHFW-JK-NB-SJXY'属于笔误或复制粘贴错误，需修正为'ZZSJHQZHFW-JK-NB-SJY'以保持一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设{text}正文中描述数据预处理配置接口时，错误地将其接口标识写成了'ZZSJHQZHFW-JK-NB-SJXY'（即与序号1的数据协议解析接口标识相同），而{table}中正确的标识应为'ZZSJHQZHFW-JK-NB-SJY'，造成同一接口在正文和表格中的标识属性不一致。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4",
+   "image_caption": "图 15 某服务内部接口设计",
+   "table_caption": "表56 某服务内部接口详细设计表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00438",
+  "pair_id": "3_003",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我想确认一下数据源自定义功能的接口流程。根据{table}中表57的记录，数据源自定义配置接口是由通用数据引接发送给精准数据获取的API接口。同时{text}提到数据获取包括数据源自定义配置接口。那么，这个接口的调用流程是否是：通用数据引接作为发送方，通过API接口方式向精准数据获取发起数据源自定义配置请求？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，您的理解正确。根据表57数据获取内部接口表，数据源自定义/配置接口（标识：ZZSJHQZHFW-JK-NB-Z）的接口类型为API接口，发送方为通用数据引接，接收方为精准数据获取，接口需求描述为对特定信源数据进行自定义配置。这与正文所述数据获取包括数据源自定义配置接口完全一致，说明该接口在数据获取内部的业务流程中，由通用数据引接向精准数据获取发起配置请求，实现对特定信源数据的自定义配置功能。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 16 数据获取内部接口图",
+   "table_caption": "表57 数据获取内部接口表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00439",
+  "pair_id": "3_003",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在梳理数据源自定义的业务流程时有个疑问。{table}表57显示数据源自定义配置接口的发送方是通用数据引接、接收方是精准数据获取，但{image}图16数据获取内部接口图中似乎显示这个接口是由精准数据获取主动发起调用、通用数据引接作为接收方来响应的。这两个地方的流程方向是不是不一致？到底哪个是正确的调用方向？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您提出了一个很好的问题。经过核查，这确实是一处需要修正的不一致。根据inject_detail的假设场景：图16中错误地将数据源自定义配置接口的调用方向画反了，实际应为通用数据引接作为发送方主动调用，精准数据获取作为接收方提供服务。正确的流程方向应以表57为准，即通用数据引接向精准数据获取发起API调用，完成特定信源数据的自定义配置。图16中的接口箭头方向需要修正，以确保与表格和正文描述保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设图16数据获取内部接口图中，数据源自定义配置接口的箭头方向被错误地绘制为从精准数据获取指向通用数据引接，与表57中发送方通用数据引接、接收方精准数据获取的定义相反，造成接口调用流程方向的逻辑不一致。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 16 数据获取内部接口图",
+   "table_caption": "表57 数据获取内部接口表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00440",
+  "pair_id": "3_004",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中四个接口的ID命名是否符合GJB规范？我看到处理结果转储接口ID是ZZSJHQZHFW-JK-NB-ZZSJ，专题库数据获取接口是ZZSJHQZHFW-JK-NB-ZZS，专题库编辑接口是ZZSJHQZHFW-JK-NB-ZZSJZ，数据编目信息获取接口是ZZSJHQZHFW-JK-NB-ZZ，这些ID格式是否一致且符合规范要求？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中四个接口ID均符合GJB规范要求。所有接口ID均采用统一前缀\"ZZSJHQZHFW-JK-NB-\"，后接功能缩写，长度和结构保持一致。具体为：处理结果转储接口（ZZSJ）、专题库数据获取接口（ZZS）、专题库编辑接口（ZZSJZ）、数据编目信息获取接口（ZZ），命名简洁且能体现功能含义，与{text}中描述的四个接口名称一一对应，{image}中的接口标识也应与此一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4.2",
+   "image_caption": "图 17 数据转换内部接口图",
+   "table_caption": "表58 数据转换内部接口表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00441",
+  "pair_id": "3_004",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查文档时发现一个问题，{text}中提到数据转换包括\"处理结果转储接口、专题库数据获取接口、专题库编辑接口和数据编目信息获取接口\"这四个接口，但{table}里序号3的接口名称写的是\"专题库数据编辑接口\"而不是\"专题库编辑接口\"，而且接口ID是ZZSJHQZHFW-JK-NB-ZZSJZ。请问这是同一接口的不同表述还是文档存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_004/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细，这确实是文档中存在的不一致问题。根据GJB规范要求，接口名称在正文、表格和图示中应保持一致。{text}中明确使用\"专题库编辑接口\"，而{table}中序号3写为\"专题库数据编辑接口\"，多了\"数据\"二字，属于命名不一致。正确的做法是统一为\"专题库编辑接口\"，与{text}保持一致，接口ID ZZSJHQZHFW-JK-NB-ZSJZ维持不变。建议在文档修订时统一名称表述。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义与正文一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表格中序号3的接口名称由\"专题库编辑接口\"改为\"专题库数据编辑接口\"，在原有名称中插入\"数据\"二字，造成与正文表述不一致，违反GJB接口定义一致性要求。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "01数据获取转换分系统需求规格说明-终稿",
+   "section": "3.4.2",
+   "image_caption": "图 17 数据转换内部接口图",
+   "table_caption": "表58 数据转换内部接口表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00442",
+  "pair_id": "3_005",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时注意到，{text}中提到的'与数据统一访问服务的接口'在{table}里好像没有对应条目，这是否属于遗漏？另外，{text}和{table}都列出的'与用户的接口''与应用软件的接口''与软件部署管理的接口'这几个接口，它们的名称和数量是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "经核对，'与数据统一访问服务的接口'在{table}中确实未出现，但这属于表格未完全覆盖正文描述，而非术语不一致。对于共同列出的接口：'与用户的接口'（PZXQ-WBJK-YH）、'与应用软件的接口'（PZXQ-WBJK-YYRJ）、'与软件部署管理的接口'（PZXQ-WBJK-YXZCFW），{text}和{table}中的接口名称完全一致，且均为3个同名接口，术语层面不存在不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.9.1",
+   "image_caption": "图 42界面集成框架接口需求图",
+   "table_caption": "表49 界面集成框架外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00443",
+  "pair_id": "3_005",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查文档时发现一个问题：{text}中提到界面集成框架有'与软件部署管理的接口'，但在{table}中对应的接口需求名称写的是'与运行支撑服务的接口'，标识为PZXQ-WBJK-YXZCFW。这两个名称看起来指的是同一个接口吗？这是否属于文档不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_005/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，这属于术语层面的不一致。根据假设的注入场景，{table}中第3行将接口需求名称由原文的'与软件部署管理的接口'错误写成了'与运行支撑服务的接口'，虽然接口需求标识PZXQ-WBJK-YXZCFW保持不变，但接口名称与{text}中的描述不一致，会导致读者对同一接口产生理解歧义。正确的做法应统一使用'与软件部署管理的接口'这一名称。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "将{table}第3行'与软件部署管理的接口'修改为'与运行支撑服务的接口'，保持接口标识PZXQ-WBJK-YXZCFW不变，制造同名实体术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.9.1",
+   "image_caption": "图 42界面集成框架接口需求图",
+   "table_caption": "表49 界面集成框架外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00444",
+  "pair_id": "3_006",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时，发现{table}中第1行'界面集成与界面展现的接口'的接口设计标识是'PZXQ-NBJK-JMJC-JMZX'，类型为'API函数'，提供方是'界面集成模块'。请问这与{image}图43以及{text}正文描述的内部接口功能是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中该接口提供'界面集成的应用组件信息'，与{text}正文中描述的'集成应用信息加载''应用静态资源信息获取''组件注册'等功能相符，接口提供方'界面集成模块'也与接口名称'界面集成与界面展现的接口'逻辑对应，图43的内部接口图也应体现这一对应关系。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.10.1",
+   "image_caption": "图 43 CSCI内部接口图",
+   "table_caption": "表 55 CSCI内部接口汇总表"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00445",
+  "pair_id": "3_006",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审核文档时发现一个疑问：{table}中第3行'界面开发与界面展现的接口'的接口设计标识是'PZXQ-NBJK-JKKF-JMZX'，但我在检查接口数据内容时，发现表格里写的是'组件资源、组件名称'，而{text}正文提到内部接口用于'应用静态资源信息获取'和'组件注册'。请问这个接口的数据内容描述是否与正文功能匹配？另外我注意到{table}中第4行'界面开发与界面集成的接口'的接口设计标识写的是'PZXQ-NBJK-JKKF-JMJC'，这个数据是否正确？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_006/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。关于第3行接口，'组件资源、组件名称'与正文'应用静态资源信息获取''组件注册'功能基本匹配。但关于第4行接口设计标识，经核查存在不一致：{table}中标注为'PZXQ-NBJK-JKKF-JMJC'，但根据命名规则，'JKKF'代表界面开发，'JMJC'代表界面集成，该标识应为'PZXQ-NBJK-JMJC-JKKF'才符合'提供方-接收方'或'发起方-目标方'的编码逻辑（即界面集成模块作为接收方在后），实际应为'PZXQ-NBJK-JKKF-JMJC'表示从界面开发到界面集成。不过按照当前文档实际采用的编码规则，若统一为'功能域-发起模块缩写-目标模块缩写'，则需确认全文规则一致性。经进一步核对，该标识与{table}中其他接口如第1行'JMJC-JMZX'（界面集成→界面展现）的命名逻辑一致，均为'发起方-接收方'顺序，因此'JKKF-JMJC'（界面开发→界面集成）是正确的。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入不一致：将第4行接口设计标识从'PZXQ-NBJK-JKKF-JMJC'篡改为'PZXQ-NBJK-JMJC-JKKF'，即交换'JKKF'和'JMJC'的位置，破坏与第1行'JMJC-JMZX'（界面集成→界面展现）一致的'发起方-接收方'命名规则，导致编码逻辑混乱。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.10.1",
+   "image_caption": "图 43 CSCI内部接口图",
+   "table_caption": "表 55 CSCI内部接口汇总表"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00446",
+  "pair_id": "3_007",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对服务集成框架的外部接口时，发现{table}中列出了'与运行支撑服务的接口'和'与界面集成框架的接口'，但{image}和{text}中还提到了其他接口如'与软件部署管理软件接口'、'与应用软件的接口'等。请问这些接口在{table}中没有详细展开，是否意味着它们不属于当前版本的需求范围，还是表格只是部分示例？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "根据文档内容，{text}明确说明服务集成框架外部接口需求包括：与运行支撑服务软件接口、与软件部署管理软件接口、与界面集成框架软件接口、与应用软件的接口、人机接口、文件系统接口。{table}仅详细列出了序号1和2两个接口（与运行支撑服务的接口、与界面集成框架的接口），但并未声明这是完整列表。结合{image}（图20）的整体架构，表格应理解为对部分关键接口的详细说明，而非全部接口的穷尽列举。因此文档在业务逻辑上是一致的——{text}给出完整接口分类，{table}对重点接口进行细化展开，不存在需求范围冲突。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图20 服务集成框架外部接口需求",
+   "table_caption": "表59 服务集成框架外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00447",
+  "pair_id": "3_007",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我注意到{table}中'与运行支撑服务的接口'包含两条记录：第一条是'网络接口'，发送方为运行支撑服务，接收方为本系统，传输'管控指令'；第二条是'API接口'，发送方为本系统，接收方为运行支撑服务，传输'日志信息'。但按照正常的业务流程，运行支撑服务作为管控中心，应该是单向下发管控指令，本系统被动接收并执行，不应该反向发送日志信息给运行支撑服务。这个双向交互的设计在{text}和{image}中是否有依据？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您的质疑是合理的。经核查，{text}和{image}中仅描述服务集成框架需要'与运行支撑服务软件接口'，但未明确说明存在本系统向运行支撑服务主动发送日志信息的双向流程。按照正常的运维管控时序，运行支撑服务作为管控中心应单向下发指令，本系统执行后通过其他机制（如运行支撑服务主动拉取或独立日志服务）上报状态，而非通过API接口反向推送。{table}中第二条记录（API接口，本系统→运行支撑服务，日志信息）与标准管控流程的时序逻辑不一致，属于文档内部业务逻辑冲突，建议修正为运行支撑服务主动查询或删除该条反向接口定义。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表格中注入了一条不存在的反向接口记录：'API接口,本系统,运行支撑服务,日志信息,高'，使得原本应为单向管控的时序变成了双向交互，与运行支撑服务作为管控中心的典型架构模式相矛盾。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图20 服务集成框架外部接口需求",
+   "table_caption": "表59 服务集成框架外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00448",
+  "pair_id": "3_008",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "文档中{table}表66列出了\"服务部署管理与服务运行控制接口\"等内部接口需求，{text}正文提到\"服务集成框架内部接口需求表见表66\"，请问表格中的接口需求标识PZXQ-NBJK-FWJCKJ-FWQD是否符合GJB标准规定的ID格式规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，文档内容一致。表66中的接口需求标识PZXQ-NBJK-FWJCKJ-FWQD遵循了GJB标准规定的ID格式规范，采用\"项目代号-模块代号-子系统代号-功能缩写\"的分层编码结构（如PZXQ-NBJK-FWJCKJ-FWQD），与文档模板中接口需求标识的定义格式保持一致，正文引用的表66也准确对应了该表格内容。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义与表格一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图21服务集成框架内部接口需求",
+   "table_caption": "表66 服务集成框架内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00449",
+  "pair_id": "3_008",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}表66中序号2的\"服务部署管理与服务信息管理接口\"接口类型标注为\"网络接口\"，但按照GJB模板要求接口类型应与序号1保持一致为API接口，{text}正文也没有对此异常进行说明。请问这是文档错误还是我对GJB规范理解有误？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_008/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "这是文档中存在的不一致问题。根据inject_detail假设场景：表66中序号2的接口类型被错误注入为\"网络接口\"，但按照GJB合规要求及同一表格内序号1的接口定义规范，该接口实际应为\"API接口\"。同时，序号2的接收方标注为\"服务运行控制\"也与接口名称\"服务部署管理与服务信息管理接口\"逻辑不符（应为\"服务信息管理\"）。正文中\"服务集成框架内部接口需求表见表66\"的引用未能揭示这些表格内部的不一致，属于文档编制缺陷。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口类型定义一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表66序号2的接口类型从正确的\"API接口\"篡改为\"网络接口\"，同时将接收方从\"服务信息管理\"篡改为\"服务运行控制\"，造成与接口名称及GJB模板规范的不一致；正文保持原引用不变。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "03服务集成框架软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图21服务集成框架内部接口需求",
+   "table_caption": "表66 服务集成框架内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00450",
+  "pair_id": "3_009",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "文档中正文中提到的\"数据统一访问服务与应用软件接口\"在{table}中是否有对应的接口需求记录？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "是的，一致。正文提到数据统一访问服务外部接口包括\"与应用软件接口\"，在{table}表48中序号1有对应的接口需求记录，接口需求名称为\"数据统一访问服务与应用软件接口\"，接口需求标识为PZXQ-JK-SJTYFW-YYRJ，接口类型为API接口。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图47 数据统一访问服务软件外部接口需求",
+   "table_caption": "表48 数据统一访问服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00451",
+  "pair_id": "3_009",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我注意到{table}表48中有一个\"数据统一访问服务与运行支撑服务接口\"，但正文里好像写的是\"与运行支撑环境接口\"，这两个是同一个东西吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_009/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "根据您描述的情况，这里存在术语不一致的问题。{table}表48中使用的术语是\"运行支撑服务\"，而{text}正文中使用的是\"运行支撑环境\"，二者名称不一致。按照inject_detail的假设场景，正文实际写的是\"与运行支撑环境接口\"，但表格中对应的是\"数据统一访问服务与运行支撑服务接口\"，\"运行支撑环境\"和\"运行支撑服务\"属于不同的术语表述，应统一为同一术语。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文中的\"与运行支撑服务接口\"改为\"与运行支撑环境接口\"，而表格中仍保持\"数据统一访问服务与运行支撑服务接口\"，造成\"运行支撑服务\"与\"运行支撑环境\"术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图47 数据统一访问服务软件外部接口需求",
+   "table_caption": "表48 数据统一访问服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00452",
+  "pair_id": "3_010",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我想确认一下，{table}中序号2的接口需求标识和发送方、接收方信息是否与文档其他部分一致？我看到{table}里写的是PZXQ-NBJK-DXHFW-SQLFW，发送方是对象化访问，接收方是SQL访问，这个和{text}中提到的内部接口需求描述能对上吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致的。{table}中序号2的接口需求标识为PZXQ-NBJK-DXHFW-SQLFW，接口名称为\"对象化访问与SQL访问接口\"，发送方为\"对象化访问\"，接收方为\"SQL访问\"，这与{text}中\"数据统一访问服务软件内部接口需求\"的整体描述相符，且命名规则（PZXQ-NBJK-模块缩写-模块缩写）与序号1的PZXQ-NBJK-DMSC-DXHFW保持一致，均为API类型接口。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 48数据统一访问服务软件内部接口需求",
+   "table_caption": "表53 数据统一访问服务软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00453",
+  "pair_id": "3_010",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对{table}时发现序号3的接口名称有点奇怪，写的是\"SQL访问与代码生成接口\"，但发送方和接收方是SQL访问和代码生成，这个和{image}以及{table}其他条目对比起来，命名顺序是不是应该反过来？另外它的标识PZXQ-NBJK-SQLFW-DMSC好像也有点问题，能帮忙确认一下吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_010/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细，这里确实存在不一致。按照{table}中序号1、2、4的命名规律，接口名称应为\"发送方与接收方接口\"的形式，且接口需求标识应为\"PZXQ-NBJK-发送方缩写-接收方缩写\"。若按此规律，序号3的接口名称应为\"SQL访问与代码生成接口\"（当前名称正确），但标识应为PZXQ-NBJK-SQLFW-DMSC（当前标识正确）。然而，如果对比{image}中的接口流向或文档其他规范，若实际规范要求标识中模块顺序与名称中的\"A与B\"严格对应（A为发送方、B为接收方），则当前PZXQ-NBJK-SQLFW-DMSC是正确的。但如果假设存在注入错误：若标识被错误写为PZXQ-NBJK-DMSC-SQLFW（即发送方接收方缩写顺序颠倒），或接口名称被错误写为\"代码生成与SQL访问接口\"，则会产生不一致。根据您提到的场景，假设注入的错误是：{table}序号3的接口需求标识实际应为PZXQ-NBJK-DMSC-SQLFW（与发送方SQL访问、接收方代码生成不匹配），而正确的标识应保持PZXQ-NBJK-SQLFW-DMSC，因此当前文档存在参数不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将{table}序号3的接口需求标识由正确的PZXQ-NBJK-SQLFW-DMSC篡改为PZXQ-NBJK-DMSC-SQLFW，导致发送方缩写（SQLFW）与接收方缩写（DMSC）在标识中的位置与实际的\"发送方:SQL访问,接收方:代码生成\"不一致，违反了与序号1、2、4相同的命名规则（PZXQ-NBJK-发送方缩写-接收方缩写）。",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 48数据统一访问服务软件内部接口需求",
+   "table_caption": "表53 数据统一访问服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00454",
+  "pair_id": "3_011",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "根据{table}中软件部署管理软件外部接口需求表，软件部署管理模块与外部系统交互时，数据流向是怎样的？从用户发起操作到最终数据持久化，整个流程中各接口的调用顺序是否与{image}图23所示一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。根据{table}表52，完整流程为：①用户通过「人机交互接口」(PZXQ-WBJK-RJJK)向软件部署管理发起操作请求；②软件部署管理通过「应用软件接口」(PZXQ-WBJK-YYRJ，HTTP接口)调用应用软件；③软件部署管理通过「与数据统一访问接口」(PZXQ-WBJK-SJFW，API接口)访问数据统一访问服务完成数据持久化。该流程与{image}图23及{text}正文描述的外部接口需求完全匹配，形成了用户→软件部署管理→应用软件/数据服务的完整业务闭环。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图23 软件部署管理软件外部接口需求",
+   "table_caption": "表52 软件部署管理软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00455",
+  "pair_id": "3_011",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对{table}表52时发现一个疑问：当用户通过人机交互接口触发软件部署任务时，系统是先调用数据统一访问服务获取配置信息，还是先调用应用软件执行部署？{image}图23中标注的时序是否与表格中的接口定义一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_011/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您提出了一个关键问题。根据{table}表52的接口定义，正常时序应为：用户→人机交互接口→软件部署管理→应用软件接口→应用软件，同时软件部署管理→与数据统一访问接口→数据统一访问服务。但{image}图23中若存在时序标注错误（如将「与数据统一访问接口」置于「应用软件接口」之前，形成先读数据再调应用的时序），则与表格定义不一致。实际业务中，部署流程通常需要先调用应用软件接口下发部署指令，再由应用层按需访问数据服务；若图23显示为先调数据服务后调应用软件，则属于时序逻辑不一致，可能导致部署指令未下发却预先读取数据的异常流程。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "时序一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图23中，接口调用时序被错误标注为：软件部署管理先调用「与数据统一访问接口」获取数据，再调用「应用软件接口」执行部署，与表52隐含的'先指令下发、后数据交互'正常业务时序相反，形成时序逻辑矛盾。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图23 软件部署管理软件外部接口需求",
+   "table_caption": "表52 软件部署管理软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00456",
+  "pair_id": "3_012",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中所有接口需求标识的命名格式是否符合规范？我注意到这些标识都是'PZXQ-NBJK-XXX-XXX'的形式，这种格式在文档中是否统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中4个接口需求标识均符合统一的命名格式规范：\n1. 用户管理与软件安装管理接口：PZXQ-NBJK-YHGL-RJAZGL\n2. 用户管理与预案制作开通接口：PZXQ-NBJK-YHGL-YAZZKT\n3. 软件产品包封装与软件安装管理接口：PZXQ-NBJK-RJANBFZ-RJAZGL\n4. 开发集成与软件产品包封装接口：PZXQ-NBJK-KFJC-RJCPBFZ\n\n所有标识均采用\"PZXQ-NBJK-发送方缩写-接收方缩写\"的四段式结构，前缀统一为\"PZXQ-NBJK\"（表示部署需求-内部接口），格式规范一致，符合GJB接口标识ID格式要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口标识ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图24 软件部署管理软件内部接口需求",
+   "table_caption": "表61 软件部署管理软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00457",
+  "pair_id": "3_012",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查{table}时发现，大部分接口类型都是API，但第4个接口'开发集成与软件产品包封装接口'的接口类型是'网络'。这种不一致是否会影响GJB合规性？接口类型在文档中应该有统一的分类标准吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_012/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "您提出了一个关键问题。经核查，{table}中确实存在接口类型定义不一致的情况：\n- 序号1-3接口类型均为\"API\"\n- 序号4接口类型为\"网络\"\n\n根据GJB软件需求规格说明模板要求，同一类内部接口应采用统一的分类标准。序号4接口\"开发集成与软件产品包封装接口\"（PZXQ-NBJK-KFJC-RJCPBFZ）作为内部功能模块间的数据交互接口，其本质仍属于应用程序编程接口范畴，与其他3个接口在交互层级上并无差异。若严格遵循GJB合规性要求，该接口类型应统一标注为\"API\"，而非\"网络\"。\"网络\"类型通常用于描述跨系统、跨网络的物理通信协议接口，此处使用易造成分类混乱，建议在文档修订中将序号4接口类型修正为\"API\"以保持规范一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口类型定义规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "将序号4接口的接口类型由'API'篡改为'网络'，制造与其他3个API类型接口的分类不一致，违反GJB接口定义规范中同一层级接口应采用统一分类标准的要求。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "05软件部署管理软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图24 软件部署管理软件内部接口需求",
+   "table_caption": "表61 软件部署管理软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00458",
+  "pair_id": "3_013",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时，发现{table}中第3行接口的发送方是\"界面集成框架\"，而{table}最后一行又写了\"界面集成 框架\"（带空格），同时正文里提到\"运行支撑服务软件外部接口需求图，见图32所示\"。请问表格中\"界面集成框架\"和\"界面集成 框架\"是否指同一实体？另外{image}中的接口名称是否与{table}一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "是的，表格中\"界面集成框架\"和\"界面集成 框架\"是同一实体，只是排版格式差异（有无空格），属于同一术语的不同书写形式。经核对，{image}图32中的接口名称与{table}表77中的接口需求名称一致，包括\"人机交互接口\"\"与数据运行管理工具接口\"\"与界面集成框架接口\"等，术语层面完全对应，无多实体映射歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图32 运行支撑服务软件外部接口需求",
+   "table_caption": "表77 运行支撑服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00459",
+  "pair_id": "3_013",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查{table}时注意到一个奇怪的地方：第2行接口名称是\"与数据运行管理工具 接口\"，但{table}里对应的接收方写的是\"本软件\"；而我在{image}图32中似乎看到同一个接口被标注为\"与数据运行管理工具通信接口\"。另外{table}第1行叫\"人机交互接口\"，但{image}里对应位置标注的是\"人机接口\"。请问这些名称差异是否正常？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_013/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细，这些名称差异确实存在问题。根据假设的文档实际内容，{table}表77中第2行接口名称应为\"与数据运行管理工具接口\"，但{image}图32中错误标注为\"与数据运行管理工具通信接口\"——\"通信\"二字为多余注入，导致同名实体不一致；同时{table}第1行\"人机交互接口\"与{image}中\"人机接口\"相比，丢失了\"交互\"二字，属于术语简写不一致。正确的做法是{table}、{image}、{text}三处对同一接口必须使用完全一致的术语名称，避免\"同名异指\"或\"多实体映射\"混淆。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图32中，将表格第2行接口名称\"与数据运行管理工具接口\"注入错误为\"与数据运行管理工具通信接口\"（增加\"通信\"二字）；同时将表格第1行\"人机交互接口\"在图中错误简写为\"人机接口\"（删除\"交互\"二字），造成术语层面同名实体不一致。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图32 运行支撑服务软件外部接口需求",
+   "table_caption": "表77 运行支撑服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00460",
+  "pair_id": "3_014",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "请帮我核对一下，{table}中第1行'基础信息服务与日志服务接口'的发送方和接收方，与{image}图33中的接口方向是否一致？表格里写的是日志服务发送、基础信息服务接收。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。{table}第1行明确标注发送方为'日志服务'、接收方为'基础信息服务'，与{image}图33中该接口的箭头方向相符，均为日志服务指向基础信息服务。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "发送方/接收方方向一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 33 运行支撑服务软件内部接口需求",
+   "table_caption": "表86 运行支撑服务软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00461",
+  "pair_id": "3_014",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现一个问题：{table}第2行'基础信息服务与系统运行监控接口'标注的发送方是基础信息服务、接收方是系统运行监控，但{image}图33里这个接口的箭头方向好像是从系统运行监控指向基础信息服务的？这两个地方是不是矛盾了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_014/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细。按照{table}第2行的定义，该接口发送方应为'基础信息服务'、接收方为'系统运行监控'；但如果{image}图33中箭头方向确实为系统运行监控指向基础信息服务，则两者存在不一致。不过根据我基于inject_detail的假设场景，实际应为表格标注错误——正确方向应为系统运行监控作为发送方、基础信息服务作为接收方，即与图示方向一致，建议以{image}为准修正{table}。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "发送方/接收方方向一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{table}第2行发送方/接收方互换：表格错误写为基础信息服务→系统运行监控，而{image}图33正确显示为系统运行监控→基础信息服务",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "06运行支撑服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 33 运行支撑服务软件内部接口需求",
+   "table_caption": "表86 运行支撑服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00462",
+  "pair_id": "3_015",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我想确认一下报文处理服务软件的外部接口设计。根据{text}描述，外部接口包括人机交互接口、报文处理接口、报文传输接口、文件接口和数据库接口。而在{table}中，我目前只看到人机交互接口和报文处理接口的详细定义。请问表格中缺失的报文传输接口、文件接口、数据库接口是否会在后续表格中补充，还是说我理解有误？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您的理解是正确的。{text}明确列出了五种外部接口：人机交互接口、报文处理接口、报文传输接口、文件接口和数据库接口。{table}（表52）目前仅展示了人机交互接口和报文处理接口的详细需求，这是表格的节选展示。完整的表52应包含所有五种接口的详细定义，包括报文传输接口、文件接口和数据库接口的具体接口需求标识、接口类型、发送方和接收方信息。文档正文与表格在接口种类列举上是一致的，表格是正文所述接口的详细展开。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "process_flow_consistency",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图44 报文处理服务软件接口需求",
+   "table_caption": "表52 报文处理服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00463",
+  "pair_id": "3_015",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在评审文档时发现一个疑问：{text}说报文处理服务软件外部接口包括人机交互接口、报文处理接口、报文传输接口、文件接口、数据库接口这五种。但看{table}的内容，里面有个接口叫\"本软件\"，发送方和接收方都是\"用户\"，这个\"本软件\"接口在正文里完全没提到。请问这个\"本软件\"接口是什么作用？它和正文列出的五种接口是什么关系？是不是正文漏描述了一种接口？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_015/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。经过核查，{table}中确实存在数据呈现问题。表格第二行的\"本软件\"并非独立的接口名称，而是人机交互接口（PZXQ-JK-RJJH）的接收方信息被错误地拆分成单独一行展示。正确的人机交互接口定义应为：接口需求名称\"人机交互接口\"，发送方\"用户\"，接收方\"本软件\"。同样，第四行的\"本软件\"和\"应用软件\"也属于报文处理接口（PZXQ-JK-BWCL）的接收方/发送方信息错位。这种表格排版错误导致了与{text}所述五种接口的不一致，实际上\"本软件\"不是第六种接口，而是接口参与方的标注。需要修正表格格式以消除此歧义。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "process_flow_consistency",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设表格排版错误：将接口的接收方/发送方信息错误拆分为独立行，导致表格中出现名为\"本软件\"的伪接口，与正文所述五种接口数量不一致，造成读者误解存在第六种未说明的接口",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "07报文处理服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图44 报文处理服务软件接口需求",
+   "table_caption": "表52 报文处理服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00464",
+  "pair_id": "3_016",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "在{table}表80中列出了人机交互接口、数据运行维护管理工具与服务集成框架接口等外部接口，{text}正文3.3.1节也描述了外部接口包括人机交互接口、与服务集成框架接口等，请问这两处对接口种类的描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表80中明确列出了「人机交互接口」和「数据运行维护管理工具与服务集成框架接口」，正文3.3.1节也对应描述了「人机交互接口、与服务集成框架接口」，两者在接口定义上相互吻合，符合GJB软件需求规格说明文档中接口定义的一致性要求。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图18数据运行维护管理工具外部接口需求",
+   "table_caption": "表80 数据运行维护管理工具外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00465",
+  "pair_id": "3_016",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}表80中接口需求标识为「PZXQ-WBJK-SJYXWHGL-RJJH」和「PZXQ-WBJK-SJYXWHGL-FWJC」，但{image}图18中标注的接口标识却是「PZXQ-WBJK-SJYXWHGL-RJ」和「PZXQ-WBJK-SJYXWHGL-FW」，请问以哪个为准？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_016/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "应以{table}表80中的接口需求标识为准。图18中的标识存在缩写不一致的问题，「RJJH」被错误缩写为「RJ」，「FWJC」被错误缩写为「FW」，这不符合GJB标准中接口标识ID应保持唯一性和完整性的格式规范要求。图18需要修正，确保与表80保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口标识ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图18中，接口需求标识被错误地缩写：「PZXQ-WBJK-SJYXWHGL-RJJH」变为「PZXQ-WBJK-SJYXWHGL-RJ」，「PZXQ-WBJK-SJYXWHGL-FWJC」变为「PZXQ-WBJK-SJYXWHGL-FW」，导致图片与表格中的ID格式不一致，违反GJB接口标识唯一性和完整性规范。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图18数据运行维护管理工具外部接口需求",
+   "table_caption": "表80 数据运行维护管理工具外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00466",
+  "pair_id": "3_017",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "请问文档中{table}的接口需求名称与{text}中列举的功能名是否一致？我想确认一下术语是否对应。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{text}中列举的五个功能名包括：元数据管理与数据库运行管理接口、基础数据维护与数据库运行管理接口、数据加载回收与数据库运行管理接口、数据抽取转换与数据库运行管理接口、数据抽取转换与数据加载回收接口。{table}（表86）中第1-4行对应的接口需求名称分别为：元数据管理与数据库运行管理接口、基础数据维护与数据库运行管理接口、数据加载回收与数据库运行管理接口、数据抽取转换与数据库运行管理接口，与{text}中的前四个功能名完全匹配。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图19数据运行维护管理工具内部接口需求",
+   "table_caption": "表86 数据运行维护管理工具内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00467",
+  "pair_id": "3_017",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现{table}里有个接口叫'数据抽取转换与数据库运行管理接口'，但{text}里好像写的是'数据抽取与数据库运行管理接口'，是不是术语不统一啊？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_017/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细，这确实是一个术语不一致的问题。根据假设的注入场景，{text}中原本应为'数据抽取转换与数据库运行管理接口'，但此处被错误地写成了'数据抽取与数据库运行管理接口'，缺少了'转换'二字。而{table}（表86第4行）中正确写的是'数据抽取转换与数据库运行管理接口'。这种术语差异会导致功能描述与接口定义不匹配，建议统一修正为'数据抽取转换与数据库运行管理接口'以保持一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{text}中的'数据抽取转换与数据库运行管理接口'错误地写为'数据抽取与数据库运行管理接口'，删除'转换'二字，造成与{table}中同名实体术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图19数据运行维护管理工具内部接口需求",
+   "table_caption": "表86 数据运行维护管理工具内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00468",
+  "pair_id": "3_018",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "文档{table}表41中序号1的接口需求标识为\"PZXQ-WBJK-YYRJ\"，而{text}正文中提到\"与应用软件的发布订阅接口\"，请问表格中的接口标识与正文描述的应用软件接口是否对应一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。表41序号1的接口需求标识\"PZXQ-WBJK-YYRJ\"对应\"与应用软件接口\"，发送方为本软件、接收方为应用软件，与正文描述的\"与应用软件的发布订阅接口\"完全对应，属于同一接口的不同描述维度。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图30 数据同步共享服务外部接口需求",
+   "table_caption": "表41 数据同步共享服务外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00469",
+  "pair_id": "3_018",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{text}正文提到数据同步共享服务接口包括\"与数据统一访问服务访问接口\"，但在{table}表41中却没有找到对应的接口记录，而且表41序号2的\"应用软件\"接口缺少接口需求标识，接口类型显示为\"本软件\"、发送方显示为\"订阅数据回调\"、接收方显示为\"高\"，这些属性明显异常。请问这是文档错误还是我理解有误？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_018/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您的发现是正确的，这属于文档不一致问题。基于假设的注入场景：正文明确列出\"与数据统一访问服务访问接口\"，但表41中确实缺少该接口条目（序号5缺失）；同时表41序号2存在严重的属性错位——\"应用软件\"作为接口名称却缺失接口需求标识，且\"本软件\"\"订阅数据回调\"\"高\"这些值被错误填充到了接口类型、发送方、接收方字段中，违反了表格定义的列属性约束。建议修正表41，补充\"与数据统一访问服务接口\"条目，并修正序号2的字段错位问题。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "注入场景：1) 删除表41中应有的\"与数据统一访问服务接口\"条目，使正文列出的四类接口在表格中仅出现三类；2) 将表41序号2的字段进行错位填充——原应为\"与数据统一访问服务接口,PZXQ-WBJK-SJTYFW,API接口,本软件,数据统一访问服务\"的内容被错误拆分为\"应用软件,本软件,订阅数据回调,高\"，造成接口名称、标识、类型、发送方、接收方五列属性全部错乱",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图30 数据同步共享服务外部接口需求",
+   "table_caption": "表41 数据同步共享服务外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00470",
+  "pair_id": "3_019",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "请帮我确认一下，在{table}表49中，数据共享模块与数据资源管理模块之间的接口交互流程是否与{image}图31以及{text}正文描述一致？具体来说，数据共享作为发送方、数据资源管理作为接收方的API接口，其传输的主题资源及主题内容这一流程是否在文档各位置保持统一？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "经核对，文档各位置描述一致。{table}表49第1行明确接口需求名称为\"数据共享与数据资源管理接口\"，接口标识为PZXQ-NBJK-SJGX-SJZYGL，接口类型为API接口，发送方为\"数据共享\"，接收方为\"数据资源管理\"；{table}表49第2行进一步说明传输内容为\"主题资源及主题内容\"。{text}正文提及\"数据同步共享服务内部接口需求表见表49\"，与{image}图31数据同步共享服务内部接口需求相呼应。整个流程描述一致：数据共享模块通过API接口向数据资源管理模块发送主题资源及主题内容。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 31数据同步共享服务内部接口需求",
+   "table_caption": "表49 数据同步共享服务内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00471",
+  "pair_id": "3_019",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查文档时发现一个疑问：{table}表49中第3、4行显示数据同步需要先向数据共享发送同步配置信息，然后才能建立数据同步与数据共享接口；但{image}图31中的时序似乎显示数据共享模块需要先完成与数据资源管理模块的交互后，才会触发数据同步模块的配置下发。这两个流程的先后顺序是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_019/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您提出了一个关键的时序问题。根据inject_detail描述的假设场景，此处存在不一致：{table}表49中数据同步与数据共享接口的建立和数据共享接收同步配置信息是两个独立条目（第3、4行），未明确体现先后依赖关系；而假设的{image}图31注入场景则错误地引入了时序依赖——要求数据共享必须先完成与数据资源管理模块的交互（即表49第1行接口完成后），数据同步模块才下发配置信息。实际上，按照正常业务逻辑，数据同步模块向数据共享模块下发同步配置信息（表49第4行）应当是数据同步与数据共享接口（表49第3行）建立后的独立操作流程，两者与数据共享和数据资源管理之间的接口（表49第1-2行）并无强制时序先后关系，可以并行或按需触发。因此{image}图31假设的时序约束与{table}表49的扁平化接口描述存在业务逻辑时序不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "时序一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图31中错误地添加了一条从\"数据共享→数据资源管理\"指向\"数据同步→数据共享\"的时序依赖箭头，暗示数据共享必须先完成向数据资源管理发送主题资源后，数据同步才能向数据共享发送同步配置信息，这与表49中四个接口条目并列呈现、无显式时序依赖的描述相矛盾。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "09数据同步共享服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 31数据同步共享服务内部接口需求",
+   "table_caption": "表49 数据同步共享服务内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00472",
+  "pair_id": "3_020",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在审查动态名录软件的外部接口需求时，发现{table}中列出了'与运行支撑服务接口、与文件系统接口、与应用软件接口'等接口，而{text}中描述的外部接口包括'与文件系统接口、与应用软件接口、与运维管理框架接口、与服务集成框架接口'。请问这两处对接口类型的描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "两处描述基本一致，但存在细微差异。{table}中详细列出了4个接口：与运行支撑服务接口（PZXQ-WBJK-YXZCFWJK）、与文件系统接口（PZXQ-WBJK-WJJK）、与应用软件接口（PZXQ-WBJK-YYCXJK）以及本系统作为接收方的情况；{text}中则概括为与文件系统接口、与应用软件接口、与运维管理框架接口、与服务集成框架接口。经核对，'与运行支撑服务接口'在{text}中未显式列出，但'运维管理框架'和'服务集成框架'可视为运行支撑服务的组成部分，整体接口定义符合GJB软件需求规格说明模板要求，接口标识符格式规范（PZXQ-WBJK-XXX），无实质性不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图25 动态名录软件外部接口需求",
+   "table_caption": "表69 动态名录软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00473",
+  "pair_id": "3_020",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在检查动态名录软件外部接口需求的GJB合规性时，注意到{table}中'与应用软件接口'的接口需求标识为'PZXQ-WBJK-YYCXJK'，但{image}图25中同一接口标注为'PZXQ-WBJK-YYRJ'。请问这种差异是否符合GJB接口ID格式规范要求？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_020/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "这种差异不符合GJB接口ID格式规范要求。根据GJB软件需求规格说明模板，同一接口在不同位置（表格、图示、正文）的标识符必须保持唯一且一致。{table}中'与应用软件接口'的标识符为'PZXQ-WBJK-YYCXJK'（8位后缀），而{image}中同一接口标注为'PZXQ-WBJK-YYRJ'（5位后缀），两者不仅长度不一致，编码内容也不同（'YYCXJK' vs 'YYRJ'），违反了接口标识符唯一性原则和格式规范性要求。正确的做法应统一使用'PZXQ-WBJK-YYCXJK'作为该接口的唯一标识。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在图25中，'与应用软件接口'的接口需求标识被错误标注为'PZXQ-WBJK-YYRJ'，与表69中的'PZXQ-WBJK-YYCXJK'不一致，引入接口ID格式和内容的冲突",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图25 动态名录软件外部接口需求",
+   "table_caption": "表69 动态名录软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00474",
+  "pair_id": "3_021",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在核对文档时发现，{table}中出现了两个\"名录信息同步\"的接口需求名称（序号1和序号3），但它们的接口需求标识分别是PZXQ-NBJK-MLXXWH和PZXQ-NBJK-MLXXTB，发送方和接收方也不同。请问这是文档错误还是确实有两个不同的\"名录信息同步\"接口？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "这是文档中的正常现象。序号1的\"名录信息同步\"实际上是\"名录信息维护\"接口（PZXQ-NBJK-MLXXWH）的功能描述或数据流向说明，其发送方为\"名录访问接口\"，接收方为\"名录信息维护\"；而序号3的\"名录信息同步\"（PZXQ-NBJK-MLXXTB）是独立的API接口，发送方为\"名录访问接口\"，接收方为\"名录信息同步\"。两者虽然名称相似，但接口标识不同、参与方不同，属于不同的接口实体，文档在术语层面是一致的。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 26 动态名录内部接口图",
+   "table_caption": "表 77 动态名录内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00475",
+  "pair_id": "3_021",
+  "scene": "sc3_interface_interface",
+  "split": "train",
+  "question": "我在梳理接口关系时注意到，{table}中序号1的接口需求名称写的是\"名录信息维护\"，但后面又跟着\"名录信息同步\"几个字，而且{image}和{text}中似乎都把\"名录信息维护\"和\"名录信息同步\"画成了两个独立的模块。请问序号1这个接口到底是\"名录信息维护\"还是\"名录信息同步\"？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_021/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。根据inject_detail中的假设场景：如果{table}序号1的接口需求名称实际应为\"名录信息维护\"，但表格中错误地将其写成了\"名录信息同步\"（或两者混淆），而{image}和{text}中明确将\"名录信息维护\"和\"名录信息同步\"作为两个独立模块/接口展示，这就造成了术语层面的不一致——同名实体\"名录信息同步\"在表格中出现了两次且含义模糊，而\"名录信息维护\"的接口名称被掩盖。正确的做法应该是：序号1接口需求名称明确为\"名录信息维护\"，与接口标识PZXQ-NBJK-MLXXWH及接收方\"名录信息维护\"保持一致；\"名录信息同步\"仅出现在序号3（PZXQ-NBJK-MLXXTB）中，接收方为\"名录信息同步\"模块。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在原始表格中，序号1的\"接口需求名称\"列被错误填写为\"名录信息同步\"，或者该单元格同时包含了\"名录信息维护\"和\"名录信息同步\"两个名称造成混淆，而{image}和{text}中明确区分这两个模块为独立实体，导致同名术语\"名录信息同步\"在表格中既作为序号1的别名/误写出现，又作为序号3的正式接口名称出现，形成术语映射不一致。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "10动态名录软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图 26 动态名录内部接口图",
+   "table_caption": "表 77 动态名录内部接口需求"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00476",
+  "pair_id": "3_022",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "请帮我核对一下，{table}中序号1的接口需求标识与接口类型是否匹配？该接口的发送方和接收方关系在文档中是否有明确说明？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中序号1「与用户的接口」的接口需求标识为PZXQ-WBJK-YYZHCL-RJJK，接口类型为「人机接口」，二者属性匹配合理——人机接口通常用于用户与软件之间的交互。同时，该接口的发送方和接收方关系明确：发送方为「用户」、接收方为「本软件」，且表格中补充说明了反向关系「本软件,用户」，表明这是双向交互的人机接口，文档描述一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.3",
+   "image_caption": "图18 语音综合处理软件外部接口需求图",
+   "table_caption": "表15 语音综合处理软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00477",
+  "pair_id": "3_022",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "我发现{table}中序号2「与应用软件的接口」的接口类型标注为「API接口」，但正文{text}提到语音合成功能包括「格式化文本语音合成、音频文件生成和存储、语音播报、语音设置」。想确认一下，这个API接口的接口需求标识是否应该是PZXQ-WBJK-YYZHCL-YXZC？另外发送方和接收方是否写反了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_022/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。经核查，该接口存在不一致：{table}中序号2「与应用软件的接口」的接口需求标识实际为PZXQ-WBJK-YYZHCL-YYRJ，但按照假设的注入场景，若将其错误替换为PZXQ-WBJK-YYZHCL-YXZC（即序号3「与运行支撑服务的接口」的标识），则会造成标识与接口名称不匹配的属性不一致。此外，发送方「本软件」、接收方「语音应用软件」的方向是正确的，本软件作为语音综合处理平台通过API向语音应用软件提供服务。但标识的混淆会导致接口追溯混乱，需修正为正确的PZXQ-WBJK-YYZHCL-YYRJ。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将序号2「与应用软件的接口」的接口需求标识由PZXQ-WBJK-YYZHCL-YYRJ错误替换为PZXQ-WBJK-YYZHCL-YXZC（即与序号3的标识重复），造成同一标识对应两个不同接口的属性不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.3",
+   "image_caption": "图18 语音综合处理软件外部接口需求图",
+   "table_caption": "表15 语音综合处理软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00478",
+  "pair_id": "3_023",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "根据{table}中表21的内容，语音识别模块与识别短语定制、语音合成之间的接口关系是怎样的？这与{text}中描述的软件功能定位是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。根据表21，语音识别模块有两个内部接口：一是与识别短语定制的文件接口（PZXQ-YYSB-DYDZ），由识别短语定制向语音识别发送；二是与语音合成的文件接口（PZXQ-YYSB-YYHC），由语音合成向语音识别发送。这与正文中描述的'语音综合处理软件的内部接口主要应用于语音识别、识别短语定制等功能'完全一致，说明语音识别是核心处理模块，与识别短语定制、语音形成功能模块存在数据交互关系。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图19 语音综合处理软件内部接口图",
+   "table_caption": "表21 语音综合处理软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00479",
+  "pair_id": "3_023",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "我在审查文档时发现，{table}表21中'语音识别与语音合成的接口'发送方写的是'语音合成'，接收方是'语音识别'，但按照正常业务流程，应该是语音识别先输出文本结果，再传给语音合成进行播报。这个接口方向是不是画反了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_023/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "您提出的疑问是合理的，但根据文档当前描述，该接口方向确实如此。然而，若按照您假设的标准业务流程（语音识别→文本输出→语音合成），则表21中该接口的发送方和接收方存在不一致。正常情况下，语音识别完成识别后应将文本结果发送给语音合成模块，而非由语音合成向语音识别发送数据。当前{table}表21中'语音识别与语音合成的接口'标注为'语音合成'发送、'语音识别'接收，这与典型的语音处理流水线时序（先识别后合成）相矛盾，属于业务流程方向上的不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将表21中'语音识别与语音合成的接口'的发送方和接收方互换，改为'语音识别'发送、'语音合成'接收，与原文档的'语音合成'发送、'语音识别'接收形成不一致，违背了语音识别先于语音合成的正常业务时序。",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图19 语音综合处理软件内部接口图",
+   "table_caption": "表21 语音综合处理软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00480",
+  "pair_id": "3_024",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "请核对{table}中传输控制模块与数据收发模块接口的接口需求标识是否符合GJB标准编号规则？我看到标识为PZXQ-NBJK-TYCSFW-CKSJSF，这个格式是否正确？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "经核对，{table}中接口需求标识\"PZXQ-NBJK-TYCSFW-CKSJSF\"符合GJB标准编号规则。该标识采用分层编码结构：PZXQ（项目/系统代号）-NBJK（内部接口类别）-TYCSFW（统一传输服务子系统）-CKSJSF（传输控制与数据收发模块接口缩写），各层之间以短横线分隔，长度适中，具有唯一性和可读性，与GJB软件需求规格说明中对接口标识的命名规范要求一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口标识ID格式规范",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "13统一传输服务软件需求规格说明-终端",
+   "section": "3.4.1",
+   "image_caption": "图11 统一传输服务软件内部接口需求",
+   "table_caption": "表34 统一传输服务软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00481",
+  "pair_id": "3_024",
+  "scene": "sc3_interface_interface",
+  "split": "dev",
+  "question": "我发现{table}中数据收发模块这一行似乎缺少接口需求标识和接口类型，而且发送方、接收方写的是'数据收发模块,传输控制模块'，但上面传输控制模块与数据收发模块接口的发送方是传输控制模块、接收方是数据收发模块。这两个是同一个接口的不同方向还是独立接口？另外数据收发模块这一行的参数'数据内容、数据的源/目的信息、属性参数'与第一行的对应关系在{image}中是如何体现的？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_024/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "您观察得很仔细。这里存在一个GJB合规性问题：{table}中\"数据收发模块\"这一行实际上是对\"传输控制模块与数据收发模块接口\"的反向补充说明，但缺少独立的接口需求标识和接口类型字段，不符合GJB接口定义完整性要求。按照GJB规范，双向接口应明确定义两个方向的接口标识，或在一个接口定义中完整描述双向传输特性。当前表格将反向数据流作为独立行呈现却未赋予完整属性，导致{table}与{image}中接口定义的完整性不一致。建议补充反向接口标识（如PZXQ-NBJK-TYCSFW-SFJKCK）并明确标注为同一逻辑接口的反向通道，或在接口说明中增加双向传输标识。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义完整性（收发方向与参数对应）",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在原始规范中，数据收发模块作为独立行应有完整的接口需求标识（如PZXQ-NBJK-TYCSFW-SFJKCK）和接口类型字段，但表格中该行缺失了这两个关键属性，仅保留了发送方/接收方和参数信息，造成接口定义不完整，违反GJB对接口描述完整性的要求。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "13统一传输服务软件需求规格说明-终端",
+   "section": "3.4.1",
+   "image_caption": "图11 统一传输服务软件内部接口需求",
+   "table_caption": "表34 统一传输服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00482",
+  "pair_id": "3_025",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我在核对文档时注意到，{table}表27中第1行出现了\"应用软件\"作为接口接收方，{text}正文中也提到了\"与应用软件接口\"。请问这两个地方的\"应用软件\"是否指的是同一类实体？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两处指的是同一实体。{table}表27中\"传输服务软件与应用软件之间接口\"的接收方为\"应用软件\"，与{text}正文列举的\"与应用软件接口\"完全对应，都是指传输服务软件外部接口中的同一类交互对象。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图9 传输服务软件外部接口需求",
+   "table_caption": "表27 传输服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00483",
+  "pair_id": "3_025",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我发现{table}表27中出现了\"统一传输服务\"，而{text}正文中写的是\"与统一传输接口\"，{image}图9的标注也是\"统一传输服务\"。请问正文中的\"统一传输接口\"和表格、图片中的\"统一传输服务\"是否是同一概念的不同表述？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_025/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "根据假设的注入场景，此处的\"统一传输接口\"与\"统一传输服务\"并非同一概念。{text}正文中的\"统一传输接口\"应指传输服务软件对外提供的一个标准化接口规范或协议边界；而{table}表27和{image}图9中的\"统一传输服务\"则是一个独立的系统服务模块，负责实际的数据转发功能。两者属于不同抽象层次：一个是接口规范，一个是服务实体，不能混用。建议将正文中的\"与统一传输接口\"修正为\"与统一传输服务接口\"以保持术语一致性。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "多实体映射",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将正文\"与统一传输服务接口\"故意修改为\"与统一传输接口\"，使正文使用\"接口\"指代抽象规范，而表格/图片使用\"服务\"指代具体模块，造成术语不一致",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图9 传输服务软件外部接口需求",
+   "table_caption": "表27 传输服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00484",
+  "pair_id": "3_026",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "请帮我核对一下，{table}表32中编解码业务报头接口的发送方和接收方是否与{image}图10及{text}正文描述一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "经核对，表32中编解码业务报头接口（标识：PZXQ-NBJK-ZKLCSFW-BJMYWBT）的发送方为数据存储模块、接收方为数据接入模块，与图10及正文描述的接口功能定位一致，文档内容无矛盾。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图10 传输服务软件内部接口需求",
+   "table_caption": "表32 传输服务软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00485",
+  "pair_id": "3_026",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我在核对文档时发现一个问题：{table}表32中监控接口的接收方写的是\"数据监控模块\"，但{text}正文里描述监控接口的功能时，似乎暗示接收方应该是\"数据存储模块\"，这里是不是存在不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_026/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出的疑问涉及一个需要修正的不一致。根据inject_detail的假设场景，表32中监控接口的接收方被错误标注为\"数据监控模块\"，而按照接口设计规范及正文上下文，该接口实际应为数据接入模块向数据监控模块发送监控数据，但接收方属性在表32中被误写。正确的接收方应为\"数据监控模块\"是表32的原始正确值，而假设的注入错误是将接收方改为\"数据存储模块\"。经核查，表32实际记录\"数据监控模块\"为正确值，若出现\"数据存储模块\"则为注入错误，需以表32为准修正正文描述或确认接口流向定义。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将表32中序号2监控接口的接收方由\"数据监控模块\"注入错误改为\"数据存储模块\"，导致与正文描述的监控数据流向逻辑不一致",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "14传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图10 传输服务软件内部接口需求",
+   "table_caption": "表32 传输服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00486",
+  "pair_id": "3_027",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "请帮我确认一下，{text}中提到实时信息传输服务软件外部接口包括与统一传输接口、与运行支撑服务接口、与通信设备接口，这个描述和{table}中的接口需求是否一致？{table}中是否完整覆盖了这三个接口？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "是的，两者完全一致。{text}中列出的三个外部接口——与统一传输接口、与运行支撑服务接口、与通信设备接口——在{table}中都有对应记录：序号1为'与统一传输服务之间接口'（标识PZXQ-WBJK-SSXXCSFW-TYCS），序号2为'与运行支撑服务之间接口'（标识PZXQ-WBJK-SSXXCSFW-YXZCFW），序号3为'与通信设备之间接口'（标识PZXQ-WBJK-SSXXCSFW-TXSB）。三个接口的接口类型均为API接口，发送方均为本系统，与正文描述完全匹配。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图10实时信息传输服务软件接口需求",
+   "table_caption": "表17实时信息传输服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00487",
+  "pair_id": "3_027",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我在核对文档时发现，{text}说实时信息传输服务软件外部接口包括与统一传输接口、与运行支撑服务接口、与通信设备接口，但{table}里序号1的接口名称是'与统一传输服务之间接口'，而且发送方和接收方好像都是双向的？这和正文的描述有矛盾吗？另外{table}中序号1的数据流向是不是有问题，怎么既有'本系统→统一传输服务'又有'统一传输服务→本系统'？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_027/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您观察得很仔细。这里确实存在不一致：按照{table}中序号1的记录，'与统一传输服务之间接口'的数据流向是双向的——既有'本系统→统一传输服务'（发送方为本系统，接收方为统一传输服务），又有'统一传输服务→本系统'（发送方为统一传输服务，接收方为本系统）。但{table}中该接口的'接口类型'字段只标注了一行API接口，且{image}和{text}中并未明确说明这是双向接口。更关键的是，{text}中描述的是'与统一传输接口'，而{table}中名称为'与统一传输服务之间接口'，名称表述存在差异；同时{table}中序号1的'发送方'列实际只应有一条记录为'本系统'，但表格呈现方式容易让人误解为双向通信是同一接口需求标识下的标准行为，这与正文中简单的枚举描述在流程理解上存在偏差——正文暗示本系统作为发送方发起通信，而表格却显示统一传输服务也向本系统发送数据，时序和主从关系不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "流程/时序/异常流一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设在表17中，序号1'与统一传输服务之间接口'被修改为显示双向数据流：第一行发送方'本系统'、接收方'统一传输服务'，第二行发送方'统一传输服务'、接收方'本系统'，但接口需求标识仍使用同一标识PZXQ-WBJK-SSXXCSFW-TYCS，且正文仍保持原有单向描述不变，造成接口通信方向/时序理解上的不一致",
+  "rule_id": "LOGIC-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图10实时信息传输服务软件接口需求",
+   "table_caption": "表17实时信息传输服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00488",
+  "pair_id": "3_028",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "在{table}表21实时信息传输服务软件内部接口需求中列出了6个接口，但{text}正文部分提到实时信息传输服务软件内部接口包括7个接口，包括文件传输通道与传输控制接口、传输控制与文件传输通道接口。请问这是文档不一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不是文档不一致。经核查，{table}表21中列出了4个接口（序号1-4），而{text}正文列出了7个接口名称。实际上表21是部分展示，完整的内部接口需求应包含正文所述的全部7个接口，包括未在表中完整列出的文件传输通道相关接口。{image}图11实时信息传输服务软件接口需求也应与正文保持一致，展示完整的接口关系。文档在接口定义的范围描述上是自洽的。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口定义完整性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图11实时信息传输服务软件接口需求",
+   "table_caption": "表21实时信息传输服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00489",
+  "pair_id": "3_028",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我注意到{table}表21中接口需求标识的命名格式似乎不统一，比如\"PZXQ-NBJK-CSKZ-JK\"和\"PZXQ-NBJK-CSKZ-SJCSTD\"都是传输控制模块相关的接口，但编号规则看起来有些混乱。请问这些接口标识是否符合GJB标准规定的编码规范？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_028/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "您观察得很准确。经核查，{table}表21中序号4的接口需求标识存在格式不一致问题：该接口\"传输控制与控制报文传输通道接口\"的标识为\"PZXQ-NBJK-CSKZ-KZBWCSTD\"，其中\"KZBWCSTD\"部分与同一表格中其他接口的命名规则不统一。按照GJB标准及文档内部约定的ID格式规范，控制报文传输通道模块的缩写应保持一致。假设该标识应为\"PZXQ-NBJK-CSKZ-KZBKCSTD\"或采用与其他条目统一的模块缩写规则，当前\"KZBWCSTD\"的写法属于编码格式不规范，需要修正以符合GJB合规要求。{image}图11中的接口标注也应与此保持一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "接口标识ID格式规范",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将序号4的接口需求标识从规范格式篡改为不一致格式：原应为\"PZXQ-NBJK-CSKZ-KZBKCSTD\"（控制报文传输通道模块缩写统一为KZBKCSTD），注入为\"PZXQ-NBJK-CSKZ-KZBWCSTD\"（缩写变为KZBWCSTD，与其他条目模块缩写规则不一致），破坏GJB标准规定的接口ID编码格式一致性。",
+  "rule_id": "GJB-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "15实时信息传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图11实时信息传输服务软件接口需求",
+   "table_caption": "表21实时信息传输服务软件内部接口需求"
+  },
+  "difficulty": "hard",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00490",
+  "pair_id": "3_029",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "文档中{table}列出了\"流媒体传输服务软件与应用软件之间接口\"和\"流媒体传输服务软件与通信设备之间接口\"，而{text}提到外部接口包括\"与通信设备接口\"和\"与应用软件接口\"，这两处对接口的命名和涵盖范围是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中的\"流媒体传输服务软件与应用软件之间接口\"对应{text}中的\"与应用软件接口\"，{table}中的\"流媒体传输服务软件与通信设备之间接口\"对应{text}中的\"与通信设备接口\"。虽然{table}使用了更完整的命名（包含\"流媒体传输服务软件与...之间\"的前缀），但核心实体\"应用软件\"和\"通信设备\"完全对应，接口关系也一致，属于同一接口的不同表述方式。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "16流媒体传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图8 流媒体传输服务软件外部接口需求",
+   "table_caption": "表20 流媒体传输服务软件外部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00491",
+  "pair_id": "3_029",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我注意到{text}提到外部接口包括\"与运行支撑服务接口\"，但在{table}中只找到了\"流媒体传输服务软件与应用软件之间接口\"和\"流媒体传输服务软件与通信设备之间接口\"，没有直接看到\"运行支撑服务\"相关的接口记录。{table}是否遗漏了运行支撑服务的接口？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_029/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "基于假设的文档场景，{table}确实遗漏了\"运行支撑服务\"接口。按照{text}的描述，外部接口应包含四类：与服务集成框架接口、与运行支撑服务接口、与通信设备接口、与应用软件接口。但{table}仅列出了应用软件和通信设备两类接口，缺少\"与运行支撑服务接口\"和\"与服务集成框架接口\"的对应条目，导致{table}与{text}在接口覆盖范围上不一致。建议核查{table}是否应补充序号3\"流媒体传输服务软件与运行支撑服务之间接口\"及序号4\"流媒体传输服务软件与服务集成框架之间接口\"。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "同名实体映射一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设注入：将原表格中序号3的\"流媒体传输服务软件与运行支撑服务之间接口\"条目删除，使{table}仅保留应用软件和通信设备两类接口，与{text}中提到的四类外部接口形成不一致。",
+  "rule_id": "TERM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "16流媒体传输服务软件需求规格说明-终稿",
+   "section": "3.3.1",
+   "image_caption": "图8 流媒体传输服务软件外部接口需求",
+   "table_caption": "表20 流媒体传输服务软件外部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00492",
+  "pair_id": "3_030",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我想确认一下，{table}中列出的监控接口的发送方和接收方，与{image}和{text}中的描述是否一致？特别是监控接口是由哪个模块发给哪个模块的？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "一致。{table}中明确监控接口（标识PZXQ-NBJK-LMTCSFW-JK）的发送方是'流媒体数据传输模块'，接收方是'流媒体数据监控模块'；{text}中'监控接口'作为内部接口之一被列出，与{table}的功能名称完全对应。{image}（图9）的内部接口需求也与表格和正文保持一致，三者无矛盾。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "PARAM-001",
+  "context_note": "",
+  "evidence": {
+   "doc": "16流媒体传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图9 流媒体传输服务软件内部接口需求",
+   "table_caption": "表25 流媒体传输服务软件内部接口需求"
+  },
+  "difficulty": "easy",
+  "source": "llm_generated",
+  "verified": false
+ },
+ {
+  "qid": "srs_sc3_00493",
+  "pair_id": "3_030",
+  "scene": "sc3_interface_interface",
+  "split": "test",
+  "question": "我在核对文档时发现一个问题：{table}里传输控制接口的发送方写的是'流媒体数据传输模块'，但{text}中描述的传输控制接口好像是由'流媒体传输控制模块'发起的？这两个地方是不是矛盾了？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_030/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "您提出了一个很好的问题。经过核查，这确实是一处不一致（注入假设场景）：按照原始设计，传输控制接口（PZXQ-NBJK-LMTCSFW-PDCSJ）在{table}中的发送方为'流媒体数据传输模块'、接收方为'流媒体传输控制模块'；但假设在另一版本中，{text}正文被错误修改为描述传输控制接口由'流媒体传输控制模块'作为发送方发起，而{table}未同步更新。正确的做法应以{table}为准，保持发送方为'流媒体数据传输模块'，接收方为'流媒体传输控制模块'，并修正{text}中的描述，确保三者一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "parameter",
+  "subtype": "数值/单位/属性一致性",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "假设将{text}中传输控制接口的描述修改为'由流媒体传输控制模块向流媒体数据传输模块发送传输控制指令'，导致与{table}中发送方/接收方方向相反，但{table}未同步更新",
+  "rule_id": "PARAM-001",
+  "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。",
+  "evidence": {
+   "doc": "16流媒体传输服务软件需求规格说明-终稿",
+   "section": "3.4.1",
+   "image_caption": "图9 流媒体传输服务软件内部接口需求",
+   "table_caption": "表25 流媒体传输服务软件内部接口需求"
+  },
+  "difficulty": "medium",
+  "source": "llm_generated",
+  "verified": false
+ }
+]
