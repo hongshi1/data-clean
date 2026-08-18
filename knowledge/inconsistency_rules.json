@@ -29,7 +29,8 @@
       "description": "多个需求ID不应映射到同一功能名(多实体映射冲突)",
       "check_method": "功能名→ID集合, 集合大小>1则冲突",
       "inject_methods": [
-        "给两个不同ID赋相同功能名"
+        "给两个不同ID赋相同功能名",
+        "同一功能名分配给不同章节"
       ],
       "applies_to": [
         "capability_table",
@@ -79,7 +80,8 @@
       "description": "参数的单位应统一(同一参数不可一处用GB一处用MB且不换算)",
       "check_method": "单位归一化(用srs_kb的unit_dictionary换算后比较)",
       "inject_methods": [
-        "换单位不换数值(如8GB→8MB)"
+        "换单位不换数值(如8GB→8MB)",
+        "用不同精度表示(如8.0GB vs 8GB)"
       ],
       "applies_to": [
         "environment_table",
@@ -174,7 +176,9 @@
       "description": "能力标识表必须包含: 序号/功能名称/项目唯一标识符/需求描述",
       "check_method": "表头字段完整性检查",
       "inject_methods": [
-        "删除'项目唯一标识符'列"
+        "删除'项目唯一标识符'列",
+        "删除'需求描述'列",
+        "删除'序号'列"
       ],
       "applies_to": [
         "capability_table"
@@ -188,7 +192,8 @@
       "description": "SRS文档必须包含GJB 438C规定的6章结构(1范围/2引用文档/3需求/4合格性/5可追踪性/6注解)",
       "check_method": "一级章节集合 ⊇ {1,2,3,4,5,6}",
       "inject_methods": [
-        "删除某章"
+        "删除某章",
+        "章节顺序错误"
       ],
       "applies_to": [
         "document_structure"
@@ -218,7 +223,8 @@
       "description": "图/表应在正文中被引用(正文应提及'见图N'或'见表N')",
       "check_method": "图/表编号 ∈ 正文引用编号集合",
       "inject_methods": [
-        "删正文中的引用"
+        "删正文中的图表引用",
+        "引用不存在的图/表编号"
       ],
       "applies_to": [
         "text",

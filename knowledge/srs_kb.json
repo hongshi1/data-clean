@@ -251,7 +251,8 @@
       "value_range": {
         "min": 1,
         "max": 10000000000,
-        "unit_hint": "frequency"
+        "unit_hint": "frequency",
+        "note": "物理范围合理: 1~10000000000覆盖从1Hz到10GHz的全频段"
       }
     },
     "voltage": {
@@ -412,7 +413,8 @@
       "value_range": {
         "min": 1,
         "max": 10000000000,
-        "unit_hint": "data_rate"
+        "unit_hint": "data_rate",
+        "note": "物理范围合理: 1~10000000000覆盖从1Hz到10GHz的全频段"
       }
     },
     "downtime": {
@@ -1119,11 +1121,13 @@
       "constraint_ratio": {
         "description": "同名参数约束值差异过大",
         "high_ratio": 10,
-        "medium_ratio": 2
+        "medium_ratio": 2,
+        "severity": "HIGH"
       },
       "physics_constraint": {
         "description": "频率×时间超过物理极限",
-        "threshold": 1000000000.0
+        "threshold": 1000000000.0,
+        "severity": "MEDIUM"
       },
       "temporal_cycle": {
         "description": "时序约束形成环依赖",
@@ -1150,6 +1154,14 @@
         "requirement_value",
         "unit",
         "verification_method"
+      ],
+      "required_fields": [
+        "序号",
+        "性能名称",
+        "项目唯一标识符",
+        "性能指标",
+        "指标值",
+        "单位"
       ]
     },
     "interface_table": {
@@ -1170,6 +1182,14 @@
         "direction",
         "protocol",
         "data_rate"
+      ],
+      "required_fields": [
+        "序号",
+        "接口名称/标识",
+        "接口描述",
+        "发送方",
+        "接收方",
+        "接口类型"
       ]
     },
     "data_dictionary": {
@@ -1191,6 +1211,14 @@
         "value_range",
         "unit",
         "description"
+      ],
+      "required_fields": [
+        "序号",
+        "数据元素名称",
+        "数据元素标识",
+        "数据类型",
+        "长度",
+        "单位"
       ]
     }
   }
