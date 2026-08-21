@@ -1,31 +1,15 @@
 #!/usr/bin/env python3
-"""语义层检测器 — 术语一致性检测
+"""语义层检测器 — 术语一致性(盲测协议)
 
-利用专家知识:
-  - 编辑距离/BGE语义相似度: 比较功能名是否一致
-  - 不一致规则: 术语层8项校验规则
-
-检测范围(对应评测集TERM-01~08):
-  TERM-01同义异名: 位置A名称X vs 位置B近义词Y
-  TERM-02同名异义: 同名在不同位置定义不同概念
-  TERM-03枚举集合: 文本N种 vs 图N-1种
-  TERM-04状态告警: 同状态不同术语
-  TERM-05指令名称: 同指令不同名称
-  TERM-06量纲单位: ≤0.2s vs ≤20ms(冲突非等效)
-  TERM-07信号接口: 同接口不同命名
-  TERM-08缩写代号: 全称 vs 缩写
-
-输入: EvalEntry(评测集) 或 上下文关联结果(occurrences)
-输出: DetectionResult
+只看occurrences_injected,不碰injection元数据。
+技术: 编辑距离 / 同义词检测 / 集合比较 / 缩写检测
 """
-import re
 from algorithms.base import BaseDetector, DetectionResult
 
 
 class TermChecker(BaseDetector):
     """语义层检测器 — 术语一致性"""
 
-    # 同义词映射(用于检测同义异名)
     SYNONYM_GROUPS = [
         {"获取", "采集"}, {"管理", "管控"}, {"监控", "监测"}, {"处理", "处置"},
         {"传输", "传送"}, {"存储", "保存"}, {"查询", "检索"}, {"注册", "登记"},
@@ -33,162 +17,114 @@ class TermChecker(BaseDetector):
         {"修改", "变更"}, {"添加", "新增"}, {"配置", "设置"}, {"加载", "载入"},
     ]
 
-    def __init__(self, expert_knowledge=None):
+    def __init__(self, expert_knowledge=None, sim_threshold=0.85):
         super().__init__("semantic", expert_knowledge)
-        self.sim_threshold = 0.85  # 术语相似度阈值
+        self.sim_threshold = sim_threshold
 
-    def detect(self, entry: dict) -> DetectionResult:
-        """检测单个条目"""
-        check_item = entry.get("check_item", "")
-        injection = self.get_injection(entry)
-        occurrences = self.get_occurrences(entry)
-        occurrences = self.apply_injection_to_occurrences(occurrences, injection)
+    def detect(self, blind_entry: dict) -> DetectionResult:
+        occurrences = blind_entry.get("occurrences", [])
+        if not occurrences:
+            return DetectionResult(False, "silver", "无内容", self.name)
 
-        # 正例不检测
-        if injection.get("method", "") == "positive":
-            return DetectionResult(False, "silver", "正例", self.name)
-
-        # 先检查注入值差异（不需要occurrence数量≥2）
-        original = str(injection.get("original", ""))
-        injected = str(injection.get("injected", ""))
-        if original and injected and original != injected:
-            sim = self._text_similarity(original, injected)
-            return DetectionResult(
-                True, "silver",
-                f"{check_item}: 术语不一致(相似度={sim:.2f}): {original[:30]} vs {injected[:30]}",
-                self.name
-            )
-
-        # 再检查occurrences中各位置内容
-        if not occurrences or len(occurrences) < 2:
-            return DetectionResult(False, "silver", "occurrences不足", self.name)
-
-        # 根据check_item选择检测策略
-        if check_item.startswith("TERM"):
-            return self._compare_occurrences(occurrences, check_item)
-        else:
-            return self._detect_general(occurrences)
-
-    def _detect_term(self, occurrences, injection, check_item):
-        """术语层检测"""
-        original = str(injection.get("original", ""))
-        injected = str(injection.get("injected", ""))
-
-        # 如果注入值和原始值不同，检测到不一致
-        if original and injected and original != injected:
-            # 进一步判断类型
-            sim = self._text_similarity(original, injected)
-            return DetectionResult(
-                True, "silver",
-                f"{check_item}: 术语不一致(相似度={sim:.2f}): {original[:30]} vs {injected[:30]}",
-                self.name
-            )
-
-        # 比较occurrences中各位置的内容
-        return self._compare_occurrences(occurrences, check_item)
-
-    def _compare_occurrences(self, occurrences, check_item):
-        """比较各位置内容是否一致"""
+        # 提取各位置可比内容
         contents = []
         for occ in occurrences:
             content = occ.get("content", "")
-            if isinstance(content, str) and len(content) >= 1:
-                contents.append(content)
+            if isinstance(content, str) and content.strip():
+                contents.append(content.strip())
             elif isinstance(content, list):
-                contents.append(str(content))
+                contents.append([str(c).strip() for c in content])
+            elif isinstance(content, dict):
+                contents.append(content)
 
-        if len(contents) < 2:
-            return DetectionResult(False, "silver", "有效内容不足", self.name)
+        strs = [c for c in contents if isinstance(c, str)]
+        lists = [c for c in contents if isinstance(c, list)]
+        dicts = [c for c in contents if isinstance(c, dict)]
 
-        # 逐对比较
-        for i in range(len(contents) - 1):
-            sim = self._text_similarity(contents[i], contents[i + 1])
-            if sim < self.sim_threshold:
-                return DetectionResult(
-                    True, "silver",
-                    f"{check_item}: 位置{i+1}与位置{i+2}术语不一致(相似度={sim:.2f})",
-                    self.name
-                )
-
-            # 检查是否是同义词
-            if self._is_synonym_pair(contents[i], contents[i + 1]):
-                return DetectionResult(
-                    True, "silver",
-                    f"{check_item}: 位置{i+1}'{contents[i][:20]}'与位置{i+2}'{contents[i+1][:20]}'是同义异名",
-                    self.name
-                )
-
-        # 检查枚举集合
-        for occ in occurrences:
-            content = occ.get("content", "")
-            if isinstance(content, list) and len(occurrences) >= 2:
-                return self._check_enum_completeness(occurrences, check_item)
-
-        return DetectionResult(False, "silver", f"{check_item}: 术语一致", self.name)
-
-    def _check_enum_completeness(self, occurrences, check_item):
-        """检查枚举集合完整性(TERM-03)"""
-        sets = []
-        for occ in occurrences:
-            content = occ.get("content", "")
-            if isinstance(content, list):
-                sets.append(set(str(c) for c in content))
-
-        if len(sets) >= 2:
-            for i in range(len(sets) - 1):
-                if sets[i] != sets[i + 1]:
-                    diff = sets[i].symmetric_difference(sets[i + 1])
+        # 集合比较(TERM-03枚举缺失): list vs list
+        if len(lists) >= 2:
+            for i in range(len(lists) - 1):
+                a, b = set(lists[i]), set(lists[i + 1])
+                if a != b:
+                    diff = a.symmetric_difference(b)
                     return DetectionResult(
                         True, "silver",
-                        f"{check_item}: 枚举集合不一致(差异: {diff})",
-                        self.name
-                    )
+                        f"枚举集合不一致(差异: {list(diff)[:3]})",
+                        self.name, technique="setdiff")
 
-        return DetectionResult(False, "silver", f"{check_item}: 枚举集合一致", self.name)
+        # 字符串两两比较(TERM-01/02/04/05/07/08)
+        if len(strs) >= 2:
+            for i in range(len(strs)):
+                for j in range(i + 1, len(strs)):
+                    a, b = strs[i], strs[j]
+                    if a == b:
+                        continue
+                    # 同义词对
+                    if self._is_synonym_pair(a, b):
+                        return DetectionResult(
+                            True, "silver",
+                            f"'{a[:20]}'与'{b[:20]}'同义异名",
+                            self.name, technique="synonym")
+                    # 缩写关系(一方是另一方的编码/缩写)
+                    if self._is_abbreviation_pair(a, b):
+                        return DetectionResult(
+                            True, "silver",
+                            f"'{a[:20]}'与'{b[:20]}'全称/缩写混用",
+                            self.name, technique="abbrev")
+                    # 编辑距离
+                    sim = self.text_sim(a, b)
+                    if sim < self.sim_threshold:
+                        return DetectionResult(
+                            True, "silver",
+                            f"'{a[:20]}'与'{b[:20]}'表述不一致(相似度{sim:.2f})",
+                            self.name, technique="editdist")
+                    # 同名但定义后缀不同(TERM-02): 同前缀+不同括号定义
+                    if self._is_homonym_pair(a, b):
+                        return DetectionResult(
+                            True, "silver",
+                            f"'{a[:20]}'与'{b[:20]}'同名不同义",
+                            self.name, technique="homonym")
 
-    def _text_similarity(self, s1, s2):
-        """文本相似度(编辑距离归一化)"""
-        s1, s2 = str(s1), str(s2)
-        if s1 == s2:
-            return 1.0
-        ml = max(len(s1), len(s2))
-        if ml == 0:
-            return 1.0
-        d = self._levenshtein(s1, s2)
-        return 1.0 - d / ml
+        # dict比较(接口属性)
+        if len(dicts) >= 2:
+            for i in range(len(dicts) - 1):
+                if dicts[i] != dicts[i + 1]:
+                    diff_keys = [k for k in set(dicts[i]) | set(dicts[i + 1])
+                                 if dicts[i].get(k) != dicts[i + 1].get(k)]
+                    return DetectionResult(
+                        True, "silver",
+                        f"属性不一致(字段: {diff_keys[:3]})",
+                        self.name, technique="attrdiff")
 
-    def _levenshtein(self, s1, s2):
-        """编辑距离"""
-        if len(s1) < len(s2):
-            return self._levenshtein(s2, s1)
-        if len(s2) == 0:
-            return len(s1)
-        prev = list(range(len(s2) + 1))
-        for i, c1 in enumerate(s1):
-            curr = [i + 1]
-            for j, c2 in enumerate(s2):
-                curr.append(min(prev[j + 1] + 1, curr[j] + 1, prev[j] + (c1 != c2)))
-            prev = curr
-        return prev[-1]
+        return DetectionResult(False, "silver", "各位置术语一致", self.name)
 
-    def _is_synonym_pair(self, s1, s2):
-        """检查是否是同义词对"""
-        s1, s2 = str(s1), str(s2)
+    def _is_synonym_pair(self, a, b):
         for group in self.SYNONYM_GROUPS:
             for w1 in group:
                 for w2 in group:
-                    if w1 != w2 and w1 in s1 and w2 in s2:
-                        # 检查替换后是否相同
-                        if s1.replace(w1, w2) == s2:
+                    if w1 != w2 and w1 in a and w2 in b:
+                        if a.replace(w1, w2) == b or b.replace(w2, w1) == a:
                             return True
         return False
 
-    def _detect_general(self, occurrences):
-        """通用术语检测"""
-        contents = [str(occ.get("content", "")) for occ in occurrences]
-        if len(contents) >= 2:
-            for i in range(len(contents) - 1):
-                sim = self._text_similarity(contents[i], contents[i + 1])
-                if sim < self.sim_threshold:
-                    return DetectionResult(True, "silver", f"术语不一致(相似度={sim:.2f})", self.name)
-        return DetectionResult(False, "silver", "术语一致", self.name)
+    def _is_abbreviation_pair(self, a, b):
+        # 一方是纯十六进制/大写字母编码,另一方是中文 → 全称/缩写混用
+        import re
+        code_re = re.compile(r'^[0-9A-F]{4,}$|^[A-Z]{2,8}$')
+        is_cn_a = bool(re.search(r'[\u4e00-\u9fa5]', a))
+        is_cn_b = bool(re.search(r'[\u4e00-\u9fa5]', b))
+        if (code_re.match(a) and is_cn_b) or (code_re.match(b) and is_cn_a):
+            return True
+        return False
+
+    def _is_homonym_pair(self, a, b):
+        # 同名+不同括号定义,如"安全模式（低功耗）"vs"安全模式（故障保护）"
+        import re
+        pa = re.match(r'^(.+?)（(.+?)）$', a)
+        pb = re.match(r'^(.+?)（(.+?)）$', b)
+        if pa and pb:
+            return pa.group(1) == pb.group(1) and pa.group(2) != pb.group(2)
+        # 一方带定义括号,另一方是裸名且是前者的前缀
+        if pa and not pb and pb is not None:
+            return pa.group(1) == b
+        return False
