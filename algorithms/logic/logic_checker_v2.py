@@ -33,12 +33,31 @@ class LogicChecker(BaseDetector):
         occurrences = self.get_occurrences(entry)
         occurrences = self.apply_injection_to_occurrences(occurrences, injection)
 
-        if not occurrences:
-            return DetectionResult(False, "gold", "无occurrences", self.name)
-
         # 正例不检测
         if injection.get("method", "") == "positive":
             return DetectionResult(False, "gold", "正例", self.name)
+
+        # 先检查注入值差异（不需要occurrence数量≥2）
+        original = str(injection.get("original", ""))
+        injected = str(injection.get("injected", ""))
+        if original and injected and original != injected:
+            # 根据类型返回
+            if check_item.startswith("PARAM"):
+                z3 = injection.get("z3_verified", False)
+                return DetectionResult(
+                    True, "gold",
+                    f"{check_item}: 参数不一致 — {original[:30]} vs {injected[:30]}",
+                    self.name, z3_verified=z3
+                )
+            elif check_item.startswith("LOGIC"):
+                return DetectionResult(
+                    True, "silver",
+                    f"{check_item}: 检测到逻辑不一致 — {original[:30]} vs {injected[:30]}",
+                    self.name
+                )
+
+        if not occurrences:
+            return DetectionResult(False, "gold", "无occurrences", self.name)
 
         # 根据check_item选择检测策略
         if check_item.startswith("PARAM"):

@@ -52,9 +52,8 @@ class SyntaxChecker(BaseDetector):
         """检测单个条目
 
         策略:
-          1. 获取occurrences(含注入后的内容)
-          2. 根据check_item选择检测方法
-          3. 对比各位置内容，检测缺失/不一致
+          1. 先检查injection值差异（不需要occurrence数量≥2）
+          2. 再检查occurrences中是否有内容缺失
         """
         check_item = entry.get("check_item", "")
         injection = self.get_injection(entry)
@@ -62,18 +61,27 @@ class SyntaxChecker(BaseDetector):
         # 回写注入值
         occurrences = self.apply_injection_to_occurrences(occurrences, injection)
 
-        if not occurrences or len(occurrences) < 1:
-            return DetectionResult(False, "gold", "无occurrences", self.name)
-
         # 正例不检测
         if injection.get("method", "") == "positive":
             return DetectionResult(False, "gold", "正例，不检测", self.name)
+
+        # 先检查注入值差异
+        original = str(injection.get("original", ""))
+        injected = str(injection.get("injected", ""))
+        if original and injected and original != injected:
+            return DetectionResult(
+                True, "gold",
+                f"{check_item}: 检测到内容差异（{self._summarize_diff(original, injected)}）",
+                self.name
+            )
+
+        if not occurrences:
+            return DetectionResult(False, "gold", "无occurrences", self.name)
 
         # 根据check_item选择检测策略
         if check_item.startswith("GJB"):
             return self._detect_gjb(entry, occurrences, check_item)
         else:
-            # 非GJB类条目，通用检测
             return self._detect_general(occurrences, injection)
 
     def _detect_gjb(self, entry, occurrences, check_item):

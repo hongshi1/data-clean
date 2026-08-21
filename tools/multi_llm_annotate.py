@@ -39,20 +39,18 @@ WQ_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
 CLAUDE_MODEL = "ep-5zazxj-1770439257299735491"
 GLM_MODEL = "ep-glsztk-1778496696841467392"
 
-# 标注prompt（不含注入信息！）
+# 标注prompt（盲测:只用渲染上下文+问题,不给任何注入信息）
 ANNOTATE_PROMPT = """你是SRS软件需求规格说明文档的质检专家。
 
-以下是一个软件功能/实体在文档中多个位置的记录：
+以下是文档中一个实体在多个位置的记录（检测上下文）：
 
-功能ID: {entity_id}
-实体类型: {entity_type}
-位置记录:
-{occurrences_text}
+{rendered_context}
 
 问题: {question}
 
-请独立判断这些位置之间是否存在不一致（同一实体在不同位置用了不同的名称/数值/属性）。
+请独立判断这些位置之间是否存在不一致（同一实体在不同位置用了不同的名称/数值/属性，或内容存在矛盾）。
 注意: 不要受问题中暗示的影响，请基于位置记录的内容独立做出判断。
+注意: 表述不同但语义等价（如0.2秒=200ms、同义词）不算不一致。
 
 输出JSON: {{"verdict": "consistent"或"inconsistent", "reason": "简要原因(50字内)"}}"""
 
@@ -141,25 +139,25 @@ def call_kimi(prompt):
 
 
 def call_wanqing(prompt, model):
-    """调用wanqing API (claude或glm)"""
+    """调用wanqing API (claude或glm) — 带指数退避重试,防空返回"""
     payload = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 200,
+        "max_tokens": 300,
         "temperature": 0.1,
     }
-    for attempt in range(3):
+    empty_retries = 0
+    for attempt in range(6):
         try:
             r = httpx.post(WQ_URL,
                 headers={"Authorization": f"Bearer {WQ_KEY}", "Content-Type": "application/json"},
-                json=payload, timeout=60)
+                json=payload, timeout=90)
             if r.status_code == 200:
                 content = r.json()["choices"][0]["message"].get("content", "")
                 if content:
                     # 清理markdown标记
                     clean = content.strip()
                     if clean.startswith("```"):
-                        # 去掉 ```json 或 ``` 开头
                         lines = clean.split("\n")
                         if len(lines) > 1:
                             clean = "\n".join(lines[1:])
@@ -175,9 +173,18 @@ def call_wanqing(prompt, model):
                             return {"verdict": "inconsistent", "reason": content[:100]}
                         elif "consistent" in content.lower():
                             return {"verdict": "consistent", "reason": content[:100]}
-            time.sleep(3)
+                else:
+                    # 空content: 退避后重试
+                    empty_retries += 1
+                    time.sleep(min(2 ** attempt, 30))
+                    continue
+            elif r.status_code in (429, 502, 503):
+                time.sleep(min(2 ** attempt, 30))
+                continue
+            else:
+                time.sleep(3)
         except Exception:
-            time.sleep(3)
+            time.sleep(min(2 ** attempt, 30))
     return None
 
 
@@ -298,24 +305,30 @@ def main():
                 annotations.append(done[eval_id])
                 continue
             
-            # 构建prompt（不含注入信息！但occurrences是注入后的）
-            occurrences = entry.get("entity", {}).get("occurrences", [])
-            injection = entry.get("injection", {})
-            occ_text = format_occurrences(occurrences, injection)
-            
+            # 盲测prompt: 直接用rendered_context(注入已渲染,不给注入元数据)
+            rendered = entry.get("rendered_context", "")
+            if not rendered:
+                # 兼容旧数据: 现场渲染
+                rendered = format_occurrences(
+                    entry.get("entity", {}).get("occurrences", []),
+                    entry.get("injection", {}))
+
             prompt = ANNOTATE_PROMPT.format(
-                entity_id=entry.get("entity", {}).get("entity_id", ""),
-                entity_type=entry.get("entity", {}).get("entity_type", ""),
-                occurrences_text=occ_text,
+                rendered_context=rendered,
                 question=entry.get("question", ""),
             )
             
             print(f"[{i+1}/{len(entries)}] {eval_id} ...", end=" ", flush=True)
             
-            # 3个LLM独立标注（GLM返回空，改用kimi-wanqing作为第三LLM）
-            kimi_result = call_kimi(prompt)
-            claude_result = call_wanqing(prompt, CLAUDE_MODEL)
-            glm_result = call_wanqing(prompt, "ep-0dkcs8-1777515852343838800")  # kimi via wanqing作为第三LLM
+            # 3个LLM并发标注(提速3倍)
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=3) as ex:
+                f_kimi = ex.submit(call_kimi, prompt)
+                f_claude = ex.submit(call_wanqing, prompt, CLAUDE_MODEL)
+                f_glm = ex.submit(call_wanqing, prompt, "ep-0dkcs8-1777515852343838800")
+                kimi_result = f_kimi.result()
+                claude_result = f_claude.result()
+                glm_result = f_glm.result()
             
             kimi_verdict = kimi_result.get("verdict", "") if kimi_result else ""
             claude_verdict = claude_result.get("verdict", "") if claude_result else ""

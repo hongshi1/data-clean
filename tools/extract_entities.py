@@ -281,57 +281,47 @@ def extract_param_entities(pairs, chunks, srs_kb):
     """提取数值参数实体（从Pair Dataset + 5231条chunks按10种参数类型提取）"""
     entities = {}
     
-    # 10种参数类型的正则模式
+    # 10种参数类型的正则模式（放宽匹配+增加关键词）
     PARAM_TYPES = {
         "time": {
-            "keywords": ["响应时间", "执行时间", "处理时间", "延迟", "时延", "耗时"],
-            "units": r"(ms|毫秒|秒|s|min|分钟)",
-            "regex": r'(?:响应时间|执行时间|处理时间|延迟|时延|耗时)[^。]*?(\d+\.?\d*)\s*(ms|毫秒|秒|s|min|分钟)'
+            "regex": r'(\d+\.?\d*)\s*(ms|毫秒|秒|s|min|分钟)(?:以内|以内|之内|之内|以下|以下|不超过|不超过)',
+            "fallback": r'(?:响应|执行|处理|完成|启动|关闭|延迟|时延|耗时|时间)[^。\n]{0,30}?(\d+\.?\d*)\s*(ms|毫秒|秒|s|min|分钟)'
         },
         "period": {
-            "keywords": ["周期", "间隔", "频率"],
-            "units": r"(ms|毫秒|秒|s|Hz|kHz)",
-            "regex": r'(?:周期|间隔|频率)[^。]*?(\d+\.?\d*)\s*(ms|毫秒|秒|s|Hz|kHz)'
+            "regex": r'(?:周期|间隔|频率|定时|定期|刷新|轮询|采样)[^。\n]{0,30}?(\d+\.?\d*)\s*(ms|毫秒|秒|s|Hz|kHz|分钟)',
+            "fallback": r'(\d+\.?\d*)\s*(ms|毫秒|秒|s|Hz|kHz)(?:.*?)(?:周期|间隔|频率|定时)'
         },
         "threshold": {
-            "keywords": ["阈值", "门限", "触发"],
-            "units": r"(%|ms|秒)",
-            "regex": r'(?:阈值|门限|触发)[^。]*?(\d+\.?\d*)\s*(%|ms|秒)'
+            "regex": r'(?:阈值|门限|触发|告警|报警|上限|下限|临界)[^。\n]{0,30}?(\d+\.?\d*)\s*(%|ms|秒|次)',
+            "fallback": r'(\d+\.?\d*)\s*%(?:.*?)(?:阈值|门限|告警|报警|触发)'
         },
         "align": {
-            "keywords": ["对齐", "同步", "校准"],
-            "units": r"(ms|us|μs|毫秒|微秒)",
-            "regex": r'(?:对齐|同步|校准)[^。]*?(\d+\.?\d*)\s*(ms|us|μs|毫秒|微秒)'
+            "regex": r'(?:对齐|同步|校准|一致|偏差|时钟|授时|守时)[^。\n]{0,30}?(\d+\.?\d*)\s*(ms|us|μs|毫秒|微秒|ns|纳秒)',
+            "fallback": r'(?:时间同步|时钟同步|时间对齐|时间偏差)[^。\n]{0,30}?(\d+\.?\d*)\s*(ms|us|μs|ns|纳秒|毫秒|微秒)'
         },
         "resource": {
-            "keywords": ["CPU", "内存", "存储", "磁盘", "带宽", "资源占用"],
-            "units": r"(GB|MB|KB|TB|GHz|MHz|%|Mbps|Gbps)",
-            "regex": r'(?:CPU|内存|存储|磁盘|带宽|资源占用)[^。]*?(\d+\.?\d*)\s*(GB|MB|KB|TB|GHz|MHz|%|Mbps|Gbps)'
+            "regex": r'(?:CPU|内存|存储|磁盘|带宽|资源|占用|空间|容量)[^。\n]{0,30}?(\d+\.?\d*)\s*(GB|MB|KB|TB|GHz|MHz|%|Mbps|Gbps|核|个)',
+            "fallback": r'(\d+\.?\d*)\s*(GB|MB|TB|GHz|MHz)(?:.*?)(?:内存|存储|磁盘|CPU|带宽|容量|空间|资源)'
         },
         "range": {
-            "keywords": ["值域", "范围", "取值", "不小于", "不大于"],
-            "units": r"(GB|MB|%|个|条|路)",
-            "regex": r'(?:值域|范围|取值|不小于|不大于)[^。]*?(\d+\.?\d*)\s*(GB|MB|%|个|条|路)'
+            "regex": r'(?:值域|范围|取值|不小于|不大于|不超过|不低于|不高于|最少|最多|至少|至多)[^。\n]{0,30}?(\d+\.?\d*)\s*(GB|MB|%|个|条|路|帧|M|K)',
+            "fallback": r'(\d+\.?\d*)\s*(?:[-~～])(\d+\.?\d*)\s*(GB|MB|%|个|条|路)'
         },
         "storage": {
-            "keywords": ["保存", "存储", "保留", "保留期"],
-            "units": r"(天|月|年|GB|TB|MB)",
-            "regex": r'(?:保存|存储|保留|保留期)[^。]*?(\d+\.?\d*)\s*(天|月|年|GB|TB|MB)'
+            "regex": r'(?:保存|存储|保留|保留期|存档|归档|历史|日志)[^。\n]{0,30}?(\d+\.?\d*)\s*(天|月|年|GB|TB|MB|小时)',
+            "fallback": r'(\d+\.?\d*)\s*(天|月|年)(?:.*?)(?:保存|存储|保留|存档|归档)'
         },
         "precision": {
-            "keywords": ["精度", "误差", "偏差", "准确度"],
-            "units": r"(ms|us|μs|%|毫秒|微秒)",
-            "regex": r'(?:精度|误差|偏差|准确度)[^。]*?(\d+\.?\d*)\s*(ms|us|μs|%|毫秒|微秒)'
+            "regex": r'(?:精度|误差|偏差|准确|误差范围|精度要求)[^。\n]{0,30}?(\d+\.?\d*)\s*(ms|us|μs|%|毫秒|微秒|ns|纳秒|ppm)',
+            "fallback": r'(?:±|±|误差|偏差|精度)[^。\n]{0,10}?(\d+\.?\d*)\s*(ms|us|μs|%|毫秒|微秒|ns|ppm)'
         },
         "degrade": {
-            "keywords": ["降级", "退化", "最低"],
-            "units": r"(%|ms|秒)",
-            "regex": r'(?:降级|退化|最低)[^。]*?(\d+\.?\d*)\s*(%|ms|秒)'
+            "regex": r'(?:降级|退化|最低|最低功能|最低性能|降级运行|降级模式|最小|最小化)[^。\n]{0,30}?(\d+\.?\d*)\s*(%|ms|秒|个|路)',
+            "fallback": r'(?:性能|功能|能力)[^。\n]{0,30}?(?:降级|退化|最低|最小)[^。\n]{0,30}?(\d+\.?\d*)\s*(%|ms|秒)'
         },
         "fault": {
-            "keywords": ["故障", "失效", "超时", "异常"],
-            "units": r"(s|ms|秒|次|min)",
-            "regex": r'(?:故障|失效|超时|异常)[^。]*?(\d+\.?\d*)\s*(s|ms|秒|次|min)'
+            "regex": r'(?:故障|失效|超时|异常|断线|中断|恢复|重启|重试)[^。\n]{0,30}?(\d+\.?\d*)\s*(s|ms|秒|次|min|分钟|小时)',
+            "fallback": r'(\d+\.?\d*)\s*(s|ms|秒|次)(?:.*?)(?:故障|失效|超时|异常|恢复|重启|重试)'
         },
     }
     
@@ -348,68 +338,27 @@ def extract_param_entities(pairs, chunks, srs_kb):
         chunk_type = chunk.get("type", "text")
         
         for ptype, pinfo in PARAM_TYPES.items():
-            pattern = re.compile(pinfo["regex"])
-            for m in pattern.finditer(text):
-                val = m.group(1)
-                unit = m.group(2)
-                
-                # 识别操作符
-                start = max(0, m.start() - 20)
-                context = text[start:m.start()]
-                op = "eq"
-                if "不小于" in context or "至少" in context or "≥" in context or "不低于" in context:
-                    op = "ge"
-                elif "不大于" in context or "至多" in context or "≤" in context or "不超过" in context:
-                    op = "le"
-                elif "大于" in context or "超过" in context or ">" in context:
-                    op = "gt"
-                elif "小于" in context or "低于" in context or "<" in context:
-                    op = "lt"
-                
-                key = f"PARAM-{ptype}"
-                if key not in entities:
-                    entities[key] = {
-                        "entity_id": key,
-                        "entity_type": "numeric_param",
-                        "param_name": ptype,
-                        "param_type": ptype,
-                        "unit": unit,
-                        "occurrences": []
-                    }
-                entities[key]["occurrences"].append({
-                    "location": chunk_type,
-                    "section": section,
-                    "content": val,
-                    "op": op,
-                    "unit": unit,
-                    "context": text[max(0, m.start()-10):m.end()+10],
-                    "doc": doc
-                })
-    
-    # 也从Pair Dataset的text.txt和table.csv补充提取
-    for pair in pairs:
-        pair_id = pair.get("instance_id", "")
-        doc = pair.get("doc", "")
-        section = pair.get("section", "")
-        
-        text_path = Path(pair["_dir"]) / "text.txt"
-        if text_path.exists():
-            text = text_path.read_text(encoding='utf-8')
-            for ptype, pinfo in PARAM_TYPES.items():
-                pattern = re.compile(pinfo["regex"])
+            # 主正则匹配
+            patterns = [pinfo.get("regex", ""), pinfo.get("fallback", "")]
+            for pat_str in patterns:
+                if not pat_str:
+                    continue
+                pattern = re.compile(pat_str)
                 for m in pattern.finditer(text):
                     val = m.group(1)
-                    unit = m.group(2)
+                    unit = m.group(2) if m.lastindex and m.lastindex >= 2 else ""
+                    
+                    # 识别操作符
                     start = max(0, m.start() - 20)
                     context = text[start:m.start()]
                     op = "eq"
-                    if "不小于" in context or "至少" in context or "≥" in context:
+                    if "不小于" in context or "至少" in context or "≥" in context or "不低于" in context:
                         op = "ge"
-                    elif "不大于" in context or "至多" in context or "≤" in context:
+                    elif "不大于" in context or "至多" in context or "≤" in context or "不超过" in context:
                         op = "le"
-                    elif "大于" in context or "超过" in context:
+                    elif "大于" in context or "超过" in context or ">" in context:
                         op = "gt"
-                    elif "小于" in context or "低于" in context:
+                    elif "小于" in context or "低于" in context or "<" in context:
                         op = "lt"
                     
                     key = f"PARAM-{ptype}"
@@ -423,10 +372,60 @@ def extract_param_entities(pairs, chunks, srs_kb):
                             "occurrences": []
                         }
                     entities[key]["occurrences"].append({
-                        "location": "text",
+                        "location": chunk_type,
                         "section": section,
                         "content": val,
                         "op": op,
+                        "unit": unit,
+                        "context": text[max(0, m.start()-10):m.end()+10],
+                        "doc": doc
+                    })
+    
+    # 也从Pair Dataset的text.txt和table.csv补充提取
+    for pair in pairs:
+        pair_id = pair.get("instance_id", "")
+        doc = pair.get("doc", "")
+        section = pair.get("section", "")
+        
+        text_path = Path(pair["_dir"]) / "text.txt"
+        if text_path.exists():
+            text = text_path.read_text(encoding='utf-8')
+            for ptype, pinfo in PARAM_TYPES.items():
+                patterns = [pinfo.get("regex", ""), pinfo.get("fallback", "")]
+                for pat_str in patterns:
+                    if not pat_str:
+                        continue
+                    pattern = re.compile(pat_str)
+                    for m in pattern.finditer(text):
+                        val = m.group(1)
+                        unit = m.group(2) if m.lastindex and m.lastindex >= 2 else ""
+                        start = max(0, m.start() - 20)
+                        context = text[start:m.start()]
+                        op = "eq"
+                        if "不小于" in context or "至少" in context or "≥" in context:
+                            op = "ge"
+                        elif "不大于" in context or "至多" in context or "≤" in context:
+                            op = "le"
+                        elif "大于" in context or "超过" in context:
+                            op = "gt"
+                        elif "小于" in context or "低于" in context:
+                            op = "lt"
+                        
+                        key = f"PARAM-{ptype}"
+                        if key not in entities:
+                            entities[key] = {
+                                "entity_id": key,
+                                "entity_type": "numeric_param",
+                                "param_name": ptype,
+                                "param_type": ptype,
+                                "unit": unit,
+                                "occurrences": []
+                            }
+                        entities[key]["occurrences"].append({
+                            "location": "text",
+                            "section": section,
+                            "content": val,
+                            "op": op,
                         "unit": unit,
                         "pair_id": pair_id,
                         "doc": doc

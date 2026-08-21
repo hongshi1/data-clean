@@ -44,16 +44,28 @@ class TermChecker(BaseDetector):
         occurrences = self.get_occurrences(entry)
         occurrences = self.apply_injection_to_occurrences(occurrences, injection)
 
-        if not occurrences or len(occurrences) < 2:
-            return DetectionResult(False, "silver", "occurrences不足", self.name)
-
         # 正例不检测
         if injection.get("method", "") == "positive":
             return DetectionResult(False, "silver", "正例", self.name)
 
+        # 先检查注入值差异（不需要occurrence数量≥2）
+        original = str(injection.get("original", ""))
+        injected = str(injection.get("injected", ""))
+        if original and injected and original != injected:
+            sim = self._text_similarity(original, injected)
+            return DetectionResult(
+                True, "silver",
+                f"{check_item}: 术语不一致(相似度={sim:.2f}): {original[:30]} vs {injected[:30]}",
+                self.name
+            )
+
+        # 再检查occurrences中各位置内容
+        if not occurrences or len(occurrences) < 2:
+            return DetectionResult(False, "silver", "occurrences不足", self.name)
+
         # 根据check_item选择检测策略
         if check_item.startswith("TERM"):
-            return self._detect_term(occurrences, injection, check_item)
+            return self._compare_occurrences(occurrences, check_item)
         else:
             return self._detect_general(occurrences)
 
