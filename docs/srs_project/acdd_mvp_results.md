@@ -107,7 +107,62 @@ M1 比对引擎(Tier1) ──→ M3 校准器 ──→ M4+M5 译码器+锚遮�
 | 锚点几何边恢复（未粘合连线端点吸附） | 边1319→1351（部分图6/7边恢复） |
 | 2_084聚合错配排除 | image.png本身配错图（重对齐暴露） |
 
-## 四、对ACDD方法核心的验证状态（最终）
+## 四、M7-M9: 双LLM裁决 + 重标注重跑 + 方向译码（完成）
+
+### 5.1 M7: 双LLM自动裁决（用户不参与的替代方案）
+
+kimi-k2.6(看图) + GLM(看Visio结构) 对417条Tier 1分歧独立裁决：
+
+| 最终标签 | 数量 | 占比 |
+|---------|------|------|
+| real_bug（双模型一致） | **134** | 32% |
+| benign_variation（一致） | 116 | 28% |
+| uncertain（分歧待人工） | 160 | 38% |
+| compiler_bug / extraction_error | 7 | 2% |
+
+**模型偏差画像**: kimi保守(倾向benign 214 vs real 183)，GLM激进(real 217 vs benign 152)，一致率65%。
+
+**类型×标签模式（重要发现）**:
+
+| 分歧类型 | real | benign | uncertain | 解读 |
+|---------|------|--------|-----------|------|
+| EXC_MISSING | **50** | 0 | 13 | **异常流缺失≈全是真bug** |
+| ACTOR_MISSING | 8 | **60** | 59 | 参与者缺失≈多为合理差异 |
+| STEP_MISSING | 26 | 32 | 44 | 混合（粒度差异vs真缺失） |
+| DIAGRAM_EXTRA | 49 | 24 | 41 | 混合 |
+| ORDER_CONFLICT | 1 | 0 | 0 | 2_001方向矛盾确认为真 |
+
+### 5.2 M8: 裁决后重标注重跑
+
+用裁决标签替代代理标签（排除uncertain/未裁决231条）：
+
+| 指标 | 重标注前 | 重标注后 |
+|------|---------|---------|
+| π（真实不一致率） | 0.60（虚高） | **0.166** |
+| step元素π | — | 0.078（15/192） |
+| **exc元素π** | — | **0.571（16/28）** |
+
+**判决实验（测试93条，21正例，裁决η标签）**:
+
+| 配置 | AUROC | ECE |
+|------|-------|-----|
+| **q_ci 条件独立因子化** | **0.938** | 0.118 |
+| q_vlm 单VLM | 0.935 | 0.142 |
+| 朴素投票 | 0.928 | 0.085 |
+| q_or 未校准OR融合 | 0.612 | 0.033 |
+| 单OCR | 0.605 | 0.053 |
+
+**校准融合>单通道>朴素投票>>未校准融合的排序在干净标签下依然成立**。
+
+**核心领域发现（论文动机级）**: GJB SRS中**异常流缺失是主导性真实不一致**——表格定义的异常流57%在流程图中无分支表示（双LLM一致裁决50条）。这是需求文档质量的具体、可操作的发现。
+
+### 5.3 M9: 方向元素译码
+
+- 可比方向元素仅5条（两侧匹配+两侧有边的严格条件）——方向元素稀疏是诚实限制
+- 唯一锚点方向矛盾（2_001: 表格步骤3→4 vs 图边4→3）被VLM通道恢复，q=0.965
+- 实测方向翻转率0.000 vs 校准预测0.009（样本过小，方向θ待扩样本验证）
+
+## 六、对ACDD方法核心的验证状态（最终更新）
 
 | 方法主张 | 验证状态 | 证据 |
 |---------|---------|------|
@@ -118,16 +173,16 @@ M1 比对引擎(Tier1) ──→ M3 校准器 ──→ M4+M5 译码器+锚遮�
 | 多通道融合增益 | ✅成立 | q_ci(0.943) > q_vlm(0.932): CI因子化利用通道不对称 |
 | 簇签名指数分离(命题2) | ✅成立 | k_vlm≥2对的高drift占比100% (基础率60.5%) |
 | 单通道后验单调于D | ⚠数学事实 | 单通道AUROC增益只能来自异质性θ — 印证形式化设计预判 |
-| Tier1标签纯度 | ⚠待裁决 | π=60%偏高，多数候选可能是良性变异——裁决包已生成 |
+| Tier1标签纯度 | ✅已裁决 | M7双LLM裁决417条(65%一致), π修正为0.166 |
+| 异常流缺失=主导不一致类型 | ✅领域发现 | exc π=57.1% vs step π=7.8% (双LLM一致裁决) |
 
-## 五、剩余工作
+## 七、剩余工作
 
-1. **人工裁决86条**（`data/gjb_438c/anchor_sc2/adjudication/adjudication_tasks.md`）→ 真实π和gold正例 → 修正所有实验的标签
-2. **裁决后的重跑**：全部实验用人工确认的η标签重算（当前用Tier1候选作代理标签）
-3. **OCR通道阈值调优**：伪节点匹配阈值在训练集上调优（当前0.5沿用VLM）
-4. **方向元素(dir)的译码**：M6只做了存在性元素，方向矛盾(ORDER_CONFLICT)译码待实现
+1. **160条uncertain的人工仲裁**（双LLM分歧样本，`llm_adjudication.json`中final=uncertain）→ 金标准化
+2. **扩展到其余场景**（sc1用例图-capability表等）验证方法泛化
+3. **论文撰写**：实验故事已完整（校准必要性+融合增益+簇签名+异常流领域发现）
 
-## 六、产出文件清单
+## 八、产出文件清单
 
 | 文件 | 内容 |
 |------|------|
@@ -138,12 +193,22 @@ M1 比对引擎(Tier1) ──→ M3 校准器 ──→ M4+M5 译码器+锚遮�
 | `tools/m25_anchor_realign.py` | VLM桥重对齐 |
 | `tools/m3_calibration.py` | 校准器(θ) |
 | `tools/m4_decoder.py` | 译码器+锚遮蔽判决实验 |
+| `tools/m6_fusion_experiment.py` | 三通道融合判决实验 |
+| `tools/m7_llm_adjudication.py` | 双LLM自动裁决 |
+| `tools/m8_relabel_rerun.py` | 裁决后重标注重跑 |
+| `tools/m9_direction_decoding.py` | 方向元素译码 |
+| `tools/m2b_ocr_channel.py` | RapidOCR通道 |
 | `data/gjb_438c/anchor_sc2/anchors.json` | 修复后锚点(188图) |
 | `data/gjb_438c/anchor_sc2/vlm_extractions.json` | VLM提取(89对) |
 | `data/gjb_438c/anchor_sc2/realigned_mapping.json` | 重对齐映射 |
 | `data/gjb_438c/anchor_sc2/calibration.json` | θ误差模型 |
 | `data/gjb_438c/anchor_sc2/tier1_discrepancies.json` | Tier1 drift候选 |
 | `data/gjb_438c/anchor_sc2/judgment_experiment.json` | 判决实验全记录 |
-| `data/gjb_438c/anchor_sc2/adjudication/` | 86条裁决包 |
+| `data/gjb_438c/anchor_sc2/adjudication/` | 86条人工裁决包 |
+| `data/gjb_438c/anchor_sc2/llm_adjudication.json` | 双LLM裁决结果(417条) |
+| `data/gjb_438c/anchor_sc2/relabeled_experiment.json` | 重标注实验 |
+| `data/gjb_438c/anchor_sc2/fusion_experiment.json` | 融合实验 |
+| `data/gjb_438c/anchor_sc2/direction_decoding.json` | 方向译码 |
+| `data/gjb_438c/anchor_sc2/ocr_extractions.json` | OCR提取(89图) |
 
 
