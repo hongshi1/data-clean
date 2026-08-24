@@ -1,0 +1,4847 @@
+{
+ "1_001_00": {
+  "pair": "1_001",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「半结构化数据源引接」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "用例图仅展示参与者直接触发的顶层用例（四种数据归集类型），而'数据源引接'是各归集用例内部的子功能/子步骤，属于更低粒度，在用例图中不展开表示符合UML惯例和GJB文档分层描述惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中存在‘流式数据引接’（子功能层级），表明‘引接’类能力应在图中表示，故遗漏‘半结构化数据源引接’属于覆盖不一致的真实缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_002_00": {
+  "pair": "1_002",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「专题数据生产」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格中「专题数据生产」是「典型应用专题库管理」的子功能，与「专题库模型构建」同级，但用例图仅展示了父用例「典型应用专题库管理」而未展开其子用例；然而表格中同级子功能「清洗转换任务管理」也未在图中出现，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项「专题数据生产」为「典型应用专题库管理」的子功能，图中仅展示一级功能节点（如数据结构转换、典型应用专题库管理），未展开子粒度用例，符合GJB文档概要设计与详细需求分层惯例。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_001_01": {
+  "pair": "1_001",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「非结构化数据源引接」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "用例图作为能力需求图声称覆盖'数据获取'全部能力，图中已画出'结构化数据归集''半结构化数据归集''非结构化数据归集''流式数据引接'四个用例，且表格中每个归集用例均对应有'源引接'子功能；但'非结构",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项「非结构化数据源引接」为子功能，其父功能「非结构化数据归集」已在图中表示，图表粒度高于表格属于合理的文档惯例。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_002_02": {
+  "pair": "1_002",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据主动推送」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n  \"reason\": \"图中存在「数据订阅推送」用例，但表格中对应项为「数据主动推送」，虽文字表述有差异（订阅vs",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格需求项“数据主动推送”与图中节点“数据订阅推送”文字表述明显不一致（主动vs订阅），属于需求与设计视图不一致或遗漏绘制的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "1_002_01": {
+  "pair": "1_002",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务接口管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "服务接口管理是数据组织发布的子功能，属于较低层级实现细节；用例图仅展示顶层用例（数据组织发布），按GJB惯例子功能不必全部在用例图中展开，表格作为完整registry记录全部能力，图则聚焦核心用户可见",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图中节点（如“数据组织发布”）对应表格的顶层功能，而被审查项“服务接口管理”为其子功能，属于粒度差异，顶层用例图未展开子功能符合文档惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "1_001_02": {
+  "pair": "1_001",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流式数据源管理」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格中'流式数据归集'包含子功能'流式数据引接'和独立的'流式数据源管理'，但图中仅有'流式数据引接'用例，缺少'流式数据源管理'；图声称覆盖全部能力需求且其他数据类型（结构化/半结构化/非结构化）均",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中实际存在「流式数据引接」，图中亦有对应节点「流式数据引接」，两者匹配；报错名称「流式数据源管理」既非表中原名也非图节点名，系比对引擎识别错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_011_00": {
+  "pair": "1_011",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「插件初始化函数定义」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格为完整能力需求登记(registry)，用例图仅展示核心开发流程，'插件初始化函数定义'属于底层实现细节而非用户可见的用例，不在用例图表示范围符合GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中列出了“插件初始化函数定义”这一能力需求（Use case），但提供的图节点列表中无对应或近似的用例椭圆，违反了GJB 438C关于需求规格说明书图文一致性的要求。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_011_03": {
+  "pair": "1_011",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务定时器接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格明确列出9项能力需求，图标题为'服务开发支撑'且声称覆盖全部能力，但表格第9项'服务定时器接口'在图中无任何对应用例，而图中却存在表格未列出的'服务交叉编译'用例，说明图与表格未保持一致且图未覆盖",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出「服务定时器接口」为Use case名称，但用例图节点列表中无对应元素，违反GJB 438C关于需求规格说明与用例图应保持一致性的要求。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "1_012_00": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「打开服务工程」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "用例图标题为'服务开发支撑'，声称覆盖服务开发支撑能力，但表格中'打开服务工程'等基础工程管理用例在用例图中完全缺失，图仅展示了运行时接口调用和插件生命周期技术细节，未覆盖工程级操作（创建/打开/关闭",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出'打开服务工程'为独立能力需求，而图侧节点列表仅包含接口定义和参与者，缺失对应的用例椭圆，不符合GJB 438C用例图需覆盖能力需求表的要求。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "1_012_01": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「关闭服务工程」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中展示的是'服务开发支撑'框架的底层技术接口用例（初始化/销毁/调用各类接口），属于插件运行时框架视角；而表格项'关闭服务工程'是IDE工程管理操作（与'创建/打开'同类），属于开发工具桌面操作视角",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中节点均为接口或函数定义（如'调用服务消息推送接口'），而非用例椭圆，导致表格中的用户能力（如'关闭服务工程'）在图中完全缺失，属于文档内容错误或图表绘制错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_011_04": {
+  "pair": "1_011",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务响应接收类接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格明确列出9项能力需求且图声称覆盖'服务开发支撑'全部能力，但表格第9项'调用服务响应接收类接口'（标识符PZXQ-GN-FWKFZC-FW）在图中完全缺失，图中仅有'服务交叉编译'作为第9个用例，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "分歧项“调用服务响应接收类接口”属于代码级接口方法，不符合用例图描述用户业务目标的粒度惯例，图无需表示此类底层实现细节。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_011_01": {
+  "pair": "1_011",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务响应发送类接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格明确列出9项能力需求（第9项为'服务交叉编译'），用例图也包含'服务交叉编译'节点，但审查分歧项是'调用服务响应发送类接口'——该名称既未出现在表格9行中的任何一行，也未出现在图的任何节点中；然而",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出「调用服务响应发送类接口」为用例名称，且图中包含同粒度的技术性用例（如服务插件编译、服务交叉编译），按GJB 438C一致性要求，该表格项应在图中有对应节点却缺失。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "1_012_03": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务插件编译」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中展示的是'服务开发支撑'框架的接口级用例（8个技术接口+2个参与者），聚焦插件生命周期和通信接口；而表格项'服务插件编译'属于IDE工程操作类功能，与图中接口调用视角不同，图无需覆盖全部工程操作能",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出的是用户级功能需求（如“服务插件编译”），而图中节点均为接口或函数级实现细节（如“调用服务...接口”），图中缺失了表格所列的核心业务用例，属于需求视图内容缺失的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_012_02": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务插件生成」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "用例图声称覆盖'服务开发支撑'全部能力，但表格中的'服务插件生成'是核心开发功能（与'服务插件编译'、'服务工程编译'等并列），图中却仅有接口调用类用例和插件生命周期函数定义，完全缺失工程级操作（创建",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出功能级用例(如'服务插件生成')，但图侧节点均为接口或组件元素(如'调用服务...接口')，缺失对应的用例椭圆，属于需求与图不一致的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "1_012_05": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务程序运行」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该用例图为'服务开发支撑'子系统的接口级用例图，聚焦插件生命周期管理和底层服务接口调用机制；而表格项'服务程序运行'属于上层IDE操作功能（如工具栏运行按钮），与图中底层接口调用视角不同，按GJB文档",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了'服务程序运行'等用户级功能用例，但图中仅列出了接口定义类节点（如'调用服务消息推送接口'）和参与者，缺失了表格中定义的关键功能用例椭圆，不符合GJB 438C用例图应覆盖能力需求表的要求。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_012_04": {
+  "pair": "1_012",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务工程编译」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中展示的是服务开发支撑框架的接口调用和插件生命周期管理（面向运行时的接口级用例），而表格项「服务工程编译」属于IDE/开发工具层面的工程构建操作（面向开发阶段的工具功能），两者粒度与视角不同——图聚",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出的是功能性用例(如编译、调试)，而图节点描述的是接口或技术组件(如消息推送接口)，两者语义范畴不同，图中确实缺失了'服务工程编译'这一用例节点。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_011_02": {
+  "pair": "1_011",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务请求处理类接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格第9项「服务」在提供的表格内容中本身不完整（截断为\"服务\"），而图中实际存在的是「服务交叉编译」；被审查项「调用服务请求处理类接口」在表格中根本不存在（表格仅列到第9项且内容截断），属于审查对象错",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "该项“调用服务请求处理类接口”描述的是系统内部实现细节（类接口调用），属于接口需求或设计细节，而非用户级的业务能力（Use Case），用例图按惯例不需表达此类内部实现粒度的内容。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "1_062_00": {
+  "pair": "1_062",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据抽取转换」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「数据抽取转换」对应图中「异构数据抽取与转换」，两者为同一用例的不同表述（图侧多了'异构'修饰词），属于文字表述差异导致的自动匹配失败，并非真实遗漏。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「异构数据抽取与转换」与表格项「数据抽取转换」语义高度对应，仅存在“异构”二字的具体化表述差异，属于自动比对引擎未能识别的同义匹配。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "1_032_00": {
+  "pair": "1_032",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「坐位分配」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「坐位分配」与图中「席位分配」为同一用例，仅存在「坐」与「席」的同义字差异，图中实际存在对应元素，属于自动匹配引擎因文字表述差异导致的误报。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「席位分配」，与表格项「坐位分配」语义一致（“席位”与“坐位”为同义词或术语混用），属于文字表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "1_113_00": {
+  "pair": "1_113",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「识别短语管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中展示的是「识别短语生成」的具体操作流程（创建BNF文件→语音录入→识别结果），属于用例的实现细节/活动图；而「识别短语管理」是管理功能（配置、扩展、维护识别短语），与「生成」是不同层级的能力，用例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格项「识别短语管理」是宏观功能需求，而图中节点均为具体操作步骤（如新建txt、保存文件），属于活动图内容，缺失了对应的能力级用例椭圆，且图中内容无法覆盖“管理”的完整语义。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_116_00": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文电发送」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中用例为粗粒度'文电收发与管理'，表格细分为'文电发送''文电接收'等，属于GJB惯例中表格完整registry与图核心抽象的正常粒度差异，且图明显是高层架构图而非完整用例图（节点含文件系统/数据库",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图中用例'文电收发与管理'是对表格项'文电发送'和'文电接收'的上层概括，属于粒度差异，符合用例图概括性描述的惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "1_116_02": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为系统上下文图/数据流图而非严格用例图，展示的是系统与外部服务的数据交互关系，并非以用户视角展示全部功能用例；图中'用户'作为外部参与者仅通过'文电处理服务'进行交互，未展开用户管理、登录等系统管",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出「用户管理」为独立能力需求，而图中仅有「文电收发与管理」等节点，缺失对用户管理这一核心功能的用例表达，导致图与表不一致。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_116_03": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「信息查询和管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中用例为粗粒度'文电收发与管理'，表格中'信息查询和管理'等属于该粗粒度用例内部子功能，用例图按惯例可只展示高层用例不展开全部子功能，且图侧节点明显为系统/服务级而非完整用例集",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出了细粒度能力(如登录、查询)，而图中仅包含高层或部分用例(如文电收发与管理)，导致“信息查询和管理”等多项能力在图中缺失，属于文档内容不一致的缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_113_01": {
+  "pair": "1_113",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「识别短语生成」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是活动图而非用例图，展示的是'识别短语管理'的具体操作流程（创建BNF文件→语音录入→识别结果），属于单一用例的内部实现细节；表格中'识别短语生成'是独立用例（构建BNF文件），但图中仅将其作为'识",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“新建txt文本文件...保存为.bnf”描述了“识别短语生成”的具体实现流程，虽然节点名称与表格项名称不一致，但实质内容对应，属于比对引擎无法识别语义映射导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_116_05": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「轻量化部署」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为系统上下文图/数据流图而非严格用例图，展示的是文电处理服务与外部系统/服务的交互关系，并非以用例椭圆形式完整覆盖全部能力需求；'轻量化部署'属于系统部署架构特性，不属于功能性用例，在系统上下文图",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "“轻量化部署”属于系统部署约束或非功能性需求，而非用户与系统交互的功能用例，按GJB 438C惯例不应在用例图中表示。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "1_116_04": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「通讯录查询和管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为系统交互图(数据流/上下文图风格)，非严格用例图，仅展示核心系统与外部实体的数据交互关系，未细化到具体用例级别；表格中的'通讯录查询和管理'属于文电处理服务内部的子功能，与'信息查询和管理'类似",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "能力需求表明确列出了「通讯录查询和管理」这一独立功能需求，而图中的用例节点仅包含「网络资源定位」和「文电收发与管理」，未包含通讯录相关用例，导致需求与图示不一致，属于文档内容缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_00": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与数据统算交互接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「与作战数据统算交互接口」节点，与表格项「与数据统算交互接口」为同一接口，仅文字表述存在「作战」二字差异，属于自动匹配未识别的同义表述",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点‘与作战数据统算交互接口’，与表格项‘与数据统算交互接口’语义对应，仅因全称与简称的文字差异导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "1_116_01": {
+  "pair": "1_116",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文电接收」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中用例'文电收发与管理'是合并用例，已将发送和接收功能聚合为一个用例，这是UML用例图常见的合并粒度处理方式，并非遗漏；表格作为完整能力需求清单保持细粒度，图作为可视化表达采用粗粒度聚合，符合GJB",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项“文电接收”属于核心业务能力，图中“文电收发与管理”是对“文电发送”和“文电接收”的合理聚合与抽象，符合GJB文档中高层用例图概括描述、详细需求表具体分解的粒度差异惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "1_134_00": {
+  "pair": "1_134",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文件TCP可靠传输」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为活动图而非用例图，展示的是系统内部处理流程而非用例视图；表格中的能力需求在用例图中应表示为椭圆用例，但此图是活动图，两者属于不同建模视角（用例视图vs动态行为视图），活动图无需覆盖全部用例能力，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出的是‘文件TCP可靠传输’这一独立能力需求，按GJB 438C要求，用例图应包含对应的用例椭圆，但图侧节点列表显示为流程步骤（如‘处理可靠文件’）且无该用例名称，属于需求项在模型中遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_02": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与上下级典型应用交互接口/ ZZSJHQZHFW」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示数据获取转换服务与外部系统的直接交互接口，表格作为完整registry包含上下级典型应用等更广泛的接口类别，属于视角和粒度差异，符合GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与'上下级典型应用'的接口需求，但图中详细绘制了数据统算、通用智能应用等其他外部系统节点，唯独缺少该节点，属于设计图遗漏了需求规定的接口。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_03": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry需完整记录收发双方，而图中「本系统」是表格视角的自指代称，在设计图中以实际组件「数据获取转换服务」作为核心节点呈现，二者是同一实体在不同文档层面的表述差异，符合GJB文档",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格中的'本系统'是需求视角的逻辑主体，而接口设计图展示的是物理组件/节点（如数据中台、指挥信息系统等），设计图对系统进行了细化分解，粒度差异导致无法直接匹配是GJB文档常见惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "3_001_01": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「态势数据组织应用」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「态势数据组织应用」在图中实际存在对应节点「态势组织应用」和接口「与态势数据组织应用交互接口」，只是文字表述存在细微差异（表格用全称「态势数据组织应用」，图中节点简写为「态势组织应用」），属于自",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中节点「态势组织应用」与表格项「态势数据组织应用」名称不一致（缺少“数据”），且图中接口节点「与态势数据组织应用交互接口」包含“数据”二字，佐证了命名不一致属于文档设计缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "1_134_01": {
+  "pair": "1_134",
+  "scene": "sc1_usecase_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据与文件同传」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格包含4个并列能力需求（数据TCP可靠传输、文件TCP可靠传输、数据与文件同传、多文件同传），图声称覆盖实时信息传输服务全部能力，但图中仅通过'处理可靠数据'和'处理可靠文件'两个独立泳道分别处理数",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出「数据与文件同传」为独立能力需求，而图内容（实为活动图逻辑的节点列表）仅包含数据/文件的单独发送接收处理及通道判断，缺失对该“同传”能力的显式定义或对应用例表示，属于需求覆盖不全。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_001_05": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「能力分析评估应用」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「能力分析评估」节点和「与能力分析评估交互接口」节点，与表格项「能力分析评估应用」是同一实体，仅文字表述存在「应用」后缀差异，属于自动匹配未识别的文字变体。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“能力分析评估”和接口“与能力分析评估交互接口”，与表格项“能力分析评估应用”实指同一对象，仅因名称缺少“应用”后缀导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_001_04": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「态势数据组织应用」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「态势数据组织应用」对应图中节点「态势组织应用」，虽文字表述存在省略差异（缺「数据」二字），但结合上下文及同组接口命名规律（如「与态势数据组织应用交互接口」），可确认为同一实体，属自动匹配未识别",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4行将系统名称“态势数据组织应用”误作为接口名称（且描述缺失），属于无效或重复的错误条目；图中已正确绘制对应系统节点及第3行所述接口，故此分歧源于表格本身的录入缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_06": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「指挥信息系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口，而接口设计图聚焦数据获取转换服务与外部系统的数据交互接口；指挥信息系统属于用户交互/指挥层级接口，与图中核心的数据流转接口视角不同，且图中已包含'与指挥",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "比对引擎误报，表格侧内容中并不存在名为「指挥信息系统」的接口项（仅有数据统算、通用智能应用等），分歧报告的前提事实不存在。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_07": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「某数据中台」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中'数据获取转换服务'组件已存在'与数据中台交互接口'节点，且表格第1-3项及后续项的接口在图中均有对应；被审查的'某数据中台'属于表格作为完整registry收录的接口需求，而接口设计图仅展示'数",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在节点「数据中台」，表格项「数据中台」应与之对应，比对引擎未能识别名称完全一致的文本匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_08": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据库系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中'数据库系统'作为底层技术支撑组件已明确画出，且有'与数据库接口'连线；但表格项'数据库系统'并非接口需求表中的被审查行，实际分歧指向的是表格行4、6等异常短行（缺接口标识和描述），而'数据库系统",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含「[other] 数据库系统」, 与表格项「数据库系统」名称完全一致, 比对引擎未能识别到该匹配项属于误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_09": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口，但接口设计图是组件框+接口连线的设计视图，图中已用'API接口'类型标注各交互接口，'API接口'是接口类型属性而非需单独绘制的组件节点，属表格与图粒度",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "API接口是接口类型属性而非系统组件，接口设计图仅需展示系统组件节点，无需为接口类型创建节点。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "3_001_10": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整的接口registry，包含全部接口的收发方、优先级等属性信息；而接口设计图是组件框+接口连线的架构视图，仅展示系统与外部组件的接口连接关系，不承载优先级等表格属性信息。「高」是表格中",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "分歧报告将优先级列的值「高」误识别为接收方名称，说明比对引擎列解析错误（将优先级列错位当作接收方列），实际接收方（如数据统算、通用智能应用等）在图中均有对应节点。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_11": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「API接口」是接口类型字段的值（技术属性），而非发送方/接收方组件名称；发送方实际为「本系统」、接收方为「数据统算/通用智能应用/态势数据组织应用」等，这些在图中均有对应节点和连线，比对引擎",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4、6行内容列错位，将接口类型'API接口'误填入'发送方'列，导致文档内容本身存在格式缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_14": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「高」是表格中的优先级属性列值，而非接口实体或组件节点；接口设计图只需表示接口及其连接关系，无需表示优先级等属性字段，这是表格(registry完整信息)与图(结构连接关系)的常规粒度差异，符合GJB",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“态势组织应用”和“能力分析评估”，分别对应表格中的“态势数据组织应用”和“能力分析评估应用”，仅因名称缩写差异导致比对引擎未能匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_15": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表中的'API接口'是接口类型字段值，而非需要图示的组件节点；图中节点为系统/服务实体，接口连线表示关系，接口类型作为属性无需独立节点表示。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "“API接口”是表格中的“接口类型”属性值，并非“发送方”实体名称，比对引擎错误地将接口类型属性识别为组件节点进行匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_12": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「高」是表格中的优先级属性列，并非接口实体或组件节点，接口设计图只需表示接口连接关系而非表格的全部属性字段，图与表格粒度/视角不同符合GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4、6行存在明显的列错位或格式错误，导致接收方列出现了优先级属性值“高”，而“高”并非有效的系统组件，属于文档内容录入或排版缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_13": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口类型'API接口'是表格中对接口技术属性的分类描述字段，而非需要出现在接口设计图中的组件/节点/连线元素；图中已用'与××交互接口'节点表示对应接口关系，接口类型属于表格特有的元数据信息，图无需重",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "分歧项将表格中的“接口类型”列数值“API接口”误识别为“发送方”，属于比对引擎解析列错位导致的误报，图中不应存在名为“API接口”的组件节点。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_20": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中receiver为「高」实为表格第4行「优先级」列的值被误读为接收方，该行实际接收方是「态势数据组织应用」；图中存在对应节点「态势组织应用」及接口连线，是OCR或解析错误导致的误报",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "比对引擎列解析错误，将'优先级'列的值'高'误判为'接收方'组件名，实际表格中接收方为'数据统算'等系统组件，且图中均已存在对应节点。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_001_16": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「高」是表格中的优先级属性列值，不是接口实体或组件节点，接口设计图只需表示接口连线和收发方组件，无需表示优先级属性值",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "文档表格第4行存在列项缺失或格式错位缺陷，导致优先级属性值'高'落入接收方列，图中无'高'节点是正确的，分歧真实反映了文档填写错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_21": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「数据库访问接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中已存在「与数据库接口」节点，表格项「数据库访问接口」是同一接口的不同文字表述，属于自动匹配未识别的同义表述，但审查项描述为「无组件节点」实际有误；然而按三选一标准，核心原因是数据库接口在图中以「与",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "提供的表格内容中，所有接口的发送方均为“本系统”，不存在发送方为“数据库访问接口”的条目，属于比对引擎识别错误或引用了不存在的表格项。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_17": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「某典型应用系统」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表作为完整registry需列出全部接口收发方，而接口设计图采用'本系统'边界内聚焦视角，仅绘制外部系统/接口节点，'某典型应用系统'作为本系统自身在图中以隐式边界存在而非显式组件节点，符合G",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格中的发送方“本系统”（即“某典型应用系统”）在接口设计图中被分解细化为内部组件节点（如“数据中台”、“数据获取转换服务”），属于需求到设计的粒度细化差异，符合GJB文档惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "3_001_18": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry记录所有接口属性(含接口类型字段如API接口)，而接口设计图聚焦组件间连接关系，'API接口'是接口的技术类型属性而非需要绘制的独立组件节点，图中已通过连线表示接口关系",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4行数据格式错误（缺失接口名称/标识、描述、接收方等列），导致“接口类型”列的值“API接口”被错位解析为“发送方”，属于文档编制错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_19": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「API接口」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口(含收发双方及类型)，而接口设计图是组件框+接口连线，'API接口'是接口类型属性而非需单独绘制的组件节点，图中已用连线表示该接口关系，类型信息在图中无需",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4、6行数据列缺失导致列错位，使'API接口'(接口类型)落入'发送方'列，属于文档数据格式错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_02": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与服务集成框架的接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在从'服务集成框架'到'界面集成框架'的连线，标注为'界面资源、服务请求、消息通知'，与表格第4项'调用服务集成框架接口，实现界面资源获取、服务请求、消息通知'内容完全对应，只是自动匹配未识别出",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中存在'服务集成框架'和'界面集成框架'(本软件)节点，按GJB 438C设计图应覆盖需求表的原则，理应画出两者间的连线但未画，属于图纸内容遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_001_22": {
+  "pair": "3_001",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「高」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中receiver「高」实为「优先级」列的值，并非接口接收方；图中节点「能力分析评估」即为序号5/6对应接口的接收方，自动匹配误将优先级值当作组件名称进行查找",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第4、6行内容列结构错位（缺失接口名称/描述列），导致“优先级”列的值“高”被错误解析为“接收方”，属于文档编制错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_06": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部收发方，但接口设计图采用以'界面集成框架'为中心的星型结构，本软件作为中心节点已隐含存在，无需单独画出'本软件'组件框；发送方/接收方中的'本软件'是表格描述",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「界面集成框架」即为「本软件」在设计视图的具体实现名称，属于同一实体的不同表述，图中实际存在对应节点。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_03": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与数据统一访问服务的接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「数据统一访问服务」节点，且有连线指向「界面集成框架」，连线标注为「提供数据统一访问的接口，实现增删改查等功能」，与表格项「与数据统一访问服务的接口」完全对应，只是自动匹配未识别出文字表述的对",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「数据统一访问服务」，与表格项「与数据统一访问服务的接口」的发送方/接收方名称完全一致，存在明确的对应元素，比对引擎未识别出该匹配。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_005_05": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口收发方，而接口设计图采用系统外部视角，'本软件'作为中心系统本身在图中以'界面集成框架'核心节点隐含代表，不单独画出'本软件'框是GJB文档惯例的粒度/视",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“界面集成框架”即为本软件的具体名称，二者指代同一对象，属于文字表述差异导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_01": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与软件部署管理的接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「软件部署管理」节点，且该节点与「界面集成框架」之间有连线（标注「提供应用组件配置、用户等信息」），与表格第3项「与软件部署管理的接口」完全对应，只是自动匹配未识别出该对应关系。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中已存在节点“软件部署管理”和“界面集成框架”(对应“本软件”), 构成了接口的实体关系, 比对引擎未能识别“本软件”与“界面集成框架”的对应关系导致误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_005_07": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出收发双方，而接口设计图采用系统边界视角，'本软件'作为中心系统以'界面集成框架'进程节点代表，外部actor与之连线即可表达接口关系，这是GJB文档中表格全覆盖与",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'界面集成框架'即为本软件的实例化组件，两者交互对象（用户、应用软件等）完全一致，仅因表用通用名'本软件'而图用具体名'界面集成框架'导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_00": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与用户的接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「与用户的接口」在图中实际有明确对应：图中存在「用户」节点与「界面集成框架」之间的双向箭头，标注为「人机交互」，且表格描述「人机接口」「提供用户菜单响应、数据编辑、图上操作等功能」与图中「人机交",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "3_006_00": {
+  "pair": "3_006",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「界面开发与界面集成的接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为Vue.js生命周期活动图，展示的是组件初始化、挂载、更新、销毁的运行时流程；而表格项「界面开发与界面集成的接口」属于开发时静态接口（组件名称、路径、依赖应用名等元数据传递），是构建/开发阶段接",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图表不符：表格描述的是模块间的静态接口关系（如界面开发与集成模块的API），而图描述的是组件内部的生命周期流程（如初始化、渲染、销毁），两者视角和内容完全不匹配，导致接口需求无法在设计图中追溯。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_005_09": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部收发方，而接口设计图采用'本软件'作为中心节点(界面集成框架)的视角绘制，图中'界面集成框架'即代表本软件，receiver'本软件'已隐含在中心节点中，符合",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“界面集成框架”即为表格中“本软件”的具体名称，二者交互的外部对象（用户、应用软件等）完全对应，属于名称表述不一致导致的匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_008_00": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务部署管理与服务运行控制接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格项「服务部署管理与服务运行控制接口」明确描述发送方为「服务部署管理」、接收方为「服务运行控制」、内容为「服务启动信息」，与图中存在的「服务启动信息」箭头（从服务部署管理指向服务运行控制）完全对应，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了“服务部署管理”到“服务运行控制”的接口需求，且图中已包含这两个节点，按照GJB 438C接口设计图应覆盖接口需求的原则，缺失连接线属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_005_08": {
+  "pair": "3_005",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列明收发双方，而接口设计图以「界面集成框架」为核心组件展示外部交互，「本软件」作为表格中的接收方/发送方是角色说明而非独立组件，图中以「界面集成框架」代表本软件对外交",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "粒度/视角差异：表格是系统级需求（'本软件'指代系统边界），图是组件级设计（'本软件'被分解为'界面集成框架'等具体组件），组件图中不应出现系统边界节点，符合设计细化惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "3_008_04": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务运行控制」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中'服务运行控制'节点明确存在，且与表格中发送方/接收方名称完全一致；被审查分歧'表格项服务运行控制在图中无匹配'是比对引擎误读，但题目要求判断的是'表格项在图中无对应'这一分歧类别，实际审查应关注",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图侧节点列表中明确包含「服务运行控制」节点，与表格中的发送方/接收方名称完全一致，属于比对引擎未能正确识别匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_008_03": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务访问代理与服务调度的关系」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n\"reason\": \"表格项「服务访问代理与服务调度的关系」在接口设计图中确实无对应连线，图中服务访问代理仅向下连接",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "需求表定义了'服务访问代理'与'服务调度'间的接口，且图中存在这两个节点，按GJB 438C设计覆盖要求，图应画出该连线却未画，属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_008_02": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务信息管理与服务调度的关系」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示核心组件间的关键数据流连线，而表格是完整的接口需求registry；图中'服务信息管理'与'服务调度'之间虽未直接连线，但二者通过各自与'服务运行控制'的关联形成间接关系，且图中已存在",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中接口发送方为'服务状态监视'，但图中不存在该节点（仅有'服务信息管理'），导致接口无法在图中表达，属于文档图、表内容不一致的缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_008_01": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务运行控制与服务信息管理接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格第3项「服务运行控制与服务信息管理接口」包含运行状态信息、占用资源信息、节点信息三类内容，但图中服务运行控制到服务信息管理仅有向下箭头标注'运行状态信息'，而'占用资源信息'和'节点信息'在图中无",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格行内存在矛盾：接口名称为'服务运行控制与服务信息管理接口'，暗示接收方应为'服务信息管理'（图中存在该节点），但接收方列却填写为'服务状态监视'（图中不存在该节点），属于表格内容填写错误或引用了错",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_008_07": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「低」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry(含全部接口+收发方)，而接口设计图是组件框+接口连线，图中已有服务部署管理、服务运行控制、服务信息管理、服务调度、服务访问代理等核心组件，「低」优先级接口在需求reg",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中明确列出组件'服务状态监视'作为接口的收发方(第3、4行)，但接口设计图中缺失该组件节点，导致接口连线无法绘制，属于设计图遗漏实体缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_008_06": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「服务状态监视」在图中无组件节点",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "接口需求表第3、4行明确将「服务状态监视」作为接收方，但图中仅存在「服务信息管理」节点而无「服务状态监视」组件；且图中「服务运行控制」到「服务信息管理」的连线标注为「运行状态信息」「占用资源信息」「节",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中将“服务状态监视”列为接口接收方，但图中无此节点（仅有“服务信息管理”），且接口名称暗示对接方应为“服务信息管理”，属于需求表与设计图不一致的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_008_08": {
+  "pair": "3_008",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「服务状态监视」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry(含全部接口+收发方)，而图是接口设计图(组件框+接口连线)，图中节点为'服务信息管理'而非'服务状态监视'，两者是粒度/视角差异——表从功能职责命名，图从组件实体命名",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "接口需求表中明确列出了“服务状态监视”作为接口的接收方（第3行）和发送方（第4行），但在接口设计图的组件节点列表中缺失该组件，导致设计图未覆盖需求表定义的接口参与方，属于文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_009_01": {
+  "pair": "3_009",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据统一访问服务与界面集成框架接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图展示的是数据统一访问服务与外部系统/组件的数据流交互，而界面集成框架与本系统的'数据模型信息'和'数据库表及字段信息'交换属于元数据/配置类信息，是框架层级的接口而非运行时数据流；GJB文档",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在交互双方节点（界面集成框架、数据统一访问服务），且接口内容涉及具体数据交互（数据模型信息），依据GJB 438C接口设计图应覆盖所有接口需求的原则，缺失连线属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_009_00": {
+  "pair": "3_009",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据统一访问服务与运行支撑服务接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中明确存在「运行支撑服务」节点和「数据统一访问服务」节点，且两者之间有标注为「服务器信息、运行状态信息」的双向箭头连线，与表格项完全对应，但审查分歧声称「无匹配」，属于比对引擎未能识别图中已有对应元",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了'数据统一访问服务'与'运行支撑服务'之间的接口需求，且图中已包含这两个节点，依据GJB 438C设计覆盖需求的原则，接口设计图应绘制两者间的连线，缺失连线属于文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_009_02": {
+  "pair": "3_009",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据统一访问服务与数据库接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「数据库」节点与「数据统一访问服务」之间的双向箭头连线，标注了「数据查询信息」和「数据修改信息」，与表格第4项「数据统一访问服务与数据库接口」完全对应，只是自动匹配未识别出文字表述的对应关系（",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在'数据统一访问服务'和'数据库'节点，但缺少连接两者的接口连线，导致表格定义的接口需求在设计图中缺失对应设计。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_010_01": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「对象化访问与SQL访问接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在从'对象化访问'到'SQL访问'的连线，标注为'SQL语句信息'，与表格第2项'对象化访问与SQL访问接口'的发送方、接收方、接口内容完全对应，只是箭头方向在图中是对象化访问→SQL访问，而表",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了“对象化访问”与“SQL访问”组件间的接口需求，且图中已存在这两个节点，但缺失连接两者的连线，属于设计未覆盖需求的遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_010_05": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据源适配与连接池管理」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中确实存在'数据源适配'到'连接池管理'的连线且标注'数据库连接信息'，与表格第6项完全对应，但审查声称'无匹配'属于比对引擎未能识别该连线；然而重新仔细核对：图中右侧确有'数据源适配'→'连接池管",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了数据源适配与连接池管理之间的API接口，且图中已包含这两个节点，按GJB一致性要求接口设计图应绘制相应连线，缺失连线属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_010_03": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「SQL访问与数据源适配接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格项「SQL访问与数据源适配接口」(序号4，SQL访问→数据源适配，数据库连接信息)在图中确实存在对应连线：从SQL访问到数据源适配有一条标注为'数据库连接信息'的箭头。但题目声称'表格项在图中无匹",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了“SQL访问”与“数据源适配”之间的接口需求，且图中已存在这两个节点，依据GJB 438C追溯性要求，接口设计图应绘制二者间的连线以实现需求，缺失连线属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_010_06": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据源适配与热点数据缓存接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示核心数据流路径（代码生成→对象化访问→SQL访问→数据源适配→连接池管理/热点数据缓存），热点数据缓存与SQL访问之间的'数据查询信息'回流属于辅助优化路径，图中未画出符合GJB文档惯",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了“数据源适配”与“热点数据缓存”之间的接口需求，图中虽存在这两个节点，但作为“接口设计图”理应画出二者之间的连线以覆盖该需求，连线缺失属于设计未覆盖需求的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_010_07": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「热点数据缓存与SQL访问接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n  \"reason\": \"表格第8项「热点数据缓存与SQL访问接口」描述热点数据缓存向SQL访问发送「数据查询信息」",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了'热点数据缓存'与'SQL访问'之间的接口需求，图中虽存在对应节点，但缺失该连线，导致设计未覆盖需求。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_010_02": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「SQL访问与代码生成接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n  \"reason\": \"表格项「SQL访问与代码生成接口」对应数据模型信息，图中SQL访问节点有指向代码生成节点的",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了组件'SQL访问'与'代码生成'之间的接口需求，图中虽存在对应节点，但结构化描述显示缺少连接二者的连线，导致设计图未完整覆盖需求规定的接口，属于文档一致性缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_010_04": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据源适配与SQL访问接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中存在数据源适配→SQL访问的'数据查询结果信息'连线，但表格项是'数据源适配与SQL访问接口'，而图中该连线方向为数据源适配→SQL访问；然而更关键的是，图中同时存在SQL访问→数据源适配的'数据",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "接口设计图通常用一条连线表示组件间的连接关系，而接口需求表按收发方向拆分为多条记录（如第4项和第5项互为反向），属于图与表粒度差异的合理现象。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "3_010_00": {
+  "pair": "3_010",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「代码生成与对象化访问接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中明确存在'代码生成'到'对象化访问'的箭头连线，标注为'头文件路径信息'，与表格项完全对应，自动匹配引擎未能识别该对应关系属于比对引擎问题",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "接口需求表定义了'代码生成'与'对象化访问'组件间的数据交互需求，而接口设计图中虽存在这两个节点，但提供的结构化描述中未见连接两者的连线，导致设计未覆盖需求接口，属于文档一致性缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_012_03": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「开发集成与软件产品包封装接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图通常聚焦系统运行时的组件交互与部署视图，而'开发集成与软件产品包封装'属于开发/构建阶段接口，非运行时接口；图中节点'软件封装'实为'软件产品包封装'的简写，但开发集成节点未与之间连线，表明",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'软件封装'对应表格中的'软件产品包封装'，节点'开发集成'与表格一致，两者之间应存在连线对应，仅因名称简写导致匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_012_00": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户管理与软件安装管理接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦组件间物理/逻辑连接关系，而'用户管理→软件安装管理'的服务启动信息、应用组件菜单配置信息属于运行期控制流/配置数据，非静态接口设计图必须表达的内容；表格作为完整registry收录全部",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的接收方'软件安装管理'与图中的节点'软件安装'语义高度对应，判定为图中元素存在但命名不完全一致导致的匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_012_04": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件安装管理」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「软件安装管理」节点，但图侧OCR/提取时误写为「软件安装」，实际图片右下角椭圆标注为「软件安装管理」，与表格项完全对应，属于比对引擎文字提取误差导致的误报",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中有节点“软件安装”，语义上对应表格中的“软件安装管理”，仅存在“管理”二字的后缀差异，属于命名不一致导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_012_02": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件产品包封装与软件安装管理接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n  \"reason\": \"表格中「软件产品包封装与软件安装管理接口」要求显示软件产品包封装与软件安装管理之间的接口（",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了“软件产品包封装”与“软件安装管理”间的接口需求，图中虽存在对应的实体节点（软件封装、软件安装），但结构化描述中未列出连接二者的接口连线，属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_012_06": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「预案制作开通」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中左下方存在'预案制作开通'节点（OCR识别为'预案制作开通'，但图侧描述误写为'系统开通'），实际图中有对应节点，只是图侧节点列表描述错误导致自动匹配失败",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "需求表定义接收方为'预案制作开通'，而设计图中仅有'系统开通'节点，两者名称差异显著且非同义缩写，导致需求定义的接口接收方在设计图中缺失对应组件，属于需求与设计不一致的缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_012_08": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「软件产品包封装」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中实际存在'软件产品包封装'节点，但图侧文字描述误写为'软件封装'，属于OCR/文字提取错误导致自动匹配失败；同时图片中右上角椭圆明确显示'软件产品包封装'字样，与表格receiver完全一致。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「软件封装」即为表格项「软件产品包封装」的简称或异名，属于同一实体的不同文字表述，图中实际存在对应元素。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_012_01": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户管理与预案制作开通接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中存在'用户管理'节点和'预案制作开通'节点，但两节点之间无直接连线，表格明确描述的是两者间的API接口（用户信息），而图中用户管理仅连接至软件安装管理，遗漏了该接口需求对应的连线关系。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格为详细接口需求 registry，图为核心架构设计图，两者粒度不同（表格项“预案制作开通”属于图节点“系统开通”的子集或具体业务接口），按 GJB 惯例图可仅展示顶层模块无需一一对应具体接口项。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_00": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与应用软件接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「与应用软件接口」对应图中左侧「应用软件」节点，且存在双向箭头：「数据发布」（本软件→应用软件）和「订阅数据回调」（应用软件→本软件），与表格第1、2行完全匹配，只是自动匹配未识别文字表述差异。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在交互双方节点（数据同步共享服务软件与应用软件），依据GJB 438C接口设计图应覆盖接口需求，图中缺失连接线属于设计内容遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_012_07": {
+  "pair": "3_012",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「软件产品包封装」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「软件产品包封装」与图中的「软件封装」是同一概念的不同文字表述，属于命名简化/缩写的惯例差异，图中实际存在对应节点，自动匹配因文字差异过大而误报。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "需求表中的接口参与方'软件产品包封装'与设计图中的节点'软件封装'命名不一致，违反GJB 438C关于需求和设计追溯一致性的要求。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_04": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "本软件是表格中接口需求的发送方/接收方列填写的自身系统名称，在接口设计图中以中央圆框'数据同步共享服务'作为本系统的图形化表示，属于同一实体的不同表述形式；接口设计图惯例以系统本身为构图中心而非标注'",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本软件”指代系统本身，对应图中的中心节点“数据同步共享服务软件”，属于语义相同但字面不同导致的匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_02": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「人机交互接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中确实未直接画出「人机交互接口」节点，但根据GJB文档惯例，接口需求表是完整registry需覆盖全部接口，而接口设计图通常聚焦软件间/系统间接口；人机交互接口属于用户界面层，与图中核心关注的数据同",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中包含了表格提及的'应用软件'、'运行支撑服务'等外部节点，却唯独遗漏了表格第4行明确列出的外部交互方'界面集成框架'，导致接口设计图与接口需求表不一致。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_01": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与运行支撑服务接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中「运行支撑服务」节点与「数据同步共享服务」之间有连线，标注为「服务器IP、用户ID等」，与表格第3项「向运行支撑服务获取数据库信息、主备服务器IP地址等信息」内容实质对应，只是自动匹配未识别文字表",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与'运行支撑服务'的接口需求，且图中已存在'运行支撑服务'节点，按GJB 438C一致性要求，接口设计图应绘制相应的连线以覆盖该需求，缺失连线属于文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_06": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "本软件是表格中的发送方/接收方角色标识，在接口设计图中通常以中心节点'数据同步共享服务'隐含代表，而非作为独立外部组件画出；图展示的是外部交互接口，本软件作为中心主体无需单独框出，符合GJB文档惯例中",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本软件”指代图中的核心组件“数据同步共享服务软件”，二者语义一致但表述不同，引擎未能识别自指关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_05": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与统一传输服务接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示核心数据流与交互关系，表格为完整接口registry；图中「写入数据缓存」箭头已体现与统一传输服务的交互实质，但图注未标注接口名称属于设计图粒度选择，符合GJB文档惯例中需求表全量登记",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已列出'统一传输服务'节点，说明该外部实体在关注范围内，但未画出与'本软件'的连线，导致接口需求表序号7定义的接口在设计图中遗漏，不符合GJB 438C一致性要求。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_07": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「应用软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是完整的接口需求registry，而图是接口设计图，图中已有「应用软件」节点且标注了双向数据流（数据发布/订阅数据回调），但表格第2行「应用软件」作为独立项是同一接口的反向回调，图中将其合并为一条",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图侧节点列表明确包含「应用软件」节点，与表格中的接口参与方名称完全一致，图中实际存在对应元素，属于比对引擎误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_09": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口收发双方，而接口设计图采用外部系统视角仅绘制与本软件交互的外部实体节点（应用软件、运行支撑服务、人机交互接口、数据统一访问服务、统一传输服务），本软件作为",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“数据同步共享服务软件”，其语义即为表格中的“本软件”，属于名称表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_12": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「界面集成框架」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出所有收发方，而接口设计图聚焦本软件内部组件及外部直接交互节点；「界面集成框架」作为发送方是人机交互接口的底层实现载体，在图中已被抽象为「人机交互接口」节点，图按设",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "接口需求表定义了外部交互方“界面集成框架”，但接口设计图中列举了其他外部节点（如应用软件、运行支撑服务）却唯独遗漏该节点，导致图物不符。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_11": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部收发方，但接口设计图采用系统外部视角仅绘制外部交互组件；「本软件」作为中心服务主体在图中以「数据同步共享服务」圆形节点隐含表示，而非独立框图节点，这是GJB文",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「数据同步共享服务软件」即为表格中的「本软件」，两者语义完全一致，属于典型的术语指代差异导致的自动比对匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_03": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与数据统一访问服务接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格项「与数据统一访问服务接口」在图中有明确对应节点和连线：图中存在「数据统一访问服务」节点，且有「存储数据」「读取数据」双向连线与中心「数据同步共享服务」相连，但表格中该接口包含双向交互（向数据库存",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中存在“数据统一访问服务”节点，但缺失了与“本软件”之间的接口连线，导致需求表中定义的接口在设计图中未体现，属于文档设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_018_14": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部收发方，而接口设计图采用组件框+接口连线视角，'本软件'作为中心圆'数据同步共享服务'是图的主体承载者而非被独立框出的节点，这是GJB文档中表图粒度/视角差异",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「数据同步共享服务软件」即为表格中的「本软件」，属于同一实体的不同命名表述，图中实际存在对应节点。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_16": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部收发方，而接口设计图采用第三方视角绘制外部交互关系，'本软件'作为中心处理节点在图中以'数据同步共享服务'圆框隐含表示而非独立框，符合GJB文档惯例中需求表完",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本软件”即指代图中的主体节点“数据同步共享服务软件”，两者语义一致，图中存在对应元素，仅因名称表述不同导致比对未通过。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_13": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表作为完整registry需列出全部接口收发方，而接口设计图采用外部系统视角仅绘制与本软件交互的外部实体节点（应用软件、运行支撑服务、人机交互接口、统一传输服务、数据统一访问服务），本软件自身",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中的节点「数据同步共享服务软件」即为表格中的「本软件」，属于同一实体的不同表述（别名），自动比对引擎未能识别二者的对应关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_019_00": {
+  "pair": "3_019",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据共享与数据资源管理接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「数据共享与数据资源管理接口」对应图中上方「数据资源管理」与「数据共享」两个节点之间的双向箭头连线，标注为「主题资源、主题内容」，与表格中「主题资源及主题内容」内容一致，仅文字表述略有差异（表格",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "接口需求表定义了‘数据共享’至‘数据资源管理’的接口交互，图侧虽存在对应节点，但(根据描述)缺失了对应连线，属于设计图未覆盖需求表定义的接口，即文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_10": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口优先级「高」是表格的属性字段，非接口实体本身；图中节点表示的是接口参与方（组件/服务），优先级作为需求属性无需在设计图中体现，符合GJB文档惯例中需求表完整registry与设计图聚焦组件连线的粒",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中“高”为接口优先级列的值，并非发送方名称，比对引擎错误地将优先级列识别为发送方组件进行匹配，属于比对引擎误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_018_15": {
+  "pair": "3_018",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「高」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口优先级「高」是表格的属性字段，属于需求管理元数据，接口设计图无需表示优先级属性；图中已正确表示对应接口的发送方、接收方和交互内容，图的职责是展示组件连接关系而非需求属性。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "分歧描述将优先级'高'误识别为发送方名称，实际是比对引擎解析表格列结构错误（列偏移），导致提取了错误的字段值进行匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_019_03": {
+  "pair": "3_019",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据资源管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是接口设计图(组件框+接口连线)，表格是接口需求registry(全部接口)，图中已体现数据资源管理节点及与数据共享的双向连线，但表格第2行缺少接口需求标识和接口类型等关键字段，属于表格自身信息不完",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含“数据资源管理”，与表格中的发送方/接收方“数据资源管理”完全一致，比对引擎漏识别导致误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_019_02": {
+  "pair": "3_019",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据共享」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中「数据共享」是节点标签而非独立组件，表格作为接口需求registry需列出全部收发方，而接口设计图从服务软件视角绘制，将「数据共享」能力纳入「数据同步共享服务软件」或「数据共享服务」节点中，粒度差",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“数据共享服务”，与表格项“数据共享”语义对应，仅存在“服务”二字的有无差异，属于自动比对引擎因字面不完全匹配导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_020_01": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与文件系统接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用中心辐射式结构，以'动态名录服务'为核心展示系统间交互关系；文件系统接口为文件接口（非API接口），且数据流向为'文件系统→本系统'（单向流入），与其他双向/ outgoing的API接",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在“文件系统”和“动态名录服务”节点，说明设计者承认该外部实体存在，理应画出二者之间的接口连线以响应需求，连线缺失属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_019_01": {
+  "pair": "3_019",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据同步与数据共享接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中节点为'数据同步'而非'数据同步服务'，表格项'数据同步与数据共享接口'在图中实际存在对应——'数据同步'节点与'数据共享'节点间有'同步配置数据'和'异常状态信息'双向连线，与表格第3、4行内容",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "需求表定义了“数据同步”与“数据共享”组件间的接口交互，图中虽存在对应的组件节点，但结构化描述中缺失连接两者的接口连线，属于设计图未完整覆盖需求定义的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_020_06": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「应用软件」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在「应用软件」节点，且与动态名录服务有双向箭头连线，表格项「应用软件」在图中有完全对应的元素，属于自动匹配未识别出的误报",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的接口实体“应用软件”明确存在于图侧的节点列表中，属于精确字符串匹配，比对引擎漏报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_020_04": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与服务集成框架接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "{\"label\": \"real_bug\",\n\"reason\": \"图中「服务集成框架」节点存在，但仅有从「动态名录服务」指向「服务集成框架」的单向箭头（发送方向",
+   "confidence": "low"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确要求“本系统”与“服务集成框架”之间存在接口交互，且图中已存在这两个节点，理应画出连线表示接口关系，缺失连线属于设计未覆盖需求的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_020_00": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与运行支撑服务接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图以'动态名录服务'为核心展示外部系统交互关系，图中已包含'运行支撑服务'节点及双向连线；表格作为完整接口需求registry列出全部接口细节，而设计图侧重组件间连接关系而非逐条列出所有API",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与“运行支撑服务”的接口需求，图中虽存在对应节点，但结构化描述中缺失了连接该节点的连线（接口），导致设计图未覆盖需求表定义的接口，属于文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_020_09": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「数据统一服访问服务」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中receiver「数据统一服访问服务」与图中节点「数据统一访问服务」为同一组件的文字表述差异（多了个'服'字），图中确实存在对应节点且有连线。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'数据统一访问服务'，表格接收方'数据统一服访问服务'为同名词汇的笔误（多字），实际存在对应关系，引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_020_03": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与人机交互框架接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在「人机交互框架」节点，且该节点有连线指向中心「动态名录服务」，与表格项「与人机交互框架接口」完全对应，只是自动匹配未识别出文字表述的一致性。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格项「与人机交互框架接口」对应实体为“人机交互框架”，图中节点列表明确包含“人机交互框架”，名称完全一致，实体存在对应，属于比对引擎未能识别匹配的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_020_07": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据统一服访问服务」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中「数据统一服访问服务」与图中「数据统一访问服务」是同一组件的文字表述差异（表格存在笔误多字「服」），图中确实存在该节点且与动态名录服务有连线对应接口需求PZXQ-WBJK-SJTYFWJK，属于",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中接收方名称“数据统一服访问服务”存在明显错别字（应为“数据统一访问服务”），与图中节点名称不一致，属于文档编写缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_020_02": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与应用软件接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格中「与应用软件接口」包含双向交互（应用软件→本系统「查询请求」、本系统→应用软件「查询结果」），但图中仅显示「动态名录服务→应用软件」单向箭头，缺少「应用软件→动态名录服务」的查询请求方向，且图中",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中已存在“应用软件”节点，通常接口设计图连线会以数据流内容（如“查询请求”）而非接口名称命名，比对引擎未能识别表格接口名称与图连线标签的语义对应关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_020_05": {
+  "pair": "3_020",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与统一传输服务接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中「统一传输服务」节点存在，但与「动态名录服务」之间为双向箭头（且箭头方向为动态名录服务↔统一传输服务），而表格明确为单向接口「本系统→统一传输服务」发送名录同步信息；更关键的是表格项「与统一传输服",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "3_021_02": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录访问接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry(完整清单)，图是接口设计图(组件间交互关系)；'名录访问接口'在图中是核心处理节点而非外部接口连线，属于合理的设计抽象与需求追溯粒度差异，符合GJB文档惯例中'表全图精",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图侧节点列表明确包含'[process] 名录访问接口'，与表格项文本完全一致，属于比对引擎未能识别已有对应元素的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_00": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录信息维护」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry(全部接口+收发方)，而图是接口设计图(组件框+接口连线)，设计图通常只画核心交互流程而非全部接口；表格中「名录信息维护」作为发送方向「名录信息同步」发送数据(节点ID、",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含名为'名录信息维护'的进程节点，与表格中出现的发送方/接收方'名录信息维护'完全一致，引擎未能匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_03": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录访问接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的'名录访问接口'作为接收方在图中有明确对应节点，图中存在同名'名录访问接口'圆形节点，且该节点与名录信息查询、名录信息维护、名录信息同步均有连线交互，只是表格将其列为接收方而图将其作为中心处理",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在节点[process] 名录访问接口，与表格项名称完全一致，比对引擎未能识别出该对应关系。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_021_04": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录访问接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图的核心目的是展示组件间的数据流和交互关系，而非罗列所有接口端点；'名录访问接口'在图中作为中心枢纽节点已存在，表格中将其列为'接收方'的条目反映的是该节点作为服务提供方被其他组件调用的关系，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含“名录访问接口”，与表格中多次出现的发送方/接收方“名录访问接口”完全一致，存在明确对应关系，判定为比对引擎未能识别匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_01": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录信息同步」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry(全部接口的收发方清单)，而图是接口设计图聚焦核心处理流程；图中'名录信息同步'作为节点存在，但表格中作为发送方/接收方的多条接口需求记录(如'名录信息同步→名录访问接口",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中「名录信息同步」为接口名称，图中存在同名模块节点「名录信息同步」，比对引擎因无法识别同名不同类型的元素（接口名 vs 模块名）或连线标签缺失而误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_05": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录信息维护」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry(完整清单)，图是接口设计图(组件交互视角)；'名录信息维护'作为接收方节点已在图中存在，但表格中'名录信息维护→名录访问接口'的维护结果反馈连线在图中标注为'维护状态反",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中「名录信息维护」作为接收方/发送方（组件/模块）明确存在于图中（[process] 名录信息维护），字符串完全一致，比对引擎未能识别组件名称与图节点的匹配关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_09": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「名录查询模块」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出所有收发方，而接口设计图聚焦组件间交互关系，'名录查询模块'作为发起查询的外部/上层模块，在图中被抽象为从'名录访问接口'流入的查询请求而非独立组件节点，属于视角",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格中定义的发送方组件“名录查询模块”在图侧节点列表中缺失，虽然图中有名称相近的“名录信息查询”节点，但“模块”与“信息查询”属于不同概念层级或命名不一致，导致文档一致性缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_07": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录信息查询」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦于组件间交互关系与数据流，'名录信息查询'作为名录访问接口的子功能/被调用能力，其逻辑已在'名录访问接口→名录信息查询'的查询路径中体现；表格作为完整接口需求registry需逐项登记，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格第2行发送方'名录查询模块'与图节点'名录信息查询'及表格第4行发送方名称不一致，属于文档命名不一致导致的真实缺陷",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_02": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「本软件」是表格中接口需求的发送方/接收方列的自指代词，在接口设计图中对应中心节点「语音综合处理软件」圆形处理框，这是图与表的不同表达惯例——图用中心节点表示本软件，表格用「本软件」文字指代，属于同一",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「语音综合处理软件」即表格中的「本软件」，两者为同一对象，仅因全称与简称表述不同导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_01": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与运行支撑服务的接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中「运行支撑服务」节点确实存在，但「日志记录」接口表现为虚线箭头指向「语音综合处理软件」，而表格中接口方向为「运行支撑服务→本软件」且内容为「日志记录」，但图中虚线箭头方向是从「语音综合处理软件」指",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在'运行支撑服务'和'语音综合处理软件'节点，按GJB 438C一致性要求，表格定义的接口连线应在图中体现，未画出属于设计遗漏",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_022_00": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与用户的接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦于软件与外部系统/文件的数据交换接口（音频文件、语音文本、应用软件、运行支撑服务），而用户作为人机交互的发起方，其'语音录入、文本输入、语音播放'属于操作交互而非数据接口，在接口设计图中",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已存在[用户]和[语音综合处理软件]节点，却缺失连接两者的接口连线，导致表格定义的接口需求未被设计图覆盖，属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_04": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「本软件」是表格中接口需求的发送方/接收方角色标注，属于自指性主体而非独立外部实体；图中以「语音综合处理软件」圆形节点作为本系统的核心表示，所有连线均从该节点发出或接收，其本身就是「本软件」的图形化体",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「语音综合处理软件」即为表格中的「本软件」，两者指代同一主体，属于名称表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_05": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「本软件」是表格中接口需求的发送方/接收方列的自指代词，表示接口的一方是系统自身；在接口设计图中，系统自身作为中心处理节点（语音综合处理软件）是必然存在且已画出的，表格中的自指是registry的完整",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中的节点'语音综合处理软件'即为表格中的'本软件'，二者指代同一实体，仅因具体名称与通用代称的文字表述差异导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_021_06": {
+  "pair": "3_021",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「名录信息同步」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦核心处理组件间的交互关系，'名录信息同步'作为独立表格项是接口需求registry的完整记录，但图中将其作为'名录信息维护'与'名录信息同步'组件间的连线标注（'名录增量同步、名录局部调",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "3_022_09": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用外部系统视角，仅绘制与外部实体的交互关系，'本软件'作为中心处理组件在图中以核心圆节点表示，接收方'本软件'是接口的本地端点而非独立外部组件，符合接口设计图惯例；表格作为完整regist",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点[process] 语音综合处理软件即为表格中的本软件，属于同一实体的不同命名表述，比对引擎未能识别同义词映射。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_07": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文本文件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中节点为'语音文本'而非'文本文件'，但二者在语义上存在对应关系——'语音文本'是语音处理场景下对文本数据的专业表述，与表格中'文本文件'指代同一类接口对象；更重要的是，接口设计图侧重展示组件间交互",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「语音文本」语义上对应表格项「文本文件」（类比「音频文件」节点），属于同一接口实体的不同命名表述，导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_10": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用外部视角绘制，仅展示与本软件交互的外部实体/actor，本软件自身作为中心处理节点隐含存在，不单独画组件节点；这是GJB文档惯例中需求registry(完整列表)与设计图(外部视角/核心",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点[process] 语音综合处理软件即为表格中本软件的对应实体，引擎未能识别别名映射导致误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_06": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「语音应用软件」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「语音应用软件」与图中的「应用软件」是同一概念，仅文字表述存在修饰词差异（多了「语音」前缀），图中实际存在对应节点，属于自动匹配未识别出的同义表述。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出接收方为'语音应用软件'，而图中对应节点为'应用软件'，两者名称不一致，属于需求与设计之间的命名不统一缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_11": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用组件框+接口连线方式，中心圆「语音综合处理软件」即代表「本软件」，表格中的「本软件」作为接收方/发送方是接口关系中的逻辑主体，在图中以中心处理节点形式存在，并非无对应；这是典型的表格完整",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'语音综合处理软件'即为表格中'本软件'的具体名称，两者实质对应，仅因表述差异导致比对引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_03": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与文本的接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中「语音文本」节点即对应表格「与文本的接口」，但图采用「语音文本」而非「文本文件」的表述，且该节点与中心软件有双向输入输出连线，属于合理的粒度/视角差异——图侧重语音处理语境下的文本数据流命名，表格",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点[actor]语音文本，对应表格中的文本文件接口，因命名差异(语音文本 vs 文本文件)导致自动匹配失败，实质对应关系存在。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_12": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表作为完整registry需列出全部接口收发方（含本软件作为sender/receiver），而接口设计图采用系统外部视角，仅画外部实体与中心组件的交互连线，本软件作为中心处理组件本身在图中以",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「语音综合处理软件」即表格中的「本软件」，属于同一实体的不同表述（具体名称 vs 通用自称），元素实际存在。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_13": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表sender「本软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用外部系统/文件视角绘制，中心节点「语音综合处理软件」即代表本软件，发送方/接收方为「本软件」的接口已通过该中心节点隐式表达，符合GJB文档惯例中需求表完整registry与设计图核心视角",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'[process] 语音综合处理软件'即为表格中的'本软件'，二者语义等价，属于自动比对引擎未能识别同义词/指代关系导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_023_00": {
+  "pair": "3_023",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「语音识别与识别短语定制的接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中右侧箭头明确显示「识别短语定制」→「语音识别」的连线，标注为「Bnf文件」，与表格项「识别短语定制→语音识别，Bnf文件」完全对应，仅自动匹配未识别文字表述差异。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图的结构化描述中列出了节点'识别短语定制'和'语音识别'，但未列出任何连线，导致表格中定义的二者之间的接口在图中缺失，属于设计图遗漏了需求规定的接口连接。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_023_01": {
+  "pair": "3_023",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「语音识别与语音合成的接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示核心交互流程（语音识别与识别短语定制、语音识别与语音合成之间的单向数据流），而表格是完整的接口需求registry；图中实际已包含'语音合成'节点及与'语音识别'的双向箭头（语音文本、",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确要求“语音合成”与“语音识别”之间存在接口，图中虽存在这两个节点，但结构化描述未列出连接二者的连线，表明设计图遗漏了该接口的连线，属于文档内容缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_022_14": {
+  "pair": "3_022",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「文本文件」在图中无组件节点",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「文本文件」与图中的「语音文本」是同一接口实体的不同表述，图中存在对应节点，只是命名差异导致自动匹配失败",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格接口实体为'文本文件'，图中对应节点为'语音文本'，两者命名不一致（对比第4行'音频文件'完全匹配），属于需求与设计不一致的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_024_03": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中中心节点明确标注为'传输控制模块'，与表格项完全对应，只是图侧文字描述中简写为'传输控制'，属于自动匹配未识别的文字表述差异。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“[process] 传输控制”，其语义与表格项“传输控制模块”完全对应，仅为名称缩写差异，属于比对引擎未能识别的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_02": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中中心节点明确标注为'传输控制模块'，与表格项'传输控制模块'完全对应，只是图侧文字描述中简写为'传输控制'，属于自动匹配未识别的文字表述差异",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“传输控制”，与表格项“传输控制模块”实为同一对象，名称仅差“模块”二字，属文本表述差异导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_04": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「传输控制模块」在图中对应中心节点「传输控制」，文字表述差异为「模块」后缀的省略，属于自动匹配未识别但人工可确认的同义元素",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“传输控制”，对应表格中的“传输控制模块”，差异仅为图省略了“模块”后缀，属命名习惯差异而非遗漏。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_023_02": {
+  "pair": "3_023",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「语音合成」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry(全部接口+收发方)，而接口设计图仅展示核心组件间的接口连线，采用不同粒度/视角是GJB文档惯例；图中「语音合成」作为offpage节点存在，且其发出的连线(语音文本、",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含 '[offpage] 语音合成'，与表格中的组件名称完全一致，元素实际存在，属于比对引擎未能正确识别或忽略前缀导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_024_05": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中的「传输控制模块」在图中存在明确对应节点「传输控制」（中心节点），且所有以「传输控制模块」为发送方/接收方的接口连线在图中均有体现（与数据收发、数据缓存、设备接入、主从备份、三方传输服务接入等模",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“传输控制”对应表格项“传输控制模块”，仅省略了通用后缀“模块”，属于文本表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_06": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中中心节点明确标注为'传输控制模块'，与表格项'传输控制模块'完全对应，只是图侧描述文字简写为'传输控制'，属于自动匹配未识别的文字表述差异",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'传输控制'，对应表格中的'传输控制模块'，属于命名后缀差异导致的自动匹配失败，实质内容已覆盖。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_07": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据缓存模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图(组件框+接口连线)与接口需求表(registry)存在粒度差异是GJB文档惯例：图中已包含「数据缓存」节点，且表-图核心接口(传输控制模块↔数据缓存模块的双向数据内容/长度/缓存时间/方式",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“数据缓存”，与表格项“数据缓存模块”语义一致，仅因命名省略“模块”后缀导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_024_08": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「设备接入模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在「设备接入模块」节点，且与「传输控制模块」有双向连线（标注「设备属性、数据内容」和「数据内容」），与表格中设备接入模块和传输控制模块的双向接口完全对应，属于自动匹配未识别出文字表述差异导致",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含“设备接入”，与表格项“设备接入模块”语义一致，属于命名缩写导致的自动匹配失败，图中实际存在对应元素。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_09": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「主从备份模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「主从备份」节点，且与「传输控制」节点有双向连线（服务状态信息、服务心跳信息），与表格中「传输控制模块与主从备份模块接口」完全对应，只是比对引擎将表格中的「主从备份模块」与图中的「主从备份」文",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“主从备份”，与表格项“主从备份模块”实为同一对象，仅因名称少了“模块”后缀导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_00": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格中的'传输控制模块'是接口需求表中的发送方/接收方角色名称，而图中的节点标注为'传输控制'（省略了'模块'二字），属于同一概念的不同表述；且图中确实存在'传输控制'这一核心节点，与表格中的'传输控",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「传输控制」，对应表格中的「传输控制模块」，属于命名惯例差异（省略“模块”后缀）导致的匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_024_10": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「三方传输服务接入模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「三方传输服务接入」节点，且与「传输控制」有双向连线，表格项「三方传输服务接入模块」即为该节点的完整名称/别称，属于文字表述差异导致的自动匹配失败，非真实遗漏。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「三方传输服务接入」，与表格项「三方传输服务接入模块」仅差「模块」二字，实为同一对象，属命名习惯差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_024_01": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格中的「传输控制模块」是接口的发送方/接收方角色标识，而图中的节点「传输控制」就是该模块的图形表示，两者是同一实体在不同视图中的表述；表格registry列全接口角色，设计图用缩写/简化名称标注组件",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'传输控制'，对应表格项'传输控制模块'，仅省略了'模块'后缀，实质对应关系明确，属于比对引擎未能识别同义词。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_024_11": {
+  "pair": "3_024",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据监控模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "数据监控模块在图中作为节点存在且与传输控制模块有连线（采集的监控信息），但表格为接口需求registry需列出全部接口，而接口设计图侧重核心数据流交互，数据监控属于旁路监控类接口，图未遗漏核心能力，属",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点列表明确包含'数据监控'，对应表格项'数据监控模块'，实体存在对应关系，分歧系比对引擎未能识别去掉'模块'后缀的同义匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_02": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输服务软件与统一传输服务之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中'指控链传输服务'与'统一传输服务'之间存在明确双向箭头，连线上标注'源用户信息、目的用户信息、数据类型、数据内容、数据长度、传输属性'，与表格第2项接口内容高度一致，只是文字表述存在细微差异（表",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'指控链传输服务'(对应表格中的'本系统/传输服务软件')和'统一传输服务'，且存在与接口内容高度匹配的数据对象'源用户信息、目的用户信息、数据类型、数据内容、数据长度、传输属性'，表明接",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_025_00": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输服务软件与应用软件之间接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅绘制指控链传输服务与外部系统/组件的接口，而表格第1项是传输服务软件内部与应用软件之间的接口，属于内部API不在设计图表达范围内；图与表格粒度/视角不同符合GJB文档惯例。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“用户”与表格项“应用软件”存在语义对应关系，且图侧连线数据内容（源用户信息、目的用户信息、数据类型等）与表格接口内容高度一致，仅因节点命名差异导致比对引擎未识别出对应关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_04": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输服务软件与通信设备之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中明确存在「通信设备」节点，且该节点与「指控链传输服务」之间有双向箭头连线，连线上标注了「数据内容、传输协议头信息」等内容，与表格第3项「传输服务软件与通信设备之间接口」完全对应，只是自动匹配未识别",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确要求与通信设备的硬件接口及特定数据内容（传输协议头信息），但图中数据对象列表缺失该内容，且通常此类设计图应显式连接对应节点，属于需求未在设计图中落实的缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_05": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用组件视角绘制外部交互关系，'本系统'作为指控链传输服务自身的容器/边界，在图中以圆框'指控链传输服务'节点自身隐含表示，而非独立绘制为外部组件；这是GJB文档惯例中'表格列全regist",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本系统”指代“传输服务软件”，图中节点“指控链传输服务”即为此实体，两者实质对应，仅因文字表述差异（别名）导致匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_03": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry需完整列出收发双方，而接口设计图采用系统外部视角只画外部交互实体（统一传输服务/通信设备/运行支撑服务/用户），'本系统'作为内部主体在图中以'指控链传输服务'圆心表示，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“指控链传输服务”对应表格中的“本系统”（即传输服务软件），属于同一实体的不同命名，自动比对引擎未能识别二者的对应关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_01": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用系统外部视角，'本系统'作为指控链传输服务本身，是图的中心节点而非外部交互实体，按GJB惯例设计图无需标注自身系统边界内的'本系统'字样，表格作为完整registry记录收发双方是正常需",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“指控链传输服务”即为表格中“本系统”的具体实现名称，两者语义一致，属于比对引擎未能识别同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_06": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输服务软件与运行支撑服务之间接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦指控链传输服务与外部实体的核心数据流交互，而运行支撑服务的'系统配置信息'属于管理/维护类接口，非核心传输链路，按GJB文档惯例接口需求表(registry)需完整枚举但接口设计图可择要",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'运行支撑服务'及数据项'日志信息'、'软件配置信息'，且存在对应的主节点'指控链传输服务'，实质已包含该接口设计，仅因'本系统'与'指控链传输服务'、'系统配置信息'与'软件配置信息'的",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_07": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry(完整清单)，图是接口设计图(组件框+接口连线)；'本系统'是表格中发送方/接收方的统称(代表指控链传输服务自身)，在图中以中心节点'指控链传输服务'表示，属于同一实体在",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本系统”即指代图中的核心节点“指控链传输服务”，两者为同一实体，仅因通用名称与具体名称的差异导致自动比对引擎未能识别匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_10": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「应用软件」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦指控链传输服务与外部系统/服务的交互，'应用软件'属于本系统内部用户层级，图中以'用户'节点概括表示人机交互，符合设计图抽象粒度高于需求表的GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出接口需求方为'应用软件'，而图中仅有'用户'节点，缺失了'应用软件'这一关键外部实体节点，导致需求项在设计图中无对应实现。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_09": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是接口需求registry需明确标注收发双方，而接口设计图采用系统边界视角，'本系统'作为指控链传输服务自身是图的中央节点而非外部组件，图只需画出与外部实体的接口连线，无需也不应把'本系统'作为独",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本系统”指代当前研制的软件实体，对应图中的具体组件“指控链传输服务”，两者实质对应但名称不同，属于比对引擎未能识别同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_12": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「应用软件」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是全部接口的完整registry(含内部软件接口)，而接口设计图仅展示系统与外部实体(统一传输服务、通信设备、运行支撑服务、用户)及关键数据流的交互，应用软件属于系统内部组件不在设计图表达范",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出“应用软件”作为接口收发方，接口设计图应包含该组件节点以展示交互关系，图中缺失该节点属于文档不一致缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_027_02": {
+  "pair": "3_027",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与运行支撑服务之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「与运行支撑服务之间接口」对应图中「实时信息传输服务」→「运行支撑服务」的箭头，连线标注为「日志信息」，与表格中接口内容「日志信息」完全匹配，只是自动匹配未识别该连线对应关系",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中已包含'运行支撑服务'和'日志信息'节点，与表格项的接收方及接口内容对应，元素齐全，属于比对引擎未能识别名称映射(如'本系统'对应'实时信息传输服务')导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_027_01": {
+  "pair": "3_027",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用组件视角绘制，'本系统'是表格中标识收发方的逻辑主体而非独立组件，实时信息传输服务即代表本系统的核心进程，图中无需重复绘制'本系统'容器；这是GJB文档中需求registry完整枚举与设",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“实时信息传输服务”即表格中的“本系统”，二者指代同一实体，仅命名方式不同（通用代称vs具体名称），导致比对引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_025_08": {
+  "pair": "3_025",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「人机交互接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图聚焦系统内部及外部系统间的技术接口（API/硬件），人机交互接口属于用户界面层，通常不在此类组件-连接器风格的接口设计图中表示；表格作为完整registry收录全部接口，而图按惯例仅画核心数",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确区分了'应用软件'接口与'人机交互接口'两项独立需求，而图中仅有一个'用户'节点，无法同时清晰映射这两个不同的外部实体或接口，导致设计图覆盖不全。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_027_03": {
+  "pair": "3_027",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与通信设备之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「与通信设备之间接口」在图中实际存在对应：图中「实时信息传输服务」与「通信设备」之间有双向箭头，且箭头标注了「源用户信息、目的用户信息、数据类型、数据内容、数据长度、传输属性、文件名称」，与表格",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中明确包含节点[通信设备]和[实时信息传输服务]（即表格中的本系统），且存在对应的数据内容节点，接口实体与内容均在图中体现，属于比对引擎未能识别语义映射导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_027_04": {
+  "pair": "3_027",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用组件视角绘制，'本系统'是表格中标识收发方的逻辑主体而非独立组件，图中以'实时信息传输服务'作为本系统的代表组件出现，符合GJB文档惯例中'图只画核心流程、表格是完整registry'的",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中的节点「实时信息传输服务」即为表格中的「本系统」，两者为同一实体的不同表述（具体名称vs通用代称），图中实际存在对应元素。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_03": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据传输通道模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中节点为「数据传输通道」而表格为「数据传输通道模块」，属于同一实体的命名惯例差异（图省略「模块」后缀），且图中确实存在对应节点和双向连线，只是表述粒度不同；接口设计图聚焦组件交互而非完整regist",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“数据传输通道”与表格项“数据传输通道模块”语义一致，仅为命名省略了“模块”后缀，属于文本非精确匹配导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_04": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「控制报文传输通道模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「控制报文传输通道」节点，与表格项「控制报文传输通道模块」仅后缀「模块」二字差异，属同一实体不同命名习惯，自动匹配未识别。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“控制报文传输通道”，与表格项“控制报文传输通道模块”实为同一对象，差异仅为图省略了“模块”后缀，属比对引擎未能识别同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_027_00": {
+  "pair": "3_027",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「与统一传输服务之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「与统一传输服务之间接口」在图中实际存在明确对应：图中有「统一传输服务」节点，且实时信息传输服务与该节点之间有双向箭头，连线上标注了「源用户信息、目的用户信息、数据类型、数据内容、数据长度、传输",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义的接口内容(源端信息、文件信息)与图中数据节点(源用户信息、文件名称)术语不一致，且图中数据节点可能仅连接了通信设备而遗漏了统一传输服务的连线，属于文档内容不一致或遗漏缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_05": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文件传输通道模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图仅展示核心接口连线，文件传输通道模块在图中实际存在（节点'文件传输通道'），但表格中该接口内容未完整填写（'用户信息、传输属性、'后截断），且接口内容标注'用户信息、传输属性、数据正文、正文",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'文件传输通道'，与表格项'文件传输通道模块'仅相差'模块'后缀，语义完全一致，属于同一实体。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_029_00": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「本系统」是表格中接口需求的发送方/接收方标识，属于需求视角的自指性描述；而接口设计图采用组件框图形式，中心节点「流媒体传输服务」即代表本系统，图中已完整画出所有外部接口连线（应用软件、通信设备、运行",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点[process]流媒体传输服务即对应表格中的本系统（流媒体传输服务软件），二者语义一致，仅因表格使用代词本系统导致字符串匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_029_02": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "「本系统」是表格中标识发送方/接收方的系统归属术语，在接口设计图中以「流媒体传输服务」节点作为本系统的代表出现，属于视角差异——表格用系统归属视角标注收发方，图用组件视角绘制接口连线，两者粒度不同且符",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本系统”即指代图中的核心节点“流媒体传输服务”，二者实为同一实体（通用术语与具体名称的关系），图中已存在对应节点，属于比对引擎未能识别同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_029_01": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体传输服务软件与通信设备之间接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「流媒体传输服务软件与通信设备之间接口」在图中实际存在对应：左下角「通信设备」矩形框与中心「流媒体传输服务」圆形之间有双向箭头连线，且标注了「源用户信息、目的用户信息、传输属性、数据内容、数据长",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与通信设备的硬件接口，图中虽存在通信设备节点，但分歧报告显示无匹配，通常意味着缺失了连接该节点的接口连线，属于设计图未覆盖需求表定义的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_02": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文件传输通道与传输控制接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中存在「传输控制与文件传输通道」的双向箭头（含用户信息、传输属性、数据正文、正文长度、文件信息），但表格第6项「文件传输通道与传输控制接口」仅有发送方和接收方，缺少接口内容（字段为空），且图中该接口",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在连接「文件传输通道」与「传输控制模块」的数据节点（含“文件信息”），实际已表示该接口，自动比对引擎因未识别非标准命名或数据节点映射而误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_01": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「控制报文传输通道与传输控制接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中仅存在从传输控制模块到控制报文传输通道的单向箭头，而表格第5项要求的是控制报文传输通道到传输控制模块的反向接口，图中无此反向连线，属于设计图遗漏已定义的接口需求",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在连接「控制报文传输通道」与「传输控制模块」的数据节点（内容含控制报文数据），实际已表示该接口交互，仅因图表粒度（双向合并或数据聚合）与表格项（单向细分）不一致导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_028_00": {
+  "pair": "3_028",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据传输通道与传输控制接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口设计图采用核心架构视角，仅绘制了传输控制模块作为中心节点向外的单向数据流（出向接口），未绘制外部模块向传输控制模块的返回/响应流（入向接口）；表格作为完整registry记录了双向接口，而图的粒度",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "3_029_05": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「本系统」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格中的「本系统」是接口需求的发送方/接收方标识，表示流媒体传输服务软件本身；而接口设计图采用组件框图视角，中心节点「流媒体传输服务」即代表本系统，连线箭头已隐含本系统作为收发方的角色，这是GJB文档",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格中的“本系统”即指代“流媒体传输服务软件”，图中存在节点“流媒体传输服务”，二者实质对应，属于名称表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_00": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「监控接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格中「监控接口」发送方为流媒体数据传输模块、接收方为流媒体数据监控模块、内容为「用户信息、传输质量属性」，与图中「流媒体数据传输」→「流媒体数据监控」的连线及其标注「流媒体传输质量信息」完全对应，仅",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了模块间的交互需求，且图中已存在对应的收发节点(流媒体数据传输、流媒体数据监控)，按GJB 438C一致性要求，接口设计图应绘制连线以覆盖该需求，未绘制属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_01": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体参数配置接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「流媒体参数配置」节点与「流媒体数据传输」节点之间的双向连线，标注为「成员参数、媒体参数」，与表格第3项「流媒体参数配置接口」的发送方「流媒体参数配置」、接收方「流媒体数据传输」、内容「成员参",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了流媒体参数配置与流媒体数据传输模块间的接口需求，且图中已包含这两个节点，依据GJB 438C一致性要求，接口设计图应画出对应连线，缺失该连线属于设计遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_03": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「客户端接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中存在'客户端'节点与'流媒体数据传输'的双向连线，但节点名称为'客户端'而非'流媒体客户端模块'；更关键的是，图作为接口设计图仅展示核心组件间接口，而表格是完整接口registry，'客户端'在图",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与外部模块“流媒体客户端模块”的接口，但接口设计图节点列表中缺失该模块，导致接口连线无法绘制，违反需求与设计一致性原则。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_02": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「传输控制接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在'流媒体传输控制'节点与'流媒体数据传输'节点之间的双向连线，标注为'用户信息、传输属性'，与表格第4项'传输控制接口'的发送方(流媒体数据传输模块)、接收方(流媒体传输控制模块)完全对应；虽",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中已存在明确的发送方节点(流媒体数据传输)和接收方节点(流媒体传输控制)，推断连线存在，比对引擎因接口名称文本差异(如'传输控制'与'传输控制接口')导致匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_030_04": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体会话控制模块」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「流媒体会话控制」节点，与表格项「流媒体会话控制模块」为同一组件的不同命名习惯（模块/组件后缀差异），且图中有明确连线标注「会话状态」对应该接口内容，自动匹配因文字后缀差异导致漏识别。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'流媒体会话控制'，与表格项'流媒体会话控制模块'仅差'模块'二字，属于同一实体的不同表述，图中实际有对应元素。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "3_029_04": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体传输服务软件与服务集成框架软件之间接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中明确存在'服务集成框架'节点和'流媒体传输服务'节点，且两者之间有双向箭头连线标注'服务状态信息'和'服务控制信息'，与表格第4项完全对应，但审查分歧声称'无匹配'，属于比对引擎未能正确识别图中已",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已列出[actor]服务集成框架节点，说明设计意图包含该外部实体，但未画出其与系统的交互连线，属于接口设计图不完整的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "3_029_03": {
+  "pair": "3_029",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体传输服务软件与运行支撑服务之间接口」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图中明确存在「运行支撑服务」节点和「日志信息」连线，但表格项「流媒体传输服务软件与运行支撑服务之间接口」却被判定为无匹配，属于比对引擎未能识别图中实际存在的对应关系",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "4_001_00": {
+  "pair": "4_001",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「组件配置填写」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图展示的是组件开发-上传-发布的核心业务流程，表格中的「组件配置填写」属于组件开发过程中的一个配置编辑功能（对应节点「配置项填写」），但两者粒度不同：表格项是独立的能力需求条目，而图中「配置项填写",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「配置项填写」与表格项「组件配置填写」语义一致，属于同一业务过程的不同简称，引擎未能识别文字差异。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_07": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "COMPONENT_MISSING",
+  "evidence": "接口表receiver「流媒体客户端模块」在图中无组件节点",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "接口需求表是完整registry需列出全部接口收发方，而接口设计图仅展示核心组件间的接口连线关系；图中'客户端'作为外部交互节点存在但标注为'客户端'而非'流媒体客户端模块'，属于粒度/命名视角差异，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格定义了与“流媒体客户端模块”的接口，但设计图中缺失该节点，导致接口连线无法绘制，不符合设计图应完整覆盖需求表的原则。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "3_030_05": {
+  "pair": "3_030",
+  "scene": "sc3_interface_interface",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「流媒体客户端模块」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中'客户端'节点与表格'流媒体客户端模块'是同一概念的不同表述层级，且接口设计图采用抽象化表示（将'客户端'作为外部角色而非内部模块）符合GJB文档惯例——表格是完整接口registry需列全收发方",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确定义了与'流媒体客户端模块'的接口交互，但图中节点列表仅包含传输、监控、会话控制、参数配置、传输控制五个模块，缺失了'流媒体客户端模块'这一关键节点，导致接口设计图无法完整覆盖需求表定义的拓扑",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_002_00": {
+  "pair": "4_002",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「生命周期管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为用户登录后的界面集成流程图，聚焦组件加载与渲染的具体执行过程；而生命周期管理是组件运行期间的持续性管理功能，属于另一维度的支撑能力，不在该流程图的时间轴和视角范围内，符合GJB文档中表格全量注册",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出5项能力需求，图中节点明确匹配了前4项（用户登录、配置信息解析、组件集成、路由集成），唯独缺失第5项“生命周期管理”，且该能力属于组件框架核心逻辑，理应在流程图中体现，属于文档一致性缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_001_01": {
+  "pair": "4_001",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「组件下载管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'公共组件上传与打包发布'的具体流程图，仅覆盖组件上传、校验、管理及发布环节；而表格项'组件下载管理'属于独立的资源获取功能（从公共组件库下载安装到本地），与图中'上传-发布'流程方向相反、属于",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已包含表格序号1、3、5对应的节点（开发工程生成、公共组件管理、组件打包发布），且包含表格中未列出的'公共组件上传'节点，说明图旨在表达完整的业务流程；在此语境下，遗漏序号4'组件下载管理'这一功",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_008_00": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「关闭服务工程」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为服务开发流程图，展示的是从启动工具到生成服务运行程序的完整开发流程（创建工程→定义接口→生成代码→实现功能→生成程序），属于正向构建流程；而关闭服务工程属于工程管理类操作（文件/资源管理），与开",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格为全量能力清单，图仅描述“创建/开发”业务流程，“关闭工程”属于独立的管理操作，不在此流程范围内，符合GJB文档图文分工惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_01": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务插件生成」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图展示的是'服务开发'能力的实现流程（从启动工具→创建工程→定义接口→生成代码→实现功能→生成运行程序），属于单一能力的端到端开发流程；而表格是能力需求全集registry，包含工程管理类操作（",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档背景明确表格为能力全集而图为特定能力实现流程，两者粒度与视角不同；图中节点'创建服务工程和服务插件工程'已隐含包含该能力，属于合理的模型概括差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_02": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务插件编译」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图展示的是服务开发的完整生命周期流程（从启动工具到生成运行程序），属于高层业务主流程；而表格中的「服务插件编译」「服务工程编译」「打开/关闭服务工程」等属于开发过程中的独立操作命令或辅助功能，并非",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出「服务插件编译」为独立能力需求，而流程图描述服务开发全过程，却缺失明确的「编译」环节节点，导致需求与设计流程不一致，属于文档内容遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_002_02": {
+  "pair": "4_002",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务请求」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格中「生命周期管理」是独立的能力需求项，而图是「界面集成」能力的实现流程图，聚焦登录、配置解析、组件/路由集成及渲染的特定流程；生命周期管理属于组件运行时的支撑机制，并非该流程图必须展示的核心步骤，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格提供的5行内容中均无“服务请求”项，分歧指向了不存在的表格项，属于比对引擎识别错误或误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_002_01": {
+  "pair": "4_002",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据状态管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是「用户登录」单一能力的实现流程图，表格是全部能力需求的完整registry；「生命周期管理」属于另一独立能力，不在该流程图表示范围内，符合GJB文档惯例中表格求全、图取核心的粒度差异",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "4_008_03": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务工程编译」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为服务开发的实现流程图，展示的是从启动工具到生成运行程序的主干开发流程；表格中的「服务工程编译」属于独立的工程管理操作（类似IDE中的编译按钮功能），并非该特定能力实现流程的必要步骤，图的粒度聚焦",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "根据说明，图仅描述'某一能力'的实现流程，而表格列出'全部能力'；'服务工程编译'是独立于'创建服务工程'的另一项能力，故不应出现在描述创建流程的图中。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_04": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务程序运行」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为服务开发流程图，聚焦服务工程创建、接口定义、代码生成到服务运行程序生成的开发阶段流程；而表格项「服务程序运行」属于开发完成后的运行/运维阶段能力，与图中开发阶段视角不同，且图中「生成服务运行程序",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图描述的是服务工程的生成与编译流程（对应表格第1-6行），而表格项“服务程序运行”属于编译后的独立执行动作，不在“生成/编译”的实现流程范围内，属于粒度与视角的合理差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_05": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务程序调试」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图展示的是服务开发工具中某一具体能力（服务工程创建到运行程序生成的开发流程）的实现步骤，而非全部能力的总览；表格中的「服务程序调试」属于独立的开发支持能力，与图中聚焦的代码生成-编译-运行主流程",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档背景明确指出'图是某一能力的实现流程图'而非全能力视图，图中节点仅描述创建/生成类流程，不包含独立的'服务程序调试'能力，属于正常的范围裁剪。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_06": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务交叉编译」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为服务开发流程图，展示的是从启动工具到生成运行程序的完整开发流水线；而表格中的「服务交叉编译」属于独立的编译类操作，与图中已有的「服务工程编译」「服务插件编译」是同类操作，且图中并未声称覆盖全部能",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图描述了从创建工程到生成运行程序的开发全流程，却遗漏了表格中明确列出的关键“编译/交叉编译”环节，导致流程逻辑缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_008_07": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务响应发送类接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图是'服务开发'能力的实现流程，展示从启动工具到生成运行程序的开发全过程；而表格项'调用服务响应发送类接口'属于服务运行时的调用行为，不在开发流程范畴内，图无需表示该项。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图节点描述的是“创建工程、定义接口、生成代码”等开发态构建流程，而表格项“调用服务响应发送类接口”属于运行态的具体业务逻辑或底层API调用，开发构建流程图通常不包含运行时的具体接口调用细节，属于合理的",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_10": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务响应接收类接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为服务工程开发流程图，展示从启动工具到生成运行程序的开发主流程；表格项「调用服务响应接收类接口」属于运行时服务调用行为，非开发阶段活动，与图的开发流程视角和粒度不同，无需在该图中表示。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图仅描述“创建服务工程”单一能力的实现流程，而表格项“调用服务响应接收类接口”属于服务运行或功能实现层面的需求（对应表格中其他条目如运行或调试），不属于创建流程范畴，按GJB文档惯例无需在该图中表示。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_08": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务请求处理类接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图展示的是'服务开发'能力的实现流程（从启动工具到生成运行程序），而表格项'调用服务请求处理类接口'属于服务运行期的调用行为，不在开发流程范围内，图无需表示该项",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图描述的是“服务开发/构建”的高层业务流程（创建、定义、生成），而表格项“调用服务请求处理类接口”属于底层代码实现细节或运行时动作，粒度与视角不同，按GJB惯例高层流程图无需覆盖此类底层实现项。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_008_11": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「调用服务请求发送类接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'服务开发流程'实现流程图，聚焦服务工程创建、接口定义、代码生成到运行程序生成的开发阶段核心流程；表格项'调用服务请求发送类接口'属于运行时服务调用/消费侧能力，与图中开发时服务提供侧流程视角不",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档说明指出图仅为“某一能力”的实现流程（根据节点判断为“创建/生成”流程），而表格项“调用服务请求发送类接口”属于运行时或不同能力范畴，不应出现在该特定能力的流程图中。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_010_00": {
+  "pair": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务启停控制」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务启停控制」对应图中「接收操作指令→服务启动/服务停止→修改服务状态」完整分支，该分支明确包含服务的启动与停止控制功能，只是自动匹配未识别「服务启停控制」与「服务启动+服务停止」节点的语义对",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务启停控制」对应图中的节点「服务启动」和「服务停止」，图中存在对应元素，仅因文字表述为缩写形式（启停 vs 启动/停止）导致自动匹配未识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_008_09": {
+  "pair": "4_008",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务定时器接口」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图展示的是'服务开发-编译-运行'的完整开发流程（从启动工具→创建工程→定义接口→生成代码→实现功能→生成运行程序），属于特定能力（如4.1.1功能）的实现流程；而表格是能力需求全景清单（含创建",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格列出具体功能特性(如定时器接口)，图示描述通用实现流程(如定义接口、实现接口)，两者粒度不同，图中的通用步骤覆盖了表格中的具体特性项，符合文档惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_010_02": {
+  "pair": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务占用资源采集」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中「采集资源占用信息」节点即为「服务占用资源采集」的对应，文字表述差异（表格用动宾结构「服务占用资源采集」，图用「采集资源占用信息」且OCR分行）导致自动匹配失败，但语义完全对应且同属「采集服务信息",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「采集资源占用信息」与表格项「服务占用资源采集」语义完全对应，仅表述方式（动宾语序）不同导致自动匹配未识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_010_01": {
+  "pair": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务异常重启」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "流程图标题为'服务运行控制流程图'，且图中已明确包含了服务启动、停止、启动方式、启动优先级、启动依赖、状态采集、资源采集等表格所列能力，说明该图意图覆盖全部能力需求；但表格项'服务异常重启'（序号5，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已详细展示了启动、停止、优先级、依赖及采集等对应表格其他项的节点，唯独缺失了表格中明确列出的'服务异常重启'能力节点，属于流程图覆盖不全的文档缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "4_010_03": {
+  "pair": "4_010",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「节点信息采集」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格项「节点信息采集」在图中无对应节点，但图中存在「采集节点负载信息」节点；审查发现表格项名称与图节点存在文字差异，但「节点信息采集」与「采集节点负载信息」实质应为同一内容，属于文字表述差异导致的匹配",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「采集节点负载信息」，与表格项「节点信息采集」语义高度相关，属于同一功能实体的不同命名或粒度表述，自动比对引擎未能识别该对应关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_012_00": {
+  "pair": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「基于轮询的负载均衡」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示服务发现与故障处理的顶层流程框架，'执行负载均衡策略'作为聚合节点涵盖多种具体策略（轮询、优先级、主机负载），表格则是完整的能力清单注册表，这种'图粗表细'的粒度差异符合GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图中节点“执行负载均衡策略”是对表格中具体策略（轮询、优先级、主机负载）的概括性描述，属于合理的抽象层级差异，符合GJB文档惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_011_01": {
+  "pair": "4_011",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「节点信息汇总」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中右侧分支「汇总服务信息→注册信息/运行状态/占用资源/节点负载→信息汇总/更新」已覆盖服务信息汇总能力，「节点负载」即节点信息汇总的具体实现，表格项「节点信息汇总」可能是「节点负载」的表述差异或粒",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "提供的表格内容中不存在名为「节点信息汇总」的需求项，审查工具报告了不存在的表格项缺失，属于引擎识别或匹配逻辑错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_012_01": {
+  "pair": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「基于优先级的负载均衡」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示服务发现与故障处理的核心流程框架，'执行负载均衡策略'作为概括性节点涵盖多种具体策略（轮询、优先级、主机负载），表格列出的三种负载均衡策略是同一能力维度的细化展开，属于粒度差异而非遗漏，符",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格列出的是具体算法策略(如基于优先级), 而图中节点'执行负载均衡策略'是对此类具体策略的抽象概括, 粒度差异符合流程图建模惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_013_00": {
+  "pair": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务访问路由」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务访问路由」(支持将服务请求发送到具体的服务实例)对应图中「转发服务请求」节点，二者描述的是同一能力——将请求路由/转发到服务实例，只是文字表述不同导致自动匹配未识别",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务访问路由」的需求描述为“将服务请求发送到具体的服务实例”，与图中的节点「转发服务请求」语义完全对应，属于同义表达但用词不同导致自动比对引擎未识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_012_03": {
+  "pair": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务故障迁移」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图标题/上下文声称是服务发现能力的实现流程，但表格项「服务故障迁移」描述的是故障场景下的请求自动调度到正常服务，图中仅有「故障发现」和「故障服务信息删除」节点，完全没有体现「自动调度到运行正常的服务」",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已包含故障处理相关节点（故障发现、故障服务信息删除），说明流程覆盖了故障场景，但缺失了表格第5项要求的核心功能动作“故障迁移”，属于流程逻辑缺失。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "4_013_01": {
+  "pair": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务响应转发」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务响应转发」对应图中节点「转发服务响应」，二者语义完全一致，仅文字表述存在细微差异（'服务响应转发' vs '转发服务响应'），属于自动匹配引擎未能识别的同义不同序表述，图中实际存在对应元素",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“转发服务响应”，与表格项“服务响应转发”语义完全一致，仅表述语序不同导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_011_00": {
+  "pair": "4_011",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务注册信息汇总」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示查询类用例的实现流程（接收查询指令→分支查询→返回结果），而汇总类用例（服务注册信息汇总、服务运行状态汇总、服务占用资源汇总）属于后台周期性或事件驱动的信息聚合流程，与查询流程在业务逻辑上",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「汇总服务信息」功能上覆盖了表格项「服务注册信息汇总」的需求，属于图中存在对应元素但因粒度或命名差异导致自动匹配失败的情况。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_012_02": {
+  "pair": "4_012",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「基于主机负载的负载均衡」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中「执行负载均衡策略」是负载均衡策略的抽象概括节点，表格中三种具体负载均衡策略（轮询、优先级、主机负载）属于同一抽象级别的不同实现方式，流程图采用抽象表示符合GJB文档惯例，无需逐一画出所有策略变体",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "粒度差异：表格列出的是具体的负载均衡策略（叶子节点需求），而流程图中的‘执行负载均衡策略’节点是对这些策略的封装和概括，流程图无需展开绘制具体的算法分支。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_013_02": {
+  "pair": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务访问信息记录」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为能力实现流程图，仅展示核心业务流程（服务请求路由与消息推送两条主线），而「服务访问信息记录」属于横切关注点/支撑性功能（日志记录），在流程图中通常作为独立机制或注解存在，非核心流程节点；GJB文",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中显式包含了转发、推送等同粒度的功能节点，却遗漏了表格中明确列出的'信息记录'功能节点，属于流程图内容不完整。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_018_00": {
+  "pair": "4_018",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务程序开发」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「服务程序开发」与图中节点「服务开发」实质为同一能力，仅存在「程序」二字省略的文字表述差异，属于自动匹配未识别的同义表述，图中实际存在对应元素。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "表格项“服务程序开发”与图节点“服务开发”语义一致，仅存在“程序”二字的缩略差异，属于自动比对算法未识别同义词/缩略语导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_013_03": {
+  "pair": "4_013",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务访问信息维护」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为某一能力（消息推送/服务路由）的实现流程图，并非声称覆盖全部能力的总体框架图；表格是完整的能力需求registry，而图仅展示核心交互流程，'服务访问信息维护'属于支撑性/管理性能力（会话信息维",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图为高层交互流程图，侧重于消息的流转节点（接收、转发、推送），而“服务访问信息维护”属于内部数据处理或状态维持逻辑，按GJB文档惯例通常不作为流程节点显式绘制，属于粒度与视角差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_020_01": {
+  "pair": "4_020",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「任务数据开通」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为「任务数据包制作」能力的实现流程图，仅覆盖制作相关活动（创建、编辑、打包），而「任务数据开通」是独立的能力需求，属于另一流程（运维/部署阶段），图无需覆盖全部表格项；表格是完整能力registr",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「任务数据包开通」，与表格项「任务数据开通」语义完全对应，仅存在「包」字的有无差异，属于自动比对引擎未能识别同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_019_00": {
+  "pair": "4_019",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文件目录管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是'软件包工程管理'这一能力的实现流程图，仅展示核心流程节点；表格是完整能力需求registry，'文件目录管理'属于另一独立能力项，按GJB文档惯例流程图无需覆盖全部表格项，粒度/视角不同导致。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「软件包内文件管理」与表格项「文件目录管理」语义一致（均涉及包内文件/目录的编辑管理），属于命名差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_022_00": {
+  "pair": "4_022",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「坐位分配」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为某一能力的实现流程图（用户管理相关流程），并非声称覆盖全部能力需求的总体流程图；表格是完整的能力需求registry，而图仅展示部分相关能力的实现流程，'席位分配'在图中有对应节点'席位分配'，",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“席位分配”，与表格项“坐位分配”语义一致，属于同义词（“坐位”即“席位”）导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_014_00": {
+  "pair": "4_014",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「静态资源请求处理」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「静态资源请求处理」在图中存在明确对应节点「接收静态资源请求」，二者语义完全一致，仅文字表述有细微差异（\"处理\"vs\"请求\"），属于自动匹配引擎未能识别同一内容导致的误报。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项为能力需求(粗粒度),图中节点为实现步骤(细粒度),按GJB惯例流程图无需将能力名称本身作为节点,只需展示其内部流程,属于粒度差异",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_020_00": {
+  "pair": "4_020",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「任务数据包管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图是「任务数据包制作」能力的实现流程图，仅展示制作与开通的技术流程；表格项「任务数据包管理」是独立能力（新建/编辑/删除/导入/导出的可视化管理），属于不同能力维度，无需在此制作流程图中体现，符合G",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项‘任务数据包管理’为高层能力需求，图中节点（如创建、维护）为其下属的具体流程步骤，属于GJB文档中常见的‘能力需求表’与‘实现流程图’粒度不一致的合理差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_022_01": {
+  "pair": "4_022",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户数据备份还原」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图中已有「用户登录验证，数据备份还原」节点，表格中无「用户数据备份还原」独立项；被审查项「用户数据备份还原」并非表格中正式列出的能力需求项（表格最后一行截断为「用户功能菜单维护」），且图作为单一能力的",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'用户登录验证，数据备份还原'明确包含了'数据备份还原'内容，与表格项'用户数据备份还原'核心语义一致，属于自动匹配算法未能识别包含关系的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_025_02": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据状态监控」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是能力需求表（完整registry列出全部用例），而图是单一能力（计算机状态监控）的实现流程图，图中已包含数据状态监控启动/搜集节点作为并发采集分支之一，但表格项「数据状态监控」作为独立用例（PZ",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“数据状态监控启动”和“数据状态搜集”，与表格项“数据状态监控”存在明确的对应关系，仅因节点名称包含“启动/搜集”等后缀导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_025_01": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「计算机状态监控」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「计算机状态监控启动」和「计算机状态数据搜集」节点，与表格项「计算机状态监控」完全对应，只是自动匹配未识别出文字表述的对应关系",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'计算机状态监控启动'、'计算机状态数据搜集'明显对应表格项'计算机状态监控'，属于名称包含匹配但未识别出的情况。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_025_03": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务状态监控」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图明确是'某一能力的实现流程图'而非全部能力总图，仅展示系统运行状态监控整体流程中的5个监控启动分支之一组示例，表格为完整能力registry，视角和粒度不同符合GJB文档惯例",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中明确包含节点“服务状态监控启动”和“服务状态数据搜集”，与表格项“服务状态监控”语义完全一致，符合该图对其他同类能力（如计算机状态监控）的命名惯例，属于自动比对算法未能识别同义词或后缀差异导致的误",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_025_05": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「设备状态监控」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格包含「设备状态监控」作为独立能力需求项，但流程图声称展示该能力实现流程时，仅包含计算机状态、服务状态、数据状态、基础软件状态四个监控启动节点，明显缺少「设备状态监控」对应的启动和数据搜集节点；同时",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「设备状态监控启动」，与表格项「设备状态监控」对应，仅因节点名称包含“启动”后缀导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_026_00": {
+  "pair": "4_026",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「故障库维护管理」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是「服务故障预警」单一能力的实现流程图（环境运行保障启动→服务状态监控数据分析→代码分析→错误代码定位→结果显示），而表格是全部能力需求的完整列表；图并未声称覆盖全部能力，仅展示「服务故障预警」的代",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档背景说明图是“某一能力”的实现流程，图中节点（代码分析、错误定位）与表格第2行“服务故障预警”内容吻合，说明图仅描述单一特定能力，表格中其他能力项（如故障库维护）无需在该图中体现。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_026_02": {
+  "pair": "4_026",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「开机基础环境检测」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "图是'服务故障预警'能力的实现流程图（节点包含'代码分析''错误代码定位''结果显示'等代码跟踪相关步骤），而表格项'开机基础环境检测'是另一独立能力（环境自检、资源检测），两者属于不同能力项；图并非",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档背景明确指出图仅为'某一能力的实现流程图'，而表格列出'全部能力需求'，因此图不需要覆盖表格中的所有项，属于正常的粒度差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_025_04": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件状态监控」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格明确列出5项能力需求（重要信息提示、计算机状态监控、数据状态监控、服务状态监控、软件状态监控），但流程图仅展示了5个启动节点：计算机状态、设备状态、服务状态、数据状态、基础软件状态监控启动；其中「",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中明确列出了'计算机'、'设备'、'服务'、'数据'、'基础软件'五种监控对象，但缺少表格项要求的'软件状态监控'（通常指应用软件，区别于'基础软件'），属于需求覆盖不全的设计缺陷。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "4_027_00": {
+  "pair": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图仅展示'基础信息设置'这一通用处理流程（启动→调用接口→设置→判断成功/失败→反馈结果），属于能力实现的共性框架；而表格中'用户基础信息查询设置'等四项是具体的基础信息类型，图无需逐一画出每种",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图描述的是通用的‘基础信息设置’流程，适用于表格中列出的用户、系统、任务、网卡等多种具体能力，属于合理的粒度差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_025_00": {
+  "pair": "4_025",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「重要信息提示」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是能力需求表（完整registry），而图仅是「系统运行状态监控」这一具体能力的实现流程图；「重要信息提示」是独立的能力需求（Use case），其功能是将各类监控数据汇总提示给用户，属于前端展示",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "4_026_01": {
+  "pair": "4_026",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「服务故障预警」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为单一能力实现流程图，仅展示'环境运行保障'这一能力的内部处理流程（环境运行保障启动→服务状态监控数据分析→代码分析→错误代码定位→结果显示），与表格项'服务故障预警'属于不同能力，图无需覆盖全部",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'代码分析'、'错误代码定位'、'结果显示'明显对应表格项'服务故障预警'的描述内容(代码跟踪、显示结果)，属于图已表达但因粒度/词汇差异导致引擎未匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_027_03": {
+  "pair": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「网卡基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'基础信息设置'单一能力的流程图，仅展示设置操作的通用流程（启动→调用接口→设置→判断成功/失败→反馈），属于某一具体能力的实现粒度；而表格中4项（用户/系统/任务/网卡基础信息查询设置）是并列",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格列出具体功能项（枚举），图描述通用处理流程（抽象），图中‘基础信息设置’节点已逻辑覆盖‘网卡’项，粒度差异符合GJB文档惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_027_01": {
+  "pair": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「系统基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图是「基础信息设置」这一通用能力的通用设置流程图（涵盖启动→调用接口→设置→判断成功→反馈结果），并非针对4个具体查询设置能力的逐一展开；表格是完整能力registry，图是其中某一能力（或共性",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「基础信息设置」即对应表格项「系统基础信息查询设置」，仅因节点命名省略了「系统」二字导致自动匹配失败，实质内容已覆盖。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_028_02": {
+  "pair": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「任务基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'基础信息查询'通用流程图，仅展示查询成功/失败的通用处理流程框架；表格中4项能力（用户/系统/任务/网卡基础信息查询）均属于同一类基础信息查询能力，共享相同的查询流程模式，图无需逐一重复绘制各",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图示为通用基础信息查询流程，采用抽象建模覆盖表格中多项具体能力（用户/系统/任务/网卡），符合GJB文档“一图多用”的惯例，无需逐一列举具体项。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_027_02": {
+  "pair": "4_027",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「任务基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图是'基础信息设置'单一能力的具体实现流程图，仅展示设置操作的通用流程（启动→调用接口→设置→判断成功→反馈结果），而表格中的四项（用户/系统/任务/网卡基础信息查询设置）是并列的不同能力类别，图只",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'基础信息设置'为通用流程节点，逻辑上覆盖了表格中的具体需求项'任务基础信息查询设置'，自动比对引擎未能识别这种泛化-特化的语义包含关系。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_029_00": {
+  "pair": "4_029",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「界面集成框架参数配置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为参数配置管理的实现流程图，聚焦于参数配置接口调用、界面集成接口调用及参数设置三条技术实现路径；表格项「界面集成框架参数配置」描述的是可配置参数的范围/内容（分屏、字体等），属于能力需求的功能范围",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“用户设置界面集成框架参数”，其语义直接对应表格项“界面集成框架参数配置”，仅因表述方式（名词vs动宾短语）不同导致比对引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_028_03": {
+  "pair": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「网卡基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示\"基础信息查询\"的通用流程框架（启动→调用接口→查询→判断成功/失败→反馈结果），属于某一能力的抽象实现流程，并非要求覆盖表格中全部4项具体能力；表格是完整的能力需求清单(registry",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图示为“基础信息查询”的通用流程，逻辑上覆盖了“网卡基础信息查询设置”这一具体能力，GJB文档惯例允许通用流程图不显式列出每个具体需求项。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_028_01": {
+  "pair": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「系统基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'基础信息查询'通用流程图，仅展示查询启动-接口调用-查询判断-结果反馈的通用技术框架，未区分用户/系统/任务/网卡四类具体基础信息；表格是完整能力清单(registry)，而图是某一能力的抽象",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "图示为基础信息服务的通用调用流程（启动-调用-查询-反馈），适用于表格中列出的所有具体能力（用户、系统、任务、网卡），表格项的具体名称在通用流程图中无对应节点属于合理的粒度差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_030_00": {
+  "pair": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件日志采集」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为某一能力（软件日志查询和管理）的实现流程图，而非全部能力的总览图；表格是完整的能力需求registry，图仅展示其中一项能力的具体流程，两者粒度与视角不同，符合GJB文档惯例，无需一一对应。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「调用软件日志采集记录接口」明确对应表格项「软件日志采集」，属于文本表述差异导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_029_02": {
+  "pair": "4_029",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「参数配置接口」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「调用参数配置接口」和「参数配置（增删改查）」两个节点，对应表格项「参数配置接口」需求的写入、查询、删除、修改功能，只是OCR将节点拆分为两个且文字表述与表格项名称不完全一致，属于自动匹配未识",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“调用参数配置接口”和“参数配置（增删改查）”，其名称与内容完全覆盖表格项“参数配置接口”的描述，属于比对引擎未能识别文本包含关系导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_029_01": {
+  "pair": "4_029",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「应用界面集成」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「调用配置界面集成接口」和「参数配置将界面集成到界面集成框架」两个节点，对应表格项「应用界面集成」的「提供参数配置界面二次开发接口」和「配置界面能够集成到界面集成框架的参数设置界面」的核心内容",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“调用配置界面集成接口”和“参数配置将界面集成到界面集成框架”明确对应表格项“应用界面集成”的描述内容（即集成配置界面到框架），属于文字表述差异（能力名称vs流程动作）导致的自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_030_01": {
+  "pair": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件日志查询」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "图标题为'软件日志查询和管理'，但图中仅包含日志采集记录流程（日志服务启动→应用软件启动→调用接口→日志记录），完全缺失'软件日志查询'这一独立能力需求的任何节点或分支；表格中'软件日志查询'是独立用",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“软件日志查询和管理”，明确包含了表格项“软件日志查询”的内容，属于比对引擎未能识别文字包含关系而产生的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_033_00": {
+  "pair": "4_033",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「比特报文校验」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「比特报文校验」与图中节点「比特数据校验」为同一能力，仅存在「报文」与「数据」的文字表述差异，属于自动匹配未识别的同义表达，图中实际有对应元素。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'比特数据校验'与表格项'比特报文校验'语义高度一致，仅存在'数据'与'报文'的用词差异，属于自动匹配算法未识别出同义词导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_028_00": {
+  "pair": "4_028",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「用户基础信息查询设置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为通用基础信息查询流程图，展示的是查询接口的共性处理流程（启动→调用→查询→判断成功/失败→反馈），而非针对具体四种基础信息（用户/系统/任务/网卡）的详细功能分解图；表格是能力需求完整清单，图是",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "parse_error",
+   "reason": "",
+   "confidence": "low"
+  },
+  "final": "uncertain"
+ },
+ "4_034_00": {
+  "pair": "4_034",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「枚举型数据名称转换成代码」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「将枚举型数据名称转换为代码」，与表格项「枚举型数据名称转换成代码」语义完全一致，仅存在「为」与「成」的微小文字差异，属于自动匹配引擎未能识别的同义表述。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“将枚举型数据名称转换为代码”，与表格项“枚举型数据名称转换成代码”语义完全一致，仅存在“为”与“成”的微小措辞差异，属于比对引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_035_00": {
+  "pair": "4_035",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「字典文件导入」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "表格明确列出「字典文件导入」为独立能力需求，但图中仅有「字典文件加载」和「字典数据更新」两个节点，且从流程图结构看，「字典文件加载」位于右侧分支末端，与「字典文件导出」并列，而「字典数据更新」作为独立",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点[state] 字典文件加载和[state] 字典数据更新组合起来对应表格项「字典文件导入」的功能实现，属于语义匹配但字面不同导致的漏报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_037_01": {
+  "pair": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步任务停止」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'同步任务'后台调度执行流程图，聚焦任务创建后的生命周期管理（启动、停止、删除、扫描、执行同步）；而'同步任务停止'是用户前端操作功能，在图中已通过'停止任务'节点体现其后台处理逻辑，但表格中'",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“停止任务”与表格项“同步任务停止”语义完全对应，仅因文字表述差异（省略了“同步”二字）导致自动比对引擎未能识别。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_037_02": {
+  "pair": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步任务启动」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「启动任务」，与表格项「同步任务启动」为同一功能的不同表述，属于文字表述差异导致的自动匹配失败，并非真实缺失",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'启动任务'与表格项'同步任务启动'语义完全对应，仅表述方式（简写/语序）存在差异，属于自动匹配算法未识别出的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_037_00": {
+  "pair": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步任务列表展示」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示同步任务的生命周期管理流程（创建、启动、停止、删除、扫描执行），而「同步任务列表展示」和「同步任务详情展示」属于信息查询/展示类功能，与流程图所聚焦的任务调度执行核心流程视角不同，按GJB",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格列出全部能力(含UI展示功能), 而图描述的是后台处理逻辑和任务生命周期(含扫描、执行等节点), '列表展示'属于UI层查询功能, 不属于后台处理流程, 粒度与视角差异合理",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_030_03": {
+  "pair": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「日志清理」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "流程图声称覆盖'软件日志采集、查询和管理'能力，但表格中'日志清理'属于日志管理范畴，图中仅有'软件日志查询和管理'一个合并节点却未体现'日志清理'的具体流程，且图名/图注未说明仅展示部分能力，按GJ",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“软件日志查询和管理”已包含“管理”范畴，通常涵盖日志的删除与清理功能，属于语义上的对应关系，因文字表述差异导致自动比对引擎未能匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_030_02": {
+  "pair": "4_030",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「日志删除」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为软件日志采集记录接口的实现流程图，仅展示日志服务启动→应用软件启动→调用接口→日志记录→日志查询和管理的单一流程；表格是能力需求全量清单，图是某一具体能力的实现流程，粒度不同，图中无需表示日志删",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点“软件日志查询和管理”中的“管理”部分语义覆盖了表格项“日志删除”的功能，属于自动比对引擎未能识别语义包含关系的误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_037_03": {
+  "pair": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步任务删除」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「删除任务」节点和「查找同步任务队列中的任务实例，删除数据记录，并修改任务状态」节点，与表格项「同步任务删除」对应，只是文字表述差异（表格用「同步任务删除」，图中用「删除任务」简称），属于自动",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「删除任务」，与表格项「同步任务删除」语义一致，属于同一功能动作，仅因表述差异（省略对象词“同步”）导致比对引擎未识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_039_00": {
+  "pair": "4_039",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「备达梦库同步异常」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「备达梦同步异常」节点，与表格项「备达梦库同步异常」仅存在「库」字差异，属于同一能力需求的不同文字表述，自动匹配引擎因文字差异未识别出对应关系",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点'备达梦同步异常'，与表格项'备达梦库同步异常'语义一致，仅省略'库'字，属于文本表述差异导致的匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_037_04": {
+  "pair": "4_037",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步任务详情展示」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图聚焦同步任务的生命周期管理（创建、启动、停止、删除、扫描执行），而「同步任务详情展示」属于信息查询展示类功能，与流程图的核心控制流程视角不同，按GJB文档惯例表格作为完整能力registry、图",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "流程图旨在描述业务生命周期和状态控制逻辑，通常只包含改变状态的‘动作’（如创建、启停、删除），而‘详情展示’属于查询类功能，不驱动流程流转，按GJB文档惯例无需在流程图中表示。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_038_00": {
+  "pair": "4_038",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「同步表检索」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "流程图标题/上下文明确为'同步数据表'的整体流程，且包含添加、删除、优先级配置等同步表操作，但完全缺失'同步表检索'这一基础能力；检索是同步操作的前提（图中'判断结构是否相同'隐含检索但未显式体现该能",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格列出了'同步表检索'能力，且图中已明确展示了'同步表添加'、'同步表删除'等同级能力的实现节点，依据GJB 438C一致性要求，该图遗漏了对'检索'功能的描述，属于文档内容缺失。",
+   "confidence": "high"
+  },
+  "final": "real_bug"
+ },
+ "4_040_02": {
+  "pair": "4_040",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据下载关闭」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图仅展示「数据下载」核心流程（从达梦数据库读取数据并初始化sqlite），而「数据下载关闭」是独立的终止/清理能力，属于另一Use case；图未声称覆盖全部三个能力，表格作为完整能力regist",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确列出“数据下载关闭”为独立能力需求，但流程图在展示初始化（清空/创建表）和下载（读取/插入）步骤后，直接跳转到“下车”节点，缺失了“关闭”功能的实现逻辑（如断开连接等），导致需求未在图中落实。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_040_01": {
+  "pair": "4_040",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据下载」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图展示的是「数据下载初始化」的完整流程（准备下车→读取配置→清空数据库→判断/创建表→读取数据→批量插入→下车），而「数据下载」是另一个独立的用例（配置数据获取功能），表格作为能力需求全量清单收录",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「从达梦数据库中读取数据」和「批量插入sqlite数据库」实质上对应表格项「数据下载」的功能实现，仅因节点名称为具体实现动作而非能力名称导致自动匹配失败。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_040_00": {
+  "pair": "4_040",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据下载初始化」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为「数据下载」能力的具体实现流程图，仅展示核心数据同步流程（读取配置→清空数据库→判断/创建表→读取数据→批量插入）；「数据下载初始化」和「数据下载关闭」属于独立的用例（分别对应初始化准备和关闭清",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'读取同步表配置文件'和'清空sqlite数据库'实质上构成了'数据下载初始化'的具体实现步骤，属于语义覆盖但词汇不匹配，并非图中缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_042_01": {
+  "pair": "4_042",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「音频文件生成和存储」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「音频文件的生成和存储」，与表格项「音频文件生成和存储」完全对应，仅表格项多了「和」字，属于文字表述基本一致，自动匹配引擎应能识别，此为比对引擎误报。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「音频文件的生成和存储」与表格项「音频文件生成和存储」语义完全一致，仅差一字“的”，属于自动匹配算法未识别出的文本差异。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_042_00": {
+  "pair": "4_042",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「格式化文本语音合成」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「格式化文本语音合成」与图中节点「格式化语音文本」是同一能力，仅存在「文本语音合成」vs「语音文本」的文字表述差异，属于自动匹配未识别的同义表述",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点「格式化语音文本」，其语义与表格项「格式化文本语音合成」对应，仅因文字表述差异（词序调整及缺少“合成”二字）导致自动比对引擎未识别。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_044_00": {
+  "pair": "4_044",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「语音识别」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为「识别短语定制」能力的实现流程图（节点为「识别短语管理」和「识别短语生成」），仅展示识别短语定制这一特定能力的内部子流程；表格中的「语音识别」是独立能力项，与「识别短语定制」为并列关系，无需在此",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "文档说明明确指出图仅为'某一能力的实现流程图'，图中节点对应的是表格第3项'识别短语定制'，因此图中无需包含'语音识别'这一独立能力项。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_041_00": {
+  "pair": "4_041",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「增量数据上传」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "流程图是'增量数据上传关闭'能力的实现流程，表格是完整能力registry，图只需展示该特定能力的流程，无需覆盖'增量数据上传'等其他能力",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "文档一致性缺陷：图中存在'数据上传初始化'和'数据上传成功并关闭'节点与表格项1、3对应，却缺失了表格项2'增量数据上传'的对应节点（图中仅以实现细节'插入达梦数据库'代替），破坏了需求追踪的一致性。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_045_00": {
+  "pair": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据监控」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「处理监控信息」「监控模块处理」「是否发往监控」等多个与监控相关的节点，且流程图明确包含监控信息处理分支，与表格项「数据监控」能力对应，只是节点命名采用「监控」而非「数据监控」的表述差异导致自",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在“监控模块处理”、“是否发往监控”、“处理监控信息”等节点，明显对应表格中的“数据监控”能力，属于名称表述差异导致匹配失败。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_043_00": {
+  "pair": "4_043",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「文本规范化」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图仅展示「语音录入」能力的实现流程（从点击录入到本地化存储），属于单一能力的详细流程图；而「文本规范化」是另一独立能力（序号2），其流程应由另一张图或不同视角表示，图无需覆盖表格全部能力。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已包含表格序号1(语音录入)和序号3(离线语音识别)的对应节点，说明图与表粒度一致且旨在覆盖流程，唯独遗漏序号2(文本规范化)，属于流程设计缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_043_01": {
+  "pair": "4_043",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「离线语音识别」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图是「语音录入」能力的实现流程图，仅展示语音录入、离线处理和本地化存储的交互过程；「离线语音识别」是独立的另一项能力（序号3），有单独的需求标识符和任务书条目，不属于本图应覆盖的范围，图的粒度与",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「对获取的语音进行离线处理」语义上明确对应表格项「离线语音识别」，仅因表述方式不同（'识别' vs '处理'）导致比对引擎未能匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_045_01": {
+  "pair": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「参数配置」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'数据传输'能力的实现流程图，聚焦数据收发处理流程；而'参数配置'是独立的管理控制能力，通常在系统初始化或管理界面中实现，不属于数据传输核心流程的组成部分，按GJB文档惯例无需在同一流程图中表示",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格为能力需求全集，图为特定能力的实现流程（如数据传输），其他能力（如参数配置）不在该流程图中体现符合GJB文档粒度差异惯例。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "4_045_02": {
+  "pair": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「通信设备状态监控」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'数据传输'能力的实现流程图，聚焦于数据收发处理流程；而'通信设备状态监控'是独立能力，属于设备管理层面的监控，与数据传输流程属不同能力维度，图中'处理接入通信设备数据'是数据层面的处理而非设备",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "图中已包含数据传输、数据监控(监控模块处理)、参数配置(读取配置)、数据存储等能力的对应节点，唯独缺失表格第5项“通信设备状态监控”的流程节点，属于流程图内容遗漏。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_045_03": {
+  "pair": "4_045",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据接入」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图是'数据传输'能力的实现流程图，而非全部能力的总览图；表格中'数据接入'并非独立列出的需求项（表格只有数据传输、数据监控、参数配置、数据存储、通信设备状态监控5项），且图中已包含'处理接入应用数据",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在'处理接入应用数据'、'处理接入统一传输数据'等节点，语义上明确对应'数据接入'能力，仅因节点命名包含具体对象（如应用、统一传输）导致自动比对引擎未能识别匹配。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_041_01": {
+  "pair": "4_041",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「增量数据上传关闭」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该流程图是'增量数据上传'功能的实现流程图，展示的是单次数据上传的完整处理过程（初始化→读取→插入→删除→关闭），而'增量数据上传关闭'是独立的管理控制功能（用于终止/关闭增量上传服务），不属于该流程",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「数据上传成功并关闭」语义上对应表格项「增量数据上传关闭」，属于同一功能动作的不同表述，自动比对引擎因文本非完全匹配而误报。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_048_01": {
+  "pair": "4_048",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「实时可靠数据传输」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "表格是全部能力需求的完整registry，而图仅是'实时数据传输'这一能力的实现流程图；表格项'实时可靠数据传输'是独立的能力需求（对应任务书4.1.3），与图中展示的'实时数据传输'（4.1.1）属",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格明确要求'实时可靠数据传输'能力，但图中仅有通用的数据发送/接收及文件处理节点，缺失实现'可靠性'（如确认、重传机制）的关键流程节点，属于设计逻辑缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_049_00": {
+  "pair": "4_049",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据UDP分段传输」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "图中存在「处理实时分段数据」节点，与表格项「数据UDP分段传输」语义完全对应，仅文字表述差异（\"处理\"vs\"数据\"、\"实时分段数据\"vs\"UDP分段传输\"），属于自动匹配未识别的同义表达，并非真实遗漏",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点「处理实时分段数据」与表格项「数据UDP分段传输」语义对应，仅因文字表述差异（'处理'vs'传输'、'实时'前缀等）导致自动匹配失败，实际存在对应关系。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ },
+ "4_048_02": {
+  "pair": "4_048",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「实时数据报文监控」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'实时数据传输'能力的实现流程图，聚焦数据收发传输过程；而'实时数据报文监控'是独立的监控能力，属于旁路/辅助功能，按GJB文档惯例无需在同一流程图中体现，表格作为完整能力registry与单能",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格为能力需求汇总表，图是特定能力的实现流程图，监控能力(第4项)作为独立或并行的观测功能，通常不出现在以数据传输为主线的流程图中，属于粒度与视角不同的合理差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "5_014_00": {
+  "pair": "5_014",
+  "scene": "sc5_function_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「预案制作开通」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「预案制作开通」与图中「系统开通」为同一功能的不同表述，属于文字差异导致的匹配失败，图中实际存在对应元素",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "real_bug",
+   "reason": "表格项「预案制作开通」涉及任务数据包管理，与图中节点「系统开通」语义不同（预案vs系统），且图中其他节点均能找到对应表格项，判定为图中漏画或命名错误。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "4_048_00": {
+  "pair": "4_048",
+  "scene": "sc4_flowchart_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「实时数据传输」在图中无匹配",
+  "kimi": {
+   "label": "benign_variation",
+   "reason": "该图为'实时数据传输控制'能力的实现流程图，而非全部能力总览图；表格是完整能力registry，图仅展示单一能力（PZXQ-GN-SSSJCSKZ）的详细流程，'实时数据传输'（PZXQ-GN-SSS",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "benign_variation",
+   "reason": "表格项「实时数据传输」为顶层能力需求，图中「数据发送」、「数据接收」等节点为其具体的实现步骤（分解），流程图展示的是实现细节而非直接同名映射，属于合理的粒度差异。",
+   "confidence": "high"
+  },
+  "final": "benign_variation"
+ },
+ "5_014_01": {
+  "pair": "5_014",
+  "scene": "sc5_function_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「软件安装管理」在图中无匹配",
+  "kimi": {
+   "label": "real_bug",
+   "reason": "功能结构图应完整覆盖子功能表所列全部功能，图中存在'软件安装'节点但表格项为'软件安装管理'，且表格列出的5个子功能（开发集成、软件产品包封装、预案制作开通、用户管理、软件安装管理）中仅4个在图中有明",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中存在节点“软件安装”，与表格项“软件安装管理”语义高度对应，属于名称表述差异（简写 vs 全称）导致的自动匹配失败，而非图中缺失。",
+   "confidence": "high"
+  },
+  "final": "uncertain"
+ },
+ "5_020_00": {
+  "pair": "5_020",
+  "scene": "sc5_function_capability",
+  "dtype": "TABLE_ITEM_MISSING",
+  "evidence": "表格项「数据抽取转换」在图中无匹配",
+  "kimi": {
+   "label": "compiler_bug",
+   "reason": "表格项「数据抽取转换」对应图中「异构数据抽取与转换」节点，文字表述差异导致自动匹配未识别（表格省略了'异构'前缀但核心语义一致），属于比对引擎误报。",
+   "confidence": "high"
+  },
+  "glm": {
+   "label": "compiler_bug",
+   "reason": "图中节点'异构数据抽取与转换'与表格项'数据抽取转换'语义对应，且名称存在包含关系，属于比对引擎未能识别相似命名导致的误报。",
+   "confidence": "high"
+  },
+  "final": "compiler_bug"
+ }
+}
