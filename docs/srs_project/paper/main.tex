@@ -1,0 +1,497 @@
+% ACDD 论文草稿 — Abstract / Introduction / Related Work 完整稿
+% 其余章节为详细大纲(含关键内容块, 待填充)
+% 编译: pdflatex main.tex (需要IEEEtran或acmart, 当前用article+近似格式)
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{leftmargin=1.2em,itemsep=0.1em,topsep=0.2em}
+
+\newtheorem{proposition}{Proposition}
+\newcommand{\qpost}{\ensuremath{q_\delta}}
+\newcommand{\pmiss}{\ensuremath{p_{\mathrm{miss}}}}
+\newcommand{\hall}{\ensuremath{p_{\mathrm{hall}}}}
+
+\title{\textbf{Decoding Perception Noise from Document Inconsistencies:\\
+Anchor-Calibrated Disagreement Decoding for\\
+Cross-Modal Consistency Checking of Requirements Specifications}}
+
+\author{Anonymous submission}
+\date{}
+
+\begin{document}
+\maketitle
+
+% ════════════════════════════════════════════════════════════════
+\begin{abstract}
+% ════════════════════════════════════════════════════════════════
+Real-world software requirements specifications (SRS) are multimodal
+documents: the same functional behavior is described concurrently in
+flowchart diagrams, use-case description tables, and prose text.
+Yet thirty years of requirements inconsistency research has remained at
+the sentence-pair level, leaving the question of whether these
+scattered views actually \emph{agree} almost entirely unexamined.
+We formalize cross-modal consistency checking as a noisy-channel
+decoding problem: an observed disagreement $D$ between an extracted
+diagram structure and a compiled table structure decomposes as
+$D = \eta \oplus \eps$, where $\eta$ is a genuine document
+inconsistency and $\eps$ is perception noise of the extraction
+channel.  The central obstacle is that these two causes are
+statistically entangled---unless one knows $\eps$.
+Our key observation is that many engineering documents carry their own
+calibration instrument: \emph{.doc files embed Visio XML sources
+that constitute a free, perfectly faithful gold standard of the
+perception layer}.  We propose \textbf{ACDD}
+(Anchor-Calibrated Disagreement Decoding), which (i)~calibrates
+element-level, type-heterogeneous error models of extraction channels
+on 188 anchored diagrams, (ii)~decodes each observed disagreement into
+a posterior probability $P(\eta{=}1 \mid D)$ with a provable
+separation condition ($\pi > p$), and (iii)~controls false discoveries
+via conformal abstention.
+On 89 diagram--table pairs from 16 real military SRS documents, ACDD
+attains AUROC 0.95 with ECE 0.023 under an anchor-masking protocol;
+fusing two heterogeneous channels (a vision-language model and OCR)
+is catastrophic without calibration (AUROC 0.58) but optimal with it
+(0.94)---calibration is not an optimization nicety but the difference
+between a working and a broken detector.
+Dual-LLM adjudication of 417 detected disagreements further reveals
+that \emph{exception-flow omission is the dominant real
+inconsistency class} (57\% of exception-flow elements are genuine
+defects, versus 8\% for steps), resurrecting---in learnable
+form---the inconsistency-tolerance agenda lost since the 1990s.
+
+\end{abstract}
+
+% ════════════════════════════════════════════════════════════════
+\section{Introduction}
+% ════════════════════════════════════════════════════════════════
+
+% ── 段1: 现象 — 真实SRS的多模态性 + 四十年的句对盲区 ──
+A requirements specification for a military information system does
+not live in sentences alone.  In the 16 GJB-format SRS documents we
+study, a single functional behavior---say, \emph{route
+integration}---appears simultaneously as an embedded flowchart
+(Figure~18 of the document), as a fourteen-step use-case description
+table (Table~14), and as prose in the section body.  Whether these
+views agree is precisely the question a requirements engineer must
+answer before the specification can serve as a contractual and
+testing basis; and in practice they frequently do not: in our corpus,
+\emph{57\% of the exception flows defined in use-case tables have no
+corresponding branch in their companion flowcharts}.
+
+The research community has, for thirty years, answered an adjacent
+but different question.  From the multi-viewpoint schools of the
+1990s~\cite{finkelstein1994inconsistency,hunter1998managing} through
+UML model
+consistency~\cite{engels2001consistent,egyed2006instant} to today's
+NLP and LLM-based
+detectors~\cite{bendik2017checking,wang2025tsrcdf,hasanain2026arareq},
+inconsistency detection has consistently operated on
+\emph{pre-aligned pairs}---two viewpoints, two models, or two
+sentences---leaving two gaps that the field has recently begun to
+acknowledge: the unit of comparison is assumed rather than computed,
+and the modality is text (or formal models) rather than the
+figure--table--prose triad that real documents actually
+contain~\cite{zhao2021nlp4re,zadenoori2025llm4re}.  No prior work, to
+our knowledge, has defined---let alone
+solved---\emph{document-level cross-modal consistency} for
+requirements artifacts.
+
+% ── 段2: 核心困难 — 感知噪声与文档不一致的统计纠缠 ──
+Solving it requires confronting an obstacle that sentence-pair
+methods never face.  To compare a diagram against a table, the
+diagram must first be \emph{read}: nodes, edges, and labels must be
+extracted from a rendered image.  When the extracted structure
+disagrees with the table, two causes are observationally identical:
+the document may be genuinely inconsistent (a defect worth
+reporting), or the extraction channel may have erred (noise worth
+suppressing).  We show that this entanglement is not a tail risk but
+the central statistical fact of the problem.  A modern
+vision-language model, prompted for structured extraction on our
+corpus, misses 19\% of table-relevant elements; an OCR channel misses
+a different 14\% but spuriously ``finds'' 69\% of elements that are
+truly absent.  \emph{Naively fusing the two channels---reporting
+disagreement whenever either channel disagrees---drives detection
+performance to AUROC 0.58, worse than ignoring the second channel
+entirely} (0.93).  The field's emerging practice of ensemble judgment
+over LLM extractors sits precisely on this cliff.
+
+% ── 段3: 关键洞察 — born-digital锚点 = 免费的感知层金标准 ──
+Our work rests on an observation about the documents themselves.
+Engineering documents written in office suites frequently embed their
+diagrams as \emph{native objects}: each flowchart in our corpus ships
+with a complete Visio XML source silently stored inside the
+\texttt{.doc} container.  Parsing this source yields the diagram's
+structure---node texts, positions, typed
+connectors---\emph{exactly}, at zero annotation cost.  Such
+born-digital sources have served as free ground truth for evaluating
+OCR and document parsers for over a
+decade~\cite{karatzas2011icdar,li2024chemscraper}.  We repurpose them
+for a new role: not to \emph{evaluate} perception channels but to
+\emph{calibrate} their error models, and thereby to \emph{decode}
+which observed disagreements are signal.  To our knowledge this
+calibration role is without precedent---and it transforms the
+problem: once the noise distribution $\eps$ is measured, each
+disagreement $D$ acquires a posterior
+$P(\eta{=}1\mid D)$ with exact probabilistic semantics.
+
+% ── 段4: 方法概述 — ACDD ──
+We formalize cross-modal consistency checking as
+\emph{anchor-calibrated disagreement decoding} (ACDD).  A two-layer
+latent model separates the \emph{perception layer} (channel output
+vs.\ diagram content; calibratable on anchors) from the
+\emph{document layer} (diagram content vs.\ table text; the detection
+target), which blocks a subtle circularity: disagreement
+\emph{between channels} examines the same image and can never be
+evidence about the document.  On anchored diagrams we estimate
+element-level, type-heterogeneous error models---miss and
+false-accept rates conditioned on element type (step, exception flow,
+actor), a distinction that proves decisive.  Decoding follows
+Proposition~\ref{prop:separation}: the maximum-a-posteriori rule
+``report disagreement as inconsistency'' is Bayes-consistent if and
+only if the inconsistency prior $\pi$ exceeds the channel error rate
+$p$; multi-element clusters achieve Chernoff-type exponential
+separation; and conformal thresholds control false discoveries at
+level $\alpha$ with distribution-free guarantees.
+
+% ── 段5: 实验结果骨架 ──
+We evaluate on 89 diagram--table pairs from 16 real military SRS
+documents under an \emph{anchor-masking protocol}: anchored pairs are
+evaluated twice---once with the anchor (a noiseless oracle
+comparison) and once with the anchor masked and replaced by noisy
+channels---so that the deployment question ``how much of the
+noiseless layer's detection power survives perception noise?'' is
+directly measurable.  ACDD recovers 87\% of the anchor layer's
+findings at 88\% precision; its posteriors are calibrated
+(ECE 0.023); and the calibration-vs-raw gap is dramatic across every
+configuration (calibrated fusion 0.94 vs.\ uncalibrated 0.58).
+Beyond method metrics, dual-LLM adjudication of all 417 detected
+disagreements (65\% inter-model agreement; disagreements routed to
+human review) yields a distributional finding the field has never
+reported: exception-flow elements are genuine defects at rate 0.57,
+actors nearly always benign (0.11), steps in between (0.08)---a
+\emph{type prior} that operationalizes, in learnable form, the
+inconsistency-tolerance agenda that the machine-learning era had
+lost~\cite{chantree2006nocuous}.
+
+% ── 段6: 贡献列表 ──
+Our contributions:
+\begin{itemize}
+\item \textbf{Task and formalization.}  We define document-level
+cross-modal consistency checking for requirements specifications and
+formalize it as noisy-channel decoding $D = \eta \oplus \eps$ with a
+two-layer latent model that decouples calibration assumptions from
+detection hypotheses (Section~\ref{sec:formulation}).
+\item \textbf{Mechanism.}  We introduce anchor calibration---the
+repurposing of embedded born-digital sources as free
+perception-layer gold standards---with type-heterogeneous error
+models, provable separation conditions, cluster signatures, and
+conformal abstention (Sections~\ref{sec:method}).
+\item \textbf{Evidence.}  On 89 pairs from 16 real military SRS
+documents we show that calibration is the difference between a
+working and a broken detector (0.94 vs.\ 0.58 AUROC), that the
+anchor-masking protocol measures deployment performance honestly, and
+that exception-flow omission dominates real
+inconsistencies (Section~\ref{sec:evaluation}).
+\item \textbf{Resource.}  We release 188 anchor-calibrated diagram
+structures, dual-LLM adjudication of 417 disagreements, and a
+deterministic mutation engine, constituting---to our
+knowledge---the first multimodal inconsistency corpus on real
+(confidential-domain) requirements documents.
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+\section{Related Work}
+\label{sec:related}
+% ════════════════════════════════════════════════════════════════
+
+We situate ACDD in four literatures; a full historical treatment
+appears in our survey~\cite{oursurvey2026}.
+
+\subsection{Inconsistency Detection in Requirements}
+Four eras, one constant.  The \emph{viewpoint era} (1990s) treated
+inconsistency as a logical and social phenomenon: labeled logics made
+inconsistency ``respectable''~\cite{gabbay1991making}, the ViewPoints
+framework legitimized distributed
+disagreement~\cite{finkelstein1992viewpoints}, and the
+inconsistency-management program established
+detection--diagnosis--tolerance--resolution as the lifecycle, insisting
+that inconsistency carries information rather than merely
+signaling defect~\cite{hunter1998managing,nuseibeh2000making}.
+The \emph{model-consistency era} (2000s) operationalized checking as
+executable rules over formal models---meta-model
+constraints~\cite{engels2001consistent}, incremental
+checking~\cite{egyed2006instant}, diagnosis of
+causes~\cite{reder2013diagnosing}---but required XMI-level
+formalization, leaving natural-language SRS out of scope.
+The \emph{learning era} (2010s) moved to text: requirement
+smells~\cite{femmer2017smells}, ambiguity
+detection~\cite{chantree2006nocuous,ezzini2022reference}, SAT-based
+checking of dependency-encoded
+requirements~\cite{bendik2017checking}, and sentence-pair conflict
+classification~\cite{guo2021fine,malik2022s3cda}, a line that
+persists in its strongest form
+today~\cite{wang2025tsrcdf}.  The \emph{LLM era} (2023--) prompts
+models directly~\cite{fantechi2023chatgpt,hasanain2026arareq}, with
+document-level evidence emerging first in the adjacent legal
+domain~\cite{legalwiz2025}.
+Across all four eras, three debts accrued: no shared benchmark, no
+principled answer to the unit of comparison, and---after an early,
+perceptive start~\cite{chantree2006nocuous}---no mechanism for
+distinguishing benign variation from genuine defect.  ACDD addresses
+the second and third directly (aggregated elements as units;
+type-prior posteriors as the benign/defect discriminator) and treats
+the first with an evaluation protocol (anchor masking plus
+anti-circular mutation splits) that requires no external labels.
+
+\subsection{Multimodal Document Understanding}
+Document AI has solved much of the \emph{perception} problem:
+layout-aware pretraining~\cite{layoutlm2020}, detection-based
+flowchart parsing that reaches 98.8\% node
+F1~\cite{flowextract2026}, and born-digital parsing that reads
+molecular diagrams from PDF
+primitives~\cite{li2024chemscraper}.  Evidence on VLM limitations is
+similarly mature: edge recovery is the systematic weak
+point~\cite{priorbias2026}.  None of this work, however, treats
+extraction error as a modeled random object; error is an engineering
+nuisance to be reduced, not a distribution to be estimated and
+decoded against.  ACDD inverts this stance: channels are replaceable
+measuring instruments, and the scientific object is the
+\emph{decomposition} of observed disagreement into perception error
+and document inconsistency.  Our calibration measurements
+additionally sharpen the VLM narrative: on born-digital rendering of
+clean engineering diagrams, a modern VLM achieves 94\% node recall
+and 98\% edge recall---the oft-cited ``VLMs cannot do topology''
+results reflect data conditions, not method ceilings.
+
+\subsection{Uncertainty-Aware Label Inference}
+Our decoder shares machinery with crowdsourcing truth
+inference~\cite{dawid1979maximum}, programmatic weak
+supervision~\cite{ratner2016data}, accuracy estimation from unlabeled
+agreement~\cite{platanios2017estimating}, measurement-error
+correction~\cite{carroll2006measurement}, and selective
+prediction~\cite{geifman2017selective}.  None of these lines handles
+our setting's three distinctive properties, which we state here as
+the delineation reviewers may ask for:
+(i)~\emph{structured, type-heterogeneous error models}---scalar
+confusion matrices become element-type- and
+difficulty-conditioned GLMMs, and the resulting heterogeneity is
+itself the mechanism that makes benign-variation tolerance learnable;
+(ii)~\emph{two-level causal separation}---annotator-agreement methods
+ask ``which label is true,'' whereas ACDD asks ``which \emph{layer}
+caused the disagreement,'' and channel-vs-channel disagreement is
+logically incapable of evidencing the document layer;
+(iii)~\emph{partial privilege with covariate shift}---the gold
+standard exists on a non-random subset of figures, requiring an
+anchor-masking protocol that weak supervision's uniform-availability
+assumption does not cover.
+
+\subsection{Born-Digital Ground Truth}
+Using pre-rendering digital sources as evaluation gold standard is an
+established practice in OCR~\cite{karatzas2011icdar,jaderberg2014synthetic}
+and document parsing~\cite{li2024chemscraper}.  Our contribution is a
+change of \emph{role}: from evaluating extractors to calibrating error
+models for downstream inference---and, complementarily, a new class
+of \emph{real} inconsistencies discovered by diffing the embedded
+source against the rendered document (provenance drift), immune to
+the ``you injected your own bugs'' objection that shadows synthetic
+evaluation.
+
+% ════════════════════════════════════════════════════════════════
+\section{Problem Formulation}
+\label{sec:formulation}
+% ════════════════════════════════════════════════════════════════
+% [完整内容已有: method_design_formal.md §0-2, 翻译为英文并压缩至1.5页]
+
+% ── 3.1 文档、实体、视图 ──
+% ── 3.2 两层潜在模型 + D = η ⊕ ε ──
+% ── 3.3 规范空间(带类型有向标记图)与元素宇宙Ω ──
+% ── 3.4 良性变异规范化N + 对齐μ + 类型化分歧Δ ──
+
+\begin{proposition}[Separation condition]
+\label{prop:separation}
+Let $\pi = P(\eta_i = 1)$ be the element-level inconsistency prior
+and $p < 1/2$ a symmetric channel error rate, with
+$D = \eta \oplus \eps$.  Then the posterior
+$P(\eta{=}1 \mid D{=}1) = \pi(1-p) / [\pi(1-p) + (1-\pi)p]$,
+and the MAP rule ``report every disagreement'' is Bayes-consistent
+\emph{if and only if} $\pi > p$.  Without knowing $p$, even the
+\emph{directional interpretation} of a disagreement is
+undetermined: for $p > 1/2$ disagreement is evidence of
+\emph{consistency}.
+\end{proposition}
+
+% Proposition 2 (Chernoff exponential separation + cause-block correction)
+% Proposition 3 (abstention dominance + conformal FDR control)
+
+% ════════════════════════════════════════════════════════════════
+\section{Method: ACDD}
+\label{sec:method}
+% ════════════════════════════════════════════════════════════════
+% [完整内容已有: method_design_formal.md §3-5]
+
+% ── 4.1 锚点提取与验证 (M0: Cell坐标解析/子Shape文本合并/Connect边重建+几何恢复)
+% ── 4.2 校准协议 (锚点三分/文档级分块/GLMM/后验预测)
+% ── 4.3 译码器 (分类型θ/CI因子化/簇签名/归属MRF)
+% ── 4.4 共形弃权 (Learn-then-Test, FDR≤α)
+% ── 4.5 算法伪代码 (ACDD-CALIBRATE离线 / ACDD-DETECT在线)
+
+% ════════════════════════════════════════════════════════════════
+\section{Evaluation}
+\label{sec:evaluation}
+% ════════════════════════════════════════════════════════════════
+
+\subsection{Setup}
+16 real GJB military SRS documents; 89 diagram--table pairs (sc2);
+188 anchor structures (2{,}092 nodes, 1{,}351 directed edges);
+channels: kimi-k2.6 (structured extraction, 89/89) and RapidOCR
+(pseudo-node matching); anchor-masking protocol with document-level
+splits; labels from dual-LLM adjudication (kimi with image + GLM with
+anchor structure; 65\% agreement; uncertain routed out).
+
+\subsection{RQ1: Does calibration matter?}
+% 主表: 校准融合0.94 vs 单通道0.93 vs 朴素投票0.93 vs 未校准OR融合0.58/0.61
+% 两种标签(代理/裁决)下排序一致 — 稳健性
+
+\subsection{RQ2: Deployment performance under anchor masking}
+% Tier2恢复86.7% Tier1发现, precision 87.8%; AUROC(q)=0.95, ECE=0.023
+% 方向元素: 唯一锚点方向矛盾被VLM恢复(q=0.965)
+
+\subsection{RQ3: What are the real inconsistencies?}
+% π=0.166; 分类型: exc 0.571 / step 0.078 / actor≈0.11
+% 134 real_bug / 116 benign / 160 uncertain (417条)
+% provenance drift + 2_001/2_008/2_041 方向矛盾案例
+
+\subsection{Threats to validity}
+% 9条脆弱点(method_design_formal.md §9): π>p可能不成立/锚点选择偏差/
+% 变异先验循环性/κ_T非零误差/渲染一致性/N不完美/对齐歧义/评测功效/聚合召回天花板
+
+% ════════════════════════════════════════════════════════════════
+\section{Discussion}
+\label{sec:discussion}
+% ── 通道画像不对称(VLM精确通道/OCR召回通道)及其对融合的启示
+% ── 类型异质性 = 可学习的不一致容忍(Chantree问题的当代回答)
+% ── born-digital锚点范式的泛化(drawio/SVG/Mermaid)
+% ── 局限: 单场景89对/方向元素稀疏/uncertain待人工
+
+\section{Conclusion}
+% 一段: 任务定义 + 方法 + 主结果 + 领域发现
+
+% ════════════════════════════════════════════════════════════════
+\begin{thebibliography}{00}
+% ════════════════════════════════════════════════════════════════
+% 核心引用(已核实, 完整列表见 literature_survey/inconsistency_history_survey.md)
+
+\bibitem{finkelstein1992viewpoints} A.~Finkelstein, J.~Kramer,
+B.~Nuseibeh, et al. Viewpoints: A framework for integrating multiple
+perspectives in requirements engineering. \emph{IJSEKE}, 2(1), 1992.
+
+\bibitem{finkelstein1994inconsistency} A.~Finkelstein, D.~Gabbay,
+A.~Hunter, J.~Kramer, B.~Nuseibeh. Inconsistency handling in
+multi-perspective specifications. \emph{IEEE TSE}, 20(8), 1994.
+
+\bibitem{gabbay1991making} D.~Gabbay, A.~Hunter. Making
+inconsistency respectable. In \emph{JELIA}, LNCS 535, 1991.
+
+\bibitem{hunter1998managing} A.~Hunter, B.~Nuseibeh. Managing
+inconsistent specifications. \emph{ACM TOSEM}, 7(4), 1998.
+
+\bibitem{nuseibeh2000making} B.~Nuseibeh, S.~Easterbrook,
+A.~Russo. Making inconsistency respectable in software development.
+\emph{IEEE Computer}, 33(4), 2000.
+
+\bibitem{engels2001consistent} G.~Engels, J.~H.~K\"uster,
+L.~Groenewegen, R.~van~der~Woude? Consistency-preserving evolution
+of UML models (consistent model engineering). \emph{ESEC/FSE}, 2001.
+
+\bibitem{egyed2006instant} A.~Egyed. Instant consistency checking
+for the UML. \emph{ICSE}, 2006.
+
+\bibitem{reder2013diagnosing} A.~Reder, A.~Egyed. Determining the
+cause of a model inconsistency. \emph{IEEE TSE}, 39(11), 2013.
+
+\bibitem{chantree2006nocuous} F.~Chantree, B.~Nuseibeh,
+N.~de~Roeck, A.~Willis. Identifying nocuous ambiguities in natural
+language requirements. \emph{RE}, 2006.
+
+\bibitem{femmer2017smells} H.~Femmer, D.~M\'endez Fern\'andez,
+S.~Wagner, S.~Eder. Rapid quality assurance with requirements
+smells. \emph{JSS}, 123, 2017.
+
+\bibitem{bendik2017checking} T.~Bend\'ik, et al. Checking
+requirements consistency via satisfiability checking. \emph{ISSTA},
+2017.
+
+\bibitem{guo2021fine} ... fine-grained semantic analysis for
+requirement conflict detection. arXiv:2103.02255, 2021.
+
+\bibitem{malik2022s3cda} H.~Malik, M.~Cevik, H.~Basar, et al.
+S3CDA. arXiv:2206.13690, 2022.
+
+\bibitem{wang2025tsrcdf} ... TSRCDF-SS. arXiv:2511.23007, 2025.
+
+\bibitem{hasanain2026arareq} H.~Hammouda, S.~Aljabari, et al.
+AraREQ. \emph{LREC}, 2026.
+
+\bibitem{fantechi2023chatgpt} A.~Fantechi, S.~Gnesi,
+G.~Passaro, L.~Semini. Assessing ChatGPT performances on requirement
+consistency. \emph{RE Workshops}, 2023.
+
+\bibitem{zhao2021nlp4re} L.~Zhao, W.~Ma, et al. NLP4RE: A
+systematic mapping. \emph{Requirements Engineering}, 2021.
+
+\bibitem{zadenoori2025llm4re} ... LLM4RE: A systematic literature
+review. arXiv:2509.11446, 2025.
+
+\bibitem{layoutlm2020} Y.~Xu, et al. LayoutLM. arXiv:1912.13318,
+2019.
+
+\bibitem{flowextract2026} G.~Gil, et al. FlowExtract: Procedural
+knowledge extraction from maintenance flowcharts. arXiv:2604.06770,
+2026.
+
+\bibitem{li2024chemscraper} M.~Li, et al. ChemScraper. \emph{ICDAR},
+2024.
+
+\bibitem{karatzas2011icdar} D.~Karatzas, et al. ICDAR 2011 Robust
+Reading Challenge. \emph{ICDAR}, 2011.
+
+\bibitem{jaderberg2014synthetic} M.~Jaderberg, et al. Synthetic data
+and artificial neural networks for natural scene text recognition.
+arXiv:1406.2227, 2014.
+
+\bibitem{priorbias2026} ... Prior bias in VLMs on UML. arXiv:2607.02853, 2026.
+
+\bibitem{dawid1979maximum} A.~P.~Dawid, A.~M.~Skene. Maximum
+likelihood estimation of observer error-rates. \emph{JRSS-C},
+28(1), 1979.
+
+\bibitem{ratner2016data} A.~Ratner, et al. Data programming.
+\emph{NeurIPS}, 2016.
+
+\bibitem{platanios2017estimating} E.~Platanios, et al. Estimating
+accuracy from unlabeled data. \emph{UAI}, 2014 / arXiv:1705.07086.
+
+\bibitem{carroll2006measurement} R.~J.~Carroll, et al.
+\emph{Measurement Error in Nonlinear Models}. Chapman \& Hall/CRC,
+2006.
+
+\bibitem{geifman2017selective} Y.~Geifman, R.~El-Yaniv. Selective
+classification for deep neural networks. \emph{NeurIPS}, 2017.
+
+\bibitem{legalwiz2025} ... LegalWiz. arXiv:2510.03418, 2025.
+
+\bibitem{oursurvey2026} Anonymous. Inconsistency detection in
+requirements: a forty-year survey and the positioning of ACDD.
+Supplementary material, 2026.
+
+\bibitem{ezzini2022reference} S.~Ezzini, et al. Handling
+referential ambiguity in requirements. \emph{ICSE}, 2022.
+
+\end{thebibliography}
+
+\end{document}
