@@ -113,20 +113,27 @@ def shape_text_all(shape: ET.Element) -> str:
     return '\n'.join(out)
 
 
-def parse_page(page_xml: str, source: str, embed_index: str) -> dict | None:
-    """解析单个Visio页面 → 干净的锚点结构"""
+def parse_page(page_xml: str, source: str, embed_index: str,
+               page_dims: tuple[float, float] | None = None) -> dict | None:
+    """解析单个Visio页面 → 干净的锚点结构
+
+    page_dims: (宽, 高) 来自pages.xml的PageSheet(关键: PageSheet不在pageN.xml里!)
+    """
     try:
         root = ET.fromstring(page_xml)
     except ET.ParseError:
         return None
 
-    # 页面尺寸
-    pw, ph = 8.5, 11.0
-    ps = root.find('.//v:PageSheet', NS)
-    if ps is not None:
-        c = get_cells(ps)
-        pw = float(c.get('PageWidth', pw))
-        ph = float(c.get('PageHeight', ph))
+    # 页面尺寸: 优先用pages.xml传入的真实尺寸
+    if page_dims:
+        pw, ph = page_dims
+    else:
+        pw, ph = 8.5, 11.0  # 兜底(标注为未验证)
+        ps = root.find('.//v:PageSheet', NS)
+        if ps is not None:
+            c = get_cells(ps)
+            pw = float(c.get('PageWidth', pw))
+            ph = float(c.get('PageHeight', ph))
 
     # ── Pass 1: 收集全部Shape(含嵌套), 建立注册表 ──
     registry = {}  # id -> {name, type, text, cells, is_child}
@@ -348,12 +355,45 @@ def extract_doc(doc_name: str) -> list[dict]:
                 if pkg[:2] != b'PK':
                     continue
                 with zipfile.ZipFile(io.BytesIO(pkg)) as vz:
+                    # 解析pages.xml → 每页真实尺寸(PageSheet在pages.xml,不在pageN.xml)
+                    page_dims_map = {}  # 'visio/pages/pageN.xml' -> (w, h)
+                    try:
+                        pages_xml = vz.read('visio/pages/pages.xml').decode('utf-8', errors='replace')
+                        proot = ET.fromstring(pages_xml)
+                        # rels: rId → 目标文件
+                        rel_map = {}
+                        try:
+                            rels_xml = vz.read('visio/pages/_rels/pages.xml.rels').decode('utf-8', errors='replace')
+                            for m in re.finditer(r'Id="(rId\d+)"[^>]*Target="([^"]+)"', rels_xml):
+                                rel_map[m.group(1)] = m.group(2)
+                        except KeyError:
+                            pass
+                        for page in proot.findall('v:Page', NS):
+                            ps = page.find('v:PageSheet', NS)
+                            rel = page.find('v:Rel', NS)
+                            if ps is None or rel is None:
+                                continue
+                            rid = None
+                            for k, v in rel.attrib.items():
+                                if k.endswith('}id'):
+                                    rid = v
+                            target = rel_map.get(rid or '', '')
+                            cells = get_cells(ps)
+                            w = float(cells.get('PageWidth', 8.5))
+                            h = float(cells.get('PageHeight', 11.0))
+                            fname = 'visio/pages/' + target.lstrip('./')
+                            page_dims_map[fname] = (w, h)
+                    except KeyError:
+                        pass
+
                     page_files = [f for f in vz.namelist()
                                   if re.match(r'visio/pages/page\d+\.xml$', f)]
                     for pf in page_files:
                         xml = vz.read(pf).decode('utf-8', errors='replace')
                         embed_idx = embed_path.split('/')[-1]
-                        structure = parse_page(xml, embed_path, f"{embed_idx}:{pf.split('/')[-1]}")
+                        structure = parse_page(xml, embed_path,
+                                               f"{embed_idx}:{pf.split('/')[-1]}",
+                                               page_dims_map.get(pf))
                         if structure and (structure['nodes'] or structure['edges']):
                             results.append(structure)
             except Exception:
