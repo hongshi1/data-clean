@@ -12,6 +12,7 @@
 \setlist{leftmargin=1.2em,itemsep=0.1em,topsep=0.2em}
 
 \newtheorem{proposition}{Proposition}
+\newcommand{\eps}{\ensuremath{\varepsilon}}
 \newcommand{\qpost}{\ensuremath{q_\delta}}
 \newcommand{\pmiss}{\ensuremath{p_{\mathrm{miss}}}}
 \newcommand{\hall}{\ensuremath{p_{\mathrm{hall}}}}
@@ -28,183 +29,166 @@ Cross-Modal Consistency Checking of Requirements Specifications}}
 
 % ════════════════════════════════════════════════════════════════
 \begin{abstract}
-% ════════════════════════════════════════════════════════════════
-Real-world software requirements specifications (SRS) are multimodal
-documents: the same functional behavior is described concurrently in
-flowchart diagrams, use-case description tables, and prose text.
-Yet thirty years of requirements inconsistency research has remained at
-the sentence-pair level, leaving the question of whether these
-scattered views actually \emph{agree} almost entirely unexamined.
-We formalize cross-modal consistency checking as a noisy-channel
-decoding problem: an observed disagreement $D$ between an extracted
-diagram structure and a compiled table structure decomposes as
-$D = \eta \oplus \eps$, where $\eta$ is a genuine document
-inconsistency and $\eps$ is perception noise of the extraction
-channel.  The central obstacle is that these two causes are
-statistically entangled---unless one knows $\eps$.
-Our key observation is that many engineering documents carry their own
-calibration instrument: \emph{.doc files embed Visio XML sources
-that constitute a free, perfectly faithful gold standard of the
-perception layer}.  We propose \textbf{ACDD}
-(Anchor-Calibrated Disagreement Decoding), which (i)~calibrates
-element-level, type-heterogeneous error models of extraction channels
-on 188 anchored diagrams, (ii)~decodes each observed disagreement into
-a posterior probability $P(\eta{=}1 \mid D)$ with a provable
-separation condition ($\pi > p$), and (iii)~controls false discoveries
-via conformal abstention.
-On 89 diagram--table pairs from 16 real military SRS documents, ACDD
-attains AUROC 0.95 with ECE 0.023 under an anchor-masking protocol;
-fusing two heterogeneous channels (a vision-language model and OCR)
-is catastrophic without calibration (AUROC 0.58) but optimal with it
-(0.94)---calibration is not an optimization nicety but the difference
-between a working and a broken detector.
-Dual-LLM adjudication of 417 detected disagreements further reveals
-that \emph{exception-flow omission is the dominant real
-inconsistency class} (57\% of exception-flow elements are genuine
-defects, versus 8\% for steps), resurrecting---in learnable
-form---the inconsistency-tolerance agenda lost since the 1990s.
+In real software requirements specifications, the same behavior is
+described in three places at once: a flowchart, a use-case table, and
+prose.  Do these views agree?  Thirty years of inconsistency research
+has never answered this question---it has stayed at the sentence-pair
+level, on text only.  We bring it to the document level.
 
+The difficulty is easy to state.  To compare a diagram against a
+table, one must first read the diagram---and reading can go wrong.
+When the extracted diagram disagrees with the table, two causes look
+identical: the document may be inconsistent, or the extraction may
+have erred.  These causes cannot be told apart unless the extraction
+error rate is known.
+
+Our key observation: many engineering documents carry their own
+answer.  \emph{The \texttt{.doc} files we study embed Visio XML
+sources that specify each diagram's structure exactly.}  These
+embedded sources are free ground truth for the extraction step.  We
+use them to measure each extraction channel's error rate, then
+decode every observed disagreement into a probability that the
+document---not the extractor---is at fault.
+
+We formalize this as noisy-channel decoding: an observed disagreement
+$D$ decomposes as $D = \eta \oplus \varepsilon$ (document
+inconsistency plus perception noise), and calibration turns each
+disagreement into a posterior $P(\eta{=}1 \mid D)$.  A simple
+proposition shows why calibration is not optional: the naive rule
+``report every disagreement'' is correct only when the true
+inconsistency rate exceeds the channel error rate---a condition
+one cannot even check without measuring the error rate first.
+
+On 89 diagram--table pairs from 16 real military SRS documents, the
+effect is stark: fusing two channels without calibration collapses to
+AUROC 0.58, worse than either channel alone; with calibration, fusion
+reaches 0.94---and the posteriors are genuinely probabilistic
+(calibration error 0.023).  Under an anchor-masking protocol, the
+deployed system recovers 87\% of the findings a noiseless oracle
+would make.  Adjudicating all 417 detected disagreements with two
+independent LLMs reveals a finding the field has never reported:
+\emph{exception flows defined in tables are missing from their
+flowcharts 57\% of the time}---a dominant, concrete defect class,
+learnable from type priors rather than hand-written rules.
 \end{abstract}
 
 % ════════════════════════════════════════════════════════════════
 \section{Introduction}
-% ════════════════════════════════════════════════════════════════
 
-% ── 段1: 现象 — 真实SRS的多模态性 + 四十年的句对盲区 ──
-A requirements specification for a military information system does
-not live in sentences alone.  In the 16 GJB-format SRS documents we
-study, a single functional behavior---say, \emph{route
-integration}---appears simultaneously as an embedded flowchart
-(Figure~18 of the document), as a fourteen-step use-case description
-table (Table~14), and as prose in the section body.  Whether these
-views agree is precisely the question a requirements engineer must
-answer before the specification can serve as a contractual and
-testing basis; and in practice they frequently do not: in our corpus,
-\emph{57\% of the exception flows defined in use-case tables have no
-corresponding branch in their companion flowcharts}.
+% ── 段1: 现象 + 四十年的空白 ──
+A requirements specification does not live in sentences alone.  In
+the 16 GJB-format military SRS documents we study, one
+behavior---\emph{route integration}---appears as a flowchart
+(Figure~18), as a fourteen-step use-case table (Table~14), and as
+prose, all in the same document.  An engineer must know whether these
+views agree; frequently they do not.  In our corpus, \emph{57\% of
+the exception flows defined in use-case tables have no branch in
+their companion flowcharts}.
 
-The research community has, for thirty years, answered an adjacent
-but different question.  From the multi-viewpoint schools of the
-1990s~\cite{finkelstein1994inconsistency,hunter1998managing} through
-UML model
-consistency~\cite{engels2001consistent,egyed2006instant} to today's
-NLP and LLM-based
-detectors~\cite{bendik2017checking,wang2025tsrcdf,hasanain2026arareq},
-inconsistency detection has consistently operated on
-\emph{pre-aligned pairs}---two viewpoints, two models, or two
-sentences---leaving two gaps that the field has recently begun to
-acknowledge: the unit of comparison is assumed rather than computed,
-and the modality is text (or formal models) rather than the
-figure--table--prose triad that real documents actually
-contain~\cite{zhao2021nlp4re,zadenoori2025llm4re}.  No prior work, to
-our knowledge, has defined---let alone
-solved---\emph{document-level cross-modal consistency} for
-requirements artifacts.
+Inconsistency detection has been studied for thirty years, but on a
+different question.  From multi-viewpoint specifications in the
+1990s~\cite{finkelstein1994inconsistency,hunter1998managing}, through
+UML model consistency in the
+2000s~\cite{engels2001consistent,egyed2006instant}, to sentence-pair
+classifiers and LLM prompts
+today~\cite{bendik2017checking,wang2025tsrcdf,hasanain2026arareq},
+the field has always compared \emph{pre-aligned pairs} of formal
+objects or sentences.  Whether the figure, the table, and the prose
+of one document agree has never been treated as a
+task~\cite{zhao2021nlp4re,zadenoori2025llm4re}.  We call it
+\emph{document-level cross-modal consistency checking}, and this
+paper defines and solves it.
 
-% ── 段2: 核心困难 — 感知噪声与文档不一致的统计纠缠 ──
-Solving it requires confronting an obstacle that sentence-pair
-methods never face.  To compare a diagram against a table, the
-diagram must first be \emph{read}: nodes, edges, and labels must be
-extracted from a rendered image.  When the extracted structure
-disagrees with the table, two causes are observationally identical:
-the document may be genuinely inconsistent (a defect worth
-reporting), or the extraction channel may have erred (noise worth
-suppressing).  We show that this entanglement is not a tail risk but
-the central statistical fact of the problem.  A modern
-vision-language model, prompted for structured extraction on our
-corpus, misses 19\% of table-relevant elements; an OCR channel misses
-a different 14\% but spuriously ``finds'' 69\% of elements that are
-truly absent.  \emph{Naively fusing the two channels---reporting
-disagreement whenever either channel disagrees---drives detection
-performance to AUROC 0.58, worse than ignoring the second channel
-entirely} (0.93).  The field's emerging practice of ensemble judgment
-over LLM extractors sits precisely on this cliff.
+% ── 段2: 核心困难（大白话+具体数字） ──
+The core difficulty is not semantic subtlety but a statistical trap.
+To compare a diagram with a table, the diagram must first be
+\emph{read}---its nodes, edges, and labels extracted from an image.
+Extraction goes wrong in known ways: in our measurements, a modern
+vision-language model misses 19\% of table-relevant elements, and an
+OCR channel spuriously ``finds'' 69\% of elements that are truly
+absent.  When extraction and table disagree, the cause is
+observationally identical either way: the document is inconsistent,
+or the extractor erred.  Without knowing the error rate, these two
+causes cannot be separated---and the naive response is actively
+harmful.  Fusing two channels by majority vote, the standard
+reflex, drove detection to AUROC 0.58 on our corpus---\emph{worse
+than either channel alone} (0.93).  The emerging practice of
+ensembling LLM extractors sits exactly on this cliff.
 
-% ── 段3: 关键洞察 — born-digital锚点 = 免费的感知层金标准 ──
-Our work rests on an observation about the documents themselves.
-Engineering documents written in office suites frequently embed their
-diagrams as \emph{native objects}: each flowchart in our corpus ships
-with a complete Visio XML source silently stored inside the
-\texttt{.doc} container.  Parsing this source yields the diagram's
-structure---node texts, positions, typed
-connectors---\emph{exactly}, at zero annotation cost.  Such
-born-digital sources have served as free ground truth for evaluating
-OCR and document parsers for over a
-decade~\cite{karatzas2011icdar,li2024chemscraper}.  We repurpose them
-for a new role: not to \emph{evaluate} perception channels but to
-\emph{calibrate} their error models, and thereby to \emph{decode}
-which observed disagreements are signal.  To our knowledge this
-calibration role is without precedent---and it transforms the
-problem: once the noise distribution $\eps$ is measured, each
-disagreement $D$ acquires a posterior
-$P(\eta{=}1\mid D)$ with exact probabilistic semantics.
+% ── 段3: 关键洞察（具体+直白） ──
+The documents themselves supply the fix.  Office-suite documents
+often embed diagrams as native objects: every flowchart in our
+corpus ships with a complete Visio XML source stored silently inside
+the \texttt{.doc} file.  Parsing that source yields the diagram's
+structure---texts, positions, typed connectors---\emph{exactly}, at
+zero annotation cost.  Born-digital sources have served as free
+ground truth for evaluating OCR and document
+parsers~\cite{karatzas2011icdar,li2024chemscraper}; we repurpose
+them from \emph{evaluating} extractors to \emph{calibrating} them.
+Once each channel's error rate is measured on these anchors, every
+observed disagreement acquires an exact posterior probability
+$P(\text{document at fault} \mid \text{disagreement})$.  To our
+knowledge, this calibration role is without precedent.
 
-% ── 段4: 方法概述 — ACDD ──
-We formalize cross-modal consistency checking as
-\emph{anchor-calibrated disagreement decoding} (ACDD).  A two-layer
-latent model separates the \emph{perception layer} (channel output
-vs.\ diagram content; calibratable on anchors) from the
-\emph{document layer} (diagram content vs.\ table text; the detection
-target), which blocks a subtle circularity: disagreement
-\emph{between channels} examines the same image and can never be
-evidence about the document.  On anchored diagrams we estimate
-element-level, type-heterogeneous error models---miss and
-false-accept rates conditioned on element type (step, exception flow,
-actor), a distinction that proves decisive.  Decoding follows
-Proposition~\ref{prop:separation}: the maximum-a-posteriori rule
-``report disagreement as inconsistency'' is Bayes-consistent if and
-only if the inconsistency prior $\pi$ exceeds the channel error rate
-$p$; multi-element clusters achieve Chernoff-type exponential
-separation; and conformal thresholds control false discoveries at
-level $\alpha$ with distribution-free guarantees.
+% ── 段4: 方法一页纸 ──
+\textbf{ACDD} (Anchor-Calibrated Disagreement Decoding) formalizes
+the task as noisy-channel decoding:
+$D = \eta \oplus \varepsilon$, an observed disagreement is the XOR
+of a genuine document inconsistency $\eta$ and perception noise
+$\eps$.  A two-layer latent model keeps calibration and detection
+honest: disagreement \emph{between channels} examines the same image
+and therefore can never evidence the document layer.  Error models
+are estimated per element type---a distinction that proves
+decisive, because defect rates differ by an order of magnitude
+across types.  Three propositions govern the decoder: the MAP rule
+``report every disagreement'' is Bayes-consistent iff $\pi > p$
+(prior exceeds error rate); $m$-element disagreement clusters achieve
+exponential error decay; and conformal thresholds control false
+discoveries while abstaining on genuinely undecidable cases.
 
-% ── 段5: 实验结果骨架 ──
-We evaluate on 89 diagram--table pairs from 16 real military SRS
-documents under an \emph{anchor-masking protocol}: anchored pairs are
-evaluated twice---once with the anchor (a noiseless oracle
-comparison) and once with the anchor masked and replaced by noisy
-channels---so that the deployment question ``how much of the
-noiseless layer's detection power survives perception noise?'' is
-directly measurable.  ACDD recovers 87\% of the anchor layer's
-findings at 88\% precision; its posteriors are calibrated
-(ECE 0.023); and the calibration-vs-raw gap is dramatic across every
-configuration (calibrated fusion 0.94 vs.\ uncalibrated 0.58).
-Beyond method metrics, dual-LLM adjudication of all 417 detected
-disagreements (65\% inter-model agreement; disagreements routed to
-human review) yields a distributional finding the field has never
-reported: exception-flow elements are genuine defects at rate 0.57,
-actors nearly always benign (0.11), steps in between (0.08)---a
-\emph{type prior} that operationalizes, in learnable form, the
-inconsistency-tolerance agenda that the machine-learning era had
-lost~\cite{chantree2006nocuous}.
+% ── 段5: 实验（直白的结果句） ──
+We evaluate on 89 diagram--table pairs from the 16 documents under
+an \emph{anchor-masking protocol}: each anchored pair is examined
+twice---with the anchor as a noiseless oracle, and with the anchor
+masked so that only noisy channels remain---so that ``how much
+oracle performance survives perception noise?'' is directly
+measured.  The deployed system recovers 87\% of the oracle's
+findings at 88\% precision, with calibrated posteriors
+(ECE~0.023).  Calibrated fusion of two channels reaches AUROC 0.94
+versus 0.58 uncalibrated---the same channels, the same data, the
+only difference being whether error rates were measured first.
+Finally, adjudicating all 417 detected disagreements with two
+independent LLMs (65\% agreement; the rest routed to human review)
+yields a distributional finding the field has never reported:
+exception-flow elements are genuine defects at rate 0.57, actors
+nearly always benign (0.11), steps in between (0.08).  This
+\emph{type prior} is a learnable answer to the benign-variation
+problem posed in 2006 and lost since~\cite{chantree2006nocuous}.
 
-% ── 段6: 贡献列表 ──
+% ── 段6: 贡献 ──
 Our contributions:
 \begin{itemize}
-\item \textbf{Task and formalization.}  We define document-level
-cross-modal consistency checking for requirements specifications and
-formalize it as noisy-channel decoding $D = \eta \oplus \eps$ with a
-two-layer latent model that decouples calibration assumptions from
-detection hypotheses (Section~\ref{sec:formulation}).
-\item \textbf{Mechanism.}  We introduce anchor calibration---the
-repurposing of embedded born-digital sources as free
-perception-layer gold standards---with type-heterogeneous error
-models, provable separation conditions, cluster signatures, and
-conformal abstention (Sections~\ref{sec:method}).
-\item \textbf{Evidence.}  On 89 pairs from 16 real military SRS
-documents we show that calibration is the difference between a
-working and a broken detector (0.94 vs.\ 0.58 AUROC), that the
-anchor-masking protocol measures deployment performance honestly, and
-that exception-flow omission dominates real
-inconsistencies (Section~\ref{sec:evaluation}).
-\item \textbf{Resource.}  We release 188 anchor-calibrated diagram
-structures, dual-LLM adjudication of 417 disagreements, and a
-deterministic mutation engine, constituting---to our
-knowledge---the first multimodal inconsistency corpus on real
+\item \textbf{Task.}  Document-level cross-modal consistency checking
+of requirements specifications: definition, formalization as
+$D = \eta \oplus \varepsilon$ decoding, and a two-layer model that
+blocks the channel-agreement circularity
+(Section~\ref{sec:formulation}).
+\item \textbf{Mechanism.}  Anchor calibration---embedded born-digital
+sources as free perception-layer gold standards---with
+type-heterogeneous error models, provable separation conditions,
+cluster signatures, and conformal abstention
+(Section~\ref{sec:method}).
+\item \textbf{Evidence.}  On 16 real military SRS documents:
+calibration is the difference between a working and a broken detector
+(0.94 vs.\ 0.58); anchor masking measures deployment performance
+honestly; exception-flow omission dominates real inconsistencies
+(Section~\ref{sec:evaluation}).
+\item \textbf{Resource.}  188 anchor structures, dual-LLM adjudication
+of 417 disagreements, and a deterministic mutation engine---to our
+knowledge the first multimodal inconsistency corpus on real
 (confidential-domain) requirements documents.
 \end{itemize}
 
-% ════════════════════════════════════════════════════════════════
 \section{Related Work}
 \label{sec:related}
 % ════════════════════════════════════════════════════════════════
