@@ -1,0 +1,230 @@
+{
+ "pair_id": "2_050",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject40.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "916",
+   "text": "连接数据库",
+   "type": "process",
+   "cx": 2.422,
+   "cy": 6.7834,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2849,
+   "ry": 0.3833
+  },
+  {
+   "id": "914",
+   "text": "",
+   "type": "state",
+   "cx": 2.422,
+   "cy": 7.5708,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.2849,
+   "ry": 0.3117
+  },
+  {
+   "id": "919",
+   "text": "获取连接类型",
+   "type": "other",
+   "cx": 2.422,
+   "cy": 4.1259,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2849,
+   "ry": 0.6249
+  },
+  {
+   "id": "917",
+   "text": "输入相关参数",
+   "type": "other",
+   "cx": 2.422,
+   "cy": 5.8976,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2849,
+   "ry": 0.4639
+  },
+  {
+   "id": "671",
+   "text": "句柄个数是否\n大于指定大小",
+   "type": "gateway",
+   "cx": 2.422,
+   "cy": 3.1416,
+   "w": 0.0,
+   "h": 1.0,
+   "rx": 0.2849,
+   "ry": 0.7144
+  },
+  {
+   "id": "915",
+   "text": "",
+   "type": "end",
+   "cx": 2.422,
+   "cy": 0.3857,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.2849,
+   "ry": 0.9649
+  },
+  {
+   "id": "920",
+   "text": "初始化连接失败",
+   "type": "other",
+   "cx": 0.9301,
+   "cy": 1.3043,
+   "w": 0.7874,
+   "h": 0.5906,
+   "rx": 0.1094,
+   "ry": 0.8814
+  },
+  {
+   "id": "921",
+   "text": "直接返回",
+   "type": "other",
+   "cx": 3.9968,
+   "cy": 1.3043,
+   "w": 0.7874,
+   "h": 0.5906,
+   "rx": 0.4702,
+   "ry": 0.8814
+  },
+  {
+   "id": "918",
+   "text": "拼接3元组",
+   "type": "other",
+   "cx": 2.422,
+   "cy": 5.0117,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2849,
+   "ry": 0.5444
+  },
+  {
+   "id": "896",
+   "text": "初始化连接",
+   "type": "gateway",
+   "cx": 0.9301,
+   "cy": 2.2886,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.1094,
+   "ry": 0.7919
+  }
+ ],
+ "edges": [
+  {
+   "src": "896",
+   "dst": "916",
+   "src_text": "初始化连接",
+   "dst_text": "连接数据库",
+   "label": "连接成功",
+   "connector_id": "913",
+   "via": "glued"
+  },
+  {
+   "src": "896",
+   "dst": "920",
+   "src_text": "初始化连接",
+   "dst_text": "初始化连接失败",
+   "label": "连接失败",
+   "connector_id": "911",
+   "via": "glued"
+  },
+  {
+   "src": "918",
+   "dst": "919",
+   "src_text": "拼接3元组",
+   "dst_text": "获取连接类型",
+   "label": "",
+   "connector_id": "881",
+   "via": "glued"
+  },
+  {
+   "src": "917",
+   "dst": "918",
+   "src_text": "输入相关参数",
+   "dst_text": "拼接3元组",
+   "label": "",
+   "connector_id": "833",
+   "via": "glued"
+  },
+  {
+   "src": "919",
+   "dst": "671",
+   "src_text": "获取连接类型",
+   "dst_text": "句柄个数是否\n大于指定大小",
+   "label": "",
+   "connector_id": "832",
+   "via": "glued"
+  },
+  {
+   "src": "671",
+   "dst": "915",
+   "src_text": "句柄个数是否\n大于指定大小",
+   "dst_text": "",
+   "label": "大于",
+   "connector_id": "831",
+   "via": "glued"
+  },
+  {
+   "src": "914",
+   "dst": "916",
+   "src_text": "",
+   "dst_text": "连接数据库",
+   "label": "",
+   "connector_id": "821",
+   "via": "glued"
+  },
+  {
+   "src": "916",
+   "dst": "917",
+   "src_text": "连接数据库",
+   "dst_text": "输入相关参数",
+   "label": "",
+   "connector_id": "823",
+   "via": "glued"
+  },
+  {
+   "src": "671",
+   "dst": "921",
+   "src_text": "句柄个数是否\n大于指定大小",
+   "dst_text": "直接返回",
+   "label": "等于",
+   "connector_id": "824",
+   "via": "glued"
+  },
+  {
+   "src": "671",
+   "dst": "896",
+   "src_text": "句柄个数是否\n大于指定大小",
+   "dst_text": "初始化连接",
+   "label": "小于",
+   "connector_id": "827",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 48,
+  "raw_connect_count": 20,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

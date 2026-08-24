@@ -1,0 +1,328 @@
+{
+ "pair_id": "1_079",
+ "scene": "sc1_usecase_capability",
+ "doc": "09数据同步共享服务软件需求规格说明-终稿",
+ "embed_index": "oleObject13.bin:page1.xml",
+ "mapping_confidence": "low",
+ "mapping_source": "keyword_mapping",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "30",
+   "text": "服务启动",
+   "type": "process",
+   "cx": 3.3099,
+   "cy": 6.4752,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.3894,
+   "ry": 0.4113
+  },
+  {
+   "id": "31",
+   "text": "同步任务创建",
+   "type": "other",
+   "cx": 0.8636,
+   "cy": 5.2587,
+   "w": 1.6431,
+   "h": 0.3937,
+   "rx": 0.1016,
+   "ry": 0.5219
+  },
+  {
+   "id": "7",
+   "text": "",
+   "type": "start",
+   "cx": 3.3099,
+   "cy": 7.0118,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.3894,
+   "ry": 0.3626
+  },
+  {
+   "id": "9",
+   "text": "",
+   "type": "fork",
+   "cx": 3.3041,
+   "cy": 5.8384,
+   "w": 0.0625,
+   "h": 0.5,
+   "rx": 0.3887,
+   "ry": 0.4692
+  },
+  {
+   "id": "32",
+   "text": "启动任务",
+   "type": "other",
+   "cx": 2.7599,
+   "cy": 5.2587,
+   "w": 1.1864,
+   "h": 0.3937,
+   "rx": 0.3247,
+   "ry": 0.5219
+  },
+  {
+   "id": "38",
+   "text": "停止任务",
+   "type": "other",
+   "cx": 4.4278,
+   "cy": 5.2587,
+   "w": 1.1864,
+   "h": 0.3937,
+   "rx": 0.5209,
+   "ry": 0.5219
+  },
+  {
+   "id": "33",
+   "text": "删除任务",
+   "type": "other",
+   "cx": 6.0053,
+   "cy": 5.2587,
+   "w": 1.378,
+   "h": 0.3937,
+   "rx": 0.7065,
+   "ry": 0.5219
+  },
+  {
+   "id": "35",
+   "text": "查找同步任务队列中的任务实例，并\n修改任务状态",
+   "type": "other",
+   "cx": 2.7599,
+   "cy": 4.1896,
+   "w": 1.7664,
+   "h": 0.9584,
+   "rx": 0.3247,
+   "ry": 0.6191
+  },
+  {
+   "id": "36",
+   "text": "同步任务扫描",
+   "type": "other",
+   "cx": 2.7599,
+   "cy": 2.8335,
+   "w": 1.378,
+   "h": 0.3937,
+   "rx": 0.3247,
+   "ry": 0.7424
+  },
+  {
+   "id": "17",
+   "text": "判断任务状态是否为等待，同步间隔时间是否到达",
+   "type": "decision",
+   "cx": 2.7599,
+   "cy": 1.8057,
+   "w": 2.0276,
+   "h": 0.9584,
+   "rx": 0.3247,
+   "ry": 0.8358
+  },
+  {
+   "id": "37",
+   "text": "执行数据同步",
+   "type": "other",
+   "cx": 2.7599,
+   "cy": 0.7666,
+   "w": 1.1864,
+   "h": 0.3937,
+   "rx": 0.3247,
+   "ry": 0.9303
+  },
+  {
+   "id": "20",
+   "text": "",
+   "type": "end",
+   "cx": 2.7599,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.3247,
+   "ry": 0.9888
+  },
+  {
+   "id": "34",
+   "text": "查找同步任务队列中的任务实例，删除数据记录，并修改任务状态",
+   "type": "other",
+   "cx": 6.0053,
+   "cy": 4.1896,
+   "w": 1.7664,
+   "h": 0.9584,
+   "rx": 0.7065,
+   "ry": 0.6191
+  },
+  {
+   "id": "29",
+   "text": "否",
+   "type": "other",
+   "cx": 1.9085,
+   "cy": 2.3196,
+   "w": 0.3248,
+   "h": 1.0278,
+   "rx": 0.2245,
+   "ry": 0.7891
+  }
+ ],
+ "edges": [
+  {
+   "src": "17",
+   "dst": "36",
+   "src_text": "判断任务状态是否为等待，同步间隔时间是否到达",
+   "dst_text": "同步任务扫描",
+   "label": "否",
+   "connector_id": "29",
+   "via": "glued"
+  },
+  {
+   "src": "31",
+   "dst": "32",
+   "src_text": "同步任务创建",
+   "dst_text": "启动任务",
+   "label": "",
+   "connector_id": "28",
+   "via": "glued"
+  },
+  {
+   "src": "34",
+   "dst": "36",
+   "src_text": "查找同步任务队列中的任务实例，删除数据记录，并修改任务状态",
+   "dst_text": "同步任务扫描",
+   "label": "",
+   "connector_id": "27",
+   "via": "glued"
+  },
+  {
+   "src": "33",
+   "dst": "34",
+   "src_text": "删除任务",
+   "dst_text": "查找同步任务队列中的任务实例，删除数据记录，并修改任务状态",
+   "label": "",
+   "connector_id": "26",
+   "via": "glued"
+  },
+  {
+   "src": "38",
+   "dst": "35",
+   "src_text": "停止任务",
+   "dst_text": "查找同步任务队列中的任务实例，并\n修改任务状态",
+   "label": "",
+   "connector_id": "24",
+   "via": "glued"
+  },
+  {
+   "src": "32",
+   "dst": "35",
+   "src_text": "启动任务",
+   "dst_text": "查找同步任务队列中的任务实例，并\n修改任务状态",
+   "label": "",
+   "connector_id": "23",
+   "via": "glued"
+  },
+  {
+   "src": "35",
+   "dst": "36",
+   "src_text": "查找同步任务队列中的任务实例，并\n修改任务状态",
+   "dst_text": "同步任务扫描",
+   "label": "",
+   "connector_id": "22",
+   "via": "glued"
+  },
+  {
+   "src": "37",
+   "dst": "20",
+   "src_text": "执行数据同步",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "21",
+   "via": "glued"
+  },
+  {
+   "src": "30",
+   "dst": "9",
+   "src_text": "服务启动",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "10",
+   "via": "glued"
+  },
+  {
+   "src": "9",
+   "dst": "31",
+   "src_text": "",
+   "dst_text": "同步任务创建",
+   "label": "",
+   "connector_id": "2",
+   "via": "glued"
+  },
+  {
+   "src": "9",
+   "dst": "32",
+   "src_text": "",
+   "dst_text": "启动任务",
+   "label": "",
+   "connector_id": "4",
+   "via": "glued"
+  },
+  {
+   "src": "9",
+   "dst": "38",
+   "src_text": "",
+   "dst_text": "停止任务",
+   "label": "",
+   "connector_id": "5",
+   "via": "glued"
+  },
+  {
+   "src": "9",
+   "dst": "33",
+   "src_text": "",
+   "dst_text": "删除任务",
+   "label": "",
+   "connector_id": "6",
+   "via": "glued"
+  },
+  {
+   "src": "17",
+   "dst": "37",
+   "src_text": "判断任务状态是否为等待，同步间隔时间是否到达",
+   "dst_text": "执行数据同步",
+   "label": "是",
+   "connector_id": "18",
+   "via": "glued"
+  },
+  {
+   "src": "36",
+   "dst": "17",
+   "src_text": "同步任务扫描",
+   "dst_text": "判断任务状态是否为等待，同步间隔时间是否到达",
+   "label": "",
+   "connector_id": "16",
+   "via": "glued"
+  },
+  {
+   "src": "7",
+   "dst": "30",
+   "src_text": "",
+   "dst_text": "服务启动",
+   "label": "",
+   "connector_id": "8",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 29,
+  "raw_connect_count": 32,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

@@ -1,0 +1,221 @@
+{
+ "pair_id": "2_048",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject37.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "884",
+   "text": "选择要导出路径的父节点，点击提交",
+   "type": "process",
+   "cx": 1.8873,
+   "cy": 7.1771,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.222,
+   "ry": 0.3475
+  },
+  {
+   "id": "882",
+   "text": "",
+   "type": "state",
+   "cx": 1.8873,
+   "cy": 7.9645,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.222,
+   "ry": 0.276
+  },
+  {
+   "id": "887",
+   "text": "输入生成的模型类名",
+   "type": "other",
+   "cx": 1.8873,
+   "cy": 3.2401,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.222,
+   "ry": 0.7054
+  },
+  {
+   "id": "885",
+   "text": "获取路径",
+   "type": "other",
+   "cx": 1.8873,
+   "cy": 5.0117,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.222,
+   "ry": 0.5444
+  },
+  {
+   "id": "641",
+   "text": "遍历父节点下的目录",
+   "type": "gateway",
+   "cx": 1.8873,
+   "cy": 6.1928,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.222,
+   "ry": 0.437
+  },
+  {
+   "id": "671",
+   "text": "生成类文件",
+   "type": "gateway",
+   "cx": 1.8873,
+   "cy": 2.2558,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.222,
+   "ry": 0.7949
+  },
+  {
+   "id": "883",
+   "text": "",
+   "type": "end",
+   "cx": 1.8873,
+   "cy": 0.3857,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.222,
+   "ry": 0.9649
+  },
+  {
+   "id": "888",
+   "text": "生成文件失败",
+   "type": "other",
+   "cx": 0.3954,
+   "cy": 1.4684,
+   "w": 0.7874,
+   "h": 0.5906,
+   "rx": 0.0465,
+   "ry": 0.8665
+  },
+  {
+   "id": "889",
+   "text": "获取子目录失败",
+   "type": "other",
+   "cx": 3.4621,
+   "cy": 1.4684,
+   "w": 0.7874,
+   "h": 0.5906,
+   "rx": 0.4073,
+   "ry": 0.8665
+  },
+  {
+   "id": "886",
+   "text": "选择要导出的目录",
+   "type": "other",
+   "cx": 1.8873,
+   "cy": 4.1259,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.222,
+   "ry": 0.6249
+  }
+ ],
+ "edges": [
+  {
+   "src": "886",
+   "dst": "887",
+   "src_text": "选择要导出的目录",
+   "dst_text": "输入生成的模型类名",
+   "label": "",
+   "connector_id": "881",
+   "via": "glued"
+  },
+  {
+   "src": "885",
+   "dst": "886",
+   "src_text": "获取路径",
+   "dst_text": "选择要导出的目录",
+   "label": "",
+   "connector_id": "833",
+   "via": "glued"
+  },
+  {
+   "src": "887",
+   "dst": "671",
+   "src_text": "输入生成的模型类名",
+   "dst_text": "生成类文件",
+   "label": "",
+   "connector_id": "832",
+   "via": "glued"
+  },
+  {
+   "src": "671",
+   "dst": "883",
+   "src_text": "生成类文件",
+   "dst_text": "",
+   "label": "生成成功",
+   "connector_id": "831",
+   "via": "glued"
+  },
+  {
+   "src": "671",
+   "dst": "888",
+   "src_text": "生成类文件",
+   "dst_text": "生成文件失败",
+   "label": "生成失败",
+   "connector_id": "827",
+   "via": "glued"
+  },
+  {
+   "src": "882",
+   "dst": "884",
+   "src_text": "",
+   "dst_text": "选择要导出路径的父节点，点击提交",
+   "label": "",
+   "connector_id": "821",
+   "via": "glued"
+  },
+  {
+   "src": "884",
+   "dst": "641",
+   "src_text": "选择要导出路径的父节点，点击提交",
+   "dst_text": "遍历父节点下的目录",
+   "label": "",
+   "connector_id": "822",
+   "via": "glued"
+  },
+  {
+   "src": "641",
+   "dst": "885",
+   "src_text": "遍历父节点下的目录",
+   "dst_text": "获取路径",
+   "label": "连接成功",
+   "connector_id": "823",
+   "via": "glued"
+  },
+  {
+   "src": "641",
+   "dst": "889",
+   "src_text": "遍历父节点下的目录",
+   "dst_text": "获取子目录失败",
+   "label": "获取失败",
+   "connector_id": "824",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 47,
+  "raw_connect_count": 18,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

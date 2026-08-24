@@ -1,0 +1,201 @@
+{
+ "pair_id": "2_024",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject6.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "532",
+   "text": "调用通过配置文件连接接口",
+   "type": "process",
+   "cx": 3.229,
+   "cy": 6.6644,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.3799,
+   "ry": 0.3941
+  },
+  {
+   "id": "533",
+   "text": "传入配置文件路径",
+   "type": "other",
+   "cx": 3.229,
+   "cy": 5.6983,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.3799,
+   "ry": 0.482
+  },
+  {
+   "id": "306",
+   "text": "判断连接模式",
+   "type": "gateway",
+   "cx": 3.229,
+   "cy": 3.6882,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.3799,
+   "ry": 0.6647
+  },
+  {
+   "id": "535",
+   "text": "连接服务器上的达梦数据库",
+   "type": "other",
+   "cx": 2.3639,
+   "cy": 2.4527,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2781,
+   "ry": 0.777
+  },
+  {
+   "id": "539",
+   "text": "连接本地的sqlite3数据库",
+   "type": "other",
+   "cx": 4.1863,
+   "cy": 2.4527,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.4925,
+   "ry": 0.777
+  },
+  {
+   "id": "530",
+   "text": "",
+   "type": "other",
+   "cx": 3.229,
+   "cy": 7.571,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.3799,
+   "ry": 0.3117
+  },
+  {
+   "id": "531",
+   "text": "",
+   "type": "other",
+   "cx": 3.3717,
+   "cy": 0.5081,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.3967,
+   "ry": 0.9538
+  },
+  {
+   "id": "534",
+   "text": "从配置文件中读取数据库IP、用户名、密码",
+   "type": "other",
+   "cx": 3.229,
+   "cy": 4.7943,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.3799,
+   "ry": 0.5642
+  },
+  {
+   "id": "536",
+   "text": "返回连接状态",
+   "type": "other",
+   "cx": 3.3708,
+   "cy": 1.3651,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.3966,
+   "ry": 0.8759
+  }
+ ],
+ "edges": [
+  {
+   "src": "536",
+   "dst": "531",
+   "src_text": "返回连接状态",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "503",
+   "via": "glued"
+  },
+  {
+   "src": "539",
+   "dst": "536",
+   "src_text": "连接本地的sqlite3数据库",
+   "dst_text": "返回连接状态",
+   "label": "",
+   "connector_id": "442",
+   "via": "glued"
+  },
+  {
+   "src": "535",
+   "dst": "536",
+   "src_text": "连接服务器上的达梦数据库",
+   "dst_text": "返回连接状态",
+   "label": "",
+   "connector_id": "440",
+   "via": "glued"
+  },
+  {
+   "src": "530",
+   "dst": "532",
+   "src_text": "",
+   "dst_text": "调用通过配置文件连接接口",
+   "label": "",
+   "connector_id": "438",
+   "via": "glued"
+  },
+  {
+   "src": "532",
+   "dst": "533",
+   "src_text": "调用通过配置文件连接接口",
+   "dst_text": "传入配置文件路径",
+   "label": "",
+   "connector_id": "171",
+   "via": "glued"
+  },
+  {
+   "src": "533",
+   "dst": "534",
+   "src_text": "传入配置文件路径",
+   "dst_text": "从配置文件中读取数据库IP、用户名、密码",
+   "label": "",
+   "connector_id": "172",
+   "via": "glued"
+  },
+  {
+   "src": "306",
+   "dst": "535",
+   "src_text": "判断连接模式",
+   "dst_text": "连接服务器上的达梦数据库",
+   "label": "",
+   "connector_id": "414",
+   "via": "glued"
+  },
+  {
+   "src": "306",
+   "dst": "539",
+   "src_text": "判断连接模式",
+   "dst_text": "连接本地的sqlite3数据库",
+   "label": "",
+   "connector_id": "416",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 32,
+  "raw_connect_count": 17,
+  "dangling_ends": 1,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

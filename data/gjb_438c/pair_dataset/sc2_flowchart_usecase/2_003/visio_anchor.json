@@ -1,0 +1,250 @@
+{
+ "pair_id": "2_003",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "02界面集成框架软件需求规格说明-终稿",
+ "embed_index": "oleObject9.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "3271",
+   "text": "用户进行公共组件的开发",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 4.69,
+   "w": 0.9055,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.5736
+  },
+  {
+   "id": "3294",
+   "text": "测试结果",
+   "type": "gateway",
+   "cx": 0.4971,
+   "cy": 3.2412,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.7053
+  },
+  {
+   "id": "3309",
+   "text": "组件上传至公共组件管理库",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 2.4066,
+   "w": 0.9843,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.7812
+  },
+  {
+   "id": "3332",
+   "text": "本级是否能够连接管理库",
+   "type": "gateway",
+   "cx": 0.4971,
+   "cy": 1.6979,
+   "w": 0.0,
+   "h": 0.5276,
+   "rx": 0.0585,
+   "ry": 0.8456
+  },
+  {
+   "id": "3347",
+   "text": "检查服务器地址配置",
+   "type": "process",
+   "cx": 2.3574,
+   "cy": 1.6979,
+   "w": 0.9055,
+   "h": 0.3937,
+   "rx": 0.2773,
+   "ry": 0.8456
+  },
+  {
+   "id": "3395",
+   "text": "",
+   "type": "start",
+   "cx": 0.4971,
+   "cy": 5.2609,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.5217
+  },
+  {
+   "id": "3396",
+   "text": "",
+   "type": "end",
+   "cx": 0.4971,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.9888
+  },
+  {
+   "id": "3401",
+   "text": "完成组件管理",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 0.7137,
+   "w": 0.9843,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.9351
+  },
+  {
+   "id": "4126",
+   "text": "测试本地组件功能",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 3.9814,
+   "w": 0.9055,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.6381
+  },
+  {
+   "id": "4149",
+   "text": "修改错误重新提交测试",
+   "type": "process",
+   "cx": 2.3721,
+   "cy": 3.2412,
+   "w": 0.9055,
+   "h": 0.3937,
+   "rx": 0.2791,
+   "ry": 0.7053
+  },
+  {
+   "id": "4173",
+   "text": "重新上传",
+   "type": "process",
+   "cx": 3.632,
+   "cy": 1.6979,
+   "w": 0.9055,
+   "h": 0.3937,
+   "rx": 0.4273,
+   "ry": 0.8456
+  }
+ ],
+ "edges": [
+  {
+   "src": "4173",
+   "dst": "3309",
+   "src_text": "重新上传",
+   "dst_text": "组件上传至公共组件管理库",
+   "label": "",
+   "connector_id": "4196",
+   "via": "glued"
+  },
+  {
+   "src": "4149",
+   "dst": "4126",
+   "src_text": "修改错误重新提交测试",
+   "dst_text": "测试本地组件功能",
+   "label": "",
+   "connector_id": "4172",
+   "via": "glued"
+  },
+  {
+   "src": "3271",
+   "dst": "4126",
+   "src_text": "用户进行公共组件的开发",
+   "dst_text": "测试本地组件功能",
+   "label": "",
+   "connector_id": "3400",
+   "via": "glued"
+  },
+  {
+   "src": "3347",
+   "dst": "4173",
+   "src_text": "检查服务器地址配置",
+   "dst_text": "重新上传",
+   "label": "",
+   "connector_id": "3394",
+   "via": "glued"
+  },
+  {
+   "src": "3332",
+   "dst": "3401",
+   "src_text": "本级是否能够连接管理库",
+   "dst_text": "完成组件管理",
+   "label": "上传成功",
+   "connector_id": "3390",
+   "via": "glued"
+  },
+  {
+   "src": "3332",
+   "dst": "3347",
+   "src_text": "本级是否能够连接管理库",
+   "dst_text": "检查服务器地址配置",
+   "label": "上传失败",
+   "connector_id": "3389",
+   "via": "glued"
+  },
+  {
+   "src": "3309",
+   "dst": "3332",
+   "src_text": "组件上传至公共组件管理库",
+   "dst_text": "本级是否能够连接管理库",
+   "label": "",
+   "connector_id": "3388",
+   "via": "glued"
+  },
+  {
+   "src": "3395",
+   "dst": "3271",
+   "src_text": "",
+   "dst_text": "用户进行公共组件的开发",
+   "label": "",
+   "connector_id": "3384",
+   "via": "glued"
+  },
+  {
+   "src": "4126",
+   "dst": "3294",
+   "src_text": "测试本地组件功能",
+   "dst_text": "测试结果",
+   "label": "",
+   "connector_id": "3385",
+   "via": "glued"
+  },
+  {
+   "src": "3294",
+   "dst": "4149",
+   "src_text": "测试结果",
+   "dst_text": "修改错误重新提交测试",
+   "label": "功能异常",
+   "connector_id": "3386",
+   "via": "glued"
+  },
+  {
+   "src": "3294",
+   "dst": "3309",
+   "src_text": "测试结果",
+   "dst_text": "组件上传至公共组件管理库",
+   "label": "正常",
+   "connector_id": "3387",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 205,
+  "raw_connect_count": 23,
+  "dangling_ends": 1,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

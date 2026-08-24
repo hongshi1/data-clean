@@ -1,0 +1,239 @@
+{
+ "pair_id": "4_001",
+ "scene": "sc4_flowchart_capability",
+ "doc": "02界面集成框架软件需求规格说明-终稿",
+ "embed_index": "oleObject5.bin:page1.xml",
+ "mapping_confidence": "low",
+ "mapping_source": "keyword_mapping",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "352",
+   "text": "开发工程生成",
+   "type": "process",
+   "cx": 1.3171,
+   "cy": 5.3389,
+   "w": 0.9843,
+   "h": 0.3841,
+   "rx": 0.155,
+   "ry": 0.5146
+  },
+  {
+   "id": "375",
+   "text": "配置项填写",
+   "type": "process",
+   "cx": 1.3171,
+   "cy": 3.7692,
+   "w": 0.9843,
+   "h": 0.3841,
+   "rx": 0.155,
+   "ry": 0.6573
+  },
+  {
+   "id": "398",
+   "text": "公共组件上传",
+   "type": "gateway",
+   "cx": 1.3171,
+   "cy": 2.7481,
+   "w": 1.1713,
+   "h": 0.5301,
+   "rx": 0.155,
+   "ry": 0.7502
+  },
+  {
+   "id": "414",
+   "text": "查看错误原因，重新开发",
+   "type": "process",
+   "cx": 3.3626,
+   "cy": 2.7481,
+   "w": 1.037,
+   "h": 0.4047,
+   "rx": 0.3956,
+   "ry": 0.7502
+  },
+  {
+   "id": "437",
+   "text": "组件打包发布",
+   "type": "process",
+   "cx": 1.3171,
+   "cy": 0.9153,
+   "w": 0.9843,
+   "h": 0.3841,
+   "rx": 0.155,
+   "ry": 0.9168
+  },
+  {
+   "id": "460",
+   "text": "组件接口",
+   "type": "process",
+   "cx": 1.3171,
+   "cy": 4.5541,
+   "w": 0.9843,
+   "h": 0.3841,
+   "rx": 0.155,
+   "ry": 0.586
+  },
+  {
+   "id": "483",
+   "text": "开发接口",
+   "type": "process",
+   "cx": 3.3626,
+   "cy": 4.0235,
+   "w": 0.85,
+   "h": 0.3841,
+   "rx": 0.3956,
+   "ry": 0.6342
+  },
+  {
+   "id": "3235",
+   "text": "",
+   "type": "start",
+   "cx": 1.3171,
+   "cy": 6.0612,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.155,
+   "ry": 0.449
+  },
+  {
+   "id": "3236",
+   "text": "",
+   "type": "end",
+   "cx": 1.3171,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.155,
+   "ry": 0.9888
+  },
+  {
+   "id": "4083",
+   "text": "公共组件管理",
+   "type": "process",
+   "cx": 1.3171,
+   "cy": 1.8136,
+   "w": 1.037,
+   "h": 0.4047,
+   "rx": 0.155,
+   "ry": 0.8351
+  }
+ ],
+ "edges": [
+  {
+   "src": "4083",
+   "dst": "437",
+   "src_text": "公共组件管理",
+   "dst_text": "组件打包发布",
+   "label": "",
+   "connector_id": "4106",
+   "via": "glued"
+  },
+  {
+   "src": "437",
+   "dst": "3236",
+   "src_text": "组件打包发布",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "529",
+   "via": "glued"
+  },
+  {
+   "src": "483",
+   "dst": "352",
+   "src_text": "开发接口",
+   "dst_text": "开发工程生成",
+   "label": "",
+   "connector_id": "514",
+   "via": "glued"
+  },
+  {
+   "src": "414",
+   "dst": "483",
+   "src_text": "查看错误原因，重新开发",
+   "dst_text": "开发接口",
+   "label": "",
+   "connector_id": "513",
+   "via": "glued"
+  },
+  {
+   "src": "375",
+   "dst": "437",
+   "src_text": "配置项填写",
+   "dst_text": "组件打包发布",
+   "label": "直接进入\n打包发布",
+   "connector_id": "512",
+   "via": "glued"
+  },
+  {
+   "src": "398",
+   "dst": "414",
+   "src_text": "公共组件上传",
+   "dst_text": "查看错误原因，重新开发",
+   "label": "失败",
+   "connector_id": "511",
+   "via": "glued"
+  },
+  {
+   "src": "398",
+   "dst": "4083",
+   "src_text": "公共组件上传",
+   "dst_text": "公共组件管理",
+   "label": "成功",
+   "connector_id": "510",
+   "via": "glued"
+  },
+  {
+   "src": "3235",
+   "dst": "352",
+   "src_text": "",
+   "dst_text": "开发工程生成",
+   "label": "",
+   "connector_id": "506",
+   "via": "glued"
+  },
+  {
+   "src": "352",
+   "dst": "460",
+   "src_text": "开发工程生成",
+   "dst_text": "组件接口",
+   "label": "",
+   "connector_id": "507",
+   "via": "glued"
+  },
+  {
+   "src": "460",
+   "dst": "375",
+   "src_text": "组件接口",
+   "dst_text": "配置项填写",
+   "label": "",
+   "connector_id": "508",
+   "via": "glued"
+  },
+  {
+   "src": "375",
+   "dst": "398",
+   "src_text": "配置项填写",
+   "dst_text": "公共组件上传",
+   "label": "",
+   "connector_id": "509",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 189,
+  "raw_connect_count": 22,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

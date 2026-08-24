@@ -1,0 +1,221 @@
+{
+ "pair_id": "2_046",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject34.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "491",
+   "text": "执行修改sql语句",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 7.3723,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.3298
+  },
+  {
+   "id": "492",
+   "text": "调用缓存更新接口",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 6.5027,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.4088
+  },
+  {
+   "id": "489",
+   "text": "",
+   "type": "state",
+   "cx": 0.6906,
+   "cy": 8.1434,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.2597
+  },
+  {
+   "id": "490",
+   "text": "",
+   "type": "end",
+   "cx": 0.6987,
+   "cy": 0.1889,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0822,
+   "ry": 0.9828
+  },
+  {
+   "id": "493",
+   "text": "解析SQL语句",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 5.6332,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.4879
+  },
+  {
+   "id": "494",
+   "text": "获取表名",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 4.7636,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5669
+  },
+  {
+   "id": "495",
+   "text": "在表名映射表中中岛对应的表名",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 3.9274,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.643
+  },
+  {
+   "id": "496",
+   "text": "遍历修改标志为失效",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 3.0416,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.7235
+  },
+  {
+   "id": "497",
+   "text": "对查询到失效并且为查询结果的表，调用缓存更新接口",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 2.1557,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.804
+  },
+  {
+   "id": "498",
+   "text": "找到缓存节点下标，先释放空间后添加缓存内容",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 1.2699,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.8846
+  }
+ ],
+ "edges": [
+  {
+   "src": "498",
+   "dst": "490",
+   "src_text": "找到缓存节点下标，先释放空间后添加缓存内容",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "488",
+   "via": "glued"
+  },
+  {
+   "src": "489",
+   "dst": "491",
+   "src_text": "",
+   "dst_text": "执行修改sql语句",
+   "label": "",
+   "connector_id": "238",
+   "via": "glued"
+  },
+  {
+   "src": "492",
+   "dst": "493",
+   "src_text": "调用缓存更新接口",
+   "dst_text": "解析SQL语句",
+   "label": "",
+   "connector_id": "259",
+   "via": "glued"
+  },
+  {
+   "src": "491",
+   "dst": "492",
+   "src_text": "执行修改sql语句",
+   "dst_text": "调用缓存更新接口",
+   "label": "",
+   "connector_id": "357",
+   "via": "glued"
+  },
+  {
+   "src": "494",
+   "dst": "495",
+   "src_text": "获取表名",
+   "dst_text": "在表名映射表中中岛对应的表名",
+   "label": "",
+   "connector_id": "457",
+   "via": "glued"
+  },
+  {
+   "src": "495",
+   "dst": "496",
+   "src_text": "在表名映射表中中岛对应的表名",
+   "dst_text": "遍历修改标志为失效",
+   "label": "",
+   "connector_id": "456",
+   "via": "glued"
+  },
+  {
+   "src": "496",
+   "dst": "497",
+   "src_text": "遍历修改标志为失效",
+   "dst_text": "对查询到失效并且为查询结果的表，调用缓存更新接口",
+   "label": "",
+   "connector_id": "455",
+   "via": "glued"
+  },
+  {
+   "src": "497",
+   "dst": "498",
+   "src_text": "对查询到失效并且为查询结果的表，调用缓存更新接口",
+   "dst_text": "找到缓存节点下标，先释放空间后添加缓存内容",
+   "label": "",
+   "connector_id": "454",
+   "via": "glued"
+  },
+  {
+   "src": "493",
+   "dst": "494",
+   "src_text": "解析SQL语句",
+   "dst_text": "获取表名",
+   "label": "",
+   "connector_id": "331",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 19,
+  "raw_connect_count": 18,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

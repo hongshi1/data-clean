@@ -1,0 +1,261 @@
+{
+ "pair_id": "2_052",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject42.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1107",
+   "text": "执行sql语句",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 8.9487,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.1865
+  },
+  {
+   "id": "1102",
+   "text": "",
+   "type": "state",
+   "cx": 2.0686,
+   "cy": 9.7361,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.2434,
+   "ry": 0.1149
+  },
+  {
+   "id": "1109",
+   "text": "获取空闲句柄",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 3.2401,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.7054
+  },
+  {
+   "id": "1103",
+   "text": "",
+   "type": "end",
+   "cx": 2.0686,
+   "cy": 0.3857,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.2434,
+   "ry": 0.9649
+  },
+  {
+   "id": "1108",
+   "text": "获取句柄类型对应的句柄组",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 4.3227,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.607
+  },
+  {
+   "id": "1111",
+   "text": "将分配的句柄状态置为使用状态",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 2.2558,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.7949
+  },
+  {
+   "id": "956",
+   "text": "判断连接模式",
+   "type": "gateway",
+   "cx": 2.0686,
+   "cy": 5.307,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.2434,
+   "ry": 0.5175
+  },
+  {
+   "id": "1104",
+   "text": "根据ID获取电影的句柄类型",
+   "type": "process",
+   "cx": 2.0686,
+   "cy": 6.2913,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.4281
+  },
+  {
+   "id": "1105",
+   "text": "输入相关参数",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 7.1771,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.3475
+  },
+  {
+   "id": "1106",
+   "text": "调用申请句柄接口",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 8.0629,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.267
+  },
+  {
+   "id": "1110",
+   "text": "提示初始化",
+   "type": "other",
+   "cx": 0.4938,
+   "cy": 3.929,
+   "w": 0.9843,
+   "h": 0.5906,
+   "rx": 0.0581,
+   "ry": 0.6428
+  },
+  {
+   "id": "1112",
+   "text": "使用连接句柄惊醒数据库操作",
+   "type": "other",
+   "cx": 2.0686,
+   "cy": 1.2716,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.2434,
+   "ry": 0.8844
+  }
+ ],
+ "edges": [
+  {
+   "src": "1112",
+   "dst": "1103",
+   "src_text": "使用连接句柄惊醒数据库操作",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "1101",
+   "via": "glued"
+  },
+  {
+   "src": "956",
+   "dst": "1110",
+   "src_text": "判断连接模式",
+   "dst_text": "提示初始化",
+   "label": "否",
+   "connector_id": "1071",
+   "via": "glued"
+  },
+  {
+   "src": "1102",
+   "dst": "1107",
+   "src_text": "",
+   "dst_text": "执行sql语句",
+   "label": "",
+   "connector_id": "821",
+   "via": "glued"
+  },
+  {
+   "src": "1108",
+   "dst": "1109",
+   "src_text": "获取句柄类型对应的句柄组",
+   "dst_text": "获取空闲句柄",
+   "label": "",
+   "connector_id": "881",
+   "via": "glued"
+  },
+  {
+   "src": "956",
+   "dst": "1108",
+   "src_text": "判断连接模式",
+   "dst_text": "获取句柄类型对应的句柄组",
+   "label": "",
+   "connector_id": "1047",
+   "via": "glued"
+  },
+  {
+   "src": "1104",
+   "dst": "956",
+   "src_text": "根据ID获取电影的句柄类型",
+   "dst_text": "判断连接模式",
+   "label": "",
+   "connector_id": "1046",
+   "via": "glued"
+  },
+  {
+   "src": "1105",
+   "dst": "1104",
+   "src_text": "输入相关参数",
+   "dst_text": "根据ID获取电影的句柄类型",
+   "label": "",
+   "connector_id": "1041",
+   "via": "glued"
+  },
+  {
+   "src": "1106",
+   "dst": "1105",
+   "src_text": "调用申请句柄接口",
+   "dst_text": "输入相关参数",
+   "label": "",
+   "connector_id": "1040",
+   "via": "glued"
+  },
+  {
+   "src": "1111",
+   "dst": "1112",
+   "src_text": "将分配的句柄状态置为使用状态",
+   "dst_text": "使用连接句柄惊醒数据库操作",
+   "label": "",
+   "connector_id": "950",
+   "via": "glued"
+  },
+  {
+   "src": "1107",
+   "dst": "1106",
+   "src_text": "执行sql语句",
+   "dst_text": "调用申请句柄接口",
+   "label": "",
+   "connector_id": "823",
+   "via": "glued"
+  },
+  {
+   "src": "1109",
+   "dst": "1111",
+   "src_text": "获取空闲句柄",
+   "dst_text": "将分配的句柄状态置为使用状态",
+   "label": "",
+   "connector_id": "831",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 37,
+  "raw_connect_count": 22,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

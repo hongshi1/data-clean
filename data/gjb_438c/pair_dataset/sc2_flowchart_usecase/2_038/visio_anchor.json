@@ -1,0 +1,161 @@
+{
+ "pair_id": "2_038",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject24.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1",
+   "text": "调用插入BLOB数据接口",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 4.6102,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5809
+  },
+  {
+   "id": "20",
+   "text": "将数据传输至服务端",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 3.7452,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.6595
+  },
+  {
+   "id": "26",
+   "text": "",
+   "type": "state",
+   "cx": 0.6906,
+   "cy": 5.5168,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.4985
+  },
+  {
+   "id": "32",
+   "text": "",
+   "type": "end",
+   "cx": 0.6906,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.9888
+  },
+  {
+   "id": "33",
+   "text": "服务端从连接池中申请数据库连接句柄",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 2.8801,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.7382
+  },
+  {
+   "id": "37",
+   "text": "用申请的连接句柄插入BLOB数据",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 1.8751,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.8295
+  },
+  {
+   "id": "41",
+   "text": "提交操作",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 0.9893,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.9101
+  }
+ ],
+ "edges": [
+  {
+   "src": "41",
+   "dst": "32",
+   "src_text": "提交操作",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "42",
+   "via": "glued"
+  },
+  {
+   "src": "37",
+   "dst": "41",
+   "src_text": "用申请的连接句柄插入BLOB数据",
+   "dst_text": "提交操作",
+   "label": "",
+   "connector_id": "38",
+   "via": "glued"
+  },
+  {
+   "src": "1",
+   "dst": "20",
+   "src_text": "调用插入BLOB数据接口",
+   "dst_text": "将数据传输至服务端",
+   "label": "",
+   "connector_id": "23",
+   "via": "glued"
+  },
+  {
+   "src": "20",
+   "dst": "33",
+   "src_text": "将数据传输至服务端",
+   "dst_text": "服务端从连接池中申请数据库连接句柄",
+   "label": "",
+   "connector_id": "29",
+   "via": "glued"
+  },
+  {
+   "src": "33",
+   "dst": "37",
+   "src_text": "服务端从连接池中申请数据库连接句柄",
+   "dst_text": "用申请的连接句柄插入BLOB数据",
+   "label": "",
+   "connector_id": "34",
+   "via": "glued"
+  },
+  {
+   "src": "26",
+   "dst": "1",
+   "src_text": "",
+   "dst_text": "调用插入BLOB数据接口",
+   "label": "",
+   "connector_id": "27",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 13,
+  "raw_connect_count": 12,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

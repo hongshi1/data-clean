@@ -1,0 +1,161 @@
+{
+ "pair_id": "2_027",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject11.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1",
+   "text": "调用修改数据接口",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 4.8859,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5558
+  },
+  {
+   "id": "2",
+   "text": "传入相关参数",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 3.9197,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.6437
+  },
+  {
+   "id": "4",
+   "text": "将语句传输至服务端",
+   "type": "other",
+   "cx": 0.6936,
+   "cy": 2.9381,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.7329
+  },
+  {
+   "id": "6",
+   "text": "",
+   "type": "state",
+   "cx": 0.6906,
+   "cy": 5.7924,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.4734
+  },
+  {
+   "id": "9",
+   "text": "",
+   "type": "end",
+   "cx": 0.6936,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0816,
+   "ry": 0.9888
+  },
+  {
+   "id": "10",
+   "text": "服务端从连接池中申请连接句柄",
+   "type": "other",
+   "cx": 0.6936,
+   "cy": 2.0522,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.8134
+  },
+  {
+   "id": "12",
+   "text": "用申请的连接句柄执行增加数据sql语句",
+   "type": "other",
+   "cx": 0.6936,
+   "cy": 1.1664,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.894
+  }
+ ],
+ "edges": [
+  {
+   "src": "12",
+   "dst": "9",
+   "src_text": "用申请的连接句柄执行增加数据sql语句",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "13",
+   "via": "glued"
+  },
+  {
+   "src": "1",
+   "dst": "2",
+   "src_text": "调用修改数据接口",
+   "dst_text": "传入相关参数",
+   "label": "",
+   "connector_id": "3",
+   "via": "glued"
+  },
+  {
+   "src": "2",
+   "dst": "4",
+   "src_text": "传入相关参数",
+   "dst_text": "将语句传输至服务端",
+   "label": "",
+   "connector_id": "5",
+   "via": "glued"
+  },
+  {
+   "src": "6",
+   "dst": "1",
+   "src_text": "",
+   "dst_text": "调用修改数据接口",
+   "label": "",
+   "connector_id": "7",
+   "via": "glued"
+  },
+  {
+   "src": "4",
+   "dst": "10",
+   "src_text": "将语句传输至服务端",
+   "dst_text": "服务端从连接池中申请连接句柄",
+   "label": "",
+   "connector_id": "8",
+   "via": "glued"
+  },
+  {
+   "src": "10",
+   "dst": "12",
+   "src_text": "服务端从连接池中申请连接句柄",
+   "dst_text": "用申请的连接句柄执行增加数据sql语句",
+   "label": "",
+   "connector_id": "11",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 13,
+  "raw_connect_count": 12,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

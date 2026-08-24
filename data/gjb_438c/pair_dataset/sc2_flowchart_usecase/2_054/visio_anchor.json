@@ -1,0 +1,161 @@
+{
+ "pair_id": "2_054",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject45.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1150",
+   "text": "执行sql语句",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 4.4212,
+   "w": 0.9843,
+   "h": 0.5906,
+   "rx": 0.0585,
+   "ry": 0.5981
+  },
+  {
+   "id": "1148",
+   "text": "",
+   "type": "state",
+   "cx": 0.4971,
+   "cy": 5.2086,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.5265
+  },
+  {
+   "id": "1149",
+   "text": "",
+   "type": "end",
+   "cx": 0.4971,
+   "cy": 0.3857,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.9649
+  },
+  {
+   "id": "1152",
+   "text": "输入相关参数",
+   "type": "other",
+   "cx": 0.4971,
+   "cy": 2.6495,
+   "w": 0.9843,
+   "h": 0.5906,
+   "rx": 0.0585,
+   "ry": 0.7591
+  },
+  {
+   "id": "1151",
+   "text": "调用释放句柄接口",
+   "type": "other",
+   "cx": 0.4971,
+   "cy": 3.5353,
+   "w": 0.9843,
+   "h": 0.5906,
+   "rx": 0.0585,
+   "ry": 0.6786
+  },
+  {
+   "id": "1107",
+   "text": "判断连接模式",
+   "type": "gateway",
+   "cx": 0.4971,
+   "cy": 1.6653,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.8486
+  },
+  {
+   "id": "1153",
+   "text": "输入相关参数",
+   "type": "other",
+   "cx": 1.57,
+   "cy": 0.8779,
+   "w": 0.7677,
+   "h": 0.5906,
+   "rx": 0.1847,
+   "ry": 0.9202
+  }
+ ],
+ "edges": [
+  {
+   "src": "1107",
+   "dst": "1153",
+   "src_text": "判断连接模式",
+   "dst_text": "输入相关参数",
+   "label": "否",
+   "connector_id": "1147",
+   "via": "glued"
+  },
+  {
+   "src": "1148",
+   "dst": "1150",
+   "src_text": "",
+   "dst_text": "执行sql语句",
+   "label": "",
+   "connector_id": "821",
+   "via": "glued"
+  },
+  {
+   "src": "1107",
+   "dst": "1149",
+   "src_text": "判断连接模式",
+   "dst_text": "",
+   "label": "是",
+   "connector_id": "1122",
+   "via": "glued"
+  },
+  {
+   "src": "1150",
+   "dst": "1151",
+   "src_text": "执行sql语句",
+   "dst_text": "调用释放句柄接口",
+   "label": "",
+   "connector_id": "823",
+   "via": "glued"
+  },
+  {
+   "src": "1151",
+   "dst": "1152",
+   "src_text": "调用释放句柄接口",
+   "dst_text": "输入相关参数",
+   "label": "",
+   "connector_id": "1040",
+   "via": "glued"
+  },
+  {
+   "src": "1152",
+   "dst": "1107",
+   "src_text": "输入相关参数",
+   "dst_text": "判断连接模式",
+   "label": "",
+   "connector_id": "1041",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 27,
+  "raw_connect_count": 12,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

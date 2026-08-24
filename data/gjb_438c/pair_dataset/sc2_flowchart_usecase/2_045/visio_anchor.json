@@ -1,0 +1,230 @@
+{
+ "pair_id": "2_045",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject33.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "465",
+   "text": "调用查询语句",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 7.4295,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.3246
+  },
+  {
+   "id": "466",
+   "text": "调用缓存添加接口",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 5.4936,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5006
+  },
+  {
+   "id": "467",
+   "text": "输入相关参数",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 4.624,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5796
+  },
+  {
+   "id": "463",
+   "text": "",
+   "type": "state",
+   "cx": 0.6906,
+   "cy": 8.2006,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.2545
+  },
+  {
+   "id": "464",
+   "text": "",
+   "type": "end",
+   "cx": 0.6906,
+   "cy": 0.1955,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.9822
+  },
+  {
+   "id": "468",
+   "text": "解析SQL语句获取表名",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 3.7545,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.6587
+  },
+  {
+   "id": "342",
+   "text": "是否已在缓存",
+   "type": "gateway",
+   "cx": 0.6906,
+   "cy": 6.4615,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.4126
+  },
+  {
+   "id": "469",
+   "text": "申请缓存节点",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 2.8302,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.7427
+  },
+  {
+   "id": "470",
+   "text": "将<表名，缓存节点下标>形式插入到表名映射表中",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 1.9443,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.8232
+  },
+  {
+   "id": "471",
+   "text": "将<sql,缓存节点下标>形式插入到sql映射表中",
+   "type": "other",
+   "cx": 0.6906,
+   "cy": 1.0585,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.9038
+  }
+ ],
+ "edges": [
+  {
+   "src": "342",
+   "dst": "464",
+   "src_text": "是否已在缓存",
+   "dst_text": "",
+   "label": "是",
+   "connector_id": "462",
+   "via": "glued"
+  },
+  {
+   "src": "471",
+   "dst": "464",
+   "src_text": "将<sql,缓存节点下标>形式插入到sql映射表中",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "454",
+   "via": "glued"
+  },
+  {
+   "src": "342",
+   "dst": "466",
+   "src_text": "是否已在缓存",
+   "dst_text": "调用缓存添加接口",
+   "label": "否",
+   "connector_id": "357",
+   "via": "glued"
+  },
+  {
+   "src": "465",
+   "dst": "342",
+   "src_text": "调用查询语句",
+   "dst_text": "是否已在缓存",
+   "label": "",
+   "connector_id": "62",
+   "via": "glued"
+  },
+  {
+   "src": "463",
+   "dst": "465",
+   "src_text": "",
+   "dst_text": "调用查询语句",
+   "label": "",
+   "connector_id": "238",
+   "via": "glued"
+  },
+  {
+   "src": "466",
+   "dst": "467",
+   "src_text": "调用缓存添加接口",
+   "dst_text": "输入相关参数",
+   "label": "",
+   "connector_id": "259",
+   "via": "glued"
+  },
+  {
+   "src": "469",
+   "dst": "470",
+   "src_text": "申请缓存节点",
+   "dst_text": "将<表名，缓存节点下标>形式插入到表名映射表中",
+   "label": "",
+   "connector_id": "456",
+   "via": "glued"
+  },
+  {
+   "src": "468",
+   "dst": "469",
+   "src_text": "解析SQL语句获取表名",
+   "dst_text": "申请缓存节点",
+   "label": "",
+   "connector_id": "331",
+   "via": "glued"
+  },
+  {
+   "src": "467",
+   "dst": "468",
+   "src_text": "输入相关参数",
+   "dst_text": "解析SQL语句获取表名",
+   "label": "",
+   "connector_id": "128",
+   "via": "glued"
+  },
+  {
+   "src": "470",
+   "dst": "471",
+   "src_text": "将<表名，缓存节点下标>形式插入到表名映射表中",
+   "dst_text": "将<sql,缓存节点下标>形式插入到sql映射表中",
+   "label": "",
+   "connector_id": "455",
+   "via": "geo"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 34,
+  "raw_connect_count": 18,
+  "dangling_ends": 0,
+  "geo_edges": 1
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

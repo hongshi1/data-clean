@@ -1,0 +1,161 @@
+{
+ "pair_id": "2_023",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject5.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1",
+   "text": "调用初始化接口",
+   "type": "process",
+   "cx": 0.694,
+   "cy": 5.0371,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.5421
+  },
+  {
+   "id": "2",
+   "text": "传入相关参数",
+   "type": "other",
+   "cx": 0.694,
+   "cy": 4.0321,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.6334
+  },
+  {
+   "id": "3",
+   "text": "判断软件实体号是否存在",
+   "type": "gateway",
+   "cx": 0.694,
+   "cy": 3.0471,
+   "w": 1.378,
+   "h": 0.7631,
+   "rx": 0.0816,
+   "ry": 0.723
+  },
+  {
+   "id": "22",
+   "text": "根据软件实体号生成交互软件ID",
+   "type": "other",
+   "cx": 0.694,
+   "cy": 1.9559,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.8222
+  },
+  {
+   "id": "23",
+   "text": "返回交互软件ID",
+   "type": "other",
+   "cx": 0.694,
+   "cy": 0.9509,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0816,
+   "ry": 0.9136
+  },
+  {
+   "id": "49",
+   "text": "",
+   "type": "state",
+   "cx": 0.694,
+   "cy": 5.9436,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0816,
+   "ry": 0.4597
+  },
+  {
+   "id": "55",
+   "text": "",
+   "type": "end",
+   "cx": 0.694,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0816,
+   "ry": 0.9888
+  }
+ ],
+ "edges": [
+  {
+   "src": "49",
+   "dst": "1",
+   "src_text": "",
+   "dst_text": "调用初始化接口",
+   "label": "",
+   "connector_id": "50",
+   "via": "glued"
+  },
+  {
+   "src": "23",
+   "dst": "55",
+   "src_text": "返回交互软件ID",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "48",
+   "via": "glued"
+  },
+  {
+   "src": "1",
+   "dst": "2",
+   "src_text": "调用初始化接口",
+   "dst_text": "传入相关参数",
+   "label": "",
+   "connector_id": "18",
+   "via": "glued"
+  },
+  {
+   "src": "2",
+   "dst": "3",
+   "src_text": "传入相关参数",
+   "dst_text": "判断软件实体号是否存在",
+   "label": "",
+   "connector_id": "19",
+   "via": "glued"
+  },
+  {
+   "src": "3",
+   "dst": "23",
+   "src_text": "判断软件实体号是否存在",
+   "dst_text": "返回交互软件ID",
+   "label": "N",
+   "connector_id": "20",
+   "via": "glued"
+  },
+  {
+   "src": "22",
+   "dst": "23",
+   "src_text": "根据软件实体号生成交互软件ID",
+   "dst_text": "返回交互软件ID",
+   "label": "",
+   "connector_id": "24",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 28,
+  "raw_connect_count": 13,
+  "dangling_ends": 1,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

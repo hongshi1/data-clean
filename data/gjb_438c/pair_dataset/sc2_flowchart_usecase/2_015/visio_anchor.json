@@ -1,0 +1,170 @@
+{
+ "pair_id": "2_015",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "02界面集成框架软件需求规格说明-终稿",
+ "embed_index": "oleObject23.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "4798",
+   "text": "请求数据",
+   "type": "gateway",
+   "cx": 0.4971,
+   "cy": 1.7873,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.8375
+  },
+  {
+   "id": "5258",
+   "text": "",
+   "type": "start",
+   "cx": 0.4971,
+   "cy": 4.4538,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.5951
+  },
+  {
+   "id": "5259",
+   "text": "",
+   "type": "end",
+   "cx": 0.4971,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0585,
+   "ry": 0.9888
+  },
+  {
+   "id": "5260",
+   "text": "进入开发工具模板",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 3.8205,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.6527
+  },
+  {
+   "id": "5283",
+   "text": "向后端发出API请求数据",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 2.9949,
+   "w": 0.0,
+   "h": 0.5163,
+   "rx": 0.0585,
+   "ry": 0.7277
+  },
+  {
+   "id": "5306",
+   "text": "查看报错信息，修改后重新提交",
+   "type": "process",
+   "cx": 2.3574,
+   "cy": 2.4066,
+   "w": 1.1614,
+   "h": 0.3937,
+   "rx": 0.2773,
+   "ry": 0.7812
+  },
+  {
+   "id": "5329",
+   "text": "在前端展现获取数据",
+   "type": "process",
+   "cx": 0.4971,
+   "cy": 0.7705,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.0585,
+   "ry": 0.93
+  }
+ ],
+ "edges": [
+  {
+   "src": "5258",
+   "dst": "5260",
+   "src_text": "",
+   "dst_text": "进入开发工具模板",
+   "label": "",
+   "connector_id": "5355",
+   "via": "glued"
+  },
+  {
+   "src": "5329",
+   "dst": "5259",
+   "src_text": "在前端展现获取数据",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "5354",
+   "via": "glued"
+  },
+  {
+   "src": "4798",
+   "dst": "5329",
+   "src_text": "请求数据",
+   "dst_text": "在前端展现获取数据",
+   "label": "成功",
+   "connector_id": "5353",
+   "via": "glued"
+  },
+  {
+   "src": "4798",
+   "dst": "5306",
+   "src_text": "请求数据",
+   "dst_text": "查看报错信息，修改后重新提交",
+   "label": "失败",
+   "connector_id": "5215",
+   "via": "glued"
+  },
+  {
+   "src": "5260",
+   "dst": "5283",
+   "src_text": "进入开发工具模板",
+   "dst_text": "向后端发出API请求数据",
+   "label": "",
+   "connector_id": "5218",
+   "via": "glued"
+  },
+  {
+   "src": "5306",
+   "dst": "5283",
+   "src_text": "查看报错信息，修改后重新提交",
+   "dst_text": "向后端发出API请求数据",
+   "label": "",
+   "connector_id": "5225",
+   "via": "glued"
+  },
+  {
+   "src": "5283",
+   "dst": "4798",
+   "src_text": "向后端发出API请求数据",
+   "dst_text": "请求数据",
+   "label": "",
+   "connector_id": "5352",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 116,
+  "raw_connect_count": 14,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "pair_id": "2_007",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "02界面集成框架软件需求规格说明-终稿",
+ "embed_index": "oleObject15.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1437",
+   "text": "输入用户名密码",
+   "type": "process",
+   "cx": 0.6611,
+   "cy": 2.3978,
+   "w": 1.3189,
+   "h": 0.3937,
+   "rx": 0.0778,
+   "ry": 0.782
+  },
+  {
+   "id": "1460",
+   "text": "请求登录接口",
+   "type": "gateway",
+   "cx": 0.6596,
+   "cy": 1.6782,
+   "w": 0.0,
+   "h": 0.3937,
+   "rx": 0.0776,
+   "ry": 0.8474
+  },
+  {
+   "id": "1475",
+   "text": "进入界面集成框架",
+   "type": "process",
+   "cx": 0.6611,
+   "cy": 0.7924,
+   "w": 1.3189,
+   "h": 0.3937,
+   "rx": 0.0778,
+   "ry": 0.928
+  },
+  {
+   "id": "3243",
+   "text": "",
+   "type": "start",
+   "cx": 0.6611,
+   "cy": 3.0387,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0778,
+   "ry": 0.7238
+  },
+  {
+   "id": "3244",
+   "text": "",
+   "type": "end",
+   "cx": 0.6611,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0778,
+   "ry": 0.9888
+  }
+ ],
+ "edges": [
+  {
+   "src": "1460",
+   "dst": "1437",
+   "src_text": "请求登录接口",
+   "dst_text": "输入用户名密码",
+   "label": "登录失败，\n重新登录",
+   "connector_id": "1515",
+   "via": "glued"
+  },
+  {
+   "src": "3243",
+   "dst": "1437",
+   "src_text": "",
+   "dst_text": "输入用户名密码",
+   "label": "",
+   "connector_id": "1511",
+   "via": "glued"
+  },
+  {
+   "src": "1437",
+   "dst": "1460",
+   "src_text": "输入用户名密码",
+   "dst_text": "请求登录接口",
+   "label": "",
+   "connector_id": "1512",
+   "via": "glued"
+  },
+  {
+   "src": "1460",
+   "dst": "1475",
+   "src_text": "请求登录接口",
+   "dst_text": "进入界面集成框架",
+   "label": "成功",
+   "connector_id": "1513",
+   "via": "glued"
+  },
+  {
+   "src": "1475",
+   "dst": "3244",
+   "src_text": "进入界面集成框架",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "1514",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 68,
+  "raw_connect_count": 10,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

@@ -1,0 +1,210 @@
+{
+ "pair_id": "7_005",
+ "scene": "sc7_usecase_usecase",
+ "doc": "11语音综合处理软件需求规格说明-终稿",
+ "embed_index": "oleObject5.bin:page1.xml",
+ "mapping_confidence": "low",
+ "mapping_source": "keyword_mapping",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "592",
+   "text": "格式化语音文本",
+   "type": "other",
+   "cx": 0.7152,
+   "cy": 4.6507,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.0841,
+   "ry": 0.5772
+  },
+  {
+   "id": "593",
+   "text": "音频文件的生成和存储",
+   "type": "other",
+   "cx": 0.7152,
+   "cy": 3.8633,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.0841,
+   "ry": 0.6488
+  },
+  {
+   "id": "594",
+   "text": "是否设置成功",
+   "type": "decision",
+   "cx": 0.7152,
+   "cy": 1.7963,
+   "w": 1.4272,
+   "h": 0.3543,
+   "rx": 0.0841,
+   "ry": 0.8367
+  },
+  {
+   "id": "613",
+   "text": "",
+   "type": "state",
+   "cx": 0.7152,
+   "cy": 5.3593,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0841,
+   "ry": 0.5128
+  },
+  {
+   "id": "614",
+   "text": "",
+   "type": "end",
+   "cx": 0.7152,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0841,
+   "ry": 0.9888
+  },
+  {
+   "id": "620",
+   "text": "语音播报",
+   "type": "other",
+   "cx": 0.7152,
+   "cy": 3.1743,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.0841,
+   "ry": 0.7114
+  },
+  {
+   "id": "622",
+   "text": "语音设置",
+   "type": "other",
+   "cx": 0.7152,
+   "cy": 2.4853,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.0841,
+   "ry": 0.7741
+  },
+  {
+   "id": "624",
+   "text": "播报语音",
+   "type": "other",
+   "cx": 0.7152,
+   "cy": 0.8318,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.0841,
+   "ry": 0.9244
+  },
+  {
+   "id": "625",
+   "text": "语音设置异常，重新设置语音",
+   "type": "other",
+   "cx": 3.0248,
+   "cy": 1.7963,
+   "w": 1.4272,
+   "h": 0.3937,
+   "rx": 0.3559,
+   "ry": 0.8367
+  }
+ ],
+ "edges": [
+  {
+   "src": "625",
+   "dst": "622",
+   "src_text": "语音设置异常，重新设置语音",
+   "dst_text": "语音设置",
+   "label": "",
+   "connector_id": "628",
+   "via": "glued"
+  },
+  {
+   "src": "624",
+   "dst": "614",
+   "src_text": "播报语音",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "626",
+   "via": "glued"
+  },
+  {
+   "src": "622",
+   "dst": "594",
+   "src_text": "语音设置",
+   "dst_text": "是否设置成功",
+   "label": "",
+   "connector_id": "623",
+   "via": "glued"
+  },
+  {
+   "src": "613",
+   "dst": "592",
+   "src_text": "",
+   "dst_text": "格式化语音文本",
+   "label": "",
+   "connector_id": "619",
+   "via": "glued"
+  },
+  {
+   "src": "592",
+   "dst": "593",
+   "src_text": "格式化语音文本",
+   "dst_text": "音频文件的生成和存储",
+   "label": "",
+   "connector_id": "597",
+   "via": "glued"
+  },
+  {
+   "src": "593",
+   "dst": "620",
+   "src_text": "音频文件的生成和存储",
+   "dst_text": "语音播报",
+   "label": "",
+   "connector_id": "599",
+   "via": "glued"
+  },
+  {
+   "src": "594",
+   "dst": "625",
+   "src_text": "是否设置成功",
+   "dst_text": "语音设置异常，重新设置语音",
+   "label": "失败",
+   "connector_id": "605",
+   "via": "glued"
+  },
+  {
+   "src": "594",
+   "dst": "624",
+   "src_text": "是否设置成功",
+   "dst_text": "播报语音",
+   "label": "成功",
+   "connector_id": "606",
+   "via": "glued"
+  },
+  {
+   "src": "620",
+   "dst": "622",
+   "src_text": "语音播报",
+   "dst_text": "语音设置",
+   "label": "",
+   "connector_id": "621",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 18,
+  "raw_connect_count": 18,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}

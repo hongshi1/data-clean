@@ -1,0 +1,161 @@
+{
+ "pair_id": "2_040",
+ "scene": "sc2_flowchart_usecase",
+ "doc": "04数据统一访问服务软件需求规格说明-终稿",
+ "embed_index": "oleObject26.bin:page1.xml",
+ "mapping_confidence": "high",
+ "mapping_source": "vlm_bridge_realigned",
+ "page": {
+  "w": 8.5,
+  "h": 11.0
+ },
+ "nodes": [
+  {
+   "id": "1",
+   "text": "调用查询BLOB数据接口",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 4.6102,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.5809
+  },
+  {
+   "id": "2",
+   "text": "将查询sql传输至服务端",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 3.7452,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.6595
+  },
+  {
+   "id": "4",
+   "text": "",
+   "type": "state",
+   "cx": 0.6906,
+   "cy": 5.5168,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.4985
+  },
+  {
+   "id": "7",
+   "text": "",
+   "type": "end",
+   "cx": 0.6906,
+   "cy": 0.1231,
+   "w": 0.0,
+   "h": 0.0,
+   "rx": 0.0813,
+   "ry": 0.9888
+  },
+  {
+   "id": "8",
+   "text": "服务端从连接池中申请数据库连接句柄",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 2.8801,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.7382
+  },
+  {
+   "id": "10",
+   "text": "用申请的连接句柄执行查询sql语句",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 1.8751,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.8295
+  },
+  {
+   "id": "12",
+   "text": "将查询结果返回给应用软件",
+   "type": "process",
+   "cx": 0.6906,
+   "cy": 0.9893,
+   "w": 1.378,
+   "h": 0.5906,
+   "rx": 0.0813,
+   "ry": 0.9101
+  }
+ ],
+ "edges": [
+  {
+   "src": "12",
+   "dst": "7",
+   "src_text": "将查询结果返回给应用软件",
+   "dst_text": "",
+   "label": "",
+   "connector_id": "13",
+   "via": "glued"
+  },
+  {
+   "src": "10",
+   "dst": "12",
+   "src_text": "用申请的连接句柄执行查询sql语句",
+   "dst_text": "将查询结果返回给应用软件",
+   "label": "",
+   "connector_id": "11",
+   "via": "glued"
+  },
+  {
+   "src": "1",
+   "dst": "2",
+   "src_text": "调用查询BLOB数据接口",
+   "dst_text": "将查询sql传输至服务端",
+   "label": "",
+   "connector_id": "3",
+   "via": "glued"
+  },
+  {
+   "src": "2",
+   "dst": "8",
+   "src_text": "将查询sql传输至服务端",
+   "dst_text": "服务端从连接池中申请数据库连接句柄",
+   "label": "",
+   "connector_id": "6",
+   "via": "glued"
+  },
+  {
+   "src": "8",
+   "dst": "10",
+   "src_text": "服务端从连接池中申请数据库连接句柄",
+   "dst_text": "用申请的连接句柄执行查询sql语句",
+   "label": "",
+   "connector_id": "9",
+   "via": "glued"
+  },
+  {
+   "src": "4",
+   "dst": "1",
+   "src_text": "",
+   "dst_text": "调用查询BLOB数据接口",
+   "label": "",
+   "connector_id": "5",
+   "via": "glued"
+  }
+ ],
+ "meta": {
+  "raw_shape_count": 13,
+  "raw_connect_count": 12,
+  "dangling_ends": 0,
+  "geo_edges": 0
+ },
+ "extraction": {
+  "tool": "m0_anchor_extract (Cell坐标/子Shape文本合并/Connect边重建+几何恢复)",
+  "known_limits": [
+   "未粘合连线仅几何恢复(SNAP_TH=0.35in)",
+   "嵌套组内坐标为父局部系(未变换)",
+   "边标签依赖连接线Shape自身文本"
+  ]
+ }
+}
