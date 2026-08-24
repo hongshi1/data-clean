@@ -552,10 +552,20 @@ def parse_page(vz, page_file: str, master_store: MasterStore,
         else:
             use_pts = [(pbx, pby), (pex, pey)]
 
-        best_b = min(((node_bbox_dist(use_pts[0][0], use_pts[0][1], n), n)
-                      for n in nodes), default=None, key=lambda t: t[0])
-        best_e = min(((node_bbox_dist(use_pts[-1][0], use_pts[-1][1], n), n)
-                      for n in nodes), default=None, key=lambda t: t[0])
+        def snap(px, py):
+            """吸附到最近节点; 平局(同距)时选bbox面积最小者=最具体节点(避免吸到容器框)"""
+            cands = []
+            for n in nodes:
+                d = node_bbox_dist(px, py, n)
+                area = abs(n['bbox'][2] - n['bbox'][0]) * abs(n['bbox'][3] - n['bbox'][1])
+                cands.append((d, area, n))
+            if not cands:
+                return None
+            cands.sort(key=lambda c: (round(c[0], 4), c[1]))
+            return (cands[0][0], cands[0][2])
+
+        best_b = snap(use_pts[0][0], use_pts[0][1])
+        best_e = snap(use_pts[-1][0], use_pts[-1][1])
         if not best_b or not best_e:
             continue
         (db, nb), (de, ne) = best_b, best_e
