@@ -112,6 +112,30 @@
 
 ---
 
+
+### 3.3 M11完整解析器（已实现✓，三限制全部修复）
+
+`tools/m11_full_parser.py` 实现升级路线阶段1-6：
+
+| 升级项 | 实现 | 验证 |
+|--------|------|------|
+| Master解析(阶段1) | masters.xml.rels→MasterID→masterN.xml，三层继承(Cell/行/文本)+父链Master传播 | 12226个形状经master继承获得属性 |
+| 嵌套组变换(阶段2) | M=T(Pin)·R(Angle)·Flip·T(-LocPin)逐级上溯 | bbox越界率仅0.6%(22/3757) |
+| Geometry折线(阶段3) | 行级+Cell级master合并→完整路径→页面系 | **回归测试328/328=100%**(折线端点≈Begin/End,偏差<0.05in) |
+| 方向三重证据(阶段4) | Connect记录+箭头Cell+粘合公式PAR(PNT(Sheet.N!)) | 三源融合，2610边全部带waypoints |
+| 类型判定(阶段6) | Master NameU(去.N后缀)>实例NameU>实例Name；1D形状兜底判connector | other率50%→29.9%(余多为无文本装饰件) |
+
+**产出**: `data/gjb_438c/anchor_v2/anchors_v2.json` (16文档373图3757节点2610边)
+**与M0对比**: 节点数一致(3757 vs 373图M0口径), 边+几何恢复190条, 全部边带完整折线waypoints
+
+### 3.4 Visio建模+文本协同的调研结论（本轮新增）
+
+`literature_survey/visio_modeling_text_synergy.md`（182行）核心发现:
+- **Visio作为建模前端有先例**: Kern 2009(Visio↔EMF互操作)、Halpin 2003(Visio企业建模)——但都是建模工具互操作,不是文档理解
+- **建模图vs文本一致性有标志性先例**: van der Aa, Leopold, Reijers 2016 (Information Systems, 被引61) — 流程模型活动与文本描述的不一致检测。**必引**。差异: 他们的模型是机器可读BPMN XML(建模工具产物) vs 我们从.doc反向解析; 二模态 vs 图表文三模态
+- **Visio作为文档理解中间语言(反向解析)无先例** — 我们的定位再次确认
+- RE领域的理论源头: Nuseibeh/Kramer/Finkelstein 1994多视图关系框架; Kamalrudin 2010文本-EUC一致性; aToucan(Yue 2015)文本→模型推导
+
 ## 四、文法方法调研的选型结论（语法关联与推断）
 
 针对"用文法做关联和推断"的四个需求，推荐排序：
