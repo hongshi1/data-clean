@@ -1,0 +1,328 @@
+{
+ "2_083": {
+  "dtype": "usecase_diagram",
+  "lang": "plantuml",
+  "verdict": {
+   "node_checks": [
+    {
+     "text": "文电收发与管理",
+     "visible": true
+    },
+    {
+     "text": "用户登录和退出",
+     "visible": true
+    },
+    {
+     "text": "文电接收",
+     "visible": true
+    },
+    {
+     "text": "文电发送",
+     "visible": true
+    },
+    {
+     "text": "用户管理",
+     "visible": true
+    },
+    {
+     "text": "信息统计",
+     "visible": true
+    },
+    {
+     "text": "信息查询和管理",
+     "visible": true
+    },
+    {
+     "text": "通信录查询和管理",
+     "visible": true
+    },
+    {
+     "text": "密码服务",
+     "visible": true
+    },
+    {
+     "text": "统一传输服务",
+     "visible": true
+    },
+    {
+     "text": "用户",
+     "visible": true
+    },
+    {
+     "text": "数据库",
+     "visible": true
+    },
+    {
+     "text": "文件系统",
+     "visible": true
+    },
+    {
+     "text": "轻量级部署",
+     "visible": true
+    }
+   ],
+   "edge_checks": [
+    {
+     "edge": "文电收发与→密码服务",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→统一传输服",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "统一传输服→文电收发与",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "用户→文电收发与",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→数据库",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→文件系统",
+     "exists": false,
+     "direction_ok": false
+    }
+   ],
+   "missed_elements": [],
+   "fidelity_score": 15,
+   "notes": "Mermaid代码严重错误：将大量外部参与者/系统（用户、数据库、统一传输服务、密码服务、文件系统）和边界框标题全部建模为同一层级的usecase，且所有连线关系完全错误，原图中是参与者与用例之间的关联，而非用例之间的依赖。"
+  }
+ },
+ "2_085": {
+  "dtype": "flowchart",
+  "lang": "mermaid-flowchart",
+  "verdict": {
+   "node_checks": [
+    {
+     "text": "①启动浏览器，输入文电Web客户",
+     "visible": true
+    },
+    {
+     "text": "②输入用户名和密码",
+     "visible": true
+    },
+    {
+     "text": "④关闭页面，退出文电客户端",
+     "visible": true
+    },
+    {
+     "text": "③接收文电",
+     "visible": true
+    },
+    {
+     "text": "③文电查询和删除",
+     "visible": true
+    },
+    {
+     "text": "③发送文电",
+     "visible": true
+    }
+   ],
+   "edge_checks": [
+    {
+     "edge": "③文电查询和删除→④关闭页面，退出文电",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "③接收文电→④关闭页面，退出文电",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "③发送文电→④关闭页面，退出文电",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "①启动浏览器，输入文→②输入用户名和密码",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "②输入用户名和密码→③接收文电",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "②输入用户名和密码→③文电查询和删除",
+     "exists": true,
+     "direction_ok": true
+    },
+    {
+     "edge": "②输入用户名和密码→③发送文电",
+     "exists": true,
+     "direction_ok": true
+    }
+   ],
+   "missed_elements": [],
+   "fidelity_score": 100,
+   "notes": "Mermaid代码完全忠实还原了原图的所有节点、文字和连接关系，无任何遗漏或错误。"
+  }
+ },
+ "2_088": {
+  "dtype": "usecase_diagram",
+  "lang": "plantuml",
+  "verdict": {
+   "node_checks": [
+    {
+     "text": "网络资源定位功能",
+     "visible": true
+    },
+    {
+     "text": "名录访问",
+     "visible": true
+    },
+    {
+     "text": "名录管理",
+     "visible": true
+    },
+    {
+     "text": "名录影像",
+     "visible": true
+    },
+    {
+     "text": "数据库",
+     "visible": true
+    }
+   ],
+   "edge_checks": [
+    {
+     "edge": "网络资源定位功能→数据库",
+     "exists": false,
+     "direction_ok": false
+    }
+   ],
+   "missed_elements": [
+    "数据库到名录访问的连接线",
+    "数据库到名录影像的连接线",
+    "数据库到名录管理的连接线"
+   ],
+   "fidelity_score": 40,
+   "notes": "Mermaid代码严重失真：将'网络资源定位功能'和'数据库'错误建模为用例节点，且遗漏了数据库与三个名录用例之间的三条关键连线，同时虚构了不存在的'网络资源定位功能→数据库'箭头。"
+  }
+ },
+ "2_089": {
+  "dtype": "usecase_diagram",
+  "lang": "plantuml",
+  "verdict": {
+   "node_checks": [
+    {
+     "text": "文电收发与管理",
+     "visible": true
+    },
+    {
+     "text": "用户登录和退出",
+     "visible": true
+    },
+    {
+     "text": "文电接收",
+     "visible": true
+    },
+    {
+     "text": "文电发送",
+     "visible": true
+    },
+    {
+     "text": "用户管理",
+     "visible": true
+    },
+    {
+     "text": "信息统计",
+     "visible": true
+    },
+    {
+     "text": "信息查询和管理",
+     "visible": true
+    },
+    {
+     "text": "通信录查询和管理",
+     "visible": true
+    },
+    {
+     "text": "密码服务",
+     "visible": true
+    },
+    {
+     "text": "统一传输服务",
+     "visible": true
+    },
+    {
+     "text": "用户",
+     "visible": true
+    },
+    {
+     "text": "数据库",
+     "visible": true
+    },
+    {
+     "text": "文件系统",
+     "visible": true
+    },
+    {
+     "text": "轻量级部署",
+     "visible": true
+    }
+   ],
+   "edge_checks": [
+    {
+     "edge": "文电收发与→密码服务",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→统一传输",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "统一传输服→文电收发与",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "用户→文电收发与",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→数据库",
+     "exists": false,
+     "direction_ok": false
+    },
+    {
+     "edge": "文电收发与→文件系统",
+     "exists": false,
+     "direction_ok": false
+    }
+   ],
+   "missed_elements": [
+    "文电收发与管理功能(作为矩形框/边界而非用例节点)",
+    "用户登录和退出与统一传输服务之间的双向箭头",
+    "用户登录和退出与数据库之间的双向箭头",
+    "文电发送与统一传输服务之间的双向箭头",
+    "文电发送与文件系统之间的双向箭头",
+    "文电接收与统一传输服务之间的双向箭头",
+    "文电接收与密码服务之间的双向箭头",
+    "用户管理与数据库之间的双向箭头",
+    "信息统计与数据库之间的双向箭头",
+    "信息查询和管理与数据库之间的双向箭头",
+    "通信录查询和管理与数据库之间的双向箭头",
+    "用户与通信录查询和管理之间的单向箭头",
+    "用户与文电收发与管理功能边界的关系"
+   ],
+   "fidelity_score": 25,
+   "notes": "Mermaid代码严重失真：将边界框错误定义为用例节点，所有内部用例与外部参与者的复杂关联完全丢失，箭头方向和关系类型全部错误，仅节点文字基本对应但结构关系完全不符。"
+  }
+ }
+}

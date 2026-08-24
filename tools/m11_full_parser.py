@@ -375,15 +375,49 @@ def parse_page(vz, page_file: str, master_store: MasterStore,
     records = []
     walk_shapes(shapes_root, None, None, master_store, records)
 
-    # ── Pass 2: 语义节点(仅顶层Shape成节点, 子Shape文本已合并进父) ──
+    # ── Pass 2: 语义节点(顶层Shape成节点; 多文本组爆炸) ──
     nodes, id_to_node = [], {}
     connectors = []
+    exploded_ids = set()  # 被爆炸的组的id(其边引用转移到子)
     for rec in records:
         if rec['type'] == 'connector':
             connectors.append(rec)
             continue
         if rec['depth'] > 0:
-            continue  # 子形状不独立成节点(文本已并入父)
+            continue  # 子形状不独立成节点(默认并入父)
+        # 组爆炸: 顶层组有≥2个带文本直接子Shape → 每个子独立成节点
+        sub = rec['elem'].find('v:Shapes', NS)
+        if sub is not None:
+            text_children = []
+            for cs in sub.findall('v:Shape', NS):
+                ctxt = cs.find('v:Text', NS)
+                if ctxt is not None and ''.join(ctxt.itertext()).strip():
+                    text_children.append(cs)
+            if len(text_children) >= 2:
+                exploded_ids.add(rec['id'])
+                for cs in text_children:
+                    # 子Shape的rec(已在records里, depth=1)
+                    cid = cs.get('ID', '')
+                    crec = next((r for r in records if r['id'] == cid), None)
+                    if crec is None:
+                        continue
+                    bbox = shape_bbox_page(crec)
+                    node = {
+                        'id': cid, 'text': crec['text'], 'type': crec['type'],
+                        'master_type': crec['master_type'],
+                        'via_master': crec['via_master'],
+                        'bbox': [round(v, 4) for v in bbox],
+                        'cx': round((bbox[0] + bbox[2]) / 2, 4),
+                        'cy': round((bbox[1] + bbox[3]) / 2, 4),
+                        'w': round(abs(bbox[2] - bbox[0]), 4),
+                        'h': round(abs(bbox[3] - bbox[1]), 4),
+                        'rx': round(((bbox[0] + bbox[2]) / 2) / pw, 4) if pw else 0,
+                        'ry': round(1 - ((bbox[1] + bbox[3]) / 2) / ph, 4) if ph else 0,
+                        'exploded_from': rec['id'],
+                    }
+                    nodes.append(node)
+                    id_to_node[cid] = node
+                continue  # 组本身不再成节点
         bbox = shape_bbox_page(rec)
         node = {
             'id': rec['id'], 'text': rec['text'], 'type': rec['type'],
@@ -538,6 +572,26 @@ def parse_page(vz, page_file: str, master_store: MasterStore,
         else:
             emit_edge(nb['id'], ne['id'], rec, 'geo', wp)
         geo_edges += 1
+
+    # ── Pass 3b: 爆炸组的边端点转移 ──
+    for e in edges:
+        for side in ('src', 'dst'):
+            if e[side] in exploded_ids:
+                ep = id_to_node.get(e[side])
+                # 找该组的孩子节点中最近的
+                children = [n for n in nodes if n.get('exploded_from') == e[side]]
+                if children and ep:
+                    ecx = (ep['bbox'][0] + ep['bbox'][2]) / 2 if ep else 0
+                    ecy = (ep['bbox'][1] + ep['bbox'][3]) / 2 if ep else 0
+                    # ep是组本身? 组不在nodes里了——用边另一端的位置就近选择
+                    other = id_to_node.get(e['dst' if side == 'src' else 'src'])
+                    if other:
+                        ox = (other['bbox'][0] + other['bbox'][2]) / 2
+                        oy = (other['bbox'][1] + other['bbox'][3]) / 2
+                        best = min(children, key=lambda c: math.hypot(
+                            (c['cx'] - ox), (c['cy'] - oy)))
+                        e[side] = best['id']
+                        e[f'{side}_text'] = best['text']
 
     # ── Pass 4: 标签收养 ──
     # UML惯例: actor/形状本体无文本, 文字在旁边的独立标签Shape里
