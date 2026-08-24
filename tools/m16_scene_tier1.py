@@ -184,23 +184,25 @@ def compile_subfunction_table(csv_path: Path) -> dict:
 # ═══════════════════════════════════════════════════════════════
 
 def match_elements(table_nodes: list[dict], diag_nodes: list[dict]) -> dict:
-    """通用元素匹配(词法+embedding), 返回matched/missing/extra"""
+    """通用元素匹配(词法+embedding), 返回matched/missing/extra
+    注意: embedding回退排除boundary类节点(能力项不应匹配到系统边界名)"""
     pairs = []
     for tn in table_nodes:
         for dn in diag_nodes:
             sc = text_match_score(tn['text'], dn['text'])
             if sc >= MATCH_TH:
                 pairs.append((sc, tn['id'], dn['id']))
-    # embedding补充
+    # embedding补充(排除boundary——语义角色不匹配)
+    emb_targets = [dn for dn in diag_nodes if dn.get('type') != 'boundary']
     low_t = [tn for tn in table_nodes
              if not any(p[1] == tn['id'] for p in pairs)]
-    if low_t:
+    if low_t and emb_targets:
         t_texts = [tn['text'] for tn in low_t]
-        n_texts = [dn['text'] for dn in diag_nodes]
+        n_texts = [dn['text'] for dn in emb_targets]
         embs = embed_batch(list({*t_texts, *n_texts}))
         emb_map = dict(zip([*t_texts, *n_texts], embs))
         for tn in low_t:
-            for dn in diag_nodes:
+            for dn in emb_targets:
                 c = cosine(emb_map.get(tn['text'], []), emb_map.get(dn['text'], []))
                 if c >= EMB_TH:
                     pairs.append((round(c, 3), tn['id'], dn['id']))
