@@ -113,11 +113,16 @@ def normalize_text(s: str) -> str:
 
 
 def char_keywords(s: str, k: int = 4) -> set[str]:
-    """提取中文关键词集合(滑动k字窗口)"""
+    """提取关键词: 中文滑动k字窗口 + 英文/数字token(INT/STRING等必须区分)"""
     cjk = re.findall(r'[\u4e00-\u9fff]', s)
-    if len(cjk) < k:
-        return {''.join(cjk)} if cjk else set()
-    return {''.join(cjk[i:i+k]) for i in range(len(cjk) - k + 1)}
+    ascii_tokens = re.findall(r'[A-Za-z0-9]+', s)
+    kws = set()
+    if len(cjk) >= k:
+        kws |= {''.join(cjk[i:i+k]) for i in range(len(cjk) - k + 1)}
+    elif cjk:
+        kws.add(''.join(cjk))
+    kws |= {t.lower() for t in ascii_tokens if len(t) >= 2}
+    return kws
 
 
 def text_match_score(a: str, b: str) -> float:

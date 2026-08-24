@@ -539,6 +539,39 @@ def parse_page(vz, page_file: str, master_store: MasterStore,
             emit_edge(nb['id'], ne['id'], rec, 'geo', wp)
         geo_edges += 1
 
+    # ── Pass 4: 标签收养 ──
+    # UML惯例: actor/形状本体无文本, 文字在旁边的独立标签Shape里
+    # 边的无文本端点 → 重定向到最近的文本节点(中心距<1.2英寸)
+    text_nodes = [n for n in nodes if n['text']]
+
+    def center(n):
+        return ((n['bbox'][0] + n['bbox'][2]) / 2, (n['bbox'][1] + n['bbox'][3]) / 2)
+
+    adopted = 0
+    for e in edges:
+        for side in ('src', 'dst'):
+            ep = id_to_node.get(e[side])
+            if ep and not ep['text'] and text_nodes:
+                ecx, ecy = center(ep)
+                best, bd = None, 1.2
+                for tn in text_nodes:
+                    tcx, tcy = center(tn)
+                    d = math.hypot(ecx - tcx, ecy - tcy)
+                    if d < bd:
+                        bd, best = d, tn
+                if best and best['id'] != e['src' if side == 'dst' else 'dst']:
+                    e[side] = best['id']
+                    e[f'{side}_text'] = best['text']
+                    adopted += 1
+    # 去重(收养后可能出现重复边)
+    seen, dedup = set(), []
+    for e in edges:
+        key = (e['src'], e['dst'])
+        if key not in seen and e['src'] != e['dst']:
+            seen.add(key)
+            dedup.append(e)
+    edges = dedup
+
     return {
         'source': source,
         'embed_index': source.split('/')[-1] + ':' + page_file.split('/')[-1],
@@ -551,7 +584,7 @@ def parse_page(vz, page_file: str, master_store: MasterStore,
             'via_master_shapes': sum(1 for r in records if r['via_master']),
             'glue_formula_connectors': len(glue),
             'glue_formula_edges': glue_emitted,
-            'geo_edges': geo_edges,
+            'geo_edges': geo_edges, 'label_adopted': adopted,
             'parser': 'm11_full (master继承+嵌套变换+geometry重建+三重方向证据)',
         },
     }
