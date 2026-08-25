@@ -29,24 +29,29 @@ VLM_PATH = BASE / "data/gjb_438c/anchor_sc2/vlm_extractions.json"
 OCR_PATH = BASE / "data/gjb_438c/anchor_sc2/ocr_extractions.json"
 MAPPING_PATH = BASE / "data/gjb_438c/visio_extracted/sc2_visio_mapping_v2.json"
 REALIGN_PATH = BASE / "data/gjb_438c/anchor_sc2/realigned_mapping.json"
-T1_PATH = BASE / "data/gjb_438c/anchor_sc2/tier1_discrepancies.json"
-ADJ_PATH = BASE / "data/gjb_438c/anchor_sc2/llm_adjudication.json"
+T1_PATH = BASE / "data/gjb_438c/anchor_sc2/tier1_discrepancies_v2.json"
+ADJ_PATH = BASE / "data/gjb_438c/anchor_v2/final_adjudication.json"
 OUT_PATH = BASE / "data/gjb_438c/anchor_sc2/relabeled_experiment.json"
 
 EXCLUDE_PAIRS = {'2_084'}
 
 
 def build_element_adj():
-    """裁决task_id → (pair, element_id) 映射"""
+    """三轮最终裁决task_id → (pair, element_id) 映射"""
     t1 = json.loads(T1_PATH.read_text())
-    adj = json.loads(ADJ_PATH.read_text())
+    adj_data = json.loads(ADJ_PATH.read_text())
+    final_labels = adj_data.get('final_labels', adj_data)
     elem_adj = {}  # (pair, element) -> label
     n_mapped = 0
-    for tid, a in adj.items():
+    for tid, a in final_labels.items():
+        label = a['label'] if isinstance(a, dict) else a
         pk, di = tid.rsplit('_', 1)
         v = t1.get(pk, {})
         discs = v.get('discrepancies', [])
-        di = int(di)
+        try:
+            di = int(di)
+        except ValueError:
+            continue
         if di >= len(discs):
             continue
         d = discs[di]
@@ -63,7 +68,7 @@ def build_element_adj():
         elif d['dtype'] == 'ACTOR_MISSING' and d.get('table_side'):
             elem = ('actor_text', d['table_side'].get('text', ''))
         if elem:
-            elem_adj[(pk, elem if isinstance(elem, str) else elem)] = a['final']
+            elem_adj[(pk, elem if isinstance(elem, str) else elem)] = label
             n_mapped += 1
     return elem_adj, n_mapped
 
