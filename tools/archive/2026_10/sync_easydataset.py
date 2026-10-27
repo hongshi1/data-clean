@@ -291,8 +291,8 @@ def import_pool_b(pid):
     if ext_existing > 0:
         print(f"D. Pool B已存在({ext_existing}条), 跳过导入")
         return 0
-    alpaca = [json.loads(l) for l in open(EXT_ALPACA, encoding="utf-8")]
-    sgpt = [json.loads(l) for l in open(EXT_SHAREGPT, encoding="utf-8")]
+    alpaca = [json.loads(line) for line in open(EXT_ALPACA, encoding="utf-8")]
+    sgpt = [json.loads(line) for line in open(EXT_SHAREGPT, encoding="utf-8")]
     assert len(alpaca) == len(sgpt) == 10642, f"外部文件行数异常: {len(alpaca)}/{len(sgpt)}"
     # 校验对齐(同序)
     mismatch = sum(1 for a, s in zip(alpaca, sgpt)
@@ -353,7 +353,8 @@ def main():
             "SELECT id, name FROM Chunks WHERE projectId=?", (pid,))}
         stats["linkedB"] = link_questions(db, pid, chunk_ids)
         # F. 验证
-        q = lambda sql: cur.execute(sql, (pid,)).fetchone()[0]
+        def q(sql):
+            return cur.execute(sql, (pid,)).fetchone()[0]
         stats["files"] = q("SELECT COUNT(*) FROM UploadFiles WHERE projectId=?")
         stats["chunks"] = q("SELECT COUNT(*) FROM Chunks WHERE projectId=?")
         stats["questions"] = q("SELECT COUNT(*) FROM Questions WHERE projectId=?")

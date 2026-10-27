@@ -76,7 +76,7 @@ def main() -> None:
     # ── 源数据加载 ──
     split = json.loads((G / "synth_s1_split.json").read_text(encoding="utf-8"))
     s1_minimal = split["eval_minimal"]  # 每源每标签1条, 已源级去重
-    bench = [json.loads(l) for l in open(G / "unified_testset/gjb_bench_test.jsonl", encoding="utf-8")]
+    bench = [json.loads(line) for line in open(G / "unified_testset/gjb_bench_test.jsonl", encoding="utf-8")]
     clean130 = json.loads((G / "human_gold/gold_v2_clean_137.json").read_text(encoding="utf-8"))
     md = (json.loads((G / "human_gold/md_test_doc047.json").read_text(encoding="utf-8"))
           + json.loads((G / "human_gold/md_test_sc3.json").read_text(encoding="utf-8")))
@@ -185,7 +185,6 @@ def main() -> None:
             used_f_img.add(p["doc"])
             n_f += 1
     # synth剩余(A/D未消费的, 源级去重, 标签均衡补足)
-    used_keys = {(p["premise"], p["hypothesis"]) for p in s1_minimal[:0]}
     a_d_keys = {(x["premise"], x["hypothesis"]) for x in out}
     leftover = [p for p in s1_minimal
                 if (p["premise"], p["hypothesis"]) not in a_d_keys]

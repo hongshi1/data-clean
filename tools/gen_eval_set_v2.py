@@ -207,7 +207,7 @@ def build_eval_entry(injection, qa, verification, idx):
 
 def main():
     print("加载注入数据...")
-    with open(INJECTED_PATH) as f:
+    with open(INJECTED_PATH, encoding="utf-8") as f:
         data = json.load(f)
     injections = data["injections"]
     print(f"  共 {len(injections)} 条注入")
@@ -218,7 +218,7 @@ def main():
     done_path = OUT_DIR / "eval_set.jsonl"
     done_count = 0
     if done_path.exists():
-        with open(done_path) as f:
+        with open(done_path, encoding="utf-8") as f:
             done_count = sum(1 for _ in f)
     print(f"  已完成: {done_count}, 待处理: {len(injections) - done_count}")
     
@@ -276,7 +276,7 @@ def main():
     # 汇总输出
     entries = []
     if done_path.exists():
-        with open(done_path) as f:
+        with open(done_path, encoding="utf-8") as f:
             for line in f:
                 entries.append(json.loads(line))
     

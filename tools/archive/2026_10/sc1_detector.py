@@ -73,9 +73,9 @@ def extract_name(ctx, rid):
 
 def load_data():
     """加载stage0和sc1 Gold Standard"""
-    s0 = json.loads(open(STAGE0).read())
+    s0 = json.loads(open(STAGE0, encoding="utf-8").read())
     id_reg = s0['id_registry']
-    gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json')).read())
+    gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json'), encoding="utf-8").read())
     sc1 = gs['scenes']['scene1']
 
     # 实体→名称(多位置ID)
@@ -222,7 +222,7 @@ class SC1Detector:
     def detect_learned(self, train_epochs=500):
         """B4: 逻辑回归(特征学习), 参数传递避免闭包作用域问题"""
         # 训练数据: Gold Standard的名称对
-        gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json')).read())
+        gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json'), encoding="utf-8").read())
         sc1 = gs['scenes']['scene1']
         train_pairs = []
         for item in sc1['negatives']:
@@ -390,7 +390,7 @@ class SC1Detector:
 
         pairs = pos + neg
         X = np.array([edge_feats(a, b) for a, b, _ in pairs], dtype=np.float64)
-        y = np.array([float(l) for _, _, l in pairs], dtype=np.float64)
+        y = np.array([float(lab) for _, _, lab in pairs], dtype=np.float64)
         Xm, Xs = X.mean(0), X.std(0) + 1e-9
         Xn = (X - Xm) / Xs
 
@@ -571,7 +571,7 @@ class SC1Detector:
         """保存结果"""
         os.makedirs(GRAPH_DIR, exist_ok=True)
         out = os.path.join(GRAPH_DIR, 'sc1_all_methods_eval.json')
-        json.dump(self.results, open(out, 'w'), ensure_ascii=False, indent=2)
+        json.dump(self.results, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
         print(f"\n已保存: {out}")
 
 

@@ -26,20 +26,21 @@ BASE = Path(__file__).resolve().parents[1]
 if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    accuracy,
+    confusion_dict,
+    macro_f1,
+    per_class_metrics,
+)
 from algorithms.consistency.nli_local import MODELS  # noqa: E402
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
 from tools.build_dev_test_split import (  # noqa: E402
     load_corpora,
     load_split,
 )
-from tools.calibrate_on_dev import (  # noqa: E402
-    class_metrics,
-    confusion_dict,
-    run_with_llm_counting,
-)
+from tools.calibrate_on_dev import run_with_llm_counting  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
-LABELS = ("support", "refute", "not_in_evidence")
 MODEL_KEY = "egt_finetuned_v2"
 RUNS_ROOT = BASE / "data/gjb_438c/runs"
 TUNED_CONFIG_PATH = BASE / "data/gjb_438c/qa_frozen/dev_tuned_config_v1.json"
@@ -95,13 +96,10 @@ def score(outcomes: dict[str, dict], rows: list[dict],
     for row in rows:
         iid = row["instance_id"]
         confusion[(outcomes[iid]["verdict"], silver[iid])] += 1
-    per_class = class_metrics(confusion)
-    correct = sum(confusion[(p, g)] for p in LABELS for g in LABELS if p == g)
     return {
-        "accuracy": round(correct / len(rows), 4),
-        "macro_f1": round(
-            sum(m["f1"] for m in per_class.values()) / len(LABELS), 4),
-        "per_class": per_class,
+        "accuracy": accuracy(confusion, len(rows)),
+        "macro_f1": macro_f1(confusion),
+        "per_class": per_class_metrics(confusion),
         "confusion[predicted, silver]": confusion_dict(confusion),
     }
 

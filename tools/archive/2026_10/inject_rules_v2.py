@@ -28,11 +28,16 @@ def z3_gate(param_name, constraints_a, constraints_b):
     s = Solver()
     x = Real(param_name)
     for op, val in constraints_a + constraints_b:
-        if op == "ge": s.add(x >= val)
-        elif op == "le": s.add(x <= val)
-        elif op == "gt": s.add(x > val)
-        elif op == "lt": s.add(x < val)
-        elif op == "eq": s.add(x == val)
+        if op == "ge":
+            s.add(x >= val)
+        elif op == "le":
+            s.add(x <= val)
+        elif op == "gt":
+            s.add(x > val)
+        elif op == "lt":
+            s.add(x < val)
+        elif op == "eq":
+            s.add(x == val)
     return s.check() == unsat
 
 # 同义词映射
@@ -89,17 +94,17 @@ PARAM_PATTERNS = {
 
 
 def load_entities():
-    with open(ENTITIES_PATH) as f:
+    with open(ENTITIES_PATH, encoding="utf-8") as f:
         return json.load(f)["entities"]
 
 def load_chunks():
-    with open(CHUNKS_PATH) as f:
+    with open(CHUNKS_PATH, encoding="utf-8") as f:
         return json.load(f)
 
 def load_vlm_flowchart():
     results = []
     if VLM_FLOWCHART.exists():
-        with open(VLM_FLOWCHART) as f:
+        with open(VLM_FLOWCHART, encoding="utf-8") as f:
             for line in f:
                 results.append(json.loads(line))
     return results
@@ -121,10 +126,14 @@ def extract_params_from_chunks(chunks):
                 # 识别操作符
                 op = "eq"
                 pre = text[max(0, m.start()-15):m.start()]
-                if "不小于" in pre or "至少" in pre or "≥" in pre: op = "ge"
-                elif "不大于" in pre or "至多" in pre or "≤" in pre: op = "le"
-                elif "大于" in pre or "超过" in pre or ">" in pre: op = "gt"
-                elif "小于" in pre or "低于" in pre or "<" in pre: op = "lt"
+                if "不小于" in pre or "至少" in pre or "≥" in pre:
+                    op = "ge"
+                elif "不大于" in pre or "至多" in pre or "≤" in pre:
+                    op = "le"
+                elif "大于" in pre or "超过" in pre or ">" in pre:
+                    op = "gt"
+                elif "小于" in pre or "低于" in pre or "<" in pre:
+                    op = "lt"
                 params[ptype].append({
                     "val": val, "unit": unit, "op": op,
                     "doc": doc, "section": section, "context": context[:80]

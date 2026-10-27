@@ -45,10 +45,8 @@ NUM_RE = re.compile(r'(\d+(?:\.\d+)?)\s*(GB|MB|KB|TB|ms|s|sec|min|hour|Mbps|Gbps
 def extract_facts(pair):
     """从pair的表格和正文提取真实事实"""
     facts = []
-    meta = pair["meta"]
     rows = pair["table_rows"]
     text = pair["text"]
-    fns = meta.get("func_names", [])
 
     # 事实1: 功能名(来自表格)
     for row in rows[1:6]:  # 前5行数据
@@ -297,7 +295,7 @@ def load_pairs():
             mp = os.path.join(ip, "meta.json")
             if not os.path.exists(mp):
                 continue
-            meta = json.loads(open(mp).read())
+            meta = json.loads(open(mp, encoding="utf-8").read())
             rows = []
             tp = os.path.join(ip, "table.csv")
             if os.path.exists(tp):
@@ -306,7 +304,7 @@ def load_pairs():
             text = ""
             txtp = os.path.join(ip, "text.txt")
             if os.path.exists(txtp):
-                text = open(txtp).read()
+                text = open(txtp, encoding="utf-8").read()
             pairs.append({
                 "meta": meta, "table_rows": rows, "text": text,
                 "image_path": os.path.join(ip, "image.png"),
@@ -439,11 +437,11 @@ async def main():
 
         # 保存按场景
         out_path = os.path.join(OUT_DIR, f"{sc_dir}.json")
-        json.dump(sc_qa, open(out_path, "w"), ensure_ascii=False, indent=1)
+        json.dump(sc_qa, open(out_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         print(f"✅ {sc_dir}: {len(sc_qa)} QA")
 
     # 保存合并
-    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w"),
+    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
 
     from collections import Counter

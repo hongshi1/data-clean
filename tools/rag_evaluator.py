@@ -47,7 +47,7 @@ async def embedding_func(texts):
 
 def load_gold():
     """加载Gold Standard: 提取实体名称对"""
-    gs = json.loads(open(GOLD_PATH).read())
+    gs = json.loads(open(GOLD_PATH, encoding="utf-8").read())
     entities = set()
     for pair in gs:
         if isinstance(pair, dict):
@@ -97,7 +97,7 @@ async def main():
     print("\n=== 总结 ===")
     for k, v in results.items():
         print(f"  {k}: {v:.3f}")
-    json.dump(results, open("data/gjb_438c/data_assets/rag_eval_results.json", "w"), indent=2)
+    json.dump(results, open("data/gjb_438c/data_assets/rag_eval_results.json", "w", encoding="utf-8"), indent=2)
 
 
 if __name__ == "__main__":

@@ -115,7 +115,6 @@ def _build_qa_dataset():
     # 语义组
     groups = build_semantic_groups(pairs, theme="SRS一致性")
     # 填充QA的group字段
-    group_map = {g.id: g for g in groups}
     for qa in all_samples:
         if qa.pairs:
             eid = qa.pairs[0].entity_id

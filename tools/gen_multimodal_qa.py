@@ -53,14 +53,14 @@ QA_PROMPT = """你是SRS软件需求文档专家。基于以下SRS图片及其�
 
 
 def load_images():
-    data = json.loads(open(IMAGE_ANALYSES).read())
+    data = json.loads(open(IMAGE_ANALYSES, encoding="utf-8").read())
     # 过滤有完整分析的
     imgs = [a for a in data["analyses"] if a.get("analysis", {}).get("key_elements")]
     return imgs
 
 
 def load_chunks():
-    return json.loads(open(CHUNKS_PATH).read())
+    return json.loads(open(CHUNKS_PATH, encoding="utf-8").read())
 
 
 def find_text_context(chunks, doc, section=None):
@@ -141,9 +141,9 @@ async def main(n=50, seed=42, include_image=True):
         else:
             print(f"[{i+1}/{len(sampled)}] ✗ 生成失败")
         if (i + 1) % 10 == 0:
-            json.dump(results, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+            json.dump(results, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
-    json.dump(results, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(results, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"\n✅ 多模态QA对完成: {len(results)}条 → {OUT_PATH}")
     # 校验图片存在性
     missing = [r for r in results if not os.path.exists(r["image_path"])]

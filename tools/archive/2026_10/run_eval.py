@@ -267,7 +267,7 @@ def evaluate_by_confidence(entries):
 
 def main():
     print("加载评测集...")
-    with open(EVAL_PATH) as f:
+    with open(EVAL_PATH, encoding="utf-8") as f:
         data = json.load(f)
     entries = data["entries"]
     print(f"  共 {len(entries)} 条")

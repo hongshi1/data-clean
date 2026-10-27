@@ -71,10 +71,10 @@ class NLIVerifier:
 
     @staticmethod
     def _norm(label):
-        l = str(label).lower()
-        if "entail" in l:
+        lab = str(label).lower()
+        if "entail" in lab:
             return "supported"
-        if "contradict" in l:
+        if "contradict" in lab:
             return "contradicted"
         return "unsupported"
 
@@ -316,7 +316,7 @@ class DocFacts:
         if not pats:
             raise FileNotFoundError(f"doc {self.doc_num} content_list 未找到")
         cl = json.load(open(pats[0], encoding="utf-8"))
-        sec, cur = "", ""
+        sec = ""
         for it in cl:
             if not isinstance(it, dict):
                 continue
@@ -325,10 +325,8 @@ class DocFacts:
                 m = re.match(r"^(\d+(?:\.\d+)*)\s+(.+)$", t.strip())
                 if m and len(m.group(2)) < 40:
                     sec = m.group(1)
-                    cur = t.strip()
                 elif len(t.strip()) > 10:
                     self.sentences.append((sec, t.strip()))
-                    cur = t.strip()
                 # 受控句枚举: "X包括：A、B、C" / "X分为..." / "X包含..."
                 em = re.match(r"^(.{2,24}?)(?:功能)?(?:包括|包含|分为)[:：]\s*(.+?)[。，；]",
                               t.strip())

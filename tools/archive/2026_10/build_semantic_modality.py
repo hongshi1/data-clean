@@ -59,7 +59,6 @@ class TP(HTMLParser):
     def handle_endtag(self, tag):
         if tag in ('td', 'th') and self.in_cell:
             colspan = int(self.cell_attrs.get('colspan', '1'))
-            rowspan = int(self.cell_attrs.get('rowspan', '1'))
             cell_text = ' '.join(self.cur_cell)
             for i in range(colspan):
                 self.cur_row.append(cell_text if i == 0 else '')
@@ -96,7 +95,6 @@ def classify_image(cap):
 
 def classify_table(caption, headers):
     """表型分类 — caption优先于headers,避免能力标识表被误分类为usecase"""
-    cap_lower = caption.lower()
     headers_text = ' '.join(str(h) for h in headers)
     all_text = (caption + ' ' + headers_text).lower()
 

@@ -132,7 +132,6 @@ def parse_visio_page(page_xml: str, source: str) -> dict:
     for shape in all_shapes:
         sid = shape.get('ID', '')
         sname = shape.get('Name', '')
-        stype = shape.get('Type', '')
 
         # 提取文本
         text_elem = shape.find('v:Text', NS)
@@ -267,7 +266,6 @@ def build_mapping(visio_structures: dict, pair_info: dict) -> dict:
                     continue
 
                 # 计算关键词覆盖: Visio节点文本中有多少关键词被table覆盖
-                visio_text_combined = ' '.join(visio_texts)
                 
                 # 方法1: Visio节点文本在table中出现
                 matched_nodes = 0

@@ -59,7 +59,7 @@ def load_pairs():
             mp = os.path.join(ip, "meta.json")
             if not os.path.exists(mp):
                 continue
-            meta = json.loads(open(mp).read())
+            meta = json.loads(open(mp, encoding="utf-8").read())
             rows = []
             tp = os.path.join(ip, "table.csv")
             if os.path.exists(tp):
@@ -120,7 +120,6 @@ def gen_terminology(p):
     qas = []
     fns = p["meta"].get("func_names", [])
     rows = p["table_rows"]
-    text = p["text"]
     ph = _ph(p)
     ev = _ev(p)
     if not fns:
@@ -616,7 +615,7 @@ def main():
             print(f"  已处理 {i+1}/{len(pairs)}, 生成{len(all_qa)}条QA")
 
     # 保存
-    json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
     # 统计
     from collections import Counter

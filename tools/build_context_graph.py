@@ -517,7 +517,8 @@ class GraphBuilder:
         # 先补挂孤立锚点SEQ → 文档根章节(诚实弱权重)
         linked = set()
         for e in edges:
-            linked.add(e["s"]); linked.add(e["t"])
+            linked.add(e["s"])
+            linked.add(e["t"])
         root_sec = next((s for s in sec_nums if "." not in s), None) \
             or (sec_nums[0] if sec_nums else None)
         for n in nodes:
@@ -532,10 +533,10 @@ class GraphBuilder:
             occs = [(r, o) for r, o in self.id_by_doc.get(doc, []) if r == rid]
             secs = sorted(set(o.get("section", "") for _, o in occs))
             locs = [o.get("location", "") for _, o in occs]
-            has_title = any("title" in l for l in locs)
-            has_func = any(("func" in l or "capability" in l) for l in locs)
-            has_qual = any(("qualification" in l or "合格" in l) for l in locs)
-            has_trace = any(("trace" in l or "追踪" in l or "追溯" in l) for l in locs)
+            has_title = any("title" in loc for loc in locs)
+            has_func = any(("func" in loc or "capability" in loc) for loc in locs)
+            has_qual = any(("qualification" in loc or "合格" in loc) for loc in locs)
+            has_trace = any(("trace" in loc or "追踪" in loc or "追溯" in loc) for loc in locs)
             media = []
             for sec in secs:
                 for ti in self._sec_tables.get(doc, {}).get(sec, []):
@@ -569,7 +570,8 @@ class GraphBuilder:
         """删除无边KNW节点(保留在全局registry), 保持文档图连通密度"""
         linked = set()
         for e in graph["edges"]:
-            linked.add(e["s"]); linked.add(e["t"])
+            linked.add(e["s"])
+            linked.add(e["t"])
         before = len(graph["nodes"])
         graph["nodes"] = [n for n in graph["nodes"]
                           if n["type"] != "KNW" or n["id"] in linked]
@@ -678,7 +680,8 @@ def main():
         # 环体检: 孤立节点
         linked = set()
         for e in g["edges"]:
-            linked.add(e["s"]); linked.add(e["t"])
+            linked.add(e["s"])
+            linked.add(e["t"])
         iso = [n for n in g["nodes"] if n["id"] not in linked]
         if iso:
             print(f"      ⚠ 孤立节点 {len(iso)}: " +

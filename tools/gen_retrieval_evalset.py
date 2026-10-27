@@ -75,8 +75,6 @@ def sample_entities(matcher, n=100, seed=42):
 async def gen_query_llm(entity, matcher):
     """用kimi生成3种问法(带实体上下文, 更自然)"""
     import httpx
-    # 获取实体上下文(用于生成针对性问题)
-    ctx = matcher._find_id_by_name(entity) or entity
     prompt = f"""你是SRS软件需求文档专家。请为实体"{entity}"生成3个不同的中文检索查询问题, 覆盖:
 1. 功能定义型(问它是什么)
 2. 结构型(问它的子功能/组成)
@@ -94,12 +92,12 @@ async def gen_query_llm(entity, matcher):
             content = r.json()["choices"][0]["message"].get("content", "")
             # 清洗: 去掉编号/前缀/类型标签
             lines = []
-            for l in content.split("\n"):
-                l = re.sub(r"^\d+[\.\、\)]\s*", "", l.strip())
-                l = re.sub(r"^(功能定义型|结构型|溯源型)[:：]\s*", "", l)
-                l = l.strip().strip('"').strip("'")
-                if l and len(l) > 4:
-                    lines.append(l)
+            for line in content.split("\n"):
+                line = re.sub(r"^\d+[\.\、\)]\s*", "", line.strip())
+                line = re.sub(r"^(功能定义型|结构型|溯源型)[:：]\s*", "", line)
+                line = line.strip().strip('"').strip("'")
+                if line and len(line) > 4:
+                    lines.append(line)
             if len(lines) >= 3:
                 return lines[:3]
     except Exception:
@@ -161,9 +159,9 @@ async def main(n=100):
             })
         if (i + 1) % 20 == 0:
             print(f"  已生成 {i+1}/{len(pairs)} 实体 ({len(evalset)} 查询)")
-            json.dump(evalset, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+            json.dump(evalset, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
-    json.dump(evalset, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(evalset, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"✅ 评测集完成: {len(evalset)} 查询对 → {OUT_PATH}")
     # 统计
     diff = {}
@@ -172,8 +170,8 @@ async def main(n=100):
     print("难度分布:", diff)
     locs = {}
     for e in evalset:
-        for l in e["expected"]["locations"]:
-            locs[l] = locs.get(l, 0) + 1
+        for loc in e["expected"]["locations"]:
+            locs[loc] = locs.get(loc, 0) + 1
     print("期望位置类型:", locs)
 
 

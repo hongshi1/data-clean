@@ -51,7 +51,7 @@ async def embedding_func(texts):
 
 def build_image_chunks(analyses_path=IMAGE_ANALYSES):
     """把图片分析转成chunk文本"""
-    data = json.loads(open(analyses_path).read())
+    data = json.loads(open(analyses_path, encoding="utf-8").read())
     chunks = []
     for a in data["analyses"]:
         ana = a.get("analysis", {})

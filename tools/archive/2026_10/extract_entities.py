@@ -64,7 +64,7 @@ def load_vlm_usecase():
     """加载用例图VLM提取"""
     results = []
     if VLM_USECASE.exists():
-        with open(VLM_USECASE) as f:
+        with open(VLM_USECASE, encoding="utf-8") as f:
             for line in f:
                 results.append(json.loads(line))
     return results
@@ -74,7 +74,7 @@ def load_vlm_flowchart():
     """加载流程图VLM提取"""
     results = []
     if VLM_FLOWCHART.exists():
-        with open(VLM_FLOWCHART) as f:
+        with open(VLM_FLOWCHART, encoding="utf-8") as f:
             for line in f:
                 results.append(json.loads(line))
     return results
@@ -228,7 +228,6 @@ def extract_interface_entities(pairs):
             # 找接口名/发送方/接收方/类型列
             name_idx = sender_idx = receiver_idx = type_idx = -1
             for i, h in enumerate(header):
-                h_lower = h.lower()
                 if ("名称" in h or "接口" in h) and name_idx == -1:
                     name_idx = i
                 if "发送" in h or "源" in h:
@@ -337,7 +336,6 @@ def extract_param_entities(pairs, chunks, srs_kb):
     }
     
     # 通用数值正则（用于Pair Dataset）
-    NUM_RE = re.compile(r'(\d+\.?\d*)\s*(GB|MB|KB|TB|GHz|MHz|kHz|ms|秒|分钟|小时|天|%|次|个|条|路|Mbps|Gbps|Kbps)')
     
     # 从chunks提取（主要来源）
     for chunk in chunks:

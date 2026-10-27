@@ -158,7 +158,7 @@ def main():
     parser.add_argument("--sample", type=int, default=0, help="只打印N条样例不写回")
     args = parser.parse_args()
 
-    with open(EVAL_PATH) as f:
+    with open(EVAL_PATH, encoding="utf-8") as f:
         data = json.load(f)
     entries = data["entries"]
     print(f"加载 {len(entries)} 条")

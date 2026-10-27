@@ -70,7 +70,6 @@ class TableHTMLParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag in ('td', 'th') and self.in_cell:
             colspan = int(self.cell_attrs.get('colspan', '1'))
-            rowspan = int(self.cell_attrs.get('rowspan', '1'))
             cell_text = ' '.join(self.cur_cell)
             for _ in range(colspan):
                 self.cur_row.append(cell_text if _ == 0 else '')
@@ -352,22 +351,18 @@ def build_all():
                     # 找列索引
                     name_col = None
                     ver_col = None
-                    type_col = None
                     for i, h in enumerate(headers):
                         h_str = str(h).strip()
                         if '软件名称' in h_str:
                             name_col = i
                         elif '软件版本' in h_str:
                             ver_col = i
-                        elif '软件种类' in h_str:
-                            type_col = i
 
                     if name_col is not None and ver_col is not None:
                         for row in rows[1:] if len(rows) > 1 else []:
                             if name_col < len(row) and ver_col < len(row):
                                 sw_name = str(row[name_col]).strip()
                                 sw_ver = str(row[ver_col]).strip()
-                                sw_type = str(row[type_col]).strip() if type_col is not None and type_col < len(row) else ""
                                 if sw_name and sw_ver and sw_ver != '—':
                                     # 标准化软件名
                                     for std_name in ['达梦', '银河麒麟', 'WPS', 'wps', 'Qt', 'Redis', 'Nginx', 'Oracle', 'MySQL']:

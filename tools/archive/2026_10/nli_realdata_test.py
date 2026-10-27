@@ -69,10 +69,10 @@ def load_model(name):
 
 
 def normalize(label):
-    l = label.lower()
-    if "entail" in l:
+    lab = label.lower()
+    if "entail" in lab:
         return "entailment"
-    if "contradict" in l or l in ("contradiction", "错误", "冲突"):
+    if "contradict" in lab or lab in ("contradiction", "错误", "冲突"):
         return "contradiction"
     return "neutral"
 

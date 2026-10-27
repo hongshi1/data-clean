@@ -403,7 +403,8 @@ def verify(qa, claim, gidx, embed=None):
         ent = ents[0] if ents else claim['subject']
         if not ent or not claim['label_hat']:
             return False, [], 'no_entity'
-        norm = lambda s: re.sub(r'[\s\n\r、，,]', '', s)
+        def norm(s):
+            return re.sub(r'[\s\n\r、，,]', '', s)
         claimed = norm(claim['label_hat'])
         # 宽容跨结构: 同名文本节点可能出现在多个结构, 任一结构的边标注匹配即通过
         hit_structs = []

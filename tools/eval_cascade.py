@@ -30,7 +30,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from collections import Counter
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
@@ -38,23 +37,22 @@ if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
 import algorithms.common.llm_client as llm_client  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    load_frozen_qa,
+    load_silver_labels,
+    run_module_corpus,
+    score_outcomes,
+)
 from algorithms.consistency.nli_local import MODELS  # noqa: E402
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 QA_FROZEN = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
 SILVER = (BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
           / "final_labels.jsonl")
 RUNS_ROOT = BASE / "data/gjb_438c/runs"
-LABELS = ("support", "refute", "not_in_evidence")
 NLI_GATE = 0.70          # L2参照数(macro-F1 0.5437, refute P=0.368)取自gate=0.70
 KEEP_CONFIDENCE = 0.95   # conformal高置信档: >=0.95直接refute, 不升级
-
-
-def read_jsonl(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8")
-            .splitlines() if line.strip()]
 
 
 REFERENCE_RUN = "eval_llm_residual_5dd69927_20261026_173434"  # 任务给定的L3参照(0.7799)
@@ -76,59 +74,6 @@ def llm_reference() -> dict:
         "refute_recall": result["residual"]["per_class"]["refute"]["recall"],
         "refute_precision": result["residual"]["per_class"]["refute"]["precision"],
     }
-
-
-def class_metrics(confusion: Counter) -> dict[str, dict]:
-    out = {}
-    for label in LABELS:
-        tp = confusion[(label, label)]
-        fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-        fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = (2 * precision * recall / (precision + recall)
-              if precision + recall else 0.0)
-        out[label] = {"precision": round(precision, 4),
-                      "recall": round(recall, 4), "f1": round(f1, 4)}
-    return out
-
-
-def macro_f1(confusion: Counter) -> float:
-    return round(sum(m["f1"] for m in class_metrics(confusion).values())
-                 / len(LABELS), 4)
-
-
-def accuracy(confusion: Counter, n: int) -> float:
-    correct = sum(confusion[(p, g)] for p in LABELS for g in LABELS if p == g)
-    return round(correct / n, 4)
-
-
-def confusion_dict(confusion: Counter) -> dict[str, int]:
-    return {f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]}
-
-
-def run_corpus(module: QAConsistencyModule,
-               rows: list[dict]) -> dict[str, dict]:
-    outcomes: dict[str, dict] = {}
-    for row in rows:
-        request = request_from_dict(row)
-        result = module.verify(request)
-        outcomes[request.instance_id] = {
-            "verdict": result.verdict,
-            "status": result.status,
-            "diagnostics": list(result.diagnostics),
-            "claims": [{
-                "claim_id": claim.claim_id,
-                "claim_text": claim.claim_text,
-                "verdict": claim.verdict,
-                "method": claim.method,
-                "confidence": claim.confidence,
-                "evidence_refs": list(claim.evidence_refs),
-                "rationale": claim.rationale[:200],
-            } for claim in result.claim_results],
-        }
-    return outcomes
 
 
 def run_with_llm_counting(module: QAConsistencyModule, rows: list[dict]
@@ -157,7 +102,7 @@ def run_with_llm_counting(module: QAConsistencyModule, rows: list[dict]
     llm_client.llm_json = counting_llm_json
     llm_client._store = counting_store
     try:
-        outcomes = run_corpus(module, rows)
+        outcomes = run_module_corpus(module, rows)
     finally:
         llm_client.llm_json = original_llm_json
         llm_client._store = original_store
@@ -166,24 +111,6 @@ def run_with_llm_counting(module: QAConsistencyModule, rows: list[dict]
     stats = {"invocations": invocations, "api_calls": api_calls,
              "cache_hits": invocations - api_calls}
     return outcomes, stats
-
-
-def score_config(outcomes: dict[str, dict], rows: list[dict],
-                 silver: dict[str, str]) -> dict:
-    confusion: Counter = Counter()
-    methods: Counter = Counter()
-    for row in rows:
-        instance_id = row["instance_id"]
-        confusion[(outcomes[instance_id]["verdict"], silver[instance_id])] += 1
-        methods.update(claim["method"]
-                       for claim in outcomes[instance_id]["claims"])
-    return {
-        "accuracy": accuracy(confusion, len(rows)),
-        "macro_f1": macro_f1(confusion),
-        "per_class": class_metrics(confusion),
-        "confusion[predicted, silver]": confusion_dict(confusion),
-        "claim_methods": dict(methods),
-    }
 
 
 def diag_count(diagnostics: list[str], prefix: str) -> int:
@@ -290,9 +217,8 @@ def main() -> None:
                         help="conformal高置信档阈值(默认0.95)")
     args = parser.parse_args()
 
-    rows = read_jsonl(QA_FROZEN)
-    silver = {row["instance_id"]: row["final_verdict"]
-              for row in read_jsonl(SILVER)}
+    rows = load_frozen_qa(QA_FROZEN)
+    silver = load_silver_labels(SILVER)
     checkpoint = MODELS[args.model_key]["dir"]
     if not (Path(checkpoint) / "config.json").exists():
         print(f"checkpoint不存在: {checkpoint} "
@@ -321,11 +247,12 @@ def main() -> None:
         out, stats = run_with_llm_counting(module, rows)
         outcomes[name] = out
         llm_stats[name] = stats
-        print(f"{name}: macro_f1={score_config(out, rows, silver)['macro_f1']} "
+        print(f"{name}: macro_f1="
+              f"{score_outcomes(out, rows, silver)['macro_f1']} "
               f"llm_invocations={stats['invocations']} "
               f"api_calls={stats['api_calls']}")
 
-    scores = {name: score_config(out, rows, silver)
+    scores = {name: score_outcomes(out, rows, silver)
               for name, out in outcomes.items()}
 
     cost_quality_table = [{

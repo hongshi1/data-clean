@@ -62,10 +62,11 @@ from z3 import (
 
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.qa_models import ClaimResult, QAInput
-from algorithms.consistency.qa_module import (
-    QAConsistencyModule,
-    _extract_numeric_claims,
+from algorithms.consistency.answer_claims import (
+    extract_numeric_claims as _extract_numeric_claims,
+    question_numeric_subject,
 )
+from algorithms.consistency.claim_channels import same_subject
 from algorithms.consistency.templates import normalize_op
 
 METHOD = "numeric_z3_expert"
@@ -281,7 +282,7 @@ def extract_numeric_claims(answer: str,
     seen: set[tuple[str, str, str, str]] = set()
     for attr, operator, value, unit in _extract_numeric_claims(text):
         subject = _norm_subject(
-            attr or QAConsistencyModule._question_numeric_subject(question))
+            attr or question_numeric_subject(question))
         if not subject:
             continue
         op = normalize_op(operator)
@@ -407,7 +408,7 @@ def _verify_interval_claim(request: QAInput, claim: NumericClaim,
         fact for fact in facts
         if fact.family == answer_norm.family
         and fact.op in _OP_SYMBOLS
-        and QAConsistencyModule._same_subject(
+        and same_subject(
             claim.subject, fact.subject, request.question)
     ]
     if not matched:
@@ -479,7 +480,7 @@ def _verify_aggregate_claim(request: QAInput, claim: NumericClaim,
             continue
         if _is_aggregate_subject(fact.subject):
             continue
-        if QAConsistencyModule._same_subject(
+        if same_subject(
                 claim.subject, fact.subject, request.question):
             continue
         groups.setdefault(_norm_subject(fact.subject), []).append(fact)

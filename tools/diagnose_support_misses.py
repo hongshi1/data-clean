@@ -44,12 +44,21 @@ if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
 import algorithms.consistency.llm_residual as llm_residual_mod  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    LABELS,
+    accuracy,
+    build_qa_input,
+    confusion_dict,
+    load_frozen_qa,
+    load_label_rows,
+    macro_f1,
+    per_class_metrics,
+)
 from algorithms.consistency.qa_models import ClaimResult  # noqa: E402
 from algorithms.consistency.qa_module import (  # noqa: E402
     AGGREGATION_VARIANTS,
     QAConsistencyModule,
 )
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.build_dev_test_split import SPLIT_PATH, load_split  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
@@ -61,7 +70,6 @@ MISSED = ("S1QA-053", "S1QA-066", "S1QA-069", "S1QA-077")
 DETECTED = ("S1QA-006", "S1QA-021")
 SUPPORT_ALL = ("S1QA-006", "S1QA-021", "S1QA-053", "S1QA-066", "S1QA-069",
                "S1QA-077")
-LABELS = ("support", "refute", "not_in_evidence")
 
 _ENUM_PREFIX = re.compile(r"^\s*(?:\d{1,2}|[一二三四五六七八九十])[.．、]\s*")
 #: pure numbering/table-cell fragments ("4．1.1 |", "|----|")
@@ -69,11 +77,6 @@ _ARTIFACT_RE = re.compile(r"^[|.．\d\s\-]+$")
 #: table-header rows pasted into claims ("... | 序号 | Use case名称 |...")
 _TABLE_HEADER_RE = re.compile(r"\|\s*序号\s*\|")
 _SILVER_SIM_THRESHOLD = 0.5
-
-
-def read_jsonl(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8")
-            .splitlines() if line.strip()]
 
 
 def _compact(text: str) -> str:
@@ -176,37 +179,14 @@ def _claim_result_of(entry: dict) -> ClaimResult:
     )
 
 
-def prf(confusion: Counter, label: str) -> tuple[float, float, float]:
-    """confusion keys are (predicted, gold) — same convention as
-    tools/eval_paper_matrix.py."""
-    tp = confusion[(label, label)]
-    fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-    fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-    precision = tp / (tp + fp) if tp + fp else 0.0
-    recall = tp / (tp + fn) if tp + fn else 0.0
-    f1 = (2 * precision * recall / (precision + recall)
-          if precision + recall else 0.0)
-    return precision, recall, f1
-
-
 def metrics(confusion: Counter, n: int) -> dict:
-    per_class = {}
-    for label in LABELS:
-        precision, recall, f1 = prf(confusion, label)
-        per_class[label] = {"precision": round(precision, 4),
-                            "recall": round(recall, 4),
-                            "f1": round(f1, 4)}
-    accuracy = (sum(confusion[(p, g)] for p in LABELS for g in LABELS
-                    if p == g) / n) if n else 0.0
+    """eval_lib指标+本工具的n字段(dev_variants行schema保持不变)."""
     return {
         "n": n,
-        "accuracy": round(accuracy, 4),
-        "macro_f1": round(sum(per_class[label]["f1"]
-                              for label in LABELS) / len(LABELS), 4),
-        "per_class": per_class,
-        "confusion[predicted, silver]": {
-            f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]},
+        "accuracy": accuracy(confusion, n),
+        "macro_f1": macro_f1(confusion),
+        "per_class": per_class_metrics(confusion),
+        "confusion[predicted, silver]": confusion_dict(confusion),
     }
 
 
@@ -235,7 +215,7 @@ def _run_strict(rows: dict, silver: dict) -> tuple[dict, dict]:
         module = QAConsistencyModule(use_experts=True, use_llm_residual=True)
         outcomes: dict[str, dict] = {}
         for iid in sorted(rows):
-            result = module.verify(request_from_dict(rows[iid]))
+            result = module.verify(build_qa_input(rows[iid]))
             outcomes[iid] = {
                 "verdict": result.verdict,
                 "claims": [{
@@ -287,8 +267,8 @@ def _cfix_probe(strict_outcomes: dict) -> dict:
 
 
 def main() -> None:
-    rows = {row["instance_id"]: row for row in read_jsonl(QA_FROZEN)}
-    silver = {row["instance_id"]: row for row in read_jsonl(SILVER)}
+    rows = {row["instance_id"]: row for row in load_frozen_qa(QA_FROZEN)}
+    silver = load_label_rows(SILVER)
 
     strict_outcomes, llm_capture = _run_strict(rows, silver)
 
@@ -383,7 +363,7 @@ def main() -> None:
         confusion: Counter = Counter()
         flips = []
         for iid in dev_ids:
-            result = module.verify(request_from_dict(rows[iid]))
+            result = module.verify(build_qa_input(rows[iid]))
             gold = silver[iid]["final_verdict"]
             confusion[(result.verdict, gold)] += 1
             if result.verdict != strict_outcomes[iid]["verdict"]:

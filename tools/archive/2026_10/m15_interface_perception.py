@@ -137,7 +137,6 @@ def main():
     print(f"  提取: {ok}/{len(results)}")
 
     # ── Phase 2: 重做drift分析 ──
-    ocr = json.loads(OCR_PATH.read_text())
     census = json.loads(CENSUS_PATH.read_text())
 
     # 对比新旧
@@ -160,7 +159,6 @@ def main():
         # 新drift检测
         v_texts = [n['text'] for n in v_new.get('nodes', []) if n.get('text')]
         # 锚点文本从anchor_v2取(重对齐后的结构)
-        anchors = json.loads((BASE / "data/gjb_438c/anchor_v2/anchors_v2.json").read_text())
         # 简化: 用pair的visio_anchor(旧映射)或重对齐结构——用census记录的new_embed
         # 这里直接重用pair文件夹的锚点做对比演示(它可能被重对齐修正过)
         anchor = va

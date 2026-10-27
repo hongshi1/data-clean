@@ -1,0 +1,139 @@
+{
+ "script": "eval_paper_matrix",
+ "git_sha": "9dc4d8a5",
+ "config": {
+  "input": "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl",
+  "labels": "data\\gjb_438c\\runs\\review_qa_with_glm53_582b51e5_20261021_145212\\final_labels.jsonl",
+  "n": 91,
+  "baselines": {
+   "B0": {
+    "mode": "majority_nie"
+   },
+   "B1": {
+    "use_experts": false,
+    "use_nli_residual": true,
+    "nli_model_path": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
+   },
+   "B2": {
+    "mode": "direct_llm",
+    "calls_per_qa": 1
+   },
+   "B3": {
+    "use_experts": true
+   },
+   "B4": {
+    "use_experts": true,
+    "use_llm_residual": true
+   },
+   "B5": {
+    "use_experts": false,
+    "use_llm_residual": true
+   }
+  },
+  "ablations": {
+   "-e1_expert": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "-entity_detector": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "-sequence_expert": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "-trace_expert": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "-id_join_expert": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "enum_join"
+    ]
+   },
+   "-enum_join_expert": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join"
+    ]
+   },
+   "-per_claim_fusion": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "fuse_per_claim": false
+   },
+   "-llm_residual": {
+    "use_experts": true
+   },
+   "-all_experts": {
+    "use_experts": false,
+    "use_llm_residual": true
+   },
+   "deq_on_off": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "use_deq": true
+   }
+  },
+  "bootstrap": {
+   "n_boot": 1000,
+   "seed": 42,
+   "pairs": [
+    "B4_vs_B3",
+    "B4_vs_B5",
+    "B4_vs_B2",
+    "B4_vs_no_join_experts"
+   ]
+  },
+  "zero_shot_nli_key": "mdeberta",
+  "llm": "glm-5.3 json cache"
+ },
+ "config_hash": "c409df7f",
+ "opened_at": 1793117563.0
+}

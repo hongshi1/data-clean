@@ -188,7 +188,6 @@ def main():
             })
 
     n = len(records)
-    n_pos = sum(r['eta'] for r in records)
     print(f"\n  元素级记录: {n}条 (Tier1正例{sum(1 for r in records if r['eta']==1 and r['D']==1)}"
           f" / Tier2观测分歧{sum(1 for r in records if r['D']==1)})")
 
@@ -252,15 +251,17 @@ def main():
 
     # ── 判决实验: AUROC(q) vs AUROC(D) ──
     def auroc(scores, labels):
-        pos = [s for s, l in zip(scores, labels) if l == 1]
-        neg = [s for s, l in zip(scores, labels) if l == 0]
+        pos = [s for s, lab in zip(scores, labels) if lab == 1]
+        neg = [s for s, lab in zip(scores, labels) if lab == 0]
         if not pos or not neg:
             return None
         wins = ties = 0
         for p_ in pos:
             for n_ in neg:
-                if p_ > n_: wins += 1
-                elif p_ == n_: ties += 1
+                if p_ > n_:
+                    wins += 1
+                elif p_ == n_:
+                    ties += 1
         return (wins + 0.5 * ties) / (len(pos) * len(neg))
 
     test_labels = [r['eta'] for r in test]

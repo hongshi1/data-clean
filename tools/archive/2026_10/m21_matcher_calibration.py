@@ -54,7 +54,6 @@ def collect_adjudicated_items():
     """收集全部已裁决项: (pair, item_text, label, anchor)"""
     items = []
     realigned = json.loads(REALIGN.read_text())
-    mapping = json.loads(MAPPING.read_text())
 
     # ── 多场景(M17) ──
     adj_s = json.loads(ADJ_SCENE.read_text())
@@ -186,8 +185,6 @@ def main():
     # compiler_bug = 真值存在但匹配器说缺失 → 匹配器的漏检(p_miss)
     # real_bug中匹配器说匹配的 = 真值不存在但匹配器说匹配 → 误收(p_halluc)
     th = best_th
-    matched = [s for s in scored if s['final_score'] >= th]
-    unmatched = [s for s in scored if s['final_score'] < th]
     # 真值存在对应 = compiler_bug类; 真值不存在 = real_bug类(benign中性)
     true_exists = [s for s in scored if s['label'] == 'compiler_bug']
     true_absent = [s for s in scored if s['label'] == 'real_bug']

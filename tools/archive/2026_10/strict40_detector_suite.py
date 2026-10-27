@@ -166,7 +166,6 @@ def detect_entry(entry) -> dict:
         if fact is None:
             fired.append(f'pos{i}: 呈现位置数超出事实数')
             break
-        floc = fact.get('location', '')
         # ── 参数型事实 ──
         fp = fact_param(fact)
         if fp:

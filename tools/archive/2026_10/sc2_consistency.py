@@ -48,7 +48,8 @@ def get_embeddings(texts):
     return [_emb_cache.get(t, []) for t in texts]
 
 def cosine(a, b):
-    if not a or not b: return 0.0
+    if not a or not b:
+        return 0.0
     return sum(x*y for x, y in zip(a, b)) / (math.sqrt(sum(x*x for x in a))*math.sqrt(sum(y*y for y in b))+1e-10)
 
 
@@ -82,9 +83,11 @@ def match_node_sets(visio_nodes: list[dict], table_steps: list[str]) -> dict:
 
     for i, vt in enumerate(visio_texts):
         vt_chars = set(vt)
-        if not vt_chars: continue
+        if not vt_chars:
+            continue
         for j, ts in enumerate(table_steps):
-            if j in used_table: continue
+            if j in used_table:
+                continue
             ts_chars = set(ts)
             overlap = len(vt_chars & ts_chars) / len(vt_chars)
             if overlap > 0.5:
@@ -102,10 +105,13 @@ def match_node_sets(visio_nodes: list[dict], table_steps: list[str]) -> dict:
         t_embs = get_embeddings(unmatched_table)
         if any(v_embs) and any(t_embs):
             for vi, vt in enumerate(unmatched_visio):
-                if not v_embs[vi]: continue
+                if not v_embs[vi]:
+                    continue
                 for ti, ts in enumerate(unmatched_table):
-                    if ti in used_table: continue
-                    if not t_embs[ti]: continue
+                    if ti in used_table:
+                        continue
+                    if not t_embs[ti]:
+                        continue
                     sim = cosine(v_embs[vi], t_embs[ti])
                     if sim > 0.7:
                         matched_pairs.append({'visio': vt, 'table': ts, 'method': 'embedding', 'score': round(sim, 2)})
@@ -115,9 +121,11 @@ def match_node_sets(visio_nodes: list[dict], table_steps: list[str]) -> dict:
 
     # 策略3: 关键词包含(短文本∈长文本)
     for i, vt in enumerate(visio_texts):
-        if i in used_visio: continue
+        if i in used_visio:
+            continue
         for j, ts in enumerate(table_steps):
-            if j in used_table: continue
+            if j in used_table:
+                continue
             # 检查关键词包含(取vt的前10个字在ts中)
             key = vt[:10]
             if len(key) >= 4 and key in ts:
@@ -151,7 +159,7 @@ def match_actors(visio_nodes: list[dict], pair_dir: Path) -> dict:
     table_actors = []
     table_path = pair_dir / "table.csv"
     if table_path.exists():
-        with open(table_path) as f:
+        with open(table_path, encoding="utf-8") as f:
             for row in csv.reader(f):
                 for cell in row:
                     if 'Actors' in cell or 'Actor' in cell:
@@ -174,8 +182,10 @@ def match_actors(visio_nodes: list[dict], pair_dir: Path) -> dict:
         for ta in table_actors:
             if va in ta or ta in va:
                 matched_actors.append({'visio': va, 'table': ta})
-                if va in visio_only_actors: visio_only_actors.remove(va)
-                if ta in table_only_actors: table_only_actors.remove(ta)
+                if va in visio_only_actors:
+                    visio_only_actors.remove(va)
+                if ta in table_only_actors:
+                    table_only_actors.remove(ta)
                 break
 
     return {
@@ -197,7 +207,7 @@ def match_exception_flows(visio_edges: list[dict], pair_dir: Path) -> dict:
     table_exceptions = []
     table_path = pair_dir / "table.csv"
     if table_path.exists():
-        with open(table_path) as f:
+        with open(table_path, encoding="utf-8") as f:
             content = f.read()
             # 提取"异常流E1: xxx"模式
             for m in re.finditer(r'异常流\s*(\w+)\s*[：:]\s*(.+?)(?:。|;|；|$)', content):
@@ -311,7 +321,7 @@ def main():
     print("=" * 60)
 
     # 加载映射
-    with open(MAPPING_PATH) as f:
+    with open(MAPPING_PATH, encoding="utf-8") as f:
         mapping = json.load(f)
 
     print(f"样本数: {len(mapping)}")

@@ -127,13 +127,13 @@ def build_all():
     stats = {"text": 0, "table": 0, "image": 0}
     for cl_path in sorted(glob.glob(os.path.join(MINERU, "*/office/*content_list.json"))):
         doc = os.path.basename(cl_path).replace("_content_list.json", "")[:25]
-        cl = json.loads(open(cl_path).read())
+        cl = json.loads(open(cl_path, encoding="utf-8").read())
         chunks = chunk_document(doc, cl)
         for c in chunks:
             stats[c["type"]] += 1
         all_chunks.extend(chunks)
         print(f"  {doc}: {len(chunks)} chunks")
-    with open(os.path.join(OUT_DIR, "srs_chunks.json"), "w") as f:
+    with open(os.path.join(OUT_DIR, "srs_chunks.json"), "w", encoding="utf-8") as f:
         json.dump(all_chunks, f, ensure_ascii=False, indent=1)
     print(f"\n总计: {len(all_chunks)} chunks {stats}")
     return all_chunks

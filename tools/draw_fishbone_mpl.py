@@ -96,7 +96,6 @@ def draw_fishbone(root: str, modules: list[tuple[str, list[str]]], out_png: str)
                   mcx, mod_cy + mod_h / 2)
 
         # 第3层:子功能(纵向排列)
-        n_leaf = len(leaves)
         for j, leaf in enumerate(leaves):
             lcy = leaf_top_y - j * (leaf_h + leaf_gap_y)
             add_box(mcx, lcy, leaf_w, leaf_h, leaf,

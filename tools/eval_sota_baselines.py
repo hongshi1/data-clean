@@ -205,7 +205,7 @@ def main() -> None:
         print(f"  {k:16s}: R@1={m['R@1']:.3f} R@5={m['R@5']:.3f} MRR={m['MRR@10']:.3f}")
 
     # ═══ 场景2: WTQ(18486q, en) ═══
-    print(f"\n=== WTQ × Contriever-MS / ColBERTv2 ===", flush=True)
+    print("\n=== WTQ × Contriever-MS / ColBERTv2 ===", flush=True)
     wtq = json.loads((EV / "wtq_ure.json").read_text(encoding="utf-8"))
     w_corpus = wtq["corpus"]
     w_ids = [c["chunk_id"] for c in w_corpus]

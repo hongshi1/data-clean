@@ -223,7 +223,6 @@ def compare_scene(anchor: dict, X_T: dict, scene: str) -> dict:
     # 接口图: 边标签也进比较池(接口名常是连线标签而非节点)
     if scene == 'sc3_interface_interface':
         edge_label_nodes = []
-        nodes_map = {n['id']: n for n in anchor['nodes']}
         for e in anchor.get('edges', []):
             lbl = (e.get('label') or '').strip()
             if lbl:

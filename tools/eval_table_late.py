@@ -48,10 +48,9 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("--topk", type=int, default=10)
-    args = ap.parse_args()
+    ap.parse_args()
 
     chunks = json.loads(CHUNKS.read_text(encoding="utf-8"))
-    tables = [c for c in chunks if c.get("type") == "table"]
     with open(DENSE_CACHE, "rb") as f:
         dense: dict[str, list[float]] = pickle.load(f)
 

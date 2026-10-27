@@ -217,15 +217,20 @@ def srs_z3_check(constraints: list[dict]) -> dict:
         
         op = c.get("operator", "")
         if op == "≤" or op == "<=":
-            solver.add(var <= val); added += 1
+            solver.add(var <= val)
+            added += 1
         elif op == "≥" or op == ">=":
-            solver.add(var >= val); added += 1
+            solver.add(var >= val)
+            added += 1
         elif op == "=":
-            solver.add(var == val); added += 1
+            solver.add(var == val)
+            added += 1
         elif op == "<":
-            solver.add(var < val); added += 1
+            solver.add(var < val)
+            added += 1
         elif op == ">":
-            solver.add(var > val); added += 1
+            solver.add(var > val)
+            added += 1
     
     result = solver.check()
     if result == unsat:

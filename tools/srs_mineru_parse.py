@@ -46,11 +46,15 @@ class TableHTMLParser(HTMLParser):
         self.in_cell = False
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'tr': self.current_row = []
-        elif tag in ('td', 'th'): self.in_cell = True; self.current_cell = []
+        if tag == 'tr':
+            self.current_row = []
+        elif tag in ('td', 'th'):
+            self.in_cell = True
+            self.current_cell = []
 
     def handle_data(self, data):
-        if self.in_cell: self.current_cell.append(data.strip())
+        if self.in_cell:
+            self.current_cell.append(data.strip())
 
     def handle_endtag(self, tag):
         if tag in ('td', 'th') and self.in_cell:
@@ -68,24 +72,35 @@ def parse_html_table(html: str) -> list:
 
 def classify_table(caption: str, headers: list) -> str:
     c = (caption + ' '.join(headers)).lower()
-    if any(kw in c for kw in ['序号', '版本号', '标记', '处数']): return 'modification'
-    if any(kw in c for kw in ['需求名称', '合格性方法', '本文档章节号']): return 'qualification'
-    if any(kw in c for kw in ['追踪', '跟踪', '任务书']): return 'traceability'
-    if any(kw in c for kw in ['接口', '信号']): return 'interface'
-    if any(kw in c for kw in ['文档编号', '标题', '修订']): return 'reference'
-    if any(kw in c for kw in ['功能名称', '标识', '子功能']): return 'capability'
+    if any(kw in c for kw in ['序号', '版本号', '标记', '处数']):
+        return 'modification'
+    if any(kw in c for kw in ['需求名称', '合格性方法', '本文档章节号']):
+        return 'qualification'
+    if any(kw in c for kw in ['追踪', '跟踪', '任务书']):
+        return 'traceability'
+    if any(kw in c for kw in ['接口', '信号']):
+        return 'interface'
+    if any(kw in c for kw in ['文档编号', '标题', '修订']):
+        return 'reference'
+    if any(kw in c for kw in ['功能名称', '标识', '子功能']):
+        return 'capability'
     return 'other'
 
 
 def classify_role(param, section):
     for kw in ['时间','间隔','延迟','误差','精度','响应','定时','偏差','周期']:
-        if kw in param: return "threshold"
+        if kw in param:
+            return "threshold"
     for kw in ['版本','型号','主频','内存','硬盘','存储','分辨率','显存']:
-        if kw in param: return "config"
+        if kw in param:
+            return "config"
     for kw in ['最多','支持','容量','数量','上限','最大','并发']:
-        if kw in param: return "capacity"
-    if section.startswith('3.10'): return "config"
-    if section.startswith('3.11'): return "threshold"
+        if kw in param:
+            return "capacity"
+    if section.startswith('3.10'):
+        return "config"
+    if section.startswith('3.11'):
+        return "threshold"
     return "description"
 
 
@@ -278,7 +293,8 @@ def main():
 
     all_results = []
     for doc_dir in sorted(MINERU_DIR.iterdir()):
-        if not doc_dir.is_dir(): continue
+        if not doc_dir.is_dir():
+            continue
         doc_name = doc_dir.name[:35]
         result = parse_mineru_output(doc_dir)
         if "error" in result:

@@ -74,15 +74,17 @@ def build_element_adj():
 
 
 def auroc(scores, labels):
-    pos = [s for s, l in zip(scores, labels) if l == 1]
-    neg = [s for s, l in zip(scores, labels) if l == 0]
+    pos = [s for s, lab in zip(scores, labels) if lab == 1]
+    neg = [s for s, lab in zip(scores, labels) if lab == 0]
     if not pos or not neg:
         return None
     wins = ties = 0
     for p_ in pos:
         for n_ in neg:
-            if p_ > n_: wins += 1
-            elif p_ == n_: ties += 1
+            if p_ > n_:
+                wins += 1
+            elif p_ == n_:
+                ties += 1
     return (wins + 0.5 * ties) / (len(pos) * len(neg))
 
 
@@ -120,7 +122,7 @@ def main():
     anchor_idx = {k: v[1] for k, v in anchor_idx.items()}
 
     records = []
-    n_excl_elem = n_excl_pair = 0
+    n_excl_elem = 0
     for pk in sorted(mapping.keys()):
         if pk in EXCLUDE_PAIRS:
             continue

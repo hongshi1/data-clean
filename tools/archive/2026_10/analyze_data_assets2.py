@@ -13,7 +13,9 @@ for doc, v in av.items():
     st = v.get('structures', [])
     nn = sum(len(s.get('nodes', [])) for s in st if isinstance(s, dict))
     ne = sum(len(s.get('edges', [])) for s in st if isinstance(s, dict))
-    tot_f += len(st); tot_n += nn; tot_e += ne
+    tot_f += len(st)
+    tot_n += nn
+    tot_e += ne
     print(f"  {doc[:14]}: visio={v.get('visio_count')} structures={len(st)} nodes={nn} edges={ne}")
 print(f"  合计: structures={tot_f} nodes={tot_n} edges={tot_e}")
 s0 = av[list(av.keys())[0]]['structures'][0]

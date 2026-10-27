@@ -69,7 +69,7 @@ def gen_vsdx(title, nodes, conns, out_path):
         # 2) 连线 + 标注
         for from_t, to_t, label in conns:
             fs, ts = shapes[from_t], shapes[to_t]
-            conn_shape = vsdx.Connect.create(page, fs, ts)
+            vsdx.Connect.create(page, fs, ts)
             # 标注文字(独立小框,放在连线中点偏上)
             cx = (fs.center_x_y[0] + ts.center_x_y[0]) / 2
             cy = (fs.center_x_y[1] + ts.center_x_y[1]) / 2
@@ -115,7 +115,6 @@ def postprocess(path):
     page_name = "visio/pages/page1.xml"
     if page_name in new_parts:
         page = new_parts[page_name].decode("utf-8")
-        ns = VISIO_NS
         char_section = (
             f'<Section N="Character"><Row IX="0">'
             f'<Cell N="Font" V="{FONT_ID_HEITI}"/>'

@@ -39,7 +39,6 @@ protocol (open_run).
 """
 from __future__ import annotations
 
-import json
 import random
 import re
 import sys
@@ -53,16 +52,23 @@ if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
 import algorithms.common.llm_client as llm_client  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    LABELS,
+    build_qa_input,
+    confusion_of,
+    load_frozen_qa,
+    load_silver_labels,
+    macro_f1_raw,
+    score_outcomes,
+)
 from algorithms.consistency.nli_local import MODELS  # noqa: E402
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 QA_FROZEN = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
 SILVER = (BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
           / "final_labels.jsonl")
 LLM_CACHE = BASE / "data/gjb_438c/llm_cache/llm_cache.jsonl"
-LABELS = ("support", "refute", "not_in_evidence")
 N_BOOT = 1000
 BOOT_SEED = 42
 ZERO_SHOT_NLI_KEY = "mdeberta"
@@ -92,78 +98,10 @@ def _without(*experts: str) -> tuple[str, ...]:
 
 # ── corpus + metrics ────────────────────────────────────────────────────────
 
-def read_jsonl(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8")
-            .splitlines() if line.strip()]
-
-
 def cache_lines() -> int:
     if not LLM_CACHE.exists():
         return 0
     return sum(1 for line in LLM_CACHE.open(encoding="utf-8") if line.strip())
-
-
-def _prf(confusion: Counter, label: str) -> tuple[float, float, float]:
-    tp = confusion[(label, label)]
-    fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-    fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-    precision = tp / (tp + fp) if tp + fp else 0.0
-    recall = tp / (tp + fn) if tp + fn else 0.0
-    f1 = (2 * precision * recall / (precision + recall)
-          if precision + recall else 0.0)
-    return precision, recall, f1
-
-
-def class_metrics(confusion: Counter) -> dict[str, dict]:
-    out = {}
-    for label in LABELS:
-        precision, recall, f1 = _prf(confusion, label)
-        out[label] = {"precision": round(precision, 4),
-                      "recall": round(recall, 4), "f1": round(f1, 4)}
-    return out
-
-
-def macro_f1_raw(confusion: Counter) -> float:
-    return sum(_prf(confusion, label)[2] for label in LABELS) / len(LABELS)
-
-
-def macro_f1(confusion: Counter) -> float:
-    return round(macro_f1_raw(confusion), 4)
-
-
-def accuracy(confusion: Counter, n: int) -> float:
-    correct = sum(confusion[(p, g)] for p in LABELS for g in LABELS if p == g)
-    return round(correct / n, 4)
-
-
-def confusion_dict(confusion: Counter) -> dict[str, int]:
-    return {f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]}
-
-
-def confusion_of(preds: list[str], golds: list[str]) -> Counter:
-    confusion: Counter = Counter()
-    for pred, gold in zip(preds, golds):
-        confusion[(pred, gold)] += 1
-    return confusion
-
-
-def score_outcomes(outcomes: dict[str, Outcome], rows: list[dict],
-                   silver: dict[str, str]) -> dict:
-    confusion = confusion_of(
-        [outcomes[row["instance_id"]]["verdict"] for row in rows],
-        [silver[row["instance_id"]] for row in rows])
-    methods: Counter = Counter()
-    for row in rows:
-        methods.update(claim["method"]
-                       for claim in outcomes[row["instance_id"]]["claims"])
-    return {
-        "accuracy": accuracy(confusion, len(rows)),
-        "macro_f1": macro_f1(confusion),
-        "per_class": class_metrics(confusion),
-        "confusion[predicted, silver]": confusion_dict(confusion),
-        "claim_methods": dict(methods),
-    }
 
 
 # ── LLM call metering ───────────────────────────────────────────────────────
@@ -304,7 +242,7 @@ def module_runner(**kwargs: Any) -> Callable[[list[dict]], dict[str, Outcome]]:
         module = QAConsistencyModule(**kwargs)
         outcomes: dict[str, Outcome] = {}
         for row in rows:
-            request = request_from_dict(row)
+            request = build_qa_input(row)
             result = module.verify(request)
             outcomes[request.instance_id] = {
                 "verdict": result.verdict,
@@ -493,9 +431,8 @@ def bootstrap_table(bootstrap: dict[str, dict]) -> str:
 
 def main() -> None:
     started = time.time()
-    rows = read_jsonl(QA_FROZEN)
-    silver = {row["instance_id"]: row["final_verdict"]
-              for row in read_jsonl(SILVER)}
+    rows = load_frozen_qa(QA_FROZEN)
+    silver = load_silver_labels(SILVER)
 
     meter = LlmMeter()
     meter.install()

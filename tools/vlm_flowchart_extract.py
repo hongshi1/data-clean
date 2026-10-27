@@ -72,7 +72,7 @@ def extract_flowchart(img_path):
 
 def main():
     # 加载图片分类
-    with open(IMAGE_ANALYSES) as f:
+    with open(IMAGE_ANALYSES, encoding="utf-8") as f:
         data = json.load(f)
 
     # 找流程图
@@ -88,7 +88,7 @@ def main():
     # 检查已完成的
     done = set()
     if OUT_PATH.exists():
-        with open(OUT_PATH) as f:
+        with open(OUT_PATH, encoding="utf-8") as f:
             for line in f:
                 try:
                     rec = json.loads(line)
@@ -98,7 +98,7 @@ def main():
     print(f"已完成: {len(done)}, 待处理: {len(flowcharts) - len(done)}")
 
     # 批量提取
-    with open(OUT_PATH, "a") as fout:
+    with open(OUT_PATH, "a", encoding="utf-8") as fout:
         for i, fc in enumerate(flowcharts):
             img_path = fc["image_path"]
             if img_path in done:

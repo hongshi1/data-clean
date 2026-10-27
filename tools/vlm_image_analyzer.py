@@ -65,7 +65,7 @@ def find_images():
     images = []
     for cl_path in sorted(glob.glob(os.path.join(IMAGE_DIR, "*/office/*content_list.json"))):
         doc = os.path.basename(cl_path).replace("_content_list.json", "")[:25]
-        cl = json.loads(open(cl_path).read())
+        cl = json.loads(open(cl_path, encoding="utf-8").read())
         office_dir = os.path.dirname(cl_path)
         for item in cl:
             if isinstance(item, dict) and item.get("type") == "image":
@@ -89,7 +89,7 @@ def main(limit=None, resume=True):
     # 断点续跑
     analyses = []
     if resume and os.path.exists(OUT_PATH):
-        old = json.loads(open(OUT_PATH).read()).get("analyses", [])
+        old = json.loads(open(OUT_PATH, encoding="utf-8").read()).get("analyses", [])
         analyses = list(old)  # 保留已有结果
         done = {r["image_path"] for r in old}
         remaining = [i for i in images if i["image_path"] not in done]
@@ -125,12 +125,12 @@ def _save(analyses):
     merged = analyses
     try:
         if os.path.exists(OUT_PATH):
-            old = json.loads(open(OUT_PATH).read()).get("analyses", [])
+            old = json.loads(open(OUT_PATH, encoding="utf-8").read()).get("analyses", [])
             old_keys = {r["image_path"] for r in old}
             merged = old + [a for a in analyses if a["image_path"] not in old_keys]
     except Exception:
         pass
-    json.dump({"analyses": merged}, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump({"analyses": merged}, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
 if __name__ == "__main__":

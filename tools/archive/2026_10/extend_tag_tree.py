@@ -52,22 +52,22 @@ def main():
 
     uml = ["UML-ASSOCIATION", "UML-usecase", "UML-actor", "UML-REALIZATION", "UML-state",
            "UML-DIRECTED", "UML-boundary", "UML-component", "UML-interface", "UML-COMPOSITION"]
-    for l in uml:
-        add(l, "UML族")
+    for tag in uml:
+        add(tag, "UML族")
     t_series = ["T1_visual_consistency", "T2_table_factual", "T3_counting", "T4_tracing",
                 "T5_text_understanding", "T7_consistency", "T8_cross_reference"]
-    for l in t_series:
-        add(l, "章节QA族")
-    for l in ["terminology", "gjb_compliance", "business_logic", "parameter"]:
-        add(l, "域内注入族")
-    for l in ["P1_需求识别", "P2_术语问答", "P3_章节结构", "P4_修饰符"]:
-        add(l, "外部-PURE")
-    for l in ["N1_冲突判别", "N2_缺陷分类", "N3_FRNFR分类"]:
-        add(l, "外部-NLIRE")
-    for l in ["A1_指代歧义", "A2_并列歧义"]:
-        add(l, "外部-歧义类")
-    for l in ["F1_topological", "F1_applied_scenario", "F1_fact_retrieval", "F1_flow_referential"]:
-        add(l, "外部-FlowVQA")
+    for tag in t_series:
+        add(tag, "章节QA族")
+    for tag in ["terminology", "gjb_compliance", "business_logic", "parameter"]:
+        add(tag, "域内注入族")
+    for tag in ["P1_需求识别", "P2_术语问答", "P3_章节结构", "P4_修饰符"]:
+        add(tag, "外部-PURE")
+    for tag in ["N1_冲突判别", "N2_缺陷分类", "N3_FRNFR分类"]:
+        add(tag, "外部-NLIRE")
+    for tag in ["A1_指代歧义", "A2_并列歧义"]:
+        add(tag, "外部-歧义类")
+    for tag in ["F1_topological", "F1_applied_scenario", "F1_fact_retrieval", "F1_flow_referential"]:
+        add(tag, "外部-FlowVQA")
     add("L1_质量评估", "外部-LLMGen")
 
     # 验证(正确键名: child; questionCount按Question.label)

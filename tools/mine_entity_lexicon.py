@@ -55,7 +55,7 @@ def main() -> None:
     from algorithms.common.llm_client import llm_chat
 
     # 语料(训练侧, 不含评测集)
-    train = [json.loads(l) for l in open(BASE / "data/gjb_438c/pair_dataset_canonical/train.jsonl", encoding="utf-8")]
+    train = [json.loads(line) for line in open(BASE / "data/gjb_438c/pair_dataset_canonical/train.jsonl", encoding="utf-8")]
     texts = set()
     for x in train:
         ph = x.get("pair", x)

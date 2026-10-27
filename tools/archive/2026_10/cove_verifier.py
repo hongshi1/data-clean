@@ -131,7 +131,7 @@ def cove_judge_desc(name, desc):
 # ========== 评测 ==========
 def eval_name_task(sample_size=None, all_items=False):
     """名称级评测: 加载sc1名称级Gold Standard, CoVe验证"""
-    gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json')).read())
+    gs = json.loads(open(os.path.join(GOLD_DIR, 'multi_scene_gold_standard.json'), encoding="utf-8").read())
     sc1 = gs['scenes']['scene1']
 
     # 收集测试对(负例的correct vs wrong)
@@ -176,7 +176,7 @@ def eval_name_task(sample_size=None, all_items=False):
     out_file = os.path.join(GOLD_DIR, 'cove_name_results.jsonl')
     done_keys = set()
     if os.path.exists(out_file):
-        with open(out_file) as f:
+        with open(out_file, encoding="utf-8") as f:
             for line in f:
                 try:
                     d = json.loads(line)
@@ -195,7 +195,7 @@ def eval_name_task(sample_size=None, all_items=False):
             'difficulty': t['difficulty'], 'source': t['source'],
             'entity_id': t['entity_id'],
         })
-        with open(out_file, 'a') as f:
+        with open(out_file, 'a', encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + '\n')
         if (i + 1) % 20 == 0:
             print(f"    进度: {i+1}/{len(todo)}")
@@ -203,7 +203,7 @@ def eval_name_task(sample_size=None, all_items=False):
 
     # 汇总
     results = []
-    with open(out_file) as f:
+    with open(out_file, encoding="utf-8") as f:
         for line in f:
             results.append(json.loads(line))
 
@@ -242,7 +242,7 @@ def eval_name_task(sample_size=None, all_items=False):
 
 def eval_desc_task(sample_size=None):
     """描述级评测: 加载sc1描述级样本, CoVe验证"""
-    samples = json.loads(open(os.path.join(GOLD_DIR, 'sc1_desc_level_samples.json')).read())
+    samples = json.loads(open(os.path.join(GOLD_DIR, 'sc1_desc_level_samples.json'), encoding="utf-8").read())
     if sample_size:
         import random
         random.seed(42)
@@ -253,7 +253,7 @@ def eval_desc_task(sample_size=None):
     out_file = os.path.join(GOLD_DIR, 'cove_desc_results.jsonl')
     done_keys = set()
     if os.path.exists(out_file):
-        with open(out_file) as f:
+        with open(out_file, encoding="utf-8") as f:
             for line in f:
                 try:
                     d = json.loads(line)
@@ -271,7 +271,7 @@ def eval_desc_task(sample_size=None):
             'gold_label': s['label'],
             'source': s.get('source', ''), 'difficulty': s.get('difficulty', ''),
         })
-        with open(out_file, 'a') as f:
+        with open(out_file, 'a', encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + '\n')
         if (i + 1) % 20 == 0:
             print(f"    进度: {i+1}/{len(todo)}")
@@ -279,7 +279,7 @@ def eval_desc_task(sample_size=None):
 
     # 汇总
     results = []
-    with open(out_file) as f:
+    with open(out_file, encoding="utf-8") as f:
         for line in f:
             results.append(json.loads(line))
 
@@ -327,7 +327,7 @@ def generate_report():
     desc_file = os.path.join(GOLD_DIR, 'cove_desc_results.jsonl')
 
     if os.path.exists(name_file):
-        results = [json.loads(l) for l in open(name_file) if l.strip()]
+        results = [json.loads(line) for line in open(name_file, encoding="utf-8") if line.strip()]
         correct = sum(1 for r in results if (r['kimi_verdict'] == 'inconsistent') == (r['gold_label'] == 'inconsistent'))
         agree = sum(1 for r in results if r['models_agree'])
         report['name_level'] = {
@@ -337,7 +337,7 @@ def generate_report():
         }
 
     if os.path.exists(desc_file):
-        results = [json.loads(l) for l in open(desc_file) if l.strip()]
+        results = [json.loads(line) for line in open(desc_file, encoding="utf-8") if line.strip()]
         correct = sum(1 for r in results if (r['kimi_verdict'] == 'inconsistent') == (r['gold_label'] == 'inconsistent'))
         agree = sum(1 for r in results if r['models_agree'])
         report['desc_level'] = {
@@ -347,7 +347,7 @@ def generate_report():
         }
 
     out = os.path.join(GOLD_DIR, 'cove_eval_report.json')
-    json.dump(report, open(out, 'w'), ensure_ascii=False, indent=2)
+    json.dump(report, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"报告已生成: {out}")
 
 

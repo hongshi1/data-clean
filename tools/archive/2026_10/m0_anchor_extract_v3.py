@@ -554,9 +554,6 @@ def extract_all(docx_dir: Path):
                     page_dims_map = {}
                     try:
                         pages_xml = vz.read('visio/pages/pages.xml').decode('utf-8', errors='replace')
-                        rels_xml = vz.read('visio/pages/_rels/pages.xml.rels').decode('utf-8', errors='replace')
-                        rels = re.findall(r'Id="([^"]+)"[^>]*Target="([^"]+)"', rels_xml)
-                        rel_map = dict(rels)
                         proot = ET.fromstring(pages_xml)
                         for pel in proot.findall('.//{*}Page'):
                             pid = pel.get('ID', '')

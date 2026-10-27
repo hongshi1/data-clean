@@ -2,39 +2,64 @@
 
 Input is ``question + answer + upstream-frozen retrieved context``. This module
 does not retrieve context or compare evidence sources with each other.
+
+Architecture (Wave 8-H2 split): this file keeps only the
+``QAConsistencyModule`` orchestration (verify / decomposition dispatch /
+expert channel registry / residual dispatch / cascade escalation /
+per-claim fusion / cross-claim aggregation). Deterministic answer claim
+extraction lives in ``algorithms.consistency.answer_claims`` and the
+per-claim verification channels in
+``algorithms.consistency.claim_channels``; the historical module-level
+names (``_AnswerClaim``, ``_extract_numeric_claims``) are re-exported
+below for backward compatibility.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
 
+from algorithms.consistency.answer_claims import AnswerClaim as _AnswerClaim
+from algorithms.consistency.answer_claims import (
+    decompose_claims,
+)
+from algorithms.consistency.answer_claims import (
+    extract_numeric_claims as _extract_numeric_claims,
+)
+from algorithms.consistency.answer_structure import StructuredClaim
+from algorithms.consistency.answer_structure import decompose_answer
+from algorithms.consistency.claim_channels import (
+    SemanticNliJudge,
+    unresolved,
+    verify_enum,
+    verify_identifier,
+    verify_numeric,
+    verify_quoted,
+    verify_semantic,
+)
+from algorithms.consistency.evidence_statements import EvidenceStatement
+from algorithms.consistency.evidence_statements import linearize_context
 from algorithms.consistency.llm_residual import REFUTE_CONFIDENCE_GATE
 from algorithms.consistency.qa_models import (
     ClaimResult,
     QAInput,
-    RetrievedEvidence,
     VerificationResult,
     Verdict,
 )
 from algorithms.consistency.qa_router import route_question
-from algorithms.consistency.templates import normalize_op, normalize_unit
-from algorithms.consistency.answer_structure import pair_statements
-from algorithms.consistency.answer_structure import decompose_answer
-from algorithms.consistency.evidence_statements import linearize_context
 
-
-@dataclass(frozen=True)
-class _AnswerClaim:
-    kind: str
-    text: str
-    attr: str = ""
-    operator: str = ""
-    value: str = ""
-    unit: str = ""
-    negative: bool = False
-
+#: backward-compatible re-exports of the pre-split module surface
+__all__ = [
+    "AGGREGATION_VARIANTS",
+    "ExpertSpec",
+    "QAConsistencyModule",
+    "_AnswerClaim",
+    "_extract_numeric_claims",
+    "_is_active_nie",
+    "_is_minor_claim",
+]
 
 #: cross-claim aggregation variants (P1 support-recall study,
 #: docs/srs_project/50_support_recall_analysis.md)
@@ -104,71 +129,6 @@ def _is_minor_claim(result: ClaimResult) -> bool:
     return any(marker in result.claim_text for marker in _MINOR_CLAIM_MARKERS)
 
 
-_OPERATOR_PATTERN = (
-    r"不大于|不超过|不高于|小于等于|不小于|不少于|不低于|大于等于|"
-    r"不小于|不大于|至少|最多|至多|最低|大于|小于|≤|≥|<=|>=|<|>|为|等于|="
-)
-_NUMERIC_PREFIX = re.compile(
-    rf"(?P<op>{_OPERATOR_PATTERN})\s*(?P<value>\d+(?:\.\d+)?)\s*"
-    r"(?P<unit>ms|毫秒|min|分钟|s|秒|GB|MB|KB|B|字节|%|条|个|次|种|路)?"
-)
-_NUMERIC_POSTFIX = re.compile(
-    r"(?P<value>\d+(?:\.\d+)?)\s*(?P<unit>ms|毫秒|min|分钟|s|秒|GB|MB|KB|B|字节|%|条|个|次|种|路)\s*"
-    r"(?P<op>以上|及以上|以下|及以下)"
-)
-_ENUM_PREFIX = re.compile(r"(?:包括|包含|分别为|如下)[：:]?\s*(?P<items>[^。；\n]{3,100})")
-_ANSWER_NUMBER = re.compile(r"(?<!\d)(?P<value>\d+(?:\.\d+)?)\s*(?P<unit>ms|毫秒|min|分钟|s|秒|GB|MB|KB|B|字节|%|条|个|次|种|路|小时)")
-_IDENTIFIER = re.compile(
-    r"(?<![A-Z0-9-])[A-Z]{2,8}(?:-[A-Z0-9]{1,12}){1,6}(?![A-Z0-9-])")
-
-
-def _attribute_before(text: str, start: int) -> str:
-    before = text[max(0, start - 48):start].rstrip()
-    before = re.split(r"[，,；。！？\n]", before)[-1].strip()
-    before = re.sub(
-        r"^(?:在|当|若|如果|对于)[^，,；。！？\n]{0,24}"
-        r"(?:条件下|情况下|时|之时)\s*",
-        "",
-        before,
-    )
-    quoted = re.search(r"[「\"]([^「」\"]{2,24})[」\"]\s*(?:的)?$", before)
-    if quoted:
-        return quoted.group(1).strip()
-    match = re.search(r"([\u4e00-\u9fffA-Za-z]{2,16}?)(?:的)?(?:要求|应|为|是|达到|保持)?\s*$", before)
-    if not match:
-        return ""
-    attr = match.group(1).strip()
-    return "" if attr in {"系统", "文档", "功能", "数据", "该", "本", "至少", "最多"} else attr
-
-
-def _extract_numeric_claims(text: str) -> list[tuple[str, str, str, str]]:
-    claims: list[tuple[str, str, str, str]] = []
-    occupied: list[tuple[int, int]] = []
-    for match in _NUMERIC_PREFIX.finditer(text):
-        attr = _attribute_before(text, match.start())
-        claims.append((attr, match.group("op"), match.group("value"),
-                       match.group("unit") or ""))
-        occupied.append(match.span())
-    for match in _NUMERIC_POSTFIX.finditer(text):
-        if any(match.start() < end and start < match.end() for start, end in occupied):
-            continue
-        op = "以上" if "以上" in match.group("op") else "以下"
-        attr = _attribute_before(text, match.start())
-        claims.append((attr, op, match.group("value"), match.group("unit")))
-    return claims
-
-
-def _extract_enum_claims(text: str) -> list[list[str]]:
-    result: list[list[str]] = []
-    for match in _ENUM_PREFIX.finditer(text):
-        body = re.split(r"[，,；。]其中", match.group("items"), maxsplit=1)[0]
-        items = [item.strip(" ：:、，,；") for item in re.split(r"[、，,]", body)]
-        items = [item for item in items if 1 < len(item) <= 32]
-        if len(items) >= 2:
-            result.append(items)
-    return result
-
-
 def _context_hash(request: QAInput) -> str:
     payload = [{
         "evidence_id": ev.evidence_id,
@@ -185,37 +145,97 @@ def _context_hash(request: QAInput) -> str:
     return hashlib.sha256(content).hexdigest()
 
 
-def _interval(operator: str, value: float) -> tuple[float, bool, float, bool] | None:
-    op = normalize_op(operator)
-    if op == "le":
-        return float("-inf"), False, value, True
-    if op == "lt":
-        return float("-inf"), False, value, False
-    if op == "ge":
-        return value, True, float("inf"), False
-    if op == "gt":
-        return value, False, float("inf"), False
-    if op == "eq":
-        return value, True, value, True
-    return None
+@dataclass(frozen=True)
+class ExpertSpec:
+    """One declaratively registered expert channel (uniform adapter).
+
+    ``runner`` wraps the expert's original entry function (whose signature
+    is NOT changed) into the uniform three-argument callable
+    ``(request, statements, structured) -> list[ClaimResult]``.
+    ``takes_claims`` records whether the underlying entry consumes the
+    decomposed answer claims; ``takes_bge`` records whether it exposes a
+    ``use_bge`` switch. Both are declarative metadata used when building
+    the adapter in :func:`_expert_registry`.
+    """
+
+    name: str
+    runner: Callable[
+        [QAInput, list[EvidenceStatement], list[StructuredClaim]],
+        list[ClaimResult],
+    ]
+    takes_claims: bool = True
+    takes_bge: bool = False
 
 
-def _subset(a: tuple[float, bool, float, bool],
-            b: tuple[float, bool, float, bool]) -> bool:
-    al, alc, au, auc = a
-    bl, blc, bu, buc = b
-    lower_ok = al > bl or (al == bl and (not alc or blc))
-    upper_ok = au < bu or (au == bu and (not auc or buc))
-    return lower_ok and upper_ok
+def _expert_registry(use_bge: bool) -> tuple[ExpertSpec, ...]:
+    """Build the declarative L0/L1 expert registry for one verification.
 
+    Expert entry functions keep their heterogeneous original signatures;
+    the adapters below wrap them into the uniform ``ExpertSpec.runner``
+    callable. Imports stay lazy (inside this builder, outside the per-expert
+    try blocks) exactly as in the pre-refactor ``_expert_channels``.
+    """
 
-def _disjoint(a: tuple[float, bool, float, bool],
-              b: tuple[float, bool, float, bool]) -> bool:
-    al, alc, au, auc = a
-    bl, blc, bu, buc = b
-    a_before_b = au < bl or (au == bl and not (auc and blc))
-    b_before_a = bu < al or (bu == al and not (buc and alc))
-    return a_before_b or b_before_a
+    def three_arg(expert: Callable[..., list[ClaimResult]]) -> Callable[
+            [QAInput, list, list], list[ClaimResult]]:
+        def runner(request: QAInput, statements: list,
+                   structured: list) -> list[ClaimResult]:
+            return expert(request, statements, structured)
+
+        return runner
+
+    def bge_switch(expert: Callable[..., list[ClaimResult]]) -> Callable[
+            [QAInput, list, list], list[ClaimResult]]:
+        def runner(request: QAInput, statements: list,
+                   structured: list) -> list[ClaimResult]:
+            return expert(request, statements, structured, use_bge=use_bge)
+
+        return runner
+
+    def statements_only(expert: Callable[..., list[ClaimResult]]) -> Callable[
+            [QAInput, list, list], list[ClaimResult]]:
+        def runner(request: QAInput, statements: list,
+                   structured: list) -> list[ClaimResult]:
+            return expert(request, statements)
+
+        return runner
+
+    def request_only(expert: Callable[..., list[ClaimResult]]) -> Callable[
+            [QAInput, list, list], list[ClaimResult]]:
+        def runner(request: QAInput, statements: list,
+                   structured: list) -> list[ClaimResult]:
+            return expert(request)
+
+        return runner
+
+    from algorithms.consistency.coverage_expert import verify_coverage
+    from algorithms.consistency.e1_expert import verify_e1_consistency
+    from algorithms.consistency.entity_detector import detect_term_conflicts
+    from algorithms.consistency.enum_join_expert import verify_enum_joins
+    from algorithms.consistency.gjb_presence_expert import (
+        verify_gjb_presence)
+    from algorithms.consistency.id_join_expert import verify_id_joins
+    from algorithms.consistency.numeric_z3_expert import (
+        verify_numeric_constraints)
+    from algorithms.consistency.sequence_expert import verify_sequence
+    from algorithms.consistency.trace_expert import verify_trace
+
+    return (
+        ExpertSpec("entity", three_arg(detect_term_conflicts)),
+        ExpertSpec("e1", three_arg(verify_e1_consistency)),
+        ExpertSpec("sequence", bge_switch(verify_sequence), takes_bge=True),
+        ExpertSpec("trace", request_only(verify_trace), takes_claims=False),
+        ExpertSpec("gjb", statements_only(verify_gjb_presence),
+                   takes_claims=False),
+        ExpertSpec("id_join", statements_only(verify_id_joins),
+                   takes_claims=False),
+        ExpertSpec("enum_join", statements_only(verify_enum_joins),
+                   takes_claims=False),
+        ExpertSpec("numeric_z3", statements_only(verify_numeric_constraints),
+                   takes_claims=False),
+        ExpertSpec("coverage", statements_only(verify_coverage),
+                   takes_claims=False),
+    )
 
 
 class QAConsistencyModule:
@@ -225,12 +245,6 @@ class QAConsistencyModule:
     constraints. Unsupported semantic shapes return NIE with a diagnostic; the
     old binary NLI verdict is deliberately not mapped into three-way gold.
     """
-
-    _QUOTED = re.compile(r"[「\"]([^「」\"]{2,80})[」\"]")
-    _NEGATIVE = re.compile(r"(?:不包括|不包含|不支持|没有|不存在|未定义|不允许)")
-    _EXPLICIT_NEGATION = re.compile(
-        r"(?:不包括|不包含|不支持|不存在|不允许|禁止|不得|不能|未定义|不具备|不含)"
-    )
 
     def __init__(self, semantic_nli=None,
                  nli_contra_threshold: float = 0.6,
@@ -617,466 +631,29 @@ class QAConsistencyModule:
             raise ValueError("every evidence item must carry a document source_ref")
 
     def _decompose(self, question: str, answer: str) -> list[_AnswerClaim]:
-        claims: list[_AnswerClaim] = []
-        numeric_claims = _extract_numeric_claims(answer)
-        numeric_question = any(item.startswith("PARAM-") for item in route_question(question))
-        if numeric_question:
-            values = list(_ANSWER_NUMBER.finditer(answer))
-            subject = self._question_numeric_subject(question)
-            explicit_matches = list(_NUMERIC_PREFIX.finditer(answer))
-            explicit_matches.extend(_NUMERIC_POSTFIX.finditer(answer))
-            bare_values = [
-                value for value in values
-                if not any(
-                    match.start() <= value.start() and value.end() <= match.end()
-                    for match in explicit_matches
-                )
-            ]
-            if len(bare_values) == 1 and subject:
-                value = bare_values[0]
-                numeric_claims.append(
-                    (subject, "为", value.group("value"), value.group("unit"))
-                )
-        for attr, operator, value, unit in numeric_claims:
-            if not attr:
-                attr = self._question_numeric_subject(question)
-            claims.append(_AnswerClaim("numeric", f"{attr} {operator}{value}{unit}",
-                                       attr, operator, value, unit))
-        for match in self._QUOTED.finditer(answer):
-            prefix = answer[max(0, match.start() - 12):match.start()]
-            claims.append(_AnswerClaim("quoted", match.group(1),
-                                       negative=bool(self._NEGATIVE.search(prefix))))
-        for items in _extract_enum_claims(answer):
-            cleaned = [re.split(r"[，,]", item)[0].strip() for item in items]
-            cleaned = [item for item in cleaned if len(item) >= 2]
-            if len(cleaned) >= 2:
-                claims.append(_AnswerClaim("enum", "、".join(cleaned)))
-        for identifier in _IDENTIFIER.findall(answer):
-            position = answer.find(identifier)
-            prefix = answer[max(0, position - 24):position]
-            cleaned_prefix = re.sub(
-                r"[（(「\",，。：:为是*`_~]+", " ", prefix).rstrip()
-            subject_match = re.search(
-                r"([\u4e00-\u9fffA-Za-z]{2,16})\s*$", cleaned_prefix)
-            subject = subject_match.group(1) if subject_match else ""
-            claims.append(_AnswerClaim("identifier", identifier, attr=subject))
-        if not claims:
-            structured = decompose_answer(answer, question)
-            for structural in structured:
-                claims.append(_AnswerClaim(
-                    "semantic", structural.text, attr=structural.scope_hint))
-        if not claims:
-            claims.append(_AnswerClaim("semantic", answer.strip()))
-        return claims
-
-    @staticmethod
-    def _question_numeric_subject(question: str) -> str:
-        """Resolve a short numeric answer's omitted subject from the question."""
-        q = re.sub(r"\s+", "", question)
-        match = re.search(
-            r"([\u4e00-\u9fffA-Za-z]{2,12}?)(?:要求是多少|是多少|为多少|的上限|的下限|阈值)",
-            q,
-        )
-        subject = match.group(1).removesuffix("的") if match else ""
-        return subject.removeprefix("系统")
+        """Answer decomposition (thin delegate to answer_claims)."""
+        return decompose_claims(question, answer)
 
     def _verify_claim(self, request: QAInput, claim: _AnswerClaim,
                       index: int, check_items: tuple[str, ...],
                       statements: tuple = ()) -> ClaimResult:
         if not request.evidence:
-            return self._unresolved(request, claim, index, check_items,
-                                    "上游冻结context为空；无法支持或反驳answer")
+            return unresolved(request, claim, index, check_items,
+                              "上游冻结context为空；无法支持或反驳answer")
         if claim.kind == "numeric":
-            return self._verify_numeric(request, claim, index, check_items)
+            return verify_numeric(request, claim, index, check_items)
         if claim.kind == "quoted":
-            return self._verify_quoted(request, claim, index, check_items)
+            return verify_quoted(request, claim, index, check_items)
         if claim.kind == "enum":
-            return self._verify_enum(request, claim, index, check_items)
+            return verify_enum(request, claim, index, check_items)
         if claim.kind == "identifier":
-            return self._verify_identifier(request, claim, index, check_items)
-        return self._verify_semantic(request, claim, index, check_items,
-                                     tuple(statements))
-
-    def _verify_semantic(self, request: QAInput, claim: _AnswerClaim,
-                         index: int, check_items: tuple[str, ...],
-                         statements: tuple) -> ClaimResult:
-        answer_text = re.sub(r"\s+", "", claim.text)
-        exact_refs = tuple(
-            ev.evidence_id for ev in request.evidence
-            if answer_text and answer_text in re.sub(r"\s+", "", ev.text)
-        )
-        if exact_refs:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="support",
-                check_item_candidates=check_items,
-                evidence_refs=exact_refs,
-                rationale="answer原子声明在冻结context中精确出现",
-                method="exact_statement",
-                confidence=1.0,
-            )
-        for statement in statements:
-            if answer_text and answer_text in re.sub(r"\s+", "", statement.text):
-                return ClaimResult(
-                    claim_id=f"{request.instance_id}-c{index:02d}",
-                    claim_text=claim.text,
-                    verdict="support",
-                    check_item_candidates=check_items,
-                    evidence_refs=(statement.evidence_id,),
-                    rationale=(f"answer声明与线性化证据语句精确匹配"
-                               f"（{statement.statement_id}）"),
-                    method="statement_exact",
-                    confidence=1.0,
-                )
-        nli_result = self._verify_semantic_nli(request, claim, index,
-                                               check_items, statements)
-        if nli_result is not None:
-            return nli_result
-        return ClaimResult(
-            claim_id=f"{request.instance_id}-c{index:02d}",
-            claim_text=claim.text,
-            verdict="not_in_evidence",
-            check_item_candidates=check_items,
-            evidence_refs=(),
-            rationale="当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。",
-            method="semantic_unresolved",
-            confidence=0.0,
-        )
-
-    _SLOT_FIELDS: tuple[tuple[str, tuple[str, ...]], ...] = (
-        ("前置条件", ("前置条件",)),
-        ("后置条件", ("后置条件",)),
-        ("异常流", ("异常流",)),
-        ("参与者", ("Actors", "参与者")),
-        ("Actor", ("Actors", "参与者")),
-    )
-
-    def _verify_semantic_nli(self, request: QAInput, claim: _AnswerClaim,
-                             index: int, check_items: tuple[str, ...],
-                             statements: tuple) -> ClaimResult | None:
-        """Residual NLI channel on scope- and slot-matched statement pairs."""
-        if self.semantic_nli is None or not statements:
-            return None
-        structured = decompose_answer(claim.text, request.question)
-        if not structured:
-            return None
-        pairs = pair_statements(structured, list(statements))
-        if not pairs:
-            return None
-        claim_slots = tuple(
-            field for keyword, fields in self._SLOT_FIELDS
-            if keyword in claim.text for field in fields)
-        if claim_slots:
-            pairs = [(structural, statement) for structural, statement in pairs
-                     if statement.field_name in claim_slots]
-        if not pairs:
-            return None
-        hypotheses = [(statement.text, structural.text)
-                      for structural, statement in pairs]
-        labels = self.semantic_nli(hypotheses)
-        contradiction_refs = []
-        entailment_refs = []
-        scope = re.sub(r"\s+", "", claim.attr or "")
-        for (structural, statement), label in zip(pairs, labels):
-            verdict = (str(label.get("label", "neutral"))
-                       if isinstance(label, dict) else str(label))
-            contra_prob = (float(label.get("p_contra", 0.0))
-                           if isinstance(label, dict) else
-                           (1.0 if verdict == "contradiction" else 0.0))
-            entail_prob = (float(label.get("p_entail", 0.0))
-                           if isinstance(label, dict) else
-                           (1.0 if verdict == "entailment" else 0.0))
-            scope_matched = (scope and statement.scope_key
-                             and (scope in statement.scope_key
-                                  or statement.scope_key in scope))
-            if (verdict == "contradiction"
-                    and contra_prob >= self.nli_contra_threshold
-                    and scope_matched):
-                contradiction_refs.append(statement.evidence_id)
-            elif verdict == "entailment" and entail_prob >= self.nli_entail_threshold:
-                entailment_refs.append(statement.evidence_id)
-        if contradiction_refs:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="refute",
-                check_item_candidates=check_items,
-                evidence_refs=tuple(sorted(set(contradiction_refs))),
-                rationale="scope匹配的证据语句与answer声明NLI矛盾",
-                method="nli_residual",
-                confidence=0.9,
-            )
-        if entailment_refs:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="support",
-                check_item_candidates=check_items,
-                evidence_refs=tuple(sorted(set(entailment_refs))),
-                rationale="scope匹配的证据语句NLI蕴含answer声明",
-                method="nli_residual",
-                confidence=0.9,
-            )
-        return None
-
-    def _verify_numeric(self, request: QAInput, claim: _AnswerClaim,
-                        index: int, check_items: tuple[str, ...]) -> ClaimResult:
-        answer_unit = normalize_unit(claim.value, claim.unit)
-        if answer_unit is None:
-            return self._unresolved(request, claim, index, check_items,
-                                    "answer数值单位无法归一化")
-        answer_interval = _interval(claim.operator, answer_unit[0])
-        if answer_interval is None:
-            return self._unresolved(request, claim, index, check_items,
-                                    "answer操作符不在已验证范围")
-
-        matches: list[tuple[RetrievedEvidence, Verdict, str]] = []
-        for evidence in request.evidence:
-            for attr, operator, value, unit in _extract_numeric_claims(evidence.text):
-                if not self._same_subject(claim.attr, attr, request.question):
-                    continue
-                ev_unit = normalize_unit(value, unit)
-                if ev_unit is None or ev_unit[1] != answer_unit[1]:
-                    continue
-                ev_interval = _interval(operator, ev_unit[0])
-                if ev_interval is None:
-                    continue
-                if (_subset(ev_interval, answer_interval)
-                        or _subset(answer_interval, ev_interval)):
-                    matches.append((evidence, "support", "context约束蕴含answer约束"))
-                elif _disjoint(ev_interval, answer_interval):
-                    matches.append((evidence, "refute", "context与answer数值区间互斥"))
-                else:
-                    matches.append((evidence, "not_in_evidence",
-                                    "数值区间重叠但不互相蕴含，无法证明一致或矛盾"))
-        decisive = [x for x in matches if x[1] in ("support", "refute")]
-        decisive_labels = {x[1] for x in decisive}
-        if len(decisive_labels) > 1:
-            return self._unresolved(request, claim, index, check_items,
-                                    "冻结context含相互冲突的数值证据",
-                                    tuple(sorted({x[0].evidence_id for x in decisive})))
-        if decisive:
-            ev, verdict, reason = decisive[0]
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict=verdict,
-                check_item_candidates=check_items,
-                evidence_refs=(ev.evidence_id,),
-                rationale=reason,
-                method="numeric_interval",
-                confidence=1.0,
-            )
-        refs = tuple(sorted({x[0].evidence_id for x in matches}))
-        return self._unresolved(request, claim, index, check_items,
-                                matches[0][2] if matches else "context无同subject/单位数值证据",
-                                refs)
-
-    def _verify_quoted(self, request: QAInput, claim: _AnswerClaim,
-                       index: int, check_items: tuple[str, ...]) -> ClaimResult:
-        target = re.sub(r"\s+", "", claim.text)
-        positive_refs: list[str] = []
-        negative_refs: list[str] = []
-        for ev in request.evidence:
-            normalized = re.sub(r"\s+", "", ev.text)
-            start = 0
-            while True:
-                pos = normalized.find(target, start)
-                if pos < 0:
-                    break
-                prefix = normalized[max(0, pos - 14):pos]
-                if self._EXPLICIT_NEGATION.search(prefix):
-                    negative_refs.append(ev.evidence_id)
-                else:
-                    positive_refs.append(ev.evidence_id)
-                start = pos + len(target)
-
-        supporting_refs = negative_refs if claim.negative else positive_refs
-        refuting_refs = positive_refs if claim.negative else negative_refs
-        if supporting_refs:
-            if refuting_refs:
-                return self._unresolved(
-                    request, claim, index, check_items,
-                    "冻结context对同一引用项同时包含支持和显式否定证据",
-                    tuple(sorted(set(supporting_refs + refuting_refs))),
-                )
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="support",
-                check_item_candidates=check_items,
-                evidence_refs=tuple(sorted(set(supporting_refs))),
-                rationale="answer声明的极性与context中的显式提及一致",
-                method="explicit_quote_polarity",
-                confidence=1.0,
-            )
-        if refuting_refs:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="refute",
-                check_item_candidates=check_items,
-                evidence_refs=tuple(sorted(set(refuting_refs))),
-                rationale="context对answer引用项存在显式相反极性",
-                method="explicit_quote_polarity",
-                confidence=1.0,
-            )
-        closed = [ev for ev in request.evidence
-                  if ev.completeness == "closed" and ev.completeness_proof.strip()]
-        if (closed and len(closed) == len(request.evidence)
-                and all(ev.scope_id == closed[0].scope_id for ev in closed)):
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="support" if claim.negative else "refute",
-                check_item_candidates=check_items,
-                evidence_refs=tuple(ev.evidence_id for ev in closed),
-                rationale="封闭scope中未出现该条目，与answer极性相符",
-                method="closed_scope_exclusion",
-                confidence=0.85,
-            )
-        return self._unresolved(request, claim, index, check_items,
-                                "引用项未命中冻结context，scope不完整或未证明穷举")
-
-    def _verify_identifier(self, request: QAInput, claim: _AnswerClaim,
-                           index: int, check_items: tuple[str, ...]) -> ClaimResult:
-        """Exact identifier matching against the frozen evidence (TERM-07).
-
-        support: the answer identifier appears verbatim in the evidence.
-        refute: the evidence states a different identifier for the same
-        subject statement. Everything else stays NIE.
-        """
-        target = claim.text
-        subject = re.sub(r"\s+", "", claim.attr or "")
-        subject_core = re.sub(
-            r"(?:用例)?(?:的)?(?:唯一)?(?:标识符?|编号|代号|名称|项目名)?$",
-            "", subject)
-        if len(subject_core) < 2:
-            subject_core = subject
-        hit_refs = tuple(
-            ev.evidence_id for ev in request.evidence
-            if target in ev.text
-        )
-        if hit_refs:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="support",
-                check_item_candidates=check_items,
-                evidence_refs=hit_refs,
-                rationale="answer标识符在冻结context中精确出现",
-                method="identifier_exact_match",
-                confidence=1.0,
-            )
-        if subject_core:
-            for ev in request.evidence:
-                compact = re.sub(r"\s+", "", ev.text)
-                start = compact.find(subject_core)
-                while start >= 0:
-                    window = compact[max(0, start - 30):
-                                      min(len(compact), start + len(subject_core) + 100)]
-                    window_ids = _IDENTIFIER.findall(window)
-                    if len(window_ids) == 1 and window_ids[0] != target:
-                        return ClaimResult(
-                            claim_id=f"{request.instance_id}-c{index:02d}",
-                            claim_text=claim.text,
-                            verdict="refute",
-                            check_item_candidates=check_items,
-                            evidence_refs=(ev.evidence_id,),
-                            rationale=("同subject局部窗口中context声明了不同标识符"
-                                       f"（{window_ids[0]}），显式值冲突"),
-                            method="identifier_exact_match",
-                            confidence=1.0,
-                        )
-                    start = compact.find(subject_core, start + 1)
-        return self._unresolved(request, claim, index, check_items,
-                                "标识符未在冻结context命中，且无同subject的显式不同值")
-
-    def _verify_enum(self, request: QAInput, claim: _AnswerClaim,
-                     index: int, check_items: tuple[str, ...]) -> ClaimResult:
-        items = [part.strip() for part in re.split(r"[、，,；]", claim.text)
-                 if len(part.strip()) >= 2]
-        found: dict[str, list[str]] = {}
-        excluded: dict[str, list[str]] = {}
-        for item in items:
-            needle = re.sub(r"\s+", "", item)
-            found[item] = []
-            excluded[item] = []
-            for ev in request.evidence:
-                text = re.sub(r"\s+", "", ev.text)
-                start = 0
-                while True:
-                    pos = text.find(needle, start)
-                    if pos < 0:
-                        break
-                    prefix = text[max(0, pos - 14):pos]
-                    target = excluded if self._EXPLICIT_NEGATION.search(prefix) else found
-                    target[item].append(ev.evidence_id)
-                    start = pos + len(needle)
-        explicit_exclusions = tuple(sorted({
-            ref for refs in excluded.values() for ref in refs
-        }))
-        positive_refs = tuple(sorted({ref for refs in found.values() for ref in refs}))
-        if explicit_exclusions and positive_refs:
-            return self._unresolved(
-                request, claim, index, check_items,
-                "枚举context同时含正向命中与显式排除，需仲裁context内部冲突",
-                tuple(sorted(set(explicit_exclusions + positive_refs))),
-            )
-        if explicit_exclusions:
-            return ClaimResult(
-                claim_id=f"{request.instance_id}-c{index:02d}",
-                claim_text=claim.text,
-                verdict="refute",
-                check_item_candidates=check_items,
-                evidence_refs=explicit_exclusions,
-                rationale="context对answer枚举成员存在显式排除语句",
-                method="explicit_enum_exclusion",
-                confidence=1.0,
-            )
-        missing = [item for item, refs in found.items() if not refs]
-        refs = positive_refs
-        if not missing:
-            return ClaimResult(
-                f"{request.instance_id}-c{index:02d}", claim.text, "support",
-                check_items, refs, "answer枚举的每个成员均在冻结context精确出现",
-                "enum_member_exact", 1.0)
-        return self._unresolved(request, claim, index, check_items,
-                                f"枚举成员未全部命中({len(missing)}项)；未证明context穷举", refs)
-
-    @staticmethod
-    def _same_subject(answer_subject: str, evidence_subject: str,
-                      question: str) -> bool:
-        a = re.sub(r"\s+", "", answer_subject).removesuffix("的")
-        e = re.sub(r"\s+", "", evidence_subject).removesuffix("的")
-        if not a or not e:
-            return False
-        if a == e:
-            return True
-        # Short answer may use an unqualified form of the question's parameter
-        # (e.g. answer "响应时间" vs evidence "系统响应时间"). Accept only when
-        # one is a qualified form of the other and the unqualified form appears
-        # in the question, so unrelated parameters are not silently merged.
-        if a in e or e in a:
-            shorter = a if len(a) < len(e) else e
-            return shorter in re.sub(r"\s+", "", question)
-        return False
-
-    @staticmethod
-    def _unresolved(request: QAInput, claim: _AnswerClaim, index: int,
-                    check_items: tuple[str, ...], rationale: str,
-                    refs: tuple[str, ...] = ()) -> ClaimResult:
-        return ClaimResult(
-            claim_id=f"{request.instance_id}-c{index:02d}",
-            claim_text=claim.text,
-            verdict="not_in_evidence",
-            check_item_candidates=check_items,
-            evidence_refs=refs,
-            rationale=rationale,
-            method="conservative_unresolved",
-            confidence=0.0,
-        )
+            return verify_identifier(request, claim, index, check_items)
+        judge = (SemanticNliJudge(self.semantic_nli,
+                                  self.nli_contra_threshold,
+                                  self.nli_entail_threshold)
+                 if self.semantic_nli is not None else None)
+        return verify_semantic(request, claim, index, check_items,
+                               tuple(statements), judge)
 
     def _expert_channels(self, request: QAInput,
                          statements: list) -> tuple[list[ClaimResult], list[str]]:
@@ -1086,46 +663,17 @@ class QAConsistencyModule:
         expert is surfaced as a diagnostic (never silently swallowed) while
         the remaining experts still contribute their ClaimResults.
         """
-        from algorithms.consistency.answer_structure import decompose_answer
-        from algorithms.consistency.coverage_expert import verify_coverage
-        from algorithms.consistency.e1_expert import verify_e1_consistency
-        from algorithms.consistency.entity_detector import detect_term_conflicts
-        from algorithms.consistency.enum_join_expert import verify_enum_joins
-        from algorithms.consistency.gjb_presence_expert import (
-            verify_gjb_presence)
-        from algorithms.consistency.id_join_expert import verify_id_joins
-        from algorithms.consistency.numeric_z3_expert import (
-            verify_numeric_constraints)
-        from algorithms.consistency.sequence_expert import verify_sequence
-        from algorithms.consistency.trace_expert import verify_trace
-
         structured = decompose_answer(request.answer, request.question)
         collected: list[ClaimResult] = []
         failures: list[str] = []
-        experts: tuple[tuple[str, object], ...] = (
-            ("entity", lambda: detect_term_conflicts(
-                request, statements, structured)),
-            ("e1", lambda: verify_e1_consistency(
-                request, statements, structured)),
-            ("sequence", lambda: verify_sequence(
-                request, statements, structured,
-                use_bge=self.use_bge_experts)),
-            ("trace", lambda: verify_trace(request)),
-            ("gjb", lambda: verify_gjb_presence(request, statements)),
-            ("id_join", lambda: verify_id_joins(request, statements)),
-            ("enum_join", lambda: verify_enum_joins(request, statements)),
-            ("numeric_z3", lambda: verify_numeric_constraints(
-                request, statements)),
-            ("coverage", lambda: verify_coverage(request, statements)),
-        )
-        for name, run in experts:
-            if self.expert_filter is not None and name not in self.expert_filter:
+        for spec in _expert_registry(self.use_bge_experts):
+            if self.expert_filter is not None and spec.name not in self.expert_filter:
                 continue
             try:
-                collected.extend(run())
+                collected.extend(spec.runner(request, statements, structured))
             except Exception as exc:  # reported in diagnostics, not silent
                 failures.append(
-                    f"expert_{name}_failed:{type(exc).__name__}")
+                    f"expert_{spec.name}_failed:{type(exc).__name__}")
         return collected, failures
 
     @staticmethod

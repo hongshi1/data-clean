@@ -90,17 +90,16 @@ def to_plantuml_usecase(s: dict) -> str:
         lbl = sanitize(e.get('label', ''), 20)
         arrow = f' --> {lbl}' if lbl else ' --> '
         # 去重
-        key = (ref(sn), ref(dn))
         lines.append(f'{ref(sn)}{arrow}{ref(dn)}')
     # 去重相邻重复行
     seen, dedup = set(), []
-    for l in lines:
-        norm = re.sub(r'\s+', ' ', l).strip()
-        if ' --> ' in l:
+    for line in lines:
+        norm = re.sub(r'\s+', ' ', line).strip()
+        if ' --> ' in line:
             if norm in seen:
                 continue
             seen.add(norm)
-        dedup.append(l)
+        dedup.append(line)
     return '\n'.join(dedup + ['@enduml'])
 
 
@@ -130,8 +129,8 @@ def to_mermaid_flowchart(s: dict) -> str:
         if not n['text'] and n['type'] not in TOPO_TYPES:
             return
         label = sanitize(n['text']) or TOPO_TYPES.get(n['type'], n['type'])
-        l, r = SHAPE.get(n['type'], ('[', ']'))
-        lines.append(f'    N{n["id"]}{l}"{label}"{r}')
+        lb, rb = SHAPE.get(n['type'], ('[', ']'))
+        lines.append(f'    N{n["id"]}{lb}"{label}"{rb}')
         emitted.add(n['id'])
 
     for n in s['nodes']:
@@ -155,7 +154,6 @@ def to_mermaid_flowchart(s: dict) -> str:
 
 def to_mermaid_state(s: dict) -> str:
     lines = ['stateDiagram-v2']
-    nodes = {n['id']: n for n in s['nodes']}
     refs = set()
     for e in s['edges']:
         refs.add(e['src'])

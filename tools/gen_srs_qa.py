@@ -60,7 +60,7 @@ def load_all_pairs():
             meta_path = os.path.join(inst_path, "meta.json")
             if not os.path.exists(meta_path):
                 continue
-            meta = json.loads(open(meta_path).read())
+            meta = json.loads(open(meta_path, encoding="utf-8").read())
             # 加载表格和正文
             table_rows = []
             tbl_path = os.path.join(inst_path, "table.csv")
@@ -446,9 +446,9 @@ async def main(limit=None, vlm_limit=50):
         all_qa.extend(qas)
         if (i + 1) % 20 == 0:
             print(f"  已处理 {i+1}/{len(pairs)} pair, 生成{len(all_qa)}个QA")
-            json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+            json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
-    json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     # 统计
     from collections import Counter
     by_type = Counter(q["type"] for q in all_qa)

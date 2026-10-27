@@ -57,7 +57,6 @@ def build_drawio(root: str, modules: list) -> str:
 
     mod_y = 140
     start_mod_x = 0
-    leaf_x_offset = (mod_w - leaf_w) / 2
     leaf_y_start = mod_y + mod_h + 50
 
     # 父框

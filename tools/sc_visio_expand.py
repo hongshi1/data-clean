@@ -149,7 +149,7 @@ def parse_visio_page(page_xml: str, source: str) -> dict:
 def extract_table_steps(table_csv_path: Path) -> list[str]:
     if not table_csv_path.exists():
         return []
-    with open(table_csv_path) as f:
+    with open(table_csv_path, encoding="utf-8") as f:
         rows = list(csv.reader(f))
     steps = []
     for r in rows:

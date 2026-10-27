@@ -62,7 +62,8 @@ def get_embeddings(texts):
     return [_emb_cache.get(t, []) for t in texts]
 
 def cosine(a, b):
-    if not a or not b: return 0.0
+    if not a or not b:
+        return 0.0
     dot = sum(x*y for x,y in zip(a,b))
     na = math.sqrt(sum(x*x for x in a))
     nb = math.sqrt(sum(y*y for y in b))
@@ -109,7 +110,6 @@ def process_document(doc_name: str) -> dict:
     
     # 参数级关联
     for param, constraints in param_index.items():
-        sections_with_param = set(c["section"] for c in constraints)
         values = set(c["value"] for c in constraints)
         threshold_values = set(c["value"] for c in constraints if c.get("role") == "threshold")
         
@@ -244,12 +244,16 @@ def process_document(doc_name: str) -> dict:
             def adjust(s, o):
                 parts = s.split('.')
                 if len(parts) >= 3:
-                    try: parts[-1] = str(int(parts[-1]) + o); return '.'.join(parts)
-                    except: return s
+                    try:
+                        parts[-1] = str(int(parts[-1]) + o)
+                        return '.'.join(parts)
+                    except:
+                        return s
                 return s
             matched = sum(1 for r in ch4_refs if adjust(r, offset) in ch3_secs)
             rate = matched / len(ch4_refs)
-            if rate > best_rate: best_offset, best_rate = offset, rate
+            if rate > best_rate:
+                best_offset, best_rate = offset, rate
         if best_offset != 0 and best_rate > 0.8:
             violations.append({
                 "check": "systematic_offset", "severity": "HIGH",

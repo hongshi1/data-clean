@@ -66,15 +66,17 @@ def ocr_element_verdicts(ocr_result: dict, X_T: dict) -> dict:
 
 
 def auroc(scores, labels):
-    pos = [s for s, l in zip(scores, labels) if l == 1]
-    neg = [s for s, l in zip(scores, labels) if l == 0]
+    pos = [s for s, lab in zip(scores, labels) if lab == 1]
+    neg = [s for s, lab in zip(scores, labels) if lab == 0]
     if not pos or not neg:
         return None
     wins = ties = 0
     for p_ in pos:
         for n_ in neg:
-            if p_ > n_: wins += 1
-            elif p_ == n_: ties += 1
+            if p_ > n_:
+                wins += 1
+            elif p_ == n_:
+                ties += 1
     return (wins + 0.5 * ties) / (len(pos) * len(neg))
 
 

@@ -60,7 +60,7 @@ def stage3_report():
     # SC1结果
     sc1_file = os.path.join(GRAPH_DIR, "sc1_all_methods_eval.json")
     if os.path.exists(sc1_file):
-        sc1 = json.loads(open(sc1_file).read())
+        sc1 = json.loads(open(sc1_file, encoding="utf-8").read())
         report["sc1_name_consistency"] = sc1
         print("\n=== SC1 名称一致性(7方法) ===")
         print(f"{'方法':<25} {'P':<8} {'R':<8} {'F1':<8}")
@@ -70,14 +70,14 @@ def stage3_report():
     # ID-Graph结果
     idg_file = os.path.join(GRAPH_DIR, "id_graph_report.json")
     if os.path.exists(idg_file):
-        report["id_graph"] = json.loads(open(idg_file).read())
+        report["id_graph"] = json.loads(open(idg_file, encoding="utf-8").read())
 
     # 描述级结果
     desc_file = os.path.join(BASE, "data/gjb_438c/data_assets/gold_standard/cove_desc_full_results.jsonl")
     if os.path.exists(desc_file):
         # 统计已完成
         results = []
-        with open(desc_file) as f:
+        with open(desc_file, encoding="utf-8") as f:
             for line in f:
                 try:
                     results.append(json.loads(line))
@@ -95,7 +95,7 @@ def stage3_report():
             print(f"准确率: {report['desc_level']['accuracy']}, 双模型一致: {report['desc_level']['models_agree']}")
 
     out = os.path.join(BASE, "data/gjb_438c/data_assets/graph/pipeline_report.json")
-    json.dump(report, open(out, 'w'), ensure_ascii=False, indent=2)
+    json.dump(report, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"\n报告已保存: {out}")
     return True
 

@@ -325,7 +325,6 @@ def build_enhanced_external_items() -> list[dict]:
         df = pd.read_parquet(PUB / f"anli_dev_r{r}.parquet")
         for i, row in df.iterrows():
             raw, lab = anli_map[int(row["label"])]
-            reason = str(row.get("reason", ""))[:120]
             out.append(_mk(f"anli-r{r}-{i}", "nli_anli", str(row["premise"]), str(row["hypothesis"]),
                            lab, "text", "text-text", f"NLI-{raw[:5].upper()}", "external",
                            f"anli:r{r}:{row['uid']}", "T3", "test", "official+adversarial",

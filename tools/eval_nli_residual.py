@@ -18,60 +18,28 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from collections import Counter
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
 if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    load_frozen_qa,
+    load_silver_labels,
+    run_module_corpus,
+    score_outcomes,
+)
 from algorithms.consistency.nli_local import MODELS  # noqa: E402
 from algorithms.consistency.nli_residual import DEFAULT_GATE  # noqa: E402
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 QA_FROZEN = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
 SILVER = (BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
           / "final_labels.jsonl")
 RUNS_ROOT = BASE / "data/gjb_438c/runs"
-LABELS = ("support", "refute", "not_in_evidence")
 GATES = (0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)
-
-
-def read_jsonl(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8")
-            .splitlines() if line.strip()]
-
-
-def class_metrics(confusion: Counter) -> dict[str, dict]:
-    out = {}
-    for label in LABELS:
-        tp = confusion[(label, label)]
-        fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-        fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = (2 * precision * recall / (precision + recall)
-              if precision + recall else 0.0)
-        out[label] = {"precision": round(precision, 4),
-                      "recall": round(recall, 4), "f1": round(f1, 4)}
-    return out
-
-
-def macro_f1(confusion: Counter) -> float:
-    return round(sum(m["f1"] for m in class_metrics(confusion).values())
-                 / len(LABELS), 4)
-
-
-def accuracy(confusion: Counter, n: int) -> float:
-    correct = sum(confusion[(p, g)] for p in LABELS for g in LABELS if p == g)
-    return round(correct / n, 4)
-
-
-def confusion_dict(confusion: Counter) -> dict[str, int]:
-    return {f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]}
 
 
 def llm_reference() -> dict:
@@ -86,45 +54,6 @@ def llm_reference() -> dict:
         "accuracy": result["residual"]["accuracy"],
         "refute_recall": result["residual"]["per_class"]["refute"]["recall"],
         "refute_precision": result["residual"]["per_class"]["refute"]["precision"],
-    }
-
-
-def run_corpus(module: QAConsistencyModule, rows: list[dict]) -> dict[str, dict]:
-    outcomes: dict[str, dict] = {}
-    for row in rows:
-        request = request_from_dict(row)
-        result = module.verify(request)
-        outcomes[request.instance_id] = {
-            "verdict": result.verdict,
-            "status": result.status,
-            "claims": [{
-                "claim_id": claim.claim_id,
-                "claim_text": claim.claim_text,
-                "verdict": claim.verdict,
-                "method": claim.method,
-                "confidence": claim.confidence,
-                "evidence_refs": list(claim.evidence_refs),
-                "rationale": claim.rationale[:200],
-            } for claim in result.claim_results],
-        }
-    return outcomes
-
-
-def score_config(outcomes: dict[str, dict], rows: list[dict],
-                 silver: dict[str, str]) -> dict:
-    confusion: Counter = Counter()
-    methods: Counter = Counter()
-    for row in rows:
-        instance_id = row["instance_id"]
-        confusion[(outcomes[instance_id]["verdict"], silver[instance_id])] += 1
-        methods.update(claim["method"]
-                       for claim in outcomes[instance_id]["claims"])
-    return {
-        "accuracy": accuracy(confusion, len(rows)),
-        "macro_f1": macro_f1(confusion),
-        "per_class": class_metrics(confusion),
-        "confusion[predicted, silver]": confusion_dict(confusion),
-        "claim_methods": dict(methods),
     }
 
 
@@ -152,27 +81,27 @@ def main() -> None:
     parser.add_argument("--model-key", default="egt_finetuned_v2",
                         help="MODELS注册表的checkpoint key")
     args = parser.parse_args()
-    rows = read_jsonl(QA_FROZEN)
-    silver = {row["instance_id"]: row["final_verdict"]
-              for row in read_jsonl(SILVER)}
+    rows = load_frozen_qa(QA_FROZEN)
+    silver = load_silver_labels(SILVER)
     checkpoint = MODELS[args.model_key]["dir"]
     if not (Path(checkpoint) / "config.json").exists():
         print(f"checkpoint不存在: {checkpoint} "
               f"(先跑 python tools/train_residual_nli.py)")
         sys.exit(1)
 
-    baseline_out = run_corpus(QAConsistencyModule(use_experts=True), rows)
-    baseline = score_config(baseline_out, rows, silver)
+    baseline_out = run_module_corpus(QAConsistencyModule(use_experts=True),
+                                     rows)
+    baseline = score_outcomes(baseline_out, rows, silver)
 
     sweep: dict[str, dict] = {}
     outcomes_by_gate: dict[str, dict[str, dict]] = {}
     for gate in GATES:
-        outcomes = run_corpus(
+        outcomes = run_module_corpus(
             QAConsistencyModule(use_experts=True, use_nli_residual=True,
                                 nli_model_path=checkpoint, nli_gate=gate),
             rows)
         outcomes_by_gate[f"{gate:.2f}"] = outcomes
-        sweep[f"{gate:.2f}"] = score_config(outcomes, rows, silver)
+        sweep[f"{gate:.2f}"] = score_outcomes(outcomes, rows, silver)
         print(f"gate={gate:.2f}: macro_f1={sweep[f'{gate:.2f}']['macro_f1']} "
               f"refuteP={sweep[f'{gate:.2f}']['per_class']['refute']['precision']}")
 

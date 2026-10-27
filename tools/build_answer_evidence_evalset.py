@@ -240,10 +240,8 @@ def main() -> None:
         if not tchunk:
             skipped["C1_表"] += 1
             continue
-        m_x = re.search(r"中(.+?)的用例描述", str(d.get("instruction", "")))
-        uc = m_x.group(1) if m_x else "该用例"
         # answer=可分解的枚举声明(引用的异常流∈文档定义集)
-        answer = f"文档中定义的异常流包括：E9。"
+        answer = "文档中定义的异常流包括：E9。"
         evs = [{"type": "text", "anchor": {"doc": doc},
                 "claims": [f"文档定义的异常流包括：{'、'.join(sorted(defined_es)[:15])}。"],
                 "exhaustive": True}]

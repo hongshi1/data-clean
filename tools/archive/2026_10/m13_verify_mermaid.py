@@ -94,8 +94,8 @@ def to_mermaid_flowchart(s: dict) -> str:
         if not n['text'] and n['type'] not in TOPO_TYPES:
             return
         label = sanitize(n['text']) or TOPO_TYPES[n['type']]
-        l, r = SHAPE.get(n['type'], ('[', ']'))
-        lines.append(f'    N{n["id"]}{l}"{label}"{r}')
+        lb, rb = SHAPE.get(n['type'], ('[', ']'))
+        lines.append(f'    N{n["id"]}{lb}"{label}"{rb}')
         emitted.add(n['id'])
 
     for n in s['nodes']:
@@ -121,7 +121,6 @@ def to_mermaid_flowchart(s: dict) -> str:
 def to_mermaid_state(s: dict) -> str:
     """状态图 → stateDiagram-v2 (全部被引用节点都定义, 哨兵用[*])"""
     lines = ['stateDiagram-v2']
-    nodes = {n['id']: n for n in s['nodes']}
     refs = set()
     for e in s['edges']:
         refs.add(e['src'])
@@ -323,15 +322,20 @@ def main():
         nv = sum(1 for c in nc if c.get('visible'))
         ee = sum(1 for c in ec if c.get('exists'))
         dk = sum(1 for c in ec if c.get('exists') and c.get('direction_ok'))
-        agg['node_visible'] += nv; agg['node_total'] += len(nc)
-        agg['edge_exists'] += ee; agg['edge_total'] += len(ec)
-        agg['dir_ok'] += dk; agg['dir_total'] += len(ec)
+        agg['node_visible'] += nv
+        agg['node_total'] += len(nc)
+        agg['edge_exists'] += ee
+        agg['edge_total'] += len(ec)
+        agg['dir_ok'] += dk
+        agg['dir_total'] += len(ec)
         agg['missed'] += len(me)
         agg['scores'].append(v.get('fidelity_score', 0))
         bt = by_type.setdefault(v['dtype'], Counter())
         bt['n'] += 1
-        bt['node_visible'] += nv; bt['node_total'] += len(nc)
-        bt['edge_exists'] += ee; bt['edge_total'] += len(ec)
+        bt['node_visible'] += nv
+        bt['node_total'] += len(nc)
+        bt['edge_exists'] += ee
+        bt['edge_total'] += len(ec)
         bt['missed'] += len(me)
         bt['score_sum'] += v.get('fidelity_score', 0)
 

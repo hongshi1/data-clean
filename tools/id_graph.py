@@ -96,7 +96,7 @@ def symbol_detect(a, b):
 # ========== L1: 图构建 ==========
 def build_graph():
     """从stage0构建ID锚定异构文档图"""
-    s0 = json.loads(open(STAGE0).read())
+    s0 = json.loads(open(STAGE0, encoding="utf-8").read())
     id_reg = s0['id_registry']
 
     G = nx.Graph()
@@ -131,7 +131,7 @@ def build_graph():
         "edges": [{"source": u, "target": v, **data} for u, v, data in G.edges(data=True)],
     }
     out = os.path.join(GRAPH_DIR, "id_document_graph.json")
-    json.dump(graph_data, open(out, 'w'), ensure_ascii=False, indent=2)
+    json.dump(graph_data, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"[L1] 图构建: {entity_nodes}实体 + {mention_nodes}Mention → {out}")
     return G
 
@@ -196,7 +196,7 @@ def symbol_layer(G):
         "ambiguous": ambiguous_entities,
     }
     out = os.path.join(GRAPH_DIR, "layer1_symbol_results.json")
-    json.dump(layer1, open(out, 'w'), ensure_ascii=False, indent=2)
+    json.dump(layer1, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"[L1] 符号层: {len(symbol_results)}不一致 + {len(ambiguous_entities)}ambiguous → {out}")
     return layer1
 
@@ -205,7 +205,6 @@ def symbol_layer(G):
 def graph_reasoning(G):
     """图推理: 传递闭包矛盾检测 + 矛盾子图"""
     transitivity_conflicts = []
-    conflict_subgraphs = []
 
     for entity_node in G.nodes(data=True):
         if entity_node[1].get('type') != 'entity':
@@ -258,7 +257,7 @@ def graph_reasoning(G):
         "conflict_details": transitivity_conflicts,
     }
     out = os.path.join(GRAPH_DIR, "layer2_graph_reasoning.json")
-    json.dump(layer2, open(out, 'w'), ensure_ascii=False, indent=2)
+    json.dump(layer2, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"[L2] 图推理: {len(transitivity_conflicts)}传递闭包矛盾 → {out}")
     return layer2
 
@@ -289,7 +288,7 @@ def visual_cross_validation():
         return
 
     results = []
-    with open(vlm_file) as f:
+    with open(vlm_file, encoding="utf-8") as f:
         for line in f:
             vlm = json.loads(line)
             img_path = vlm.get('image_path', '')
@@ -344,7 +343,7 @@ def detect_usecase_nodes_robust(img_path):
 # ========== 语义图方法: 名称文本相似度连边 + 连通分量矛盾检测 ==========
 def semantic_graph_detection(threshold=0.6):
     """语义图: 名称节点按文本相似度连边, 实体名称分裂成多分量=矛盾"""
-    s0 = json.loads(open(STAGE0).read())
+    s0 = json.loads(open(STAGE0, encoding="utf-8").read())
     id_reg = s0['id_registry']
 
     def _extract_name(ctx, rid):
@@ -408,6 +407,6 @@ def semantic_graph_detection(threshold=0.6):
         "semantic_edges": G.number_of_edges(),
         "conflicts": len(conflicts),
         "items": conflicts,
-    }, open(out, 'w'), ensure_ascii=False, indent=2)
+    }, open(out, 'w', encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"[语义图] {len(conflicts)}个矛盾实体(连通分量分裂) → {out}")
     return conflicts

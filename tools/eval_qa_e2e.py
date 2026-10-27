@@ -147,7 +147,6 @@ def run_a3(qa_lines: list[dict], tbl, cap_only, txt, checker) -> dict:
     for d in a3:
         ins = str(d.get("instruction", ""))
         m_cap = re.search(r"「(.+?)」", ins)
-        m_n = re.search(r"列出\D*(\d+)个功能", ins)
         if not m_cap:
             stats["无表caption"] += 1
             continue
@@ -205,7 +204,7 @@ def run_a3(qa_lines: list[dict], tbl, cap_only, txt, checker) -> dict:
 
 def main() -> None:
     print("═ QA端到端真实测试(A1: 表-图) ═\n")
-    qa_lines = [json.loads(l) for l in (BASE / "data/gjb_438c/easydataset/srs_alpaca.jsonl").read_text(encoding="utf-8").splitlines()]
+    qa_lines = [json.loads(line) for line in (BASE / "data/gjb_438c/easydataset/srs_alpaca.jsonl").read_text(encoding="utf-8").splitlines()]
     tbl, cap_only, txt, img = build_indexes()
     print(f"证据索引: 表格{len(tbl)}, 图{len(img)}, 文本块{len(txt)}")
     from algorithms.consistency.checker import ConsistencyChecker

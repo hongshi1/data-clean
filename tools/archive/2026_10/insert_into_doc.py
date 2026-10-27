@@ -21,7 +21,7 @@ BACKUP = DOC + '.bak'
 
 W = '{http://schemas.microsoft.com/office/word/2003/wordml}'
 V = '{urn:schemas-microsoft-com:vml}'
-O = '{urn:schemas-microsoft-com:office:office}'
+NS_O = '{urn:schemas-microsoft-com:office:office}'
 
 # 注册命名空间前缀,保持序列化后前缀一致
 ET.register_namespace('w', 'http://schemas.microsoft.com/office/word/2003/wordml')

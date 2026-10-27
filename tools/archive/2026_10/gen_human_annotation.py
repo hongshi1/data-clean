@@ -60,7 +60,7 @@ def stratified_sample(entries, size):
 
 def gen_package(size):
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    with open(EVAL_PATH) as f:
+    with open(EVAL_PATH, encoding="utf-8") as f:
         data = json.load(f)
     entries = data["entries"]
 
@@ -132,10 +132,10 @@ def calc_kappa():
         from collections import Counter
         labels = set(p[0] for p in pairs) | set(p[1] for p in pairs)
         matrix = Counter(pairs)
-        po = sum(matrix[(l, l)] for l in labels) / n
+        po = sum(matrix[(lab, lab)] for lab in labels) / n
         m1 = Counter(p[0] for p in pairs)
         m2 = Counter(p[1] for p in pairs)
-        pe = sum((m1[l] / n) * (m2[l] / n) for l in labels)
+        pe = sum((m1[lab] / n) * (m2[lab] / n) for lab in labels)
         return (po - pe) / (1 - pe) if pe < 1 else 1.0
 
     # 标注者1 vs gold

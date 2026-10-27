@@ -44,7 +44,6 @@ def run_ablation(doc_num="02", config="full"):
     # 应用消融配置
     if config == "no_z3":
         # PARAM层: 禁用Z3, 用简单值比较
-        original = ce._check_params
         def simple_params(doc_num, doc, g):
             out = defaultdict(list)
             cons = ce._extract_constraints(doc)
@@ -64,7 +63,6 @@ def run_ablation(doc_num="02", config="full"):
 
     elif config == "no_graph":
         # LOGIC层: 禁用图论, 退化为纯计数
-        original = ce._check_logic_basic
         def simple_logic(doc_num, doc, g):
             out = defaultdict(list)
             all_text = " ".join(ce.sec_texts.get(doc, {}).values())
@@ -80,7 +78,6 @@ def run_ablation(doc_num="02", config="full"):
 
     elif config == "no_stat":
         # TERM层: 固定阈值替代统计校准
-        original = ce._hybrid_sim
         def fixed_sim(a, b):
             if a == b:
                 return 1.0

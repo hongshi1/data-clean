@@ -60,7 +60,6 @@ def main() -> None:
         chunk_id = pair["chunk_id"]
         rows_str = "\n".join(pair.get("table_rows", [])[:5])[:400]
         nodes = doc_nodes.get(pair.get("doc_full", ""), [])
-        nodes_str = "; ".join(nodes[:20])[:300] if nodes else "(无图节点数据)"
 
         prompt = PROMPT.format(
             title=pair.get("table_title", "")[:50],

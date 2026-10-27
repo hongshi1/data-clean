@@ -95,7 +95,7 @@ async def init_rag(enable_vlm=False):
 
 def load_srs_chunks():
     """加载结构化chunks: 按doc分组, 返回[(doc, full_text, chunks)]"""
-    chunks = json.loads(open(CHUNKS_PATH).read())
+    chunks = json.loads(open(CHUNKS_PATH, encoding="utf-8").read())
     docs = {}
     for c in chunks:
         docs.setdefault(c["doc"], []).append(c)

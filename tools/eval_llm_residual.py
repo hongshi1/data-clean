@@ -22,77 +22,29 @@ if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
 import algorithms.common.llm_client as llm_client  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    LABELS,
+    accuracy,
+    confusion_dict,
+    load_frozen_qa,
+    load_silver_labels,
+    macro_f1,
+    per_class_metrics,
+    run_module_corpus,
+)
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 QA_FROZEN = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
 SILVER = (BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
           / "final_labels.jsonl")
 LLM_CACHE = BASE / "data/gjb_438c/llm_cache/llm_cache.jsonl"
-LABELS = ("support", "refute", "not_in_evidence")
-
-
-def read_jsonl(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8")
-            .splitlines() if line.strip()]
 
 
 def cache_lines() -> int:
     if not LLM_CACHE.exists():
         return 0
     return sum(1 for line in LLM_CACHE.open(encoding="utf-8") if line.strip())
-
-
-def class_metrics(confusion: Counter) -> dict[str, dict]:
-    out = {}
-    for label in LABELS:
-        tp = confusion[(label, label)]
-        fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-        fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = (2 * precision * recall / (precision + recall)
-              if precision + recall else 0.0)
-        out[label] = {"precision": round(precision, 4),
-                      "recall": round(recall, 4), "f1": round(f1, 4)}
-    return out
-
-
-def macro_f1(confusion: Counter) -> float:
-    return round(sum(m["f1"] for m in class_metrics(confusion).values())
-                 / len(LABELS), 4)
-
-
-def accuracy(confusion: Counter, n: int) -> float:
-    correct = sum(confusion[(p, g)] for p in LABELS for g in LABELS if p == g)
-    return round(correct / n, 4)
-
-
-def confusion_dict(confusion: Counter) -> dict[str, int]:
-    return {f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]}
-
-
-def run_corpus(module: QAConsistencyModule, rows: list[dict]) -> dict[str, dict]:
-    outcomes: dict[str, dict] = {}
-    for row in rows:
-        request = request_from_dict(row)
-        result = module.verify(request)
-        outcomes[request.instance_id] = {
-            "verdict": result.verdict,
-            "status": result.status,
-            "claims": [{
-                "claim_id": claim.claim_id,
-                "claim_text": claim.claim_text,
-                "verdict": claim.verdict,
-                "method": claim.method,
-                "confidence": claim.confidence,
-                "evidence_refs": list(claim.evidence_refs),
-                "rationale": claim.rationale[:200],
-            } for claim in result.claim_results],
-        }
-    return outcomes
 
 
 def flip_detail(instance_id: str, silver: str, before: str, after: str,
@@ -115,11 +67,10 @@ def flip_detail(instance_id: str, silver: str, before: str, after: str,
 
 
 def main() -> None:
-    rows = read_jsonl(QA_FROZEN)
-    silver = {row["instance_id"]: row["final_verdict"]
-              for row in read_jsonl(SILVER)}
+    rows = load_frozen_qa(QA_FROZEN)
+    silver = load_silver_labels(SILVER)
 
-    baseline = run_corpus(QAConsistencyModule(use_experts=True), rows)
+    baseline = run_module_corpus(QAConsistencyModule(use_experts=True), rows)
 
     call_stats = {"invocations": 0}
     original_llm_json = llm_client.llm_json
@@ -131,7 +82,7 @@ def main() -> None:
     lines_before = cache_lines()
     llm_client.llm_json = counting_llm_json
     try:
-        residual = run_corpus(
+        residual = run_module_corpus(
             QAConsistencyModule(use_experts=True, use_llm_residual=True), rows)
     finally:
         llm_client.llm_json = original_llm_json
@@ -188,14 +139,14 @@ def main() -> None:
         "baseline": {
             "accuracy": accuracy(confusion_before, len(rows)),
             "macro_f1": macro_f1(confusion_before),
-            "per_class": class_metrics(confusion_before),
+            "per_class": per_class_metrics(confusion_before),
             "confusion[predicted, silver]": confusion_dict(confusion_before),
             "claim_methods": dict(methods_before),
         },
         "residual": {
             "accuracy": accuracy(confusion_after, len(rows)),
             "macro_f1": macro_f1(confusion_after),
-            "per_class": class_metrics(confusion_after),
+            "per_class": per_class_metrics(confusion_after),
             "confusion[predicted, silver]": confusion_dict(confusion_after),
             "claim_methods": dict(methods_after),
             "support_recall": round(support_recall, 4),

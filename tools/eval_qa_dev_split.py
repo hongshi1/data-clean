@@ -17,60 +17,25 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from collections import Counter
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Sequence
 
 BASE = Path(__file__).resolve().parents[1]
 if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    evaluate_module,
+    load_frozen_qa,
+    load_silver_labels,
+)
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
 from tools.build_dev_test_split import SPLIT_PATH, load_split  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 QA_FROZEN = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
 SILVER = (BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
           / "final_labels.jsonl")
-LABELS = ("support", "refute", "not_in_evidence")
-
-
-def read_jsonl(path: Path) -> list[dict[str, Any]]:
-    return [json.loads(line) for line in
-            path.read_text(encoding="utf-8").splitlines() if line.strip()]
-
-
-def prf(confusion: Counter, label: str) -> tuple[float, float, float]:
-    tp = confusion[(label, label)]
-    fp = sum(confusion[(label, gold)] for gold in LABELS if gold != label)
-    fn = sum(confusion[(pred, label)] for pred in LABELS if pred != label)
-    precision = tp / (tp + fp) if tp + fp else 0.0
-    recall = tp / (tp + fn) if tp + fn else 0.0
-    f1 = (2 * precision * recall / (precision + recall)
-          if precision + recall else 0.0)
-    return precision, recall, f1
-
-
-def metrics(confusion: Counter, n: int) -> dict[str, Any]:
-    per_class = {}
-    for label in LABELS:
-        precision, recall, f1 = prf(confusion, label)
-        per_class[label] = {"precision": round(precision, 4),
-                            "recall": round(recall, 4),
-                            "f1": round(f1, 4)}
-    accuracy = sum(confusion[(p, g)] for p in LABELS for g in LABELS
-                   if p == g) / n if n else 0.0
-    return {
-        "n": n,
-        "accuracy": round(accuracy, 4),
-        "macro_f1": round(
-            sum(per_class[label]["f1"] for label in LABELS) / len(LABELS), 4),
-        "per_class": per_class,
-        "confusion[predicted, silver]": {
-            f"{p}|{g}": confusion[(p, g)]
-            for p in LABELS for g in LABELS if confusion[(p, g)]},
-    }
 
 
 def main(argv: Sequence[str] | None = None) -> None:
@@ -89,33 +54,33 @@ def main(argv: Sequence[str] | None = None) -> None:
     split = load_split(SPLIT_PATH)
     dev_ids = list(split["dev"])
 
-    rows = {row["instance_id"]: row for row in read_jsonl(QA_FROZEN)}
-    silver = {row["instance_id"]: row for row in read_jsonl(SILVER)}
+    rows = {row["instance_id"]: row for row in load_frozen_qa(QA_FROZEN)}
+    silver = load_silver_labels(SILVER)
     missing = [iid for iid in dev_ids if iid not in rows or iid not in silver]
     if missing:
         sys.exit(f"dev实例缺冻结行或silver标签: {missing}")
 
     module = QAConsistencyModule(
         use_experts=True, use_llm_residual=args.use_llm_residual)
-    confusion: Counter = Counter()
-    per_row = []
-    for iid in dev_ids:
-        result = module.verify(request_from_dict(rows[iid]))
-        gold = silver[iid]["final_verdict"]
-        confusion[(result.verdict, gold)] += 1
-        per_row.append({
-            "instance_id": iid,
-            "predicted": result.verdict,
-            "silver": gold,
-            "claim_methods": [claim.method for claim in result.claim_results],
-            "claims": [{
-                "claim_text": claim.claim_text[:80],
-                "verdict": claim.verdict,
-                "method": claim.method,
-            } for claim in result.claim_results],
-        })
-
-    score = metrics(confusion, len(dev_ids))
+    outcome = evaluate_module(module, [rows[iid] for iid in dev_ids], silver)
+    score = {
+        "n": len(dev_ids),
+        "accuracy": outcome.metrics["accuracy"],
+        "macro_f1": outcome.metrics["macro_f1"],
+        "per_class": outcome.metrics["per_class"],
+        "confusion[predicted, silver]": outcome.metrics["confusion"],
+    }
+    per_row = [{
+        "instance_id": row["instance_id"],
+        "predicted": row["predicted"],
+        "silver": row["label"],
+        "claim_methods": row["claim_methods"],
+        "claims": [{
+            "claim_text": claim["claim_text"][:80],
+            "verdict": claim["verdict"],
+            "method": claim["method"],
+        } for claim in row["claims"]],
+    } for row in outcome.per_row]
     run = open_run("eval_qa_dev_split", {
         "input": str(QA_FROZEN.relative_to(BASE)),
         "labels": str(SILVER.relative_to(BASE)),

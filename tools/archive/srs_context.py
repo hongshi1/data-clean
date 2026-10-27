@@ -245,8 +245,6 @@ def aggregate_items(entities: list[dict], content: ET.Element) -> list[Item]:
     id_clusters = build_id_clusters(entities)
     
     # A3: 章节号偏移
-    ch3_secs = [s.get('section_id', '') for s in content.findall('.//Section')
-                if s.get('section_id', '').startswith('3.2.')]
     ch4_secs = []
     for table in content.findall('.//Table[@type="qualification"]'):
         for row in table.findall('Row'):
@@ -255,7 +253,6 @@ def aggregate_items(entities: list[dict], content: ET.Element) -> list[Item]:
                 m = re.search(r'(3\.2\.\d+)', cell)
                 if m:
                     ch4_secs.append(m.group(1))
-    offset = detect_section_offset(ch3_secs, ch4_secs)
     
     # 按ID预分组(完整ID)
     groups = defaultdict(list)
@@ -343,10 +340,14 @@ def aggregate_items(entities: list[dict], content: ET.Element) -> list[Item]:
             # 0.75会合并"服务开发支撑"="服务部署管理"(都是"服务XX"格式)
             strong_signals = sum([id_match, name_sim > 0.85, type_match])
             score = 0
-            if id_match: score += 0.4
-            if name_sim > 0.85: score += 0.3
-            if type_match: score += 0.2
-            if entity["section"][:3] == other["section"][:3]: score += 0.1
+            if id_match:
+                score += 0.4
+            if name_sim > 0.85:
+                score += 0.3
+            if type_match:
+                score += 0.2
+            if entity["section"][:3] == other["section"][:3]:
+                score += 0.1
             
             # 合并条件: score>=0.6 且至少2个强信号
             if score >= 0.6 and strong_signals >= 2:

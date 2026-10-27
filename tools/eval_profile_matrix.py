@@ -49,16 +49,16 @@ def run_profile_matrix(bge, corpus: list, scenes: dict, fold_map: dict,
                       for i in range(n)]
 
             def build(ul):
-                texts = [u for l in ul for u in l]
+                texts = [u for sub in ul for u in sub]
                 vecs = bge.embed(texts)
                 U = np.stack([np.asarray(vecs.get(u, [0.0] * 1024),
                                          dtype=np.float32) for u in texts]).T
                 U = U / np.maximum(np.linalg.norm(U, axis=0,
                                                   keepdims=True), 1e-8)
-                seg = np.cumsum([0] + [len(l) for l in ul])
+                seg = np.cumsum([0] + [len(sub) for sub in ul])
                 df: dict = {}
-                for l in ul:
-                    for u in set(l):
+                for sub in ul:
+                    for u in set(sub):
                         df[u] = df.get(u, 0) + 1
                 idf = np.asarray([np.log(1 + n / max(df.get(u, 1), 1))
                                   for u in texts], dtype=np.float32)
@@ -70,8 +70,8 @@ def run_profile_matrix(bge, corpus: list, scenes: dict, fold_map: dict,
             Urt = Ur.T
             sims = Urt @ Ur
             np.fill_diagonal(sims, -1.0)
-            owner = np.concatenate([np.full(len(l), i, dtype=np.int64)
-                                    for i, l in enumerate(raw)])
+            owner = np.concatenate([np.full(len(sub), i, dtype=np.int64)
+                                    for i, sub in enumerate(raw)])
             near = sims > 0.90
             del sims
             fuzzy = np.empty(Urt.shape[0], dtype=np.float32)

@@ -56,11 +56,16 @@ def z3_gate(param_name, constraints_a, constraints_b):
     s = Solver()
     x = Real(param_name)
     for op, val in constraints_a + constraints_b:
-        if op == "ge": s.add(x >= val)
-        elif op == "le": s.add(x <= val)
-        elif op == "gt": s.add(x > val)
-        elif op == "lt": s.add(x < val)
-        elif op == "eq": s.add(x == val)
+        if op == "ge":
+            s.add(x >= val)
+        elif op == "le":
+            s.add(x <= val)
+        elif op == "gt":
+            s.add(x > val)
+        elif op == "lt":
+            s.add(x < val)
+        elif op == "eq":
+            s.add(x == val)
     return s.check() == unsat
 
 
@@ -542,7 +547,7 @@ def make_positive(entity):
 
 def main():
     print("加载检测对象...")
-    with open(ENTITIES_PATH) as f:
+    with open(ENTITIES_PATH, encoding="utf-8") as f:
         data = json.load(f)
     entities = data["entities"]
     print(f"  共 {len(entities)} 个检测对象")

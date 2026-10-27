@@ -36,20 +36,22 @@ BASE = Path(__file__).resolve().parents[1]
 if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
-from algorithms.consistency.nli_local import MODELS  # noqa: E402
-from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
-from algorithms.consistency.router import LearnedRouter  # noqa: E402
-from tools.eval_cascade import (  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
     QA_FROZEN,
     SILVER,
     accuracy,
-    class_metrics,
     confusion_dict,
+    load_frozen_qa,
+    load_silver_labels,
     macro_f1,
+    per_class_metrics,
     read_jsonl,
-    run_with_llm_counting,
-    score_config,
+    score_outcomes,
 )
+from algorithms.consistency.nli_local import MODELS  # noqa: E402
+from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
+from algorithms.consistency.router import LearnedRouter  # noqa: E402
+from tools.eval_cascade import run_with_llm_counting  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 RUNS_ROOT = BASE / "data/gjb_438c/runs"
@@ -99,7 +101,7 @@ def oracle_router_simulation(dataset: list[dict]) -> dict:
         elif key == "v_l3":
             llm_calls += max(1, int((row.get("route_llm_calls") or {})
                                     .get(key, 0) or 0))
-    per_class = class_metrics(confusion)
+    per_class = per_class_metrics(confusion)
     return {
         "macro_f1": macro_f1(confusion),
         "accuracy": accuracy(confusion, len(dataset)),
@@ -132,9 +134,8 @@ def main() -> None:
                         help="跳过alpha扫描(快速模式)")
     args = parser.parse_args()
 
-    rows = read_jsonl(QA_FROZEN)
-    silver = {row["instance_id"]: row["final_verdict"]
-              for row in read_jsonl(SILVER)}
+    rows = load_frozen_qa(QA_FROZEN)
+    silver = load_silver_labels(SILVER)
     checkpoint = MODELS[args.model_key]["dir"]
     if not (Path(checkpoint) / "config.json").exists():
         print(f"checkpoint不存在: {checkpoint} "
@@ -164,11 +165,12 @@ def main() -> None:
         out, stats = run_with_llm_counting(module, rows)
         outcomes[name] = out
         llm_stats[name] = stats
-        print(f"{name}: macro_f1={score_config(out, rows, silver)['macro_f1']} "
+        print(f"{name}: macro_f1="
+              f"{score_outcomes(out, rows, silver)['macro_f1']} "
               f"llm_invocations={stats['invocations']} "
               f"api_calls={stats['api_calls']}")
 
-    scores = {name: score_config(out, rows, silver)
+    scores = {name: score_outcomes(out, rows, silver)
               for name, out in outcomes.items()}
 
     pareto_points: list[dict] = []
@@ -181,7 +183,7 @@ def main() -> None:
                 raise SystemExit("router加载失败, 无法扫描")
             module.router.cost_alpha = alpha
             out, stats = run_with_llm_counting(module, rows)
-            score = score_config(out, rows, silver)
+            score = score_outcomes(out, rows, silver)
             point = {
                 "alpha": alpha,
                 "macro_f1": score["macro_f1"],

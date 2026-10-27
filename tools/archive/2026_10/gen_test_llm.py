@@ -48,7 +48,7 @@ def load_pairs():
             mp = os.path.join(ip, "meta.json")
             if not os.path.exists(mp):
                 continue
-            meta = json.loads(open(mp).read())
+            meta = json.loads(open(mp, encoding="utf-8").read())
             rows = []
             tp = os.path.join(ip, "table.csv")
             if os.path.exists(tp):
@@ -202,10 +202,12 @@ async def gen_qa_for_pair(pair):
             if m:
                 try:
                     d = json.loads(m.group(0))
-                    if isinstance(d, list): return d
+                    if isinstance(d, list):
+                        return d
                     elif isinstance(d, dict):
                         for k in ["qa", "questions"]:
-                            if k in d: return d[k]
+                            if k in d:
+                                return d[k]
                         return [d] if "question" in d else []
                 except:
                     pass
@@ -312,7 +314,7 @@ async def main(n=50, verify=True):
         
         # 每10个pair保存一次
         if (i + 1) % 10 == 0:
-            json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+            json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     
     # 验证(可选)
     if verify:
@@ -331,7 +333,7 @@ async def main(n=50, verify=True):
         all_qa = [q for q in all_qa if q["verified"]]
         print(f"  验证通过: {len(all_qa)}/{before} ({len(all_qa)/before:.0%})")
     
-    json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     
     # 统计
     from collections import Counter

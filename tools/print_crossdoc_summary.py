@@ -15,12 +15,13 @@ def main() -> None:
     res = json.load(open(os.path.join(rdir, "result.json"), encoding="utf-8"))
     print("run:", rdir)
     for name, cfg in res["configs"].items():
-        print(f"== {name}: macroF1={cfg['macro_f1']:.4f} "
-              f"acc={cfg['accuracy']:.4f}")
+        m = cfg["metrics"]
+        print(f"== {name}: macroF1={m['macro_f1']:.4f} "
+              f"acc={m['accuracy']:.4f}")
         for cls in ("support", "refute", "not_in_evidence"):
-            m = cfg["per_class"][cls]
-            print(f"   {cls}: P={m['precision']:.3f} "
-                  f"R={m['recall']:.3f} F1={m['f1']:.3f}")
+            c = m["per_class"][cls]
+            print(f"   {cls}: P={c['precision']:.3f} "
+                  f"R={c['recall']:.3f} F1={c['f1']:.3f}")
 
 
 if __name__ == "__main__":

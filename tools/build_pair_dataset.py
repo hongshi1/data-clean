@@ -97,7 +97,6 @@ def clean_table_rows(rows):
         if not cells:
             continue
         # 表头检测1: 行内含"序号"或整行都是表头词
-        joined = ' '.join(cells)
         if '序号' in cells or (len(cells) >= 3 and all(
                 any(n in c for n in ['标识', '名称', '描述', '重用', '方式', '运行', '备注', '任务书'])
                 for c in cells)):
@@ -162,7 +161,6 @@ def classify_image(cap):
 
 
 def classify_table(caption, headers):
-    cap_lower = caption.lower()
     headers_text = ' '.join(str(h) for h in headers)
     all_text = (caption + ' ' + headers_text).lower()
 
@@ -540,7 +538,7 @@ def materialize_pairs(scenarios, doc_name):
 
             # 表格 → CSV
             if inst.get("table"):
-                with open(inst_dir / "table.csv", "w") as f:
+                with open(inst_dir / "table.csv", "w", encoding="utf-8") as f:
                     tbl = inst["table"]
                     # 表头
                     if tbl.get("headers"):
@@ -551,7 +549,7 @@ def materialize_pairs(scenarios, doc_name):
 
             # 正文
             if inst.get("text"):
-                with open(inst_dir / "text.txt", "w") as f:
+                with open(inst_dir / "text.txt", "w", encoding="utf-8") as f:
                     f.write(inst["text"]["content"])
 
             # meta
@@ -571,7 +569,7 @@ def materialize_pairs(scenarios, doc_name):
                 "func_names": inst["table"]["func_names"] if inst.get("table") else [],
                 "image_exists": inst["image"]["exists"],
             }
-            with open(inst_dir / "meta.json", "w") as f:
+            with open(inst_dir / "meta.json", "w", encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=2)
             created += 1
             next_num += 1

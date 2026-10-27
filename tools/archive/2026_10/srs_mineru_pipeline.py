@@ -133,13 +133,18 @@ def classify_role(param: str, section: str) -> str:
     config_kw = ['版本', '型号', '主频', '内存', '硬盘', '存储', '分辨率', '显存']
     capacity_kw = ['最多', '支持', '容量', '数量', '上限', '最大', '并发']
     for kw in threshold_kw:
-        if kw in param: return "threshold"
+        if kw in param:
+            return "threshold"
     for kw in config_kw:
-        if kw in param: return "config"
+        if kw in param:
+            return "config"
     for kw in capacity_kw:
-        if kw in param: return "capacity"
-    if section.startswith('3.10'): return "config"
-    if section.startswith('3.11'): return "threshold"
+        if kw in param:
+            return "capacity"
+    if section.startswith('3.10'):
+        return "config"
+    if section.startswith('3.11'):
+        return "threshold"
     return "description"
 
 

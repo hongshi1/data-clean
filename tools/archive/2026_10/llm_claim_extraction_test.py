@@ -18,7 +18,7 @@ import json
 import random
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -198,7 +198,8 @@ def main():
 
     n = len(results)
     n_ok = n - llm_fail
-    f1 = lambda tp, fp, fn: 2 * tp / max(2 * tp + fp + fn, 1)
+    def f1(tp, fp, fn):
+        return 2 * tp / max(2 * tp + fp + fn, 1)
     print(f"\n[声明级一致率] kind {agree_kind}/{n_ok}={agree_kind/max(n_ok,1):.1%} | "
           f"实体 {agree_ents}/{n_ok}={agree_ents/max(n_ok,1):.1%} | 关系 {agree_rel}/{n_ok}={agree_rel/max(n_ok,1):.1%}")
     print(f"[下游检测一致率] LLM vs 模式: {det_agree}/{n_ok}={det_agree/max(n_ok,1):.1%}")

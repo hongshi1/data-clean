@@ -87,7 +87,6 @@ def main():
         failed += resp.get("failed", 0)
         if resp.get("errors"):
             print(f"  批{bi+1} errors: {resp['errors'][:2]}")
-        done = (bi + 1) * BATCH
         print(f"  批{bi+1}/{n_batches}: +{resp.get('success', 0)} (累计{ok}) [{time.time()-t0:.0f}s]")
 
     # 3. 计数核验

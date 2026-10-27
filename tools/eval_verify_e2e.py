@@ -23,7 +23,7 @@ def main() -> None:
     from algorithms.consistency.verify import Evidence, Verifier
 
     v = Verifier()
-    qa_lines = [json.loads(l) for l in (BASE / "data/gjb_438c/easydataset/srs_alpaca.jsonl").read_text(encoding="utf-8").splitlines()]
+    qa_lines = [json.loads(line) for line in (BASE / "data/gjb_438c/easydataset/srs_alpaca.jsonl").read_text(encoding="utf-8").splitlines()]
     tbl, cap_only, txt, img = build_indexes()
 
     # ═══ A1 ═══

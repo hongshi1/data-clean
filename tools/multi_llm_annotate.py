@@ -202,12 +202,12 @@ def cohen_kappa(annotations1, annotations2):
     matrix = Counter(pairs)
     
     # 观察一致性
-    po = sum(matrix[(l, l)] for l in labels) / n
+    po = sum(matrix[(lab, lab)] for lab in labels) / n
     
     # 期望一致性
     marg1 = Counter(a1 for a1, a2 in pairs)
     marg2 = Counter(a2 for a1, a2 in pairs)
-    pe = sum((marg1[l] / n) * (marg2[l] / n) for l in labels)
+    pe = sum((marg1[lab] / n) * (marg2[lab] / n) for lab in labels)
     
     if pe == 1.0:
         return 1.0
@@ -276,7 +276,7 @@ def fleiss_kappa(annotations):
 
 def main():
     print("加载评测集...")
-    with open(EVAL_PATH) as f:
+    with open(EVAL_PATH, encoding="utf-8") as f:
         data = json.load(f)
     entries = data["entries"]
     print(f"  共 {len(entries)} 条")
@@ -284,7 +284,7 @@ def main():
     # 检查已完成的进度
     done = {}
     if PROGRESS_PATH.exists():
-        with open(PROGRESS_PATH) as f:
+        with open(PROGRESS_PATH, encoding="utf-8") as f:
             for line in f:
                 try:
                     rec = json.loads(line)

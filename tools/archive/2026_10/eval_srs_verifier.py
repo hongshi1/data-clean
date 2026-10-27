@@ -75,7 +75,7 @@ def main() -> None:
     preds_a = []
     for x in srs:
         ctx = x.get("context") or {}
-        from algorithms.consistency_check.srs_verifier import decompose_context, SrsVerifier as SV
+        from algorithms.consistency_check.srs_verifier import decompose_context
         units = decompose_context(ctx)
         filt = ver2.recall_and_filter(x["pair"]["premise"], units)
         att = ver2.sub_attention(x["pair"]["premise"], filt)
@@ -108,7 +108,7 @@ def main() -> None:
     print(f"消融3(去注意力门控): F1={m_abl3['F1']}")
 
     # 分源细目
-    print(f"\n分源细目(SRS-Verifier):")
+    print("\n分源细目(SRS-Verifier):")
     by = defaultdict(list)
     for x, p in zip(srs, preds):
         by[x["source"]].append((x["label"], p))

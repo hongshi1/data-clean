@@ -30,12 +30,12 @@ def main() -> None:
         key = re.sub(r"[「」\s]", "", v.get("premise", ""))[:60]
         by_text[key].add(v["label"])
     n_ambig = sum(1 for v in by_text.values() if len(v) > 1)
-    print(f"归因1 金标噪声(md_gold 577条):")
+    print("归因1 金标噪声(md_gold 577条):")
     print(f"  证据反驳(已修复): {n_refuted}条(19.4%)")
     for p, (n, r) in proto.items():
         print(f"  协议{p}: {r}/{n}={r/n:.0%}真 — 协议间真比率差{abs(proto['cot'][1]/max(proto['cot'][0],1) - proto['dual-llm'][1]/max(proto['dual-llm'][0],1)):.0%} = 标签生成偏差")
     print(f"  同文本反标签: {n_ambig}组 — 文本不可分的残余")
-    print(f"  估计不可约噪声: ~20-25% (LLM裁决未见图证据+协议混淆)\n")
+    print("  估计不可约噪声: ~20-25% (LLM裁决未见图证据+协议混淆)\n")
 
     # ── 归因2: 判别信号本身是词汇级(模型上限=词汇信号上限) ──
     md = json.loads((BASE / "data/gjb_438c/human_gold/md_test_sc3.json").read_text(encoding="utf-8"))
@@ -51,18 +51,18 @@ def main() -> None:
             pred = "inconsistent" if hit_r else "consistent"
             if pred == x["label"]:
                 n_correct += 1
-    print(f"归因2 词汇信号覆盖率(md sc3 148条):")
+    print("归因2 词汇信号覆盖率(md sc3 148条):")
     print(f"  动词词典可判: {n_dec}/148 ({n_dec/148:.0%}), 其中正确 {n_correct}/{n_dec} ({n_correct/max(n_dec,1):.0%})")
-    print(f"  → 信号=核心动词vs辅助动词(词汇级), SVM已吃到(0.866 bAcc)")
-    print(f"  → 神经模型没有超过SVM = 判别信号本来就浅\n")
+    print("  → 信号=核心动词vs辅助动词(词汇级), SVM已吃到(0.866 bAcc)")
+    print("  → 神经模型没有超过SVM = 判别信号本来就浅\n")
 
     # ── 归因3: 训练分布与测试分布错配 ──
-    train = [json.loads(l) for l in open(BASE / "data/gjb_438c/pair_dataset_canonical/train.jsonl", encoding="utf-8")]
+    train = [json.loads(line) for line in open(BASE / "data/gjb_438c/pair_dataset_canonical/train.jsonl", encoding="utf-8")]
     src = Counter(x["source"] for x in train)
-    print(f"归因3 训练-测试分布错配:")
+    print("归因3 训练-测试分布错配:")
     print(f"  训练构成: {dict(src)} — 80%是变异(带措辞伪影), 真实锚点仅~20%")
-    print(f"  测试构成: clean130/md166 = 100%真实锚点风格")
-    print(f"  → 模型学的变异伪影在真实测试上无效(风格捷径的根源)\n")
+    print("  测试构成: clean130/md166 = 100%真实锚点风格")
+    print("  → 模型学的变异伪影在真实测试上无效(风格捷径的根源)\n")
 
     print("═ 结论: 弱结果 = 标签噪声(~25%) × 浅信号(词汇级) × 分布错配(80%变异污染) ═")
     print("适配方案(v12): 仅用真实锚点数据训练 + 良性×6过采样 → 训练分布=测试分布")

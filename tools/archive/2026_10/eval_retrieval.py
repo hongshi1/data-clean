@@ -130,7 +130,6 @@ def eval_recall(result_text, expected, entity_name=""):
     else:
         combined = result_text
         # 从文本中提取章节号
-        sections = re.findall(r"\d+\.\d+(?:\.\d+)*", result_text)
         locs = set()
         if "<table" in result_text or "表格" in result_text:
             locs.add("table")
@@ -154,7 +153,7 @@ def eval_recall(result_text, expected, entity_name=""):
 
     # loc_recall
     exp_locs = exp.get("locations", [])
-    loc_hits = sum(1 for l in exp_locs if l in locs)
+    loc_hits = sum(1 for loc in exp_locs if loc in locs)
     n_loc = max(len(exp_locs), 1)
 
     avg = (entity_hit + sec_hits / n_sec + loc_hits / n_loc) / 3
@@ -168,7 +167,7 @@ def eval_recall(result_text, expected, entity_name=""):
 
 async def main(sample=None):
     # 加载评测集
-    evalset = json.loads(open(EVALSET_PATH).read())
+    evalset = json.loads(open(EVALSET_PATH, encoding="utf-8").read())
     if sample:
         evalset = evalset[:sample]
     print(f"评测查询: {len(evalset)}")
@@ -220,7 +219,7 @@ async def main(sample=None):
             print(f"  {k}: {v}")
 
     json.dump({"summary": summary, "details": results},
-              open(OUT_PATH, "w"), ensure_ascii=False, indent=2)
+              open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"\n✅ 评测完成 → {OUT_PATH}")
 
 

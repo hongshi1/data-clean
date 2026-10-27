@@ -99,7 +99,6 @@ def structure_to_mermaid_v3(structure):
 
     has_usecase = node_types.get('usecase', 0) > 0
     has_actor = node_types.get('actor', 0) > 0
-    has_process = node_types.get('process', 0) > 0
     has_state = node_types.get('state', 0) > 0
 
     if has_usecase and has_actor:
@@ -116,8 +115,6 @@ def structure_to_mermaid_v3(structure):
     for n in nodes:
         nid = n['id']
         text = node_label(n)
-        typ = n.get('type', 'other')
-        shape = NODE_SHAPES.get(typ, NODE_SHAPES['other'])
         lines.append(f'    {nid}["{text}"]')
         node_ids.add(nid)
 
@@ -135,8 +132,6 @@ def structure_to_mermaid_v3(structure):
         uml_type = e.get('uml_type', 'ASSOCIATION')
         uml_types[uml_type] += 1
 
-        src_text = e.get('src_text', node_label({'text': '', 'id': src}))[:20]
-        dst_text = e.get('dst_text', node_label({'text': '', 'id': dst}))[:20]
 
         # 根据UML关系类型选择mermaid语法
         if uml_type == 'ASSOCIATION':
@@ -278,7 +273,6 @@ def generate_uml_qa(anchors_v3):
 
         for st_idx, st in enumerate(structures):
             edges = st.get('edges', [])
-            nodes = {n['id']: n for n in st.get('nodes', [])}
             embed = st.get('embed_index', '')
 
             for e in edges:

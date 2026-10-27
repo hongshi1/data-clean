@@ -57,7 +57,7 @@ def load_pairs():
             mp = os.path.join(ip, "meta.json")
             if not os.path.exists(mp):
                 continue
-            meta = json.loads(open(mp).read())
+            meta = json.loads(open(mp, encoding="utf-8").read())
             rows = []
             tp = os.path.join(ip, "table.csv")
             if os.path.exists(tp):
@@ -183,13 +183,13 @@ def normalize_qa(qa_item, pair, qa_type, qid):
         t = qa_type
     
     # 归一化label
-    l = qa_item.get("label", "")
-    if "consistent" in l.lower() or "正例" in l:
-        l = "consistent"
-    elif "inconsistent" in l.lower() or "注入" in l or "不一致" in l:
-        l = "inconsistent"
+    lab = qa_item.get("label", "")
+    if "consistent" in lab.lower() or "正例" in lab:
+        lab = "consistent"
+    elif "inconsistent" in lab.lower() or "注入" in lab or "不一致" in lab:
+        lab = "inconsistent"
     else:
-        l = "inconsistent" if qa_item.get("is_injected") else "consistent"
+        lab = "inconsistent" if qa_item.get("is_injected") else "consistent"
     
     # 归一化difficulty
     d = str(qa_item.get("difficulty", "medium"))
@@ -215,12 +215,12 @@ def normalize_qa(qa_item, pair, qa_type, qid):
         "answer_modality": "table" if "{table}" in qa_item.get("question", "") else "text",
         "inconsistency_type": t,
         "subtype": qa_item.get("subtype", ""),
-        "label": l,
-        "is_injected": l == "inconsistent",
+        "label": lab,
+        "is_injected": lab == "inconsistent",
         "inject_detail": qa_item.get("inject_detail") or "",
         "rule_id": {"terminology": "TERM-001", "parameter": "PARAM-001",
                     "business_logic": "LOGIC-001", "gjb_compliance": "GJB-001"}.get(t, ""),
-        "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。" if l == "inconsistent" else "",
+        "context_note": "此QA为注入场景: 原始文档文件未修改, inject_detail描述的是假设引入的错误。" if lab == "inconsistent" else "",
         "evidence": {
             "doc": meta.get("doc", ""),
             "section": meta.get("section", ""),
@@ -267,7 +267,7 @@ async def main():
         
         # 保存按场景
         out_path = os.path.join(OUT_DIR, f"{sc_name}.json")
-        json.dump(sc_qa, open(out_path, "w"), ensure_ascii=False, indent=1)
+        json.dump(sc_qa, open(out_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         total_qa += len(sc_qa)
         print(f"✅ {sc_name}: {len(sc_qa)}条QA → {out_path}")
     
@@ -281,8 +281,8 @@ async def main():
     for sc_dir in sorted(by_scene.keys()):
         p = os.path.join(OUT_DIR, f"{sc_dir}.json")
         if os.path.exists(p):
-            all_qa.extend(json.loads(open(p).read()))
-    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w"),
+            all_qa.extend(json.loads(open(p, encoding="utf-8").read()))
+    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     
     from collections import Counter

@@ -84,14 +84,14 @@ def convert_to_hd_png(obj_data, fmt, out_path):
         # 用LibreOffice转换
         if fmt in ('vsdx', 'vsd', 'emf'):
             filter_str = PNG_FILTER if fmt in ('vsdx', 'vsd') else 'png'
-            result = subprocess.run(
+            subprocess.run(
                 ['soffice', '--headless', '--convert-to', filter_str,
                  '--outdir', str(tmpdir), str(src_path)],
                 capture_output=True, text=True, timeout=60
             )
         else:
             # OLE格式,尝试直接用soffice打开
-            result = subprocess.run(
+            subprocess.run(
                 ['soffice', '--headless', '--convert-to', PNG_FILTER,
                  '--outdir', str(tmpdir), str(src_path)],
                 capture_output=True, text=True, timeout=60
@@ -153,7 +153,6 @@ def process_document(doc_name):
     for i, img_item in enumerate(img_items):
         if i < len(hd_pngs):
             idx, png_path, size, size_kb = hd_pngs[i]
-            old_path = img_item.get('img_path', '')
             
             # 计算相对路径
             rel_path = f"images/{doc_name[:20]}/hd_{idx:03d}.png"

@@ -33,7 +33,8 @@ from algorithms.consistency.answer_mutations import (  # noqa: E402
     propose_out_of_range_conflict,
     propose_reversed_data_flow,
 )
-from algorithms.consistency.qa_models import QAInput, RetrievedEvidence, SourceRef  # noqa: E402
+from algorithms.consistency.eval_lib import build_qa_input  # noqa: E402
+from algorithms.consistency.qa_models import QAInput  # noqa: E402
 from algorithms.consistency.structural_mutations import (  # noqa: E402
     propose_actor_role_list_mutation,
     propose_closed_list_add,
@@ -65,26 +66,8 @@ from algorithms.consistency.qa_router import route_question  # noqa: E402
 
 
 def request_from_dict(row: dict[str, Any]) -> QAInput:
-    evidence = tuple(
-        RetrievedEvidence(
-            evidence_id=str(item["evidence_id"]),
-            text=str(item["text"]),
-            source_type=item["source_type"],
-            source_ref=SourceRef(**item["source_ref"]),
-            scope_id=str(item["scope_id"]),
-            completeness=item.get("completeness", "unknown"),
-            completeness_proof=str(item.get("completeness_proof", "")),
-            extraction_method=str(item.get("extraction_method", "")),
-            extraction_confidence=item.get("extraction_confidence"),
-        ) for item in row["evidence"]
-    )
-    return QAInput(
-        instance_id=str(row["instance_id"]),
-        question=str(row["question"]),
-        answer=str(row["answer"]),
-        context_freeze_id=str(row["context_freeze_id"]),
-        evidence=evidence,
-    )
+    """dict→QAInput (委托eval_lib.build_qa_input: SourceRef六字段映射的权威实现)."""
+    return build_qa_input(row)
 
 
 def proposal_record(proposal: AnswerMutationProposal,

@@ -40,11 +40,6 @@ def match_steps_to_nodes(node_texts: list[dict], X_T: dict) -> dict:
             sc = text_match_score(st['text'], dn['text'])
             if sc >= MATCH_TH:
                 pairs.append((sc, st['id'], dn['id']))
-    low = [(sc, s, d) for sc, s, d in pairs if sc < 0.75]
-    if low:
-        all_texts = list({t for t in [x[1] for x in low] + [x[2] for x in low]})
-        # 需要原始文本
-        pass
     pairs.sort(key=lambda x: -x[0])
     used = set()
     matched = {}
@@ -171,15 +166,17 @@ def main():
 
     # AUROC(q) — 注意: 单通道二元观测下AUROC(q)=AUROC(D), 此处验证q的概率语义
     def auroc(scores, labels):
-        pos = [s for s, l in zip(scores, labels) if l == 1]
-        neg = [s for s, l in zip(scores, labels) if l == 0]
+        pos = [s for s, lab in zip(scores, labels) if lab == 1]
+        neg = [s for s, lab in zip(scores, labels) if lab == 0]
         if not pos or not neg:
             return None
         wins = ties = 0
         for p_ in pos:
             for n_ in neg:
-                if p_ > n_: wins += 1
-                elif p_ == n_: ties += 1
+                if p_ > n_:
+                    wins += 1
+                elif p_ == n_:
+                    ties += 1
         return (wins + 0.5 * ties) / (len(pos) * len(neg))
 
     auc = auroc([r['q'] for r in records], [r['eta'] for r in records])

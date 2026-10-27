@@ -1,0 +1,392 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "baseline": {
+  "accuracy": 0.9121,
+  "macro_f1": 0.7212,
+  "per_class": {
+   "support": {
+    "precision": 0.6667,
+    "recall": 0.3333,
+    "f1": 0.4444
+   },
+   "refute": {
+    "precision": 1.0,
+    "recall": 0.625,
+    "f1": 0.7692
+   },
+   "not_in_evidence": {
+    "precision": 0.9157,
+    "recall": 0.987,
+    "f1": 0.95
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 2,
+   "support|not_in_evidence": 1,
+   "refute|refute": 5,
+   "not_in_evidence|support": 4,
+   "not_in_evidence|refute": 3,
+   "not_in_evidence|not_in_evidence": 76
+  },
+  "claim_methods": {
+   "semantic_unresolved": 328,
+   "e1_template_match": 19,
+   "l0_entity_detector:TERM-05": 51,
+   "sequence_alignment": 79,
+   "conservative_unresolved": 29,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 18,
+   "exact_statement": 9,
+   "enum_join_registry": 2,
+   "l0_entity_detector:TERM-08:warning": 3
+  }
+ },
+ "residual": {
+  "accuracy": 0.9451,
+  "macro_f1": 0.8747,
+  "per_class": {
+   "support": {
+    "precision": 0.8333,
+    "recall": 0.8333,
+    "f1": 0.8333
+   },
+   "refute": {
+    "precision": 0.7778,
+    "recall": 0.875,
+    "f1": 0.8235
+   },
+   "not_in_evidence": {
+    "precision": 0.9737,
+    "recall": 0.961,
+    "f1": 0.9673
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 5,
+   "support|not_in_evidence": 1,
+   "refute|refute": 7,
+   "refute|not_in_evidence": 2,
+   "not_in_evidence|support": 1,
+   "not_in_evidence|refute": 1,
+   "not_in_evidence|not_in_evidence": 74
+  },
+  "claim_methods": {
+   "semantic_unresolved": 246,
+   "e1_template_match": 19,
+   "l0_entity_detector:TERM-05": 51,
+   "sequence_alignment": 79,
+   "conservative_unresolved": 22,
+   "llm_residual": 89,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 18,
+   "exact_statement": 9,
+   "enum_join_registry": 2,
+   "l0_entity_detector:TERM-08:warning": 3
+  },
+  "support_recall": 0.8333
+ },
+ "llm_stats": {
+  "invocations": 83,
+  "api_calls": 0,
+  "cache_hits": 83,
+  "llm_residual_failed_claims": 0
+ },
+ "flips": {
+  "corrected": [
+   {
+    "instance_id": "S1QA-006",
+    "silver": "support",
+    "before": "not_in_evidence",
+    "after": "support",
+    "llm_claims": [
+     {
+      "claim_text": "项目中对BLOB数据进行修改、查询和插入的功能均沿用“桌面”和“平板”设备，并且在开发阶段和运行阶段均进行了支持",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-006-ev-000035"
+      ],
+      "rationale": "LLM残差判定：BLOB数据操作功能（含插入、删除、查询）锚定ev-12/ev-13，方式名称为平板、桌面，运行状态为运行阶段、开发阶段，与声明一致"
+     },
+     {
+      "claim_text": "BLOB数据修改：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-006-ev-000035"
+      ],
+      "rationale": "LLM残差判定：BLOB数据修改属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     },
+     {
+      "claim_text": "BLOB数据查询：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-006-ev-000035"
+      ],
+      "rationale": "LLM残差判定：BLOB数据查询属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     },
+     {
+      "claim_text": "BLOB数据插入：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-006-ev-000035"
+      ],
+      "rationale": "LLM残差判定：BLOB数据插入属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-066",
+    "silver": "support",
+    "before": "not_in_evidence",
+    "after": "support",
+    "llm_claims": [
+     {
+      "claim_text": "热点数据缓存功能有以下特点",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-066-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2给出热点数据缓存的需求描述，列出了其特点"
+     },
+     {
+      "claim_text": "查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-066-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持对查询结果集进行缓存并加载至内存中"
+     },
+     {
+      "claim_text": "可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-066-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持对缓存大小进行配置；'调节内存使用和性能表现'为解释性扩展，核心值一致"
+     },
+     {
+      "claim_text": "动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-066-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持修改数据后再次查询时重新从数据库获取数据并更新缓存；'确保始终反映最新信息'为效果性扩展"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-068",
+    "silver": "refute",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "代码生成功能是通过以下步骤实现的",
+      "verdict": "support",
+      "confidence": 0.8,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2描述了配置转换、生成接口文件、提供下载的完整流程，支持步骤性描述"
+     },
+     {
+      "claim_text": "系统转换数据结构：基于提供的配置，系统将关系型数据库中的表和视图转化为对应的目标语言代码",
+      "verdict": "refute",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确产物为'数据对象'，而非'目标语言代码'，产物类型不同"
+     },
+     {
+      "claim_text": "生成接口文件：自动生成与外部系统集成所需的接口文件，简化了与数据库的交互",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确'支持自动生成接口文件'，与声明主体一致（'简化交互'为效果性扩展不影响判定）"
+     },
+     {
+      "claim_text": "下载功能：提供下载选项，方便用户直接获取生成的代码和接口文件",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确'提供下载'，支持下载功能声明"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-069",
+    "silver": "support",
+    "before": "not_in_evidence",
+    "after": "support",
+    "llm_claims": [
+     {
+      "claim_text": "对象化访问功能支持以下操作",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确列出对象化访问支持添加、删除、修改、查询操作"
+     },
+     {
+      "claim_text": "添加：向数据库中插入数据",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持通过数据对象方式对数据库数据进行添加"
+     },
+     {
+      "claim_text": "删除：从数据库中删除已存在的数据",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持删除操作"
+     },
+     {
+      "claim_text": "修改：对数据库中的数据进行更新或修改",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持修改操作，修改≈更新"
+     },
+     {
+      "claim_text": "查询：根据特定条件检索数据库中的数据",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确支持查询操作"
+     },
+     {
+      "claim_text": "这些操作通过数据对象方式实现，支持在应用软件中进行相应的操作",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-069-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确说明支持应用软件通过数据对象方式对数据库进行操作"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-079",
+    "silver": "refute",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "在读取配置文件连接时，系统会返回以下参数",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-1显示系统输出连接状态及连接失败时的具体连接错误信息"
+     },
+     {
+      "claim_text": "用户输入的配置文件路径等必要参数：这包括用户调用接口时提供的配置文件路径和相关参数",
+      "verdict": "refute",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：配置文件路径等是应用软件调用接口时输入的参数（ev-1），不是系统返回的参数"
+     },
+     {
+      "claim_text": "连接结果的状态信息：系统会根据连接是否成功返回状态",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-1明确应用软件输出连接状态"
+     },
+     {
+      "claim_text": "如果连接成功，则保存连接句柄",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-2明确连接成功则保存连接句柄"
+     },
+     {
+      "claim_text": "如果失败，将通过异常流E1返回具体的错误信息",
+      "verdict": "support",
+      "confidence": 0.8,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-2连接失败执行异常流E1，ev-1失败时输出具体连接错误信息，ev-4为E1定义"
+     }
+    ]
+   }
+  ],
+  "regressed": [
+   {
+    "instance_id": "S1QA-050",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "修改数据记录的前置条件是：数据库连接正常",
+      "verdict": "refute",
+      "confidence": 0.8,
+      "evidence_refs": [
+       "S1QA-050-ev-000049"
+      ],
+      "rationale": "LLM残差判定：修改数据用例的前置条件是'数据库初始化成功'，与声明的'数据库连接正常'不同"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-060",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "但不限于确保数据库已创建、设置正确的访问权限以及确保网络连接正常",
+      "verdict": "refute",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-060-ev-000049"
+      ],
+      "rationale": "LLM残差判定：数据库连接的前置条件明确为'数据库初始化成功'，与声明所述'数据库已创建、设置访问权限、网络连接正常'等不同"
+     }
+    ]
+   }
+  ],
+  "moved": []
+ },
+ "false_refutes": [
+  "S1QA-050",
+  "S1QA-060"
+ ],
+ "false_supports": [
+  "S1QA-064"
+ ]
+}

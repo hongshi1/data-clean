@@ -145,7 +145,6 @@ def main() -> None:
     for x, comp in zip(a_pairs, results, strict=True):
         preds.append(vfn(comp))
         golds.append(x["label"])
-    acc = sum(1 for p, g in zip(preds, golds) if p == g) / len(golds)
     n_pos = golds.count("inconsistent")
     n_neg = golds.count("consistent")
     tpr = sum(1 for p, g in zip(preds, golds) if p == g == "inconsistent") / n_pos

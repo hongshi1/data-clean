@@ -150,7 +150,6 @@ class DocumentIndexer(Operator):
             text = sec_data["text"]
             for m in VERSION_RE.finditer(text):
                 name = m.group(1)
-                version = m.group(2)
                 version_index[name].append(Occurrence(
                     section=sec_id, occ_type="version",
                     content=text[max(0,m.start()-10):m.end()+10],
@@ -184,13 +183,18 @@ class DocumentIndexer(Operator):
         config_kw = ['版本', '型号', '主频', '内存', '硬盘', '存储', '分辨率', '显存']
         capacity_kw = ['最多', '支持', '容量', '数量', '上限', '最大', '并发']
         for kw in threshold_kw:
-            if kw in param: return "threshold"
+            if kw in param:
+                return "threshold"
         for kw in config_kw:
-            if kw in param: return "config"
+            if kw in param:
+                return "config"
         for kw in capacity_kw:
-            if kw in param: return "capacity"
-        if section.startswith('3.10'): return "config"
-        if section.startswith('3.11'): return "threshold"
+            if kw in param:
+                return "capacity"
+        if section.startswith('3.10'):
+            return "config"
+        if section.startswith('3.11'):
+            return "threshold"
         return "description"
 
 
@@ -333,7 +337,8 @@ class LongRangeAssociator(Operator):
         return [emb_cache.get(t, []) for t in texts]
     
     def _cosine(self, a, b):
-        if not a or not b: return 0.0
+        if not a or not b:
+            return 0.0
         dot = sum(x*y for x,y in zip(a,b))
         na = math.sqrt(sum(x*x for x in a))
         nb = math.sqrt(sum(y*y for y in b))
@@ -405,7 +410,6 @@ class ContextAwareDetector(Operator):
         """覆盖缺失: 需求ID在第4/5章未出现"""
         sections = set(o.section for o in item.occurrences)
         has_ch4 = any(s.startswith('4') for s in sections)
-        has_ch5 = any(s.startswith('5') for s in sections)
         has_table = any(o.occ_type == "table_row" for o in item.occurrences)
         
         violations = []

@@ -44,7 +44,7 @@ def load_all_pairs():
             meta_path = os.path.join(inst_path, "meta.json")
             if not os.path.exists(meta_path):
                 continue
-            meta = json.loads(open(meta_path).read())
+            meta = json.loads(open(meta_path, encoding="utf-8").read())
             table_rows = []
             tbl_path = os.path.join(inst_path, "table.csv")
             if os.path.exists(tbl_path):
@@ -93,8 +93,6 @@ def gen_terminology_qa(pair):
     """术语一致性QA: 图/表/文的名称是否一致"""
     qas = []
     func_names = pair["meta"].get("func_names", [])
-    table_rows = pair["table_rows"]
-    text = pair["text"]
     ph = _ph(pair)
     ev = _meta(pair)
 
@@ -325,7 +323,6 @@ def gen_gjb_qa(pair):
     func_names = pair["meta"].get("func_names", [])
     ph = _ph(pair)
     ev = _meta(pair)
-    sc = pair["sc_dir"]
 
     if len(table_rows) < 2:
         return qas
@@ -428,9 +425,9 @@ def main():
 
         if (i + 1) % 50 == 0:
             print(f"  已处理 {i+1}/{len(pairs)}, 生成{len(all_qa)}条QA")
-            json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+            json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
-    json.dump(all_qa, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
+    json.dump(all_qa, open(OUT_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
     # 统计
     from collections import Counter

@@ -60,7 +60,7 @@ def main() -> None:
         doc = doc[:2000]
         return rr.score([(query, doc)])[0]
 
-    n_sel = n_ce = n_other = 0
+    n_sel = n_ce = 0
     per_q = []
     t0 = time.time()
     for qi, q in enumerate(queries):

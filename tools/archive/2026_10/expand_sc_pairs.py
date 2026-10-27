@@ -90,7 +90,7 @@ def main() -> None:
     print(f"  待标注: {n_unlabeled}条(需LLM裁决)")
 
     # 按场景统计
-    print(f"\n按场景:")
+    print("\n按场景:")
     for scene in sorted(set(x["scene"] for x in items)):
         scene_items = [x for x in items if x["scene"] == scene]
         n_lab = sum(1 for x in scene_items if x["label"] is not None)

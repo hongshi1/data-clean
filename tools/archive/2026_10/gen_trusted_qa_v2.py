@@ -52,10 +52,8 @@ CHAR_REPLACE_MAP = {
 def extract_facts(pair):
     """从pair提取5类真实事实(09文档§5.1)"""
     facts = []
-    meta = pair["meta"]
     rows = pair["table_rows"]
     text = pair["text"]
-    fns = meta.get("func_names", [])
 
     # 事实1: 功能名(来自表格)
     for row in rows[1:6]:
@@ -352,7 +350,7 @@ def load_pairs():
             mp = os.path.join(ip, "meta.json")
             if not os.path.exists(mp):
                 continue
-            meta = json.loads(open(mp).read())
+            meta = json.loads(open(mp, encoding="utf-8").read())
             rows = []
             tp = os.path.join(ip, "table.csv")
             if os.path.exists(tp):
@@ -361,7 +359,7 @@ def load_pairs():
             text = ""
             txtp = os.path.join(ip, "text.txt")
             if os.path.exists(txtp):
-                text = open(txtp).read()
+                text = open(txtp, encoding="utf-8").read()
             pairs.append({
                 "meta": meta, "table_rows": rows, "text": text,
                 "image_path": os.path.join(ip, "image.png"),
@@ -490,12 +488,12 @@ async def main(verify=True):
                 print(f"  {sc_dir}: {i+1}/{len(pairs)} pairs, {len(sc_qa)} QA", flush=True)
 
         out_path = os.path.join(OUT_DIR, f"{sc_dir}.json")
-        json.dump(sc_qa, open(out_path, "w"), ensure_ascii=False, indent=1)
+        json.dump(sc_qa, open(out_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         verified_count = sum(1 for q in sc_qa if q.get("verified"))
         print(f"✅ {sc_dir}: {len(sc_qa)} QA (verified: {verified_count})")
 
     # 保存合并
-    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w"),
+    json.dump(all_qa, open(os.path.join(OUT_DIR, "all_scenes.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
 
     from collections import Counter
@@ -507,7 +505,7 @@ async def main(verify=True):
     print(f"Verified: {sum(1 for q in all_qa if q.get('verified'))}/{len(all_qa)}")
     if verify:
         verified = [q for q in all_qa if q.get("verified")]
-        json.dump(verified, open(os.path.join(OUT_DIR, "verified.json"), "w"),
+        json.dump(verified, open(os.path.join(OUT_DIR, "verified.json"), "w", encoding="utf-8"),
                   ensure_ascii=False, indent=1)
         print(f"Verified saved: {len(verified)} QA")
 

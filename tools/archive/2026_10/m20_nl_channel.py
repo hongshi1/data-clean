@@ -236,10 +236,14 @@ def main():
     for r in records:
         nl_ok = r['d_nl'] == r['eta']
         vlm_ok = r['d_vlm'] == r['eta']
-        if nl_ok and vlm_ok: both_right += 1
-        elif nl_ok: nl_only_right += 1
-        elif vlm_ok: vlm_only_right += 1
-        else: both_wrong += 1
+        if nl_ok and vlm_ok:
+            both_right += 1
+        elif nl_ok:
+            nl_only_right += 1
+        elif vlm_ok:
+            vlm_only_right += 1
+        else:
+            both_wrong += 1
     print(f"\n  分解: 双对{both_right} 仅NL对{nl_only_right} 仅VLM对{vlm_only_right} 双错{both_wrong}")
 
     # NL通道的错误模式

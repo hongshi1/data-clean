@@ -235,11 +235,14 @@ def load_pairs() -> list[dict]:
     """加载所有pair_dataset样本"""
     pairs = []
     for sc_dir in sorted(PAIR_DIR.iterdir()):
-        if not sc_dir.is_dir(): continue
+        if not sc_dir.is_dir():
+            continue
         for sample_dir in sorted(sc_dir.iterdir()):
-            if not sample_dir.is_dir(): continue
+            if not sample_dir.is_dir():
+                continue
             meta_p = sample_dir / "meta.json"
-            if not meta_p.exists(): continue
+            if not meta_p.exists():
+                continue
             
             meta = json.loads(meta_p.read_text())
             pair = {

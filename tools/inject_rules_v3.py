@@ -106,17 +106,17 @@ LOGIC_KEYWORDS = {
 
 
 def load_entities():
-    with open(ENTITIES_PATH) as f:
+    with open(ENTITIES_PATH, encoding="utf-8") as f:
         return json.load(f)["entities"]
 
 def load_chunks():
-    with open(CHUNKS_PATH) as f:
+    with open(CHUNKS_PATH, encoding="utf-8") as f:
         return json.load(f)
 
 def load_vlm_flowchart():
     results = []
     if VLM_FLOWCHART.exists():
-        with open(VLM_FLOWCHART) as f:
+        with open(VLM_FLOWCHART, encoding="utf-8") as f:
             for line in f:
                 results.append(json.loads(line))
     return results

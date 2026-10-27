@@ -27,7 +27,7 @@ def extract_table_steps(table_csv_path: Path) -> list[str]:
     """从用例描述表提取主事件流步骤"""
     if not table_csv_path.exists():
         return []
-    with open(table_csv_path) as f:
+    with open(table_csv_path, encoding="utf-8") as f:
         rows = list(csv.reader(f))
     steps = []
     for r in rows:
@@ -74,7 +74,7 @@ def main():
     print("=" * 60)
 
     # 加载Visio结构
-    with open(VISIO_STRUCTURES_PATH) as f:
+    with open(VISIO_STRUCTURES_PATH, encoding="utf-8") as f:
         all_visio = json.load(f)
 
     # 加载pair_dataset
@@ -105,7 +105,6 @@ def main():
 
         best_score = 0
         best_struct = None
-        best_idx = -1
 
         for i, struct in enumerate(structures):
             embed_key = f"{doc_name}:{struct['embed_index']}"
@@ -118,7 +117,6 @@ def main():
             if score > best_score:
                 best_score = score
                 best_struct = struct
-                best_idx = i
 
         if best_struct and best_score > 0.15:  # 最低阈值
             used_visio.add(f"{doc_name}:{best_struct['embed_index']}")

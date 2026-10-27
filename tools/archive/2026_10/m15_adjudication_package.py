@@ -51,12 +51,8 @@ def build_tasks(sample_n: int):
         if v.get('match_score', 0) <= 0.3:  # 低置信对不进裁决
             continue
         m = mapping.get(pk, {})
-        pair_dir = PAIR_DIR / m.get('pair_dir', pk)
 
         # 读取表格全文(裁决上下文)
-        table_text = ''
-        if (pair_dir / 'table.csv').exists():
-            table_text = (pair_dir / 'table.csv').read_text(encoding='utf-8')[:800]
 
         for di, d in enumerate(v['discrepancies']):
             tasks.append({

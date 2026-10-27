@@ -79,7 +79,7 @@ def main():
     print(f"qa键集: 仅源{len(keys_src - keys_exp)} | 仅导出{len(keys_exp - keys_src)}")
 
     # 3. ground truth对照
-    alpaca = [json.loads(l) for l in open(ALPACA, encoding="utf-8")]
+    alpaca = [json.loads(line) for line in open(ALPACA, encoding="utf-8")]
     gt_keys = {qa_key({"question": a.get("instruction", ""), "answer": a.get("output", "")}) for a in alpaca}
     gt_match = gt_keys == keys_exp
     print(f"ground truth srs_alpaca.jsonl: {len(alpaca)}行, instruction/output键集与导出一致: {gt_match}")

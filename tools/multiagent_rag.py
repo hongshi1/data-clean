@@ -136,7 +136,7 @@ async def index_doc_agent(rag, doc_name, clist, semaphore):
 async def index_all(rag, limit=None):
     """多Agent并行索引结构化chunks"""
     import json as _json
-    chunks = _json.loads(open(CHUNKS_PATH).read())
+    chunks = _json.loads(open(CHUNKS_PATH, encoding="utf-8").read())
     docs = {}
     for c in chunks:
         docs.setdefault(c["doc"], []).append(c)
