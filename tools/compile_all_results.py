@@ -47,8 +47,8 @@ if full_pipeline:
 print("\n### Table 2: Gold-Proxy Evaluation (n=2991, exogenous)")
 if gold_proxy:
     gp = gold_proxy["gold_proxy"]
-    print(f"| Model | AUC |")
-    print(f"|---|---:|")
+    print("| Model | AUC |")
+    print("|---|---:|")
     print(f"| Native BGE | {gp['auc_bge']} |")
     print(f"| Qwen3 | {gp['auc_qwen3']} |")
     print(f"| Ensemble | {gp['auc_ensemble']} |")
@@ -57,8 +57,8 @@ if gold_proxy:
 # Table 3: LODO transfer
 print("\n### Table 3: LODO Transfer (16 folds)")
 if lodo:
-    print(f"| Metric | Value |")
-    print(f"|---|---:|")
+    print("| Metric | Value |")
+    print("|---|---:|")
     print(f"| Macro AUC | {lodo['macro_auc']} |")
     print(f"| Std AUC | {lodo['std_auc']} |")
     print(f"| Valid folds | {lodo['n_valid_folds']} |")
@@ -69,8 +69,8 @@ if lodo:
 # Table 4: ID stratification
 print("\n### Table 4: ID Stratification")
 if id_masked:
-    print(f"| Subset | AUC | n |")
-    print(f"|---|---:|---:|")
+    print("| Subset | AUC | n |")
+    print("|---|---:|---:|")
     for key in ["native_full", "native_both_id", "native_no_id"]:
         if key in id_masked:
             r = id_masked[key]
@@ -90,7 +90,7 @@ if full_pipeline:
     print(f"| RQ3 | Fusion > single? | No (T1<T0 alone) | T1={full_pipeline['T1']['test']['auc']} < T0={t0['auc']} |")
     print(f"| RQ4 | De-bias reduces Delta_ID? | Native Delta_ID minimal | Delta_ID={id_masked.get('native_delta_id', 'N/A') if id_masked else 'N/A'} |")
     print(f"| RQ5 | LODO ≈ inner fold? | No (gap 7.4pt) | LODO={lodo['macro_auc'] if lodo else 'N/A'} vs inner={t0['auc']} |")
-    print(f"| RQ6 | Joint score reveals gap? | Not yet tested | Requires evidence-level gold |")
+    print("| RQ6 | Joint score reveals gap? | Not yet tested | Requires evidence-level gold |")
 
 # Key findings
 print("\n### Key Findings")
