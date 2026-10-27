@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Slide 2 v7 Geometry QA</title>
+<style>
+  body { margin: 0; background: #333; font-family: Consolas, monospace; }
+  #stage { width: 1280px; height: 720px; margin: 20px auto; background: #fff; box-shadow: 0 0 12px #000; position: relative; }
+  #result { max-width: 1280px; margin: 10px auto 40px; color: #eee; font-size: 13px; white-space: pre-wrap; }
+  .ok { color: #6c6; } .bad { color: #f66; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="result">loading…</div>
+<script>
+(async () => {
+  const svgText = await fetch('/docs/srs_project/ppt/slide2_route_v7.svg').then(r => r.text());
+  const stage = document.getElementById('stage');
+  stage.innerHTML = svgText;
+  const svg = stage.querySelector('svg');
+  svg.setAttribute('width', '1280'); svg.setAttribute('height', '720');
+  await document.fonts.ready;
+  await new Promise(r => setTimeout(r, 300)); // font settle
+
+  const W = 1280, H = 720, TOL = 2;
+  const inter = (a, b) => ({
+    x: Math.max(a.x, b.x), y: Math.max(a.y, b.y),
+    x2: Math.min(a.x + a.width, b.x + b.width), y2: Math.min(a.y + a.height, b.y + b.height)
+  });
+  const iArea = i => Math.max(0, i.x2 - i.x) * Math.max(0, i.y2 - i.y);
+  const fullInside = (inner, outer, t = 0) =>
+    inner.x >= outer.x - t && inner.y >= outer.y - t &&
+    inner.x + inner.width <= outer.x + outer.width + t &&
+    inner.y + inner.height <= outer.y + outer.height + t;
+
+  const texts = [...svg.querySelectorAll('text')].map(el => {
+    const b = el.getBBox();
+    return { el, b, x: b.x, y: b.y, width: b.width, height: b.height, s: el.textContent.trim().slice(0, 24) };
+  });
+  // rects: exclude background (>=1200 wide or >=700 tall)
+  const rects = [...svg.querySelectorAll('rect')].map(el => {
+    const b = el.getBBox();
+    return { el, x: b.x, y: b.y, width: b.width, height: b.height };
+  }).filter(r => r.width < 1200 && r.height < 700);
+
+  const violations = [];
+  const overlay = [];
+
+  // Rule 1: text out of canvas bounds
+  texts.forEach(t => {
+    if (t.x < -TOL || t.y < -TOL || t.x + t.width > W + TOL || t.y + t.height > H + TOL) {
+      violations.push({ type: 'OOB', a: t.s, box: [t.x, t.y, t.width, t.height].map(v => Math.round(v)) });
+      overlay.push(t);
+    }
+  });
+
+  // Rule 2: text × text overlap
+  for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) {
+    const a = texts[i], b = texts[j];
+    const iv = iArea(inter(a, b));
+    if (iv > 1 && (inter(a, b).x2 - inter(a, b).x) > 0.5 && (inter(a, b).y2 - inter(a, b).y) > 0.5) {
+      violations.push({ type: 'T-T', a: a.s, b: b.s, ov: Math.round(iv) });
+      overlay.push(a, b);
+    }
+  }
+
+  // Rule 3: text partially crossing a rect boundary (not fully inside any rect, but intersects one)
+  texts.forEach(t => {
+    if (rects.some(r => fullInside(t, r, 1))) return;         // fully inside a container → OK
+    const hit = rects.find(r => iArea(inter(t, r)) > 1);       // partially overlapping a rect → flag
+    if (hit) {
+      violations.push({ type: 'T-R', a: t.s, rect: [hit.x, hit.y, hit.width, hit.height].map(v => Math.round(v)), box: [t.x, t.y, t.width, t.height].map(v => Math.round(v)) });
+      overlay.push(t);
+    }
+  });
+
+  // Rule 4: major rect × major rect partial overlap (bands/cards/subblocks/panels)
+  const major = rects.filter(r => r.width > 150 && r.height > 40);
+  for (let i = 0; i < major.length; i++) for (let j = i + 1; j < major.length; j++) {
+    const a = major[i], b = major[j];
+    if (fullInside(a, b, 1) || fullInside(b, a, 1)) continue;
+    const iv = iArea(inter(a, b));
+    if (iv > 4) {
+      violations.push({ type: 'R-R', a: [a.x, a.y, a.width, a.height].map(v => Math.round(v)), b: [b.x, b.y, b.width, b.height].map(v => Math.round(v)), ov: Math.round(iv) });
+    }
+  }
+
+  // draw violation overlay
+  const ns = 'http://www.w3.org/2000/svg';
+  overlay.forEach(t => {
+    const r = document.createElementNS(ns, 'rect');
+    r.setAttribute('x', t.x - 2); r.setAttribute('y', t.y - 2);
+    r.setAttribute('width', t.width + 4); r.setAttribute('height', t.height + 4);
+    r.setAttribute('fill', 'none'); r.setAttribute('stroke', 'red'); r.setAttribute('stroke-width', '2');
+    svg.appendChild(r);
+  });
+
+  const report = {
+    texts: texts.length, rects: rects.length,
+    violations: violations.length,
+    details: violations
+  };
+  console.log('QA_RESULT ' + JSON.stringify(report));
+  const el = document.getElementById('result');
+  el.className = violations.length ? 'bad' : 'ok';
+  el.textContent = `texts=${texts.length} rects=${rects.length} violations=${violations.length}\n` +
+    violations.map(v => JSON.stringify(v)).join('\n');
+  window.__QA__ = report;
+})();
+</script>
+</body>
+</html>

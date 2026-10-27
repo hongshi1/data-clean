@@ -21,23 +21,21 @@
 """
 import argparse
 import asyncio
-import json
 import logging
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from functools import partial
 
 from lightrag import LightRAG, QueryParam
 from lightrag.llm.openai import openai_complete_if_cache
 from lightrag.utils import EmbeddingFunc
-from sentence_transformers import SentenceTransformer, CrossEncoder
+from sentence_transformers import SentenceTransformer
 
 # ── API配置 ──────────────────────────────────────────────
 BASE_URL = "https://api.moonshot.cn/v1"
-API_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY as API_KEY
 LLM_MODEL = "kimi-k2.6"
 EMBED_MODEL = "BAAI/bge-small-zh-v1.5"
 RERANK_MODEL = "data/models/bge-reranker-v2-m3"

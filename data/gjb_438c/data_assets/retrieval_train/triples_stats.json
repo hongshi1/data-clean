@@ -1,0 +1,62 @@
+{
+ "n_triples": 9436,
+ "n_pairs_by_source": {
+  "hq": 4797,
+  "eval": 2859,
+  "alpaca": 1780
+ },
+ "n_unique_queries": 5999,
+ "n_dup_dropped": 793,
+ "n_negs_mean": 14.89,
+ "n_negs_min": 9,
+ "n_negs_p50": 15,
+ "n_negs_p95": 15,
+ "n_triples_full15": 9226,
+ "n_pos_in_negs_violations": 0,
+ "hard_neg_overlap": {
+  "overlap_mean_intersection": 5.85,
+  "overlap_mean_jaccard": 0.2613,
+  "overlap_pooled_jaccard": 0.2425,
+  "overlap_pairs_valid": 5999
+ },
+ "mining": {
+  "n_unique_queries": 5999,
+  "bm25_elapsed_s": 365.2,
+  "dense_elapsed_s": 13.1
+ },
+ "hq": {
+  "hq_chunks": 2000,
+  "hq2_chunks": 797,
+  "invalid_chunk": 0,
+  "bad_query": 0
+ },
+ "eval": {
+  "empty_expected": 0,
+  "invalid_expected": 0,
+  "n_eval": 300,
+  "target_2_3": 200,
+  "split_at": 201,
+  "n_train_queries": 201,
+  "n_test_queries": 99,
+  "n_train_entities": 67,
+  "n_test_entities": 33,
+  "entity_leak": 0
+ },
+ "alpaca": {
+  "n_rows": 28761,
+  "matched_body": 340,
+  "matched_caption": 2233,
+  "skip_noanchor": 26188,
+  "skip_ambiguous": 0
+ },
+ "protocol": {
+  "n_hard": 15,
+  "mine_topk": 30,
+  "neg_mix": "BM25/dense按名次交错各半(单源枯竭互补)",
+  "neg_exclusion": "该query期望全集(hq=宿主chunk; eval=全部期望chunks;alpaca=锚匹配chunk)",
+  "dense": "dense_index.pkl原生BGE向量余弦; query侧bge-local+指令前缀(为这个句子生成表示以用于…)",
+  "eval_split": "前0.667实体组边界对齐"
+ },
+ "elapsed_s": 378.7,
+ "date": "2026-09-21"
+}

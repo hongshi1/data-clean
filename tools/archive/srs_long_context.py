@@ -25,8 +25,7 @@ import requests
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from dataclasses import dataclass, field
-from collections import defaultdict, Counter
-from typing import Optional
+from collections import defaultdict
 from datetime import datetime
 
 BASE = Path(__file__).resolve().parent.parent
@@ -36,7 +35,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Embedding API
 EMB_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/embeddings"
-EMB_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as EMB_KEY
 EMB_MODEL = "ep-qrkeon-1785654358657880827"
 
 # 正则

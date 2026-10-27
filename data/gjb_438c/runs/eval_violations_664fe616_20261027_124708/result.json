@@ -1,0 +1,643 @@
+{
+ "evalset": "data\\gjb_438c\\localization_gold\\violation_evalset_v1.jsonl",
+ "expected_verdict_note": "17条真实违例转化实例, 期望verdict均为refute; 逐条理由见评测集rationale_for_expectation字段",
+ "configs": {
+  "deterministic": {
+   "n": 17,
+   "n_expected_refute": 17,
+   "n_detected": 15,
+   "detection_rate": 0.8824,
+   "targeted_detection_rate": 0.7059,
+   "false_positives": 0,
+   "false_positive_note": "本评测集17条全部期望refute(answer断言违例内容或其正确版本的被反驳形态), 期望非refute实例数为0, 假阳性结构性为0; 期望support/NIE上的假阳性在91条冻结QA主集上另行测量",
+   "by_category": {
+    "document_name": {
+     "n": 1,
+     "detected": 0,
+     "target_hit": 0,
+     "detection_rate": 0.0,
+     "ids": [
+      "DOC04-VIO-15"
+     ]
+    },
+    "enumeration": {
+     "n": 4,
+     "detected": 4,
+     "target_hit": 3,
+     "detection_rate": 1.0,
+     "ids": [
+      "DOC04-VIO-06",
+      "DOC04-VIO-07",
+      "DOC04-VIO-08",
+      "DOC04-VIO-09"
+     ]
+    },
+    "exception_template": {
+     "n": 2,
+     "detected": 2,
+     "target_hit": 1,
+     "detection_rate": 1.0,
+     "ids": [
+      "DOC04-VIO-13",
+      "DOC04-VIO-14"
+     ]
+    },
+    "function_coverage": {
+     "n": 1,
+     "detected": 1,
+     "target_hit": 1,
+     "detection_rate": 1.0,
+     "ids": [
+      "DOC04-VIO-16"
+     ]
+    },
+    "identifier": {
+     "n": 5,
+     "detected": 5,
+     "target_hit": 5,
+     "detection_rate": 1.0,
+     "ids": [
+      "DOC04-VIO-01",
+      "DOC04-VIO-02",
+      "DOC04-VIO-03",
+      "DOC04-VIO-04",
+      "DOC04-VIO-05"
+     ]
+    },
+    "qualification_coverage": {
+     "n": 1,
+     "detected": 0,
+     "target_hit": 0,
+     "detection_rate": 0.0,
+     "ids": [
+      "DOC04-VIO-17"
+     ]
+    },
+    "traceability": {
+     "n": 3,
+     "detected": 3,
+     "target_hit": 2,
+     "detection_rate": 1.0,
+     "ids": [
+      "DOC04-VIO-10",
+      "DOC04-VIO-11",
+      "DOC04-VIO-12"
+     ]
+    }
+   },
+   "by_answer_pattern": {
+    "assert_expected_content": {
+     "n": 3,
+     "detected": 2,
+     "detection_rate": 0.6667
+    },
+    "assert_violation_content": {
+     "n": 14,
+     "detected": 13,
+     "detection_rate": 0.9286
+    }
+   },
+   "confusion[predicted|expected]": {
+    "refute|refute": 15,
+    "support|refute": 1,
+    "not_in_evidence|refute": 1
+   },
+   "localization": {
+    "gold_refs_total": 33,
+    "gold_refs_hit": 23,
+    "refute_block_refs_total": 27,
+    "precision": 0.8519,
+    "recall": 0.697,
+    "instances_with_full_gold_hit": 9
+   },
+   "refute_channels": {
+    "e1_L1": 3,
+    "id_join_L1": 5,
+    "entity_L0": 2,
+    "enum_join_L1": 3,
+    "gjb_L1": 2,
+    "trace_L1": 3
+   },
+   "detected_ids": [
+    "DOC04-VIO-01",
+    "DOC04-VIO-02",
+    "DOC04-VIO-03",
+    "DOC04-VIO-04",
+    "DOC04-VIO-05",
+    "DOC04-VIO-06",
+    "DOC04-VIO-07",
+    "DOC04-VIO-08",
+    "DOC04-VIO-09",
+    "DOC04-VIO-10",
+    "DOC04-VIO-11",
+    "DOC04-VIO-12",
+    "DOC04-VIO-13",
+    "DOC04-VIO-14",
+    "DOC04-VIO-16"
+   ],
+   "targeted_ids": [
+    "DOC04-VIO-01",
+    "DOC04-VIO-02",
+    "DOC04-VIO-03",
+    "DOC04-VIO-04",
+    "DOC04-VIO-05",
+    "DOC04-VIO-06",
+    "DOC04-VIO-07",
+    "DOC04-VIO-09",
+    "DOC04-VIO-10",
+    "DOC04-VIO-12",
+    "DOC04-VIO-13",
+    "DOC04-VIO-16"
+   ],
+   "undetected_ids": [
+    "DOC04-VIO-15",
+    "DOC04-VIO-17"
+   ],
+   "details": [
+    {
+     "instance_id": "DOC04-VIO-01",
+     "category": "identifier",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "e1_L1",
+      "id_join_L1"
+     ],
+     "refute_methods": [
+      "e1_template_match",
+      "id_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-01-ev-000220",
+      "DOC04-VIO-01-ev-000225"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-01-ev-000219",
+      "DOC04-VIO-01-ev-000220",
+      "DOC04-VIO-01-ev-000222",
+      "DOC04-VIO-01-ev-000225"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-01-ev-000220",
+      "DOC04-VIO-01-ev-000225"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表39(b219)把连接池配置登记为PZXQ-GN-LJCGL-LJCPZ、连接池初始化登记为PZXQ-GN-LJCGL-LJCCSH；而节标题3.2.5.1(b220)与3.2.5.2(b225)两处均写PZXQ-GN-LJCGL-LJCCSH——同一「项目唯一标识符」被两个用例共用(TERM-07同ID双指真实违例)。answer按违例侧断言两用例共用同一ID；唯一标识符字段的唯一性语义被违反，正确的校验系统应判refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-02",
+     "category": "identifier",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "entity_L0",
+      "id_join_L1"
+     ],
+     "refute_methods": [
+      "id_join_registry",
+      "l0_entity_detector:TERM-07"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-02-ev-000040",
+      "DOC04-VIO-02-ev-000057"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-02-ev-000040",
+      "DOC04-VIO-02-ev-000057"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-02-ev-000040",
+      "DOC04-VIO-02-ev-000057"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "同一能力(数据库关闭)在节标题3.2.1.1.1.4(b057)登记为PZXQ-GN-SJKCZ-SJKGB，在表4所有能力标识(b040)登记为PZXQ-GN-SJKCZ-SJKGBGN——跨位置ID冲突(TERM-07真实违例)。answer断言节标题侧的ID，表4一侧的能力登记直接反对它；answer同时被证据支持与反驳时，自相矛盾的文档应判refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-03",
+     "category": "identifier",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "id_join_L1"
+     ],
+     "refute_methods": [
+      "id_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-03-ev-000267",
+      "DOC04-VIO-03-ev-000268",
+      "DOC04-VIO-03-ev-000271",
+      "DOC04-VIO-03-ev-000274",
+      "DOC04-VIO-03-ev-000277"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-03-ev-000267",
+      "DOC04-VIO-03-ev-000271"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-03-ev-000267",
+      "DOC04-VIO-03-ev-000271"
+     ],
+     "localization_recall": 0.4,
+     "rationale_for_expectation": "表48外部接口需求表(b267)把该接口登记为PZXQ-JK-SJTBGX-YXZCFW，3.3.3节标题(b271)用PZXQ-JK-SJTYFW-YXZCFW——同一接口两套前缀(TERM-07真实违例)。answer断言节标题侧标识，表48的双登记(SJTBGX还出现在3.3.4/3.3.5)反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-04",
+     "category": "identifier",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "id_join_L1"
+     ],
+     "refute_methods": [
+      "id_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-04-ev-000285",
+      "DOC04-VIO-04-ev-000286"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-04-ev-000285",
+      "DOC04-VIO-04-ev-000286"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-04-ev-000285",
+      "DOC04-VIO-04-ev-000286"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表53内部接口需求表(b285)写PZXQ-NBJK-DMSC-DXHFW，3.4.2节标题(b286)写PZXQ-NBJK-DXHFW-DMSC——组件段顺序颠倒(TERM-07真实违例)。answer断言表53侧标识，节标题侧的颠倒写法反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-05",
+     "category": "identifier",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "id_join_L1"
+     ],
+     "refute_methods": [
+      "id_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-05-ev-000139",
+      "DOC04-VIO-05-ev-000140",
+      "DOC04-VIO-05-ev-000145",
+      "DOC04-VIO-05-ev-000150"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-05-ev-000139",
+      "DOC04-VIO-05-ev-000140"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-05-ev-000139",
+      "DOC04-VIO-05-ev-000140"
+     ],
+     "localization_recall": 0.5,
+     "rationale_for_expectation": "表23(b139)的三个BLOB子项ID均缺BLOBSJCZ段(如PZXQ-GN-SQLFW-BLOBSJCR)，而节标题3.2.1.4.1.1(b140)用PZXQ-GN-SQLFW-BLOBSJCZ-BLOBSJCR、父节3.2.1.4(b135)也含BLOBSJCZ段——表侧ID与节侧ID不一致(TERM-07真实违例)。answer断言表23侧ID，节标题侧登记反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-06",
+     "category": "enumeration",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "enum_join_L1"
+     ],
+     "refute_methods": [
+      "enum_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-06-ev-000032",
+      "DOC04-VIO-06-ev-000035"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-06-ev-000032",
+      "DOC04-VIO-06-ev-000035"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-06-ev-000032",
+      "DOC04-VIO-06-ev-000035"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "正文3.2.1(b032)枚举5项功能，表3所有能力能力标识(b035)只有4行顶层能力——逐行获取数据被并入查询数据行的需求描述而非独立能力行(TERM-03枚举集合真实违例)。answer断言正文侧5项枚举，表3的顶层能力集合(4项)反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-07",
+     "category": "enumeration",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "enum_join_L1"
+     ],
+     "refute_methods": [
+      "enum_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-07-ev-000181",
+      "DOC04-VIO-07-ev-000184"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-07-ev-000181",
+      "DOC04-VIO-07-ev-000184"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-07-ev-000181",
+      "DOC04-VIO-07-ev-000184"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "正文3.2.3(b181)枚举「缓存修改」，表32所有能力能力标识(b184)的成员是「缓存更新」——同义成员名冲突(TERM-03真实违例)。answer断言正文侧枚举，表32的封闭能力清单(标题为「所有能力能力标识」)不含「缓存修改」成员 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-08",
+     "category": "enumeration",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": false,
+     "refute_channels": [
+      "gjb_L1"
+     ],
+     "refute_methods": [
+      "gjb_presence_check"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-08-ev-000011",
+      "DOC04-VIO-08-ev-000024"
+     ],
+     "refute_block_refs": [],
+     "gold_hit_refs": [],
+     "localization_recall": 0.0,
+     "rationale_for_expectation": "1.2系统概述(b011)用「统一访问4项+访问管控4项」两套分类法，而3.2节CSCI能力需求(b024)与表2能力标识表(b030)的权威分类是六项：SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存、连接池管理(TERM-03两套分类法不一致真实违例)。answer把1.2侧分类断言为3.2的CSCI能力需求，权威清单反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-09",
+     "category": "enumeration",
+     "answer_pattern": "assert_expected_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "enum_join_L1"
+     ],
+     "refute_methods": [
+      "enum_join_registry"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-09-ev-000067",
+      "DOC04-VIO-09-ev-000087"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-09-ev-000067"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-09-ev-000067"
+     ],
+     "localization_recall": 0.5,
+     "rationale_for_expectation": "表9(b067)修改数据三行与表13(b087)的方式名称列均写「平版」——错别字，应为「平板」；全文档方式名称值域为{桌面、平板、手持}(正文b032「桌面版、平板版、手持版」)。answer断言正确成员「平板」，表9/表13同列的错写值「平版」反对它(同位置值冲突；错别字是LOGIC-05分类下的真实违例) → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-10",
+     "category": "traceability",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "entity_L0",
+      "trace_L1"
+     ],
+     "refute_methods": [
+      "l0_entity_detector:TERM-02",
+      "trace_bidirectional_join"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-10-ev-000407",
+      "DOC04-VIO-10-ev-000408"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-10-ev-000198",
+      "DOC04-VIO-10-ev-000407",
+      "DOC04-VIO-10-ev-000408"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-10-ev-000407",
+      "DOC04-VIO-10-ev-000408"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表81 row11正向映射：代码生成3.2.4←任务书4.1.1 c)；表82 row12逆向映射：代码生成3.2.4→任务书4.1.1 a)——同一需求正逆两表目标不一致(GJB-05正逆矛盾真实违例)。answer断言正向侧映射，逆向表直接反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-11",
+     "category": "traceability",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": false,
+     "refute_channels": [
+      "trace_L1"
+     ],
+     "refute_methods": [
+      "trace_bidirectional_join"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-11-ev-000407"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-11-ev-000407"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-11-ev-000407"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表81 row16(b407)把获取错误信息映射到本文档3.2.1.7章节，但文档章节清单中不存在3.2.1.7——SQL访问子节从3.2.1.3(查询数据, b083)直接到3.2.1.4(BLOB数据操作, b135)，获取错误信息实际位于3.2.1.3.1.2(b093节标题)——追踪锚点失效(GJB-05真实违例)。answer断言失效锚点3.2.1.7，证据中的实际章节位置反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-12",
+     "category": "traceability",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "trace_L1"
+     ],
+     "refute_methods": [
+      "trace_bidirectional_join"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-12-ev-000407"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-12-ev-000407",
+      "DOC04-VIO-12-ev-000408"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-12-ev-000407"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表81 row20(b407)映射列写「接口4.5→CSCI外部接口需求/CSCI内部接口需求@3.3、3.4」，同一行的跟踪说明列却写「不追踪」——行内自相矛盾(GJB-05同行矛盾真实违例)。answer断言追踪关系成立，同行的「不追踪」声明反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-13",
+     "category": "exception_template",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "e1_L1"
+     ],
+     "refute_methods": [
+      "e1_template_match"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-13-ev-000192",
+      "DOC04-VIO-13-ev-000222",
+      "DOC04-VIO-13-ev-000227"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-13-ev-000192",
+      "DOC04-VIO-13-ev-000222"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-13-ev-000192",
+      "DOC04-VIO-13-ev-000222"
+     ],
+     "localization_recall": 0.6667,
+     "rationale_for_expectation": "特殊case：answer断言的是文档真实但有缺陷的内容。表34(b192)缓存更新的E1字面为「系统提示初始化」，该提示关键词与用例主题(缓存/更新/sql)无重合，是从其他用例复制的错位内容(LOGIC-02 E1主题错位真实违例；b222连接池配置、b227连接池初始化的E1同样错位)。answer与E1字面一致，但判refute需要主题错位检测：E1提示内容应与所在用例主题相关，「初始化」与缓存更新主题无关——正确的校验系统应判refute(违例检出)。"
+    },
+    {
+     "instance_id": "DOC04-VIO-14",
+     "category": "exception_template",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": false,
+     "refute_channels": [
+      "e1_L1"
+     ],
+     "refute_methods": [
+      "e1_template_match"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-14-ev-000237",
+      "DOC04-VIO-14-ev-000242"
+     ],
+     "refute_block_refs": [
+      "DOC04-VIO-14-ev-000237",
+      "DOC04-VIO-14-ev-000242"
+     ],
+     "gold_hit_refs": [
+      "DOC04-VIO-14-ev-000237",
+      "DOC04-VIO-14-ev-000242"
+     ],
+     "localization_recall": 1.0,
+     "rationale_for_expectation": "表37/38(b237/b242)概述写「本用例是热点数据缓存的扩展用例」，但热点数据缓存的能力清单(表32/b184)只含缓存添加、缓存更新、缓存查询，且两用例的主事件流内容(连接句柄数组、空闲句柄、连接类型)属于连接池管理域(表39/b219)——概述归属错误(LOGIC-02真实违例)。answer断言错误归属，用例自身的主事件流内容与所属能力域的清单反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-15",
+     "category": "document_name",
+     "answer_pattern": "assert_violation_content",
+     "expected": "refute",
+     "predicted": "support",
+     "detected": false,
+     "false_positive": false,
+     "target_hit": false,
+     "refute_channels": [],
+     "refute_methods": [],
+     "gold_refs": [
+      "DOC04-VIO-15-ev-000348"
+     ],
+     "refute_block_refs": [],
+     "gold_hit_refs": [],
+     "localization_recall": 0.0,
+     "rationale_for_expectation": "3.9.1节(b348)把本文档写作「数据同步共享服务」，而本文档全称是「数据统一访问服务」(b367同类引用句与全文档表caption一致)——文档名误写(TERM-05真实违例)。answer断言误写名，证据中的正确文档名反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-16",
+     "category": "function_coverage",
+     "answer_pattern": "assert_expected_content",
+     "expected": "refute",
+     "predicted": "refute",
+     "detected": true,
+     "false_positive": false,
+     "target_hit": true,
+     "refute_channels": [
+      "gjb_L1"
+     ],
+     "refute_methods": [
+      "gjb_presence_check"
+     ],
+     "gold_refs": [
+      "DOC04-VIO-16-ev-000011"
+     ],
+     "refute_block_refs": [],
+     "gold_hit_refs": [],
+     "localization_recall": 0.0,
+     "rationale_for_expectation": "1.2系统概述(b011)声称该功能存在，但3.2节CSCI能力需求(b024)与表2能力标识表(b030)均无对应能力条目——功能声明缺失(GJB-04真实违例：1.2的「访问审计以及日志记录」是概述级提及，非需求条款)。answer断言功能存在，权威能力清单(表2「所有能力标识」+3.2节六项分解)中无该项反对它 → refute。"
+    },
+    {
+     "instance_id": "DOC04-VIO-17",
+     "category": "qualification_coverage",
+     "answer_pattern": "assert_expected_content",
+     "expected": "refute",
+     "predicted": "not_in_evidence",
+     "detected": false,
+     "false_positive": false,
+     "target_hit": false,
+     "refute_channels": [],
+     "refute_methods": [],
+     "gold_refs": [
+      "DOC04-VIO-17-ev-000404"
+     ],
+     "refute_block_refs": [],
+     "gold_hit_refs": [],
+     "localization_recall": 0.0,
+     "rationale_for_expectation": "表80合格性规定(b404)仅6行，覆盖3.2.1~3.2.6；3.3~3.17的全部需求(如b262 CSCI外部接口需求、b280 CSCI内部接口需求——章节存在)无合格性方法——合格性覆盖缺口(GJB-01真实违例)。answer断言全覆盖关系，表80的6行封闭覆盖面反对它 → refute。"
+    }
+   ]
+  }
+ }
+}

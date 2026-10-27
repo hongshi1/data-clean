@@ -1,0 +1,97 @@
+{
+ "model": "bge-large-zh-v1.5",
+ "bge_mode": "cuda",
+ "n_pairs": 80,
+ "n_lex_total": 405,
+ "silver": "text_match_score>=0.5",
+ "score_dist": {
+  "lex_confirmed": {
+   "p10": 0.806,
+   "p50": 1.0,
+   "p90": 1.0
+  },
+  "not_confirmed": {
+   "p10": 0.357,
+   "p50": 0.507,
+   "p90": 0.755
+  },
+  "n_confirmed": 405,
+  "n_not_confirmed": 3238
+ },
+ "sweep": [
+  {
+   "th": 0.6,
+   "n_emb": 359,
+   "n_confirmed": 340,
+   "agreement": 0.9471,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.886
+  },
+  {
+   "th": 0.65,
+   "n_emb": 357,
+   "n_confirmed": 340,
+   "agreement": 0.9524,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.881
+  },
+  {
+   "th": 0.7,
+   "n_emb": 356,
+   "n_confirmed": 340,
+   "agreement": 0.9551,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.879
+  },
+  {
+   "th": 0.72,
+   "n_emb": 352,
+   "n_confirmed": 339,
+   "agreement": 0.9631,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.869
+  },
+  {
+   "th": 0.75,
+   "n_emb": 349,
+   "n_confirmed": 336,
+   "agreement": 0.9628,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.862
+  },
+  {
+   "th": 0.78,
+   "n_emb": 343,
+   "n_confirmed": 333,
+   "agreement": 0.9708,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.847
+  },
+  {
+   "th": 0.8,
+   "n_emb": 343,
+   "n_confirmed": 333,
+   "agreement": 0.9708,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.847
+  },
+  {
+   "th": 0.85,
+   "n_emb": 333,
+   "n_confirmed": 326,
+   "agreement": 0.979,
+   "n_lex_pairs": 405,
+   "emb_vs_lex_ratio": 0.822
+  }
+ ],
+ "stats": {
+  "n_embed_calls": 1,
+  "n_texts": 544,
+  "n_cache_hits": 1,
+  "n_batches": 34,
+  "embed_ms": 871.4,
+  "device": "cuda",
+  "dim": 1024
+ },
+ "note": "agreement=embedding匹配被词法银标确认的比例(精度下界); emb_vs_lex_ratio<1过多=欠召回, >1过多=过匹配"
+}

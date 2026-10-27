@@ -1,0 +1,60 @@
+{
+ "script": "eval_ablation_matrix",
+ "git_sha": "ff0d4950",
+ "config": {
+  "protocol": "48 ablation matrix (B/C/D/A4 rows) on balanced folds",
+  "fold_map": {
+   "01": 1,
+   "02": 2,
+   "03": 3,
+   "04": 3,
+   "05": 3,
+   "06": 0,
+   "07": 1,
+   "08": 2,
+   "09": 2,
+   "10": 1,
+   "11": 3,
+   "12": 0,
+   "13": 0,
+   "14": 3,
+   "15": 3,
+   "16": 1
+  },
+  "fold_map_source": "tools/balance_folds.py archived assignment (default)",
+  "snapshot": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\feature_snapshot_v1",
+  "pairs": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\training_pairs_v1\\pairs.jsonl",
+  "n_train": 512,
+  "n_dev": 128,
+  "n_test": 128,
+  "n_pairs_missing_vector": 15,
+  "train_config": {
+   "epochs": 2,
+   "batch_size": 256,
+   "shared_dim": 256,
+   "lr": 0.0001,
+   "temperature": 0.07,
+   "boundary_margin": 0.1,
+   "boundary_weight": 0.5,
+   "seed": 42,
+   "device": "cpu (verbatim replication of train_shared_projection loop)"
+  },
+  "gate": {
+   "alpha": 0.7,
+   "fusion": "0.7*proj_cos + 0.3*structural_score, hard_veto -> -inf",
+   "clean_variant": "identifier_match forced False",
+   "same_section_false_maps_to": "unknown (cross-section coreference is legitimate)"
+  },
+  "threshold_rule": "dev negative-score 95th percentile (B1 exception: test, in-fold)",
+  "limit": 512,
+  "skip_b1": true,
+  "reference_a3_run": {
+   "run": "train_shared_projection_3408ed57_20261022_073000",
+   "dev_auc": 0.8539,
+   "test_auc": 0.9193,
+   "test_false_merge_rate": 0.0193
+  }
+ },
+ "config_hash": "5b6be8cd",
+ "opened_at": 1792627241.7
+}

@@ -196,7 +196,7 @@ def main():
             print(f"{entry['eval_id']} | {ci} | {entry.get('injection',{}).get('method','')}")
             print(f"original: {str(entry.get('injection',{}).get('original',''))[:60]}")
             print(f"injected: {str(entry.get('injection',{}).get('injected',''))[:60]}")
-            print(f"--- rendered_context ---")
+            print("--- rendered_context ---")
             print(entry["rendered_context"][:400])
         return
 

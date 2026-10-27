@@ -18,7 +18,7 @@ ID-Graph: 规则锚定的异构文档图一致性校验工具
 import json
 import os
 import re
-from collections import Counter, defaultdict
+from collections import Counter
 
 import networkx as nx
 

@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-09-08T18:19:44.751156",
+  "seed": 42,
+  "total_external": 10642,
+  "dedup_removed": 33,
+  "length_or_empty_dropped": 52,
+  "skipped": {
+    "pure_req_too_short": 11,
+    "pure_p3_sections_available": 1561,
+    "flowvqa_mermaid_too_long": 2,
+    "flowvqa_pool_sizes": {
+      "topological": 9589,
+      "applied_scenario": 4570,
+      "fact_retrieval": 4527,
+      "flow_referential": 3708
+    }
+  },
+  "counts_by_source": {
+    "外部-PURE": {
+      "P1_需求识别": {
+        "count": 1576,
+        "difficulty": "easy"
+      },
+      "P2_术语问答": {
+        "count": 290,
+        "difficulty": "easy"
+      },
+      "P4_修饰符": {
+        "count": 197,
+        "difficulty": "medium"
+      },
+      "P3_章节结构": {
+        "count": 409,
+        "difficulty": "medium"
+      }
+    },
+    "外部-NLIRE": {
+      "N3_FRNFR分类": {
+        "count": 611,
+        "difficulty": "medium"
+      },
+      "N2_缺陷分类": {
+        "count": 130,
+        "difficulty": "hard"
+      },
+      "N1_冲突检测": {
+        "count": 258,
+        "difficulty": "hard"
+      }
+    },
+    "外部-歧义检测": {
+      "A1_指代歧义": {
+        "count": 159,
+        "difficulty": "medium"
+      },
+      "A2_并列歧义": {
+        "count": 158,
+        "difficulty": "medium"
+      }
+    },
+    "外部-FlowVQA": {
+      "F1_topological": {
+        "count": 2000,
+        "difficulty": "hard"
+      },
+      "F1_applied_scenario": {
+        "count": 1500,
+        "difficulty": "medium"
+      },
+      "F1_fact_retrieval": {
+        "count": 1500,
+        "difficulty": "easy"
+      },
+      "F1_flow_referential": {
+        "count": 1000,
+        "difficulty": "medium"
+      }
+    },
+    "外部-LLMGen": {
+      "L1_质量评估": {
+        "count": 854,
+        "difficulty": "medium"
+      }
+    }
+  },
+  "merged_files": {
+    "srs_alpaca_full.jsonl": 28761
+  },
+  "samples": {
+    "外部-PURE": [
+      {
+        "instruction": "判断以下句子来自某需求规格文档，它是一条需求语句（对系统应做什么的可验证陈述），还是一般性描述文字？",
+        "input": "11.4.2     The functions to which calls shall be routed based upon the location of the mobile shall \ninclude: (M)",
+        "output": "这是一条需求语句。"
+      },
+      {
+        "instruction": "判断以下句子来自某需求规格文档，它是一条需求语句（对系统应做什么的可验证陈述），还是一般性描述文字？",
+        "input": "The system should ensure high scalability and performance through:",
+        "output": "这是一条需求语句。"
+      }
+    ],
+    "外部-NLIRE": [
+      {
+        "instruction": "判断该需求属于功能需求还是非功能需求，并给出具体类别。",
+        "input": "The system shall refresh the display every 60 seconds.'",
+        "output": "Performance（非功能需求）"
+      },
+      {
+        "instruction": "判断该需求属于功能需求还是非功能需求，并给出具体类别。",
+        "input": "The application shall match the color of the schema set forth by Department of Homeland Security'",
+        "output": "Look & Feel（非功能需求）"
+      }
+    ],
+    "外部-歧义检测": [
+      {
+        "instruction": "判断以下软件需求是否包含指代歧义（anaphoric ambiguity，如it/they等指代不明）？",
+        "input": "The Game must be programmed using the C# language and its libraries compatible with the Unity Engine",
+        "output": "否，不包含指代歧义。"
+      },
+      {
+        "instruction": "判断以下软件需求是否包含指代歧义（anaphoric ambiguity，如it/they等指代不明）？",
+        "input": "The User shall be able to the select username and password for their account on the website.",
+        "output": "否，不包含指代歧义。"
+      }
+    ],
+    "外部-FlowVQA": [
+      {
+        "instruction": "根据以下Mermaid流程图，回答问题。",
+        "input": "```mermaid\nflowchart TD\n    A([\"Start\"]) --> B[/\"Gather neodymium magnet and rubber cap (optional)\"/]\n    B --> C{\"Is switch plate plastic and builder's quality?\"}\n    C -->|Yes| D{\"Do you have a rubb...",
+        "output": "21"
+      },
+      {
+        "instruction": "根据以下Mermaid流程图，回答问题。",
+        "input": "```mermaid\nflowchart TD\n    A([\"Start\"]) --> B[/\"Input integer n\"/]\n    B --> C[\"Initialize res to 1\"]\n    C --> D{\"Is n divisible by 2?\"}\n    D -->|\"Yes\"| E[\"n = n / 2\"]\n    E --> D\n    D -->|\"No\"| F...",
+        "output": "Yes"
+      }
+    ],
+    "外部-LLMGen": [
+      {
+        "instruction": "评估以下软件需求的写作质量，从三个维度各打1到5分：无歧义性（Unambiguity）、可验证性（Verifiability）、单一性（Singularity，一条需求只描述一件事），并给出评估理由。",
+        "input": "The PyTorch project shall include a comprehensive mechanism for tracking and reporting the coverage of Metal Performance Shaders (MPS) operators. This feature must provide clear visibility into which ...",
+        "output": "无歧义性：4/5；可验证性：4/5；单一性：5/5\n理由：Unambiguity: The requirement specifies clear objectives (tracking, reporting, visibility) but uses terms like 'comprehensive' which could be interpreted differently. Verif..."
+      },
+      {
+        "instruction": "评估以下软件需求的写作质量，从三个维度各打1到5分：无歧义性（Unambiguity）、可验证性（Verifiability）、单一性（Singularity，一条需求只描述一件事），并给出评估理由。",
+        "input": "Requirement: Extend the PyTorch framework to support execution on ARM-based Macs utilizing the built-in 16-core Neural Engine for accelerated neural network computations.",
+        "output": "无歧义性：4/5；可验证性：3/5；单一性：5/5\n理由：The requirement specifies extending PyTorch for ARM-based Macs with the Neural Engine, which is clear but could specify measurable acceleration metrics. It focuses on a si..."
+      }
+    ]
+  }
+}

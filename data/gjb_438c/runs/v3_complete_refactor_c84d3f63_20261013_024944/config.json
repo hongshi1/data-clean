@@ -1,0 +1,17 @@
+{
+ "script": "v3_complete_refactor",
+ "git_sha": "ff0d4950",
+ "config": {
+  "核心改变": [
+   "1. 删除六族架构(审计证明全链路空转), 简化为3通道: numeric/verify/nli",
+   "2. K1别名表从srs_kb.json+canonical数据自动构建",
+   "3. K2数值提取支持引号锚定+符号操作符(≤/≥)+扩展单位(种/类/套)",
+   "4. verify通道必须提供真实evidence_units才激活(消灭循环论证)",
+   "5. 统一max_length=128(与基线评测一致)",
+   "6. NLI批量推理(32/batch)",
+   "7. label映射断言(id2label[1]=='inconsistent')"
+  ]
+ },
+ "config_hash": "c84d3f63",
+ "opened_at": 1791830984.6
+}

@@ -19,20 +19,17 @@ SRS上下文关联+特征提取 (方向A)
 """
 import re
 import math
-import json
 import requests
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from dataclasses import dataclass, field
-from collections import defaultdict, Counter
-from itertools import combinations
-from typing import Optional
+from collections import defaultdict
 
 BASE = Path(__file__).resolve().parent.parent
 
 # Embedding API配置
 EMB_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/embeddings"
-EMB_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as EMB_KEY
 EMB_MODEL = "ep-qrkeon-1785654358657880827"
 
 # 需求ID正则
@@ -598,7 +595,7 @@ if __name__ == "__main__":
     test_files = sorted(outline_dir.glob("*_content.xml"))
     if test_files:
         items, phantoms = run_context_aggregation(str(test_files[1]))
-        print(f"\n=== 条目列表 ===")
+        print("\n=== 条目列表 ===")
         for item in items[:5]:
             print(f"  [{item.item_type}] {item.canonical_name[:25]:25s} "
                   f"出现{len(item.occurrences)}次 特征{len(item.features)}个")

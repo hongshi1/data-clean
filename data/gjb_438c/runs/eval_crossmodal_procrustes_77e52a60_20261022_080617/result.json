@@ -1,0 +1,127 @@
+{
+ "protocol": "cross-modal claim->diagram_node retrieval; query-prefix register gap vs Procrustes bridge (G0 doc-doc / G1 prefix-doc / G2 prefix+procrustes)",
+ "gold_train": {
+  "n_claims": 405,
+  "n_pairs": 640
+ },
+ "gold_dev_excluded": {
+  "n_claims": 182,
+  "n_pairs": 382
+ },
+ "gold_test": {
+  "n_claims": 175,
+  "n_pairs": 288
+ },
+ "n_queries": 175,
+ "groups": {
+  "G0_doc_doc": {
+   "recall@1": 0.9143,
+   "recall@5": 1.0,
+   "recall@10": 1.0,
+   "mrr@10": 0.9526,
+   "auc": 0.9923
+  },
+  "G1_prefix_doc": {
+   "recall@1": 0.9257,
+   "recall@5": 1.0,
+   "recall@10": 1.0,
+   "mrr@10": 0.96,
+   "auc": 0.9891
+  },
+  "G2_procrustes": {
+   "recall@1": 0.9429,
+   "recall@5": 1.0,
+   "recall@10": 1.0,
+   "mrr@10": 0.9686,
+   "auc": 0.9917
+  }
+ },
+ "register_gap_G0_minus_G1": {
+  "recall@1": -0.0114,
+  "recall@5": 0.0,
+  "recall@10": 0.0,
+  "mrr@10": -0.0074,
+  "auc": 0.0032
+ },
+ "procrustes_recovery_G2_minus_G1": {
+  "recall@1": 0.0171,
+  "recall@5": 0.0,
+  "recall@10": 0.0,
+  "mrr@10": 0.0086,
+  "auc": 0.0026
+ },
+ "anchors": {
+  "n": 405,
+  "anchor_hash": "28461cc0f281aee94311a81e1ee551d7fe8cbc5d6647c4613ac682144c39ceee",
+  "scope": "gold",
+  "source": "bge_query_prefix (live GPU, no-prefix text prefixed)",
+  "target": "bge_doc_snapshot (vectors.npz claim rows)"
+ },
+ "fold": {
+  "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\runs\\train_shared_projection_3408ed57_20261022_073000\\config.json",
+  "fold_map": {
+   "01": 1,
+   "02": 2,
+   "03": 3,
+   "04": 3,
+   "05": 3,
+   "06": 0,
+   "07": 1,
+   "08": 2,
+   "09": 2,
+   "10": 1,
+   "11": 3,
+   "12": 0,
+   "13": 0,
+   "14": 3,
+   "15": 3,
+   "16": 1
+  },
+  "fallback_docs": [],
+  "roles": "0=test,1=dev,2|3=train (mirrors train_shared_projection)"
+ },
+ "pool": {
+  "same_doc": "ID-reachable nodes (normalized text == some same-doc requirement title)",
+  "n_negatives_per_query": 50,
+  "mean_size": 104.3,
+  "min_size": 64,
+  "max_size": 142,
+  "mean_golds_per_query": 1.65
+ },
+ "live_vs_snapshot_cos": {
+  "n": 64,
+  "mean": 1.0,
+  "min": 1.0
+ },
+ "data_audit": {
+  "n_claim_records": 12517,
+  "n_node_records": 2831,
+  "n_nodes_with_regex_id": 0,
+  "claim_mismatch": {
+   "not_in_snapshot": 0,
+   "doc": 0,
+   "text": 8
+  },
+  "node_mismatch": {
+   "not_in_snapshot": 2334,
+   "doc": 0,
+   "text": 0
+  }
+ },
+ "bge": {
+  "mode": "cuda",
+  "device": "cuda",
+  "dim": 1024,
+  "n_prefix_texts_encoded": 580,
+  "embed_ms": 7147.1
+ },
+ "notes": [
+  "no diagram node text contains a regex identifier (verified at run time: n_nodes_with_regex_id in data_audit); the spec's claim-ID<->node-ID gold link is realized as the deterministic chain: claim canonical ID -> requirements.jsonl row (requirement_id or canonical raw_text ID match) -> title -> same-doc snapshot node with whitespace-normalized equal text",
+  "IDs are extracted whitespace-tolerantly and canonicalized; hierarchical parent IDs that are hyphen-prefixes of another ID in the same claim are dropped (tree-table rows resolve to the deepest ID)",
+  "candidate pool adapts '含ID node': same-doc pool = ID-reachable nodes (superset of gold), negatives = seeded sample of other docs' ID-reachable nodes; per-query RNG is seeded by (seed, sha1(claim id))",
+  "query text = features.jsonl text (the exact string the snapshot vectors encode; 8 claim texts are 200-char snapshot-truncated, counted in data_audit.claim_mismatch.text); ID extraction uses claim_slot_features raw_text",
+  "Recall@k is hit-style (query counts when any gold node ranks in top-k); MRR@10 uses the first gold's rank; AUC pools all (query, pool-node) score/label pairs",
+  "G1 equals the deployed O1 retrieval protocol (query prefix + bare doc); G2 fits prefix->doc orthogonal Procrustes on train anchors with anchor_ids = claim occurrence ids",
+  "dev-fold gold claims are excluded from anchors and queries"
+ ]
+}

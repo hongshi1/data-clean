@@ -37,7 +37,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import httpx
 
-API_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY as API_KEY
 URL = "https://api.moonshot.cn/v1/chat/completions"
 MODEL = "kimi-k2.6"
 PAIR_DIR = "data/gjb_438c/pair_dataset"
@@ -293,7 +293,7 @@ def gen_consistency_check_qa(pair):
                 if only_in_text or only_in_table:
                     qas.append({
                         "type": "T7_consistency",
-                        "question": f"正文和表格的功能名是否完全一致？请对比分析。",
+                        "question": "正文和表格的功能名是否完全一致？请对比分析。",
                         "answer": (f"正文提到{len(text_funcs)}个功能，表格列出{len(func_names)}个。"
                                    + (f"仅正文有：{', '.join(only_in_text[:3])}；" if only_in_text else "")
                                    + (f"仅表格有：{', '.join(only_in_table[:3])}。" if only_in_table else "")

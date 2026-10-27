@@ -1,0 +1,18 @@
+{
+ "test": {
+  "ParamShift": "变异成功,conflict_verified=True",
+  "QA4种": "判别/定位/解释/修复全部通过质控",
+  "质控": "4条通过,1条低质量被拒绝(empty_question)",
+  "SemanticGroup": "成功构建(1组含2Pair)",
+  "evidence_chain": "每条QA包含2条Evidence"
+ },
+ "pipeline_steps": {
+  "Step0": "SYNTHESIS_SPEC定义4种检测项的合成规范",
+  "Step1": "Evidence→Pair构建",
+  "Step2": "数据资产汇聚(外部调用方负责)",
+  "Step3": "build_semantic_groups(按entity_id分组)",
+  "Step4": "4算子+冲突验证+质控",
+  "Step5": "generate_qa_for_pair(4种QA+槽位完整性检查)",
+  "Step6": "quality_filter(5项质控规则)"
+ }
+}

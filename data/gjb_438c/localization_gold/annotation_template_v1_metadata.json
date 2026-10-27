@@ -1,0 +1,61 @@
+{
+ "schema": "s7_localization_gold_v1",
+ "template_version": "annotation_template_v1",
+ "builder_version": "s7_localization_gold_builder_v1",
+ "inputs": {
+  "frozen_qa": {
+   "path": "data\\gjb_438c\\qa_frozen\\scene1_qa_frozen_v1.jsonl",
+   "sha256": "c4a02b55ec4c3bc2482a1462b94541bf1786d934f739fc1918d3d2a53fde12f4"
+  },
+  "silver_labels": {
+   "path": "data\\gjb_438c\\runs\\review_qa_with_glm53_582b51e5_20261021_145212\\final_labels.jsonl",
+   "sha256": "2f06a95394b89f24b861bc93bf47af5c86f3c4bc55641b00b4223e65aff967c0"
+  },
+  "taxonomy": {
+   "path": "knowledge\\consistency_taxonomy_v3.json",
+   "sha256": "3f107323543157f2cac196ee34f2ab5a06f27d459bc38f24495b08ba6fa92278"
+  },
+  "doc04_content_list": {
+   "path": "data\\gjb_438c\\mineru_standard\\04数据统一访问服务软件需求规格说明-终稿\\office\\04数据统一访问服务软件需求规格说明-终稿_content_list.json",
+   "sha256": "8873a60091093ba6baf9aae6c037b213fc4898bad473111bfcd93ca6d04f86a7"
+  }
+ },
+ "counts": {
+  "qa": 91,
+  "violations": 17,
+  "total": 108
+ },
+ "silver_label_distribution": {
+  "not_in_evidence": 77,
+  "refute": 8,
+  "support": 6
+ },
+ "system_verdict_distribution": {
+  "not_in_evidence": 86,
+  "refute": 3,
+  "support": 2
+ },
+ "violation_category_distribution": {
+  "document_name": 1,
+  "enumeration": 4,
+  "exception_template": 2,
+  "function_coverage": 1,
+  "identifier": 5,
+  "qualification_coverage": 1,
+  "traceability": 3
+ },
+ "system_prefill": {
+  "module": "QAConsistencyModule",
+  "use_experts": true,
+  "use_bge_experts": false,
+  "semantic_nli": null,
+  "verifier_version": "qa_verifier_v1",
+  "note": "QA条目预填=系统claim_results建议(非gold); 违例条目无系统预填(S7阶段违例检测未接线)"
+ },
+ "notes": [
+  "gold_verdict初值=silver(GLM-5.3复核), 非gold, 标注员必须逐条确认或改判",
+  "违例条目(DOC04-VIO-*)的gold定位=违例位置预填, 标注员确认/可增删",
+  "17违例以project_guide §2 canonical清单为准; taxonomy v3的doc04_violations共34条字符串, 与canonical 17的差异(去重/收录范围)见协议§6",
+  "标注完成的gold建议注册进MANIFEST(重跑tools/build_data_manifest.py)"
+ ]
+}

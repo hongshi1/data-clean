@@ -28,7 +28,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE / "tools"))
-from m1_compare_engine import compile_usecase_table, text_match_score, normalize_text, char_keywords, save_emb_cache
+from m1_compare_engine import compile_usecase_table, save_emb_cache
 from m4_decoder import as_diagram_view, element_verdicts
 
 ANCHOR_PATH = BASE / "data/gjb_438c/anchor_sc2/anchors.json"
@@ -184,7 +184,7 @@ def main():
     print(f"\n  θ_vlm:  p_miss={th_vlm['p_miss']:.3f} p_halluc={th_vlm['p_halluc']:.3f}")
     print(f"  θ_ocr:  p_miss={th_ocr['p_miss']:.3f} p_halluc={th_ocr['p_halluc']:.3f}")
     print(f"  θ_or:   p_miss={th_or['p_miss']:.3f} p_halluc={th_or['p_halluc']:.3f}")
-    print(f"  (OR的p_miss应低于两个单通道 — 互补性检验)")
+    print("  (OR的p_miss应低于两个单通道 — 互补性检验)")
 
     # ── 译码(测试集) ──
     def decode(D, pi, p_m, p_h):
@@ -229,7 +229,7 @@ def main():
 
     # ── 对级簇签名译码 (命题2: 分歧数的二项尾概率) ──
     print(f"\n{'='*64}")
-    print(f"对级簇签名译码 (命题2: k~Bin(m,p)的尾概率)")
+    print("对级簇签名译码 (命题2: k~Bin(m,p)的尾概率)")
     print(f"{'='*64}")
     from math import comb
     pbar = th_or['p_miss']  # H0下单元素分歧率

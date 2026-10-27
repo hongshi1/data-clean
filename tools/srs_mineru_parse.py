@@ -16,7 +16,7 @@ import re
 import json
 from pathlib import Path
 from datetime import datetime
-from collections import defaultdict, Counter
+from collections import defaultdict
 from html.parser import HTMLParser
 
 BASE = Path(__file__).resolve().parent.parent

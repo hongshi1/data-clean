@@ -197,8 +197,8 @@ def main():
     fn = sum(1 for r in records if r['eta'] == 1 and r['D'] == 0)
     fp = sum(1 for r in records if r['eta'] == 0 and r['D'] == 1)
     tn = sum(1 for r in records if r['eta'] == 0 and r['D'] == 0)
-    print(f"\n  锚遮蔽混淆矩阵 (D vs η):")
-    print(f"              D=1(分歧)  D=0(一致)")
+    print("\n  锚遮蔽混淆矩阵 (D vs η):")
+    print("              D=1(分歧)  D=0(一致)")
     print(f"    η=1(真矛盾)  {tp:4d}      {fn:4d}")
     print(f"    η=0(一致)    {fp:4d}      {tn:4d}")
     if tp + fn:
@@ -291,7 +291,7 @@ def main():
     print(f"  ECE(q_kind):           {ece(test, 'q_kind'):.3f}")
 
     # 分元素类型
-    print(f"\n  分元素类型 (AUROC q | AUROC D | n正例):")
+    print("\n  分元素类型 (AUROC q | AUROC D | n正例):")
     for kind in ('step', 'exc', 'actor'):
         sub = [r for r in test if r['kind'] == kind]
         if not sub:

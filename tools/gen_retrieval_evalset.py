@@ -22,9 +22,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from algorithms.semantic.scene1.kg_context_matcher import KGContextMatcher
+from algorithms.consistency.semantic.scene1.kg_context_matcher import KGContextMatcher
 
-API_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY as API_KEY
 URL = "https://api.moonshot.cn/v1/chat/completions"
 MODEL = "kimi-k2.6"
 OUT_PATH = "data/gjb_438c/data_assets/retrieval_evalset.json"

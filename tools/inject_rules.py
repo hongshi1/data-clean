@@ -10,7 +10,6 @@ seed=42可复现，注入值回写occurrences
 """
 import json
 import random
-import re
 from pathlib import Path
 from z3 import Real, Solver, unsat
 
@@ -185,7 +184,7 @@ def inject_TERM_07(entity, rng):
             pos = rng.randint(0, len(name) - 1)
             new_c = CHAR_MAP.get(name[pos], chr(ord(name[pos]) + 1))
             injected = name[:pos] + new_c + name[pos+1:]
-            return make_result("TERM-07_iface_name", "TERM-07", name, injected, entity, occ, f"char replace", "silver")
+            return make_result("TERM-07_iface_name", "TERM-07", name, injected, entity, occ, "char replace", "silver")
     return None
 
 def inject_TERM_08(entity, rng):
@@ -278,7 +277,7 @@ def inject_LOGIC_03(entity, rng):
         if isinstance(content, list) and len(content) >= 3:
             injected = list(content)
             injected[0], injected[1] = injected[1], injected[0]
-            return make_result("LOGIC-03_step_swap", "LOGIC-03", content, injected, entity, occ, f"swap step 0,1", "silver")
+            return make_result("LOGIC-03_step_swap", "LOGIC-03", content, injected, entity, occ, "swap step 0,1", "silver")
     return None
 
 def inject_LOGIC_04(entity, rng):
@@ -390,7 +389,7 @@ def inject_GJB_03(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-03_security", "GJB-03", content, injected, entity, occ, f"remove security clause", "gold")
+            return make_result("GJB-03_security", "GJB-03", content, injected, entity, occ, "remove security clause", "gold")
     return None
 
 def inject_GJB_04(entity, rng):
@@ -399,7 +398,7 @@ def inject_GJB_04(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-04_audit", "GJB-04", content, injected, entity, occ, f"remove audit clause", "gold")
+            return make_result("GJB-04_audit", "GJB-04", content, injected, entity, occ, "remove audit clause", "gold")
     return None
 
 def inject_GJB_05(entity, rng):
@@ -408,7 +407,7 @@ def inject_GJB_05(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-05_traceability", "GJB-05", content, injected, entity, occ, f"break traceability", "gold")
+            return make_result("GJB-05_traceability", "GJB-05", content, injected, entity, occ, "break traceability", "gold")
     return None
 
 def inject_GJB_06(entity, rng):
@@ -417,7 +416,7 @@ def inject_GJB_06(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-06_alarm", "GJB-06", content, injected, entity, occ, f"remove alarm element", "gold")
+            return make_result("GJB-06_alarm", "GJB-06", content, injected, entity, occ, "remove alarm element", "gold")
     return None
 
 def inject_GJB_07(entity, rng):
@@ -426,7 +425,7 @@ def inject_GJB_07(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-07_selfcheck", "GJB-07", content, injected, entity, occ, f"remove self-check", "gold")
+            return make_result("GJB-07_selfcheck", "GJB-07", content, injected, entity, occ, "remove self-check", "gold")
     return None
 
 def inject_GJB_08(entity, rng):
@@ -435,7 +434,7 @@ def inject_GJB_08(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-08_powerfail", "GJB-08", content, injected, entity, occ, f"remove power-fail protection", "gold")
+            return make_result("GJB-08_powerfail", "GJB-08", content, injected, entity, occ, "remove power-fail protection", "gold")
     return None
 
 def inject_GJB_09(entity, rng):
@@ -444,7 +443,7 @@ def inject_GJB_09(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-09_input_protection", "GJB-09", content, injected, entity, occ, f"remove input protection", "gold")
+            return make_result("GJB-09_input_protection", "GJB-09", content, injected, entity, occ, "remove input protection", "gold")
     return None
 
 def inject_GJB_10(entity, rng):
@@ -453,7 +452,7 @@ def inject_GJB_10(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-10_upgrade", "GJB-10", content, injected, entity, occ, f"remove rollback", "gold")
+            return make_result("GJB-10_upgrade", "GJB-10", content, injected, entity, occ, "remove rollback", "gold")
     return None
 
 def inject_GJB_11(entity, rng):
@@ -462,7 +461,7 @@ def inject_GJB_11(entity, rng):
         content = occ.get("content", "")
         if isinstance(content, list) and len(content) >= 3:
             injected = content[:-1]
-            return make_result("GJB-11_degrade", "GJB-11", content, injected, entity, occ, f"remove degrade mode", "gold")
+            return make_result("GJB-11_degrade", "GJB-11", content, injected, entity, occ, "remove degrade mode", "gold")
     return None
 
 
@@ -564,7 +563,21 @@ def main():
     for method_id, (injector, required_type) in INJECTORS.items():
         # 获取候选实体
         candidates = by_type.get(required_type, [])
-        
+
+        # PARAM精确匹配: PARAM-01优先选param_type=time的实体(修复标签造假)
+        if method_id.startswith("PARAM") and required_type == "numeric_param":
+            ptype_map = {
+                "PARAM-01": "time", "PARAM-02": "period", "PARAM-03": "threshold",
+                "PARAM-04": "align", "PARAM-05": "resource", "PARAM-06": "range",
+                "PARAM-07": "storage", "PARAM-08": "precision",
+                "PARAM-09": "degrade", "PARAM-10": "fault",
+            }
+            want_type = ptype_map.get(method_id, "")
+            typed = [e for e in candidates if e.get("param_type") == want_type]
+            if typed:
+                candidates = typed
+            # 该类型无实体则回落到全部numeric_param(如实报告)
+
         # 参数层如果没有numeric_param，尝试其他类型
         if not candidates and method_id.startswith("PARAM"):
             for ft in PARAM_FALLBACK_TYPES[1:]:
@@ -602,12 +615,12 @@ def main():
     neg_count = len(results) - pos_count
     z3_count = sum(1 for r in results if r.get("z3_verified"))
     
-    print(f"\n注入统计:")
+    print("\n注入统计:")
     print(f"  正例: {pos_count}")
     print(f"  负例: {neg_count}")
     print(f"  Z3验证: {z3_count}条")
     print(f"  方法数: {len(method_stats)}/40")
-    print(f"  按方法:")
+    print("  按方法:")
     for m in sorted(method_stats.keys()):
         print(f"    {m}: {method_stats[m]}")
     

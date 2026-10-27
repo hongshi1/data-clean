@@ -1,0 +1,26 @@
+{
+ "protocol": "Contriever-MS(Meta MSMARCO) — RAG标准双塔基线",
+ "results": {
+  "gjb_deep_v2": {
+   "Contriever-MS": {
+    "R@1": 0.0,
+    "R@5": 0.008,
+    "R@10": 0.015,
+    "MRR@10": 0.005
+   }
+  },
+  "wtq": {
+   "Contriever-MS": {
+    "R@1": 0.336,
+    "R@5": 0.534,
+    "R@10": 0.622,
+    "MRR@10": 0.4176
+   }
+  }
+ },
+ "colbertv2_note": {
+  "status": "requires_dedicated_index",
+  "reason": "ColBERTv2的逐条MaxSim在2100候选上需~2s/query(1小时/500q), 实际需要PLAID/DiskANN等专用索引; 单条验证gold(9.04)>非gold(5.2-8.5)工作正常",
+  "single_query_verification": "R@1 correct on individual query"
+ }
+}

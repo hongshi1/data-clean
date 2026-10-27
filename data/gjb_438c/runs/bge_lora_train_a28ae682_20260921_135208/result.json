@@ -1,0 +1,58 @@
+{
+ "protocol": "LoRA InfoNCE: in-batch neg + hard neg, channel-blocked passage塔(每epoch no_grad重编码)",
+ "query_prefix": "none(对称用法, 与候选侧一致)",
+ "lora": {
+  "r": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "targets": [
+   "query",
+   "key",
+   "value",
+   "attention.output.dense"
+  ],
+  "n_params": 3145728
+ },
+ "n_triples": 10,
+ "n_train": 10,
+ "n_dev": 0,
+ "data_stat": {
+  "n_raw": 10,
+  "n_ok": 10,
+  "n_skipped": 0
+ },
+ "epochs": 2,
+ "lr": 0.0002,
+ "tau": 0.03,
+ "eff_batch": 64,
+ "micro_batch_actual": 16,
+ "n_hard_neg": 7,
+ "seed": 42,
+ "weight_decay": 0.01,
+ "precision": "fp16",
+ "data_spec": {
+  "source": "demo",
+  "n": 10
+ },
+ "fingerprint": "6784c12d",
+ "fit_ms": 28609.3,
+ "gpu_mem_gb": 1.32,
+ "gpu_reserved_gb": 1.35,
+ "oom_halvings": 0,
+ "history": [
+  {
+   "epoch": 1,
+   "loss": 1.7613,
+   "train_acc": 1.0,
+   "n_steps": 1,
+   "pool": 20
+  },
+  {
+   "epoch": 2,
+   "loss": 1.6878,
+   "train_acc": 1.0,
+   "n_steps": 1,
+   "pool": 20
+  }
+ ]
+}

@@ -1,0 +1,789 @@
+{
+ "n_pairs_total": 27694,
+ "n_pairs_missing_vector": 15,
+ "skipped_by_split": {
+  "dev": 0,
+  "test": 0,
+  "train": 15,
+  "unknown_split": 0
+ },
+ "split_counts": {
+  "dev": 11647,
+  "test": 5372
+ },
+ "bucket_names": [
+  "claim+requirement|False",
+  "claim+requirement|True",
+  "claim+table_row|False",
+  "claim+table_row|True",
+  "diagram_node+diagram_node|False",
+  "requirement+requirement|True",
+  "requirement+table_row|False",
+  "requirement+table_row|True",
+  "table_row+table_row|True"
+ ],
+ "trap_diagnostic": {
+  "dev": {
+   "id_nonempty": {
+    "n": 7893,
+    "label_rate": 1.0
+   },
+   "id_empty": {
+    "n": 3754,
+    "label_rate": 0.0
+   }
+  },
+  "test": {
+   "id_nonempty": {
+    "n": 1593,
+    "label_rate": 1.0
+   },
+   "id_empty": {
+    "n": 3779,
+    "label_rate": 0.0
+   }
+  },
+  "policy": "shared_identifiers (ID covariate) excluded from conditioning; diagnostic only"
+ },
+ "bucket_label_purity": {
+  "claim+requirement|False": {
+   "n_test": 172.0,
+   "n_test_pos": 172.0,
+   "label_pure": true
+  },
+  "claim+requirement|True": {
+   "n_test": 359.0,
+   "n_test_pos": 359.0,
+   "label_pure": true
+  },
+  "claim+table_row|False": {
+   "n_test": 172.0,
+   "n_test_pos": 172.0,
+   "label_pure": true
+  },
+  "claim+table_row|True": {
+   "n_test": 359.0,
+   "n_test_pos": 359.0,
+   "label_pure": true
+  },
+  "diagram_node+diagram_node|False": {
+   "n_test": 886.0,
+   "n_test_pos": 0.0,
+   "label_pure": true
+  },
+  "requirement+requirement|True": {
+   "n_test": 2723.0,
+   "n_test_pos": 0.0,
+   "label_pure": true
+  },
+  "requirement+table_row|False": {
+   "n_test": 172.0,
+   "n_test_pos": 172.0,
+   "label_pure": true
+  },
+  "requirement+table_row|True": {
+   "n_test": 359.0,
+   "n_test_pos": 359.0,
+   "label_pure": true
+  },
+  "table_row+table_row|True": {
+   "n_test": 170.0,
+   "n_test_pos": 0.0,
+   "label_pure": true
+  }
+ },
+ "D2": {
+  "raw_sigmoid_tau1": {
+   "dev_ece": 0.0486,
+   "dev_brier": 0.21,
+   "test_ece": 0.3815,
+   "test_brier": 0.333,
+   "test_logloss": 0.8647
+  },
+  "temperature": {
+   "dev_ece": 0.057,
+   "dev_brier": 0.2094,
+   "test_ece": 0.4578,
+   "test_brier": 0.354,
+   "test_logloss": 0.912,
+   "tau": 0.841005,
+   "dev_nll_tau1": 0.609656,
+   "dev_nll_tau": 0.607668
+  },
+  "isotonic_pava": {
+   "dev_ece": 0.0,
+   "dev_brier": 0.1795,
+   "test_ece": 0.4104,
+   "test_brier": 0.3226,
+   "test_logloss": 0.819,
+   "n_blocks": 323
+  },
+  "platt": {
+   "dev_ece": 0.1196,
+   "dev_brier": 0.1996,
+   "test_ece": 0.4437,
+   "test_brier": 0.3145,
+   "test_logloss": 0.8248,
+   "C": 100.0,
+   "coef": [
+    0.6731
+   ],
+   "intercept": 0.8181
+  }
+ },
+ "conditional_calibration": {
+  "dev_ece": 0.0005,
+  "dev_brier": 0.0,
+  "test_ece": 0.0006,
+  "test_brier": 0.0,
+  "test_logloss": 0.0006,
+  "C": 100.0,
+  "n_params": 20,
+  "n_buckets": 9,
+  "s_coef": 0.2386,
+  "intercept": 2.5397,
+  "bucket_effects": {
+   "claim+requirement|False": {
+    "n_dev": 1770,
+    "onehot_coef": 5.6094,
+    "interaction_coef": -0.703
+   },
+   "claim+requirement|True": {
+    "n_dev": 933,
+    "onehot_coef": 4.4574,
+    "interaction_coef": 1.0517
+   },
+   "claim+table_row|False": {
+    "n_dev": 1674,
+    "onehot_coef": 5.5334,
+    "interaction_coef": -0.7902
+   },
+   "claim+table_row|True": {
+    "n_dev": 921,
+    "onehot_coef": 4.4528,
+    "interaction_coef": 1.0385
+   },
+   "diagram_node+diagram_node|False": {
+    "n_dev": 1924,
+    "onehot_coef": -9.891,
+    "interaction_coef": 1.1733
+   },
+   "requirement+requirement|True": {
+    "n_dev": 1604,
+    "onehot_coef": -10.0603,
+    "interaction_coef": -0.7239
+   },
+   "requirement+table_row|False": {
+    "n_dev": 1674,
+    "onehot_coef": 5.609,
+    "interaction_coef": -0.5161
+   },
+   "requirement+table_row|True": {
+    "n_dev": 921,
+    "onehot_coef": 4.1103,
+    "interaction_coef": 1.5987
+   },
+   "table_row+table_row|True": {
+    "n_dev": 226,
+    "onehot_coef": -7.3226,
+    "interaction_coef": -1.8904
+   }
+  }
+ },
+ "bucketed_ece_decomposition": {
+  "raw": {
+   "global_ece": 0.3815,
+   "per_bucket": {
+    "claim+requirement|False": {
+     "n": 172.0,
+     "n_pos": 172.0,
+     "ece": 0.3031
+    },
+    "claim+requirement|True": {
+     "n": 359.0,
+     "n_pos": 359.0,
+     "ece": 0.2758
+    },
+    "claim+table_row|False": {
+     "n": 172.0,
+     "n_pos": 172.0,
+     "ece": 0.3031
+    },
+    "claim+table_row|True": {
+     "n": 359.0,
+     "n_pos": 359.0,
+     "ece": 0.2758
+    },
+    "diagram_node+diagram_node|False": {
+     "n": 886.0,
+     "n_pos": 0.0,
+     "ece": 0.6369
+    },
+    "requirement+requirement|True": {
+     "n": 2723.0,
+     "n_pos": 0.0,
+     "ece": 0.6686
+    },
+    "requirement+table_row|False": {
+     "n": 172.0,
+     "n_pos": 172.0,
+     "ece": 0.3031
+    },
+    "requirement+table_row|True": {
+     "n": 359.0,
+     "n_pos": 359.0,
+     "ece": 0.2739
+    },
+    "table_row+table_row|True": {
+     "n": 170.0,
+     "n_pos": 0.0,
+     "ece": 0.6908
+    }
+   },
+   "weighted_sum": 0.5501
+  },
+  "literal_check": {
+   "global_raw_ece": 0.3815,
+   "weighted_sum_raw_bucket_ece": 0.5501,
+   "ratio_weighted_over_global": 1.4418,
+   "pre_registered_direction": "weighted << global (mixture confirmed)",
+   "measured_direction": "weighted >> global",
+   "math_note": "impossible by construction: per equal-width bin the bucket errors mix through a convex combination, so |mean_p - mean_y| obeys the triangle inequality and global ECE <= weighted bucket sum ALWAYS holds. The measured reversal is the mixture signature itself: same-score strata carry opposite-signed calibration errors that cancel in shared bins."
+  },
+  "bucket_isotonic": {
+   "claim+requirement|False": {
+    "n": 172.0,
+    "n_pos": 172.0,
+    "ece": 0.3030979904148325,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.6969
+   },
+   "claim+requirement|True": {
+    "n": 359.0,
+    "n_pos": 359.0,
+    "ece": 0.27579768729324117,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.7242
+   },
+   "claim+table_row|False": {
+    "n": 172.0,
+    "n_pos": 172.0,
+    "ece": 0.3030979904148326,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.6969
+   },
+   "claim+table_row|True": {
+    "n": 359.0,
+    "n_pos": 359.0,
+    "ece": 0.27579768729324117,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.7242
+   },
+   "diagram_node+diagram_node|False": {
+    "n": 886.0,
+    "n_pos": 0.0,
+    "ece": 0.6368785003480841,
+    "recal_ece": 0.0,
+    "base_rate": 0.0,
+    "mean_p_raw": 0.6369
+   },
+   "requirement+requirement|True": {
+    "n": 2723.0,
+    "n_pos": 0.0,
+    "ece": 0.6685688714869289,
+    "recal_ece": 0.0,
+    "base_rate": 0.0,
+    "mean_p_raw": 0.6686
+   },
+   "requirement+table_row|False": {
+    "n": 172.0,
+    "n_pos": 172.0,
+    "ece": 0.3030735803471056,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.6969
+   },
+   "requirement+table_row|True": {
+    "n": 359.0,
+    "n_pos": 359.0,
+    "ece": 0.2739463812024326,
+    "recal_ece": 0.0,
+    "base_rate": 1.0,
+    "mean_p_raw": 0.7261
+   },
+   "table_row+table_row|True": {
+    "n": 170.0,
+    "n_pos": 0.0,
+    "ece": 0.6907830025403678,
+    "recal_ece": 0.0,
+    "base_rate": 0.0,
+    "mean_p_raw": 0.6908
+   }
+  },
+  "operative_check": {
+   "global_isotonic_test_ece": 0.4104,
+   "conditional_bucket_isotonic_weighted_test_ece": 0.0,
+   "conditional_bucket_isotonic_global_test_ece": 0.0,
+   "root_cause_confirmed": true,
+   "interpretation": "stratum-conditional recalibration collapses test ECE while the best global calibrator cannot: the score->label relation is bucket-heterogeneous (same-score heterogeneity), which is the corrected root-cause test"
+  }
+ },
+ "D3_selective_prediction": {
+  "selected_by": "4-fold out-of-fold dev ECE (tie-break cv Brier); test untouched",
+  "selected_method": "conditional",
+  "cv_table": {
+   "isotonic": {
+    "cv_ece": 0.0104,
+    "cv_brier": 0.1802,
+    "cv_logloss": 0.5254
+   },
+   "platt": {
+    "cv_ece": 0.1202,
+    "cv_brier": 0.1997,
+    "cv_logloss": 0.5852
+   },
+   "conditional": {
+    "cv_ece": 0.0005,
+    "cv_brier": 0.0,
+    "cv_logloss": 0.0005
+   },
+   "temperature": {
+    "cv_ece": 0.0603,
+    "cv_brier": 0.2094,
+    "cv_logloss": 0.6077
+   }
+  },
+  "best": {
+   "sweep": [
+    {
+     "threshold": 0.5,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.55,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.6,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.65,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.7,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.75,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.8,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.85,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.9,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    },
+    {
+     "threshold": 0.95,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.0
+    }
+   ],
+   "aurc": 0.0,
+   "n_errors": 0,
+   "aurc_oracle": 0.0,
+   "excess_aurc": 0.0,
+   "test_error_rate": 0.0
+  },
+  "platt_contrast": {
+   "sweep": [
+    {
+     "threshold": 0.5,
+     "n_covered": 5372,
+     "coverage": 1.0,
+     "selective_risk": 0.6361
+    },
+    {
+     "threshold": 0.55,
+     "n_covered": 5129,
+     "coverage": 0.9548,
+     "selective_risk": 0.6354
+    },
+    {
+     "threshold": 0.6,
+     "n_covered": 4675,
+     "coverage": 0.8703,
+     "selective_risk": 0.624
+    },
+    {
+     "threshold": 0.65,
+     "n_covered": 3827,
+     "coverage": 0.7124,
+     "selective_risk": 0.5675
+    },
+    {
+     "threshold": 0.7,
+     "n_covered": 2759,
+     "coverage": 0.5136,
+     "selective_risk": 0.4349
+    },
+    {
+     "threshold": 0.75,
+     "n_covered": 2014,
+     "coverage": 0.3749,
+     "selective_risk": 0.284
+    },
+    {
+     "threshold": 0.8,
+     "n_covered": 1468,
+     "coverage": 0.2733,
+     "selective_risk": 0.1546
+    },
+    {
+     "threshold": 0.85,
+     "n_covered": 901,
+     "coverage": 0.1677,
+     "selective_risk": 0.0266
+    },
+    {
+     "threshold": 0.9,
+     "n_covered": 0,
+     "coverage": 0.0,
+     "selective_risk": null
+    },
+    {
+     "threshold": 0.95,
+     "n_covered": 0,
+     "coverage": 0.0,
+     "selective_risk": null
+    }
+   ],
+   "aurc": 0.359811,
+   "n_errors": 3417,
+   "aurc_oracle": 0.268277,
+   "excess_aurc": 0.091534,
+   "test_error_rate": 0.6361
+  }
+ },
+ "conformal_E50": {
+  "primary": {
+   "p_source": "conditional",
+   "alpha": 0.1,
+   "nonconformity": "1 - p_hat",
+   "calibration_set": "dev fold positives (label-conditional guarantee: P(covered | y=1) >= 1-alpha)",
+   "mondrian": "kind_pair",
+   "quantiles": {
+    "claim+requirement": {
+     "n_calibration_positives": 2703,
+     "q": 0.0006161118998482262
+    },
+    "claim+table_row": {
+     "n_calibration_positives": 2595,
+     "q": 0.0007083613247091947
+    },
+    "diagram_node+diagram_node": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    },
+    "requirement+requirement": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    },
+    "requirement+table_row": {
+     "n_calibration_positives": 2595,
+     "q": 0.000560274771409297
+    },
+    "table_row+table_row": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    }
+   },
+   "per_bucket": {
+    "claim+requirement": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 527,
+     "positive_coverage": 0.9925,
+     "q": 0.0006161118998482262
+    },
+    "claim+table_row": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 523,
+     "positive_coverage": 0.9849,
+     "q": 0.0007083613247091947
+    },
+    "diagram_node+diagram_node": {
+     "n_test": 886,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    },
+    "requirement+requirement": {
+     "n_test": 2723,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    },
+    "requirement+table_row": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 525,
+     "positive_coverage": 0.9887,
+     "q": 0.000560274771409297
+    },
+    "table_row+table_row": {
+     "n_test": 170,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    }
+   },
+   "coverage_of_positives": 0.9887,
+   "confirmed_set": {
+    "n": 1575,
+    "tp": 1575,
+    "fp": 0,
+    "precision": 1.0
+   },
+   "dual_axis": {
+    "cells": {
+     "conformal_covered|contract_met": {
+      "n": 1095,
+      "n_pos": 1095,
+      "precision": 1.0
+     },
+     "conformal_covered|contract_unmet": {
+      "n": 480,
+      "n_pos": 480,
+      "precision": 1.0
+     },
+     "conformal_abstain|contract_met": {
+      "n": 18,
+      "n_pos": 18,
+      "precision": 1.0
+     },
+     "conformal_abstain|contract_unmet": {
+      "n": 3779,
+      "n_pos": 0,
+      "precision": 0.0
+     }
+    },
+    "margins": {
+     "conformal_covered": {
+      "n": 1575,
+      "n_pos": 1575,
+      "precision": 1.0
+     },
+     "conformal_abstain": {
+      "n": 3797,
+      "n_pos": 18,
+      "precision": 0.0047
+     },
+     "contract_met": {
+      "n": 1113,
+      "n_pos": 1113,
+      "precision": 1.0
+     },
+     "contract_unmet": {
+      "n": 4259,
+      "n_pos": 480,
+      "precision": 0.1127
+     },
+     "all": {
+      "n": 5372,
+      "n_pos": 1593,
+      "precision": 0.2965
+     }
+    }
+   },
+   "obligation_logic_source": "tools/eval_contract_risk_coverage.py (imported)",
+   "leak_note": "identity_evidence (shared_identifiers non-empty) reconstructs the silver label by construction, so the contract axis is entangled with the label; the conformal axis is label-free at decision time (dev quantiles only)"
+  },
+  "platt_contrast": {
+   "p_source": "platt",
+   "alpha": 0.1,
+   "nonconformity": "1 - p_hat",
+   "calibration_set": "dev fold positives (label-conditional guarantee: P(covered | y=1) >= 1-alpha)",
+   "mondrian": "kind_pair",
+   "quantiles": {
+    "claim+requirement": {
+     "n_calibration_positives": 2703,
+     "q": 0.45577750133077466
+    },
+    "claim+table_row": {
+     "n_calibration_positives": 2595,
+     "q": 0.45720363176231915
+    },
+    "diagram_node+diagram_node": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    },
+    "requirement+requirement": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    },
+    "requirement+table_row": {
+     "n_calibration_positives": 2595,
+     "q": 0.4137314492609926
+    },
+    "table_row+table_row": {
+     "n_calibration_positives": 0,
+     "q": null,
+     "policy": "no calibration data for this stratum -> abstain"
+    }
+   },
+   "per_bucket": {
+    "claim+requirement": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 531,
+     "positive_coverage": 1.0,
+     "q": 0.45577750133077466
+    },
+    "claim+table_row": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 531,
+     "positive_coverage": 1.0,
+     "q": 0.45720363176231915
+    },
+    "diagram_node+diagram_node": {
+     "n_test": 886,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    },
+    "requirement+requirement": {
+     "n_test": 2723,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    },
+    "requirement+table_row": {
+     "n_test": 531,
+     "n_test_pos": 531,
+     "covered_pos": 531,
+     "positive_coverage": 1.0,
+     "q": 0.4137314492609926
+    },
+    "table_row+table_row": {
+     "n_test": 170,
+     "n_test_pos": 0,
+     "covered_pos": 0,
+     "positive_coverage": 0.0,
+     "q": null
+    }
+   },
+   "coverage_of_positives": 1.0,
+   "confirmed_set": {
+    "n": 1593,
+    "tp": 1593,
+    "fp": 0,
+    "precision": 1.0
+   },
+   "dual_axis": {
+    "cells": {
+     "conformal_covered|contract_met": {
+      "n": 1113,
+      "n_pos": 1113,
+      "precision": 1.0
+     },
+     "conformal_covered|contract_unmet": {
+      "n": 480,
+      "n_pos": 480,
+      "precision": 1.0
+     },
+     "conformal_abstain|contract_met": {
+      "n": 0,
+      "n_pos": 0,
+      "precision": null
+     },
+     "conformal_abstain|contract_unmet": {
+      "n": 3779,
+      "n_pos": 0,
+      "precision": 0.0
+     }
+    },
+    "margins": {
+     "conformal_covered": {
+      "n": 1593,
+      "n_pos": 1593,
+      "precision": 1.0
+     },
+     "conformal_abstain": {
+      "n": 3779,
+      "n_pos": 0,
+      "precision": 0.0
+     },
+     "contract_met": {
+      "n": 1113,
+      "n_pos": 1113,
+      "precision": 1.0
+     },
+     "contract_unmet": {
+      "n": 4259,
+      "n_pos": 480,
+      "precision": 0.1127
+     },
+     "all": {
+      "n": 5372,
+      "n_pos": 1593,
+      "precision": 0.2965
+     }
+    }
+   },
+   "obligation_logic_source": "tools/eval_contract_risk_coverage.py (imported)",
+   "leak_note": "identity_evidence (shared_identifiers non-empty) reconstructs the silver label by construction, so the contract axis is entangled with the label; the conformal axis is label-free at decision time (dev quantiles only)"
+  }
+ },
+ "conclusions": [
+  "D2 vs conditional: best global calibrator test ECE 0.4104 -> conditional 0.0006 (temperature scaling stays at tau=0.841005, ECE 0.4578)",
+  "base-rate shift: dev positive rate 0.6777 vs test 0.2965 — every GLOBAL calibrator fit on dev inherits the dev base rate and lands WORSE than the raw score on test (raw 0.3815); the conditional model absorbs the shift through the bucket structure",
+  "literal decomposition check: weighted bucket ECE 0.5501 vs global 0.3815 — the pre-registered 'weighted << global' direction is impossible (triangle inequality); the measured reversal IS the same-score-heterogeneity signature",
+  "operative root-cause check: global isotonic test ECE 0.4104 vs bucket-conditional weighted ECE 0.0 -> root cause CONFIRMED",
+  "conformal E50 (alpha=0.1, p=conditional): coverage of positives 0.9887, confirmed-set precision 1.0; dual-axis diagonal contract_met∧covered precision 1.0",
+  "silver caveat: buckets are label-pure by generator construction (purity: 9/9), so conditional-calibration / conformal numbers are silver-bound upper bounds"
+ ]
+}

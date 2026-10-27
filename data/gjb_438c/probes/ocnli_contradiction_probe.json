@@ -1,0 +1,1437 @@
+{
+ "meta": {
+  "probe_type": "ocnli_contradiction",
+  "purpose": "矛盾漏报探针: 高词面相似的矛盾对(gold全为inconsistent)被判consistent的比例=漏报率, 即'词相似⇒放行'捷径分(D族TERM-01/02同构)",
+  "source": {
+   "dataset": "OCNLI (Original Chinese NLI)",
+   "files": [
+    "data/gjb_438c/public_nli/ocnli_3way.jsonl"
+   ],
+   "raw_label_map": {
+    "contradiction": "inconsistent"
+   },
+   "filter": "仅contradiction类, 两侧各15-60字",
+   "selection": "200条, random.Random('p0probe:ocnli_contradiction').sample"
+  },
+  "template": "T2规定式: premise=文档某章节规定：「S1」/ hypothesis=文档另一章节规定：「S2」",
+  "item_schema": [
+   "id",
+   "premise",
+   "hypothesis",
+   "label",
+   "probe_type"
+  ],
+  "positive_class": "inconsistent",
+  "built_at": "2026-10-13T19:01:35",
+  "builder": "tools/build_probes.py",
+  "git_sha": "ff0d4950",
+  "frozen": true,
+  "freeze_declaration": "冻结评测资产(eval-only): 本集永不进入任何训练/微调/验证集, 仅允许推理期评测; 任何修改须以--force显式重建并同步MANIFEST与快照测试",
+  "n_items": 200,
+  "label_dist": {
+   "inconsistent": 200
+  }
+ },
+ "items": [
+  {
+   "id": "ocnli-41745",
+   "premise": "文档某章节规定：「停了一会儿,蒋丽莉说:是程先生托我来看你的」",
+   "hypothesis": "文档另一章节规定：「程先生和蒋丽莉一起来看望“我”」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-47025",
+   "premise": "文档某章节规定：「“双随机、一公开”监管全面实施」",
+   "hypothesis": "文档另一章节规定：「监管早已做到“双随机、一公开”」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-23386",
+   "premise": "文档某章节规定：「让我们每个人都为振兴中华贡献出一份力量吧」",
+   "hypothesis": "文档另一章节规定：「振兴中华只需要在经济方面作出努力。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44268",
+   "premise": "文档某章节规定：「追赶服装的时髦成为潮流,走向从南向北,从广东、福建流向上海、北京、西北」",
+   "hypothesis": "文档另一章节规定：「时髦服装的流行只与经济发展水平相关」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37180",
+   "premise": "文档某章节规定：「这个我必须证明,放走丁义珍的不是美联航」",
+   "hypothesis": "文档另一章节规定：「丁义珍想了很多方法,最终靠着自己的机智逃走了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24487",
+   "premise": "文档某章节规定：「所以,它的人口优势一直保持着,但是它的整体教育水平也提不上去,这个国家气候又好,椰子、香蕉乱掉」",
+   "hypothesis": "文档另一章节规定：「这个国家正面临严峻的人口老龄化问题」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32272",
+   "premise": "文档某章节规定：「进一步做好海外侨胞和归侨、侨眷的工作,充分发挥他们在促进祖国统一和民族振兴中的独特作用」",
+   "hypothesis": "文档另一章节规定：「促进祖国统一和民族振兴不需要海外侨胞和归侨、侨眷。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-46396",
+   "premise": "文档某章节规定：「现有土地承包关系要保持稳定并长久不变,赋予农民包括离乡农民工更加充分而有保障的土地承包经营权」",
+   "hypothesis": "文档另一章节规定：「有关农民的土地承包权的问题始终没有得到重视」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38589",
+   "premise": "文档某章节规定：「她选择美丽的王琦瑶做她的知心,她的心事也变得美丽了」",
+   "hypothesis": "文档另一章节规定：「她的心情因为选择了王琦瑶做知己而很糟糕。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31647",
+   "premise": "文档某章节规定：「觉得北京就是不是我的归属感的地方是我工作的地方,但是我后来慢慢」",
+   "hypothesis": "文档另一章节规定：「我觉得北京并不是适合工作的地方」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31177",
+   "premise": "文档某章节规定：「但这句话其实不是出现在我的论坛,是我前一天另外一个论坛,我那个论坛也是很火爆,爆了好多好多的料」",
+   "hypothesis": "文档另一章节规定：「这句话是昨天我写进我的论坛一篇文章里的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-5126",
+   "premise": "文档某章节规定：「82%的企业认为他们拥有较充分的自主权,能够独立自主管理企业」",
+   "hypothesis": "文档另一章节规定：「许多企业都觉得自己并未拥有充分自主权。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-50005",
+   "premise": "文档某章节规定：「就是说中国知识分子的两种苦恼,一种叫忧国忧民,这是郁闷一种是性」",
+   "hypothesis": "文档另一章节规定：「所有的中国知识分子都有这样的烦恼」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-3470",
+   "premise": "文档某章节规定：「就是用这个说法不是表达种族主义的倾向」",
+   "hypothesis": "文档另一章节规定：「这个说法明确认为黑人是最低等的人种。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31968",
+   "premise": "文档某章节规定：「首先,不少分析家指出,新预算的目标难以实现」",
+   "hypothesis": "文档另一章节规定：「不费吹灰之力就可以把新预算的目标完成」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-34894",
+   "premise": "文档某章节规定：「但是我看见一个网络传言,网络传言肯定不是真的,网络传言说他到美国去造汽车,可是那地方叫什么呢」",
+   "hypothesis": "文档另一章节规定：「我举例说明网络传言是值得被相信的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-18679",
+   "premise": "文档某章节规定：「今年要对土地出让金收支和耕地保护情况进行全面审计」",
+   "hypothesis": "文档另一章节规定：「今年不对土地出让金收支进行全面审计」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32463",
+   "premise": "文档某章节规定：「回头去,就上上海去拿,或者是.」",
+   "hypothesis": "文档另一章节规定：「除了去上海拿之外,再没有其他方法了。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-27565",
+   "premise": "文档某章节规定：「提高重大传染病、慢性病和职业病、地方病防治能力,人均基本公共卫生服务经费补助标准增加到35元」",
+   "hypothesis": "文档另一章节规定：「人均基本公共卫生服务经费补助标准增加到50元」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-5333",
+   "premise": "文档某章节规定：「我们要牢牢把握住经济建设这个中心,用最大的力量去发展社会生产力」",
+   "hypothesis": "文档另一章节规定：「发展社会生产力,经济建设可以先放一边。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29273",
+   "premise": "文档某章节规定：「啊那读书啊,妈妈说读书要认真.」",
+   "hypothesis": "文档另一章节规定：「“妈妈”反对学习,认为无知才是力量。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-6089",
+   "premise": "文档某章节规定：「沉静半载的莒县爱国村村委会正北巷道里,挤满了人群」",
+   "hypothesis": "文档另一章节规定：「莒县爱国村村委会正北巷道里,空无一人。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31891",
+   "premise": "文档某章节规定：「改革是艰苦细致的工作,靠大轰大嗡是不行的」",
+   "hypothesis": "文档另一章节规定：「越是大轰大嗡,就能越快地完成改革」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49798",
+   "premise": "文档某章节规定：「联合国儿童基金会的数据资料表明,由于水体污染引起的疾病每年就造成4000万儿童的死亡」",
+   "hypothesis": "文档另一章节规定：「每年4000万儿童的死亡是由于饥饿。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31482",
+   "premise": "文档某章节规定：「他听不懂今天的莫斯科街头年轻人聊天的这套嗑」",
+   "hypothesis": "文档另一章节规定：「他只和莫斯科街头上了年纪的人聊天」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-39689",
+   "premise": "文档某章节规定：「康明逊再进一步问:你问我这个做什么」",
+   "hypothesis": "文档另一章节规定：「我一开始交代了这次访问的目的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-2497",
+   "premise": "文档某章节规定：「功能比较齐全、基础设施基本配套的现代港口城市的风采」",
+   "hypothesis": "文档另一章节规定：「这个现代港口城市缺乏基础设施建设」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-100",
+   "premise": "文档某章节规定：「笔者近日在地铁看到曾是京城最火的《北京青年报·青年周末》已压下4期没有销完」",
+   "hypothesis": "文档另一章节规定：「《北京青年报·青年周末》直到现在还是很火,期期脱销」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-10328",
+   "premise": "文档某章节规定：「雷锋精神是中华民族的传统美德和无产阶级的高尚品格在社会主义时期的继承和发展」",
+   "hypothesis": "文档另一章节规定：「雷锋精神和中华民族传统美德无关」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-48883",
+   "premise": "文档某章节规定：「《锵锵三人行》,李菁今天够黄的」",
+   "hypothesis": "文档另一章节规定：「李菁在节目中全程正襟危坐,十分严肃。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42854",
+   "premise": "文档某章节规定：「优化国有经济布局和结构,加快发展混合所有制经济,建立健全现代企业制度和公司法人治理结构」",
+   "hypothesis": "文档另一章节规定：「现代企业制度和公司法人治理机构已经非常健全。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37099",
+   "premise": "文档某章节规定：「李放立即进行调查,发现不少工人戴上这种眼镜几天后就出现头昏、恶心的不良反应」",
+   "hypothesis": "文档另一章节规定：「工人是吃了有毒的饭菜导致出现头昏、恶心」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29394",
+   "premise": "文档某章节规定：「这么一分担,两头便达到平衡,友情逐日加深」",
+   "hypothesis": "文档另一章节规定：「两个人是仇人,一见面就要厮杀起来。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-3737",
+   "premise": "文档某章节规定：「投诉时积极见记者的该公司老总,则避而不再见了」",
+   "hypothesis": "文档另一章节规定：「投诉时积极见记者的该公司老总,现在同样积极见记者」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-41673",
+   "premise": "文档某章节规定：「京津冀协同发展重在疏解北京非首都功能,高标准建设雄安新区」",
+   "hypothesis": "文档另一章节规定：「京津冀协同发展加重了北京的负担」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-39529",
+   "premise": "文档某章节规定：「但是,一些人见钱眼开,或明目张胆,或花样翻新,继续以权经商,以权牟利」",
+   "hypothesis": "文档另一章节规定：「没有权利的人赚钱都是清清白白的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37105",
+   "premise": "文档某章节规定：「李放立即进行调查,发现不少工人戴上这种眼镜几天后就出现头昏、恶心的不良反应」",
+   "hypothesis": "文档另一章节规定：「工人戴上眼镜一个月后才出现头昏、恶心的反应」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-10551",
+   "premise": "文档某章节规定：「在总结辽宁省完善城镇社会保障体系试点工作的基础上,将试点范围扩大到黑龙江和吉林两省」",
+   "hypothesis": "文档另一章节规定：「辽宁省未开展城镇社会保障体系试点工作」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25781",
+   "premise": "文档某章节规定：「澳门特别行政区的筹建工作目前已进入关键性阶段」",
+   "hypothesis": "文档另一章节规定：「此次特别行政区的筹建没有经验可循」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-43785",
+   "premise": "文档某章节规定：「我们一定要直面问题和挑战,勇于担当,恪尽职守,竭尽全力做好工作,决不辜负人民期待」",
+   "hypothesis": "文档另一章节规定：「我们工作中的所有问题早在几十年前就全部解决了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44432",
+   "premise": "文档某章节规定：「在分析当前和今后一个时期世界的多极结构时,不能不看到以下的重要因素:」",
+   "hypothesis": "文档另一章节规定：「以下重要因素是可以在分析的时候被忽略的」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-13654",
+   "premise": "文档某章节规定：「加快国家创新体系和科技基础设施建设,切实加强基础研究」",
+   "hypothesis": "文档另一章节规定：「国家没有创新体系和科技基础设施」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-43913",
+   "premise": "文档某章节规定：「遏制通货膨胀,使1989年物价上涨幅度明显低于1988年,1990年以后的上涨幅度进一步下降」",
+   "hypothesis": "文档另一章节规定：「1989年以后物价水平与1990相同」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49816",
+   "premise": "文档某章节规定：「让我又想到了咱们中国,甚至想到了跟您风格、跟王老师最近都有关的新闻和话题」",
+   "hypothesis": "文档另一章节规定：「让我想到了跟您最近有关的新闻话题。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-28215",
+   "premise": "文档某章节规定：「这天晚上,爱丽丝公寓又来了一个人,是吴佩珍」",
+   "hypothesis": "文档另一章节规定：「吴佩珍带着他的伴侣一起进入爱丽丝公寓」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-39138",
+   "premise": "文档某章节规定：「一要完善产业政策和行业规划,健全行业信息发布制度,正确引导社会投资方向」",
+   "hypothesis": "文档另一章节规定：「每一位投资者都可以投到心仪的项目」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-15080",
+   "premise": "文档某章节规定：「国务院着手编制国家中长期科学和技术发展规划,组织大批专家参与研究论证,已有一批重要研究成果」",
+   "hypothesis": "文档另一章节规定：「国家只制定了科学技术短期规划。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31286",
+   "premise": "文档某章节规定：「安定团结的政治局面的巩固,社会主义民主和社会主义法制建设的发展,有人民政协的重要贡献」",
+   "hypothesis": "文档另一章节规定：「国家稳定的局面只能依靠人民政协。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29359",
+   "premise": "文档某章节规定：「深化“互联网+政务服务”,各地探索推广一批有特色的改革举措,企业和群众办事便利度不断提高」",
+   "hypothesis": "文档另一章节规定：「这是一个中央高度集权的国家,地方没有丝毫自主权。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49946",
+   "premise": "文档某章节规定：「合理的投资规模是保持经济稳定和增强发展后劲的重要条件」",
+   "hypothesis": "文档另一章节规定：「合理的投资规模造成经济波动下滑」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29885",
+   "premise": "文档某章节规定：「江泽民总书记的讲话,李鹏总理的政府工作报告,部突出了抓住机遇,加速发展,深化改革,扩大外放的主题」",
+   "hypothesis": "文档另一章节规定：「没有一个人知道江泽民讲了些什么话」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38579",
+   "premise": "文档某章节规定：「埃及、叙利亚和海湾国家的一些大学都已表示向科威特大学提供财政和教学方面的援助」",
+   "hypothesis": "文档另一章节规定：「海湾国家没有大学愿意为科威特大学提供援助。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-47472",
+   "premise": "文档某章节规定：「出台稳外贸政策,货物通关时间压缩一半以上」",
+   "hypothesis": "文档另一章节规定：「出台积极的外贸政策,货物通关时间压缩一半以上。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25579",
+   "premise": "文档某章节规定：「长安田头出现招手停农机劳务服务在秋播中发挥作用」",
+   "hypothesis": "文档另一章节规定：「小李在长安田头享受不到招手停农机劳务服务」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-22195",
+   "premise": "文档某章节规定：「早在几星期前,比利时国防大臣就指示参谋部着手制订撤军的各种安排」",
+   "hypothesis": "文档另一章节规定：「比利时国防大臣没有指示部署撤军计划」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-12251",
+   "premise": "文档某章节规定：「这台东风加长大卡车,是自治区党委和人民政府为支持宁夏话剧团坚持送戏下乡的正确方向,拉专款购置的」",
+   "hypothesis": "文档另一章节规定：「宁夏话剧团从未有送戏下乡的打算」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-5448",
+   "premise": "文档某章节规定：「完善公司治理结构,健全市场化经营机制,建立职业经理人等制度」",
+   "hypothesis": "文档另一章节规定：「建立职业经理人等制度不是促进完善公司治理结构的方法」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-21571",
+   "premise": "文档某章节规定：「完善基层计划生育基础设施和服务体系,切实加强流动人口计划生育管理」",
+   "hypothesis": "文档另一章节规定：「目前计划生育基础设施和服务体系已经近乎完美」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24194",
+   "premise": "文档某章节规定：「今明两年继续提高企业退休人员基本养老金,人均每年增长10%左右」",
+   "hypothesis": "文档另一章节规定：「今明两年,退休人员基本养老金越来越少」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49796",
+   "premise": "文档某章节规定：「联合国儿童基金会的数据资料表明,由于水体污染引起的疾病每年就造成4000万儿童的死亡」",
+   "hypothesis": "文档另一章节规定：「水体污染引起的疾病会让儿童活蹦乱跳。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-35501",
+   "premise": "文档某章节规定：「作为新闻舆论机关,本报同仁一如既往支持他们的工作」",
+   "hypothesis": "文档另一章节规定：「本报宣传股票、基金、债券等投资信息」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-43728",
+   "premise": "文档某章节规定：「在那条崎岖漫长的成都路上,淮海路与长乐路之间的一段,沿街有一扇小门,虽是常开着,却无人会注意」",
+   "hypothesis": "文档另一章节规定：「所有人都注意到了成都路沿街的那一扇小门」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-8645",
+   "premise": "文档某章节规定：「市井俗语,口语里头比小鲜肉还厉害得多,你比如骂街的」",
+   "hypothesis": "文档另一章节规定：「市井俗语是不怎么厉害的口头语言。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-7274",
+   "premise": "文档某章节规定：「国际社会及有关国家为促进结束柬埔寨战争而提出各种政治解决柬问题的方案,得到广泛关注」",
+   "hypothesis": "文档另一章节规定：「没有国家为促进结束柬埔寨战争提出政治解决柬问题的方案」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-17969",
+   "premise": "文档某章节规定：「要实现江泽民同志在十四大报告中提出的全面振兴农村经济,任重道远」",
+   "hypothesis": "文档另一章节规定：「全面振兴农村经济是件很容易的事。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-6513",
+   "premise": "文档某章节规定：「两年内基本取消全国高速公路省界收费站,实现不停车快捷收费,减少拥堵、便利群众」",
+   "hypothesis": "文档另一章节规定：「取消全国高速公路省界收费站,使路况变得拥堵」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25783",
+   "premise": "文档某章节规定：「澳门特别行政区的筹建工作目前已进入关键性阶段」",
+   "hypothesis": "文档另一章节规定：「澳门特别行政区的筹建工作在1999年12月20日之后展开」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42689",
+   "premise": "文档某章节规定：「当林奕含已经很悲剧式的自杀之后,她已经不存在到底要不要追诉,到底要不要这方面的问题」",
+   "hypothesis": "文档另一章节规定：「所有人对林奕含的自杀都保持冷漠态度」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-730",
+   "premise": "文档某章节规定：「除此之外,双方在有关海湾战后和平安排的问题上也存在某些差别」",
+   "hypothesis": "文档另一章节规定：「双方在对战后和平的处理方式相同」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32116",
+   "premise": "文档某章节规定：「开展群众性农田水利建设,鼓励集体、农户以多种形式建设和经营小型水利设施」",
+   "hypothesis": "文档另一章节规定：「集体和农户经营小型水利设施行为将受到严厉查处。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24719",
+   "premise": "文档某章节规定：「全村69名70岁以上的老人全来了」",
+   "hypothesis": "文档另一章节规定：「村里70岁以上的老人都和子女一起去城市居住了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-30624",
+   "premise": "文档某章节规定：「因专门的工具书店在我市从未有过,国内也少见,书店将开业盛况拍了新闻照片,打算送报社以扩大影响」",
+   "hypothesis": "文档另一章节规定：「该书店不知道专门的工具书店的数量概况」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38970",
+   "premise": "文档某章节规定：「她婆婆拾起被子一把将她裹住,只觉得她在怀里筛糠似地抖,只得劝亲家母先回家转,过些时再来」",
+   "hypothesis": "文档另一章节规定：「她的母亲在婆婆的劝说下把她带回家了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49262",
+   "premise": "文档某章节规定：「但是,黎某目前拥有的3处私人住宅共占地5114.71平方米」",
+   "hypothesis": "文档另一章节规定：「黎某的每处私人住宅占地只有200平方米。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-36383",
+   "premise": "文档某章节规定：「公路桥和铁路桥的100个桥墩,已完成62个,正施工的35个」",
+   "hypothesis": "文档另一章节规定：「公路桥需要101个桥墩才能建立起来」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32556",
+   "premise": "文档某章节规定：「晚上来打针的,总有点不速之客的味道,听见楼梯响,她便猜:是谁来了」",
+   "hypothesis": "文档另一章节规定：「她的诊所只在上午开门,下午和晚上她都在学校。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-23035",
+   "premise": "文档某章节规定：「而广大劳动人民不仅谈不上拥有参加管理国家大事的民主权利,连维护自身的生存权利也十分艰难」",
+   "hypothesis": "文档另一章节规定：「广大劳动人民对参加管理国家大事的需求不高」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44352",
+   "premise": "文档某章节规定：「但是,进入80年代以来,南方国家陷入困境,经济状况严重恶化」",
+   "hypothesis": "文档另一章节规定：「80年代后,北方国家经济状况陷入困境」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-26784",
+   "premise": "文档某章节规定：「动员更多科技人员投身经济建设第一线,推广技术、研发产品、创办科技型企业」",
+   "hypothesis": "文档另一章节规定：「没有科技人员,科技型企业的创办也很顺利。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-45475",
+   "premise": "文档某章节规定：「长江大堤的武昌八铺街、东西湖围堤、武惠堤古家头等险工险段,经过防汛军民的紧张奋战,已经得到加固」",
+   "hypothesis": "文档另一章节规定：「武昌八铺街、东西湖围堤、武惠堤古家头最终决堤」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-30821",
+   "premise": "文档某章节规定：「不仅在八五期间,而且到本世纪末,东部地区都将承担全国原油产量的大头」",
+   "hypothesis": "文档另一章节规定：「本世纪末东部地区将不再是主要原油产区。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25724",
+   "premise": "文档某章节规定：「持续深化农村改革,广袤乡村必将焕发新的生机活力」",
+   "hypothesis": "文档另一章节规定：「农村改革就是要革除农村旧有的一切看似与现代化不符的东西」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-35128",
+   "premise": "文档某章节规定：「老谋深算的肯德基公司也在紧锣密鼓,筹划着在上海乃至全中国谋取进一步发展的新招」",
+   "hypothesis": "文档另一章节规定：「肯德基并不打算在中国继续发展。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-20924",
+   "premise": "文档某章节规定：「各类公司的清理整顿正在抓紧进行,重点清查了1986年以来新成立的公司和流通领域的公司」",
+   "hypothesis": "文档另一章节规定：「各类公司都很正规,不需要整顿清理」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-111",
+   "premise": "文档某章节规定：「这个肯定是有数据的,我们不知道这个数据,不可能百分之百的离婚的人又百分之百的回来了,不可能」",
+   "hypothesis": "文档另一章节规定：「百分百的离婚又百分百回来是很常见的事情」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-30127",
+   "premise": "文档某章节规定：「我们衷心希望济南箱包总厂能早一点实现他们的目标:质量百分之百」",
+   "hypothesis": "文档另一章节规定：「济南箱包总厂没有任何企业文化。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37480",
+   "premise": "文档某章节规定：「而且是成都这大城市,这很有文化,天府之国,诸葛亮的故乡」",
+   "hypothesis": "文档另一章节规定：「诸葛亮几十年来一直都在山东生活」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-10220",
+   "premise": "文档某章节规定：「所以,讲中国的时候,人家会发生误会,现在年轻的网民搞不清楚,以为他原来是大陆去的,加入了美国」",
+   "hypothesis": "文档另一章节规定：「所以,讲中国的时候,人家会发生误会,现在年长的网民搞不清楚,以为他原来是大陆去的,加入了美国」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42954",
+   "premise": "文档某章节规定：「就杨广开凿大运河,纪念这个公祭」",
+   "hypothesis": "文档另一章节规定：「公祭和杨广开凿大运河毫无联系。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-13260",
+   "premise": "文档某章节规定：「那时大家都讲奋斗,一股子开天辟地的劲头」",
+   "hypothesis": "文档另一章节规定：「大家很懒散,一点都没有奋斗的精神」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-36943",
+   "premise": "文档某章节规定：「反是萨沙这个生人,并不觉得有什么拘束,还有几句玩笑话,和这晚的压抑沉闷唱着反调」",
+   "hypothesis": "文档另一章节规定：「这晚的气氛因为萨沙的玩笑话变得更欢乐了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24824",
+   "premise": "文档某章节规定：「粉刷钢梁和墙壁,必须先清除灰尘」",
+   "hypothesis": "文档另一章节规定：「粉刷钢梁和墙壁前不要对其表面做任何额外工作」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-46470",
+   "premise": "文档某章节规定：「事情到了这步,王琦瑶心里倒有些害怕」",
+   "hypothesis": "文档另一章节规定：「王琦瑶很奇怪事情怎么会发展成这样」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-45171",
+   "premise": "文档某章节规定：「两个月来,黎巴嫩依然处于政治危机中,教派之间的武装流血冲突时有发生」",
+   "hypothesis": "文档另一章节规定：「观察家认为,该国政治危机已经解除」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42068",
+   "premise": "文档某章节规定：「我们逐步积累了在新的形势下正确进行宏观调控和促进经济增长的经验和办法」",
+   "hypothesis": "文档另一章节规定：「一夜之间我们就掌握了正确宏观调控的方法。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-36511",
+   "premise": "文档某章节规定：「组织科研攻关,在诊断、治疗、防疫等方面取得重要进展」",
+   "hypothesis": "文档另一章节规定：「此次攻关仅是个人行为,没有任何组织」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32081",
+   "premise": "文档某章节规定：「在场的人都佩服他那惊人的记忆力」",
+   "hypothesis": "文档另一章节规定：「他那惊人的记忆力使所有人感到厌恶和惊恐。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24670",
+   "premise": "文档某章节规定：「今年要适当调整粮棉和能源价格,以调动广大农民的生产积极性,支持能源工业的发展,促进能源的节约」",
+   "hypothesis": "文档另一章节规定：「今年的粮棉和能源市场十分稳定,无须调控」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-43027",
+   "premise": "文档某章节规定：「越南与金边政权在联合国监督下撤军和建立四方临时联合政府这两个关键问题上仍坚持其顽固立场」",
+   "hypothesis": "文档另一章节规定：「越南与金边政权放弃了他们的立场。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-22881",
+   "premise": "文档某章节规定：「占用耕地建房的,不但要经镇人民政府审核,还要报县人民政府批准,并且由县国土局办理用地手续」",
+   "hypothesis": "文档另一章节规定：「占用耕地建房只要镇人民政府审核就行」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-3659",
+   "premise": "文档某章节规定：「一次孩子拉稀,看下来硬是要了七十五」",
+   "hypothesis": "文档另一章节规定：「一次孩子拉稀医疗费用只要三十元」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-40578",
+   "premise": "文档某章节规定：「各项决策都要做到程序依法规范、过程民主公开、结果科学公正」",
+   "hypothesis": "文档另一章节规定：「只有部分决策需要做到程序依法规范、过程民主公开、结果科学公正」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49998",
+   "premise": "文档某章节规定：「对扰乱社会秩序和毒害人民身心健康的封建迷信、赌博活动,必须依法取缔」",
+   "hypothesis": "文档另一章节规定：「所有的封建迷行活动都扰乱社会秩序和毒害人民身心健康」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-10526",
+   "premise": "文档某章节规定：「就像你刚才说的,就好像有的人甚至说这是一种文化上的寻父行为」",
+   "hypothesis": "文档另一章节规定：「所有人都认为这是一种文化上的寻父行为」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-39674",
+   "premise": "文档某章节规定：「市面上的空气很恐慌,有点朝不保夕的样子」",
+   "hypothesis": "文档另一章节规定：「经济的发展一直都是一帆风顺的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-48008",
+   "premise": "文档某章节规定：「也没点名,就在网上留言说,我们要听我们要听我们要听这样子的」",
+   "hypothesis": "文档另一章节规定：「留言里有暴力倾向的内容所以被禁止了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42666",
+   "premise": "文档某章节规定：「坚定维护国家的主权、安全和发展利益,保障我国公民和法人在海外的合法权益」",
+   "hypothesis": "文档另一章节规定：「我国公民和法人在海外无正当权益。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-47406",
+   "premise": "文档某章节规定：「严师母说她女儿还小得很,他就说情愿等,等白了头也不悔的」",
+   "hypothesis": "文档另一章节规定：「严师母的女儿已经四十岁了,是个大龄未婚女青年。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-19493",
+   "premise": "文档某章节规定：「晚上睡在地下道里,也有一些同学睡在广场上,围裹四周的是破旧的衣服」",
+   "hypothesis": "文档另一章节规定：「学校有一个宿舍楼供全部学生住宿」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38034",
+   "premise": "文档某章节规定：「的确,在熙熙攘攘的商场内转了一圈,这支不长的队伍引起了记者的注意」",
+   "hypothesis": "文档另一章节规定：「在商场转了好久,记者才发现这支不长的队伍」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32217",
+   "premise": "文档某章节规定：「生态保护和污染防治任务仍然繁重」",
+   "hypothesis": "文档另一章节规定：「人类并没有在生态保护和环境治理方面花费功夫」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37021",
+   "premise": "文档某章节规定：「实施鼓励进口政策,增加国内短缺产品进口」",
+   "hypothesis": "文档另一章节规定：「国内的产品一直都有充足的储备量」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-33225",
+   "premise": "文档某章节规定：「英国舆论强烈反对保守党政府取消制裁的决定」",
+   "hypothesis": "文档另一章节规定：「前两天内阁刚被议会弹劾集体辞职下台,新一届内阁还没来得及组建」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-35878",
+   "premise": "文档某章节规定：「在集市靠近北京西路口处,一个施工后留下的大坑里积满了雨水,里面尽是砖头、菜皮,成了天然垃圾箱」",
+   "hypothesis": "文档另一章节规定：「施工人员对施工留下的坑的处理方式符合规范」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-620",
+   "premise": "文档某章节规定：「今年国民经济和社会发展的主要预期目标是:国内生产总值增长8%左右,经济结构进一步优化」",
+   "hypothesis": "文档另一章节规定：「经济结构已经足够优秀,无需优化」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-34515",
+   "premise": "文档某章节规定：「这《共产党人》栏目里,老乃早该占一位置喽」",
+   "hypothesis": "文档另一章节规定：「《共产党员》栏目前年就改名《党员》了。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29210",
+   "premise": "文档某章节规定：「他的意思绝对不会被弹劾,你是绝对认为他绝对会弹劾对吧」",
+   "hypothesis": "文档另一章节规定：「他是个刚出生的婴儿,没有意思表示能力。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38887",
+   "premise": "文档某章节规定：「合理调整棉花布局,稳定新疆棉区种植面积,进一步调减冀鲁豫和长江流域种棉面积」",
+   "hypothesis": "文档另一章节规定：「冀鲁豫和长江流域种棉面积会扩大」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42873",
+   "premise": "文档某章节规定：「但是下边的报道,你看陈星身败名裂,还有哪一页」",
+   "hypothesis": "文档另一章节规定：「我们是在收音机上得知陈星身败名裂的消息的。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29326",
+   "premise": "文档某章节规定：「我们会闻这个风向,这就必有问题,就是说」",
+   "hypothesis": "文档另一章节规定：「这是正在太空漫步的宇航员的任务报告。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-41618",
+   "premise": "文档某章节规定：「进出口贸易总额2.56万亿美元,增长17.8%」",
+   "hypothesis": "文档另一章节规定：「中国进出口贸易总额将呈现负增长趋势」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-22193",
+   "premise": "文档某章节规定：「早在几星期前,比利时国防大臣就指示参谋部着手制订撤军的各种安排」",
+   "hypothesis": "文档另一章节规定：「几周后,比利时国防大臣才指示部署撤军计划」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-27468",
+   "premise": "文档某章节规定：「坚持依法治军方针,加强正规化建设」",
+   "hypothesis": "文档另一章节规定：「军队正不正规无所谓,武器厉害最重要」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-48128",
+   "premise": "文档某章节规定：「它不能说没规矩,而是规矩大杂,虽然莫衷一是,也叫她们嫁接得很好,是杂读的闺阁」",
+   "hypothesis": "文档另一章节规定：「经营这个闺阁的女人的心是掺了假的」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37312",
+   "premise": "文档某章节规定：「同时,重视与支持基础研究和应用基础研究工作」",
+   "hypothesis": "文档另一章节规定：「目前我们只需要支持基础研究就足够了」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42974",
+   "premise": "文档某章节规定：「有了它们,这世界就更老了,像是几万年的炼丹炉一样」",
+   "hypothesis": "文档另一章节规定：「几万年的炼丹炉是非常青春的象征。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32318",
+   "premise": "文档某章节规定：「非典疫情蔓延,集中暴露出我国经济和社会发展不协调的问题」",
+   "hypothesis": "文档另一章节规定：「非典疫情除了带来巨大的经济损失和人员伤亡外无任何影响。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-11389",
+   "premise": "文档某章节规定：「所有这些都说明,对粮食问题的严重性和紧迫性必须要有足够的认识,这是问题的一个方面」",
+   "hypothesis": "文档另一章节规定：「所有这些都说明,对粮食问题的严重性和紧迫性必没有足够的认识不是导致问题的一个方面」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24067",
+   "premise": "文档某章节规定：「也恰巧我们的企业,我们的理念也是这个话题」",
+   "hypothesis": "文档另一章节规定：「我们企业的理念与所谈的话题无关」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-43551",
+   "premise": "文档某章节规定：「要努力增加城乡居民收入,提高居民购买力水平」",
+   "hypothesis": "文档另一章节规定：「居民购买力水品只和居民收入有关」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-13953",
+   "premise": "文档某章节规定：「县乡级电视台拍起“药片”更加肆无忌惮」",
+   "hypothesis": "文档另一章节规定：「县乡级电视台拍起“药片”相对收敛一些」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-5228",
+   "premise": "文档某章节规定：「澳门特别行政区基本法的起草工作也已于去年开始,预计将在1993年完成」",
+   "hypothesis": "文档另一章节规定：「澳门特别行政区基本法的起草工作尚未开始、」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32377",
+   "premise": "文档某章节规定：「从这一次开始,搬家在唐启文成了家常便饭」",
+   "hypothesis": "文档另一章节规定：「唐启文搬过一次家,但他不适应新环境,很快又回去了,再也没搬过。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-26926",
+   "premise": "文档某章节规定：「消费拉动经济增长作用进一步增强」",
+   "hypothesis": "文档另一章节规定：「小明今天没有消费,城市的经济增长停滞了。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-11962",
+   "premise": "文档某章节规定：「重视工会、共青团、妇联等群众团体的桥梁和纽带作用,发挥舆论监督作用」",
+   "hypothesis": "文档另一章节规定：「工会、共青团、妇联等群众团体没有作用」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-34868",
+   "premise": "文档某章节规定：「Wabi-Sabi那是他当中的一个概念」",
+   "hypothesis": "文档另一章节规定：「他的设计运用了各种概念,除了Wabi-Sabi。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44470",
+   "premise": "文档某章节规定：「对重大项目要进行专项审计和跟踪审计」",
+   "hypothesis": "文档另一章节规定：「专项审计是对重大项目进行审计的唯一方法」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-31291",
+   "premise": "文档某章节规定：「对于成绩特别突出的大学生营业员,公司理所当然予以重用」",
+   "hypothesis": "文档另一章节规定：「营业员都是40岁以上的中年人。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32247",
+   "premise": "文档某章节规定：「这个事我自己要做决定,这个情绪其实是人的一种本能」",
+   "hypothesis": "文档另一章节规定：「我将这个事的决定权完全交给了父母。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32553",
+   "premise": "文档某章节规定：「晚上来打针的,总有点不速之客的味道,听见楼梯响,她便猜:是谁来了」",
+   "hypothesis": "文档另一章节规定：「她一家人都是学文科的,没有人懂怎么打针。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-14318",
+   "premise": "文档某章节规定：「有费解的台词,也由程先生翻译给蒋丽莉,再传给王琦瑶」",
+   "hypothesis": "文档另一章节规定：「程先生直接将翻译的台词传给王琦瑶」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32948",
+   "premise": "文档某章节规定：「这标志着我国向建立社会主义市场经济体制迈出了重要步伐」",
+   "hypothesis": "文档另一章节规定：「我国已经处于社会主义市场经济阶段」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-30946",
+   "premise": "文档某章节规定：「小林绞尽脑汁想人,把京城里的同学想遍,没想出与这个单位有关系的人」",
+   "hypothesis": "文档另一章节规定：「小林想到了跟这个单位有关系的人是谁。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-336",
+   "premise": "文档某章节规定：「现在,我代表国务院,向大会报告政府工作,请予审议,并请全国政协委员提出意见」",
+   "hypothesis": "文档另一章节规定：「我代表国务院向大会报告政府工作,全国政协议员无权提出意见」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42917",
+   "premise": "文档某章节规定：「大力发展职业教育,特别要重点支持农村中等职业教育」",
+   "hypothesis": "文档另一章节规定：「我们重点支持城市中等职业教育发展。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29238",
+   "premise": "文档某章节规定：「双方官员以及中英、中葡联合联络小组通过磋商,就有关顺利过渡的一系列问题达成了协议」",
+   "hypothesis": "文档另一章节规定：「双方官员在磋商中相互厮杀,最终无人幸免。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-39446",
+   "premise": "文档某章节规定：「重生产、轻流通,这是金牌大省悲哀的症结所在」",
+   "hypothesis": "文档另一章节规定：「只要是金牌大省就一定会有这两个问题」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-36107",
+   "premise": "文档某章节规定：「保持合理投资规模,优化投资结构」",
+   "hypothesis": "文档另一章节规定：「投资结构一直是这样,以后也会是这样」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-26596",
+   "premise": "文档某章节规定：「基本完成省市县政府机构改革,继续推进事业单位改革」",
+   "hypothesis": "文档另一章节规定：「短期内将取消省市县政府机构和事业单位的存在。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-14263",
+   "premise": "文档某章节规定：「对不起,你错了,因为今天要讲的台北故事,它的起点在香港」",
+   "hypothesis": "文档另一章节规定：「今天的台北故事起点在台北或者其他台湾的地方」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-46620",
+   "premise": "文档某章节规定：「据说他是比尔盖茨,巴菲特这些人行善的榜样」",
+   "hypothesis": "文档另一章节规定：「比尔盖茨,巴菲特这些人对他深以为恶」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42220",
+   "premise": "文档某章节规定：「这次通过处决张文列,同时也看到我们党惩治腐败的决心是很大的」",
+   "hypothesis": "文档另一章节规定：「我们党对腐败行为睁一只眼,闭一只眼。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-8218",
+   "premise": "文档某章节规定：「记者认为,台湾当局对待两岸经贸关系的态度,可用三心二意四个字来概括,这是干扰与障碍产生的主要原因」",
+   "hypothesis": "文档另一章节规定：「台湾当局对待俩岸经济贸易的态度很肯定」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37361",
+   "premise": "文档某章节规定：「安政府主张明确规定停火日,而从停火到大选的期限则应在以后由安所有政治力量共同商定」",
+   "hypothesis": "文档另一章节规定：「至于停火到大选的期限,就现在立刻决定吧」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-45538",
+   "premise": "文档某章节规定：「他,捧出一大摞资料卷宗呵呵笑着」",
+   "hypothesis": "文档另一章节规定：「他每次看到这堆资料卷宗,就会很生气愤懑」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-40790",
+   "premise": "文档某章节规定：「从长远看,解决教育经费不足的问题,只靠增加政府财政拨款是不够的」",
+   "hypothesis": "文档另一章节规定：「财政拨款可以完全满足教育经费需求」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-4292",
+   "premise": "文档某章节规定：「但是你看今天的社会,二十年间发生了很大的变化」",
+   "hypothesis": "文档另一章节规定：「今天的社会和二十年前的社会在各个方面差不太多」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-45490",
+   "premise": "文档某章节规定：「三要更加重视思想政治和品德教育」",
+   "hypothesis": "文档另一章节规定：「这是一所幼儿托管学校的学校课程改革计划书」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-4354",
+   "premise": "文档某章节规定：「必须切实防止和坚决纠正廉价出售甚至侵吞国家财产,以及变相扩大消费基金等错误做法」",
+   "hypothesis": "文档另一章节规定：「没有人要防止、纠正廉价出售甚至侵吞国家财产,以及变相扩大消费基金等错误做法」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-47615",
+   "premise": "文档某章节规定：「程先生又不便大声,只得压低了声音,里边就是不开门,待他认了输准备走开,却听那门锁略地一声开了」",
+   "hypothesis": "文档另一章节规定：「看门始终紧闭着,程先生离开了。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-808",
+   "premise": "文档某章节规定：「所以,讲中国的时候,人家会发生误会,现在年轻的网民搞不清楚,以为他原来是大陆去的,加入了美国」",
+   "hypothesis": "文档另一章节规定：「所以,讲中国的时候,没有人会发生误会」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49812",
+   "premise": "文档某章节规定：「要健全民主制度,丰富民主形式,拓宽民主渠道,依法实行民主选举、民主决策、民主管理、民主监督」",
+   "hypothesis": "文档另一章节规定：「可以随心所欲实行民主选举、民主决策、民主管理、民主监督。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-4129",
+   "premise": "文档某章节规定：「自去年参院选举被在野党夺得参院主导权后,自民党在国会通过法案已不如过去那么容易」",
+   "hypothesis": "文档另一章节规定：「自民党在国会通过法案比过去容易」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-36992",
+   "premise": "文档某章节规定：「大力发展特色现代农业,扶持农产品精深加工和销售,发展农村二三产业,加快小城镇建设,壮大县域经济」",
+   "hypothesis": "文档另一章节规定：「政策强调农产品直接进行销售从而获取利润」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-5854",
+   "premise": "文档某章节规定：「来自全国各地的万名石油工人和科技人员汇集冀东油田,夜以继日地顽强奋战」",
+   "hypothesis": "文档另一章节规定：「只有来自北京的石油工人和科技人员才可以去冀东油田工作」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-30913",
+   "premise": "文档某章节规定：「在贯彻宪法和各项法律的基础上,完善行政法规和制度,并严格执法」",
+   "hypothesis": "文档另一章节规定：「现有的行政法规不应该做任何改动。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32569",
+   "premise": "文档某章节规定：「王琦瑶也至少是将他当半个朋友看的,她有时甚至会忽略他的年轻,同他说一些自己的心情」",
+   "hypothesis": "文档另一章节规定：「王琦瑶是个非常内向的人,从不向家人之外的人说起自己的心情。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44511",
+   "premise": "文档某章节规定：「所以我才出来这么一个规定,就是说你进书店至少要买一本书,甚至有他的朋友都发文,你们知道这个老板吗」",
+   "hypothesis": "文档另一章节规定：「他的朋友的发文是仅自己可见的私密状态」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24430",
+   "premise": "文档某章节规定：「对外贸易全面发展,进出口贸易总额达到1958亿美元,比上年增长百分之十八点二」",
+   "hypothesis": "文档另一章节规定：「去年进出口贸易总额是2000亿美元」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-19566",
+   "premise": "文档某章节规定：「要充分尊重和信任科研人员,赋予创新团队和领军人才更大的人财物支配权和技术路线决策权」",
+   "hypothesis": "文档另一章节规定：「创新团队和领军人才没有财物支配权」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-33060",
+   "premise": "文档某章节规定：「原来保姆已经闻知他们在给孩子找幼儿园」",
+   "hypothesis": "文档另一章节规定：「我国幼儿园采用全覆盖强制分配名额的方法,孩子一旦适龄自动获得某家幼儿园的名额」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-46397",
+   "premise": "文档某章节规定：「现有土地承包关系要保持稳定并长久不变,赋予农民包括离乡农民工更加充分而有保障的土地承包经营权」",
+   "hypothesis": "文档另一章节规定：「土地承包权问题和农民之间的关系微乎其微」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-26891",
+   "premise": "文档某章节规定：「提高知识产权创造、运用、保护和管理水平」",
+   "hypothesis": "文档另一章节规定：「局部无视知识产权的保护和管理水平。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-21992",
+   "premise": "文档某章节规定：「这位发言人说,北约以极大的兴趣注视着关于苏将从匈牙利撤军的讨论,北约一直希望减少苏联对欧洲的军事威胁」",
+   "hypothesis": "文档另一章节规定：「北约不关心苏联是否会从匈牙利撤军」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-27949",
+   "premise": "文档某章节规定：「那罗曼蒂克早已无影无踪,只留有一些记忆,在很少几个人的心里,王琦瑶就是其中一个」",
+   "hypothesis": "文档另一章节规定：「王琦瑶在过去对罗曼蒂克毫不关心」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-29871",
+   "premise": "文档某章节规定：「最后呢这个汤里边原来没有鱼,是一个豆腐汤」",
+   "hypothesis": "文档另一章节规定：「汤是在一个封闭的房间做的,里面并没有豆腐」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37684",
+   "premise": "文档某章节规定：「康明逊不知是喜是悲,他足有整整一周没去王琦瑶那里」",
+   "hypothesis": "文档另一章节规定：「康明逊一周内去了好几次王琦瑶那里」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49224",
+   "premise": "文档某章节规定：「今年要基本完成省级政府的机构改革,并在部分市县级政府进行机构改革」",
+   "hypothesis": "文档另一章节规定：「今年要完成所有县级政府的机构改革。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-21743",
+   "premise": "文档某章节规定：「隔几天又想杀她,又出去了,就循环往复,就这么一个概念」",
+   "hypothesis": "文档另一章节规定：「(某人)想杀她的念头只出现一次」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-24",
+   "premise": "文档某章节规定：「但全院医生、护士最先挖掘的不是自己的东西,而是医院的器材和药品」",
+   "hypothesis": "文档另一章节规定：「医生和护士从来不挖掘医院的器材」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32259",
+   "premise": "文档某章节规定：「这个其实跟真的聪明和笨没有任何关系」",
+   "hypothesis": "文档另一章节规定：「聪明的人在这件事上更有发言权。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-18328",
+   "premise": "文档某章节规定：「乡镇工业应当主要发展农副产品加工、某些原材料生产和为城市工业配套的生产,发展出口创汇产品的生产」",
+   "hypothesis": "文档另一章节规定：「城市工业适合发挥农村产品加工业」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-37474",
+   "premise": "文档某章节规定：「继续推行城镇居民住房制度的改革,合理制定出售公房的统一原则、分类标准和定价办法」",
+   "hypothesis": "文档另一章节规定：「所有公房都由政府直接分配给困难群众」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-4929",
+   "premise": "文档某章节规定：「坚持党的领导,是做好工会、共青团、妇联工作的根本保证」",
+   "hypothesis": "文档另一章节规定：「工会、共青团、妇联工作可以在不坚持党的领导下做好」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25485",
+   "premise": "文档某章节规定：「我们将继续从中国人民和世界各国人民的根本利益出发,为妥善解决热点问题和全球性问题作出新的贡献」",
+   "hypothesis": "文档另一章节规定：「中国人民的利益和世界各国人民的利益是冲突的」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-8262",
+   "premise": "文档某章节规定：「切实解决基层计划生育工作的实际困难和问题,真正做到责任到位、措施到位、投入到位」",
+   "hypothesis": "文档另一章节规定：「基层计划生育工作中的困难是无法解决的」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-42888",
+   "premise": "文档某章节规定：「全面贯彻党的宗教工作基本方针,发挥宗教界人士和信教群众在促进经济社会发展中的积极作用」",
+   "hypothesis": "文档另一章节规定：「宗教工作基本方针预计在明年十一月才能制定出来。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-47705",
+   "premise": "文档某章节规定：「他们有明确规定:凡违反四项基本原则的不演」",
+   "hypothesis": "文档另一章节规定：「违反四项基本原则的不演是口头承诺」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38144",
+   "premise": "文档某章节规定：「21点:法国总统签署了正式的作战命令」",
+   "hypothesis": "文档另一章节规定：「法国总统签署的是美国的作战命令」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-33619",
+   "premise": "文档某章节规定：「会议上讨论了多种政治解决柬问题的方案」",
+   "hypothesis": "文档另一章节规定：「大家对于政治解决柬问题都束手无策」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-28883",
+   "premise": "文档某章节规定：「你比如说你不能指望查老师有一段是纽约客水平,另外一段知音水平,这是不可能的」",
+   "hypothesis": "文档另一章节规定：「查老师的水平一会高于纽约客,一会低于知音」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-22865",
+   "premise": "文档某章节规定：「扩大对外开放,增进同世界各国人民的交往和友谊,维护世界和平,有人民政协的重要贡献」",
+   "hypothesis": "文档另一章节规定：「人民政协自始至终没有参与过这些工作」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-27139",
+   "premise": "文档某章节规定：「工人阶级是企业的主人,是国家的主人,自然也是改革的主人」",
+   "hypothesis": "文档另一章节规定：「资产阶级比是企业、国家和改革的主人」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-25955",
+   "premise": "文档某章节规定：「又拦住一辆汽车,抱起浑身是血、昏倒在地的任志庆送往医院救治的人们,同样没有一个留下姓名」",
+   "hypothesis": "文档另一章节规定：「任志庆受伤昏倒的地方荒无人烟,没有任何人和车经过」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-38529",
+   "premise": "文档某章节规定：「加大执法力度,依法严厉惩治建设领域的各种腐败行为」",
+   "hypothesis": "文档另一章节规定：「加大执法力度会降低惩治建设领域的腐败问题的能力。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-32019",
+   "premise": "文档某章节规定：「台下是黑压压的一片,没底的深渊似的」",
+   "hypothesis": "文档另一章节规定：「台上正在表演,台下却空无一人。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49655",
+   "premise": "文档某章节规定：「在复杂多变的国际形势下,我国坚定不移地奉行独立自主的和平外交政策,外交工作取得新的成就」",
+   "hypothesis": "文档另一章节规定：「我国奉行的和平外交政策,让外交工作很难开展。」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-44829",
+   "premise": "文档某章节规定：「新中国成立之初,我国只有寥寥几家面粉厂、罐头食品厂、糖厂和啤酒厂,而且大多是作坊式的手工操作」",
+   "hypothesis": "文档另一章节规定：「这些工厂只有手工操作这一种生产方式」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-49792",
+   "premise": "文档某章节规定：「美日经济前景的反差,也是造成美元和日元升、贬的原因」",
+   "hypothesis": "文档另一章节规定：「美元和日元升、贬,也是造成两国经济反差的原因」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  },
+  {
+   "id": "ocnli-19490",
+   "premise": "文档某章节规定：「是啊,这个等于是他心理上的一个征兆」",
+   "hypothesis": "文档另一章节规定：「他看到乌云满天,预兆这将是一个阳光明媚的一天」",
+   "label": "inconsistent",
+   "probe_type": "ocnli_contradiction"
+  }
+ ]
+}

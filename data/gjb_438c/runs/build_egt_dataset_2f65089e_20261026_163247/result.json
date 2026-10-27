@@ -1,0 +1,172 @@
+{
+ "n_qa": 91,
+ "seeds": {
+  "total": 111,
+  "by_method": {
+   "e1_template_match": 28,
+   "l0_entity_detector:TERM-05": 49,
+   "sequence_alignment": 14,
+   "identifier_exact_match": 11,
+   "exact_statement": 9
+  }
+ },
+ "qa_path": {
+  "support": {
+   "n_seeds": 111,
+   "seed_passthrough": 111,
+   "multi_claim_merged": 30
+  },
+  "refute": {
+   "n_seeds": 111,
+   "skipped_no_flippable_structure": 48,
+   "skipped_self_check": 4,
+   "skipped_module_gate": 30,
+   "attempts_by_operator": {
+    "term_slot_swap": 26,
+    "e1_ending_flip": 8,
+    "numeric_operator_flip": 2,
+    "e1_prompt_swap": 16,
+    "id_tail_mutation": 8,
+    "id_sibling_swap": 3
+   },
+   "kept_by_operator": {
+    "e1_ending_flip": 8,
+    "e1_prompt_swap": 8,
+    "numeric_operator_flip": 1,
+    "id_tail_mutation": 8,
+    "term_slot_swap": 1,
+    "id_sibling_swap": 3
+   },
+   "self_check_pass_rate": 0.8788,
+   "attempt_yield": 0.4603,
+   "module_verdicts_of_kept": {
+    "refute": 19,
+    "not_in_evidence": 10
+   },
+   "module_refute_rate_of_kept": 0.6552
+  },
+  "nie": {
+   "span": {
+    "attempted": 110,
+    "kept": 50,
+    "skipped_no_support_statement": 0,
+    "skipped_self_check": 0,
+    "skipped_module_support": 46,
+    "skipped_module_refute": 14
+   },
+   "block": {
+    "attempted": 111,
+    "kept": 54,
+    "skipped_all_blocks_support": 0,
+    "skipped_self_check": 0,
+    "skipped_module_support": 51,
+    "skipped_module_refute": 6
+   },
+   "cross_instance": {
+    "attempted": 111,
+    "kept": 55,
+    "skipped_no_peer": 56
+   }
+  }
+ },
+ "statement_path": {
+  "per_doc": [
+   {
+    "doc": "04数据统一访问服务软件需求规格说明-终稿",
+    "n_blocks": 411,
+    "n_content_blocks": 360,
+    "n_seeds": 904,
+    "kept": {
+     "support": 378,
+     "refute": 209,
+     "not_in_evidence": 1278
+    }
+   }
+  ],
+  "doc_errors": {},
+  "refute": {
+   "n_seeds": 904,
+   "skipped_no_flippable_structure": 645,
+   "skipped_self_check": 42,
+   "skipped_module_gate": 8,
+   "attempts_by_operator": {
+    "enum_member_delete": 10,
+    "id_tail_mutation": 73,
+    "id_sibling_swap": 133,
+    "e1_prompt_swap": 34,
+    "numeric_value_perturb": 1,
+    "numeric_unit_swap": 6,
+    "numeric_operator_flip": 2
+   },
+   "kept_by_operator": {
+    "id_tail_mutation": 73,
+    "id_sibling_swap": 91,
+    "e1_prompt_swap": 34,
+    "numeric_value_perturb": 1,
+    "numeric_unit_swap": 6,
+    "numeric_operator_flip": 2,
+    "enum_member_delete": 2
+   }
+  }
+ },
+ "dataset": {
+  "raw_counts": {
+   "support": 519,
+   "refute": 238,
+   "not_in_evidence": 1437
+  },
+  "final_counts": {
+   "support": 238,
+   "refute": 238,
+   "not_in_evidence": 238
+  },
+  "cap_per_label": 1000,
+  "balance": true,
+  "total": 714,
+  "version": "egt_synthesis_v2"
+ },
+ "final_by_source": {
+  "statement": 595,
+  "l0_entity_detector": 32,
+  "sequence_alignment": 13,
+  "e1_template_match": 31,
+  "multi_claim_merge": 9,
+  "identifier_exact_match": 18,
+  "exact_statement": 6,
+  "cross_instance": 10
+ },
+ "final_by_operator": {
+  "support_rewrite:filler_removal": 147,
+  "support_rewrite:deontic_swap": 26,
+  "support_rewrite:num_format": 1,
+  "seed_passthrough": 55,
+  "multi_claim_merge": 9,
+  "id_tail_mutation": 81,
+  "id_sibling_swap": 94,
+  "e1_prompt_swap": 42,
+  "numeric_value_perturb": 1,
+  "numeric_unit_swap": 6,
+  "numeric_operator_flip": 3,
+  "enum_member_delete": 2,
+  "e1_ending_flip": 8,
+  "term_slot_swap": 1,
+  "cross_block_evidence": 115,
+  "inblock_span_deletion": 97,
+  "cross_instance_evidence_swap": 10,
+  "evidence_block_deletion": 10,
+  "evidence_span_deletion": 6
+ },
+ "acceptance": {
+  "kept_refute": 238,
+  "skipped_self_check": 46,
+  "self_check_pass_rate": 0.838,
+  "module_verdicts_of_kept": {
+   "refute": 208,
+   "not_in_evidence": 30
+  },
+  "module_refute_rate_of_kept": 0.8739
+ },
+ "files": {
+  "egt_dataset.jsonl": 714
+ }
+}

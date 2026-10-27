@@ -1,0 +1,79 @@
+{
+ "protocol": "LoRA InfoNCE: in-batch neg + hard neg, channel-blocked passage塔(每epoch no_grad重编码)",
+ "query_prefix": "none(对称用法, 与候选侧一致)",
+ "lora": {
+  "r": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "targets": [
+   "query",
+   "key",
+   "value",
+   "attention.output.dense"
+  ],
+  "n_params": 3145728
+ },
+ "n_triples": 9436,
+ "n_train": 8493,
+ "n_dev": 943,
+ "data_stat": {
+  "n_raw": 9436,
+  "n_ok": 9436,
+  "n_skipped": 0
+ },
+ "epochs": 3,
+ "lr": 0.0002,
+ "tau": 0.03,
+ "eff_batch": 64,
+ "micro_batch_actual": 16,
+ "n_hard_neg": 7,
+ "seed": 42,
+ "weight_decay": 0.01,
+ "precision": "fp16",
+ "data_spec": {
+  "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\data_assets\\retrieval_train\\triples.json",
+  "n": 9436,
+  "resolve": {
+   "n_raw": 9436,
+   "n_text_schema": 0,
+   "n_chunkid_schema": 9436,
+   "n_pos_missing": 0,
+   "n_neg_missing": 0,
+   "n_ok": 9436
+  }
+ },
+ "fingerprint": "5ddc0bd9",
+ "fit_ms": 611064.1,
+ "gpu_mem_gb": 1.82,
+ "gpu_reserved_gb": 2.14,
+ "oom_halvings": 0,
+ "history": [
+  {
+   "epoch": 1,
+   "loss": 2.7039,
+   "train_acc": 0.4315,
+   "n_steps": 133,
+   "pool": 4193,
+   "dev_recall@10": 0.5716,
+   "dev_mrr@10": 0.365
+  },
+  {
+   "epoch": 2,
+   "loss": 2.3584,
+   "train_acc": 0.4879,
+   "n_steps": 133,
+   "pool": 4193,
+   "dev_recall@10": 0.6119,
+   "dev_mrr@10": 0.4229
+  },
+  {
+   "epoch": 3,
+   "loss": 2.2025,
+   "train_acc": 0.5056,
+   "n_steps": 133,
+   "pool": 4193,
+   "dev_recall@10": 0.6426,
+   "dev_mrr@10": 0.4463
+  }
+ ]
+}

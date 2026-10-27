@@ -14,7 +14,6 @@
 import base64
 import json
 import os
-import sys
 import time
 from pathlib import Path
 
@@ -22,7 +21,7 @@ import requests
 
 BASE = Path(__file__).resolve().parent.parent
 KIMI_URL = "https://api.moonshot.cn/v1/chat/completions"
-KIMI_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY
 IMAGE_ANALYSES = BASE / "data/gjb_438c/data_assets/chunks/srs_image_analyses.json"
 OUT_PATH = BASE / "data/gjb_438c/data_assets/vlm_flowchart_extract.jsonl"
 
@@ -65,7 +64,7 @@ def extract_flowchart(img_path):
                                 "start_node": "", "end_nodes": [], "data_flow_direction": "",
                                 "raw": content[:200]}
             time.sleep(3)
-        except Exception as e:
+        except Exception:
             if attempt < 2:
                 time.sleep(5)
     return None

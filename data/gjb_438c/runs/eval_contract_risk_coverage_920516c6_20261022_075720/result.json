@@ -1,0 +1,259 @@
+{
+ "protocol": "pre-registered E-matrix #48: E0 forced similarity classification vs E3 QualityContract obligation gating + abstention, native frozen-BGE cosine relation score",
+ "rq": "RQ8: relation-score-only confirmation vs obligation-checked confirmation with abstention — confirmed precision gain vs abstention cost",
+ "n_pairs_total": 27694,
+ "skipped_missing_vector": 15,
+ "split_pair_counts": {
+  "dev": 6947,
+  "test": 6848,
+  "train": 13884
+ },
+ "fold_map_source": "train_shared_projection_3408ed57_20261022_073000 (timestamp 20261022_073000)",
+ "fold_map": {
+  "01": 1,
+  "02": 2,
+  "03": 3,
+  "04": 3,
+  "05": 3,
+  "06": 0,
+  "07": 1,
+  "08": 2,
+  "09": 2,
+  "10": 1,
+  "11": 3,
+  "12": 0,
+  "13": 0,
+  "14": 3,
+  "15": 3,
+  "16": 1
+ },
+ "relation_score": "native BGE cosine (feature_snapshot_v1, no projection)",
+ "dev_threshold": {
+  "rule": "95th percentile of dev-split negative pair scores",
+  "q": 0.95,
+  "tau": 0.9008,
+  "n_dev_pairs": 6947,
+  "n_dev_neg": 3653
+ },
+ "E0_forced": {
+  "n_pairs": 6848,
+  "n_pos": 3063,
+  "n_neg": 3785,
+  "tp": 1309,
+  "fp": 75,
+  "fn": 1754,
+  "tn": 3710,
+  "precision": 0.9458,
+  "recall": 0.4274,
+  "false_merge_rate": 0.0198,
+  "error_rate": 0.2671,
+  "coverage": 1.0,
+  "threshold": 0.9008
+ },
+ "E3_contract": {
+  "n_pairs": 6848,
+  "n_pos": 3063,
+  "n_neg": 3785,
+  "n_confirmed": 1118,
+  "confirmed_tp": 1118,
+  "confirmed_fp": 0,
+  "confirmed_precision": 1.0,
+  "confirmed_recall": 0.365,
+  "false_merge_rate": 0.0,
+  "n_abstain": 266,
+  "abstention_rate": 0.0388,
+  "n_rejected": 5464,
+  "rejected_pos": 1754,
+  "rejected_neg": 3710,
+  "coverage": 0.9612,
+  "selective_risk": 0.2665,
+  "e0_fp": 75,
+  "saved_high_risk_fp": 75,
+  "saved_rate": 1.0,
+  "residual_fp": 0,
+  "abstain_missing_obligations": {
+   "identity_evidence": 57,
+   "identity_evidence+scope_evidence+value_parse": 7,
+   "identity_evidence+value_parse": 11,
+   "scope_evidence": 48,
+   "scope_evidence+value_parse": 30,
+   "value_parse": 113
+  },
+  "abstain_missing_obligations_pos": {
+   "scope_evidence": 48,
+   "scope_evidence+value_parse": 30,
+   "value_parse": 113
+  },
+  "abstain_missing_obligations_neg": {
+   "identity_evidence": 57,
+   "identity_evidence+scope_evidence+value_parse": 7,
+   "identity_evidence+value_parse": 11
+  }
+ },
+ "E3_vs_E0": {
+  "confirmed_precision_gain": 0.0542,
+  "abstention_cost_rate": 0.0388,
+  "saved_high_risk_fp": 75,
+  "saved_rate": 1.0,
+  "residual_fp": 0
+ },
+ "risk_coverage": [
+  {
+   "q": 0.5,
+   "tau": 0.7368,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.7347,
+    "recall": 0.8126,
+    "error_rate": 0.2151,
+    "fp": 899,
+    "fn": 574
+   },
+   "E3": {
+    "coverage": 0.748,
+    "abstention_rate": 0.252,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.1121,
+    "n_confirmed": 1662,
+    "n_abstain": 1726
+   }
+  },
+  {
+   "q": 0.7,
+   "tau": 0.7974,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.8531,
+    "recall": 0.6938,
+    "error_rate": 0.1904,
+    "fp": 366,
+    "fn": 938
+   },
+   "E3": {
+    "coverage": 0.8579,
+    "abstention_rate": 0.1421,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.1597,
+    "n_confirmed": 1518,
+    "n_abstain": 973
+   }
+  },
+  {
+   "q": 0.8,
+   "tau": 0.8332,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.8896,
+    "recall": 0.6024,
+    "error_rate": 0.2113,
+    "fp": 229,
+    "fn": 1218
+   },
+   "E3": {
+    "coverage": 0.8972,
+    "abstention_rate": 0.1028,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.1982,
+    "n_confirmed": 1370,
+    "n_abstain": 704
+   }
+  },
+  {
+   "q": 0.9,
+   "tau": 0.8735,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.9218,
+    "recall": 0.5116,
+    "error_rate": 0.2379,
+    "fp": 133,
+    "fn": 1496
+   },
+   "E3": {
+    "coverage": 0.9369,
+    "abstention_rate": 0.0631,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.2332,
+    "n_confirmed": 1268,
+    "n_abstain": 432
+   }
+  },
+  {
+   "q": 0.95,
+   "tau": 0.9008,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.9458,
+    "recall": 0.4274,
+    "error_rate": 0.2671,
+    "fp": 75,
+    "fn": 1754
+   },
+   "E3": {
+    "coverage": 0.9612,
+    "abstention_rate": 0.0388,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.2665,
+    "n_confirmed": 1118,
+    "n_abstain": 266
+   }
+  },
+  {
+   "q": 0.975,
+   "tau": 0.9193,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.965,
+    "recall": 0.3784,
+    "error_rate": 0.2842,
+    "fp": 42,
+    "fn": 1904
+   },
+   "E3": {
+    "coverage": 0.9704,
+    "abstention_rate": 0.0296,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.2865,
+    "n_confirmed": 998,
+    "n_abstain": 203
+   }
+  },
+  {
+   "q": 0.99,
+   "tau": 0.9408,
+   "E0": {
+    "coverage": 1.0,
+    "precision": 0.9801,
+    "recall": 0.3222,
+    "error_rate": 0.3061,
+    "fp": 20,
+    "fn": 2076
+   },
+   "E3": {
+    "coverage": 0.9779,
+    "abstention_rate": 0.0221,
+    "confirmed_precision": 1.0,
+    "selective_risk": 0.31,
+    "n_confirmed": 856,
+    "n_abstain": 151
+   }
+  }
+ ],
+ "findings_validation": {
+  "n_numeric_insufficient_findings": 3505,
+  "n_two_claim_refs": 3505,
+  "n_resolvable_vectors": 3505,
+  "n_e0_similarity_would_confirm": 203,
+  "e0_confirm_rate": 0.0579,
+  "mean_claim_pair_cos": 0.7195
+ },
+ "notes": [
+  "义务-标签相关性(诚实声明): training_pairs_v1的全部正例来自 explicit_identifier(共享显式ID), 全部负例来自 sibling_distinct_identifier(ID不相交)。identity_evidence义务(shared_identifiers非空)因此在该数据集上近乎完美地区分正负例——这既是E3契约设计的本意(确认same_identity需要身份证据), 也意味着confirmed precision的提升幅度与银标签构造方式纠缠, 是门控策略在该标注上的上界, 不能直接外推到金标数据。",
+  "关系分数局限: 最近的train_shared_projection run未保存逐pair分数, 故本实验用BGE原生余弦自包含重算。E0与E3共享同一分数, 对照隔离的是判定策略(门控+弃权 vs 强制分类), 不反映训练投影的质量差异。",
+  "阈值口径: tau = dev fold负例分数的95%分位(与 train_shared_projection.sweep_threshold同一算法, ceil(q*n)-1顺序统计量, 保留4位小数); train fold未参与阈值估计。",
+  "selective risk定义: 提交决策(confirmed或rejected)上的0-1损失, =(confirmed FP + rejected FN)/提交数; E0覆盖率为1, 其risk即全量错误率。risk-coverage扫描tau取dev负例分位数 [0.5, 0.7, 0.8, 0.9, 0.95, 0.975, 0.99]。",
+  "findings验证为模拟口径: 以claim对BGE cos>=tau模拟E0相似度法会把多少条结构线已判为insufficient的numeric冲突候选'误确认', 计数是实例级佐证而非fold级精度测量(claim对来自结构证据图, 不在pair test fold内)。",
+  "fold映射来源: train_shared_projection_3408ed57_20261022_073000 (timestamp 20261022_073000); 无fold_map时回退 sha1(doc)%4。"
+ ],
+ "conclusion": "E3 vs E0 on the test fold: confirmed precision 0.9458 -> 1.0 (delta +0.0542), at the cost of abstaining on 0.0388 of test pairs (266/6848); 75/75 E0 false positives (100.00%) are converted from confirmed merges into abstentions. Silver-label caveat: the identity_evidence obligation nearly reconstructs the positive/negative construction, so the precision gain is an upper bound tied to this labeling."
+}

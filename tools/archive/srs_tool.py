@@ -15,11 +15,9 @@ SRS一致性检测工具集
 用法: 被srs_detect.py调用
 """
 import re
-import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from collections import Counter, defaultdict
-from typing import Optional
 
 
 # ── 工具1: srs_search (改自DocDancer doc_tool.py:436 single_search) ──────

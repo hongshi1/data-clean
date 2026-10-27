@@ -352,7 +352,7 @@ def main():
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     
     print(f"\n生成完成: {len(results)}份文档 → {OUTPUT_DIR}")
-    print(f"每份产出: {{doc_id}}_outline.xml + {{doc_id}}_content.xml")
+    print("每份产出: {doc_id}_outline.xml + {doc_id}_content.xml")
 
 
 if __name__ == "__main__":

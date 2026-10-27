@@ -1,0 +1,47 @@
+%% Task 1 三块专家知识架构图
+flowchart TB
+    subgraph IN["输入: Pair对 (premise, hypothesis)"]
+        direction LR
+        P1["「可用空间200G以上」"]
+        P2["「缓存大小不小于20M」"]
+    end
+
+    subgraph K1["第一块 · 领域词典 (NER翻译与替换)"]
+        direction TB
+        K1A["中英别名<br/>RAM/SDRAM/buffer size ↔ 内存容量<br/>LAN ↔ 局域网"]
+        K1B["同义异名<br/>缓存大小 ↔ 内存容量<br/>句柄个数 ↔ 句柄数"]
+        K1C["动词同义词<br/>获取↔采集/引接<br/>传输↔传送 · 查询↔检索"]
+        K1D["参数词典(srs_kb)<br/>response_time→响应时间/响应延迟<br/>throughput→吞吐量/数据速率"]
+    end
+
+    subgraph K2["第二块 · 模板和规则 (组织形式)"]
+        direction TB
+        K2A["声明模板×7<br/>数值(前缀/后缀)·引号「」<br/>枚举列表·编号条目·计数·缺失声明"]
+        K2B["GJB标准规则(120条)<br/>文档构成: 封面/修改页/目录/正文/附录<br/>格式: 页号唯一·附录A/B标记<br/>内容: 条目计数一致·条款完整"]
+        K2C["场景模板<br/>sc1用例表(名称/Actors/步骤/异常流)<br/>sc2流程图(节点/边)<br/>sc3接口表"]
+    end
+
+    subgraph K3["第三块 · 特殊case (语义判别惯例)"]
+        direction TB
+        K3A["良性省略 ✓consistent<br/>图省略参与者=良性<br/>「没有」≠缺失"]
+        K3B["核心缺失 ✗inconsistent<br/>图缺核心步骤=真矛盾<br/>同样是「没有」·裁定相反!"]
+        K3C["等价复述 ✓consistent<br/>同值异表面: 200G=204800MB<br/>表11↔表12 · 图元素重排"]
+        K3D["命名一致 ✗inconsistent<br/>同实体异名=TERM-01<br/>值相同≠一致!"]
+    end
+
+    NER["实体消解<br/>(识别→归一→对齐)"]
+    PARSE["结构化解析<br/>(模板槽位+规则校验)"]
+    JUDGE["领域裁定<br/>(什么算不一致)"]
+
+    IN --> NER
+    K1 --> NER
+    NER --> PARSE
+    K2 --> PARSE
+    PARSE --> JUDGE
+    K3 --> JUDGE
+    JUDGE --> OUT["输出: consistent / inconsistent<br/>+ 不一致条目 + 类型 + 证据"]
+
+    style K1 fill:#E3F2FD,stroke:#1565C0
+    style K2 fill:#E8F5E9,stroke:#2E7D32
+    style K3 fill:#FFF3E0,stroke:#E65100
+    style OUT fill:#FCE4EC,stroke:#C2185B

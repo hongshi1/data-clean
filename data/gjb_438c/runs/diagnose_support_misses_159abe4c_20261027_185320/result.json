@@ -1,0 +1,960 @@
+{
+ "focus_missed": [
+  "S1QA-053",
+  "S1QA-066",
+  "S1QA-069",
+  "S1QA-077"
+ ],
+ "detected_reference": [
+  "S1QA-006",
+  "S1QA-021"
+ ],
+ "module_config": {
+  "use_experts": true,
+  "use_llm_residual": true
+ },
+ "diagnosis": {
+  "S1QA-053": {
+   "question": "修改数据记录的功能标识表中包含哪些内容？",
+   "silver": "support",
+   "predicted_strict": "refute",
+   "silver_claim_count": 4,
+   "our_fused_claim_count": 5,
+   "claims": [
+    {
+     "claim_id": "S1QA-053-c01",
+     "claim_text": "PZXQ-GN-SQLFW-SJXG",
+     "verdict": "support",
+     "method": "identifier_exact_match",
+     "confidence": 1.0,
+     "evidence_refs": [
+      "S1QA-053-ev-000067"
+     ],
+     "rationale": "answer标识符在冻结context中精确出现",
+     "llm_residual_verdict": null,
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-053-c02",
+     "claim_text": "PZXQ-GN-SQLFW-ZXSW",
+     "verdict": "support",
+     "method": "identifier_exact_match",
+     "confidence": 1.0,
+     "evidence_refs": [
+      "S1QA-053-ev-000067"
+     ],
+     "rationale": "answer标识符在冻结context中精确出现",
+     "llm_residual_verdict": null,
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-053-idjoin03",
+     "claim_text": "PZXQ-GN-SQLFW-TJSW",
+     "verdict": "refute",
+     "method": "id_join_registry",
+     "confidence": 1.0,
+     "evidence_refs": [
+      "S1QA-053-ev-000035#s6",
+      "S1QA-053-ev-000067#s12"
+     ],
+     "rationale": "ID绑定冲突：主体「修改数据记录」在注册表中登记为PZXQ-GN-SQLFW-XGSJ（S1QA-053-ev-000035#s6[标识符]），与answer声称的PZXQ-GN-SQLFW-TJSW不一致——ID家族错配（TERM-07同主体ID冲突）",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "a",
+     "class_note": "聚合语义错配-refute级",
+     "matched_silver_claim": "修改数据记录的功能标识表包含修改数据记录条目：项目唯一标识符PZXQ-GN-SQLFW-TJSW，需求描述为支持修改数据记录，需求重用沿用，方式名称桌面、平版、"
+    },
+    {
+     "claim_id": "ac01",
+     "claim_text": "修改数据记录的功能标识表中包含以下内容： | 序号 | Use case名称 | 项目唯一标识符 | 需求描述 | 需求重用 | 方式名称 | 运行状态 | 对应的任务书功能/性能 | |------|-----------------------|--------------------|---------------------|-----------|--------------|-----------------|-----------------------| | 1 | 删除数据记录 | PZXQ-GN-SQLFW-SJXG | 支持删除数据记录 | 沿用 | 桌面、平版、手持 | 开发阶段、运行阶段 | 4.1.1 | | 2 | 增加数据记录 | PZXQ-GN-SQLFW-ZXSW | 支持增加数据记录 | 沿用 | 桌面、平版、手持 | 开发阶段、运行阶段 | 4.1.1 | | 3 | 修改数据记录 | PZXQ-GN-SQLFW-TJSW | 支持修改数据记录 | 沿用 | 桌面、平版、手持 | 开发阶段、运行阶段 | 4.1.1 | 这些能力标识基于删除、增加和修改数据记录的功能，每个条目具有其独特的能力标识，并符合需求重用沿用的策略",
+     "verdict": "refute",
+     "method": "l0_entity_detector:TERM-07",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-053-ev-000035#s6"
+     ],
+     "rationale": "evidence规定接口标识PZXQ-GN-SQLFW-XGSJ，answer却使用PZXQ-GN-SQLFW-SJXG（接口标识冲突）",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-表格残片claim",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-053-ac01",
+     "claim_text": "4．1.1               |",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-表格残片claim",
+     "matched_silver_claim": ""
+    }
+   ],
+   "blocking_distribution": {
+    "a": 1,
+    "c": 2
+   }
+  },
+  "S1QA-066": {
+   "question": "热点数据缓存功能有什么特点",
+   "silver": "support",
+   "predicted_strict": "not_in_evidence",
+   "silver_claim_count": 3,
+   "our_fused_claim_count": 7,
+   "claims": [
+    {
+     "claim_id": "S1QA-066-c01",
+     "claim_text": "热点数据缓存功能有以下特点",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.9,
+     "evidence_refs": [
+      "S1QA-066-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2给出热点数据缓存的需求描述，列出了其特点",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-c02",
+     "claim_text": "查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.9,
+     "evidence_refs": [
+      "S1QA-066-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持对查询结果集进行缓存并加载至内存中",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-c03",
+     "claim_text": "可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-066-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持对缓存大小进行配置；'调节内存使用和性能表现'为解释性扩展，核心值一致",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-c04",
+     "claim_text": "动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-066-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持修改数据后再次查询时重新从数据库获取数据并更新缓存；'确保始终反映最新信息'为效果性扩展",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-ac02",
+     "claim_text": "1．查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-ac03",
+     "claim_text": "2．可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-066-ac04",
+     "claim_text": "3．动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    }
+   ],
+   "blocking_distribution": {
+    "c": 3
+   }
+  },
+  "S1QA-069": {
+   "question": "对象化访问功能支持哪些操作",
+   "silver": "support",
+   "predicted_strict": "not_in_evidence",
+   "silver_claim_count": 6,
+   "our_fused_claim_count": 10,
+   "claims": [
+    {
+     "claim_id": "S1QA-069-c01",
+     "claim_text": "对象化访问功能支持以下操作",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确列出对象化访问支持添加、删除、修改、查询操作",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-c02",
+     "claim_text": "添加：向数据库中插入数据",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持通过数据对象方式对数据库数据进行添加",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-c03",
+     "claim_text": "删除：从数据库中删除已存在的数据",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持删除操作",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-c04",
+     "claim_text": "修改：对数据库中的数据进行更新或修改",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持修改操作，修改≈更新",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-c05",
+     "claim_text": "查询：根据特定条件检索数据库中的数据",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确支持查询操作",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-c06",
+     "claim_text": "这些操作通过数据对象方式实现，支持在应用软件中进行相应的操作",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.95,
+     "evidence_refs": [
+      "S1QA-069-ev-000030"
+     ],
+     "rationale": "LLM残差判定：ev-2明确说明支持应用软件通过数据对象方式对数据库进行操作",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-ac02",
+     "claim_text": "1．添加：向数据库中插入数据",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-ac03",
+     "claim_text": "2．删除：从数据库中删除已存在的数据",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-ac04",
+     "claim_text": "3．修改：对数据库中的数据进行更新或修改",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-069-ac05",
+     "claim_text": "4．查询：根据特定条件检索数据库中的数据",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "证据无用例主事件流编号步骤, 时序不可核对",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "c",
+     "class_note": "分解粒度-编号前缀重复claim(同内容已判support)",
+     "matched_silver_claim": ""
+    }
+   ],
+   "blocking_distribution": {
+    "c": 4
+   }
+  },
+  "S1QA-077": {
+   "question": "SQL访问功能包括哪些核心操作？",
+   "silver": "support",
+   "predicted_strict": "not_in_evidence",
+   "silver_claim_count": 6,
+   "our_fused_claim_count": 7,
+   "claims": [
+    {
+     "claim_id": "S1QA-077-c01",
+     "claim_text": "初始化、读取配置文件连接、数据库连接和关闭功能",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "confidence": 0.0,
+     "evidence_refs": [
+      "S1QA-077-ev-000035",
+      "S1QA-077-ev-000049"
+     ],
+     "rationale": "枚举成员未全部命中(1项)；未证明context穷举",
+     "llm_residual_verdict": "not_in_evidence",
+     "blocking": true,
+     "class": "b",
+     "class_note": "能力缺口-残差L3判NIE",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-077-c02",
+     "claim_text": "错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能、如逐行拷贝、获取INT、STRING和FLOAT等",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.7,
+     "evidence_refs": [
+      "S1QA-077-ev-000084"
+     ],
+     "rationale": "LLM残差判定：ev-22明确列出查询数据功能包括获取错误信息、二维数据输出、JSON输出、逐行获取INT/STRING/FLOAT等，与声明一致；'DML输出'未逐字出现但包括列表非穷尽，不阻止support",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-077-c03",
+     "claim_text": "插入、删除和查询BLOB（大型对象块）数据记录",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "confidence": 0.0,
+     "evidence_refs": [
+      "S1QA-077-ev-000035"
+     ],
+     "rationale": "枚举成员未全部命中(1项)；未证明context穷举",
+     "llm_residual_verdict": "not_in_evidence",
+     "blocking": true,
+     "class": "b",
+     "class_note": "能力缺口-残差L3判NIE",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-077-ac02",
+     "claim_text": "1．数据库操作：包括初始化、读取配置文件连接、数据库连接和关闭功能",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "answer步骤在主事件流证据中无匹配(最佳相似度0.28低于配对阈值), 判凭空步骤",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "a",
+     "class_note": "聚合语义错配-NIE级",
+     "matched_silver_claim": "数据库操作包括初始化、读取配置文件连接、数据库连接和数据库关闭功能。"
+    },
+    {
+     "claim_id": "S1QA-077-ac03",
+     "claim_text": "2．修改数据：涉及删除、增加或修改数据库中的记录",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "answer步骤在主事件流证据中无匹配(最佳相似度0.07低于配对阈值), 判凭空步骤",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "a",
+     "class_note": "聚合语义错配-NIE级",
+     "matched_silver_claim": "修改数据涉及删除、增加或修改数据库中的记录。"
+    },
+    {
+     "claim_id": "S1QA-077-ac04",
+     "claim_text": "3．查询数据：不仅限于常规查询，还包括错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能，如逐行拷贝、获取INT、STRING和FLOAT等",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "answer步骤在主事件流证据中无匹配(最佳相似度0.15低于配对阈值), 判凭空步骤",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "b",
+     "class_note": "未归类-无L3判定且无silver对应(需人工复核)",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-077-ac05",
+     "claim_text": "4．BLOB数据操作：包括插入、删除和查询BLOB（大型对象块）数据记录",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment",
+     "confidence": 0.0,
+     "evidence_refs": [],
+     "rationale": "answer步骤在主事件流证据中无匹配(最佳相似度0.05低于配对阈值), 判凭空步骤",
+     "llm_residual_verdict": null,
+     "blocking": true,
+     "class": "a",
+     "class_note": "聚合语义错配-NIE级",
+     "matched_silver_claim": "BLOB数据操作包括插入、删除和查询BLOB数据记录。"
+    }
+   ],
+   "blocking_distribution": {
+    "b": 3,
+    "a": 3
+   }
+  },
+  "S1QA-006": {
+   "question": "项目中支持对BLOB数据进行修改、查询和插入的功能分别沿用哪些设备？",
+   "silver": "support",
+   "predicted_strict": "support",
+   "silver_claim_count": 3,
+   "our_fused_claim_count": 4,
+   "claims": [
+    {
+     "claim_id": "S1QA-006-c01",
+     "claim_text": "项目中对BLOB数据进行修改、查询和插入的功能均沿用“桌面”和“平板”设备，并且在开发阶段和运行阶段均进行了支持",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.9,
+     "evidence_refs": [
+      "S1QA-006-ev-000035"
+     ],
+     "rationale": "LLM残差判定：BLOB数据操作功能（含插入、删除、查询）锚定ev-12/ev-13，方式名称为平板、桌面，运行状态为运行阶段、开发阶段，与声明一致",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-006-c02",
+     "claim_text": "BLOB数据修改：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-006-ev-000035"
+     ],
+     "rationale": "LLM残差判定：BLOB数据修改属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-006-c03",
+     "claim_text": "BLOB数据查询：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-006-ev-000035"
+     ],
+     "rationale": "LLM残差判定：BLOB数据查询属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    },
+    {
+     "claim_id": "S1QA-006-c04",
+     "claim_text": "BLOB数据插入：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+     "verdict": "support",
+     "method": "llm_residual",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-006-ev-000035"
+     ],
+     "rationale": "LLM残差判定：BLOB数据插入属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    }
+   ],
+   "blocking_distribution": {}
+  },
+  "S1QA-021": {
+   "question": "如果无法连接到服务端会发生什么异常",
+   "silver": "support",
+   "predicted_strict": "support",
+   "silver_claim_count": 2,
+   "our_fused_claim_count": 1,
+   "claims": [
+    {
+     "claim_id": "ac01",
+     "claim_text": "如果无法连接到服务端，系统会触发异常流E1，并显示“无法连接到服务端，提示连接错误",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "confidence": 0.85,
+     "evidence_refs": [
+      "S1QA-021-ev-000043#s5",
+      "S1QA-021-ev-000043#s7"
+     ],
+     "rationale": "answer提到的指令/用例「异常流E1」在evidence中明确出现",
+     "llm_residual_verdict": "support",
+     "blocking": false,
+     "class": "",
+     "class_note": "",
+     "matched_silver_claim": ""
+    }
+   ],
+   "blocking_distribution": {}
+  }
+ },
+ "blocking_distribution_missed4": {
+  "a": 4,
+  "c": 9,
+  "b": 3
+ },
+ "granularity": {
+  "corpus": {
+   "n": 91,
+   "glm_mean_claims": 5.58,
+   "our_mean_fused_claims": 7.66
+  },
+  "support6": {
+   "glm_mean_claims": 4.0,
+   "our_mean_fused_claims": 5.67
+  },
+  "per_instance": {
+   "S1QA-006": {
+    "glm_claims": 3,
+    "our_fused_claims": 4
+   },
+   "S1QA-021": {
+    "glm_claims": 2,
+    "our_fused_claims": 1
+   },
+   "S1QA-053": {
+    "glm_claims": 4,
+    "our_fused_claims": 5
+   },
+   "S1QA-066": {
+    "glm_claims": 3,
+    "our_fused_claims": 7
+   },
+   "S1QA-069": {
+    "glm_claims": 6,
+    "our_fused_claims": 10
+   },
+   "S1QA-077": {
+    "glm_claims": 6,
+    "our_fused_claims": 7
+   }
+  }
+ },
+ "split": {
+  "source": "data\\gjb_438c\\qa_frozen\\dev_test_split_v1.json",
+  "seed": 42,
+  "method": "exact DP over 2^20 topic assignments; objective (|2s-6|, |2r-8|, |2n-91|, min mask)",
+  "dev_n": 45,
+  "dev_label_counts": {
+   "not_in_evidence": 38,
+   "support": 3,
+   "refute": 4
+  },
+  "test_label_counts": {
+   "not_in_evidence": 39,
+   "refute": 4,
+   "support": 3
+  }
+ },
+ "dev_variants": {
+  "strict": {
+   "n": 45,
+   "accuracy": 0.9556,
+   "macro_f1": 0.8875,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "refute": {
+     "precision": 1.0,
+     "recall": 0.8,
+     "f1": 0.8889
+    },
+    "not_in_evidence": {
+     "precision": 0.9737,
+     "recall": 0.9737,
+     "f1": 0.9737
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "refute|refute": 4,
+    "refute|not_in_evidence": 1,
+    "not_in_evidence|support": 1,
+    "not_in_evidence|not_in_evidence": 37
+   },
+   "false_support": 0,
+   "flips_vs_strict": []
+  },
+  "dominant_70": {
+   "n": 45,
+   "accuracy": 0.3778,
+   "macro_f1": 0.4958,
+   "per_class": {
+    "support": {
+     "precision": 1.0,
+     "recall": 0.1,
+     "f1": 0.1818
+    },
+    "refute": {
+     "precision": 1.0,
+     "recall": 0.8,
+     "f1": 0.8889
+    },
+    "not_in_evidence": {
+     "precision": 0.2632,
+     "recall": 1.0,
+     "f1": 0.4167
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 3,
+    "support|not_in_evidence": 27,
+    "refute|refute": 4,
+    "refute|not_in_evidence": 1,
+    "not_in_evidence|not_in_evidence": 10
+   },
+   "false_support": 27,
+   "flips_vs_strict": [
+    {
+     "instance_id": "S1QA-001",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-003",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-004",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-008",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-011",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-013",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-019",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-025",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-033",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-035",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-036",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-037",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-038",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-039",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-057",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-058",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-059",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-061",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-065",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-066",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "support"
+    },
+    {
+     "instance_id": "S1QA-067",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-075",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-078",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-080",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-081",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-082",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-083",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    },
+    {
+     "instance_id": "S1QA-085",
+     "strict": "not_in_evidence",
+     "variant": "support",
+     "silver": "not_in_evidence"
+    }
+   ]
+  },
+  "no_minor_block": {
+   "n": 45,
+   "accuracy": 0.9556,
+   "macro_f1": 0.8875,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "refute": {
+     "precision": 1.0,
+     "recall": 0.8,
+     "f1": 0.8889
+    },
+    "not_in_evidence": {
+     "precision": 0.9737,
+     "recall": 0.9737,
+     "f1": 0.9737
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "refute|refute": 4,
+    "refute|not_in_evidence": 1,
+    "not_in_evidence|support": 1,
+    "not_in_evidence|not_in_evidence": 37
+   },
+   "false_support": 0,
+   "flips_vs_strict": []
+  }
+ },
+ "variant_effect_on_missed_diagnosis": {
+  "S1QA-053": {
+   "strict": "refute",
+   "dominant_70": "refute",
+   "no_minor_block": "refute"
+  },
+  "S1QA-066": {
+   "strict": "not_in_evidence",
+   "dominant_70": "support",
+   "no_minor_block": "not_in_evidence"
+  },
+  "S1QA-069": {
+   "strict": "not_in_evidence",
+   "dominant_70": "support",
+   "no_minor_block": "not_in_evidence"
+  },
+  "S1QA-077": {
+   "strict": "not_in_evidence",
+   "dominant_70": "not_in_evidence",
+   "no_minor_block": "not_in_evidence"
+  }
+ },
+ "notes": [
+  "variant selection on dev only; test numbers reserved for the later honest evaluation",
+  "variant_effect_on_missed_diagnosis aggregates the strict run's fused claims under each rule — a mechanism diagnosis, not a test-set metric",
+  "llm calls all served from the llm_json disk cache"
+ ]
+}

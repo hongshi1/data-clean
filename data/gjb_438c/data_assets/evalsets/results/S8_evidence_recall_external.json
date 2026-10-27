@@ -1,0 +1,136 @@
+{
+ "protocol": "evidence_recall框架×4外部数据集(语言匹配协议): en=bge-base-en-v1.5+EN前缀, zh=bge-large-zh; recall=O1-unit数学, rerank=unit2+b0.1+top50; 采样seed42",
+ "results": {
+  "wtq": {
+   "n_queries": 2000,
+   "language": "en",
+   "pool": "table",
+   "recall": {
+    "R@1": 0.41,
+    "R@5": 0.5875,
+    "R@10": 0.6665,
+    "MRR@10": 0.48790892857142876
+   },
+   "rerank": {
+    "R@1": 0.464,
+    "R@5": 0.636,
+    "R@10": 0.7005,
+    "MRR@10": 0.5382259920634924
+   },
+   "mcnemar": {
+    "b": 198,
+    "c": 90,
+    "p_one_sided": 9.830802838450836e-11
+   },
+   "locked_check": {
+    "recall_R@1": {
+     "locked": 0.4095,
+     "framework": 0.41,
+     "delta": 0.0005
+    },
+    "rerank_R@1": {
+     "locked": 0.4395,
+     "framework": 0.464,
+     "delta": 0.0245
+    }
+   }
+  },
+  "fetaqa": {
+   "n_queries": 2000,
+   "language": "en",
+   "pool": "table",
+   "recall": {
+    "R@1": 0.854,
+    "R@5": 0.9375,
+    "R@10": 0.951,
+    "MRR@10": 0.8901150793650794
+   },
+   "rerank": {
+    "R@1": 0.86,
+    "R@5": 0.946,
+    "R@10": 0.9565,
+    "MRR@10": 0.8979099206349206
+   },
+   "mcnemar": {
+    "b": 91,
+    "c": 79,
+    "p_one_sided": 0.17869285801876322
+   },
+   "locked_check": {
+    "recall_R@1": {
+     "locked": 0.856,
+     "framework": 0.854,
+     "delta": -0.002
+    },
+    "rerank_R@1": {
+     "locked": 0.84,
+     "framework": 0.86,
+     "delta": 0.02
+    }
+   }
+  },
+  "duret": {
+   "n_queries": 2000,
+   "language": "zh",
+   "pool": "table",
+   "recall": {
+    "R@1": 0.9495,
+    "R@5": 0.9755,
+    "R@10": 0.983,
+    "MRR@10": 0.9611498015873015
+   },
+   "rerank": {
+    "R@1": 0.9535,
+    "R@5": 0.9805,
+    "R@10": 0.987,
+    "MRR@10": 0.9651523809523809
+   },
+   "mcnemar": {
+    "b": 32,
+    "c": 24,
+    "p_one_sided": 0.14252470370130643
+   },
+   "locked_check": {
+    "recall_R@1": {
+     "locked": 0.837,
+     "framework": 0.9495,
+     "delta": 0.1125
+    }
+   }
+  },
+  "pure": {
+   "n_queries": 180,
+   "language": "en",
+   "pool": "all",
+   "recall": {
+    "R@1": 0.36666666666666664,
+    "R@5": 0.6444444444444445,
+    "R@10": 0.75,
+    "MRR@10": 0.48044091710758396
+   },
+   "rerank": {
+    "R@1": 0.39444444444444443,
+    "R@5": 0.6333333333333333,
+    "R@10": 0.7388888888888889,
+    "MRR@10": 0.49727954144620823
+   },
+   "mcnemar": {
+    "b": 11,
+    "c": 6,
+    "p_one_sided": 0.11262645318032649
+   },
+   "locked_check": {
+    "recall_R@1": {
+     "locked": 0.283,
+     "framework": 0.3667,
+     "delta": 0.0837
+    },
+    "rerank_R@1(rrF参考)": {
+     "locked": 0.325,
+     "framework": 0.3944,
+     "delta": 0.0694
+    }
+   }
+  }
+ }
+}

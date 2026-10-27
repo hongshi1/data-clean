@@ -8,7 +8,6 @@
 输出: data/gjb_438c/data_assets/srs_qa_v3/eval_set.json
 """
 import json
-import os
 import time
 from pathlib import Path
 
@@ -20,11 +19,11 @@ OUT_DIR = BASE / "data/gjb_438c/data_assets/srs_qa_v3"
 
 # API配置（已验证可用）
 KIMI_URL = "https://api.moonshot.cn/v1/chat/completions"
-KIMI_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY
 KIMI_MODEL = "kimi-k2.6"
 
 WQ_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions"
-WQ_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as WQ_KEY
 CLAUDE_MODEL = "ep-5zazxj-1770439257299735491"
 
 REWRITE_PROMPT = """你是SRS软件需求规格说明文档的质检专家。请根据以下注入信息，生成一个自然语言的检测问答对。
@@ -265,7 +264,7 @@ def main():
             
             time.sleep(1)  # 避免API限速
     
-    print(f"\n=== 统计 ===")
+    print("\n=== 统计 ===")
     print(f"总数: {stats['total']}")
     print(f"改写成功: {stats['rewritten']}")
     print(f"验证完成: {stats['verified']}")

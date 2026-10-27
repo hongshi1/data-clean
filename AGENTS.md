@@ -162,12 +162,28 @@ data_clean/
 
 ## 环境
 
-- MinerU venv: `~/mineru-env/bin/python`
-- GLM-5 API: `https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions`
-- API_KEY: 见.env(不提交明文)
-- MODEL: `ep-glsztk-1778496696841467392`
+- Python: **系统 Python 3.12 (Anaconda, Windows) — 唯一可用解释器**; `.venv`/`.venv-srs` 为macOS残留(可删), `.venv-embed` 仅含numpy
+- 依赖锁定: `pip install -r requirements.txt`
+- Lint: `ruff check algorithms` 必须零报错(tools增量偿还, 只许减少不许新增)
+- 测试: `python -m pytest`(tests/ + algorithms/; 论文数字快照在 tests/test_gold_assets.py)
+- **密钥: 统一 `from ai_config import ...`(tools/ai_config.py 读 .env; .env已gitignore, 模板见.env.example); 代码中出现密钥字面量 = 违规**
+- API端点/模型: 见 `tools/ai_config.py` 与 `.env.example`
+- **本地深度模型**(torch 2.11+cu128 GPU版已装于系统Python): `models/nli/`(mDeBERTa多语言NLI + Erlangshen中文NLI) + `models/embedding/bge-large-zh-v1.5`(1024维, GPU校验: tools/test_bge_gpu.py); 本地embedding走 `algorithms/bge_local.py`(惰性加载+磁盘缓存), 通道入口 `algorithms/blackboard/embedding_channel.py`(live API→local BGE→cache四级降级, BGE阈值EMB_TH_LOCAL=0.78经tools/bge_threshold_sweep.py校准); 下载新模型参考 `tools/download_embedding_model.py`(含Windows系统代理继承)
+
+## 代码质量硬规则
+
+1. **密钥**: 只有 tools/ai_config.py 允许读 .env; 任何 .py 出现密钥字面量立即修复(旧密钥已泄漏进git历史, 需在API平台轮换)
+2. **无类型抑制**(as any式), **无裸 `except:`**; 静默吞错是科研结果被污染的常见源头
+3. **模块顶层零I/O**: import期不读文件/不发请求(m1的emb_cache加载是历史包袱, 新代码禁止)
+4. **open()必须 `encoding="utf-8"`**(Windows默认GBK, macOS上跑通的代码在Windows会静默乱码/崩溃)
+5. **新功能配测试**: 确定性内核进 tests/ 快照回归(论文数字: θ/F1/规模计数已锁定)
+6. **数据资产受MANIFEST保护**(tests/test_manifest.py); 有意重生成后跑 `python tools/build_data_manifest.py` 并同步快照
+7. **LLM/VLM调用走缓存接口**(algorithms/llm_client.py 的 cache=True / m1 emb_cache)——禁止裸调用(不可复现)
+8. **实验产出走runs协议**(tools/run_utils.py: config+git_sha+result, 不覆盖写)
 
 ## 当前状态
+
+> ⚠️ 本清单为项目早期快照(历史存档), **实际进度以 `docs/srs_project/project_guide.md`(黄金文档) 为准**——项目已推进至ACDD M25里程碑(锚点校准管线/多场景裁决/论文草稿), 上方"⬜未开始"多项实际已完成.
 
 - ✅ 数据准备：16份真实SRS已解析为markdown
 - ✅ 基础知识：GJB 120条规则 + 词典

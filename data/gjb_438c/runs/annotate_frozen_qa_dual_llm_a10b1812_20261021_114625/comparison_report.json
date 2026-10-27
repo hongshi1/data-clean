@@ -1,0 +1,67 @@
+{
+  "pilot": true,
+  "gold_label": null,
+  "input": "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl",
+  "n_input": 5,
+  "requested_annotators": [
+    {
+      "id": "codex_gpt5_6_sol",
+      "model_id": "gpt-5.6-sol (in-session)",
+      "transport": "in-session annotation; no GPT API call"
+    },
+    {
+      "id": "dual_qa_glm",
+      "model_id": "glm-5",
+      "transport": "configured GLM endpoint; fallback disabled"
+    }
+  ],
+  "annotator_counts": {
+    "gpt5_6_sol_valid": 5,
+    "glm_valid": 3,
+    "glm_invalid": 2
+  },
+  "valid_pairs": 3,
+  "qa_verdict_agreement": {
+    "agree": 3,
+    "disagree": 0,
+    "rate": 1.0,
+    "paired_labels": {
+      "support": 0,
+      "refute": 0,
+      "not_in_evidence": 3
+    },
+    "cohen_kappa": null,
+    "kappa_note": "Undefined because both annotators used only one category on valid pairs."
+  },
+  "claim_level_comparison": {
+    "directly_aligned": false,
+    "agreement_rate": null,
+    "note": "Claim segmentation differs; no automatic claim-id alignment was attempted. Compare claims/evidence manually during adjudication."
+  },
+  "invalid_glm_rows": [
+    {
+      "instance_id": "S1QA-001",
+      "reason": "GLM response failed the required JSON schema; abstained."
+    },
+    {
+      "instance_id": "S1QA-005",
+      "reason": "Configured GLM call failed; abstained."
+    }
+  ],
+  "manual_review_candidates": [
+    {
+      "instance_id": "S1QA-002",
+      "note": "Long answer has many overlapping procedural claims; review whether the model claim split is complete and whether table evidence supports any more specific detail."
+    },
+    {
+      "instance_id": "S1QA-005",
+      "note": "GPT marks the two listed lifecycle states supported but the overall answer NIE due an unsupported implementation-success claim. This tests mixed-claim aggregation and should be human-reviewed."
+    }
+  ],
+  "protocol_notes": [
+    "Only question, answer, and frozen evidence were used; no old labels or mutation metadata were shown.",
+    "Open evidence absence was never treated as refutation.",
+    "Only exact evidence IDs in the frozen row may be cited.",
+    "This pilot is not a gold standard and must not be used as benchmark performance."
+  ]
+}

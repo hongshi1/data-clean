@@ -1,0 +1,38 @@
+{
+ "protocol": "效率基准: GJB表池1207/13402单元, 100查询样本, GPU=RTX4060-8GB; 参数量=冻结模型参数(非训练)",
+ "results": {
+  "BM25-doc": {
+   "build_s": 0.13,
+   "latency_p50_ms": 3.0,
+   "latency_p95_ms": 4.4,
+   "params": 0,
+   "note": "纯CPU倒排索引"
+  },
+  "BM25-unit": {
+   "build_s": 0.16,
+   "latency_p50_ms": 17.7,
+   "latency_p95_ms": 21.5,
+   "params": 0,
+   "note": "单元级倒排(13402单元)"
+  },
+  "O1-unit": {
+   "build_s": 0.45,
+   "latency_p50_ms": 11.8,
+   "latency_p95_ms": 13.5,
+   "params": 326000000,
+   "note": "BGE-large-zh冻结+13K单元矩阵"
+  },
+  "O1+Rerank": {
+   "build_s": 0.45,
+   "latency_p50_ms": 765.1,
+   "latency_p95_ms": 1016.0,
+   "params": 894000000,
+   "note": "BGE召回+Reranker-v2-m3精排(50对), 峰值显存3.6GB"
+  }
+ },
+ "context": {
+  "gjb_build_from_S7": "1586owner/19492单元 92s",
+  "wtq_build_from_S8": "2100owner/42394单元 10s",
+  "duret_build_from_S8": "10000owner/81225单元 1715s"
+ }
+}

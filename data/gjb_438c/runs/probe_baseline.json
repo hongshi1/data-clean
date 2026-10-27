@@ -1,0 +1,3731 @@
+{
+ "meta": {
+  "timestamp": "2026-10-13T19:03:34",
+  "git_sha": "ff0d4950",
+  "model_dir": "models/nli/roberta-v12-anchor",
+  "positive_class": "inconsistent",
+  "probe_dir": "data/gjb_438c/probes",
+  "note": "探针为冻结eval-only资产; 结果含每条预测供翻转分析"
+ },
+ "probes": {
+  "paws_shortcut": {
+   "file": "probes/paws_shortcut_probe.json",
+   "probe_meta": {
+    "probe_type": "paws_shortcut",
+    "purpose": "词面重叠捷径探针: 释义对(高词重叠, gold=consistent)被判inconsistent的比例=误报率, 即'词重叠⇒误报'捷径分(v5全报警病灶的量化)",
+    "n_items": 200,
+    "label_dist": {
+     "consistent": 100,
+     "inconsistent": 100
+    },
+    "built_at": "2026-10-13T19:01:34"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 100,
+    "n_neg": 100,
+    "tp": 85,
+    "fn": 15,
+    "tn": 26,
+    "fp": 74,
+    "tpr": 0.85,
+    "tnr": 0.26,
+    "bacc": 0.555,
+    "fpr_误报率": 0.74,
+    "fnr_漏报率": 0.15,
+    "acc": 0.555
+   },
+   "shortcut_score": {
+    "metric": "fpr_误报率",
+    "desc": "词重叠捷径分=误报率(释义对被判inconsistent比例)",
+    "value": 0.74
+   },
+   "rows": [
+    {
+     "id": "paws-val-6539",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7866
+    },
+    {
+     "id": "paws-val-7777",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8657
+    },
+    {
+     "id": "paws-test-283",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7219
+    },
+    {
+     "id": "paws-val-5574",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9351
+    },
+    {
+     "id": "paws-val-5633",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8266
+    },
+    {
+     "id": "paws-test-5024",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9869
+    },
+    {
+     "id": "paws-test-2609",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.993
+    },
+    {
+     "id": "paws-val-5318",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9361
+    },
+    {
+     "id": "paws-val-2188",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9346
+    },
+    {
+     "id": "paws-test-6596",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9423
+    },
+    {
+     "id": "paws-test-3244",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0804
+    },
+    {
+     "id": "paws-val-1439",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.328
+    },
+    {
+     "id": "paws-val-7519",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5707
+    },
+    {
+     "id": "paws-test-1107",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.976
+    },
+    {
+     "id": "paws-test-3430",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8766
+    },
+    {
+     "id": "paws-test-7899",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6909
+    },
+    {
+     "id": "paws-val-5264",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6649
+    },
+    {
+     "id": "paws-test-3579",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9712
+    },
+    {
+     "id": "paws-test-4169",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9746
+    },
+    {
+     "id": "paws-val-3679",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.2056
+    },
+    {
+     "id": "paws-test-3359",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9304
+    },
+    {
+     "id": "paws-test-7546",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8144
+    },
+    {
+     "id": "paws-test-5942",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9774
+    },
+    {
+     "id": "paws-test-6142",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.1351
+    },
+    {
+     "id": "paws-test-3440",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.1595
+    },
+    {
+     "id": "paws-test-6749",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.851
+    },
+    {
+     "id": "paws-test-7789",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8902
+    },
+    {
+     "id": "paws-val-1627",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6589
+    },
+    {
+     "id": "paws-val-5353",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0035
+    },
+    {
+     "id": "paws-test-858",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.1614
+    },
+    {
+     "id": "paws-test-1357",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8801
+    },
+    {
+     "id": "paws-val-5328",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8507
+    },
+    {
+     "id": "paws-val-493",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7379
+    },
+    {
+     "id": "paws-val-7",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.4295
+    },
+    {
+     "id": "paws-test-1776",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9714
+    },
+    {
+     "id": "paws-test-4898",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0124
+    },
+    {
+     "id": "paws-test-7867",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7916
+    },
+    {
+     "id": "paws-test-7046",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9612
+    },
+    {
+     "id": "paws-val-1482",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.1772
+    },
+    {
+     "id": "paws-test-7968",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9421
+    },
+    {
+     "id": "paws-val-3000",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8189
+    },
+    {
+     "id": "paws-val-6924",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.641
+    },
+    {
+     "id": "paws-val-5407",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8759
+    },
+    {
+     "id": "paws-test-4165",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9355
+    },
+    {
+     "id": "paws-val-3802",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9668
+    },
+    {
+     "id": "paws-test-5225",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.1395
+    },
+    {
+     "id": "paws-val-2102",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7787
+    },
+    {
+     "id": "paws-test-4688",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9344
+    },
+    {
+     "id": "paws-test-5454",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.4221
+    },
+    {
+     "id": "paws-val-775",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9777
+    },
+    {
+     "id": "paws-val-2977",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9662
+    },
+    {
+     "id": "paws-val-4576",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0337
+    },
+    {
+     "id": "paws-val-4483",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0131
+    },
+    {
+     "id": "paws-val-4813",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.3645
+    },
+    {
+     "id": "paws-val-669",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0687
+    },
+    {
+     "id": "paws-val-4687",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7501
+    },
+    {
+     "id": "paws-test-3514",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0038
+    },
+    {
+     "id": "paws-val-1021",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7982
+    },
+    {
+     "id": "paws-val-3999",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.3368
+    },
+    {
+     "id": "paws-val-1100",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9218
+    },
+    {
+     "id": "paws-val-7072",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6849
+    },
+    {
+     "id": "paws-test-6806",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6383
+    },
+    {
+     "id": "paws-val-5876",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.3809
+    },
+    {
+     "id": "paws-test-5635",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8929
+    },
+    {
+     "id": "paws-val-5258",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9595
+    },
+    {
+     "id": "paws-val-5169",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.974
+    },
+    {
+     "id": "paws-test-7887",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8656
+    },
+    {
+     "id": "paws-test-1098",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9621
+    },
+    {
+     "id": "paws-test-4247",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.4943
+    },
+    {
+     "id": "paws-val-4206",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8773
+    },
+    {
+     "id": "paws-val-6840",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.889
+    },
+    {
+     "id": "paws-test-5397",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8957
+    },
+    {
+     "id": "paws-test-7468",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.941
+    },
+    {
+     "id": "paws-val-6210",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9599
+    },
+    {
+     "id": "paws-val-360",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.401
+    },
+    {
+     "id": "paws-test-5357",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.4421
+    },
+    {
+     "id": "paws-test-1385",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.0397
+    },
+    {
+     "id": "paws-val-7219",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9204
+    },
+    {
+     "id": "paws-val-239",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.379
+    },
+    {
+     "id": "paws-test-5628",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5314
+    },
+    {
+     "id": "paws-val-5669",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9157
+    },
+    {
+     "id": "paws-val-4656",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.793
+    },
+    {
+     "id": "paws-test-4937",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8758
+    },
+    {
+     "id": "paws-test-5498",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6944
+    },
+    {
+     "id": "paws-val-6962",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8186
+    },
+    {
+     "id": "paws-test-2535",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9871
+    },
+    {
+     "id": "paws-test-1085",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9591
+    },
+    {
+     "id": "paws-test-4779",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8947
+    },
+    {
+     "id": "paws-val-4854",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8757
+    },
+    {
+     "id": "paws-val-4254",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.358
+    },
+    {
+     "id": "paws-test-2289",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6967
+    },
+    {
+     "id": "paws-val-7801",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9826
+    },
+    {
+     "id": "paws-test-7234",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9057
+    },
+    {
+     "id": "paws-test-5135",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8229
+    },
+    {
+     "id": "paws-test-2297",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.677
+    },
+    {
+     "id": "paws-test-10",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8181
+    },
+    {
+     "id": "paws-val-6509",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8931
+    },
+    {
+     "id": "paws-test-4399",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8157
+    },
+    {
+     "id": "paws-val-4074",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.887
+    },
+    {
+     "id": "paws-val-680",
+     "label": "consistent",
+     "pred": "consistent",
+     "prob_inc": 0.3467
+    },
+    {
+     "id": "paws-val-7987",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.459
+    },
+    {
+     "id": "paws-test-7352",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8911
+    },
+    {
+     "id": "paws-test-7406",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8196
+    },
+    {
+     "id": "paws-test-3398",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5883
+    },
+    {
+     "id": "paws-test-803",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9169
+    },
+    {
+     "id": "paws-test-3371",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9463
+    },
+    {
+     "id": "paws-val-7053",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0979
+    },
+    {
+     "id": "paws-val-5943",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8157
+    },
+    {
+     "id": "paws-test-7275",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.895
+    },
+    {
+     "id": "paws-test-4901",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8766
+    },
+    {
+     "id": "paws-val-4884",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9295
+    },
+    {
+     "id": "paws-test-798",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9251
+    },
+    {
+     "id": "paws-val-3769",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7148
+    },
+    {
+     "id": "paws-test-6880",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9819
+    },
+    {
+     "id": "paws-test-3207",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8533
+    },
+    {
+     "id": "paws-val-2271",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9954
+    },
+    {
+     "id": "paws-test-533",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1782
+    },
+    {
+     "id": "paws-val-981",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8188
+    },
+    {
+     "id": "paws-test-148",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8848
+    },
+    {
+     "id": "paws-val-7607",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0027
+    },
+    {
+     "id": "paws-test-1328",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.811
+    },
+    {
+     "id": "paws-test-4114",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7691
+    },
+    {
+     "id": "paws-val-2311",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1764
+    },
+    {
+     "id": "paws-val-5011",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4505
+    },
+    {
+     "id": "paws-val-3611",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9133
+    },
+    {
+     "id": "paws-val-7671",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9795
+    },
+    {
+     "id": "paws-val-4739",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9784
+    },
+    {
+     "id": "paws-val-6235",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7988
+    },
+    {
+     "id": "paws-val-3285",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9309
+    },
+    {
+     "id": "paws-val-1988",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3489
+    },
+    {
+     "id": "paws-test-2855",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5907
+    },
+    {
+     "id": "paws-test-1040",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9771
+    },
+    {
+     "id": "paws-test-7121",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9096
+    },
+    {
+     "id": "paws-test-4285",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9554
+    },
+    {
+     "id": "paws-test-620",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6697
+    },
+    {
+     "id": "paws-test-1122",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7972
+    },
+    {
+     "id": "paws-test-1568",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8751
+    },
+    {
+     "id": "paws-test-655",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5626
+    },
+    {
+     "id": "paws-val-2513",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7622
+    },
+    {
+     "id": "paws-test-7761",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6988
+    },
+    {
+     "id": "paws-val-2620",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0049
+    },
+    {
+     "id": "paws-test-654",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9747
+    },
+    {
+     "id": "paws-test-3908",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7302
+    },
+    {
+     "id": "paws-test-4661",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7914
+    },
+    {
+     "id": "paws-test-1022",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.723
+    },
+    {
+     "id": "paws-test-6974",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7783
+    },
+    {
+     "id": "paws-test-4255",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.988
+    },
+    {
+     "id": "paws-test-6688",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7065
+    },
+    {
+     "id": "paws-test-2882",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7793
+    },
+    {
+     "id": "paws-val-5129",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8157
+    },
+    {
+     "id": "paws-test-98",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8459
+    },
+    {
+     "id": "paws-test-2226",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.963
+    },
+    {
+     "id": "paws-test-2709",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9484
+    },
+    {
+     "id": "paws-test-1871",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8046
+    },
+    {
+     "id": "paws-val-6756",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5449
+    },
+    {
+     "id": "paws-val-2371",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8253
+    },
+    {
+     "id": "paws-val-6838",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9372
+    },
+    {
+     "id": "paws-test-4673",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9683
+    },
+    {
+     "id": "paws-test-2569",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5246
+    },
+    {
+     "id": "paws-test-598",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9827
+    },
+    {
+     "id": "paws-test-4718",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5537
+    },
+    {
+     "id": "paws-val-407",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6387
+    },
+    {
+     "id": "paws-val-7973",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6636
+    },
+    {
+     "id": "paws-test-3259",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7911
+    },
+    {
+     "id": "paws-test-855",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8737
+    },
+    {
+     "id": "paws-test-1061",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.582
+    },
+    {
+     "id": "paws-val-6412",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9651
+    },
+    {
+     "id": "paws-val-7765",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9949
+    },
+    {
+     "id": "paws-val-206",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.322
+    },
+    {
+     "id": "paws-test-2682",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.996
+    },
+    {
+     "id": "paws-val-2052",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7196
+    },
+    {
+     "id": "paws-test-1859",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7179
+    },
+    {
+     "id": "paws-val-4063",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7606
+    },
+    {
+     "id": "paws-val-7466",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9759
+    },
+    {
+     "id": "paws-val-33",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.726
+    },
+    {
+     "id": "paws-val-7673",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0065
+    },
+    {
+     "id": "paws-val-5084",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7898
+    },
+    {
+     "id": "paws-val-2072",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1921
+    },
+    {
+     "id": "paws-test-4372",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9053
+    },
+    {
+     "id": "paws-test-8000",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0061
+    },
+    {
+     "id": "paws-val-6491",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4977
+    },
+    {
+     "id": "paws-val-5068",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8132
+    },
+    {
+     "id": "paws-val-7182",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7649
+    },
+    {
+     "id": "paws-val-5860",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9641
+    },
+    {
+     "id": "paws-val-4522",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8437
+    },
+    {
+     "id": "paws-val-1746",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0318
+    },
+    {
+     "id": "paws-test-6765",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8498
+    },
+    {
+     "id": "paws-val-3636",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6936
+    },
+    {
+     "id": "paws-val-2193",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7824
+    },
+    {
+     "id": "paws-test-2742",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8164
+    },
+    {
+     "id": "paws-val-3483",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9844
+    },
+    {
+     "id": "paws-val-7721",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0969
+    },
+    {
+     "id": "paws-test-313",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9198
+    },
+    {
+     "id": "paws-test-4220",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9251
+    },
+    {
+     "id": "paws-val-1445",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9595
+    },
+    {
+     "id": "paws-val-1863",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6074
+    },
+    {
+     "id": "paws-val-4858",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5006
+    },
+    {
+     "id": "paws-test-4562",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9334
+    },
+    {
+     "id": "paws-val-5556",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9637
+    },
+    {
+     "id": "paws-test-5495",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9306
+    }
+   ]
+  },
+  "feverous_table": {
+   "file": "probes/feverous_table_probe.json",
+   "probe_meta": {
+    "probe_type": "feverous_table",
+    "purpose": "表格蕴含探针: 声明(claim)与结构化表格证据的核对能力(SUPPORTS→consistent, REFUTES→inconsistent)",
+    "n_items": 200,
+    "label_dist": {
+     "consistent": 100,
+     "inconsistent": 100
+    },
+    "built_at": "2026-10-13T19:01:34"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 100,
+    "n_neg": 100,
+    "tp": 99,
+    "fn": 1,
+    "tn": 0,
+    "fp": 100,
+    "tpr": 0.99,
+    "tnr": 0.0,
+    "bacc": 0.495,
+    "fpr_误报率": 1.0,
+    "fnr_漏报率": 0.01,
+    "acc": 0.495
+   },
+   "shortcut_score": {
+    "metric": "fpr_误报率",
+    "desc": "表格蕴含误报率(SUPPORTS被判inconsistent比例)",
+    "value": 1.0
+   },
+   "rows": [
+    {
+     "id": "feverous-39950",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9632
+    },
+    {
+     "id": "feverous-79442",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9901
+    },
+    {
+     "id": "feverous-85180",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9834
+    },
+    {
+     "id": "feverous-72929",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.973
+    },
+    {
+     "id": "feverous-39012",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9458
+    },
+    {
+     "id": "feverous-61602",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9779
+    },
+    {
+     "id": "feverous-24622",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.981
+    },
+    {
+     "id": "feverous-24273",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9659
+    },
+    {
+     "id": "feverous-68604",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9812
+    },
+    {
+     "id": "feverous-60100",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9899
+    },
+    {
+     "id": "feverous-52863",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9894
+    },
+    {
+     "id": "feverous-29778",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9161
+    },
+    {
+     "id": "feverous-39235",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9717
+    },
+    {
+     "id": "feverous-7621",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9931
+    },
+    {
+     "id": "feverous-2804",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9472
+    },
+    {
+     "id": "feverous-41707",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9588
+    },
+    {
+     "id": "feverous-18312",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9856
+    },
+    {
+     "id": "feverous-31997",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9665
+    },
+    {
+     "id": "feverous-47056",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9725
+    },
+    {
+     "id": "feverous-68558",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8666
+    },
+    {
+     "id": "feverous-17081",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9868
+    },
+    {
+     "id": "feverous-64026",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9699
+    },
+    {
+     "id": "feverous-73392",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9938
+    },
+    {
+     "id": "feverous-51303",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9931
+    },
+    {
+     "id": "feverous-51633",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9826
+    },
+    {
+     "id": "feverous-15007",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.985
+    },
+    {
+     "id": "feverous-90682",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7768
+    },
+    {
+     "id": "feverous-66783",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.919
+    },
+    {
+     "id": "feverous-21889",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9681
+    },
+    {
+     "id": "feverous-82181",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.992
+    },
+    {
+     "id": "feverous-17608",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.987
+    },
+    {
+     "id": "feverous-12069",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9907
+    },
+    {
+     "id": "feverous-7885",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9884
+    },
+    {
+     "id": "feverous-80281",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9417
+    },
+    {
+     "id": "feverous-20565",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9878
+    },
+    {
+     "id": "feverous-63598",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9775
+    },
+    {
+     "id": "feverous-72764",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9899
+    },
+    {
+     "id": "feverous-71734",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9421
+    },
+    {
+     "id": "feverous-32228",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9842
+    },
+    {
+     "id": "feverous-24913",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9359
+    },
+    {
+     "id": "feverous-68908",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9096
+    },
+    {
+     "id": "feverous-4742",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.958
+    },
+    {
+     "id": "feverous-62631",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9934
+    },
+    {
+     "id": "feverous-5871",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.922
+    },
+    {
+     "id": "feverous-6390",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9875
+    },
+    {
+     "id": "feverous-91039",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.942
+    },
+    {
+     "id": "feverous-24447",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.974
+    },
+    {
+     "id": "feverous-40372",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9933
+    },
+    {
+     "id": "feverous-89397",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9956
+    },
+    {
+     "id": "feverous-10665",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9562
+    },
+    {
+     "id": "feverous-18199",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.984
+    },
+    {
+     "id": "feverous-6007",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.947
+    },
+    {
+     "id": "feverous-53089",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9392
+    },
+    {
+     "id": "feverous-19662",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9785
+    },
+    {
+     "id": "feverous-71198",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9881
+    },
+    {
+     "id": "feverous-61548",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.983
+    },
+    {
+     "id": "feverous-64567",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9769
+    },
+    {
+     "id": "feverous-67592",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9941
+    },
+    {
+     "id": "feverous-64107",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9928
+    },
+    {
+     "id": "feverous-1297",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9736
+    },
+    {
+     "id": "feverous-78946",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9886
+    },
+    {
+     "id": "feverous-90321",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8959
+    },
+    {
+     "id": "feverous-67120",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.991
+    },
+    {
+     "id": "feverous-31146",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9839
+    },
+    {
+     "id": "feverous-84140",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9899
+    },
+    {
+     "id": "feverous-53620",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9614
+    },
+    {
+     "id": "feverous-5373",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9946
+    },
+    {
+     "id": "feverous-78044",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9688
+    },
+    {
+     "id": "feverous-43618",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9969
+    },
+    {
+     "id": "feverous-15980",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9494
+    },
+    {
+     "id": "feverous-71396",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.826
+    },
+    {
+     "id": "feverous-91825",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9935
+    },
+    {
+     "id": "feverous-6789",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.963
+    },
+    {
+     "id": "feverous-65128",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9884
+    },
+    {
+     "id": "feverous-40167",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9463
+    },
+    {
+     "id": "feverous-9223",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.985
+    },
+    {
+     "id": "feverous-36493",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9752
+    },
+    {
+     "id": "feverous-67382",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.986
+    },
+    {
+     "id": "feverous-53489",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9706
+    },
+    {
+     "id": "feverous-50756",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9425
+    },
+    {
+     "id": "feverous-95184",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9794
+    },
+    {
+     "id": "feverous-7524",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.982
+    },
+    {
+     "id": "feverous-29928",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9874
+    },
+    {
+     "id": "feverous-39986",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9582
+    },
+    {
+     "id": "feverous-44763",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9043
+    },
+    {
+     "id": "feverous-57828",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9736
+    },
+    {
+     "id": "feverous-18181",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9571
+    },
+    {
+     "id": "feverous-60662",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9497
+    },
+    {
+     "id": "feverous-48101",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.99
+    },
+    {
+     "id": "feverous-58848",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9432
+    },
+    {
+     "id": "feverous-70126",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9821
+    },
+    {
+     "id": "feverous-82678",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9845
+    },
+    {
+     "id": "feverous-75865",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9969
+    },
+    {
+     "id": "feverous-14120",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9322
+    },
+    {
+     "id": "feverous-22506",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8637
+    },
+    {
+     "id": "feverous-79919",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9839
+    },
+    {
+     "id": "feverous-71967",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.958
+    },
+    {
+     "id": "feverous-87520",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9938
+    },
+    {
+     "id": "feverous-32321",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9933
+    },
+    {
+     "id": "feverous-84940",
+     "label": "consistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9691
+    },
+    {
+     "id": "feverous-87181",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8174
+    },
+    {
+     "id": "feverous-71790",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9919
+    },
+    {
+     "id": "feverous-41457",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9743
+    },
+    {
+     "id": "feverous-23591",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9903
+    },
+    {
+     "id": "feverous-41590",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9893
+    },
+    {
+     "id": "feverous-86058",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9752
+    },
+    {
+     "id": "feverous-74155",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9925
+    },
+    {
+     "id": "feverous-60877",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8818
+    },
+    {
+     "id": "feverous-14124",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9859
+    },
+    {
+     "id": "feverous-50984",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4942
+    },
+    {
+     "id": "feverous-78730",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9607
+    },
+    {
+     "id": "feverous-6903",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.971
+    },
+    {
+     "id": "feverous-33257",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9703
+    },
+    {
+     "id": "feverous-56585",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9771
+    },
+    {
+     "id": "feverous-55866",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9912
+    },
+    {
+     "id": "feverous-81529",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9344
+    },
+    {
+     "id": "feverous-93580",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9662
+    },
+    {
+     "id": "feverous-78323",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9224
+    },
+    {
+     "id": "feverous-39792",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9728
+    },
+    {
+     "id": "feverous-64795",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9748
+    },
+    {
+     "id": "feverous-58245",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9797
+    },
+    {
+     "id": "feverous-43872",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.967
+    },
+    {
+     "id": "feverous-50062",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9647
+    },
+    {
+     "id": "feverous-79172",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9772
+    },
+    {
+     "id": "feverous-52248",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9862
+    },
+    {
+     "id": "feverous-50961",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9879
+    },
+    {
+     "id": "feverous-31834",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.97
+    },
+    {
+     "id": "feverous-13767",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9844
+    },
+    {
+     "id": "feverous-76957",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9731
+    },
+    {
+     "id": "feverous-23324",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9323
+    },
+    {
+     "id": "feverous-11134",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.976
+    },
+    {
+     "id": "feverous-78194",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8326
+    },
+    {
+     "id": "feverous-20882",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9844
+    },
+    {
+     "id": "feverous-64406",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9966
+    },
+    {
+     "id": "feverous-63782",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.993
+    },
+    {
+     "id": "feverous-14642",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9464
+    },
+    {
+     "id": "feverous-64998",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8954
+    },
+    {
+     "id": "feverous-30329",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9792
+    },
+    {
+     "id": "feverous-94267",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9743
+    },
+    {
+     "id": "feverous-41265",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9585
+    },
+    {
+     "id": "feverous-12172",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9894
+    },
+    {
+     "id": "feverous-95138",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9453
+    },
+    {
+     "id": "feverous-92876",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9806
+    },
+    {
+     "id": "feverous-63970",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9935
+    },
+    {
+     "id": "feverous-94378",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9907
+    },
+    {
+     "id": "feverous-30267",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9937
+    },
+    {
+     "id": "feverous-16837",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9661
+    },
+    {
+     "id": "feverous-77256",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9939
+    },
+    {
+     "id": "feverous-40389",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9561
+    },
+    {
+     "id": "feverous-72246",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9651
+    },
+    {
+     "id": "feverous-27527",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9671
+    },
+    {
+     "id": "feverous-45354",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9557
+    },
+    {
+     "id": "feverous-26382",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9959
+    },
+    {
+     "id": "feverous-22729",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9884
+    },
+    {
+     "id": "feverous-35573",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9942
+    },
+    {
+     "id": "feverous-91184",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9524
+    },
+    {
+     "id": "feverous-75546",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.986
+    },
+    {
+     "id": "feverous-15122",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9739
+    },
+    {
+     "id": "feverous-85738",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9876
+    },
+    {
+     "id": "feverous-48792",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9656
+    },
+    {
+     "id": "feverous-16535",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9789
+    },
+    {
+     "id": "feverous-77364",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9916
+    },
+    {
+     "id": "feverous-61822",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9828
+    },
+    {
+     "id": "feverous-39277",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.992
+    },
+    {
+     "id": "feverous-25463",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.989
+    },
+    {
+     "id": "feverous-12956",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9707
+    },
+    {
+     "id": "feverous-15553",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9523
+    },
+    {
+     "id": "feverous-57736",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9405
+    },
+    {
+     "id": "feverous-83769",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9754
+    },
+    {
+     "id": "feverous-11178",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8957
+    },
+    {
+     "id": "feverous-44247",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9782
+    },
+    {
+     "id": "feverous-38861",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9898
+    },
+    {
+     "id": "feverous-76778",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9706
+    },
+    {
+     "id": "feverous-41381",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9357
+    },
+    {
+     "id": "feverous-56352",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9488
+    },
+    {
+     "id": "feverous-43459",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9595
+    },
+    {
+     "id": "feverous-58450",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.981
+    },
+    {
+     "id": "feverous-44698",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9843
+    },
+    {
+     "id": "feverous-23795",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9813
+    },
+    {
+     "id": "feverous-44056",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9118
+    },
+    {
+     "id": "feverous-92271",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9904
+    },
+    {
+     "id": "feverous-30591",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7899
+    },
+    {
+     "id": "feverous-81498",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9751
+    },
+    {
+     "id": "feverous-61367",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.982
+    },
+    {
+     "id": "feverous-75612",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9914
+    },
+    {
+     "id": "feverous-92968",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9149
+    },
+    {
+     "id": "feverous-23620",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.987
+    },
+    {
+     "id": "feverous-47821",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9816
+    },
+    {
+     "id": "feverous-50069",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9498
+    },
+    {
+     "id": "feverous-31049",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9478
+    },
+    {
+     "id": "feverous-56109",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.977
+    },
+    {
+     "id": "feverous-64489",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9769
+    },
+    {
+     "id": "feverous-49987",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9526
+    },
+    {
+     "id": "feverous-74833",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9934
+    },
+    {
+     "id": "feverous-55678",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9856
+    },
+    {
+     "id": "feverous-48750",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.958
+    },
+    {
+     "id": "feverous-81489",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8106
+    },
+    {
+     "id": "feverous-78812",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9298
+    },
+    {
+     "id": "feverous-61413",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9922
+    },
+    {
+     "id": "feverous-54523",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9507
+    }
+   ]
+  },
+  "ocnli_contradiction": {
+   "file": "probes/ocnli_contradiction_probe.json",
+   "probe_meta": {
+    "probe_type": "ocnli_contradiction",
+    "purpose": "矛盾漏报探针: 高词面相似的矛盾对(gold全为inconsistent)被判consistent的比例=漏报率, 即'词相似⇒放行'捷径分(D族TERM-01/02同构)",
+    "n_items": 200,
+    "label_dist": {
+     "inconsistent": 200
+    },
+    "built_at": "2026-10-13T19:01:35"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 200,
+    "n_neg": 0,
+    "tp": 118,
+    "fn": 82,
+    "tn": 0,
+    "fp": 0,
+    "tpr": 0.59,
+    "tnr": null,
+    "bacc": null,
+    "fpr_误报率": null,
+    "fnr_漏报率": 0.41,
+    "acc": 0.59
+   },
+   "shortcut_score": {
+    "metric": "fnr_漏报率",
+    "desc": "矛盾漏报率(contradiction被判consistent比例)",
+    "value": 0.41
+   },
+   "rows": [
+    {
+     "id": "ocnli-41745",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9415
+    },
+    {
+     "id": "ocnli-47025",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7076
+    },
+    {
+     "id": "ocnli-23386",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4745
+    },
+    {
+     "id": "ocnli-44268",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2392
+    },
+    {
+     "id": "ocnli-37180",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7282
+    },
+    {
+     "id": "ocnli-24487",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.404
+    },
+    {
+     "id": "ocnli-32272",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9625
+    },
+    {
+     "id": "ocnli-46396",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.979
+    },
+    {
+     "id": "ocnli-38589",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4311
+    },
+    {
+     "id": "ocnli-31647",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4042
+    },
+    {
+     "id": "ocnli-31177",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.687
+    },
+    {
+     "id": "ocnli-5126",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4426
+    },
+    {
+     "id": "ocnli-50005",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.357
+    },
+    {
+     "id": "ocnli-3470",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0506
+    },
+    {
+     "id": "ocnli-31968",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4334
+    },
+    {
+     "id": "ocnli-34894",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7459
+    },
+    {
+     "id": "ocnli-18679",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9928
+    },
+    {
+     "id": "ocnli-32463",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9803
+    },
+    {
+     "id": "ocnli-27565",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2417
+    },
+    {
+     "id": "ocnli-5333",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4473
+    },
+    {
+     "id": "ocnli-29273",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3363
+    },
+    {
+     "id": "ocnli-6089",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8009
+    },
+    {
+     "id": "ocnli-31891",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6127
+    },
+    {
+     "id": "ocnli-49798",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1966
+    },
+    {
+     "id": "ocnli-31482",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9176
+    },
+    {
+     "id": "ocnli-39689",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8892
+    },
+    {
+     "id": "ocnli-2497",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6603
+    },
+    {
+     "id": "ocnli-100",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9428
+    },
+    {
+     "id": "ocnli-10328",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6123
+    },
+    {
+     "id": "ocnli-48883",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9271
+    },
+    {
+     "id": "ocnli-42854",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6823
+    },
+    {
+     "id": "ocnli-37099",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.28
+    },
+    {
+     "id": "ocnli-29394",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3372
+    },
+    {
+     "id": "ocnli-3737",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9782
+    },
+    {
+     "id": "ocnli-41673",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4708
+    },
+    {
+     "id": "ocnli-39529",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2629
+    },
+    {
+     "id": "ocnli-37105",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3176
+    },
+    {
+     "id": "ocnli-10551",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8328
+    },
+    {
+     "id": "ocnli-25781",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9786
+    },
+    {
+     "id": "ocnli-43785",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1957
+    },
+    {
+     "id": "ocnli-44432",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0182
+    },
+    {
+     "id": "ocnli-13654",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4034
+    },
+    {
+     "id": "ocnli-43913",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5245
+    },
+    {
+     "id": "ocnli-49816",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9371
+    },
+    {
+     "id": "ocnli-28215",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9399
+    },
+    {
+     "id": "ocnli-39138",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1618
+    },
+    {
+     "id": "ocnli-15080",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4005
+    },
+    {
+     "id": "ocnli-31286",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1754
+    },
+    {
+     "id": "ocnli-29359",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7149
+    },
+    {
+     "id": "ocnli-49946",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0951
+    },
+    {
+     "id": "ocnli-29885",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7074
+    },
+    {
+     "id": "ocnli-38579",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5348
+    },
+    {
+     "id": "ocnli-47472",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9933
+    },
+    {
+     "id": "ocnli-25579",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9965
+    },
+    {
+     "id": "ocnli-22195",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6927
+    },
+    {
+     "id": "ocnli-12251",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9802
+    },
+    {
+     "id": "ocnli-5448",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5455
+    },
+    {
+     "id": "ocnli-21571",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6554
+    },
+    {
+     "id": "ocnli-24194",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.957
+    },
+    {
+     "id": "ocnli-49796",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3209
+    },
+    {
+     "id": "ocnli-35501",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9078
+    },
+    {
+     "id": "ocnli-43728",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7604
+    },
+    {
+     "id": "ocnli-8645",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4019
+    },
+    {
+     "id": "ocnli-7274",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7585
+    },
+    {
+     "id": "ocnli-17969",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4136
+    },
+    {
+     "id": "ocnli-6513",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9165
+    },
+    {
+     "id": "ocnli-25783",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9756
+    },
+    {
+     "id": "ocnli-42689",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9288
+    },
+    {
+     "id": "ocnli-730",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4737
+    },
+    {
+     "id": "ocnli-32116",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5899
+    },
+    {
+     "id": "ocnli-24719",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9194
+    },
+    {
+     "id": "ocnli-30624",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8705
+    },
+    {
+     "id": "ocnli-38970",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6202
+    },
+    {
+     "id": "ocnli-49262",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4218
+    },
+    {
+     "id": "ocnli-36383",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9557
+    },
+    {
+     "id": "ocnli-32556",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7044
+    },
+    {
+     "id": "ocnli-23035",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2727
+    },
+    {
+     "id": "ocnli-44352",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3965
+    },
+    {
+     "id": "ocnli-26784",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7647
+    },
+    {
+     "id": "ocnli-45475",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9581
+    },
+    {
+     "id": "ocnli-30821",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.252
+    },
+    {
+     "id": "ocnli-25724",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5523
+    },
+    {
+     "id": "ocnli-35128",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9481
+    },
+    {
+     "id": "ocnli-20924",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6245
+    },
+    {
+     "id": "ocnli-111",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8983
+    },
+    {
+     "id": "ocnli-30127",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9942
+    },
+    {
+     "id": "ocnli-37480",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5883
+    },
+    {
+     "id": "ocnli-10220",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7753
+    },
+    {
+     "id": "ocnli-42954",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8964
+    },
+    {
+     "id": "ocnli-13260",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4978
+    },
+    {
+     "id": "ocnli-36943",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2821
+    },
+    {
+     "id": "ocnli-24824",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9686
+    },
+    {
+     "id": "ocnli-46470",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7142
+    },
+    {
+     "id": "ocnli-45171",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3369
+    },
+    {
+     "id": "ocnli-42068",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1292
+    },
+    {
+     "id": "ocnli-36511",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9397
+    },
+    {
+     "id": "ocnli-32081",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1683
+    },
+    {
+     "id": "ocnli-24670",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6688
+    },
+    {
+     "id": "ocnli-43027",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8085
+    },
+    {
+     "id": "ocnli-22881",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.787
+    },
+    {
+     "id": "ocnli-3659",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8182
+    },
+    {
+     "id": "ocnli-40578",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0547
+    },
+    {
+     "id": "ocnli-49998",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1699
+    },
+    {
+     "id": "ocnli-10526",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4333
+    },
+    {
+     "id": "ocnli-39674",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2031
+    },
+    {
+     "id": "ocnli-48008",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9584
+    },
+    {
+     "id": "ocnli-42666",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4181
+    },
+    {
+     "id": "ocnli-47406",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.384
+    },
+    {
+     "id": "ocnli-19493",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2273
+    },
+    {
+     "id": "ocnli-38034",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2574
+    },
+    {
+     "id": "ocnli-32217",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1976
+    },
+    {
+     "id": "ocnli-37021",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5696
+    },
+    {
+     "id": "ocnli-33225",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7988
+    },
+    {
+     "id": "ocnli-35878",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7263
+    },
+    {
+     "id": "ocnli-620",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1634
+    },
+    {
+     "id": "ocnli-34515",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7372
+    },
+    {
+     "id": "ocnli-29210",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7137
+    },
+    {
+     "id": "ocnli-38887",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6488
+    },
+    {
+     "id": "ocnli-42873",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9368
+    },
+    {
+     "id": "ocnli-29326",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6915
+    },
+    {
+     "id": "ocnli-41618",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8083
+    },
+    {
+     "id": "ocnli-22193",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7294
+    },
+    {
+     "id": "ocnli-27468",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1954
+    },
+    {
+     "id": "ocnli-48128",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0605
+    },
+    {
+     "id": "ocnli-37312",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3012
+    },
+    {
+     "id": "ocnli-42974",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5925
+    },
+    {
+     "id": "ocnli-32318",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3818
+    },
+    {
+     "id": "ocnli-11389",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2872
+    },
+    {
+     "id": "ocnli-24067",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2632
+    },
+    {
+     "id": "ocnli-43551",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2936
+    },
+    {
+     "id": "ocnli-13953",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7034
+    },
+    {
+     "id": "ocnli-5228",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9902
+    },
+    {
+     "id": "ocnli-32377",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8247
+    },
+    {
+     "id": "ocnli-26926",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1759
+    },
+    {
+     "id": "ocnli-11962",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6436
+    },
+    {
+     "id": "ocnli-34868",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9868
+    },
+    {
+     "id": "ocnli-44470",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9584
+    },
+    {
+     "id": "ocnli-31291",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8296
+    },
+    {
+     "id": "ocnli-32247",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1
+    },
+    {
+     "id": "ocnli-32553",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4894
+    },
+    {
+     "id": "ocnli-14318",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9221
+    },
+    {
+     "id": "ocnli-32948",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2927
+    },
+    {
+     "id": "ocnli-30946",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2146
+    },
+    {
+     "id": "ocnli-336",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8255
+    },
+    {
+     "id": "ocnli-42917",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7172
+    },
+    {
+     "id": "ocnli-29238",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9386
+    },
+    {
+     "id": "ocnli-39446",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4331
+    },
+    {
+     "id": "ocnli-36107",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2
+    },
+    {
+     "id": "ocnli-26596",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5236
+    },
+    {
+     "id": "ocnli-14263",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8027
+    },
+    {
+     "id": "ocnli-46620",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7164
+    },
+    {
+     "id": "ocnli-42220",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4088
+    },
+    {
+     "id": "ocnli-8218",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7174
+    },
+    {
+     "id": "ocnli-37361",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3721
+    },
+    {
+     "id": "ocnli-45538",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8739
+    },
+    {
+     "id": "ocnli-40790",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8401
+    },
+    {
+     "id": "ocnli-4292",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3104
+    },
+    {
+     "id": "ocnli-45490",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8536
+    },
+    {
+     "id": "ocnli-4354",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9519
+    },
+    {
+     "id": "ocnli-47615",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8196
+    },
+    {
+     "id": "ocnli-808",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.71
+    },
+    {
+     "id": "ocnli-49812",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7677
+    },
+    {
+     "id": "ocnli-4129",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.937
+    },
+    {
+     "id": "ocnli-36992",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5885
+    },
+    {
+     "id": "ocnli-5854",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.824
+    },
+    {
+     "id": "ocnli-30913",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2971
+    },
+    {
+     "id": "ocnli-32569",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6174
+    },
+    {
+     "id": "ocnli-44511",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8925
+    },
+    {
+     "id": "ocnli-24430",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8518
+    },
+    {
+     "id": "ocnli-19566",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4778
+    },
+    {
+     "id": "ocnli-33060",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5972
+    },
+    {
+     "id": "ocnli-46397",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9834
+    },
+    {
+     "id": "ocnli-26891",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8126
+    },
+    {
+     "id": "ocnli-21992",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8635
+    },
+    {
+     "id": "ocnli-27949",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3605
+    },
+    {
+     "id": "ocnli-29871",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.5508
+    },
+    {
+     "id": "ocnli-37684",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.668
+    },
+    {
+     "id": "ocnli-49224",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6304
+    },
+    {
+     "id": "ocnli-21743",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.415
+    },
+    {
+     "id": "ocnli-24",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.2458
+    },
+    {
+     "id": "ocnli-32259",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.0489
+    },
+    {
+     "id": "ocnli-18328",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4718
+    },
+    {
+     "id": "ocnli-37474",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7327
+    },
+    {
+     "id": "ocnli-4929",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6325
+    },
+    {
+     "id": "ocnli-25485",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1178
+    },
+    {
+     "id": "ocnli-8262",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.498
+    },
+    {
+     "id": "ocnli-42888",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4961
+    },
+    {
+     "id": "ocnli-47705",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3295
+    },
+    {
+     "id": "ocnli-38144",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.6056
+    },
+    {
+     "id": "ocnli-33619",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4389
+    },
+    {
+     "id": "ocnli-28883",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.9878
+    },
+    {
+     "id": "ocnli-22865",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4216
+    },
+    {
+     "id": "ocnli-27139",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.3048
+    },
+    {
+     "id": "ocnli-25955",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8693
+    },
+    {
+     "id": "ocnli-38529",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.4385
+    },
+    {
+     "id": "ocnli-32019",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1957
+    },
+    {
+     "id": "ocnli-49655",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.7675
+    },
+    {
+     "id": "ocnli-44829",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8905
+    },
+    {
+     "id": "ocnli-49792",
+     "label": "inconsistent",
+     "pred": "inconsistent",
+     "prob_inc": 0.8145
+    },
+    {
+     "id": "ocnli-19490",
+     "label": "inconsistent",
+     "pred": "consistent",
+     "prob_inc": 0.1441
+    }
+   ]
+  }
+ },
+ "pooled": {
+  "n": 600,
+  "n_pos": 400,
+  "n_neg": 200,
+  "tp": 302,
+  "fn": 98,
+  "tn": 26,
+  "fp": 174,
+  "tpr": 0.755,
+  "tnr": 0.13,
+  "bacc": 0.4425,
+  "fpr_误报率": 0.87,
+  "fnr_漏报率": 0.245,
+  "acc": 0.5467
+ }
+}

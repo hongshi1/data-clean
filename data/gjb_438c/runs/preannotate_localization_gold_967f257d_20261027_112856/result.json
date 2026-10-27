@@ -1,0 +1,69 @@
+{
+ "tool_version": "s7_preannotate_localization_gold_v1",
+ "module": {
+  "name": "QAConsistencyModule",
+  "use_experts": true,
+  "use_llm_residual": true
+ },
+ "paths": {
+  "template": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\localization_gold\\annotation_template_v1.jsonl",
+  "frozen": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\qa_frozen\\scene1_qa_frozen_v1.jsonl",
+  "out": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\localization_gold\\pre_annotated_v1.jsonl"
+ },
+ "inputs": {
+  "template_sha256": "b99fc9dee86cb48b3c66e9defa27f337ecac3ed1bac3542688b564f48b5ea78d",
+  "frozen_sha256": "c4a02b55ec4c3bc2482a1462b94541bf1786d934f739fc1918d3d2a53fde12f4"
+ },
+ "counts": {
+  "template_rows": 108,
+  "qa_pre_annotated": 91,
+  "violations_skipped": 17,
+  "qa_rows_with_gold_refs_prefilled": 0,
+  "system_claims": 695,
+  "decisive_claims": 215
+ },
+ "llm_calls": {
+  "span_calls": 214,
+  "span_budget": 350,
+  "span_budget_skipped_claims": 0,
+  "llm_residual_instances_estimate": 35,
+  "llm_residual_failed_instances": 0
+ },
+ "system_vs_silver": {
+  "n": 91,
+  "confusion_silver_x_system": {
+   "support": {
+    "support": 2,
+    "refute": 1,
+    "not_in_evidence": 3
+   },
+   "refute": {
+    "support": 0,
+    "refute": 6,
+    "not_in_evidence": 2
+   },
+   "not_in_evidence": {
+    "support": 1,
+    "refute": 2,
+    "not_in_evidence": 74
+   }
+  },
+  "agreement_rate": 0.9011
+ },
+ "span_quality": {
+  "n_span_candidates": 214,
+  "n_span_returned": 207,
+  "n_span_valid": 207,
+  "span_valid_rate": 1.0,
+  "n_span_strict_block_substring": 200,
+  "span_strict_block_rate": 0.9662
+ },
+ "span_call_failures": [],
+ "notes": [
+  "gold字段保持空: suggest_前缀字段只是建议, 人工须逐条填gold(协议§3)",
+  "span细化只做判定性claim(support/refute且带引用); NIE claim的refs是诊断信息(协议§7)",
+  "LLM全部走llm_json(cache=True): 残差通道按实例批量(每实例≤1次), span每claim一次",
+  "超span预算时优先silver=refute/support实例, NIE实例只填系统建议",
+  "17违例条目非标准QA, 预标注跳过, 保持模板原样(协议§10.3)"
+ ]
+}

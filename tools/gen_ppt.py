@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """生成SRS一致性校验方案PPT"""
 from pptx import Presentation
-from pptx.util import Inches, Pt, Emu
+from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
-from pptx.chart.data import CategoryChartData
-from pptx.enum.chart import XL_CHART_TYPE
+from pptx.enum.text import PP_ALIGN
 
 prs = Presentation()
 prs.slide_width = Inches(13.333)

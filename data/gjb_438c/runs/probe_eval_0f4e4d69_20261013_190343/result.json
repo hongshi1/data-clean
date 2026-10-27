@@ -1,0 +1,125 @@
+{
+ "meta": {
+  "timestamp": "2026-10-13T19:03:34",
+  "git_sha": "ff0d4950",
+  "model_dir": "models/nli/roberta-v12-anchor",
+  "positive_class": "inconsistent",
+  "probe_dir": "data/gjb_438c/probes",
+  "note": "探针为冻结eval-only资产; 结果含每条预测供翻转分析"
+ },
+ "pooled": {
+  "n": 600,
+  "n_pos": 400,
+  "n_neg": 200,
+  "tp": 302,
+  "fn": 98,
+  "tn": 26,
+  "fp": 174,
+  "tpr": 0.755,
+  "tnr": 0.13,
+  "bacc": 0.4425,
+  "fpr_误报率": 0.87,
+  "fnr_漏报率": 0.245,
+  "acc": 0.5467
+ },
+ "probes": {
+  "paws_shortcut": {
+   "file": "probes/paws_shortcut_probe.json",
+   "probe_meta": {
+    "probe_type": "paws_shortcut",
+    "purpose": "词面重叠捷径探针: 释义对(高词重叠, gold=consistent)被判inconsistent的比例=误报率, 即'词重叠⇒误报'捷径分(v5全报警病灶的量化)",
+    "n_items": 200,
+    "label_dist": {
+     "consistent": 100,
+     "inconsistent": 100
+    },
+    "built_at": "2026-10-13T19:01:34"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 100,
+    "n_neg": 100,
+    "tp": 85,
+    "fn": 15,
+    "tn": 26,
+    "fp": 74,
+    "tpr": 0.85,
+    "tnr": 0.26,
+    "bacc": 0.555,
+    "fpr_误报率": 0.74,
+    "fnr_漏报率": 0.15,
+    "acc": 0.555
+   },
+   "shortcut_score": {
+    "metric": "fpr_误报率",
+    "desc": "词重叠捷径分=误报率(释义对被判inconsistent比例)",
+    "value": 0.74
+   }
+  },
+  "feverous_table": {
+   "file": "probes/feverous_table_probe.json",
+   "probe_meta": {
+    "probe_type": "feverous_table",
+    "purpose": "表格蕴含探针: 声明(claim)与结构化表格证据的核对能力(SUPPORTS→consistent, REFUTES→inconsistent)",
+    "n_items": 200,
+    "label_dist": {
+     "consistent": 100,
+     "inconsistent": 100
+    },
+    "built_at": "2026-10-13T19:01:34"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 100,
+    "n_neg": 100,
+    "tp": 99,
+    "fn": 1,
+    "tn": 0,
+    "fp": 100,
+    "tpr": 0.99,
+    "tnr": 0.0,
+    "bacc": 0.495,
+    "fpr_误报率": 1.0,
+    "fnr_漏报率": 0.01,
+    "acc": 0.495
+   },
+   "shortcut_score": {
+    "metric": "fpr_误报率",
+    "desc": "表格蕴含误报率(SUPPORTS被判inconsistent比例)",
+    "value": 1.0
+   }
+  },
+  "ocnli_contradiction": {
+   "file": "probes/ocnli_contradiction_probe.json",
+   "probe_meta": {
+    "probe_type": "ocnli_contradiction",
+    "purpose": "矛盾漏报探针: 高词面相似的矛盾对(gold全为inconsistent)被判consistent的比例=漏报率, 即'词相似⇒放行'捷径分(D族TERM-01/02同构)",
+    "n_items": 200,
+    "label_dist": {
+     "inconsistent": 200
+    },
+    "built_at": "2026-10-13T19:01:35"
+   },
+   "metrics": {
+    "n": 200,
+    "n_pos": 200,
+    "n_neg": 0,
+    "tp": 118,
+    "fn": 82,
+    "tn": 0,
+    "fp": 0,
+    "tpr": 0.59,
+    "tnr": null,
+    "bacc": null,
+    "fpr_误报率": null,
+    "fnr_漏报率": 0.41,
+    "acc": 0.59
+   },
+   "shortcut_score": {
+    "metric": "fnr_漏报率",
+    "desc": "矛盾漏报率(contradiction被判consistent比例)",
+    "value": 0.41
+   }
+  }
+ }
+}

@@ -1,0 +1,15 @@
+@startuml
+!pragma layout smetana
+left to right direction
+actor "数据保障人员" as P4
+rectangle "数据获取" {
+  usecase "结构化数据归集" as P2
+  usecase "半结构化数据归集" as P3
+  usecase "非结构化数据归集" as P7
+  usecase "流式数据引接" as P9
+}
+P4 -- P3
+P4 -- P2
+P4 -- P7
+P4 -- P9
+@enduml

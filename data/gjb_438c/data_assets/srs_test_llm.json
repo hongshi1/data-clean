@@ -461,13 +461,17 @@
   "qid": "srs_llm_test_00058",
   "split": "test",
   "pair_id": "1_140",
-  "question": "表13中三个功能的需求重用方式和适用平台参数是否统一？",
+  "question": "表{table}中三个功能的需求重用方式和适用平台参数是否统一？",
   "placeholders": {
    "image": "data/gjb_438c/pair_dataset/sc1_usecase_capability/1_140/image.png",
    "table": "data/gjb_438c/pair_dataset/sc1_usecase_capability/1_140/table.csv",
    "text": "data/gjb_438c/pair_dataset/sc1_usecase_capability/1_140/text.txt"
   },
-  "modalities": [],
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
   "answer": "统一。三个功能的需求重用均为\"沿用\"，适用平台均为\"桌面版、平板版\"，参数属性值在表格内完全一致，无参数冲突。",
   "answer_modality": "text",
   "inconsistency_type": "parameter",
@@ -3703,13 +3707,17 @@
   "qid": "srs_llm_train_00135",
   "split": "train",
   "pair_id": "3_003",
-  "question": "根据文档，该接口设计遵循的是GJB 5000B还是GJB 5235标准？",
+  "question": "根据{text}，该接口设计遵循的是GJB 5000B还是GJB 5235标准？",
   "placeholders": {
    "image": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/image.png",
    "table": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/table.csv",
    "text": "data/gjb_438c/pair_dataset/sc3_interface_interface/3_003/text.txt"
   },
-  "modalities": [],
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
   "answer": "文档未提及任何GJB标准编号，若声称遵循'GJB 5235'则属于无中生有的标准注入，原文不存在该引用。",
   "answer_modality": "text",
   "inconsistency_type": "gjb_compliance",
@@ -3929,13 +3937,17 @@
   "qid": "srs_llm_train_00144",
   "split": "train",
   "pair_id": "4_026",
-  "question": "根据文档章节3.2.2，图13标题为\"服务故障预警流程图\"，但正文描述\"故障预警修复功能包括：故障库维护管理、服务故障预警、开机基础环境检测，其功能用例如图12所示\"。请问图13与正文中哪个功能对应？图12和图13是什么关系？",
+  "question": "根据正文{text}章节3.2.2，图13标题为\"服务故障预警流程图\"，但正文描述\"故障预警修复功能包括：故障库维护管理、服务故障预警、开机基础环境检测，其功能用例如图12所示\"。请问图13与正文中哪个功能对应？图12和图13是什么关系？",
   "placeholders": {
    "image": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/image.png",
    "table": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/table.csv",
    "text": "data/gjb_438c/pair_dataset/sc4_flowchart_capability/4_026/text.txt"
   },
-  "modalities": [],
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
   "answer": "存在不一致：图13标题为\"服务故障预警流程图\"，但正文提到的是\"图12\"展示功能用例，且未提及图13。图13仅对应\"服务故障预警\"一个功能，但正文说图12展示三个功能（故障库维护管理、服务故障预警、开机基础环境检测）的用例。图号引用不一致（图12 vs 图13），且图13与正文功能集合描述不匹配。",
   "answer_modality": "text",
   "inconsistency_type": "terminology",

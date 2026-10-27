@@ -1,0 +1,901 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "checkpoint": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\egt_finetuned",
+ "default_gate": 0.6,
+ "baseline": {
+  "accuracy": 0.8791,
+  "macro_f1": 0.576,
+  "per_class": {
+   "support": {
+    "precision": 0.5,
+    "recall": 0.1667,
+    "f1": 0.25
+   },
+   "refute": {
+    "precision": 1.0,
+    "recall": 0.375,
+    "f1": 0.5455
+   },
+   "not_in_evidence": {
+    "precision": 0.8837,
+    "recall": 0.987,
+    "f1": 0.9325
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 1,
+   "support|not_in_evidence": 1,
+   "refute|refute": 3,
+   "not_in_evidence|support": 5,
+   "not_in_evidence|refute": 5,
+   "not_in_evidence|not_in_evidence": 76
+  },
+  "claim_methods": {
+   "semantic_unresolved": 312,
+   "e1_template_match": 31,
+   "l0_entity_detector:TERM-05": 56,
+   "sequence_alignment": 225,
+   "conservative_unresolved": 29,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 17,
+   "exact_statement": 9,
+   "l0_entity_detector:TERM-08:warning": 4
+  }
+ },
+ "nli_residual": {
+  "accuracy": 0.7692,
+  "macro_f1": 0.4553,
+  "per_class": {
+   "support": {
+    "precision": 0.2,
+    "recall": 0.1667,
+    "f1": 0.1818
+   },
+   "refute": {
+    "precision": 0.2727,
+    "recall": 0.375,
+    "f1": 0.3158
+   },
+   "not_in_evidence": {
+    "precision": 0.88,
+    "recall": 0.8571,
+    "f1": 0.8684
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 1,
+   "support|not_in_evidence": 4,
+   "refute|support": 1,
+   "refute|refute": 3,
+   "refute|not_in_evidence": 7,
+   "not_in_evidence|support": 4,
+   "not_in_evidence|refute": 5,
+   "not_in_evidence|not_in_evidence": 66
+  },
+  "claim_methods": {
+   "nli_residual": 155,
+   "e1_template_match": 31,
+   "semantic_unresolved": 168,
+   "l0_entity_detector:TERM-05": 56,
+   "sequence_alignment": 225,
+   "conservative_unresolved": 18,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 17,
+   "exact_statement": 9,
+   "l0_entity_detector:TERM-08:warning": 4
+  }
+ },
+ "gate_sweep": {
+  "0.50": {
+   "accuracy": 0.7253,
+   "macro_f1": 0.429,
+   "per_class": {
+    "support": {
+     "precision": 0.1111,
+     "recall": 0.1667,
+     "f1": 0.1333
+    },
+    "refute": {
+     "precision": 0.2727,
+     "recall": 0.375,
+     "f1": 0.3158
+    },
+    "not_in_evidence": {
+     "precision": 0.8732,
+     "recall": 0.8052,
+     "f1": 0.8378
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 8,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 62
+   },
+   "claim_methods": {
+    "nli_residual": 171,
+    "e1_template_match": 31,
+    "semantic_unresolved": 154,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 16,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.55": {
+   "accuracy": 0.7363,
+   "macro_f1": 0.4348,
+   "per_class": {
+    "support": {
+     "precision": 0.125,
+     "recall": 0.1667,
+     "f1": 0.1429
+    },
+    "refute": {
+     "precision": 0.2727,
+     "recall": 0.375,
+     "f1": 0.3158
+    },
+    "not_in_evidence": {
+     "precision": 0.875,
+     "recall": 0.8182,
+     "f1": 0.8456
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 7,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 63
+   },
+   "claim_methods": {
+    "nli_residual": 166,
+    "e1_template_match": 31,
+    "semantic_unresolved": 159,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 16,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.60": {
+   "accuracy": 0.7692,
+   "macro_f1": 0.4553,
+   "per_class": {
+    "support": {
+     "precision": 0.2,
+     "recall": 0.1667,
+     "f1": 0.1818
+    },
+    "refute": {
+     "precision": 0.2727,
+     "recall": 0.375,
+     "f1": 0.3158
+    },
+    "not_in_evidence": {
+     "precision": 0.88,
+     "recall": 0.8571,
+     "f1": 0.8684
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 4,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 66
+   },
+   "claim_methods": {
+    "nli_residual": 155,
+    "e1_template_match": 31,
+    "semantic_unresolved": 168,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 18,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.65": {
+   "accuracy": 0.7692,
+   "macro_f1": 0.4553,
+   "per_class": {
+    "support": {
+     "precision": 0.2,
+     "recall": 0.1667,
+     "f1": 0.1818
+    },
+    "refute": {
+     "precision": 0.2727,
+     "recall": 0.375,
+     "f1": 0.3158
+    },
+    "not_in_evidence": {
+     "precision": 0.88,
+     "recall": 0.8571,
+     "f1": 0.8684
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 4,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 66
+   },
+   "claim_methods": {
+    "nli_residual": 153,
+    "e1_template_match": 31,
+    "semantic_unresolved": 170,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 18,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.70": {
+   "accuracy": 0.7802,
+   "macro_f1": 0.4678,
+   "per_class": {
+    "support": {
+     "precision": 0.25,
+     "recall": 0.1667,
+     "f1": 0.2
+    },
+    "refute": {
+     "precision": 0.3,
+     "recall": 0.375,
+     "f1": 0.3333
+    },
+    "not_in_evidence": {
+     "precision": 0.8701,
+     "recall": 0.8701,
+     "f1": 0.8701
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 3,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 5,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 67
+   },
+   "claim_methods": {
+    "nli_residual": 146,
+    "e1_template_match": 31,
+    "semantic_unresolved": 175,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 20,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.75": {
+   "accuracy": 0.7802,
+   "macro_f1": 0.4678,
+   "per_class": {
+    "support": {
+     "precision": 0.25,
+     "recall": 0.1667,
+     "f1": 0.2
+    },
+    "refute": {
+     "precision": 0.3,
+     "recall": 0.375,
+     "f1": 0.3333
+    },
+    "not_in_evidence": {
+     "precision": 0.8701,
+     "recall": 0.8701,
+     "f1": 0.8701
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 3,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 7,
+    "not_in_evidence|support": 5,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 67
+   },
+   "claim_methods": {
+    "nli_residual": 143,
+    "e1_template_match": 31,
+    "semantic_unresolved": 177,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 21,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  },
+  "0.80": {
+   "accuracy": 0.7912,
+   "macro_f1": 0.4768,
+   "per_class": {
+    "support": {
+     "precision": 0.25,
+     "recall": 0.1667,
+     "f1": 0.2
+    },
+    "refute": {
+     "precision": 0.3333,
+     "recall": 0.375,
+     "f1": 0.3529
+    },
+    "not_in_evidence": {
+     "precision": 0.8718,
+     "recall": 0.8831,
+     "f1": 0.8774
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 3,
+    "refute|refute": 3,
+    "refute|not_in_evidence": 6,
+    "not_in_evidence|support": 5,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 68
+   },
+   "claim_methods": {
+    "nli_residual": 133,
+    "e1_template_match": 31,
+    "semantic_unresolved": 187,
+    "l0_entity_detector:TERM-05": 56,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 21,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 17,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 4
+   }
+  }
+ },
+ "nli_stats": {
+  "nli_residual_claims": 155,
+  "model_unavailable": false
+ },
+ "llm_reference_l3": {
+  "run": "eval_llm_residual_5dd69927_20261026_173434",
+  "macro_f1": 0.7799,
+  "accuracy": 0.9341,
+  "refute_recall": 0.875,
+  "refute_precision": 1.0
+ },
+ "gap_to_l3": -0.3246,
+ "flips": {
+  "corrected": [],
+  "regressed": [
+   {
+    "instance_id": "S1QA-001",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+      "verdict": "support",
+      "confidence": 0.987,
+      "evidence_refs": [
+       "S1QA-001-ev-000011",
+       "S1QA-001-ev-000030",
+       "S1QA-001-ev-000032",
+       "S1QA-001-ev-000035",
+       "S1QA-001-ev-000043",
+       "S1QA-001-ev-000049",
+       "S1QA-001-ev-000054"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.99)，premise含19条证据语句"
+     },
+     {
+      "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+      "verdict": "refute",
+      "confidence": 0.9134,
+      "evidence_refs": [
+       "S1QA-001-ev-000011",
+       "S1QA-001-ev-000030",
+       "S1QA-001-ev-000032",
+       "S1QA-001-ev-000035",
+       "S1QA-001-ev-000043",
+       "S1QA-001-ev-000049",
+       "S1QA-001-ev-000054"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.91)，premise含19条证据语句"
+     },
+     {
+      "claim_text": "资源释放与错误报告： 在异常处理过程中，系统确保所有资源得到妥善释放，并及时通知相关错误信息以供用户处理",
+      "verdict": "support",
+      "confidence": 0.6462,
+      "evidence_refs": [
+       "S1QA-001-ev-000011",
+       "S1QA-001-ev-000030",
+       "S1QA-001-ev-000032",
+       "S1QA-001-ev-000035",
+       "S1QA-001-ev-000043",
+       "S1QA-001-ev-000049",
+       "S1QA-001-ev-000054"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.65)，premise含20条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-005",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "support",
+    "nli_claims": [
+     {
+      "claim_text": "对BLOB数据的支持（修改、查询、插入）、确保了任务书中所列功能的实现",
+      "verdict": "support",
+      "confidence": 0.9889,
+      "evidence_refs": [
+       "S1QA-005-ev-000030",
+       "S1QA-005-ev-000032",
+       "S1QA-005-ev-000035"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.99)，premise含34条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-013",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "support",
+    "nli_claims": [
+     {
+      "claim_text": "当在获取LOB时发生连接错误，系统将触发一个名为E1的异常，表示无法连接到服务端",
+      "verdict": "support",
+      "confidence": 0.991,
+      "evidence_refs": [
+       "S1QA-013-ev-000030",
+       "S1QA-013-ev-000032",
+       "S1QA-013-ev-000035",
+       "S1QA-013-ev-000043",
+       "S1QA-013-ev-000049",
+       "S1QA-013-ev-000054"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.99)，premise含22条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-020",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "SQL文件输出和获取INT用例的后置条件均为无",
+      "verdict": "refute",
+      "confidence": 0.9973,
+      "evidence_refs": [
+       "S1QA-020-ev-000032",
+       "S1QA-020-ev-000035",
+       "S1QA-020-ev-000084",
+       "S1QA-020-ev-000087",
+       "S1QA-020-ev-000109"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=1.00)，premise含35条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-023",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "生成DML语句并输出数据：系统将收集到的查询数据组织成特定格式的DML语句，然后将这些数据输出到内存或指定的文件中",
+      "verdict": "support",
+      "confidence": 0.8486,
+      "evidence_refs": [
+       "S1QA-023-ev-000030",
+       "S1QA-023-ev-000032",
+       "S1QA-023-ev-000035",
+       "S1QA-023-ev-000043",
+       "S1QA-023-ev-000049",
+       "S1QA-023-ev-000084",
+       "S1QA-023-ev-000087",
+       "S1QA-023-ev-000109"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.85)，premise含24条证据语句"
+     },
+     {
+      "claim_text": "这些数据可以被其他软件调用以便进一步处理",
+      "verdict": "support",
+      "confidence": 0.9253,
+      "evidence_refs": [
+       "S1QA-023-ev-000030",
+       "S1QA-023-ev-000032",
+       "S1QA-023-ev-000035",
+       "S1QA-023-ev-000043",
+       "S1QA-023-ev-000049",
+       "S1QA-023-ev-000084",
+       "S1QA-023-ev-000087",
+       "S1QA-023-ev-000109"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.93)，premise含28条证据语句"
+     },
+     {
+      "claim_text": "确保流程在遇到问题时能够及时终止并提供有效的反馈",
+      "verdict": "refute",
+      "confidence": 0.9585,
+      "evidence_refs": [
+       "S1QA-023-ev-000030",
+       "S1QA-023-ev-000032",
+       "S1QA-023-ev-000035",
+       "S1QA-023-ev-000043",
+       "S1QA-023-ev-000049",
+       "S1QA-023-ev-000084",
+       "S1QA-023-ev-000087",
+       "S1QA-023-ev-000109"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.96)，premise含28条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-034",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "在数据查询过程中，如果返回的数据量超过了1000条，系统将执行以下措施",
+      "verdict": "support",
+      "confidence": 0.9934,
+      "evidence_refs": [
+       "S1QA-034-ev-000027",
+       "S1QA-034-ev-000032",
+       "S1QA-034-ev-000035",
+       "S1QA-034-ev-000037",
+       "S1QA-034-ev-000043",
+       "S1QA-034-ev-000049",
+       "S1QA-034-ev-000084",
+       "S1QA-034-ev-000087"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.99)，premise含29条证据语句"
+     },
+     {
+      "claim_text": "抛出错误信息：通过异常流E1提示获取失败，应用软件无法继续操作",
+      "verdict": "refute",
+      "confidence": 0.7805,
+      "evidence_refs": [
+       "S1QA-034-ev-000027",
+       "S1QA-034-ev-000032",
+       "S1QA-034-ev-000035",
+       "S1QA-034-ev-000037",
+       "S1QA-034-ev-000043",
+       "S1QA-034-ev-000049",
+       "S1QA-034-ev-000084",
+       "S1QA-034-ev-000087"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.78)，premise含26条证据语句"
+     },
+     {
+      "claim_text": "这些措施确保系统的稳定性和可靠性，同时符合性能约束条件",
+      "verdict": "support",
+      "confidence": 0.861,
+      "evidence_refs": [
+       "S1QA-034-ev-000027",
+       "S1QA-034-ev-000032",
+       "S1QA-034-ev-000035",
+       "S1QA-034-ev-000037",
+       "S1QA-034-ev-000043",
+       "S1QA-034-ev-000049",
+       "S1QA-034-ev-000084",
+       "S1QA-034-ev-000087"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.86)，premise含30条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-040",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "support",
+    "nli_claims": [
+     {
+      "claim_text": "SQL文件输出的功能是将查询结果以SQL语句的形式保存为文件，以便后续的自动化处理或集成到其他系统中",
+      "verdict": "support",
+      "confidence": 0.7666,
+      "evidence_refs": [
+       "S1QA-040-ev-000084",
+       "S1QA-040-ev-000087",
+       "S1QA-040-ev-000109"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.77)，premise含37条证据语句"
+     },
+     {
+      "claim_text": "通过此功能，用户可以在本地存储查询结果，并根据需要在运行时进行调整和执行，从而提高数据处理的效率和灵活性",
+      "verdict": "support",
+      "confidence": 0.6916,
+      "evidence_refs": [
+       "S1QA-040-ev-000084",
+       "S1QA-040-ev-000087",
+       "S1QA-040-ev-000109"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.69)，premise含38条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-048",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "修改数据记录的操作流程包括以下步骤",
+      "verdict": "support",
+      "confidence": 0.9443,
+      "evidence_refs": [
+       "S1QA-048-ev-000011",
+       "S1QA-048-ev-000024",
+       "S1QA-048-ev-000030",
+       "S1QA-048-ev-000032",
+       "S1QA-048-ev-000035",
+       "S1QA-048-ev-000043"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.94)，premise含29条证据语句"
+     },
+     {
+      "claim_text": "数据传输到服务端：将获取到的SQL语句通过网络传输至服务端",
+      "verdict": "support",
+      "confidence": 0.648,
+      "evidence_refs": [
+       "S1QA-048-ev-000011",
+       "S1QA-048-ev-000024",
+       "S1QA-048-ev-000030",
+       "S1QA-048-ev-000032",
+       "S1QA-048-ev-000035",
+       "S1QA-048-ev-000043",
+       "S1QA-048-ev-000049",
+       "S1QA-048-ev-000054"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.65)，premise含25条证据语句"
+     },
+     {
+      "claim_text": "提交成功或异常处理",
+      "verdict": "support",
+      "confidence": 0.7653,
+      "evidence_refs": [
+       "S1QA-048-ev-000011",
+       "S1QA-048-ev-000030",
+       "S1QA-048-ev-000032",
+       "S1QA-048-ev-000035",
+       "S1QA-048-ev-000043",
+       "S1QA-048-ev-000049",
+       "S1QA-048-ev-000054"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.77)，premise含25条证据语句"
+     },
+     {
+      "claim_text": "后置条件：操作完成后无后续步骤需要执行",
+      "verdict": "refute",
+      "confidence": 0.999,
+      "evidence_refs": [
+       "S1QA-048-ev-000011",
+       "S1QA-048-ev-000030",
+       "S1QA-048-ev-000032",
+       "S1QA-048-ev-000035",
+       "S1QA-048-ev-000043",
+       "S1QA-048-ev-000049",
+       "S1QA-048-ev-000054"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=1.00)，premise含20条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-049",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "在增加数据记录的过程中，应用软件调用了“增加数据记录接口”，并按照以下步骤进行操作",
+      "verdict": "support",
+      "confidence": 0.9831,
+      "evidence_refs": [
+       "S1QA-049-ev-000011",
+       "S1QA-049-ev-000024",
+       "S1QA-049-ev-000030",
+       "S1QA-049-ev-000035",
+       "S1QA-049-ev-000043",
+       "S1QA-049-ev-000049",
+       "S1QA-049-ev-000064",
+       "S1QA-049-ev-000067"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.98)，premise含22条证据语句"
+     },
+     {
+      "claim_text": "调用接口：应用软件通过“增加数据记录接口”输入相关参数，包括修改的SQL语句",
+      "verdict": "support",
+      "confidence": 0.9947,
+      "evidence_refs": [
+       "S1QA-049-ev-000011",
+       "S1QA-049-ev-000024",
+       "S1QA-049-ev-000030",
+       "S1QA-049-ev-000035",
+       "S1QA-049-ev-000043",
+       "S1QA-049-ev-000049",
+       "S1QA-049-ev-000064",
+       "S1QA-049-ev-000067"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.99)，premise含24条证据语句"
+     },
+     {
+      "claim_text": "释放连接句柄，同时在发生执行错误时触发异常流E1，系统提示执行失败",
+      "verdict": "refute",
+      "confidence": 0.8681,
+      "evidence_refs": [
+       "S1QA-049-ev-000011",
+       "S1QA-049-ev-000024",
+       "S1QA-049-ev-000030",
+       "S1QA-049-ev-000035",
+       "S1QA-049-ev-000043",
+       "S1QA-049-ev-000049",
+       "S1QA-049-ev-000064",
+       "S1QA-049-ev-000067"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.87)，premise含23条证据语句"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-086",
+    "silver": "not_in_evidence",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "PZXQ-JK-SJTYFW-JMJCKJ",
+      "verdict": "support",
+      "confidence": 0.7386,
+      "evidence_refs": [
+       "S1QA-086-ev-000009",
+       "S1QA-086-ev-000010",
+       "S1QA-086-ev-000030",
+       "S1QA-086-ev-000263",
+       "S1QA-086-ev-000281",
+       "S1QA-086-ev-000331"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.74)，premise含35条证据语句"
+     },
+     {
+      "claim_text": "PZXQ-JK-SJTYFW-SJK",
+      "verdict": "refute",
+      "confidence": 0.8994,
+      "evidence_refs": [
+       "S1QA-086-ev-000009",
+       "S1QA-086-ev-000010",
+       "S1QA-086-ev-000030",
+       "S1QA-086-ev-000263",
+       "S1QA-086-ev-000281",
+       "S1QA-086-ev-000331"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.90)，premise含35条证据语句"
+     }
+    ]
+   }
+  ],
+  "moved": [
+   {
+    "instance_id": "S1QA-077",
+    "silver": "support",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "nli_claims": [
+     {
+      "claim_text": "初始化、读取配置文件连接、数据库连接和关闭功能",
+      "verdict": "refute",
+      "confidence": 0.6832,
+      "evidence_refs": [
+       "S1QA-077-ev-000011",
+       "S1QA-077-ev-000024",
+       "S1QA-077-ev-000030",
+       "S1QA-077-ev-000032",
+       "S1QA-077-ev-000035",
+       "S1QA-077-ev-000049",
+       "S1QA-077-ev-000084"
+      ],
+      "rationale": "NLI残差判定：contradiction(p=0.68)，premise含28条证据语句"
+     },
+     {
+      "claim_text": "错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能、如逐行拷贝、获取INT、STRING和FLOAT等",
+      "verdict": "support",
+      "confidence": 0.9992,
+      "evidence_refs": [
+       "S1QA-077-ev-000011",
+       "S1QA-077-ev-000024",
+       "S1QA-077-ev-000030",
+       "S1QA-077-ev-000032",
+       "S1QA-077-ev-000035",
+       "S1QA-077-ev-000084",
+       "S1QA-077-ev-000087"
+      ],
+      "rationale": "NLI残差判定：entailment(p=1.00)，premise含28条证据语句"
+     },
+     {
+      "claim_text": "插入、删除和查询BLOB（大型对象块）数据记录",
+      "verdict": "support",
+      "confidence": 0.6954,
+      "evidence_refs": [
+       "S1QA-077-ev-000011",
+       "S1QA-077-ev-000024",
+       "S1QA-077-ev-000030",
+       "S1QA-077-ev-000032",
+       "S1QA-077-ev-000035",
+       "S1QA-077-ev-000084",
+       "S1QA-077-ev-000087"
+      ],
+      "rationale": "NLI残差判定：entailment(p=0.70)，premise含32条证据语句"
+     }
+    ]
+   }
+  ]
+ },
+ "false_refutes": [
+  "S1QA-001",
+  "S1QA-020",
+  "S1QA-023",
+  "S1QA-034",
+  "S1QA-048",
+  "S1QA-049",
+  "S1QA-077",
+  "S1QA-086"
+ ],
+ "targets": {
+  "macro_f1_ge_0.65": false,
+  "refute_precision_ge_0.8": false
+ }
+}

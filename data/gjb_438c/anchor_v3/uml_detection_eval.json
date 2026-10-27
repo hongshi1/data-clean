@@ -1,0 +1,803 @@
+{
+ "config": {
+  "seed": 42,
+  "corpus": "D:\\study\\hengxiang\\data_clean\\data\\gjb_438c\\anchor_v3\\uml_qa_full.json",
+  "anchors": "D:\\study\\hengxiang\\data_clean\\data\\gjb_438c\\anchor_v3\\anchors_v3.json",
+  "n": 11711,
+  "time": 30
+ },
+ "main": {
+  "P": 0.9973,
+  "R": 0.9907,
+  "F1": 0.994,
+  "acc": 0.9943,
+  "tp": 5537,
+  "fp": 15,
+  "fn": 52,
+  "tn": 6107,
+  "coverage": 1.0,
+  "n": 11711,
+  "tag": "main_doc_level",
+  "f1_ci95": [
+   0.9925,
+   0.9954
+  ],
+  "by_difficulty": {
+   "medium": {
+    "P": 0.9948,
+    "R": 0.9779,
+    "F1": 0.9863,
+    "acc": 0.9845,
+    "tp": 2303,
+    "fp": 12,
+    "fn": 52,
+    "tn": 1771,
+    "coverage": 1.0,
+    "n": 4138,
+    "tag": ""
+   },
+   "easy": {
+    "P": 0.0,
+    "R": 0.0,
+    "F1": 0.0,
+    "acc": 0.9993,
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "tn": 4336,
+    "coverage": 1.0,
+    "n": 4339,
+    "tag": ""
+   },
+   "hard": {
+    "P": 1.0,
+    "R": 1.0,
+    "F1": 1.0,
+    "acc": 1.0,
+    "tp": 3234,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0,
+    "coverage": 1.0,
+    "n": 3234,
+    "tag": ""
+   }
+  },
+  "by_source": {
+   "label_negative": {
+    "P": 1.0,
+    "R": 0.987,
+    "F1": 0.9935,
+    "acc": 0.987,
+    "tp": 76,
+    "fp": 0,
+    "fn": 1,
+    "tn": 0,
+    "coverage": 1.0,
+    "n": 77,
+    "tag": ""
+   },
+   "compound_negative": {
+    "P": 1.0,
+    "R": 1.0,
+    "F1": 1.0,
+    "acc": 1.0,
+    "tp": 22,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0,
+    "coverage": 1.0,
+    "n": 22,
+    "tag": ""
+   },
+   "label_positive": {
+    "P": 0.0,
+    "R": 0.0,
+    "F1": 0.0,
+    "acc": 1.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "tn": 77,
+    "coverage": 1.0,
+    "n": 77,
+    "tag": ""
+   },
+   "node_negative": {
+    "P": 1.0,
+    "R": 0.9418,
+    "F1": 0.97,
+    "acc": 0.9418,
+    "tp": 696,
+    "fp": 0,
+    "fn": 43,
+    "tn": 0,
+    "coverage": 1.0,
+    "n": 739,
+    "tag": ""
+   },
+   "node_positive": {
+    "P": 0.0,
+    "R": 0.0,
+    "F1": 0.0,
+    "acc": 1.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "tn": 1259,
+    "coverage": 1.0,
+    "n": 1259,
+    "tag": ""
+   },
+   "uml_positive": {
+    "P": 0.0,
+    "R": 0.0,
+    "F1": 0.0,
+    "acc": 0.9969,
+    "tp": 0,
+    "fp": 15,
+    "fn": 0,
+    "tn": 4771,
+    "coverage": 1.0,
+    "n": 4786,
+    "tag": ""
+   },
+   "uml_negative": {
+    "P": 1.0,
+    "R": 0.9983,
+    "F1": 0.9992,
+    "acc": 0.9983,
+    "tp": 4743,
+    "fp": 0,
+    "fn": 8,
+    "tn": 0,
+    "coverage": 1.0,
+    "n": 4751,
+    "tag": ""
+   }
+  },
+  "by_uml_type": {
+   "": {
+    "P": 1.0,
+    "R": 0.9435,
+    "F1": 0.9709,
+    "acc": 0.9787,
+    "tp": 718,
+    "fp": 0,
+    "fn": 43,
+    "tn": 1259,
+    "coverage": 1.0,
+    "n": 2020,
+    "tag": ""
+   },
+   "ASSOCIATION": {
+    "P": 0.9989,
+    "R": 0.9993,
+    "F1": 0.9991,
+    "acc": 0.9991,
+    "tp": 4590,
+    "fp": 5,
+    "fn": 3,
+    "tn": 4593,
+    "coverage": 1.0,
+    "n": 9191,
+    "tag": ""
+   },
+   "COMPOSITION": {
+    "P": 0.6774,
+    "R": 1.0,
+    "F1": 0.8077,
+    "acc": 0.7619,
+    "tp": 21,
+    "fp": 10,
+    "fn": 0,
+    "tn": 11,
+    "coverage": 1.0,
+    "n": 42,
+    "tag": ""
+   },
+   "REALIZATION": {
+    "P": 1.0,
+    "R": 0.963,
+    "F1": 0.9811,
+    "acc": 0.9817,
+    "tp": 156,
+    "fp": 0,
+    "fn": 6,
+    "tn": 166,
+    "coverage": 1.0,
+    "n": 328,
+    "tag": ""
+   },
+   "DIRECTED": {
+    "P": 1.0,
+    "R": 1.0,
+    "F1": 1.0,
+    "acc": 1.0,
+    "tp": 52,
+    "fp": 0,
+    "fn": 0,
+    "tn": 78,
+    "coverage": 1.0,
+    "n": 130,
+    "tag": ""
+   }
+  }
+ },
+ "mutation_scores": {
+  "dependency_fabrication": {
+   "n": 1545,
+   "detected": 1545,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "relationship_type_confusion": {
+   "n": 1542,
+   "detected": 1542,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "direction_fabrication": {
+   "n": 1438,
+   "detected": 1436,
+   "score": 0.9986,
+   "miss_stage": {
+    "ok": 2
+   }
+  },
+  "usecase_vs_state": {
+   "n": 437,
+   "detected": 398,
+   "score": 0.9108,
+   "miss_stage": {
+    "ok": 39
+   }
+  },
+  "actor_vs_component": {
+   "n": 302,
+   "detected": 298,
+   "score": 0.9868,
+   "miss_stage": {
+    "ok": 4
+   }
+  },
+  "direction_reversal": {
+   "n": 101,
+   "detected": 95,
+   "score": 0.9406,
+   "miss_stage": {
+    "ok": 6
+   }
+  },
+  "realization_vs_generalization": {
+   "n": 79,
+   "detected": 79,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "condition_swap": {
+   "n": 77,
+   "detected": 76,
+   "score": 0.987,
+   "miss_stage": {
+    "ok": 1
+   }
+  },
+  "navigation_error": {
+   "n": 26,
+   "detected": 26,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "circular_dependency": {
+   "n": 22,
+   "detected": 22,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "composition_vs_aggregation": {
+   "n": 10,
+   "detected": 10,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "lifecycle_error": {
+   "n": 10,
+   "detected": 10,
+   "score": 1.0,
+   "miss_stage": {}
+  },
+  "_positive_specificity": {
+   "n": 6122,
+   "fp": 15,
+   "specificity": 0.9975
+  }
+ },
+ "baselines": {
+  "B0": {
+   "P": 0.0,
+   "R": 0.0,
+   "F1": 0.0,
+   "acc": 0.5228,
+   "tp": 0,
+   "fp": 0,
+   "fn": 5589,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "B0_majority"
+  },
+  "B1_polarity": {
+   "P": 0.0,
+   "R": 0.0,
+   "F1": 0.0,
+   "acc": 0.5214,
+   "tp": 0,
+   "fp": 16,
+   "fn": 5589,
+   "tn": 6106,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "B1_polarity"
+  }
+ },
+ "ablation_locality": {
+  "P": 0.9973,
+  "R": 0.9987,
+  "F1": 0.998,
+  "acc": 0.9981,
+  "tp": 5582,
+  "fp": 15,
+  "fn": 7,
+  "tn": 6107,
+  "coverage": 1.0,
+  "n": 11711,
+  "tag": "embed_restricted",
+  "f1_ci95": [
+   0.9972,
+   0.9988
+  ],
+  "mutation_scores": {
+   "dependency_fabrication": 1.0,
+   "relationship_type_confusion": 1.0,
+   "direction_fabrication": 1.0,
+   "usecase_vs_state": 1.0,
+   "actor_vs_component": 0.9967,
+   "direction_reversal": 0.9406,
+   "realization_vs_generalization": 1.0,
+   "condition_swap": 1.0,
+   "navigation_error": 1.0,
+   "circular_dependency": 1.0,
+   "composition_vs_aggregation": 1.0,
+   "lifecycle_error": 1.0,
+   "_positive_specificity": 0.9975
+  }
+ },
+ "ablation_single": {
+  "D_type": {
+   "P": 0.9976,
+   "R": 0.2922,
+   "F1": 0.452,
+   "acc": 0.6619,
+   "tp": 1633,
+   "fp": 4,
+   "fn": 3956,
+   "tn": 6118,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_type"
+  },
+  "D_dir": {
+   "P": 1.0,
+   "R": 0.2616,
+   "F1": 0.4147,
+   "acc": 0.6476,
+   "tp": 1462,
+   "fp": 0,
+   "fn": 4127,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_dir"
+  },
+  "D_nav": {
+   "P": 1.0,
+   "R": 0.0047,
+   "F1": 0.0093,
+   "acc": 0.525,
+   "tp": 26,
+   "fp": 0,
+   "fn": 5563,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_nav"
+  },
+  "D_dep": {
+   "P": 1.0,
+   "R": 0.2764,
+   "F1": 0.4331,
+   "acc": 0.6547,
+   "tp": 1545,
+   "fp": 0,
+   "fn": 4044,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_dep"
+  },
+  "D_nodetype": {
+   "P": 1.0,
+   "R": 0.1245,
+   "F1": 0.2215,
+   "acc": 0.5822,
+   "tp": 696,
+   "fp": 0,
+   "fn": 4893,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_nodetype"
+  },
+  "D_label": {
+   "P": 1.0,
+   "R": 0.0136,
+   "F1": 0.0268,
+   "acc": 0.5292,
+   "tp": 76,
+   "fp": 0,
+   "fn": 5513,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_label"
+  },
+  "D_cycle": {
+   "P": 1.0,
+   "R": 0.0039,
+   "F1": 0.0078,
+   "acc": 0.5246,
+   "tp": 22,
+   "fp": 0,
+   "fn": 5567,
+   "tn": 6122,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_cycle"
+  },
+  "D_lifecycle": {
+   "P": 0.4762,
+   "R": 0.0018,
+   "F1": 0.0036,
+   "acc": 0.5227,
+   "tp": 10,
+   "fp": 11,
+   "fn": 5579,
+   "tn": 6111,
+   "coverage": 1.0,
+   "n": 11711,
+   "tag": "D_lifecycle"
+  }
+ },
+ "errors": {
+  "fn_stage": {
+   "ok": 52
+  },
+  "fn_kind": {
+   "direction": 2,
+   "label": 1,
+   "impl": 6,
+   "nodetype": 43
+  },
+  "fn_adjudication": {
+   "graph_supports_direction": 2,
+   "unadjudicated": 1,
+   "graph_bidirectional": 6,
+   "node_type_ambiguous": 43
+  },
+  "fn_samples": [
+   {
+    "inject": "direction_fabrication",
+    "kind": "direction",
+    "stage": "ok",
+    "adjudication": "graph_supports_direction"
+   },
+   {
+    "inject": "condition_swap",
+    "kind": "label",
+    "stage": "ok",
+    "adjudication": "unadjudicated"
+   },
+   {
+    "inject": "direction_reversal",
+    "kind": "impl",
+    "stage": "ok",
+    "adjudication": "graph_bidirectional"
+   },
+   {
+    "inject": "direction_reversal",
+    "kind": "impl",
+    "stage": "ok",
+    "adjudication": "graph_bidirectional"
+   },
+   {
+    "inject": "direction_reversal",
+    "kind": "impl",
+    "stage": "ok",
+    "adjudication": "graph_bidirectional"
+   },
+   {
+    "inject": "actor_vs_component",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "direction_fabrication",
+    "kind": "direction",
+    "stage": "ok",
+    "adjudication": "graph_supports_direction"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   },
+   {
+    "inject": "usecase_vs_state",
+    "kind": "nodetype",
+    "stage": "ok",
+    "adjudication": "node_type_ambiguous"
+   }
+  ],
+  "fp_samples": [
+   {
+    "inject": "",
+    "fired": [
+     "D_type: 声明REALIZATION 实际['ASSOCIATION']"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_type: 声明REALIZATION 实际['ASSOCIATION']"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_type: 声明REALIZATION 实际['ASSOCIATION']"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_type: 声明REALIZATION 实际['ASSOCIATION']"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_lifecycle: 声明可独立存在但实际是组合关系(部分不能脱离整体)"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_lifecycle: 声明可独立存在但实际是组合关系(部分不能脱离整体)"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_lifecycle: 声明可独立存在但实际是组合关系(部分不能脱离整体)"
+    ]
+   },
+   {
+    "inject": "",
+    "fired": [
+     "D_lifecycle: 声明可独立存在但实际是组合关系(部分不能脱离整体)"
+    ]
+   }
+  ]
+ },
+ "adjudicated": {
+  "P": 0.9973,
+  "R": 0.9998,
+  "F1": 0.9986,
+  "acc": 0.9986,
+  "tp": 5588,
+  "fp": 15,
+  "fn": 1,
+  "tn": 6107,
+  "justified_as_label_noise": 51,
+  "note": "graph-fact-supported claims mislabeled by corpus templates"
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "experiment": "v6良性差异重训",
+ "training": {
+  "data": "benchmark_train_v3 (2598 benchmark + 220 anchor structural: 111 real + 109 benign)",
+  "epochs": 15,
+  "final_loss": 0.0042,
+  "method": "QLoRA r=8 + FFN injection, Erlangshen-330M base"
+ },
+ "evaluation": {
+  "gold_v2_clean130": {
+   "v5_full": {
+    "F1": 0.471,
+    "P": 0.308,
+    "R": 1.0,
+    "flag": "130/130"
+   },
+   "v6": {
+    "F1": 0.568,
+    "P": 0.521,
+    "R": 0.625,
+    "flag": "48/130"
+   },
+   "all_baselines": {
+    "F1": 0.471,
+    "P": 0.308,
+    "R": 1.0,
+    "flag": "130/130全报警"
+   },
+   "glm5_22cached": {
+    "F1": 0.522,
+    "P": 0.353,
+    "R": 1.0
+   }
+  },
+  "gold_v1_23": {
+   "v5_full": {
+    "F1": 0.414
+   },
+   "v6": {
+    "F1": 0.545,
+    "P": 0.375,
+    "R": 1.0
+   }
+  },
+  "bench_300": {
+   "v5_full": {
+    "F1": 0.985
+   },
+   "v6": {
+    "F1": 0.975,
+    "P": 0.957,
+    "R": 0.993
+   }
+  },
+  "xnli_300": {
+   "v5_full": {
+    "F1": 0.883
+   },
+   "v6": {
+    "F1": 0.878,
+    "P": 0.802,
+    "R": 0.97
+   }
+  }
+ },
+ "conclusion": "v6是唯一在真实金标上不退化为全报警的方法; 域内能力保留(-0.010), 无额外遗忘; 良性负样本训练是关键设计"
+}

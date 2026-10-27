@@ -1,0 +1,22 @@
+{
+ "data_structures": {
+  "Evidence": "原始证据单元(content, modality, source)",
+  "Pair": "语义对齐单元(premise+hypothesis, relation, entity_id)",
+  "SemanticGroup": "跨证据组合(theme, pairs, entity_ids)",
+  "QASample": "最终样本(qa_type, question, answer, label, type, location, explanation, provenance)"
+ },
+ "mutation_operators": {
+  "ParamShift": "参数族: 数值变更(非等价变换验证)",
+  "TermSwap": "术语族: 别名替换",
+  "ItemRemove": "结构族: 条目删除",
+  "OrderSwap": "逻辑族: 顺序反转"
+ },
+ "qa_types": [
+  "判别型(是否一致)",
+  "定位型(哪里不一致)",
+  "解释型(为什么不一致)",
+  "修复型(如何修改)"
+ ],
+ "mutation_record": "MutationRecord(operator, target_type, position, original, mutated, is_valid, validation_note)",
+ "test_status": "3族变异算子+QA生成全部测试通过"
+}

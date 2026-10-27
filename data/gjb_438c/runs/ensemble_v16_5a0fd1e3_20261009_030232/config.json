@@ -1,0 +1,29 @@
+{
+ "script": "ensemble_v16",
+ "git_sha": "ff0d4950",
+ "config": {
+  "models": {
+   "v12": "models/nli/roberta-v12-anchor",
+   "v15": "models/nli/roberta-v15",
+   "v13": "models/nli/macbert-v13",
+   "svm": "retrain-svm"
+  },
+  "eval": [
+   "clean130",
+   "md166"
+  ],
+  "threshold": 0.5,
+  "svm_recipe": "TF-IDF+LinearSVC(balanced) on decontam canonical train",
+  "strategies": [
+   "a_mean",
+   "b_wavg_bacc",
+   "b2_wavg_excess",
+   "c_vote",
+   "d_route",
+   "e_median",
+   "diag_oracle_route"
+  ]
+ },
+ "config_hash": "5a0fd1e3",
+ "opened_at": 1791486152.9
+}

@@ -1,0 +1,125 @@
+{
+  "agreement": {
+    "dual_encoder_on_rule_negatives": {
+      "agreement_rate": 0.7112,
+      "bge_only_low": 89,
+      "both_low": 1810,
+      "neither_low": 882,
+      "qwen3_only_low": 1004
+    },
+    "dual_encoder_on_rule_positives": {
+      "agreement_rate": 0.8606,
+      "bge_only": 128,
+      "both": 1181,
+      "neither": 1455,
+      "qwen3_only": 299
+    },
+    "spearman_bge_qwen3_test": 0.8952
+  },
+  "auc_vs_rule_labels": {
+    "bge": {
+      "dev": 0.8169,
+      "test": 0.8774
+    },
+    "qwen3": {
+      "dev": 0.8682,
+      "test": 0.9018
+    }
+  },
+  "counts": {
+    "gold_proxy_negative": 1810,
+    "gold_proxy_pairs_file": 2991,
+    "gold_proxy_positive": 1181,
+    "review_total": 3857,
+    "review_written": 200
+  },
+  "exogenous_evaluation_only": true,
+  "fold_map": {
+    "01": 1,
+    "02": 2,
+    "03": 3,
+    "04": 3,
+    "05": 3,
+    "06": 0,
+    "07": 1,
+    "08": 2,
+    "09": 2,
+    "10": 1,
+    "11": 3,
+    "12": 0,
+    "13": 0,
+    "14": 3,
+    "15": 3,
+    "16": 1
+  },
+  "fold_map_source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\runs\\train_shared_projection_3408ed57_20261022_073000\\config.json",
+  "inputs": {
+    "features_sha256": "f258b9eefd800b2d6aa7a1b971cc361ba2ea15fb29cadd6566a476468f17952d",
+    "pairs": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\training_pairs_v1\\pairs.jsonl",
+    "pairs_sha256": "20a3b99675697998b690da5211ad07169a4fc99744d8a3067b7216e506477819",
+    "qwen3_model_dir": "C:\\Users\\12488\\Desktop\\data_clean\\models\\embedding\\qwen3-embedding-0.6b",
+    "snapshot_dir": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\feature_snapshot_v1",
+    "vectors_sha256": "3c26cb9f373473b11c5c3568b21f9e20f8fd9f9305710fdc79248b94bbf33448"
+  },
+  "policy": {
+    "exogenous_only": true,
+    "gold_pairs_source_split": "test(防泄漏: 永不进入训练/校准split)",
+    "no_identifier_positive_limit": "gold_proxy正例必须为P1显式ID正例——无共享显式ID的正例在本构造下为0条(覆盖率局限: 无ID同指pair只能落入review_queue)",
+    "qwen3_input_parity": "Qwen3输入=feature_snapshot_v1同款200字符截断文本(编码器间分歧只反映编码器差异)",
+    "review_queue_top_n": 200,
+    "silver_bound_not_gold": true,
+    "threshold_calibration_split": "dev(θ与θ_low仅用dev fold校准)"
+  },
+  "review_score_gap_stats": {
+    "max": 0.3065,
+    "mean": 0.0813,
+    "median": 0.0703
+  },
+  "review_type_distribution": {
+    "all_review": {
+      "neg_bge_high_qwen_low": 1004,
+      "neg_bge_low_qwen_high": 89,
+      "neg_both_above_theta_low": 882,
+      "pos_bge_high_qwen_low": 128,
+      "pos_bge_low_qwen_high": 299,
+      "pos_both_below_theta": 1455
+    },
+    "written_top_n": {
+      "neg_bge_high_qwen_low": 189,
+      "neg_bge_low_qwen_high": 6,
+      "pos_both_below_theta": 5
+    }
+  },
+  "schema_version": "gold_proxy_v1",
+  "test_docs": [
+    "06",
+    "12",
+    "13"
+  ],
+  "test_stats": {
+    "missing_endpoints": 0,
+    "n_pairs_scored": 6848,
+    "n_pairs_total": 6848,
+    "n_rule_negative": 3785,
+    "n_rule_positive": 3063,
+    "rule_positive_ratio": 0.4473
+  },
+  "thresholds": {
+    "bge": {
+      "n_dev_neg": 3653,
+      "n_dev_pos": 3294,
+      "theta": 0.9008386135101318,
+      "theta_low": 0.6784466505050659,
+      "theta_low_rule": "dev fold正例5%分位(nearest-rank)",
+      "theta_rule": "dev fold负例95%分位(nearest-rank)"
+    },
+    "qwen3": {
+      "n_dev_neg": 3653,
+      "n_dev_pos": 3294,
+      "theta": 0.877770721912384,
+      "theta_low": 0.6582003235816956,
+      "theta_low_rule": "dev fold正例5%分位(nearest-rank)",
+      "theta_rule": "dev fold负例95%分位(nearest-rank)"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+digraph claw {
+  graph [rankdir=TB, fontname="Heiti SC", dpi=150, bgcolor="white", nodesep=0.35, ranksep=0.6];
+  node [shape=box, fontname="Heiti SC", style=filled];
+  edge [arrowhead=none];
+  center [label="数据一致性校验智能体", fillcolor=lightyellow, fontsize=14, width=2.4, height=0.7];
+  p0 [label="语法层校验", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p0;
+  p0_c0 [label="规则逻辑推导", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p0 -> p0_c0;
+  p0_c1 [label="结构模式识别", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p0 -> p0_c1;
+  p1 [label="语义层校验", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p1;
+  p1_c0 [label="跨模态语义校验", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p1 -> p1_c0;
+  p1_c1 [label="蕴含矛盾判定", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p1 -> p1_c1;
+  p2 [label="逻辑层校验", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p2;
+  p2_c0 [label="约束求解分析", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p2 -> p2_c0;
+  p2_c1 [label="专家知识推断", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p2 -> p2_c1;
+}

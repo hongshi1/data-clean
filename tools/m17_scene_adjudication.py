@@ -33,10 +33,10 @@ ANCHOR_V2 = BASE / "data/gjb_438c/anchor_v2/anchors_v2.json"
 OUT = BASE / "data/gjb_438c/anchor_v2/scene_adjudication.json"
 
 KIMI_URL = "https://api.moonshot.cn/v1/chat/completions"
-KIMI_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY
 KIMI_MODEL = "kimi-k2.6"
 GLM_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions"
-GLM_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as GLM_KEY
 GLM_MODEL = "ep-glsztk-1778496696841467392"
 
 SCENE_DESC = {
@@ -242,7 +242,7 @@ def main():
     print(f"  总标签: {dict(final)}")
 
     # 分场景×标签 + π
-    print(f"\n  分场景(π=real_bug率):")
+    print("\n  分场景(π=real_bug率):")
     scene_pi = {}
     cross = defaultdict(Counter)
     for r in ok:
@@ -257,7 +257,7 @@ def main():
               f"compiler={c['compiler_bug']:2d} uncertain={c['uncertain']:3d} → π={pi:.2f}")
 
     # real_bug样例
-    print(f"\n  real_bug样例(前6):")
+    print("\n  real_bug样例(前6):")
     n = 0
     for tid, r in results.items():
         if r.get('final') == 'real_bug' and n < 6:

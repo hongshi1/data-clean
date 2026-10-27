@@ -11,7 +11,6 @@ import shutil
 import subprocess
 import sys
 import urllib.request
-import zlib
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(SCRIPT_DIR, "output")
@@ -65,7 +64,7 @@ def main(files):
         elif render_online(mmd, png):
             print(f"  ✓ mermaid.ink 渲染: {png}")
         else:
-            print(f"  ✗ 渲染失败")
+            print("  ✗ 渲染失败")
             continue
         ok.append(png)
     return ok

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#455a64"/>
+    </marker>
+  </defs>
+  <style>
+    .nbox{fill:#e3f2fd;stroke:#1565c0;stroke-width:1.5}
+    .gbox{fill:#e8f5e9;stroke:#2e7d32;stroke-width:1.5}
+    .ybox{fill:#fff8e1;stroke:#f9a825;stroke-width:1.5}
+    .rbox{fill:#fce4ec;stroke:#c62828;stroke-width:1.5}
+    .gry{fill:#eceff1;stroke:#90a4ae;stroke-width:1;stroke-dasharray:4 3}
+    .num{font-weight:bold}
+    .t1{font-size:12px;fill:#263238}
+    .t2{font-size:11px;fill:#546e7a}
+    .tt{font-size:13px;font-weight:bold;fill:#263238}
+  </style>
+
+  <text x="480" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#263238">标签账目闭环：从分歧到银标（全部数字可审计）</text>
+  <text x="480" y="48" text-anchor="middle" font-size="12" fill="#607d8b">标签性质：多轮LLM聚合的银标（非人工金标）——协议见下，可信度论证见文档§5.3</text>
+
+  <!-- 顶部: 1005 -->
+  <rect x="330" y="66" width="300" height="52" class="nbox" rx="8"/>
+  <text x="480" y="90" text-anchor="middle" class="tt">词法比对产出分歧 <tspan fill="#0d47a1" class="num">1005</tspan> 条</text>
+  <text x="480" y="108" text-anchor="middle" class="t2">sc1/3/4/5场景 579 + sc2场景 426</text>
+
+  <!-- 右侧分支: 303未裁决 -->
+  <line x1="630" y1="92" x2="742" y2="92" stroke="#78909c" stroke-width="1.5" marker-end="url(#a2)" stroke-dasharray="5 3"/>
+  <rect x="746" y="66" width="196" height="106" class="gry" rx="6"/>
+  <text x="844" y="90" text-anchor="middle" class="tt">未裁决 <tspan class="num">303</tspan> 条</text>
+  <text x="844" y="110" text-anchor="middle" class="t2">211 图多余型（裁决延后）</text>
+  <text x="844" y="126" text-anchor="middle" class="t2">83 缺失型未入选</text>
+  <text x="844" y="142" text-anchor="middle" class="t2">9 提取错误（sc2排除）</text>
+  <text x="844" y="162" text-anchor="middle" class="t2" fill="#c62828">不进入评测</text>
+
+  <!-- 1005 → 702 -->
+  <line x1="480" y1="118" x2="480" y2="148" stroke="#455a64" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="500" y="138" font-size="11" fill="#546e7a">702条进入裁决</text>
+
+  <!-- 702 -->
+  <rect x="330" y="152" width="300" height="52" class="nbox" rx="8"/>
+  <text x="480" y="176" text-anchor="middle" class="tt">双LLM异构独立裁决 <tspan fill="#0d47a1" class="num">702</tspan> 条</text>
+  <text x="480" y="194" text-anchor="middle" class="t2">kimi-k2.6看渲染图 ↔ GLM看锚点结构（不看图）· 互为独立信息源</text>
+
+  <!-- 分叉: 一致362 / 不一致340 -->
+  <line x1="400" y1="204" x2="230" y2="240" stroke="#2e7d32" stroke-width="2" marker-end="url(#a2)"/>
+  <line x1="560" y1="204" x2="730" y2="240" stroke="#f9a825" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="300" y="222" font-size="11" fill="#2e7d32">双方一致 362条（51.6%）</text>
+  <text x="640" y="222" font-size="11" fill="#f57f17">双方不一致 340条</text>
+
+  <!-- 362 直接采纳 -->
+  <rect x="80" y="244" width="300" height="70" class="gbox" rx="8"/>
+  <text x="230" y="268" text-anchor="middle" class="tt">第一轮：一致直接采纳 <tspan class="num" fill="#1b5e20">362</tspan> 条</text>
+  <text x="230" y="288" text-anchor="middle" class="t2">两模型意见相同 → 采纳该标签（round=1）</text>
+  <text x="230" y="304" text-anchor="middle" class="t2">kimi与GLM独立信息源的一致=交叉验证</text>
+
+  <!-- 340 → 五票 -->
+  <rect x="540" y="244" width="340" height="70" class="ybox" rx="8"/>
+  <text x="710" y="268" text-anchor="middle" class="tt">第二轮：五路投票（≥3/5多数才裁决）</text>
+  <text x="710" y="288" text-anchor="middle" class="t2">票1 kimi看图 · 票2 GLM看结构 · 票3 kimi增强(图+惯例规则+正文)</text>
+  <text x="710" y="304" text-anchor="middle" class="t2">票4 GLM单问题直查 · 票5 kimi纯文本（五票互补视角）</text>
+
+  <!-- 五票结果: 302 / 38 -->
+  <line x1="620" y1="314" x2="560" y2="360" stroke="#2e7d32" stroke-width="2" marker-end="url(#a2)"/>
+  <line x1="800" y1="314" x2="848" y2="360" stroke="#c62828" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#a2)"/>
+  <text x="580" y="344" font-size="11" fill="#2e7d32">多数决 302条</text>
+  <text x="840" y="344" font-size="11" fill="#c62828">无多数 38条 → 未决</text>
+
+  <rect x="540" y="364" width="160" height="40" class="gbox" rx="6"/>
+  <text x="620" y="382" text-anchor="middle" class="tt">五票采纳 <tspan class="num" fill="#1b5e20">302</tspan></text>
+  <text x="620" y="398" text-anchor="middle" class="t2">(round=2)</text>
+
+  <rect x="770" y="364" width="180" height="40" class="gry" rx="6"/>
+  <text x="860" y="386" text-anchor="middle" class="tt">未决 <tspan class="num">38</tspan> 条</text>
+  <text x="860" y="398" text-anchor="middle" class="t2" fill="#c62828">不进评测</text>
+
+  <!-- 362 + 302 → 664 -->
+  <line x1="230" y1="314" x2="380" y2="428" stroke="#2e7d32" stroke-width="2" marker-end="url(#a2)"/>
+  <line x1="620" y1="404" x2="470" y2="428" stroke="#2e7d32" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- 664 银标 -->
+  <rect x="300" y="432" width="360" height="64" class="nbox" rx="8" stroke-width="2"/>
+  <text x="480" y="456" text-anchor="middle" class="tt">最终银标 <tspan fill="#0d47a1" class="num">664</tspan> 条 = 362 + 302</text>
+  <text x="480" y="476" text-anchor="middle" class="t2">每条标签可追溯至双方原始意见与理由（裁决记录在案）</text>
+  <text x="480" y="492" text-anchor="middle" class="t2">NLI复核独立于标签生产（不看图/不看LLM意见）→ 无循环评测</text>
+
+  <!-- 三分类 -->
+  <line x1="480" y1="496" x2="480" y2="522" stroke="#455a64" stroke-width="2" marker-end="url(#a2)"/>
+
+  <rect x="90" y="526" width="240" height="64" class="rbox" rx="6"/>
+  <text x="210" y="548" text-anchor="middle" class="tt" fill="#c62828">real_bug 真实缺陷 176 (26.5%)</text>
+  <text x="210" y="566" text-anchor="middle" class="t2">文档该表示的图里确实缺</text>
+  <text x="210" y="582" text-anchor="middle" class="t2">实例：异常流E3流程图无分支</text>
+
+  <rect x="360" y="526" width="240" height="64" class="ybox" rx="6"/>
+  <text x="480" y="548" text-anchor="middle" class="tt" fill="#f57f17">benign 合理差异 378 (56.9%)</text>
+  <text x="480" y="566" text-anchor="middle" class="t2">绘图惯例/粒度取舍</text>
+  <text x="480" y="582" text-anchor="middle" class="t2">实例：接口图只画主要接口</text>
+
+  <rect x="630" y="526" width="240" height="64" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5" rx="6"/>
+  <text x="750" y="548" text-anchor="middle" class="tt" fill="#0d47a1">compiler 引擎误报 110 (16.6%)</text>
+  <text x="750" y="566" text-anchor="middle" class="t2">图里有，词法没认出</text>
+  <text x="750" y="582" text-anchor="middle" class="t2">NLI消化100/110=91.7%</text>
+
+  <text x="480" y="612" text-anchor="middle" font-size="11" fill="#90a4ae">全账目：1005 = 702(裁决) + 303(未裁决)；702 = 362(一致) + 302(五票) + 38(未决)；评测集 = 664 − 15(不可构造) = 649</text>
+</svg>

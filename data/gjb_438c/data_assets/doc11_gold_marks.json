@@ -1,0 +1,74 @@
+{
+  "source": "docs/doc11/场景1-软件需求规格辅助生成场景补发数据/高质量问答对（配套样例数据中：04数据统一访问服务软件需求规格说明）.json",
+  "note": "人工逐条阅读69条真实QA+grep核对04文档原文后标记的必须抓出项(2026-09-09)。gold不完备——未标记的QA被引擎标记属'待人工复核'而非必然误报。",
+  "qa_must_flag": [
+    {
+      "instruction_contains": "BLOB数据操作包括哪些功能",
+      "expect": ["contradicted_or_flag"],
+      "check": "enumeration",
+      "issue": "答案{插入,删除,查询}与文档图23/用例节(L411起)的{插入,修改,查询}冲突(删除∉图集)。根因是文档自身TERM-03: L388列举缺'修改'。引擎应经多源枚举核验抓出。"
+    },
+    {
+      "instruction_contains": "项目中支持对BLOB数据进行修改、查询和插入的功能分别沿用哪些设备",
+      "expect": ["contradicted_or_flag"],
+      "check": "enumeration",
+      "issue": "答案操作集{修改,查询,插入}与文档L388{插入,删除,查询}冲突(修改∉L388集, 删除∉答案集)。"
+    },
+    {
+      "instruction_contains": "SQL访问功能提供了哪些具体的操作",
+      "expect": ["contradicted_or_flag"],
+      "check": "enumeration",
+      "issue": "答案BLOB子集写'删除、更新和查询'——'更新'∉文档任何BLOB操作集(文档用词是修改), 集合口径混乱。"
+    },
+    {
+      "instruction_contains": "修改数据记录的功能标识表中包含哪些内容",
+      "expect": ["supported", "partial", "term_variant"],
+      "check": "identifier+terminology",
+      "issue": "归因修正(2026-09-09复核): QA的短格式ID与'平版'均忠实抄自文档表9——不是QA错误, 是文档级问题(表9短ID vs 节标题长ID; 表内平版12次vs平板20次混用)。引擎判supported/partial属正确行为; 该QA的表内容与节标题的矛盾由scan-docs的文档级检测承接。"
+    },
+    {
+      "instruction_contains": "的主要应用场景是什么",
+      "expect": ["internal_flaw"],
+      "check": "internal",
+      "issue": "答案二次拼接: 正文+「答案：」重述两段冗余(生成瑕疵)。注: 另有同主题短答案QA(主要用途)无此瑕疵, gold指向应用场景版。"
+    },
+    {
+      "instruction_contains": "查询数据功能的运行状态如何分类",
+      "expect": ["internal_flaw", "unsupported"],
+      "check": "internal",
+      "issue": "答案二次拼接('答案：'重复)。注: 该答案同时存在实体错配导致的误判风险(运行状态列举撞上查询数据功能列举)。"
+    },
+    {
+      "instruction_contains": "逐行获取INT值的功能在什么场景下使用",
+      "expect": ["unsupported", "internal_flaw"],
+      "check": "grounding",
+      "issue": "外推答案: '库存管理/成绩评分系统'为通用知识, 非文档内容; 且答案存在二次拼接——两类问题并存, 任一类别抓出即算。"
+    }
+  ],
+  "doc_findings_reference": [
+    {
+      "doc": "04",
+      "type": "enumeration_incomplete",
+      "where": "3.2.1.4(L388) vs 3.2.1.4.1.2(L411)/图23",
+      "desc": "BLOB数据操作功能列举{插入,删除,查询}但同节子用例与图23含'BLOB数据修改'——文档级TERM-03枚举不完备(引擎scan-docs的E1/E2应产出)"
+    },
+    {
+      "doc": "04",
+      "type": "identifier_mismatch",
+      "where": "3.2.1.2.1.1-3(L227/239/251)",
+      "desc": "删除数据记录=SJXG(数据修改缩写)/增加=ZXSW/修改=TJSW(添加数据缩写); L251的ID还缺XGSJ父级段——文档级ID-名称语义错配(引擎E4应产出)"
+    },
+    {
+      "doc": "04",
+      "type": "table_terminology_drift",
+      "where": "表9等能力标识表 方式名称列",
+      "desc": "表内'平版'12处 vs '平板'20处混用——文档级术语不一致(QA答案的'平版'即忠实抄自此, 2026-09-09复核确认)"
+    },
+    {
+      "doc": "04",
+      "type": "id_dual_format",
+      "where": "表9(能力标识表) vs 3.2.1.x节标题",
+      "desc": "表9用短格式ID(PZXQ-GN-SQLFW-SJXG)而节标题用长格式(PZXQ-GN-SQLFW-XGSJ-SJXG)——文档级ID双格式并存"
+    }
+  ]
+}

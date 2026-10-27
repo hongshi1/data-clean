@@ -1,0 +1,170 @@
+{
+ "dev": {
+  "n_pairs": 6947,
+  "auc": 0.8539,
+  "precision": 0.8991,
+  "recall": 0.4924,
+  "f1": 0.6363,
+  "false_merge_rate": 0.0498,
+  "threshold": 0.742
+ },
+ "history": [
+  {
+   "epoch": 1,
+   "infonce": 3.8974,
+   "boundary": 0.6817
+  },
+  {
+   "epoch": 2,
+   "infonce": 3.5419,
+   "boundary": 0.438
+  },
+  {
+   "epoch": 3,
+   "infonce": 3.4849,
+   "boundary": 0.365
+  },
+  {
+   "epoch": 4,
+   "infonce": 3.469,
+   "boundary": 0.3152
+  },
+  {
+   "epoch": 5,
+   "infonce": 3.451,
+   "boundary": 0.2689
+  },
+  {
+   "epoch": 6,
+   "infonce": 3.4365,
+   "boundary": 0.2487
+  },
+  {
+   "epoch": 7,
+   "infonce": 3.4334,
+   "boundary": 0.2269
+  },
+  {
+   "epoch": 8,
+   "infonce": 3.4368,
+   "boundary": 0.221
+  },
+  {
+   "epoch": 9,
+   "infonce": 3.4255,
+   "boundary": 0.2025
+  },
+  {
+   "epoch": 10,
+   "infonce": 3.4236,
+   "boundary": 0.1836
+  },
+  {
+   "epoch": 11,
+   "infonce": 3.429,
+   "boundary": 0.1796
+  },
+  {
+   "epoch": 12,
+   "infonce": 3.4275,
+   "boundary": 0.1707
+  },
+  {
+   "epoch": 13,
+   "infonce": 3.422,
+   "boundary": 0.1602
+  },
+  {
+   "epoch": 14,
+   "infonce": 3.4176,
+   "boundary": 0.1495
+  },
+  {
+   "epoch": 15,
+   "infonce": 3.4228,
+   "boundary": 0.1479
+  },
+  {
+   "epoch": 16,
+   "infonce": 3.4147,
+   "boundary": 0.1353
+  },
+  {
+   "epoch": 17,
+   "infonce": 3.4116,
+   "boundary": 0.1316
+  },
+  {
+   "epoch": 18,
+   "infonce": 3.4151,
+   "boundary": 0.1269
+  },
+  {
+   "epoch": 19,
+   "infonce": 3.416,
+   "boundary": 0.1254
+  },
+  {
+   "epoch": 20,
+   "infonce": 3.4157,
+   "boundary": 0.1174
+  }
+ ],
+ "threshold_from_dev": 0.742,
+ "config": {
+  "epochs": 20,
+  "batch_size": 256,
+  "shared_dim": 256,
+  "lr": 0.0001,
+  "temperature": 0.07,
+  "boundary_margin": 0.1,
+  "boundary_weight": 0.5,
+  "seed": 42,
+  "limit": null,
+  "snapshot": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\feature_snapshot_v1",
+  "pairs": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\training_pairs_v1\\pairs.jsonl",
+  "n_train": 13884,
+  "n_dev": 6947,
+  "n_test": 6848,
+  "fold_map": {
+   "01": 1,
+   "02": 2,
+   "03": 3,
+   "04": 3,
+   "05": 3,
+   "06": 0,
+   "07": 1,
+   "08": 2,
+   "09": 2,
+   "10": 1,
+   "11": 3,
+   "12": 0,
+   "13": 0,
+   "14": 3,
+   "15": 3,
+   "16": 1
+  },
+  "loss": "infonce_plus_identity_boundary",
+  "supervision": "silver_p1_identifier_plus_sibling_negatives"
+ },
+ "test": {
+  "n_pairs": 6848,
+  "auc": 0.9193,
+  "precision": 0.9484,
+  "recall": 0.4385,
+  "f1": 0.5997,
+  "false_merge_rate": 0.0193,
+  "threshold": 0.742
+ },
+ "native_control_dev": {
+  "n_pairs": 6947,
+  "auc": 0.8169,
+  "threshold": 0.9008
+ },
+ "native_control_test": {
+  "n_pairs": 6848,
+  "auc": 0.8774,
+  "false_merge_rate": 0.0198,
+  "threshold": 0.9008
+ }
+}

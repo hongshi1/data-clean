@@ -2,21 +2,18 @@ sequenceDiagram
     autonumber
     participant PRE as 标准化预处理智能体
     participant EX as 特征提取与上下文关联智能体<br/>多模态特征提取
-    participant ROLE as 语义角色标注
-    participant LNK as 跨章节实体链接
-    participant AG as 上下文聚合
+    participant LNK as 跨源实体关联
+    participant AG as 条目汇聚
     participant LIB as 条目库
     participant CHK as 数据一致性校验智能体
 
     PRE->>EX: 标准化特征数据
-    EX->>EX: 提取文字/图片/表格多模态特征
-    EX->>ROLE: 多模态特征
-    ROLE->>ROLE: 标注需求/参数/接口/约束语义角色
-    ROLE->>LNK: 语义角色标注结果
-    LNK->>LNK: 判别"同一事物"，跨章节实体对齐
-    LNK->>AG: 跨章节关联关系
-    AG->>AG: 聚合文字片段+图片+表格行构建条目
-    AG->>LIB: 写入聚合条目
+    EX->>EX: 提取文本/图像/表格/时序多模态特征
+    EX->>LNK: 多模态特征
+    LNK->>LNK: 判别"同一实体"，跨源对齐
+    LNK->>AG: 实体关联关系
+    AG->>AG: 聚合分散描述构建统一条目
+    AG->>LIB: 写入统一条目
     LIB-->>CHK: 条目列表(供一致性校验)
     CHK->>LIB: 请求条目对
     LIB-->>CHK: 返回条目对

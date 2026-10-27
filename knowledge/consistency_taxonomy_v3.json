@@ -1,0 +1,448 @@
+{
+  "version": "consistency_taxonomy_v3",
+  "date": "2026-10-22",
+  "provenance": {
+    "authoritative_sources": [
+      {
+        "path": "docs/srs_project/软件需求规格说明辅助生成场景微调数据应用设计与落地实施文档.docx",
+        "section": "面向武器装备科研数据的多层级跨模态一致性校验技术功能需求（技术三，段[116]-[211]）",
+        "role": "40项校验体系的原始权威定义"
+      },
+      {
+        "path": "docs/doc11/场景1-软件需求规格辅助生成场景补发数据/高质量问答对（配套样例数据中：04数据统一访问服务软件需求规格说明）.json",
+        "role": "91条官方参考QA对（Alpaca格式）"
+      },
+      {
+        "path": "docs/doc11/场景1-软件需求规格辅助生成场景补发数据/2-某项目的合同、需归文档/数据服务软件需求规格说明.docx",
+        "role": "04号SRS原始文档"
+      }
+    ],
+    "derived_docs_deleted": [
+      "knowledge/consistency_taxonomy_v2.json",
+      "docs/srs_project/14_strict_40_design.md",
+      "docs/srs_project/14_strict_40_items_design.md",
+      "docs/srs_project/13_alignment_analysis.md",
+      "docs/srs_project/13_dataset_synthesis_progress.md",
+      "knowledge/inconsistency_rules.json"
+    ],
+    "deletion_reason": "派生文档偏离原始意图：原始定义是跨模态/跨文档校验（文本vs框图/时序图/状态机/流程图），派生版本丢失模态维度且GJB层虚构了7项不存在的标准条款"
+  },
+  "original_intent": {
+    "overall_goal": "构建术语、参数指标、业务逻辑、国军标合规四层校验体系，支持跨文档、跨资料比对检测，作为数据质量审校规则、负样本构造规则和问答对过滤标准",
+    "four_uses": [
+      "过滤低质、存在需求矛盾、不合规的原始问答对",
+      "构造正样本（规范、自洽、满足四层一致性）",
+      "构造困难负样本（存在术语冲突、指标矛盾、逻辑漏洞、国军标缺陷）",
+      "引导模型生成自洽、无冲突、符合军工规范的软件需求规格说明书"
+    ],
+    "gjb_standards": "国军标841、国军标2438、国军标438C等多个标准（不仅438C）"
+  },
+  "items": [
+    {
+      "id": "TERM-01",
+      "name": "同义异名校验",
+      "original_example": "输入文本写「目标捕捉指令」，框图标注「目标获取指令」，判定术语不一致，自动提示统一规范术语。",
+      "cross_modal_pair": "文本术语 vs 框图术语",
+      "doc04_evidence": "正文术语（如「热点数据缓存」）vs 功能框图/用例图标注（图1、图2）；括号定义「大字段（BLOB）」表2；追溯表别名对表81/82",
+      "qa_coverage": ["S1QA-065", "S1QA-066", "S1QA-069", "S1QA-071"],
+      "doc04_violations": []
+    },
+    {
+      "id": "TERM-02",
+      "name": "同名异义校验",
+      "original_example": "多处出现\"安全模式\"：一处指代电源低压保护模式，一处指代跟踪丢失降级模式，识别概念歧义，要求增加限定词区分。",
+      "cross_modal_pair": "同名术语在不同模态/位置的含义",
+      "doc04_evidence": "「运行状态」3.1节指状态机状态vs能力表指生命周期阶段；「数据查询」在SQL访问和对象化访问两处同名不同用例；同ID双指（连接池配置/初始化共用PZXQ-GN-LJCGL-LJCCSH）",
+      "qa_coverage": ["S1QA-005", "S1QA-038", "S1QA-062", "S1QA-037", "S1QA-044"],
+      "doc04_violations": ["同ID双指：连接池配置(b220)与初始化(b225)共用PZXQ-GN-LJCGL-LJCCSH"]
+    },
+    {
+      "id": "TERM-03",
+      "name": "枚举集合一致性校验",
+      "original_example": "文本描述支持「手动、自动、应急」3种工作模式；状态迁移图仅绘制手动、自动两种模式，判定枚举缺失。",
+      "cross_modal_pair": "文本枚举 vs 图/表枚举",
+      "doc04_evidence": "正文「包括」句（b011/024/032/037/064/084/136/156/181/199/216/246/266）vs 能力表行（表2/3/4/9/13/23/27/32/36/39/45/48）——13+组可校验对",
+      "qa_coverage": ["S1QA-011", "S1QA-044", "S1QA-056", "S1QA-065", "S1QA-069", "S1QA-070", "S1QA-071", "S1QA-074", "S1QA-077"],
+      "doc04_violations": [
+        "3.2.1文本说5项但表3仅4行",
+        "「缓存修改」(b181) vs「缓存更新」(表32)",
+        "1.2两套分类法与3.2六项分类不一致",
+        "3.2.6成员顺序颠倒 vs 表45"
+      ]
+    },
+    {
+      "id": "TERM-04",
+      "name": "状态/告警术语统一校验",
+      "original_example": "需求文本使用\"通信异常告警\"，接口报文定义字段为\"链路故障标志\"，识别同一业务状态术语不统一。",
+      "cross_modal_pair": "文本状态/告警名 vs 接口字段名",
+      "doc04_evidence": "用例表异常流「系统提示连接失败/获取失败/初始化失败」vs 接口数据表（表49-52）字段定义；3.1节单状态声明 vs 能力表运行状态列{运行阶段,开发阶段}；方式名称列{桌面,平板,手持}",
+      "qa_coverage": ["S1QA-001", "S1QA-008", "S1QA-013", "S1QA-021", "S1QA-025", "S1QA-028", "S1QA-033", "S1QA-081"],
+      "doc04_violations": ["E1内容与用例主题错位：缓存更新/连接池配置/初始化的E1均为「系统提示初始化」(b192/222/227)"]
+    },
+    {
+      "id": "TERM-05",
+      "name": "指令名称全局一致性校验",
+      "original_example": "顶层方案提及「复位指令」，模块需求拆分为软复位、整机复位，但部分段落未区分，造成术语模糊。",
+      "cross_modal_pair": "顶层指令名 vs 模块需求指令名拆分",
+      "doc04_evidence": "04号无指令定义（全411块grep「指令」「命令」=0命中），用例表替代了指令概念",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号上退化为用例名称/接口名称的全局一致性"
+    },
+    {
+      "id": "TERM-06",
+      "name": "量纲、单位术语一致性校验",
+      "original_example": "文本时延单位书写\"0.2秒\"，指标表格记录\"200ms\"（数值等效不冲突）；若文本写≤0.2s，表格填写≤20ms，则判定冲突。",
+      "cross_modal_pair": "文本数值+单位 vs 表格数值+单位",
+      "doc04_evidence": "表63-67值域（字符单位）；表70/71硬件（GHz/GB/英寸）；b090「查询1000条<1s」；b259「切换≤2s」；b142「BLOB≤65535字节」",
+      "qa_coverage": ["S1QA-031", "S1QA-032"],
+      "doc04_violations": ["表70/71「2.2Hz」应为GHz（b349/358两处）", "吋/英寸混用（b349/358）"]
+    },
+    {
+      "id": "TERM-07",
+      "name": "信号、接口命名一致性校验",
+      "original_example": "系统框图接口命名\"导航信息输入接口\"，软件需求规格说明书接口章节写作\"导航数据接收端口\"，识别到命名不统一。",
+      "cross_modal_pair": "框图接口名 vs SRS接口章节接口名",
+      "doc04_evidence": "表48外部接口（PZXQ-JK-SJTYFW-YYRJ等4个）+表53内部接口（8个）vs 3.3.x/3.4.x节标题接口ID——双登记结构",
+      "qa_coverage": ["S1QA-085", "S1QA-087", "S1QA-088", "S1QA-089", "S1QA-084"],
+      "doc04_violations": [
+        "表48用SJTBGX前缀 vs 3.3.x节标题用SJTYFW（b267 vs b268/271/274/277）",
+        "表53组件顺序颠倒DMSC-DXHFW vs 节标题DXHFW-DMSC（b285/286）",
+        "表23 BLOB子项ID缺BLOBSJCZ段（b139 vs b140/145/150）",
+        "数据库关闭节标题SJKGB vs 表4 SJKGBGN（b057/040）",
+        "连接池配置/初始化同ID PZXQ-GN-LJCGL-LJCCSH（b220/225）"
+      ]
+    },
+    {
+      "id": "TERM-08",
+      "name": "缩写与代号一致性校验",
+      "original_example": "全文对置信度统一缩写为Conf；部分段落私自使用CF、置信系数，触发术语规范告警。",
+      "cross_modal_pair": "全文范围内缩写使用统一性",
+      "doc04_evidence": "显式定义仅1处「大字段（BLOB）」（b030）；BLOB/sql文件/二维数据组等多种缩写并存；sqlite3/Sqlite3/SQLITE3大小写变体",
+      "qa_coverage": [],
+      "doc04_violations": ["sqlite3/Sqlite3/SQLITE3大小写变体（b030/349/352）"]
+    },
+    {
+      "id": "PARAM-01",
+      "name": "时间约束跨模态冲突校验",
+      "original_example": "自然语言需求：指令响应时延≤200ms；时序图中标注处理耗时300ms，判定指标冲突。",
+      "cross_modal_pair": "文本时间约束 vs 时序图时间标注",
+      "doc04_evidence": "仅2处：b259「数据源切换时间不超过2s」、b341「3s内持续重连」",
+      "qa_coverage": ["S1QA-031", "S1QA-032"],
+      "doc04_violations": []
+    },
+    {
+      "id": "PARAM-02",
+      "name": "周期参数一致性校验",
+      "original_example": "功能需求：状态数据输出周期固定200ms；场景描述增加\"系统繁忙时可延长周期\"，量化约束相互矛盾。",
+      "cross_modal_pair": "功能需求周期 vs 场景描述周期",
+      "doc04_evidence": "零证据（无周期声明）",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "PARAM-03",
+      "name": "阈值边界一致性校验",
+      "original_example": "文本：信噪比低于阈值下调置信门限；数据字典仅定义信噪比上限，缺失下限阈值，判定参数缺项。",
+      "cross_modal_pair": "文本阈值 vs 数据字典阈值",
+      "doc04_evidence": "零证据（无阈值声明）",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "PARAM-04",
+      "name": "多源融合时间对齐指标校验",
+      "original_example": "需求要求多传感器数据时间对齐误差≤10ms；仿真模型配置对齐容差20ms，指标不一致。",
+      "cross_modal_pair": "需求对齐误差 vs 仿真模型对齐容差",
+      "doc04_evidence": "零证据",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "PARAM-05",
+      "name": "资源占用指标一致性校验",
+      "original_example": "可靠性需求：持续运行CPU占用≤50%；架构设计文档预估峰值负载60%，指标冲突。",
+      "cross_modal_pair": "可靠性资源需求 vs 架构设计预估",
+      "doc04_evidence": "表70/71硬件配置（16核/1.5GHz/16GB等）——置备值非运行占用；表71多出「综合信息终端」行（表70无）",
+      "qa_coverage": [],
+      "doc04_violations": ["表71多出综合信息终端行（表70无对应）"]
+    },
+    {
+      "id": "PARAM-06",
+      "name": "参数值域范围一致性校验",
+      "original_example": "接口需求：目标速度取值范围0～1200m/s；报文结构体限定最大值800m/s，值域冲突。",
+      "cross_modal_pair": "接口需求值域 vs 报文结构体值域",
+      "doc04_evidence": "表63-67值域表（12字段min/max/精度/单位）——最强证据",
+      "qa_coverage": [],
+      "doc04_violations": []
+    },
+    {
+      "id": "PARAM-07",
+      "name": "存储容量与保存时长约束校验",
+      "original_example": "需求规定告警日志至少保存30天；存储方案配置日志分区仅支持保存15天，指标不匹配。",
+      "cross_modal_pair": "需求保存时长 vs 存储方案容量",
+      "doc04_evidence": "存储容量=硬件置备（表70/71：512GB等）；保存时长零证据",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "capacity有锚、retention零证据，两谓词分开判"
+    },
+    {
+      "id": "PARAM-08",
+      "name": "同步守时精度指标校验",
+      "original_example": "软件需求：本地守时时钟漂移≤100ms/h；时钟模块设计指标漂移≤200ms/h，顶层约束被放宽。",
+      "cross_modal_pair": "软件需求精度 vs 时钟模块设计指标",
+      "doc04_evidence": "零证据",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "PARAM-09",
+      "name": "降级触发阈值一致性校验",
+      "original_example": "文本：剩余存储空间低于10%启动数据清理；配置表格阈值设置为5%，阈值不一致。",
+      "cross_modal_pair": "文本降级阈值 vs 配置表降级阈值",
+      "doc04_evidence": "零数值证据（仅定性「不影响正常运转」b336）",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用（定性有、定量无）"
+    },
+    {
+      "id": "PARAM-10",
+      "name": "故障判定持续时长校验",
+      "original_example": "需求：温度超限持续5s触发告警；流程图判定条件为持续3s，参数冲突。",
+      "cross_modal_pair": "需求故障时长 vs 流程图判定条件",
+      "doc04_evidence": "仅1处近似：b341「3s内持续重连」",
+      "qa_coverage": [],
+      "doc04_violations": []
+    },
+    {
+      "id": "LOGIC-01",
+      "name": "模式切换优先级逻辑校验",
+      "original_example": "文字需求：应急指令具备最高优先级，可强制切至手动模式；状态机模型允许自动模式夺回控制权，逻辑冲突。",
+      "cross_modal_pair": "文字优先级声明 vs 状态机模型",
+      "doc04_evidence": "3.1节「只有一个运行状态」（b022，无状态机）；表79优先级排序（章节级高/中/低）；数据源适配「依据状态信息自动切换」（b030）",
+      "qa_coverage": ["S1QA-090"],
+      "doc04_violations": []
+    },
+    {
+      "id": "LOGIC-02",
+      "name": "异常处置策略一致性校验",
+      "original_example": "需求：单路传感器数据异常时剔除数据、继续融合；流程图绘制逻辑为任意一路异常直接停止融合，处置逻辑矛盾。",
+      "cross_modal_pair": "文字处置策略 vs 流程图处置逻辑",
+      "doc04_evidence": "用例表异常流E1（~30个用例）vs 正文异常描述——E1模板化「异常流E1：系统提示X，用例结束」",
+      "qa_coverage": ["S1QA-001", "S1QA-008", "S1QA-009", "S1QA-013", "S1QA-015", "S1QA-016", "S1QA-021", "S1QA-025", "S1QA-028", "S1QA-033", "S1QA-036", "S1QA-045", "S1QA-046", "S1QA-047", "S1QA-052", "S1QA-081"],
+      "doc04_violations": [
+        "E1内容与用例主题错位（缓存/连接池的E1均为「系统提示初始化」b192/222/227）",
+        "b207含E1~E4四条挤在同一单元格",
+        "b060无E1行但主事件流约束列仍引用E1",
+        "申请/释放句柄概述错误归属「热点数据缓存的扩展用例」(b237/242)"
+      ]
+    },
+    {
+      "id": "LOGIC-03",
+      "name": "事件时序逻辑校验",
+      "original_example": "文本流程：先采集数据→算法处理→输出结果→写入日志；流程图为先输出结果再采集日志，时序顺序冲突。",
+      "cross_modal_pair": "文本流程顺序 vs 流程图顺序",
+      "doc04_evidence": "用例表主事件流（编号步骤1.2.3.，Actor列持奇数步、系统列持偶数步）；功能框图/用例图（图3-47）",
+      "qa_coverage": ["S1QA-002", "S1QA-007", "S1QA-012", "S1QA-014", "S1QA-023", "S1QA-024", "S1QA-029", "S1QA-037", "S1QA-048", "S1QA-049", "S1QA-055", "S1QA-058", "S1QA-076", "S1QA-080"],
+      "doc04_violations": [
+        "b162数据插入Actor列步骤无编号+奇偶列归属混乱",
+        "b192步骤1文本重复（调用缓存更新接口并调用缓存更新接口）",
+        "编号标点混用「1.」「2．」「1、」"
+      ]
+    },
+    {
+      "id": "LOGIC-04",
+      "name": "数据流流向一致性校验",
+      "original_example": "框图显示导航数据单向输入软件；文字需求提及软件向导航分系统输出校正指令，数据流方向不一致。",
+      "cross_modal_pair": "框图数据流方向 vs 文字数据流方向",
+      "doc04_evidence": "用例表动词框架（「应用软件调用→系统执行→返回」）；数据源切换用例（b259「将达梦句柄切换到sqlite3句柄」）；功能框图（图1）",
+      "qa_coverage": ["S1QA-017", "S1QA-022", "S1QA-026", "S1QA-029"],
+      "doc04_violations": []
+    },
+    {
+      "id": "LOGIC-05",
+      "name": "工况分支完备性校验",
+      "original_example": "需求覆盖正常工况、短时通信中断、长期链路失效三类场景；流程图缺少长期链路失效降级分支，逻辑缺项。",
+      "cross_modal_pair": "文字场景覆盖 vs 流程图分支",
+      "doc04_evidence": "正文设备声明（桌面/平板/手持，b011/332）vs 能力表方式列（10张表）vs 用例表分支条件（b049/054「如果在桌面版…如果在手持上…」）——4处声明互证",
+      "qa_coverage": ["S1QA-006", "S1QA-063"],
+      "doc04_violations": ["表9三行「平版」错别字（b067/087，应为「平板」）"]
+    },
+    {
+      "id": "LOGIC-06",
+      "name": "互斥控制逻辑校验",
+      "original_example": "人工控制激活时应禁止自动控制输出；模型中同时允许两路控制指令并行输出，存在逻辑风险。",
+      "cross_modal_pair": "文字互斥声明 vs 模型并行行为",
+      "doc04_evidence": "零证据（无互斥/禁止并行声明）",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "LOGIC-07",
+      "name": "任务切换原子性校验",
+      "original_example": "需求：模式切换失败自动回滚至上一状态；流程未设计回滚分支，逻辑不完备。",
+      "cross_modal_pair": "文字回滚声明 vs 流程回滚分支",
+      "doc04_evidence": "零证据（无切换原子性/回滚声明）",
+      "qa_coverage": [],
+      "doc04_violations": [],
+      "note": "04号不适用"
+    },
+    {
+      "id": "LOGIC-08",
+      "name": "数据冗余仲裁逻辑校验",
+      "original_example": "双路同源数据不一致时选用有效通道数据；模型直接采用通道A数据，缺少仲裁逻辑匹配。",
+      "cross_modal_pair": "文字仲裁策略 vs 模型实际行为",
+      "doc04_evidence": "数据源适配（b030「根据运行支撑服务提供的状态信息自动切换达梦/sqlite3」）；b259切换用例（「切换时间不超过2s」）",
+      "qa_coverage": ["S1QA-067"],
+      "doc04_violations": ["表2说「自动切换」vs b259是应用软件主动调用——触发方式表述冲突"]
+    },
+    {
+      "id": "LOGIC-09",
+      "name": "权限访问控制逻辑校验",
+      "original_example": "需求规定普通操作员无法修改校准参数；界面交互流程图允许普通用户进入校准页面，逻辑冲突。",
+      "cross_modal_pair": "文字权限声明 vs 流程图权限路径",
+      "doc04_evidence": "用例表Actors列（值域={应用软件,数据库,用户,文件}4角色）；表69保密性（身份认证+数据库访问控制）",
+      "qa_coverage": ["S1QA-004"],
+      "doc04_violations": []
+    },
+    {
+      "id": "LOGIC-10",
+      "name": "故障恢复逻辑校验",
+      "original_example": "掉电预警收到后先保存关键数据再关机；行为模型未设计数据保存步骤，逻辑缺失。",
+      "cross_modal_pair": "文字恢复行为 vs 行为模型步骤",
+      "doc04_evidence": "表68安全性（系统自检+3s重连）——有恢复行为；E1处置=「提示+用例结束」=终止不恢复",
+      "qa_coverage": ["S1QA-009", "S1QA-033", "S1QA-036"],
+      "doc04_violations": []
+    },
+    {
+      "id": "LOGIC-11",
+      "name": "追踪重搜逻辑校验",
+      "original_example": "目标丢失启动重新搜索，连续3次搜索失败产生告警；状态机仅实现1次重搜，逻辑不匹配。",
+      "cross_modal_pair": "文字重搜策略 vs 状态机实现",
+      "doc04_evidence": "热点数据缓存（b030「数据修改后再次查询时重新从数据库获取更新缓存」+ b192缓存更新用例）——有重搜机制",
+      "qa_coverage": ["S1QA-066"],
+      "doc04_violations": []
+    },
+    {
+      "id": "GJB-01",
+      "name": "可测试性合规校验（国军标438C）",
+      "original_example": "原始需求\"软件运行稳定\"，属于模糊需求，不符合国军标可测试性要求；校验识别并提示补充量化指标。",
+      "doc04_evidence": "表73质量因素row7「可测试性：易于充分测试的能力」；表80合格性规定（6行覆盖3.2.1~3.2.6）",
+      "qa_coverage": ["S1QA-005"],
+      "doc04_violations": ["表80合格性覆盖缺口：3.3~3.17全部需求无合格性方法"]
+    },
+    {
+      "id": "GJB-02",
+      "name": "故障容错需求完备性校验",
+      "original_example": "仅描述正常工况功能，缺少异常输入、通信故障、存储故障下容错处置条款，不符合军工软件可靠性需求编写规范。",
+      "doc04_evidence": "表68安全性（故障检测+重连）——有容错但不完备",
+      "qa_coverage": [],
+      "doc04_violations": ["无存储故障、输入异常容错条款"]
+    },
+    {
+      "id": "GJB-03",
+      "name": "安全访问控制合规校验",
+      "original_example": "软件需求规格说明书未划分操作权限等级、无越权访问拦截要求，不满足软件安全性国军标要求。",
+      "doc04_evidence": "表69保密性（身份认证+数据库访问控制）——有但无权限等级划分",
+      "qa_coverage": [],
+      "doc04_violations": []
+    },
+    {
+      "id": "GJB-04",
+      "name": "审计日志合规校验",
+      "original_example": "需求仅要求记录告警信息，缺少关键操作、参数修改、权限变更审计日志，不符合审计追溯合规要求。",
+      "doc04_evidence": "无审计日志章节/表（1.2提及「访问审计以及日志记录功能」但3.2无对应）",
+      "qa_coverage": [],
+      "doc04_violations": ["1.2声称「访问审计及日志记录功能」但3.2/表2无对应能力——功能声明缺失"]
+    },
+    {
+      "id": "GJB-05",
+      "name": "需求可追溯性合规校验",
+      "original_example": "多条软件需求无法向上溯源至系统总体要求，存在\"无根需求\"，违反国军标需求追溯管理规定。",
+      "doc04_evidence": "表81正向（33行）+表82逆向（38行）——有双向追溯表",
+      "qa_coverage": ["S1QA-005", "S1QA-064"],
+      "doc04_violations": [
+        "表81 row11代码生成→4.1.1 c) vs 表82 row12代码生成→4.1.1 a)——正逆矛盾",
+        "表81 row16追踪锚点失效（指向不存在的3.2.1.7节）",
+        "表81 row20同行矛盾（映射非空+说明列写「不追踪」）"
+      ]
+    },
+    {
+      "id": "GJB-06",
+      "name": "异常报警要素合规校验",
+      "original_example": "告警需求未要求包含时间戳、故障位置、故障等级、处置建议，告警信息要素不满足标准规范。",
+      "doc04_evidence": "用例表E1「系统提示X」——仅有提示文本",
+      "qa_coverage": [],
+      "doc04_violations": ["E1仅有提示文本，无时间戳/位置/等级/建议要素"]
+    },
+    {
+      "id": "GJB-07",
+      "name": "软件自检条款合规校验",
+      "original_example": "缺少上电启动自检、周期运行自检相关需求，不满足嵌入式军工软件可靠性通用要求。",
+      "doc04_evidence": "表68 row1「系统自检：检测系统中的故障」——有自检但无周期自检",
+      "qa_coverage": [],
+      "doc04_violations": []
+    },
+    {
+      "id": "GJB-08",
+      "name": "掉电数据保护合规校验",
+      "original_example": "无关键配置、任务状态掉电保存需求，断电后状态全部丢失，不满足装备持续工作合规约束。",
+      "doc04_evidence": "无掉电保护条款（表68仅故障检测+重连）",
+      "qa_coverage": [],
+      "doc04_violations": ["掉电保护条款完全缺失"]
+    },
+    {
+      "id": "GJB-09",
+      "name": "输入数据防护合规校验",
+      "original_example": "未定义非法报文、越界参数、畸形输入拦截处理需求，缺少输入安全防护条款。",
+      "doc04_evidence": "表63-67有值域约束但无显式输入校验声明",
+      "qa_coverage": ["S1QA-010", "S1QA-017"],
+      "doc04_violations": []
+    },
+    {
+      "id": "GJB-10",
+      "name": "版本升级安全合规校验",
+      "original_example": "升级流程缺少升级包校验、失败自动回滚需求，存在升级瘫痪风险，不符合国军标软件维护性要求。",
+      "doc04_evidence": "无升级条款（3.15保障需求仅有「软件升级」一行b383）",
+      "qa_coverage": [],
+      "doc04_violations": ["升级安全条款缺失（仅有「软件升级」保障条目）"]
+    },
+    {
+      "id": "GJB-11",
+      "name": "降级运行合规校验",
+      "original_example": "故障场景仅设计停机保护，无分级降级运行策略，不符合装备连续工作可靠性规范。",
+      "doc04_evidence": "3.1「只有一个运行状态」（无降级模式声明）；3.6e「提供负载均衡功能」（b336）",
+      "qa_coverage": ["S1QA-090"],
+      "doc04_violations": ["无分级降级运行策略"]
+    }
+  ],
+  "doc04_summary": {
+    "total_real_violations": 17,
+    "violation_distribution": {
+      "identifier": 5,
+      "enumeration": 4,
+      "traceability": 3,
+      "exception_template": 3,
+      "document_name": 1,
+      "completeness": 1
+    },
+    "qa_to_item_mapping": {
+      "LOGIC-02_exception": 16,
+      "TERM-03_enumeration": 9,
+      "LOGIC-03_sequence": 14,
+      "TERM-07_identifier": 5,
+      "precondition": 7,
+      "interface_param": 15,
+      "state_device": 6
+    },
+    "inapplicable_on_doc04": [
+      "PARAM-02", "PARAM-03", "PARAM-04", "PARAM-08", "PARAM-09",
+      "LOGIC-06", "LOGIC-07"
+    ]
+  }
+}

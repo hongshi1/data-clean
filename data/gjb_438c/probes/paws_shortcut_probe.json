@@ -1,0 +1,1440 @@
+{
+ "meta": {
+  "probe_type": "paws_shortcut",
+  "purpose": "词面重叠捷径探针: 释义对(高词重叠, gold=consistent)被判inconsistent的比例=误报率, 即'词重叠⇒误报'捷径分(v5全报警病灶的量化)",
+  "source": {
+   "dataset": "PAWS-X zh (paraphrase adversaries from word scrambling)",
+   "files": [
+    "data/gjb_438c/public_nli/pawsx_validation.parquet",
+    "data/gjb_438c/public_nli/pawsx_test.parquet"
+   ],
+   "raw_label_map": {
+    "1=paraphrase": "consistent",
+    "0=non-paraphrase": "inconsistent"
+   },
+   "filter": "两侧各≥8个CJK字符(中文实质内容)",
+   "selection": "释义对100 + 非释义对100, random.Random('p0probe:paws_shortcut').sample"
+  },
+  "template": "T2规定式: premise=文档某章节规定：「S1」/ hypothesis=文档另一章节规定：「S2」",
+  "item_schema": [
+   "id",
+   "premise",
+   "hypothesis",
+   "label",
+   "probe_type"
+  ],
+  "positive_class": "inconsistent",
+  "built_at": "2026-10-13T19:01:34",
+  "builder": "tools/build_probes.py",
+  "git_sha": "ff0d4950",
+  "frozen": true,
+  "freeze_declaration": "冻结评测资产(eval-only): 本集永不进入任何训练/微调/验证集, 仅允许推理期评测; 任何修改须以--force显式重建并同步MANIFEST与快照测试",
+  "n_items": 200,
+  "label_dist": {
+   "consistent": 100,
+   "inconsistent": 100
+  }
+ },
+ "items": [
+  {
+   "id": "paws-val-6539",
+   "premise": "文档某章节规定：「在奥地利的菲利普二世于 1578 年去世后，约翰允许她选择自己的住所。」",
+   "hypothesis": "文档另一章节规定：「在菲利普二世于 1578 年因奥地利去世后，约翰允许她选择他自己的住所。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7777",
+   "premise": "文档某章节规定：「苏利耶·德·莫朗在驻中国的法国外交使团中工作了多年，期间曾在中国的多个城市担任法国领事。」",
+   "hypothesis": "文档另一章节规定：「苏利耶·德·莫朗在驻中国的法国外交使团中工作了多年，期间曾在中国的多个城市担任法国领事。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-283",
+   "premise": "文档某章节规定：「2006 年 9 月 14 日，华盛顿奇才队签下了朗，2017 年 7 月，朗被奇才队裁掉。」",
+   "hypothesis": "文档另一章节规定：「2006 年 9 月 14 日，华盛顿奇才队签下了朗。2017 年 7 月，朗被奇才队裁掉。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5574",
+   "premise": "文档某章节规定：「它为墨尔本东南部的伊迪斯韦尔郊区服务，并在 1919 年 9 月 20 日开放。」",
+   "hypothesis": "文档另一章节规定：「它为墨尔本东南部艾迪斯威尔郊区服务，于 1919 年 9 月 20 日开放。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5633",
+   "premise": "文档某章节规定：「奥德利男爵的第一任妻子是琼·莫蒂默，她是罗杰·莫蒂默的女儿。」",
+   "hypothesis": "文档另一章节规定：「奥德利第二男爵詹姆斯的第一任妻子是琼·莫蒂默，她是罗杰·莫蒂默的女儿。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5024",
+   "premise": "文档某章节规定：「1924 年、1932 年和 1936 年，他分别在多伦多、苏黎世和奥斯陆担任 ICM 的特邀发言人。」",
+   "hypothesis": "文档另一章节规定：「1924 年、1932 年和 1936 年，他分别在多伦多、苏黎世和奥斯陆担任 ICM 的特邀发言人。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2609",
+   "premise": "文档某章节规定：「然后与具有类似情节的华纳兄弟项目“假死新人生”相比，“That Was Often”仅在播出两集之后便被取消。」",
+   "hypothesis": "文档另一章节规定：「之后，被拿来与 WB 节目《Do Over》做比较，两者剧情相似。《This was often》仅播出两集后便停播。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5318",
+   "premise": "文档某章节规定：「“陶顿城堡号”于 8 月 1 日在槟城，于 10 月 31 日在里约热内卢。」",
+   "hypothesis": "文档另一章节规定：「“陶顿城堡号”于 8 月 1 日在槟城，于 10 月 31 日在里约热内卢。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2188",
+   "premise": "文档某章节规定：「然而，在真实的连载中，超人在《最后的氪星之子》中首次遇见现在的萨德。」",
+   "hypothesis": "文档另一章节规定：「在实际连载中，超人在《最后的氪星之子》中首次遇见现在的萨德。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6596",
+   "premise": "文档某章节规定：「Chris Sievey 的自传由曼彻斯特作家编写，于 2014 年 11 年出版。」",
+   "hypothesis": "文档另一章节规定：「克里斯·锡维的传记由曼彻斯特作家米克·米德尔斯撰写，于 2014 年 11 月出版。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3244",
+   "premise": "文档某章节规定：「从最负面的意义上讲，圣经中的厄运是一种正式的赐福。」",
+   "hypothesis": "文档另一章节规定：「从最消极的意义上讲，圣经中的诅咒是一种正式的祝福。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1439",
+   "premise": "文档某章节规定：「根据季节的不同，北美洲的卷心菜种群从加拿大迁移到墨西哥。」",
+   "hypothesis": "文档另一章节规定：「根据季节不同，北美洲的粉纹夜蛾种群会从加拿大迁徙至墨西哥。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7519",
+   "premise": "文档某章节规定：「在这些采石场中发现一些尚未完工的古代作品，比如阿波罗纳斯巨像或两个弗雷里奥巨像。」",
+   "hypothesis": "文档另一章节规定：「在这些采石场发现了一些未完成的古代作品，如阿波罗纳斯的青年雕像或 Flerio 的两尊青年雕像。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1107",
+   "premise": "文档某章节规定：「1978 年 1 月 12 日：剑桥联的经理罗恩·阿特金森被任命为西布罗姆维奇的经理。」",
+   "hypothesis": "文档另一章节规定：「1978 年 1 月 12 日：剑桥联队经理罗恩·阿特金森被任命为西布罗姆维奇队经理。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3430",
+   "premise": "文档某章节规定：「在加州理工学院，助理教授的平均薪水为 111,300 美元，副教授为 121,300 美元，而正教授则为 172,800 美元。」",
+   "hypothesis": "文档另一章节规定：「加州理工学院助理教授的平均工资为 111,300 美元，副教授为 121,300 美元，教授为 172,800 美元。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7899",
+   "premise": "文档某章节规定：「邦妮·比蒂丽娅·克金（本名邦妮·比蒂丽娅，1948 年 3 月 25 日出生）是美国女演员。」",
+   "hypothesis": "文档另一章节规定：「邦尼·贝德莉娅·卡尔金（1948 年 3 月 25 日出生于邦尼·贝德莉娅）是一位美籍美国女演员。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5264",
+   "premise": "文档某章节规定：「马都卡拉是巴基斯坦旁遮普省杰赫勒姆县的一个乡和联合委员会。隶属杰赫勒姆地区。」",
+   "hypothesis": "文档另一章节规定：「Madu Kalas 是巴基斯坦旁遮普省 Jhelum Tehsil 的一个村庄和联盟理事会，也是杰赫勒姆区的一部分。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3579",
+   "premise": "文档某章节规定：「西班牙女子国家队代表西班牙参加国际壁球团体赛，并由 Real Federación Española de Squash 管理。」",
+   "hypothesis": "文档另一章节规定：「西班牙国家女子壁球队代表西班牙参加国际壁球团体赛，并由 Real Federación Española de Squash 管理。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4169",
+   "premise": "文档某章节规定：「菲类二聚体 8,8-双去氢灯心草酚、单分子灯心草酚和去氢-6-甲基灯心草二酚可以从灯心草提取出来。」",
+   "hypothesis": "文档另一章节规定：「菲类二聚体 8,8-双去氢灯心草酚、单体灯心草酚和去氢灯心草酚可以从“ J. acutus”中分离出来。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3679",
+   "premise": "文档某章节规定：「卢浮宫绘画的光线更加柔和，而且看起来更加温暖，但这可能是表面清漆的色调产生的效果。」",
+   "hypothesis": "文档另一章节规定：「卢浮宫画作中的光线更为柔和，看起来也更加温暖，但这有可能是画作表面清漆的色调造成的效果。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3359",
+   "premise": "文档某章节规定：「他娶了伊丽莎白·杨（1854 - 1932 年），并且是航运巨头 N. O. 杨·弗恩利和地主托马斯·弗恩利的父亲。」",
+   "hypothesis": "文档另一章节规定：「他娶了伊丽莎白·杨（1854 - 1932 年），并且是航运巨头 N. O. 杨·弗恩利和地主托马斯·弗恩利的父亲。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7546",
+   "premise": "文档某章节规定：「西蒙 西蒙于 1979 年出生于查理和梅根·佩斯，并居住在英格兰曼彻斯特。」",
+   "hypothesis": "文档另一章节规定：「西蒙出生于 1979 年，父母分别为查理和梅根·佩斯，在英格兰曼彻斯特生活。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5942",
+   "premise": "文档某章节规定：「这是第三届锦标赛，也是 2013 至 2014 IRB 世界七人榄球系列赛的第三站。」",
+   "hypothesis": "文档另一章节规定：「这是锦标赛的第三版和 2013-14 赛季 IRB Sevens 世界系列赛的第六站。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6142",
+   "premise": "文档某章节规定：「卢浮宫这幅画的光线更加温暖，而且看起来更加柔和，但这可能是表面清漆色调所产生的效果。」",
+   "hypothesis": "文档另一章节规定：「卢浮宫绘画中的光线更温暖，而且显得更柔和，这可能是由表面颜料的色调所造成的。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3440",
+   "premise": "文档某章节规定：「在他人的描述中，锡安广场“永远拥挤，永远疯狂”。」",
+   "hypothesis": "文档另一章节规定：「锡安广场被形容为“总是拥挤不堪，总是让人疯狂”。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6749",
+   "premise": "文档某章节规定：「在世界银行、联合国和亚洲开发银行的支持下，老挝人民民主共和国于 1974 年成立了第 II 阶段基金。」",
+   "hypothesis": "文档另一章节规定：「在联合国、亚洲开发银行和世界银行的支持下，老挝人民民主共和国于 1974 年成立了第二阶段基金。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7789",
+   "premise": "文档某章节规定：「Mehta 和妻子 Juhi Chawla 拥有一双儿女，女孩 Jahnavi Mehta（2001 年出生）和男孩 Arjun Mehta（2003 年出生）。」",
+   "hypothesis": "文档另一章节规定：「菊希·曹拉与妻子嘉和纳薇·梅赫达育有两个子女，一个女孩梅赫达（生于 2001 年）和一个男孩阿尔君·梅赫达（生于 2003 年）。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1627",
+   "premise": "文档某章节规定：「波林说“是的”，但佛兰妮仍旧怀疑。」",
+   "hypothesis": "文档另一章节规定：「波林说“是的”，但佛兰妮仍旧怀疑。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5353",
+   "premise": "文档某章节规定：「所有格词干“-m”的以上例子用于第一人称单数。」",
+   "hypothesis": "文档另一章节规定：「所有格主题“-m”的上述例子为第一人称单数。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-858",
+   "premise": "文档某章节规定：「该属目前归类为蜥蜴科，即美洲鬣蜥科，属于安乐蜥亚科，且已不再归入现已无效的变色蜥科。」",
+   "hypothesis": "文档另一章节规定：「该属目前归类为蜥蜴科，即美洲鬣蜥科，属于安乐蜥亚科，且已不再归入现已无效的变色蜥科。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1357",
+   "premise": "文档某章节规定：「德瑞特出生于莱顿，曾为 FC 乌得勒支、FC 丹博斯治、精英队、RKC 瓦尔韦克和 FC 安曼等球队效力。」",
+   "hypothesis": "文档另一章节规定：「代·鲁特出生于莱顿，为 RKC 瓦尔韦克、邓伯什足球俱乐部、精英队、乌德勒支足球俱乐部和埃门足球俱乐部效力过。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5328",
+   "premise": "文档某章节规定：「该节日还能让参与者有机会在两国泰米尔人和谐共享的地区重新燃起希望，并根据传统进行划分。」",
+   "hypothesis": "文档另一章节规定：「该节日也让参加者有机会在来自两个国家的泰米尔人和睦共享的区域内重新燃起希望和共享传统。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-493",
+   "premise": "文档某章节规定：「印度尼西亚驻罗马官方代表处于 1952 年 3 月设立，而意大利共和国于 1952 年 10 月在雅加达设立官方代表处。」",
+   "hypothesis": "文档另一章节规定：「印度尼西亚在罗马的官方代表处设立于 1952 年 3 月，而意大利共和国在雅加达的官方代表处设立于 1952 年 10 月。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7",
+   "premise": "文档某章节规定：「Timora diarhoda 是夜蛾科的一种蛾类。它被发现于非洲，包括南非。」",
+   "hypothesis": "文档另一章节规定：「Diarhoda 是夜蛾科的一种蛾类。它被发现于南非，包括非洲。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1776",
+   "premise": "文档某章节规定：「简单介质的特征可以是在频率公式_2 和公式_3 处存在有效的吸收和发射横截面。」",
+   "hypothesis": "文档另一章节规定：「简单介质的特征在于公式 2 和公式 3 的频率下的吸收和发射的有效横截面。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4898",
+   "premise": "文档某章节规定：「这限制了组节点内的复杂性，并隐藏了它们与组外其他节点的耦合。」",
+   "hypothesis": "文档另一章节规定：「这限制了组节点内部的复杂性，并隐藏了它们与组外部其它节点的耦合。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7867",
+   "premise": "文档某章节规定：「当时，它由来自意大利、法国、德国、巴基斯坦、加拿大、英国和美国的船只组成。」",
+   "hypothesis": "文档另一章节规定：「当时，它由加拿大、法国、德国、巴基斯坦、意大利、英国和美国的船舰组成。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7046",
+   "premise": "文档某章节规定：「他娶了伊丽莎白·杨 (1854-1932)，并且是轮船大亨 N·O·杨·费恩利和地主托马斯·费恩利的父亲。」",
+   "hypothesis": "文档另一章节规定：「他娶了伊丽莎白·杨（1854 - 1932 年），是航运业巨头 N. O . Young Fearnley 和土地拥有者托马斯·费恩利的父亲。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1482",
+   "premise": "文档某章节规定：「三性女神的全新宗教观念是巫术宗教的现代运动的核心。」",
+   "hypothesis": "文档另一章节规定：「三相女神这一新的宗教理念是威卡教现代运动的中心。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7968",
+   "premise": "文档某章节规定：「伊丽莎白·普鲁登于 1653 年从英国移民到康涅狄格州的米尔福德，嫁给了罗杰·普里查德」",
+   "hypothesis": "文档另一章节规定：「伊丽莎白 伊丽莎白·普鲁登于 1653 年从英格兰移民至康涅狄格州米尔福德，嫁给罗杰·普里查德」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3000",
+   "premise": "文档某章节规定：「宿雾市包括宿雾岛、中米沙鄢和内格罗斯岛东半部，地区中心为锡基霍尔和保和。」",
+   "hypothesis": "文档另一章节规定：「宿务市包括宿务岛、中米沙鄢和内格罗斯岛的东半部分。其区域中心在保和省和锡基霍尔省。该市包括以下省份：」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6924",
+   "premise": "文档某章节规定：「1291 年，Mahaut 与奥托四世勃艮第伯爵结婚，与三个孩子的母亲成婚，其中有两个女孩成为法国国王。」",
+   "hypothesis": "文档另一章节规定：「1291 年，马奥与勃艮第伯爵奥托四世结婚。她娶了三个孩子的母亲，其中包括两个成为法国国王的女孩。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5407",
+   "premise": "文档某章节规定：「五月，斯潘塞·麦克拉伦抵达并饰演基兰·弗莱彻，该角色是已经确立的角色莎莉·弗莱彻（凯特·里奇）的爱慕对象。」",
+   "hypothesis": "文档另一章节规定：「五月，斯宾塞·麦克拉伦以基兰·弗莱彻的身份抵达，后者是已确立角色莎莉·弗莱彻（凯特·里奇）的爱慕对象。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4165",
+   "premise": "文档某章节规定：「1932 年瑞典冰球锦标赛赢得了第 11 季瑞典国家级锦标赛—瑞典冰球锦标赛的冠军。哈马比足球会夺得了冠军。」",
+   "hypothesis": "文档另一章节规定：「1932 年的瑞典冰球锦标赛是瑞典冰球锦标赛的第 11 个赛季，是瑞典全国冠军赛，冠军是哈马比体育会。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3802",
+   "premise": "文档某章节规定：「弗兰克·詹姆斯加入了为当地德鲁·洛布斯军队招募的分离主义连队，并于 1861 年 8 月参加了威尔逊之战。」",
+   "hypothesis": "文档另一章节规定：「弗兰克·詹姆斯加入为当地德鲁·洛布斯军队招募的分离主义者连队，并于 1861 年 8 月在威尔逊克里克战役中参加作战。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5225",
+   "premise": "文档某章节规定：「癌前病变在形态上是非典型的组织，在显微镜检查中看起来异常，并且相比其明显正常的对应物，更有可能出现癌症。」",
+   "hypothesis": "文档另一章节规定：「癌前病变是一种形态上非典型组织，在用显微镜检查时其会呈现异常，而且在此处发生癌变的可能性大于其形态正常的对应组织。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2102",
+   "premise": "文档某章节规定：「据美国人口调查局称，绍斯波特总面积为，其中陆地占，水域占 0.91%。」",
+   "hypothesis": "文档另一章节规定：「据美国人口调查局的数据显示，绍斯波特的总土地面积或 0.91% 是水域。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4688",
+   "premise": "文档某章节规定：「诺曼·梅兰克顿·格迪斯，本名诺曼·贝尔·格迪斯（1893 年 4 月 27 日至 1958 年 5 月 8 日），是一位美国剧场和工业设计师。」",
+   "hypothesis": "文档另一章节规定：「诺曼·梅兰克顿·格迪斯，本名诺曼·贝尔·格迪斯（1893 年 4 月 27 日至 1958 年 5 月 8 日），是一位美国剧院和工业设计师。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5454",
+   "premise": "文档某章节规定：「联赛的许多主力选手都曾效力于该队，包括拥有七年职业生涯的老运动员杰克·雷姆森和从业十年的老运动员约翰·凯林斯。」",
+   "hypothesis": "文档另一章节规定：「很多大联盟选手都与球队在一起，包括七年球龄的老将杰克·瑞姆森和十年球龄的老将约翰·科瑞恩斯。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-775",
+   "premise": "文档某章节规定：「这张唱片由 Aníbal Kerpel 在洛杉矶录制，并在加利福尼亚州洛杉矶的“La Casa”工作室进行混音。」",
+   "hypothesis": "文档另一章节规定：「此专辑由阿尼瓦尔·科佩尔在加利福尼亚州的洛杉矶录制，并在洛杉矶的“La Casa”工作室进行了混音。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2977",
+   "premise": "文档某章节规定：「歌曲《相信我》由内德·威夫、弥尔顿·阿格尔和珍·史华兹创作而成。」",
+   "hypothesis": "文档另一章节规定：「《相信我》是由珍·史瓦茲、弥尔顿·阿格尔和内德·威夫共同创作的一首歌曲。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4576",
+   "premise": "文档某章节规定：「首先描述花粉量高的区域，而非花粉量低的区域。」",
+   "hypothesis": "文档另一章节规定：「首先，描述具有高花粉价值而非低花粉价值的区域。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4483",
+   "premise": "文档某章节规定：「朱利安·斯图尔特的《爱斯基摩人的季节性变动》提到系统理论的基本原理，而这种原理后来在马瑟·牟斯的作品中反复出现。」",
+   "hypothesis": "文档另一章节规定：「朱利安·斯图尔特的“爱斯基摩人的季节性变动”提到系统理论的基本原理，而这种原理后来在马瑟·牟斯的作品中也曾重复出现。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4813",
+   "premise": "文档某章节规定：「这是禅寺中践行的正式的上餐与用餐风格。」",
+   "hypothesis": "文档另一章节规定：「这是禅寺供应和享用餐食的正式方式。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-669",
+   "premise": "文档某章节规定：「然而系列几乎在每个地方汇聚。」",
+   "hypothesis": "文档另一章节规定：「然后该系列几乎在每个地方汇集。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4687",
+   "premise": "文档某章节规定：「两架于 1934 年制造，但没有再飞行。」",
+   "hypothesis": "文档另一章节规定：「其中两架在 1934 年生产，但没有再飞行。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3514",
+   "premise": "文档某章节规定：「在实践中是 Mesquite“模块”Java - 类别，通常是具体类定义的抽象子类。」",
+   "hypothesis": "文档另一章节规定：「在实践中，麦斯奎特“模块”Java 类，通常是具有具体类定义的抽象子类。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1021",
+   "premise": "文档某章节规定：「它被发现于印度尼西亚的萨拉瓦蒂岛和印度尼西亚巴布亚省的鸟警察半岛。」",
+   "hypothesis": "文档另一章节规定：「它被发现于印度尼西亚的萨拉瓦蒂岛，以及印度尼西亚巴布亚省的多贝拉伊半岛。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3999",
+   "premise": "文档某章节规定：「“IPA”由 500 个补充符号、300 个基本符号和 200 个互补符号构成。」",
+   "hypothesis": "文档另一章节规定：「“国际音标”包含 500 个互补符号、300 个基本符号和 200 个补充符号。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1100",
+   "premise": "文档某章节规定：「这些歌曲由托米·李制作，并由迈克尔·拜因霍恩担任鼓手。」",
+   "hypothesis": "文档另一章节规定：「这些歌曲由汤米·李和鼓手迈克尔·拜因霍恩制作。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7072",
+   "premise": "文档某章节规定：「1991 年以前，这里是特哈玛县唯一的舞台，1993 年以前一直用作唯一一家公共戏院。」",
+   "hypothesis": "文档另一章节规定：「1991 年以前，它是特哈玛县的唯一舞台，1993 年以前 ，这里提供了唯一的公共戏院。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6806",
+   "premise": "文档某章节规定：「在苏格兰足球界，各级半职业球队都无法参加苏格兰超级足球联赛，并且大部分半职业球队也无法参加苏格兰足球冠军联赛。」",
+   "hypothesis": "文档另一章节规定：「在苏格兰足球中，半职业球队在低于苏格兰足球冠军联赛的各个级别角逐，其中大多数低于苏格兰足球冠军联赛水平的球队均为半职业球队。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5876",
+   "premise": "文档某章节规定：「Erginus galkini 是一种海螺，是真正的帽贝，属于莲花青螺科海生腹足软体动物，莲花青螺科是真正帽贝科之一。」",
+   "hypothesis": "文档另一章节规定：「Erginus galkini 是一种海螺，一种真帽贝，是莲花青螺科的海洋腹足纲软体动物，属于真帽贝的一科。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5635",
+   "premise": "文档某章节规定：「乔纳森·埃利希和安迪·拉姆在决赛中分别以 5 -- 3 和 5 -- 4 击败马克·诺尔斯和丹尼尔·内斯特，从而夺冠。」",
+   "hypothesis": "文档另一章节规定：「乔纳森·埃利希和安迪·拉姆在决赛中以 5 -- 3 和 5 -- 4 赢得冠军并击败马克·诺尔斯和丹尼尔·内斯特。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5258",
+   "premise": "文档某章节规定：「泰勒仍旧活跃于棒球界，直至去世前一直为亚特兰大勇士队、密尔瓦基队和芝加哥白袜队担任球探。」",
+   "hypothesis": "文档另一章节规定：「泰勒生前仍然积极地担任芝加哥白袜队、密尔沃基棒球队和亚特兰大勇者队的球探。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5169",
+   "premise": "文档某章节规定：「私立克莱本学院位于克莱本教区附近未并入的海恩斯维尔。」",
+   "hypothesis": "文档另一章节规定：「这座私立克莱本学院位于海恩斯维尔，靠近克莱本教区。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7887",
+   "premise": "文档某章节规定：「这使他成为了第一个效力雄鸡队的 994nd 评分者。」",
+   "hypothesis": "文档另一章节规定：「这让他成为首个效力雄鸡队的 994 年级学生。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1098",
+   "premise": "文档某章节规定：「1699 年 8 月 1 日，威廉·布莱克特将他在 Chirton 登记在册的土地移交给了阿奇博尔德·坎贝尔爵士，后者出售给了第一代阿盖尔公爵比克斯塔夫。」",
+   "hypothesis": "文档另一章节规定：「1699 年 8 月 1 日，威廉·布莱克特将他在 Chirton 注册登记的土地让与了阿奇博尔德·坎贝尔爵士，而后者将大厅卖给了阿盖尔第一公爵比克斯塔夫。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4247",
+   "premise": "文档某章节规定：「亨利·里克森是理事会主席；弗雷德里克·布朗是委员会主席。」",
+   "hypothesis": "文档另一章节规定：「理事会的主席是亨利·亨利·瑞克森，而委员会的主席是弗雷德里克·布朗。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4206",
+   "premise": "文档某章节规定：「校区过去位于湾柴和西贡，之后于 2013 年 8 月搬至坚尼地城的新地址。」",
+   "hypothesis": "文档另一章节规定：「学校位于湾仔和西贡。2013 年 8 月，学校搬迁到位于坚尼地的永久场址。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6840",
+   "premise": "文档某章节规定：「斯特雷奇从一位真人秀明星那里偷窃可卡因，该明星然后获得豪华轿车。」",
+   "hypothesis": "文档另一章节规定：「斯特雷奇偷走了真人秀明星的可卡因，随后获得了豪华轿车。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5397",
+   "premise": "文档某章节规定：「他是第一准男爵约翰·拉德爵士的遗腹子；他的母亲是啤酒酿造师亨利·斯雷尔的姐姐。」",
+   "hypothesis": "文档另一章节规定：「他作为第一从男爵约翰·拉德爵士的遗腹子出生，他的母亲是酿酒师的姐妹亨利·索拉勒。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7468",
+   "premise": "文档某章节规定：「代理老板 Rene Piccarreto——Loren Piccarreto 的儿子——于 1988 年被逮捕，于 1994 年被释放。」",
+   "hypothesis": "文档另一章节规定：「代理老板—雷内·皮卡雷达—洛伦·皮卡雷达之子，于 1988 年被逮捕，于 1994 年被释放。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6210",
+   "premise": "文档某章节规定：「在新的电视连续剧《Dead Gorgeous》中，亚历桑德拉·柯平杰扮演幺妹哈泽尔一角。」",
+   "hypothesis": "文档另一章节规定：「亚历桑德拉·柯平杰在新电视连续剧《Dead Gorgeous》中饰演幺妹哈泽尔一角。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-360",
+   "premise": "文档某章节规定：「一个独立的国际专家团队调查了事故影响并得出结论，没有人死于此次事故或因此中毒。」",
+   "hypothesis": "文档另一章节规定：「一个国际独立的专家团队研究了该事件的影响并得出结论：该事件没有导致任何人死亡或中毒。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5357",
+   "premise": "文档某章节规定：「1291 年，马奥嫁给勃艮第伯爵奥托四世，育有三个子女，其中两位女孩嫁给法国的国王。」",
+   "hypothesis": "文档另一章节规定：「1291 年，马哈特与勃艮第伯国奥托四世结婚。她是三个孩子的母亲，其中两个女儿嫁给了法国国王。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1385",
+   "premise": "文档某章节规定：「调节鹿群数量的另一条途径是控制出生率。」",
+   "hypothesis": "文档另一章节规定：「控制鹿的数量的另一个方法是调节生育率。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7219",
+   "premise": "文档某章节规定：「威廉·威廉姆斯，也称为卢埃林·威廉姆斯（1867 年 3 月 10 日至 1922 年 4 月 22 日），是一名威尔士自由党派的激进记者、律师和政治家。」",
+   "hypothesis": "文档另一章节规定：「威廉·卢埃林·威廉姆斯以卢埃林·威廉姆斯（1867 年 3 月 10 日 -- 1922 年 4 月 22 日）这个名字为人所知，他是一位激进的记者、律师和威尔士自由党政治家。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-239",
+   "premise": "文档某章节规定：「菲什曼拥有哥伦比亚大学的学士学位和布朗大学的经济学硕士学位。」",
+   "hypothesis": "文档另一章节规定：「菲什曼持有哥伦比亚大学学士学位和布朗大学经济学硕士学位。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5628",
+   "premise": "文档某章节规定：「Ballouhey 主要存在于伊泽尔省、巴黎、法国以及南非。」",
+   "hypothesis": "文档另一章节规定：「Ballouhey 主要存在于巴黎、伊泽尔省、法国以及南非。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5669",
+   "premise": "文档某章节规定：「当杰克·尼采第一次听到《顽固的家伙》时正和菲尔·斯佩克特一同驾车行驶在日落大道上，歌声让他激动万分，没有控制住汽车。」",
+   "hypothesis": "文档另一章节规定：「当杰克·尼切第一次听到“固执的家伙”时，他正与菲尔·斯佩克特驾车行驶在日落大道上，他太过激动以至于失去了对车的控制。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4656",
+   "premise": "文档某章节规定：「苏里南最杰出的女性包括詹妮佛·西蒙斯、Marijke Djwalapersad、伊丽莎白·桑松、辛西娅·麦克劳德和露丝·韦登博斯。」",
+   "hypothesis": "文档另一章节规定：「苏里南的杰出女性包括伊丽莎白·参孙、辛西娅·麦克劳德、Marijke Djwalapersad、詹妮弗·西蒙斯和 Ruth Wijdenbosch。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4937",
+   "premise": "文档某章节规定：「在此群体中，87.91 % 是匈牙利人，7.53 % 是罗马尼亚人，4.43 % 是罗姆人。」",
+   "hypothesis": "文档另一章节规定：「在此群体中，87.91 % 是匈牙利人，7.53 % 是罗马尼亚人，4.43 % 是罗姆人。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5498",
+   "premise": "文档某章节规定：「会议因许多信使的到来而中断，他们由该市拥有权势或影响力的不同马杜克人派遣，带来了为王子所设晚宴的不同邀请函。」",
+   "hypothesis": "文档另一章节规定：「会议因众多信使的到来而中断，派遣他们前来的是城中各路颇有权势和的马杜克人，为的是送来给王子的各种晚宴请帖。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6962",
+   "premise": "文档某章节规定：「卡图瓦纳分区秘书处是位于斯里兰卡南部汉班托塔省的分区秘书处。」",
+   "hypothesis": "文档另一章节规定：「卡图瓦纳分区秘书处是斯里兰卡南部省汉班托特区的一个分区秘书处。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2535",
+   "premise": "文档某章节规定：「这些创新提高了 BRT 系统的最高载客量至每小时 35,000 名乘客。」",
+   "hypothesis": "文档另一章节规定：「借助这些创新，快速公交系统的最大载客量增加至每小时 35,000 名乘客。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1085",
+   "premise": "文档某章节规定：「他以落后巴巴·沃森和路易·乌修仁两击的成绩结束比赛，他对自己的推杆表现表示遗憾，认为这是他没有赢得比赛的原因。」",
+   "hypothesis": "文档另一章节规定：「他以落后路易·乌修仁和巴巴·沃森两杆的成绩结束了比赛，叹息他的推杆表现导致他未能赢得比赛。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4779",
+   "premise": "文档某章节规定：「他后于俄亥俄州托莱多任教，并于 1856 至 1859 年间任克利夫兰学校代理督学。」",
+   "hypothesis": "文档另一章节规定：「他之后在俄亥俄州托莱多的学校教课，在 1856 年至 1859 年间担任克利夫兰地区学校副主管。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4854",
+   "premise": "文档某章节规定：「1781 年，弗吉尼亚州州长托马斯·杰斐逊提拔克拉克为准将，并委任他指挥肯塔基州和伊利诺伊州的所有民兵。」",
+   "hypothesis": "文档另一章节规定：「1781 年，弗吉尼亚州州长托马斯·杰斐逊将克拉克提拔为准将并让他指挥肯塔基州和伊利诺伊州的所有郡县的民兵。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4254",
+   "premise": "文档某章节规定：「SPB 拥有恒定的高度尺寸（从内斑块到外斑块的距离），约为 150 纳米，但是它的直径在细胞周期中发生变化，z。」",
+   "hypothesis": "文档另一章节规定：「SPB 拥有约 150 纳米的恒定高度尺寸（从内斑到外斑的距离），但其直径会在细胞周期过程中发生变化，例如。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2289",
+   "premise": "文档某章节规定：「在下方的评价中，该节目的最高评分为红色，对节目的最低评价为蓝色剧集。」",
+   "hypothesis": "文档另一章节规定：「在以下评论中，对节目的最高评分以红色表示，对节目的最低评分为蓝色剧集。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7801",
+   "premise": "文档某章节规定：「UIF 由 2008 年合并室内足球联赛 (IFL) 和联合激烈足球联赛而成立。」",
+   "hypothesis": "文档另一章节规定：「UIF 在 2008 年由室内足球联盟 (IFL) 和联合激烈足球联赛合并而成。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7234",
+   "premise": "文档某章节规定：「立刻告诉他、他的父亲查理·克劳森（扎克·麦克圭尔）和伊维。」",
+   "hypothesis": "文档另一章节规定：「立即告诉他的父亲萨克·麦圭雷（查利·克劳森）和伊维。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5135",
+   "premise": "文档某章节规定：「《福布斯》的保罗·塔西称，任天堂本可以从微软和索尼向核芯显卡的转换中吸取经验，从而更高效地处理这一变化。」",
+   "hypothesis": "文档另一章节规定：「“福布斯”的保罗·塔西称，任天堂本可以借鉴微软和索尼向高清图形的转型，更有效地应对这一变化。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2297",
+   "premise": "文档某章节规定：「在 1967 年的 NBA 选秀大会上，他在第 7 轮（以第 77 顺位）被费城 76 人队选中。」",
+   "hypothesis": "文档另一章节规定：「他在 1967 年 NBA 选秀的第 7 轮（共有 77 轮甄选）被费城 76 人队选中。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-10",
+   "premise": "文档某章节规定：「2005 年末至 2009 年期间是例外，当时他效力于瑞典的卡斯塔德联队、塞尔维亚的查查克足球俱乐部和俄罗斯的格罗兹尼特里克足球俱乐部。」",
+   "hypothesis": "文档另一章节规定：「例外情况发生于 2005 年末至 2009 年期间，当时他效力于瑞典的卡斯塔德联队、塞尔维亚的查查克足球俱乐部和俄罗斯的格罗兹尼艾卡马特足球俱乐部。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6509",
+   "premise": "文档某章节规定：「约纳斯·比约克曼和法布里斯·桑托罗在决赛中分别以 6-2 和 6-4 战胜马丁·达姆和拉德克·斯泰潘内克。」",
+   "hypothesis": "文档另一章节规定：「约纳斯·比约克曼和法布里斯·桑托罗在决赛中以 6 - 2 和 6 - 4 击败马丁·达姆和拉德克·斯泰潘内克。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4399",
+   "premise": "文档某章节规定：「2011 年 3 月 5 日，MTV Hive 发布了一条关于蕾哈娜的流媒体链接，她在表演安妮·罗西的《粗鲁男孩》。」",
+   "hypothesis": "文档另一章节规定：「2011 年 3 月 5 日，MTV Hive 发布了一条蕾哈娜表演安妮·罗西的《粗鲁男孩》的流媒体链接。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4074",
+   "premise": "文档某章节规定：「1960 年，约翰·T·德里斯科尔和帕特里克·F·麦克多诺竞选马萨诸塞州的财务主管和接管人，他在民主党初选中位列第三，仅次于肯尼迪。」",
+   "hypothesis": "文档另一章节规定：「1960 年，约翰·T·德里斯科尔和帕特里克·F·麦克多诺竞选马萨诸塞州财务总管和税收局长。他在民主党初选中位列第三，仅次于肯尼迪。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-680",
+   "premise": "文档某章节规定：「美国明尼苏达州道奇县是弗农镇的一个镇。」",
+   "hypothesis": "文档另一章节规定：「美国明尼苏达州道奇县是弗农镇的一个社区。」",
+   "label": "consistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7987",
+   "premise": "文档某章节规定：「她得到理查德·吉布森和宫廷画师彼得·雷利的称赞，她被公认为成就堪比琼·卡莱尔。」",
+   "hypothesis": "文档另一章节规定：「她受到理查德·吉布森和宫廷画家琼·卡莱尔的称赞，被认为像彼得·莱利一样成功。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7352",
+   "premise": "文档某章节规定：「超级明星杰基·史洛夫的司机拉胡尔·罗伊未能完成他的工作，所以他被他的儿子迪帕克（阿洛克·纳特）取代了。」",
+   "hypothesis": "文档另一章节规定：「超级巨星杰基·史洛夫的司机阿洛克·纳特无法做自己的工作，所以他被自己的儿子迪帕克（拉胡尔·罗伊）取代。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7406",
+   "premise": "文档某章节规定：「皮特·森柏斯在决赛中以 6 : 7、6 : 4、7 : 6 的比分击败了蒂姆·亨曼。」",
+   "hypothesis": "文档另一章节规定：「蒂姆 蒂姆·亨曼在决赛中以 6 - 7、6 - 4、7 - 6 的成绩击败皮特·桑普拉斯。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3398",
+   "premise": "文档某章节规定：「韦斯特莱克是美国路易斯安那州卡尔克苏堂区西部的一个城市，也是查尔斯湖大都会统计区的一部分。」",
+   "hypothesis": "文档另一章节规定：「韦斯特莱克是卡尔克苏教区的一座城市，位于美国路易斯安那州西部，属于莱克查尔斯都会统计区的一部分。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-803",
+   "premise": "文档某章节规定：「凯伦·菲利普斯与苏兰·琼斯扮演的的史蒂夫开始了一段恋情。」",
+   "hypothesis": "文档另一章节规定：「史蒂夫与苏兰·琼斯扮演的凯伦·菲利普斯展开了一段恋情。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3371",
+   "premise": "文档某章节规定：「诺曼·梅兰克顿·格迪斯，本名诺曼·贝尔·格迪斯（1893 年 4 月 27 日至 1958 年 5 月 8 日），是一位美国剧场和工业设计师。」",
+   "hypothesis": "文档另一章节规定：「诺曼·贝尔·格迪斯，本名诺曼·梅兰克顿·格迪斯（1893 年 4 月 27 日至 1958 年 5 月 8 日），是一位美国舞台和工业设计师。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7053",
+   "premise": "文档某章节规定：「树叶中的海绵束分布在维管叶肉细胞之间。」",
+   "hypothesis": "文档另一章节规定：「海绵状叶肉之间的维管束位于叶子中。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5943",
+   "premise": "文档某章节规定：「奥克塔维厄斯·瓦尔·马莱特的次女爱丽丝·安娜·凯瑟琳于 1852 年 6 月 24 日在科隆英国领事馆嫁给托马斯。」",
+   "hypothesis": "文档另一章节规定：「托马斯·安妮的第二个女儿，艾莉丝·安娜·凯瑟琳于 1852 年 6 月 24 日在科隆的英国领事馆与奥克塔维厄斯·沃尔·马利特结婚。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7275",
+   "premise": "文档某章节规定：「2000 年，普尼亚姆·德维击败了代表联合人民党的全国人民党德尔门德拉·亚达夫的德维。」",
+   "hypothesis": "文档另一章节规定：「全国人民党的普那姆·德维于 2000 年击败了人民党联合派代表德尔门德拉·亚达夫。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4901",
+   "premise": "文档某章节规定：「其中 87.91% 是匈牙利人，7.53% 是罗马尼亚人，4.43% 是罗姆人。」",
+   "hypothesis": "文档另一章节规定：「在这些人口中，87.91% 为罗马尼亚人，7.53% 为匈牙利人且 4.43% 为罗姆人。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4884",
+   "premise": "文档某章节规定：「《卡伯特公路》剧集是在布雷顿角岛拍摄而成，包括东海岸新斯科舍省的佩吉湾和高地。」",
+   "hypothesis": "文档另一章节规定：「“东海岸”这一集在新斯科舍省现场拍摄，包括卡伯特公路沿路的佩姬湾与布雷顿角高地。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-798",
+   "premise": "文档某章节规定：「中央浸礼会协会是一个由南卡罗来纳州到印第安纳州的教堂组成的协会，其中的大多数教堂位于田纳西州东部和弗吉尼亚州西南部。」",
+   "hypothesis": "文档另一章节规定：「中央浸礼协进会是一个由从南卡罗来纳州到弗吉尼亚州的教会组成的协会，其中大部分教会位于田纳西州东部和印第安纳州西南部。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3769",
+   "premise": "文档某章节规定：「演员均为男性，包括六位悉尼男演员和一位墨尔本男演员（戈登·格伦莱特）。」",
+   "hypothesis": "文档另一章节规定：「演员都为男性，其中包括六位墨尔本演员和一位悉尼演员（戈登·格伦赖特）。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6880",
+   "premise": "文档某章节规定：「苏格兰联合长老会传教会在 1864 年派代理人前往中国。」",
+   "hypothesis": "文档另一章节规定：「1864 年，中国联合长老会传教协会派遣代理到苏格兰。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3207",
+   "premise": "文档某章节规定：「1886 年，迈尔斯取代乔治·克鲁克将军，成为与亚利桑那部奇里卡瓦阿帕奇族首领杰罗尼莫作战的武装部队指挥官。」",
+   "hypothesis": "文档另一章节规定：「1886 年，乔治·克鲁克取代迈尔斯将军成为对抗杰罗尼莫的部队的指挥官，杰罗尼莫是亚利桑那州分部中奇里卡华阿帕切族首领。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2271",
+   "premise": "文档某章节规定：「“Fallbeil”于 1949 年最后一次在西德使用，并于 1966 年在东德使用。」",
+   "hypothesis": "文档另一章节规定：「``断头台'' 在西德最后一次使用是在 1949 年，在东德是在 1966 年。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-533",
+   "premise": "文档某章节规定：「SPB 拥有恒定的高度尺寸（从内斑块到外斑块的距离），约为 150 纳米，但其直径会在细胞周期中发生变化，z。」",
+   "hypothesis": "文档另一章节规定：「SPB 的内高度尺寸（从外斑块到恒定斑块的距离）约为 150 纳米，但其直径会在细胞周期中发生变化，例如」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-981",
+   "premise": "文档某章节规定：「卢加济罗马天主教教区是乌干达坎帕拉教省卢加济市的一个教区。」",
+   "hypothesis": "文档另一章节规定：「卢加济的罗马天主教教区是一个教区，位于坎帕拉乌干达教会省的卢加济市。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-148",
+   "premise": "文档某章节规定：「塔尔福尔德·伊利是克拉布·罗宾逊早期好友约翰·陶威尔·拉特的孙子。」",
+   "hypothesis": "文档另一章节规定：「塔尔福尔德·伊利是克拉布·鲁滨逊的孙子，后者是约翰·陶威尔·拉特早年的一位朋友。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7607",
+   "premise": "文档某章节规定：「如果一个句子中存在多个语法类型，则只有复数才具有首个标记。例如：」",
+   "hypothesis": "文档另一章节规定：「如果句子中存在多个语法类别，则仅有第一个类别带复数标记。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1328",
+   "premise": "文档某章节规定：「R205 号公路是爱尔兰的一条区域公路，自卡文郡的 R199 号公路起延伸至利特里姆郡的爱尔兰北部边境，大部分位于弗玛纳郡内。」",
+   "hypothesis": "文档另一章节规定：「第 R205 号公路是一条位于爱尔兰的区域性公路，从利特里姆郡的第 R199 号公路延伸至弗马纳郡的北爱尔兰边境，大部分在卡文郡。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4114",
+   "premise": "文档某章节规定：「他在连续的政变中被穆塔拉·穆罕默德（1975 年）和奥卢塞贡·奥巴桑乔（1976 年）所取代。」",
+   "hypothesis": "文档另一章节规定：「他在连续的政变中被奥卢塞贡·奥巴桑乔（1975 年）和穆塔拉·穆罕默德（1976 年）所取代。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2311",
+   "premise": "文档某章节规定：「尽管 3/4 中有共同部分，但该运动仍在延长的时间内。」",
+   "hypothesis": "文档另一章节规定：「尽管有 324 个共同部分，但该运动仍在延长的时间内。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5011",
+   "premise": "文档某章节规定：「伍斯特是英格兰伍斯特郡的一座城市和郡首府。」",
+   "hypothesis": "文档另一章节规定：「伍斯特郡是英格兰伍斯特的一个镇和县级市。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3611",
+   "premise": "文档某章节规定：「2012 年，吉尔扮演詹妮佛·拉·佩纳，成为萨尔瓦多·罗亚尔斯翻拍电视剧的电影《Mundo Man ay Magunaw》的一部分。」",
+   "hypothesis": "文档另一章节规定：「2012 年，詹妮弗·拉佩尼亚在 Salvador Royales 的影片“Mundo Man ay Magunaw”的电视翻拍版中出演吉尔一角。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7671",
+   "premise": "文档某章节规定：「1865 年 8 月 17 日，纽约第十三志愿者骑兵队与纽约第十六志愿者骑兵队合并成纽约第三临时骑兵队。」",
+   "hypothesis": "文档另一章节规定：「1865 年 8 月 17 日，第 3 纽约志愿骑兵队与第 16 纽约志愿骑兵队合并，组成第 13 纽约暂编骑兵队。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4739",
+   "premise": "文档某章节规定：「《vidas distintas》是 1969 年由 Televisa 播送、最初由 Telesistema Mexicano 制作的墨西哥电视连续剧。」",
+   "hypothesis": "文档另一章节规定：「vidas distintas 是 Televisa 于 1969 年制作的一部墨西哥拉美电视剧，最初由 Telesistema Mexicano 传播。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6235",
+   "premise": "文档某章节规定：「Goyt 山谷中有两座水库，该水库是其中之一，另一座则是 Errwood 水库。」",
+   "hypothesis": "文档另一章节规定：「Errwood 水库中建有两座水库，该水库是其中之一，另一座是 Goyt 山谷。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3285",
+   "premise": "文档某章节规定：「Brunau 在 Nindorf 附近水面上升，最初从东北方向流向 Hetzendorf 的南方。」",
+   "hypothesis": "文档另一章节规定：「布鲁瑙河流经宁多夫附近地区，发源于 Hetendorf 东北方向。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1988",
+   "premise": "文档某章节规定：「德沃山是加拿大不列颠哥伦比亚温哥华岛的一座山，位于兰布勒峰东南面和戈尔德河南面。」",
+   "hypothesis": "文档另一章节规定：「DeVoe 山是加拿大不列颠哥伦比亚省温哥华岛上的一座山，位于金河东南部和漫步者峰南部。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2855",
+   "premise": "文档某章节规定：「最初的团队由作家萨尔·布谢马和艺术家罗伊·托马斯在《复仇者联盟》#71 中共同打造（1969 年 12 月）。」",
+   "hypothesis": "文档另一章节规定：「最初的团队是由作家罗伊·托马斯和艺术家萨尔·巴思马在《复仇者联盟》71 期（1969 年 12 月）中创造的。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1040",
+   "premise": "文档某章节规定：「这三个母系王朝统治着 Mbooj 父系家族掌管的 Waalo 王国。」",
+   "hypothesis": "文档另一章节规定：「这三个父系王朝统治着 Mbooj 母系家族掌管的 Waalo 王国。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7121",
+   "premise": "文档某章节规定：「那时，该国的所有者是约翰逊先生，他同意与莱斯利·弗农·卡尔卡特签订 99 年的租约。」",
+   "hypothesis": "文档另一章节规定：「当时该国的所有者是莱斯利·弗农·加尔各答，他同意与约翰逊先生签订一份 99 年的租约。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4285",
+   "premise": "文档某章节规定：「1914 年，托德洛夫先生创立了 Coney Island 餐厅，发明了他的杰克逊科尼岛辣酱食谱。」",
+   "hypothesis": "文档另一章节规定：「1914 年，托多洛夫先生创办了 Jackson Coney Island 餐厅并创立了自己的 Coney Island 辣椒酱配方。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-620",
+   "premise": "文档某章节规定：「1933 年 9 月 21 日，罗宾斯与他的孪生兄弟大卫出生于考文垂，他们在查尔斯·罗宾斯和杰萨曼·罗宾斯的十二个孩子中排行第八和第九。」",
+   "hypothesis": "文档另一章节规定：「大卫于 1933 年 9 月 21 日出生在考文垂，同日出生的还有他的双胞胎父亲查尔斯·罗宾斯和杰萨明·罗宾斯，二人在罗宾斯家 12 个孩子中排行第八和第九。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1122",
+   "premise": "文档某章节规定：「这座寺庙是韩国印度教徒和来自南亚国家的移民的一个文化和宗教中心。」",
+   "hypothesis": "文档另一章节规定：「这座寺庙是南亚印度教徒和韩国移民的文化及宗教中心。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1568",
+   "premise": "文档某章节规定：「他是第一准男爵约翰·拉德爵士的遗腹子，他的母亲是酿酒师亨利·斯雷尔的妹妹。」",
+   "hypothesis": "文档另一章节规定：「他作为第一从男爵亨利·特雷尔爵士的孩子出生，他的母亲是酿酒师约翰·拉德的妹妹。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-655",
+   "premise": "文档某章节规定：「大卫于 1933 年 9 月 21 日在考文垂出生，他的双胞胎父亲查尔斯和杰西敏·罗宾斯是罗宾斯的十二个孩子中的第八个和第九个孩子。」",
+   "hypothesis": "文档另一章节规定：「1933 年 9 月 21 日，罗宾斯出生于考文垂，在查尔斯和杰萨曼·罗宾斯的 12 个孩子中，他与双胞胎兄弟大卫排行第 8 和第 9。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2513",
+   "premise": "文档某章节规定：「1920 和 1921 年，意大利人在威尼斯获胜——1920 年无其他参赛国，1921 年法国人未开始。」",
+   "hypothesis": "文档另一章节规定：「1920 和 1921 年，意大利队在威尼斯加入，1920 年其他国家均未获胜，而在 1921 年法国尚未开始参加。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-7761",
+   "premise": "文档某章节规定：「鉴于 Vinny Testaverde 被认为是首发成员，雷·卢卡斯正在与佐拉克竞争候补席位。」",
+   "hypothesis": "文档另一章节规定：「由于温尼·特施塔弗代担任发球员，佐拉克与雷·卢卡斯竞争替补球员的位置。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2620",
+   "premise": "文档某章节规定：「根据若尔当标准型，“T”与唯一非零项在超对角线上的矩阵相似。」",
+   "hypothesis": "文档另一章节规定：「“T”类似于一个矩阵，其标准条目均采用若尔当非零超对角形式。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-654",
+   "premise": "文档某章节规定：「2002 年，这首歌由英国制作人文森特·索菲尔德发行，由 Independiente 将其作为《甜蜜和声 02》进行伴奏。」",
+   "hypothesis": "文档另一章节规定：「2002 年，这首歌由英国制作人文森特·斯托姆菲尔德翻唱并由 Independiente 发行为《甜蜜和谐 02》。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3908",
+   "premise": "文档某章节规定：「圣克鲁兹天空之园是一座位于加利福尼亚州斯科茨山谷的机场，位于圣克鲁兹县境内。」",
+   "hypothesis": "文档另一章节规定：「圣克鲁斯县是加利福尼亚州斯科茨谷的一座机场，位于圣克鲁斯天空公园内。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4661",
+   "premise": "文档某章节规定：「他于 1965 年 12 月 21 日出生在康涅狄格州纽黑文，访问了马里兰州奥克森山的奥克森山高中。」",
+   "hypothesis": "文档另一章节规定：「他于 1965 年 12 月 21 日在马里兰州的奥克森山出生，就读过康涅狄格州纽黑文的奥克森山高中。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1022",
+   "premise": "文档某章节规定：「当患有恶性高血压时，这些增生性变化通常伴有动脉内膜纤维蛋白样坏死和动脉中层坏死。」",
+   "hypothesis": "文档另一章节规定：「在恶性高血压中，这些增生性变化常伴有动脉内膜和中膜的纤维素样坏死。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6974",
+   "premise": "文档某章节规定：「Wa Kyun 是安达曼海中的一座岛屿，位于缅甸南部地区的孟邦海岸附近。」",
+   "hypothesis": "文档另一章节规定：「Wa Kyun 是安达曼海的一座岛屿，位于孟邦南部区域缅甸海岸附近。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4255",
+   "premise": "文档某章节规定：「1989 年 11 月，德莱尼成为纽约证券交易所的一员，并且担任 Henderson Brothers , Inc. 和 Bear Wagner 的高级董事总经理。」",
+   "hypothesis": "文档另一章节规定：「1989 年 11 月，德莱尼成为纽约证券交易所会员，并成为 Henderson Brothers , Inc. 和 Bear Wagner 的高级常务董事。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6688",
+   "premise": "文档某章节规定：「卡森上尉在华盛顿哥伦比亚特区去世。他被葬在阿灵顿国家公墓，之后被转移到了华盛顿。」",
+   "hypothesis": "文档另一章节规定：「卡辛船长在华盛顿特区逝世。他的遗体葬在华盛顿，后来迁移到阿灵顿国家公墓。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2882",
+   "premise": "文档某章节规定：「Cabo Cassiporé 是一个位于低位河流以东的宽阔海角。」",
+   "hypothesis": "文档另一章节规定：「Cabo Cassiporé 是一个大约位于这条河流低入口以东的宽阔海角。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5129",
+   "premise": "文档某章节规定：「他是捷克国家队队员 Miroslav Hlinka 的表兄弟，也是前队员 Jaroslav Hlinka sr 之子。」",
+   "hypothesis": "文档另一章节规定：「他是捷克国家运动员雅罗斯拉夫·赫林卡的堂兄，也是前运动员小米罗斯拉夫·赫林卡的儿子。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-98",
+   "premise": "文档某章节规定：「中卫约翰·盖奇在 1805 年 5 月为北海使用了它们，中尉罗伯特·拉姆齐在 1806 年取代了他。」",
+   "hypothesis": "文档另一章节规定：「1805 年 5 月，罗伯特·拉姆齐中尉将她派往北海，约翰·盖奇中尉于 1806 年接替了他。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2226",
+   "premise": "文档某章节规定：「每逢星期天，每小时都有开往格拉斯哥的列车，但没有开往爱丁堡和邓布兰的列车。」",
+   "hypothesis": "文档另一章节规定：「周日每小时有一次前往爱丁堡和邓布兰的服务，但没有前往格拉斯哥的服务。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2709",
+   "premise": "文档某章节规定：「在第一轮对决后，海涅·托特兰德击败斯坎克斯特斯，在第二回合对战 Gaute Ormåsen，后者击败了 Bjørn Johan Muri。」",
+   "hypothesis": "文档另一章节规定：「在第一轮对决后，比约恩·乔汉·穆里击败斯了坎克斯特斯，迎战哥特·阿曼森，后者在第二回合击败了海涅·托特兰德。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1871",
+   "premise": "文档某章节规定：「Massé 出生于纽约州威斯特彻斯特县，在密歇根州霍兰德长大，青少年时期生活在欧洲。」",
+   "hypothesis": "文档另一章节规定：「Massé 出生于密歇根州霍兰德，在纽约州威斯特彻斯特县长大，青少年时期生活在欧洲。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6756",
+   "premise": "文档某章节规定：「他曾于 1924 年、1932 年和 1936 年先后在多伦多、奥斯陆和苏黎世担任 ICM 的特邀发言人。」",
+   "hypothesis": "文档另一章节规定：「他于 1924 年在多伦多、1932 年在苏黎世以及 1936 年在奥斯陆担任国际数学家大会的特邀发言人。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2371",
+   "premise": "文档某章节规定：「1997 年，她饰演《加冕街》中的希拉·迪克逊，1998 年饰演内奥米·拉塞尔。」",
+   "hypothesis": "文档另一章节规定：「1997 年，她在“加冕街”中饰演内奥米·罗素，1998 年饰演希拉‧迪克森。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6838",
+   "premise": "文档某章节规定：「他娶了伊丽莎白·杨（1854 -- 1932 年），并且是轮船大亨 N·O·杨·费恩利和地主托马斯·费恩利的父亲。」",
+   "hypothesis": "文档另一章节规定：「他娶了伊丽莎白·杨（1854 至 1932 年），并且是轮船大亨托马斯·费恩利和地主 N·O·杨·费恩利的父亲。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4673",
+   "premise": "文档某章节规定：「彼得·达孔杰（1903 - 1967）是一位早期爵士乐的簧片演奏家，活跃于美国新奥尔良的爵士乐坛。」",
+   "hypothesis": "文档另一章节规定：「彼得·杜康（1903 年 ？—1967 年 ？）是一位活跃于早期新奥尔良爵士乐坛上的美国爵士乐簧乐器演奏家。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2569",
+   "premise": "文档某章节规定：「蔡峰也有一个儿子，叫做蔡茂。」",
+   "hypothesis": "文档另一章节规定：「蔡茂也有一个儿子，叫做蔡峰。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-598",
+   "premise": "文档某章节规定：「上游是废弃的密歇根中央铁路桥，其前身是尼亚加拉悬臂桥，与旋涡激流大桥争夺铁路运输。」",
+   "hypothesis": "文档另一章节规定：「上游是废弃的密歇根中央铁路桥，其前身是旋涡激流大桥，与尼亚加拉悬臂桥争夺铁路运输。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4718",
+   "premise": "文档某章节规定：「他们有能力成立当地政府、将活跃自由的库尔德政党制度化以及管理库尔德议会。」",
+   "hypothesis": "文档另一章节规定：「他们能够管理当地政府，建立自由活跃的库尔德政治党派，并使库尔德议会制度化。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-407",
+   "premise": "文档某章节规定：「阿姆斯特朗所著悬疑小说《侦察无限》中的一位人物被比作乔吉特•海尔。」",
+   "hypothesis": "文档另一章节规定：「《无限侦查》这部由乔治特·海耶所著的悬疑小说将一个人物比作阿姆斯特朗。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7973",
+   "premise": "文档某章节规定：「他还编写了大量管弦乐曲和多种伴奏曲。」",
+   "hypothesis": "文档另一章节规定：「他还编写了大量的声乐编排和种类多样的管弦乐伴唱。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-3259",
+   "premise": "文档某章节规定：「塞德丝出生于马萨诸塞州温彻斯特，在新罕布什尔州德里长大。」",
+   "hypothesis": "文档另一章节规定：「塞德斯出生于新罕布什尔州的德里。他在马萨诸塞州的温彻斯特长大。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-855",
+   "premise": "文档某章节规定：「Valea lui Lambă 河，又称罗姆河，是罗马尼亚境内 Șimon 河的一条支流。」",
+   "hypothesis": "文档另一章节规定：「Valea lui Lambă 河或 Lom 河是罗马尼亚“unk”imon 河的支流。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1061",
+   "premise": "文档某章节规定：「在这次任务期间，有 65 名士兵丧生：34 名尼日利亚人、28 名乍得人、2 名多哥人和 1 名布基纳法索人。」",
+   "hypothesis": "文档另一章节规定：「在执行任务时，65 名士兵被杀：包括 34 名乍得人、28 名尼日利亚人、2 名多哥人和 1 名布基纳法索人。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6412",
+   "premise": "文档某章节规定：「然而，为支持原版，温和版已被跳过。」",
+   "hypothesis": "文档另一章节规定：「然而，为了支持温和输出，原版已被跳过。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7765",
+   "premise": "文档某章节规定：「2005 年 6 月，BBC 新闻学院作为电子学习课程开设，由凯文·马什担任执行编辑，第一任总监为文·雷。」",
+   "hypothesis": "文档另一章节规定：「BBC 新闻学院于 2005 年 6 月作为电子学习课程系列开设，由文·雷担任执行编辑。其第一任总监为凯文·马什。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-206",
+   "premise": "文档某章节规定：「自 2000 年起，迈耶斯一直在博物馆和美术馆制作因地制宜的大型壁画。」",
+   "hypothesis": "文档另一章节规定：「自 2000 年起，迈耶斯便在博物馆和美术馆绘制特定的大幅面壁画。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2682",
+   "premise": "文档某章节规定：「1918 年 9 月 22 日，第一封无线电报消息从斯洛当尼亚发往澳大利亚。」",
+   "hypothesis": "文档另一章节规定：「1918 年 9 月 22 日，斯诺登尼亚向澳大利亚发送了第一封无线电报。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2052",
+   "premise": "文档某章节规定：「他的父亲阿尔菲·伯恩是议员、下议院议员、参议员兼都柏林市市长大人，另一位哥哥帕特里克·伯恩也是下议院议员。」",
+   "hypothesis": "文档另一章节规定：「他的父亲帕特里克·伯恩是国会议员、下议院议员、参议员兼都柏林市市长大人。另一位哥哥阿尔菲·伯恩也是下议院议员。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-1859",
+   "premise": "文档某章节规定：「乔治·黑尔写的悬疑小说《Detection Unlimited》中的一个人物被拿来与阿姆斯特朗进行比较。」",
+   "hypothesis": "文档另一章节规定：「在阿姆斯特朗创作的神秘小说《探索无限》中，有一个角色被暗指是乔洁·黑尔。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4063",
+   "premise": "文档某章节规定：「与古巴裔墨西哥人梅赛德斯·马丁内斯结婚，并与其育有一子塞巴斯蒂安·韦茨和一女雅典娜·韦茨。」",
+   "hypothesis": "文档另一章节规定：「韦茨与古巴裔墨西哥人塞巴斯蒂安·韦茨结婚，并与其育有一子梅赛德斯·马丁内斯，和一女雅典娜·韦茨。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7466",
+   "premise": "文档某章节规定：「第一个是 Kai-sung，她是 Jin-Qua 的女儿，并与 Gordon Chen 生下 Dirk Struan。」",
+   "hypothesis": "文档另一章节规定：「第一位 Kai-sung 是 Jin-Qua 的女儿。她与 Gordon Chen 育有一子德克·斯特卢安。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-33",
+   "premise": "文档某章节规定：「在以下评论中，对节目的最高评价以红色表示，对节目的最低评价为蓝色剧集。」",
+   "hypothesis": "文档另一章节规定：「在以下评论中，对节目的最低评价将以红色表示，对节目的最高评价以蓝色序列表示。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7673",
+   "premise": "文档某章节规定：「实际上，Mesquite“模块”是 Java 类，通常为抽象类定义的具体子类。」",
+   "hypothesis": "文档另一章节规定：「实际是 Mesquite“模块”Java 类，通常为具体类定义的抽象子类。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5084",
+   "premise": "文档某章节规定：「制剂由帕特里克·佩奇博士及其团队发明，并由 Genkyotex 公司于 2007 年取得专利。」",
+   "hypothesis": "文档另一章节规定：「该化合物由帕特里克·佩吉博士及其团队获得专利，由 Genkyotex 于 2007 年发明。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2072",
+   "premise": "文档某章节规定：「三相女神的新宗教观念是巫术现代运动的核心。」",
+   "hypothesis": "文档另一章节规定：「三性女神的现代观念是巫术宗教新宗教运动的核心。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4372",
+   "premise": "文档某章节规定：「奥迪 V8 在其 DTM 展示期间与更小且更轻的梅赛德斯 190、宝马 M3 和更小的欧宝 Omega 3000 竞争。」",
+   "hypothesis": "文档另一章节规定：「在德国房车大师赛亮相期间，奥迪 V8 与更为小巧的梅赛德斯 190、宝马 M3 以及稍显轻便的欧宝 Omega 3000 展开了竞争。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-8000",
+   "premise": "文档某章节规定：「在另一个方向上，假设 \"m\" 通过准素分解是最强大的」",
+   "hypothesis": "文档另一章节规定：「在另一个方向，假设“m”是质数，具有强大的因子分解。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-6491",
+   "premise": "文档某章节规定：「许多大联盟运动员都曾为球队效力，包括有七年运动经验的约翰·凯林斯和十年经验的杰克·雷姆森。」",
+   "hypothesis": "文档另一章节规定：「很多大联盟选手都与球队在一起，包括七年球龄的老将杰克·瑞姆森和十年球龄的老将约翰·科瑞恩斯。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5068",
+   "premise": "文档某章节规定：「大卫·卡迪纳尔·比顿去世时是苏格兰大法官、圣安德鲁斯大主教和苏格兰红衣主教使节。」",
+   "hypothesis": "文档另一章节规定：「在他去世时，大卫红衣主教比顿是圣安德鲁斯的大法官，苏格兰大主教以及苏格兰红衣主教使节。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7182",
+   "premise": "文档某章节规定：「文森门站位于巴黎 20 区东南角与 12 区东北角的交汇处。」",
+   "hypothesis": "文档另一章节规定：「文森门站位于巴黎 12 区东北角与 20 区东南角的交汇处。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5860",
+   "premise": "文档某章节规定：「在斯里兰卡，会计师（斯里兰卡特许会计师）这一名称仅限斯里兰卡会计师协会会员使用。」",
+   "hypothesis": "文档另一章节规定：「在 CA，只有斯里兰卡会计师协会的成员才能使用会计师的头衔（斯里兰卡 斯里兰卡）。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4522",
+   "premise": "文档某章节规定：「他曾作为专业选手出战希腊、俄罗斯、意大利、法国、波多黎各、葡萄牙和印度尼西亚，并且在印度尼西亚和希腊夺得全国锦标赛冠军。」",
+   "hypothesis": "文档另一章节规定：「李作为专业运动员出战意大利、俄罗斯、希腊、法国、印度尼西亚和希腊。他在波多黎各、葡萄牙和印度尼西亚夺得全国锦标赛冠军。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1746",
+   "premise": "文档某章节规定：「他对图片的继发效应尤其感兴趣，图片中有身披长斗篷的时髦人物，或是具有装饰性的姿势；叙述性内容受到影响。」",
+   "hypothesis": "文档另一章节规定：「他对他的图片的装饰效果尤其感兴趣，图片中有身披长斗篷的时髦人物，或是受到影响的姿势，叙述性内容是次要的。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-6765",
+   "premise": "文档某章节规定：「Vălcea 河是罗马尼亚 Arieşul Mare 河的支流。」",
+   "hypothesis": "文档另一章节规定：「Arieşul Mare 河是罗马尼亚 Vâlcea 河的一条支流。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3636",
+   "premise": "文档某章节规定：「亚瑟努力深受感染，更加体贴地对待格温（主动做晚餐等）。」",
+   "hypothesis": "文档另一章节规定：「在深受影响下，格温努力更加体贴地对待亚瑟（主动做晚餐等）。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-2193",
+   "premise": "文档某章节规定：「莱特从北卡罗来纳州教堂山搬到纽约。」",
+   "hypothesis": "文档另一章节规定：「赖特从纽约搬至北卡罗来纳州的教堂山。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-2742",
+   "premise": "文档某章节规定：「自 1984 年以来，布莱克与帕特丽夏·迈耶共结连理并育有二子：莱恩（出生于 1988 年）和戴尔（出生于 1992 年）。」",
+   "hypothesis": "文档另一章节规定：「自 1984 年起，布莱克与帕特丽夏·迈耶结婚，并育有二子：莱恩（出生于 1988 年）和戴尔（出生于 1992 年）。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-3483",
+   "premise": "文档某章节规定：「在斯里兰卡，会计师（斯里兰卡特许会计师）这一名称仅限斯里兰卡会计师协会会员使用。」",
+   "hypothesis": "文档另一章节规定：「在 CA，特许会计师的头衔（斯里兰卡斯里兰卡）只能由斯里兰卡会计师学会的成员使用。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-7721",
+   "premise": "文档某章节规定：「癌前病变是一种在显微镜检查中表现异常的典型组织，相比形态正常的细胞更容易发生癌症。」",
+   "hypothesis": "文档另一章节规定：「癌前病变是形态上非典型组织，在显微镜检查中看起来不正常，而且在这种组织中比显然正常的组织更有可能发生癌症。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-313",
+   "premise": "文档某章节规定：「挤喉音是一些口头语言中使用的一种软颚音 国际音标中代表该发音的符号。」",
+   "hypothesis": "文档另一章节规定：「软颚挤喉音是一些口头语言中使用的一种辅音。国际音标中的这一符号，即代表该发音 。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4220",
+   "premise": "文档某章节规定：「这些歌曲由托米·李制作并由迈克尔·拜因霍恩担任鼓手。」",
+   "hypothesis": "文档另一章节规定：「这些歌曲由迈克尔·拜因霍恩制作，并由汤米·李担任鼓手。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1445",
+   "premise": "文档某章节规定：「1983 年 5 月，英国巡演启动，现场吉他手罗宾·乔治参与了额外演出。」",
+   "hypothesis": "文档另一章节规定：「1983 年 5 月，英国巡演在多一位吉他手罗宾·乔治的情况下开始现场演出。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-1863",
+   "premise": "文档某章节规定：「他的父亲阿尔菲·伯恩是一位代表、参议员兼都柏林市市长大人，另一位兄弟帕特里克·伯恩也是下议院议员。」",
+   "hypothesis": "文档另一章节规定：「他的父亲帕特里克·伯恩是都柏林的代表、参议员和市长大人，另一位哥哥阿尔菲·伯恩也是 TD。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-4858",
+   "premise": "文档某章节规定：「纳瓦罗是阿根廷布宜诺斯艾利斯省东北部的一个 partido。」",
+   "hypothesis": "文档另一章节规定：「纳瓦罗是阿根廷东北部布宜诺斯艾利斯省的一个 partido。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-4562",
+   "premise": "文档某章节规定：「这部电影与新电影业的一位马拉雅拉姆语歌手拉斐尔有关。」",
+   "hypothesis": "文档另一章节规定：「该电影关于拉斐尔——电影业中的新马拉雅拉姆语歌手。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-val-5556",
+   "premise": "文档某章节规定：「《Ungarala Rambabu》是一部泰卢固语电影，由 Paruchuri Kiriti 编剧和管理，由 Kranthi Madhav 制作。」",
+   "hypothesis": "文档另一章节规定：「Ungarala Rambabu 是一部泰卢固语电影，由克兰第·马德哈瓦编写和筹划并由 Paruchuri Kiriti 制作。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  },
+  {
+   "id": "paws-test-5495",
+   "premise": "文档某章节规定：「1171 年 11 月 29 日，冈萨洛首次作为冈萨洛·鲁伊斯·德·布列巴签署文件。」",
+   "hypothesis": "文档另一章节规定：「1171 年 11 月 29 日，冈萨洛·鲁伊斯·德·布雷巴首次以“冈萨洛”的身份签署了证书。」",
+   "label": "inconsistent",
+   "probe_type": "paws_shortcut"
+  }
+ ]
+}

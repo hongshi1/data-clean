@@ -1,0 +1,22 @@
+
+digraph route {
+  graph [rankdir=LR, fontname="Heiti SC", dpi=150, bgcolor="white", nodesep=0.5, ranksep=0.7];
+  node [shape=box, style=filled, fontname="Heiti SC", fontsize=11];
+
+  subgraph cluster_in {
+    label="多模态数据输入"; fontname="Heiti SC"; fontsize=12;
+    style=dashed; color=gray;
+    t [label="文本数据\n(设计文档/规范)", fillcolor=lightyellow];
+    i [label="图像数据\n(图纸/状态标识)", fillcolor=lightyellow];
+    s [label="时序数据\n(运行参数)", fillcolor=lightyellow];
+  }
+
+  fe [label="多模态特征提取\n(语言模型/视觉网络/时序建模)", fillcolor=lightcyan];
+  proj [label="共享语义投影\n(映射到统一语义空间)", fillcolor=lightcyan];
+  ctx [label="上下文关联建模\n(时间序列建模/事件锚点对齐)", fillcolor=lightgreen];
+  rule [label="领域先验规则注入\n(规则约束/语义关系映射)", fillcolor=lightgreen];
+  check [label="自动化一致性检测\n(跨模态比对/事实核查)", fillcolor=orange];
+
+  t -> fe; i -> fe; s -> fe;
+  fe -> proj -> ctx -> rule -> check;
+}

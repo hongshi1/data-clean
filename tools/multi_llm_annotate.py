@@ -31,11 +31,11 @@ PROGRESS_PATH = BASE / "data/gjb_438c/data_assets/srs_qa_v3/multi_llm_progress.j
 
 # API配置
 KIMI_URL = "https://api.moonshot.cn/v1/chat/completions"
-KIMI_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY
 KIMI_MODEL = "kimi-k2.6"
 
 WQ_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/chat/completions"
-WQ_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as WQ_KEY
 CLAUDE_MODEL = "ep-5zazxj-1770439257299735491"
 GLM_MODEL = "ep-glsztk-1778496696841467392"
 
@@ -407,7 +407,7 @@ def main():
     k_g = cohen_kappa(kimi_anns, glm_anns)
     c_g = cohen_kappa(claude_anns, glm_anns)
     
-    print(f"\nLLM间Cohen's κ:")
+    print("\nLLM间Cohen's κ:")
     print(f"  kimi vs claude: κ={k_c:.4f}")
     print(f"  kimi vs glm:    κ={k_g:.4f}")
     print(f"  claude vs glm:  κ={c_g:.4f}")

@@ -1,0 +1,141 @@
+{
+ "protocol": "49 span-grounded extraction: viewer ✓/✗ annotation evaluation",
+ "span_types": [
+  "identifier",
+  "quantity_unit",
+  "predicate",
+  "modal",
+  "negative",
+  "reference"
+ ],
+ "min_sample": 50,
+ "target_precision": 0.9,
+ "n_records": 20,
+ "record_status_counts": {
+  "invalid_verdict": 1,
+  "ok": 18,
+  "unknown_type": 1
+ },
+ "unknown_type_counts": {
+  "subject": 1
+ },
+ "dedup": {
+  "n_keys": 17,
+  "n_duplicate_events": 0,
+  "n_reannotated_keys": 1,
+  "n_conflicting_keys": 1,
+  "n_dropped": 1
+ },
+ "n_evaluated": 17,
+ "overall": {
+  "n": 17,
+  "n_correct": 14,
+  "n_incorrect": 3,
+  "precision": 0.8235,
+  "ci95": [
+   0.5897,
+   0.9381
+  ],
+  "sufficiency": "insufficient",
+  "target_met": false,
+  "ci_lower_meets_target": false
+ },
+ "by_type": {
+  "identifier": {
+   "n": 5,
+   "n_correct": 4,
+   "n_incorrect": 1,
+   "precision": 0.8,
+   "ci95": [
+    0.3755,
+    0.9638
+   ],
+   "sufficiency": "insufficient",
+   "target_met": false,
+   "ci_lower_meets_target": false
+  },
+  "quantity_unit": {
+   "n": 5,
+   "n_correct": 4,
+   "n_incorrect": 1,
+   "precision": 0.8,
+   "ci95": [
+    0.3755,
+    0.9638
+   ],
+   "sufficiency": "insufficient",
+   "target_met": false,
+   "ci_lower_meets_target": false
+  },
+  "predicate": {
+   "n": 3,
+   "n_correct": 2,
+   "n_incorrect": 1,
+   "precision": 0.6667,
+   "ci95": [
+    0.2077,
+    0.9385
+   ],
+   "sufficiency": "insufficient",
+   "target_met": false,
+   "ci_lower_meets_target": false
+  },
+  "modal": {
+   "n": 2,
+   "n_correct": 2,
+   "n_incorrect": 0,
+   "precision": 1.0,
+   "ci95": [
+    0.3424,
+    1.0
+   ],
+   "sufficiency": "insufficient",
+   "target_met": true,
+   "ci_lower_meets_target": false
+  },
+  "negative": {
+   "n": 1,
+   "n_correct": 1,
+   "n_incorrect": 0,
+   "precision": 1.0,
+   "ci95": [
+    0.2065,
+    1.0
+   ],
+   "sufficiency": "insufficient",
+   "target_met": true,
+   "ci_lower_meets_target": false
+  },
+  "reference": {
+   "n": 1,
+   "n_correct": 1,
+   "n_incorrect": 0,
+   "precision": 1.0,
+   "ci95": [
+    0.2065,
+    1.0
+   ],
+   "sufficiency": "insufficient",
+   "target_met": true,
+   "ci_lower_meets_target": false
+  }
+ },
+ "insufficient_types": [
+  "identifier",
+  "quantity_unit",
+  "predicate",
+  "modal",
+  "negative",
+  "reference"
+ ],
+ "notes": [
+  "指标边界: span precision只测已高亮span的正确率(抽取层), 不含recall(未高亮文本不在分母), 不裁决关系层对齐(48号gold-proxy独立, 两层互推禁止)。",
+  "统计: Wilson score interval(z=1.959963984540054, 95%双侧)自实现无scipy; 每类型样本量门槛>=50条标注。",
+  "合并规则: 同(span_text, span_type, block_index)以ts最新为准; 精确重复与verdict冲突单独计数, 不静默丢弃任何记录。",
+  "样本量不足(insufficient)类型的precision仅作过程监控, 不进入论文结论。"
+ ],
+ "conclusion": "总体span precision = 14/17 = 0.8235, Wilson 95% CI [0.5897, 0.9381], 目标>=0.9: 未达标。样本不足(<50)的类型: identifier, quantity_unit, predicate, modal, negative, reference。",
+ "annotation_files": {
+  "C:\\Users\\12488\\AppData\\Local\\Temp\\opencode\\span_annotations_demo.json": 20
+ }
+}

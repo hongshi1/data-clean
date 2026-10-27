@@ -1,0 +1,1526 @@
+[
+ {
+  "qid": "srs_trusted_train_01701",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_001",
+  "question": "请帮我核对一下，文档{image}和{table}中关于这个用例的名称描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01702",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_001",
+  "question": "我查看了{image}中的开发工程用例，并对照{table}的开发工程生成用例描述，发现功能名称写的是\"名称\"，这个描述是否准确？文档前后有没有不一致的地方？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。{image}中的用例与{table}的描述相互对应，功能名称的表述在文档中没有矛盾之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01703",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_001",
+  "question": "我在核对{table}开发工程生成用例描述和{text}正文描述时，发现表格里列出了14个功能，但正文中好像只提到了13个功能。请问这两者是否一致？是不是漏了哪个功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不一致。表格列出14个功能，但正文只提到13个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "14个功能",
+   "injected": "13个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出14个功能，但正文只提到13个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01704",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_001",
+  "question": "请问在{image}图6的开发工程用例和{table}表4的开发工程生成用例描述中，功能名称这一栏的表述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_001/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。{table}表4中功能名称字段与{image}图6开发工程用例的相关描述相互对应，没有矛盾之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "02界面集成框架软件需求规格说明-终稿",
+   "section": "1.8.1.1",
+   "image_caption": "图 6开发工程用例",
+   "table_caption": "表4 开发工程生成用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01705",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_002",
+  "question": "我在核对文档时，发现{table}里有个字段叫\"名称\"，类型标注的是\"func_name\"。这个字段的命名和类型定义在文档里前后一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01706",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_002",
+  "question": "我在看{image}这个数据库关闭用例图，里面有个功能叫\"名称\"，想确认一下文档里对这个功能的描述前后是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01707",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_002",
+  "question": "请帮我核对一下{table}中的功能列表和正文描述是否一致？表格里是不是列出了7个功能，但正文实际只提到了6个？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "不一致。表格列出7个功能，但正文只提到6个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "7个功能",
+   "injected": "6个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出7个功能，但正文只提到6个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01708",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_002",
+  "question": "请帮我核对一下，在{image}这个数据库关闭用例图中，对应的功能名称是不是就是\"名称\"？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_002/text.txt"
+  },
+  "modalities": [
+   "image"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "04数据统一访问服务软件需求规格说明-终稿",
+   "section": "3.2.1.1.1.4",
+   "image_caption": "图 8数据库关闭用例图",
+   "table_caption": ""
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01709",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_003",
+  "question": "我查看了{image}中的基础数据录入用例图，并对照{table}的人员数据录入用例描述，发现用例名称写的是\"人员数据录入\"。但文档里另一处提到这个功能时，好像用的表述不太一样。请问这个用例的名称在整份文档中是否统一？是否存在前后不一致的情况？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。{table}中明确将用例名称定义为\"人员数据录入\"，与{image}基础数据录入用例图中的表述相互对应，文档各处关于该功能的命名保持统一，不存在前后不一致的情况。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01710",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_003",
+  "question": "我在看文档《08数据运行维护管理工具软件需求规格说明-终稿》的3.2.3.1.1节，里面有{image}和{table}，想确认一下：表22里描述的人员数据录入用例，它的名称是不是就叫\"人员数据录入\"？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。表22人员数据录入用例描述中的名称与用例本身相符，文档前后没有矛盾。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01711",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_003",
+  "question": "我对比了{table}中的人员数据录入用例描述和{text}相关内容，发现表格里列出了8个功能项，但正文描述好像只提到了7个，是不是漏了「后置条件」这个功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不一致。表格列出8个功能，但正文只提到7个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "8个功能",
+   "injected": "7个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出8个功能，但正文只提到7个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_train_01712",
+  "scene": "sc7_usecase_usecase",
+  "split": "train",
+  "pair_id": "7_003",
+  "question": "请帮我核对一下，{table}表22中人员数据录入用例的名称，与{image}图7基础数据录入用例图以及{text}3.2.3.1.1章节描述的内容是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_003/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "一致。文档内容一致，无不一致。表22中的人员数据录入用例名称与图7基础数据录入用例图及章节描述内容相符，不存在不一致的情况。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "08数据运行维护管理工具软件需求规格说明-终稿",
+   "section": "3.2.3.1.1",
+   "image_caption": "图 7基础数据录入用例图",
+   "table_caption": "表 22人员数据录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01713",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_004",
+  "question": "请帮我核对一下，文档中关于这个音频文件生成和存储功能的名称，在图6的流程图和表5的用例描述里是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [],
+  "answer": "一致。文档内容一致，无不一致。图6音频文件生成和存储用例流程图与表5音频文件生成和存储用例描述中，该功能的名称表述相互吻合，没有发现不一致之处。",
+  "answer_modality": "text",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01714",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_004",
+  "question": "我查看了{image}中的音频文件生成和存储用例流程图，以及{table}里的用例描述，发现表格中写的功能名称和流程图里的用例名称好像不完全一样，这个算不算文档不一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。经过核对，{table}中功能名称与{image}中的用例名称是匹配的，不存在不一致的情况。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01715",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_004",
+  "question": "请帮我核对一下{table}中的功能描述是否完整。我注意到表格里列出了几个功能项，但和正文描述的功能数量好像对不上？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "9个功能",
+   "injected": "8个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01716",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_004",
+  "question": "帮我看看{table}和{image}里的内容是不是一致的？{table}是音频文件生成和存储用例描述，{image}是音频文件生成和存储用例流程图，都来自文档11语音综合处理软件需求规格说明的3.2章节。",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_004/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。表5中的用例描述与图6的流程图在功能名称、处理流程等关键信息上相互对应，没有发现矛盾或冲突的地方。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图6 音频文件生成和存储用例流程图",
+   "table_caption": "表 5音频文件生成和存储用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01717",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_005",
+  "question": "我在核对文档时发现，{table}里语音播报用例的名称，和{image}图7流程图对应的用例名称是不是同一个？有没有不一致的地方？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。{table}中的用例名称与{image}图7语音播报用例流程图所描述的用例完全对应，没有不一致之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01718",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_005",
+  "question": "我在核对文档时，发现{table}里语音播报用例的\"名称\"字段，和{image}图7语音播报用例流程图里的功能名称好像是对应的，能帮忙确认一下这两者是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01719",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_005",
+  "question": "请帮我核对一下{table}中语音播报用例描述的功能完整性。我看到表格里列出了8个功能项，但文档正文部分好像只提到了7个，是不是漏了哪个功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "不一致。表格列出8个功能，但正文只提到7个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "8个功能",
+   "injected": "7个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出8个功能，但正文只提到7个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01720",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_005",
+  "question": "我查看了文档《11语音综合处理软件需求规格说明-终稿》第3.2节中的{image}图7 语音播报用例流程图，以及{table}表6 语音播报用例描述，发现表6里有个字段叫\"名称\"，标注的类型是func_name。请问这个用例名称在流程图和用例描述表中是否存在不一致的地方？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_005/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。图7的语音播报用例流程图与表6的语音播报用例描述相互吻合，表6中\"名称\"字段的类型标注为func_name也与文档整体规范保持一致，未发现任何矛盾或冲突之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图7 语音播报用例流程图",
+   "table_caption": "表6 语音播报用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01721",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_006",
+  "question": "我在看文档{image}里的语音设置用例流程图，和{table}的用例描述对比时，发现描述里写的功能名称是\"名称\"，这个和流程图里的内容能对上吗？整个文档有没有前后不一致的地方？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。流程图与表格描述相互吻合，没有发现矛盾之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01722",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_006",
+  "question": "我在看{image}图8的语音设置用例流程图，和{table}表7的用例描述，想确认一下表7里写的功能名称是不是就是\"名称\"？这两个地方有没有矛盾？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。表7中功能名称确实为\"名称\"，与图8的语音设置用例流程图相互对应，没有不一致的地方。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01723",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_006",
+  "question": "我对比了{table}语音设置用例描述和{text}相关正文内容，发现表格里列了9个功能项，但正文描述好像只提到了8个，是不是漏了「后置条件」这个功能？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "table",
+   "text"
+  ],
+  "answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "9个功能",
+   "injected": "8个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01724",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_006",
+  "question": "我查看文档《11语音综合处理软件需求规格说明-终稿》第3.2章时，发现{image}中的图8语音设置用例流程图和{table}中的表7语音设置用例描述，这两个地方对用例名称的表述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_006/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。图8语音设置用例流程图与表7语音设置用例描述中关于该功能模块的命名信息相互吻合，不存在矛盾或差异。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图 8语音设置用例流程图",
+   "table_caption": "表7 语音设置用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01725",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_007",
+  "question": "我在核对需求文档时，发现{table}里写的用例名称和{text}章节中图{image}的标题都是\"语音录入\"，但我不确定两者描述的是不是同一个功能，能帮我确认一下文档前后是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table",
+   "text"
+  ],
+  "answer": "一致。文档内容一致，无不一致。{table}中的用例名称与{text}章节{image}的流程图标题相互对应，均指向同一\"语音录入\"功能，不存在不一致之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01726",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_007",
+  "question": "我在看{image}语音录入用例流程图和{table}语音录入用例描述时，发现表9里有个字段叫\"名称\"，这个字段的含义在流程图和表格里有没有矛盾的地方？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。流程图与用例描述表中\"名称\"字段的表述相互吻合，没有发现矛盾之处。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01727",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_007",
+  "question": "我核对了一下文档中的{table}语音录入用例描述，发现表格里列出的功能项和正文描述的功能数量好像对不上，能帮我确认一下是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "不一致。表格列出12个功能，但正文只提到11个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "12个功能",
+   "injected": "11个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出12个功能，但正文只提到11个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01728",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_007",
+  "question": "我在看文档《11语音综合处理软件需求规格说明-终稿》第3.2节的图11语音录入用例流程图和表9语音录入用例描述，发现表里有个\"名称\"字段，想确认一下这个用例的名称在流程图和表格里描述的是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_007/text.txt"
+  },
+  "modalities": [],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "text",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图11 语音录入用例流程图",
+   "table_caption": "表9 语音录入用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01729",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_008",
+  "question": "请帮我核对一下，{table}中离线语音识别用例的名称，和{image}里离线语音识别用例流程图描述的功能是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01730",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_008",
+  "question": "我在看文档11语音综合处理软件需求规格说明-终稿的3.2章节，{image}是图12离线语音识别用例流程图，{table}是表10离线语音识别用例描述。表10里写的用例名称和图12流程图里的功能名称是不是一致的？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。表10离线语音识别用例描述中的名称与图12离线语音识别用例流程图的功能名称相互对应，没有不一致的情况。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01731",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_008",
+  "question": "请帮我核对一下{table}中的功能完整性。我看到表格里列出了离线语音识别的各项功能，但和正文描述的数量似乎对不上？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "table"
+  ],
+  "answer": "不一致。表格列出25个功能，但正文只提到24个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "25个功能",
+   "injected": "24个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出25个功能，但正文只提到24个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01732",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_008",
+  "question": "我查看了{image}中的离线语音识别用例流程图，也看了{table}的用例描述，想确认一下这两个地方对功能名称的描述是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_008/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图12 离线语音识别用例流程图",
+   "table_caption": "表 10离线语音识别用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01733",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_009",
+  "question": "我在核对文档中关于文本规范化功能的描述时，发现{table}表11里写的用例名称和{image}图13流程图里的功能名称好像有点对不上，您能帮我确认一下这两个地方是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "经过仔细核对，两处内容是一致的。表11文本规范化用例描述中的名称与图13文本规范化用例流程图所描述的功能完全对应，文档内容一致，没有不一致的地方。",
+  "answer_modality": "table",
+  "inconsistency_type": "terminology",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "TERM-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01734",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_009",
+  "question": "我在核对需求文档时发现，表11里写的文本规范化用例名称和图13流程图里的标注好像不完全一样，您能帮我确认一下这两个地方关于用例名称的描述是否一致吗？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [],
+  "answer": "一致。文档内容一致，无不一致。表11文本规范化用例描述中的名称与图13文本规范化用例流程图中的对应信息相互吻合，不存在不一致的情况。",
+  "answer_modality": "text",
+  "inconsistency_type": "business_logic",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "LOGIC-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01735",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_009",
+  "question": "我在核对文档「11语音综合处理软件需求规格说明-终稿」第3.2节的{table}和{image}时，发现表11「文本规范化用例描述」里列出的功能项，和正文描述的功能数量对不上。表格里好像有9个功能，但正文流程里只提到了8个，是不是漏了「后置条件」这个功能的描述？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+  "answer_modality": "table",
+  "inconsistency_type": "business_logic",
+  "subtype": "L3",
+  "label": "inconsistent",
+  "is_injected": true,
+  "inject_detail": "func_missing['后置条件']",
+  "rule_id": "LOGIC-001",
+  "context_note": "注入场景: 原始文档未修改, inject_detail描述假设引入的错误",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": {
+   "method_id": "L3",
+   "method": "func_missing['后置条件']",
+   "original": "9个功能",
+   "injected": "8个功能(缺'后置条件')",
+   "correct_answer": "不一致。表格列出9个功能，但正文只提到8个，缺少功能「后置条件」。",
+   "difficulty": "medium"
+  },
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "medium",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ },
+ {
+  "qid": "srs_trusted_dev_01736",
+  "scene": "sc7_usecase_usecase",
+  "split": "dev",
+  "pair_id": "7_009",
+  "question": "我查看了文档中关于文本规范化功能的描述，{table}里写的用例名称和{image}流程图中的功能名称是否一致？",
+  "placeholders": {
+   "image": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/image.png",
+   "table": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/table.csv",
+   "text": "data/gjb_438c/pair_dataset/sc7_usecase_usecase/7_009/text.txt"
+  },
+  "modalities": [
+   "image",
+   "table"
+  ],
+  "answer": "一致。文档内容一致，无不一致。",
+  "answer_modality": "table",
+  "inconsistency_type": "gjb_compliance",
+  "subtype": "consistency_check",
+  "label": "consistent",
+  "is_injected": false,
+  "inject_detail": "",
+  "rule_id": "GJB-001",
+  "context_note": "",
+  "fact": {
+   "type": "func_name",
+   "value": "名称",
+   "id": null,
+   "source": "table"
+  },
+  "injection": null,
+  "evidence": {
+   "doc": "11语音综合处理软件需求规格说明-终稿",
+   "section": "3.2",
+   "image_caption": "图13 文本规范化用例流程图",
+   "table_caption": "表11 文本规范化用例描述"
+  },
+  "difficulty": "easy",
+  "source": "fact_extracted+rule_injected+llm_rewritten",
+  "verified": false
+ }
+]

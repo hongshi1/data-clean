@@ -15,7 +15,6 @@ M2.5: 锚点-pair重对齐 (跨通道实体对齐)
 """
 import json
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
@@ -114,7 +113,7 @@ def main():
             print(f"  {label:24s}: {n}")
     # 修复明细
     if n_changed:
-        print(f"\n  重对齐明细(前12):")
+        print("\n  重对齐明细(前12):")
         for pk, r in results.items():
             if r['status'] == 'realigned':
                 print(f"    {pk}: score={r.get('align_score')} "

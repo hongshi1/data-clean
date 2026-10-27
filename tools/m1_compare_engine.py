@@ -32,7 +32,7 @@ PAIR_DIR = BASE / "data/gjb_438c/pair_dataset/sc2_flowchart_usecase"
 OUT_PATH = BASE / "data/gjb_438c/anchor_sc2/tier1_discrepancies.json"
 
 EMB_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/embeddings"
-EMB_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as EMB_KEY
 EMB_MODEL = "ep-qrkeon-1785654358657880827"
 EMB_CACHE_PATH = BASE / "data/gjb_438c/anchor_sc2/emb_cache.pkl"
 EMB_TH = 0.62  # embedding余弦匹配阈值
@@ -536,7 +536,7 @@ def main():
         sc = sorted(per_pair_counts)
         print(f"  每对分歧数: min{sc[0]} 中位{sc[n_ok//2]} max{sc[-1]} "
               f"均值{sum(sc)/n_ok:.1f}")
-    print(f"\n  分歧类型分布 (drift候选):")
+    print("\n  分歧类型分布 (drift候选):")
     for dt, c in sorted(stats.items(), key=lambda x: -x[1]):
         print(f"    {dt:18s}: {c}")
 

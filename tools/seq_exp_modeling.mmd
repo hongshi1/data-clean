@@ -1,0 +1,17 @@
+sequenceDiagram
+    autonumber
+    participant PRE as 标准化预处理智能体
+    participant EX as 设计经验结构化建模智能体<br/>经验知识抽取
+    participant FMT as 知识形式化
+    participant KG as 知识图谱构建
+    participant KB as 知识库
+    participant DS as 微调数据集
+
+    PRE->>EX: 标准化业务数据
+    EX->>EX: 抽取领域规范/评审意见中的准则与约束
+    EX->>FMT: 抽取的准则与约束
+    FMT->>FMT: 转化为结构化规则(条件-结论/约束表达式)
+    FMT->>KG: 结构化规则
+    KG->>KG: 构建实体-属性-关系知识图谱
+    KG->>KB: 写入结构化知识
+    KB-->>DS: 提供结构化知识(供数据集构建)

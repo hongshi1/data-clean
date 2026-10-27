@@ -1,0 +1,28 @@
+{
+ "angle_matrix": "runs/angle_method_matrix.json (13角度×4方法)",
+ "real_gold_296": {
+  "fixed_router": {
+   "F1": 0.798,
+   "P": 0.675,
+   "R": 0.975
+  },
+  "oracle": {
+   "F1": 0.788
+  },
+  "best_single_v6": {
+   "F1": 0.769
+  }
+ },
+ "implementation": "algorithms/srs_calib.py mode=multi-angle (meta驱动)",
+ "model_dist": {
+  "v6": 180,
+  "v8": 75,
+  "mdeberta": 34,
+  "v9": 7
+ },
+ "findings": [
+  "无单一检测器全角度最优(检测器异质性是本质的)",
+  "元数据路由=免费增益(+0.03 F1, 全项目最佳0.798)",
+  "doc02步骤角度mDeBERTa唯一可行(0.522 vs 微调模型0.17-0.33)"
+ ]
+}

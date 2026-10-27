@@ -1,0 +1,611 @@
+{
+ "configs": {
+  "A1-native": {
+   "method": "frozen BGE cosine (vectors.npz), no training",
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.8169,
+    "precision": 0.8898,
+    "recall": 0.4487,
+    "f1": 0.5966,
+    "false_merge_rate": 0.0501,
+    "threshold": 0.9008
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.8774,
+    "precision": 0.9458,
+    "recall": 0.4274,
+    "f1": 0.5887,
+    "false_merge_rate": 0.0198,
+    "threshold": 0.9008
+   }
+  },
+  "A3-projection": {
+   "method": "shared projection head, InfoNCE + identity boundary",
+   "loss": "infonce_plus_identity_boundary",
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.8539,
+    "precision": 0.8991,
+    "recall": 0.4924,
+    "f1": 0.6363,
+    "false_merge_rate": 0.0498,
+    "threshold": 0.742
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9193,
+    "precision": 0.9484,
+    "recall": 0.4385,
+    "f1": 0.5997,
+    "false_merge_rate": 0.0193,
+    "threshold": 0.742
+   },
+   "history": [
+    {
+     "epoch": 1,
+     "infonce": 3.8974,
+     "boundary": 0.6817
+    },
+    {
+     "epoch": 2,
+     "infonce": 3.5419,
+     "boundary": 0.438
+    },
+    {
+     "epoch": 3,
+     "infonce": 3.4849,
+     "boundary": 0.365
+    },
+    {
+     "epoch": 4,
+     "infonce": 3.469,
+     "boundary": 0.3152
+    },
+    {
+     "epoch": 5,
+     "infonce": 3.451,
+     "boundary": 0.2689
+    },
+    {
+     "epoch": 6,
+     "infonce": 3.4365,
+     "boundary": 0.2487
+    },
+    {
+     "epoch": 7,
+     "infonce": 3.4334,
+     "boundary": 0.2269
+    },
+    {
+     "epoch": 8,
+     "infonce": 3.4368,
+     "boundary": 0.221
+    },
+    {
+     "epoch": 9,
+     "infonce": 3.4255,
+     "boundary": 0.2025
+    },
+    {
+     "epoch": 10,
+     "infonce": 3.4236,
+     "boundary": 0.1836
+    },
+    {
+     "epoch": 11,
+     "infonce": 3.429,
+     "boundary": 0.1796
+    },
+    {
+     "epoch": 12,
+     "infonce": 3.4275,
+     "boundary": 0.1707
+    },
+    {
+     "epoch": 13,
+     "infonce": 3.422,
+     "boundary": 0.1602
+    },
+    {
+     "epoch": 14,
+     "infonce": 3.4176,
+     "boundary": 0.1495
+    },
+    {
+     "epoch": 15,
+     "infonce": 3.4228,
+     "boundary": 0.1479
+    },
+    {
+     "epoch": 16,
+     "infonce": 3.4147,
+     "boundary": 0.1353
+    },
+    {
+     "epoch": 17,
+     "infonce": 3.4116,
+     "boundary": 0.1316
+    },
+    {
+     "epoch": 18,
+     "infonce": 3.4151,
+     "boundary": 0.1269
+    },
+    {
+     "epoch": 19,
+     "infonce": 3.416,
+     "boundary": 0.1254
+    },
+    {
+     "epoch": 20,
+     "infonce": 3.4157,
+     "boundary": 0.1174
+    }
+   ]
+  },
+  "A4-projection-gate-clean": {
+   "method": "A3 projected cosine fused with structural gate (alpha=0.7); identifier_match=forced False",
+   "role": "paper main row",
+   "identifier_match_used": false,
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.8305,
+    "precision": 0.8919,
+    "recall": 0.4584,
+    "f1": 0.6056,
+    "false_merge_rate": 0.0501,
+    "threshold": 0.597
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9114,
+    "precision": 0.9542,
+    "recall": 0.4221,
+    "f1": 0.5853,
+    "false_merge_rate": 0.0164,
+    "threshold": 0.597
+   }
+  },
+  "A4-projection-gate-leak": {
+   "method": "A3 projected cosine fused with structural gate (alpha=0.7); identifier_match=enabled",
+   "role": "oracle upper bound (label leakage)",
+   "identifier_match_used": true,
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.968,
+    "precision": 0.9363,
+    "recall": 0.8163,
+    "f1": 0.8722,
+    "false_merge_rate": 0.0501,
+    "threshold": 0.597
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9825,
+    "precision": 0.9722,
+    "recall": 0.7075,
+    "f1": 0.819,
+    "false_merge_rate": 0.0164,
+    "threshold": 0.597
+   }
+  },
+  "C2-infonce-only": {
+   "method": "shared projection head, InfoNCE only (boundary_weight=0)",
+   "loss": "infonce_only",
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.8423,
+    "precision": 0.8992,
+    "recall": 0.493,
+    "f1": 0.6369,
+    "false_merge_rate": 0.0498,
+    "threshold": 0.7867
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9063,
+    "precision": 0.9506,
+    "recall": 0.4398,
+    "f1": 0.6013,
+    "false_merge_rate": 0.0185,
+    "threshold": 0.7867
+   },
+   "history": [
+    {
+     "epoch": 1,
+     "infonce": 3.8932,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 2,
+     "infonce": 3.5381,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 3,
+     "infonce": 3.4913,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 4,
+     "infonce": 3.4587,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 5,
+     "infonce": 3.4505,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 6,
+     "infonce": 3.4412,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 7,
+     "infonce": 3.4344,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 8,
+     "infonce": 3.4235,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 9,
+     "infonce": 3.4227,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 10,
+     "infonce": 3.427,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 11,
+     "infonce": 3.4166,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 12,
+     "infonce": 3.4194,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 13,
+     "infonce": 3.4089,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 14,
+     "infonce": 3.4118,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 15,
+     "infonce": 3.4168,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 16,
+     "infonce": 3.4151,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 17,
+     "infonce": 3.4132,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 18,
+     "infonce": 3.411,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 19,
+     "infonce": 3.4156,
+     "boundary": 0.0
+    },
+    {
+     "epoch": 20,
+     "infonce": 3.4069,
+     "boundary": 0.0
+    }
+   ]
+  },
+  "C3-boundary-only": {
+   "method": "shared projection head, identity boundary term only (margin penalty on all train negatives per epoch; positives unused)",
+   "loss": "boundary_only",
+   "dev": {
+    "n_pairs": 6947,
+    "auc": 0.8401,
+    "precision": 0.8972,
+    "recall": 0.4851,
+    "f1": 0.6298,
+    "false_merge_rate": 0.0501,
+    "threshold": 0.7131
+   },
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9155,
+    "precision": 0.9656,
+    "recall": 0.4215,
+    "f1": 0.5868,
+    "false_merge_rate": 0.0122,
+    "threshold": 0.7131
+   },
+   "history": [
+    {
+     "epoch": 1,
+     "infonce": 0.0,
+     "boundary": 0.5309
+    },
+    {
+     "epoch": 2,
+     "infonce": 0.0,
+     "boundary": 0.2432
+    },
+    {
+     "epoch": 3,
+     "infonce": 0.0,
+     "boundary": 0.1804
+    },
+    {
+     "epoch": 4,
+     "infonce": 0.0,
+     "boundary": 0.1489
+    },
+    {
+     "epoch": 5,
+     "infonce": 0.0,
+     "boundary": 0.1277
+    },
+    {
+     "epoch": 6,
+     "infonce": 0.0,
+     "boundary": 0.1129
+    },
+    {
+     "epoch": 7,
+     "infonce": 0.0,
+     "boundary": 0.1011
+    },
+    {
+     "epoch": 8,
+     "infonce": 0.0,
+     "boundary": 0.0919
+    },
+    {
+     "epoch": 9,
+     "infonce": 0.0,
+     "boundary": 0.085
+    },
+    {
+     "epoch": 10,
+     "infonce": 0.0,
+     "boundary": 0.0789
+    },
+    {
+     "epoch": 11,
+     "infonce": 0.0,
+     "boundary": 0.0742
+    },
+    {
+     "epoch": 12,
+     "infonce": 0.0,
+     "boundary": 0.0693
+    },
+    {
+     "epoch": 13,
+     "infonce": 0.0,
+     "boundary": 0.0646
+    },
+    {
+     "epoch": 14,
+     "infonce": 0.0,
+     "boundary": 0.0606
+    },
+    {
+     "epoch": 15,
+     "infonce": 0.0,
+     "boundary": 0.0576
+    },
+    {
+     "epoch": 16,
+     "infonce": 0.0,
+     "boundary": 0.0538
+    },
+    {
+     "epoch": 17,
+     "infonce": 0.0,
+     "boundary": 0.0517
+    },
+    {
+     "epoch": 18,
+     "infonce": 0.0,
+     "boundary": 0.0488
+    },
+    {
+     "epoch": 19,
+     "infonce": 0.0,
+     "boundary": 0.0472
+    },
+    {
+     "epoch": 20,
+     "infonce": 0.0,
+     "boundary": 0.0453
+    }
+   ]
+  },
+  "B1-late-interaction": {
+   "method": "BGE token-level IDF-weighted MaxSim (anchor->candidate)",
+   "training": "none",
+   "threshold_source": "test negative 95th percentile (in-fold; see notes)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.8479,
+    "precision": 0.9011,
+    "recall": 0.5622,
+    "f1": 0.6924,
+    "false_merge_rate": 0.0499,
+    "threshold": 0.866
+   },
+   "n_test_pairs": 6848,
+   "n_test_sides": 13696,
+   "n_unique_test_texts_encoded": 646,
+   "idf_corpus_documents": 2425,
+   "idf_train_texts_available": 1779,
+   "idf_train_texts_sampled": 1779,
+   "idf_train_sample_target": 5000,
+   "bge_mode": "cuda",
+   "bge_device": "cuda",
+   "bge_dim": 1024,
+   "token_max_length": 256,
+   "score_direction": "anchor(query)->candidate(document), IDF-weighted MaxSim"
+  },
+  "D-calibration": {
+   "method": "temperature scaling of A3 scores; tau fit on dev NLL (grid 0.05..5.0, coarse 200 + fine 41)",
+   "base": "A3-projection",
+   "tau": 0.997714,
+   "dev_nll_tau1": 0.65057,
+   "dev_nll_tau": 0.65057,
+   "ece_before": 0.2662,
+   "ece_after": 0.266,
+   "brier_before": 0.2095,
+   "brier_after": 0.2094,
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.9193,
+    "precision": 0.9484,
+    "recall": 0.4385,
+    "f1": 0.5997,
+    "false_merge_rate": 0.0193,
+    "threshold": 0.6778
+   }
+  }
+ },
+ "summary_table": "| config | AUC | F1 | precision | recall | false_merge_rate | threshold | extra |\n|---|---:|---:|---:|---:|---:|---:|---|\n| A1-native | 0.8774 | 0.5887 | 0.9458 | 0.4274 | 0.0198 | 0.9008 |  |\n| A3-projection | 0.9193 | 0.5997 | 0.9484 | 0.4385 | 0.0193 | 0.742 |  |\n| A4-projection-gate-clean | 0.9114 | 0.5853 | 0.9542 | 0.4221 | 0.0164 | 0.597 |  |\n| A4-projection-gate-leak | 0.9825 | 0.8190 | 0.9722 | 0.7075 | 0.0164 | 0.597 | oracle upper bound (identifier leak) |\n| B1-late-interaction | 0.8479 | 0.6924 | 0.9011 | 0.5622 | 0.0499 | 0.866 | threshold in-fold (test negatives); AUC comparable |\n| C2-infonce-only | 0.9063 | 0.6013 | 0.9506 | 0.4398 | 0.0185 | 0.7867 |  |\n| C3-boundary-only | 0.9155 | 0.5868 | 0.9656 | 0.4215 | 0.0122 | 0.7131 |  |\n| D-calibration | 0.9193 | 0.5997 | 0.9484 | 0.4385 | 0.0193 | 0.6778 | ECE 0.2662->0.2660, Brier 0.2095->0.2094, tau 0.997714 |",
+ "summary_rows": [
+  {
+   "config": "A1-native",
+   "auc": 0.8774,
+   "f1": 0.5887,
+   "precision": 0.9458,
+   "recall": 0.4274,
+   "false_merge_rate": 0.0198,
+   "threshold": 0.9008,
+   "n_pairs": 6848,
+   "description": "frozen BGE cosine, no training"
+  },
+  {
+   "config": "A3-projection",
+   "auc": 0.9193,
+   "f1": 0.5997,
+   "precision": 0.9484,
+   "recall": 0.4385,
+   "false_merge_rate": 0.0193,
+   "threshold": 0.742,
+   "n_pairs": 6848,
+   "description": "InfoNCE + identity boundary (full loss)"
+  },
+  {
+   "config": "A4-projection-gate-clean",
+   "auc": 0.9114,
+   "f1": 0.5853,
+   "precision": 0.9542,
+   "recall": 0.4221,
+   "false_merge_rate": 0.0164,
+   "threshold": 0.597,
+   "n_pairs": 6848,
+   "description": "A3 + structural gate, identifier forced False (paper main row)"
+  },
+  {
+   "config": "A4-projection-gate-leak",
+   "auc": 0.9825,
+   "f1": 0.819,
+   "precision": 0.9722,
+   "recall": 0.7075,
+   "false_merge_rate": 0.0164,
+   "threshold": 0.597,
+   "n_pairs": 6848,
+   "description": "A3 + gate with identifier_match (oracle, label leakage)"
+  },
+  {
+   "config": "B1-late-interaction",
+   "auc": 0.8479,
+   "f1": 0.6924,
+   "precision": 0.9011,
+   "recall": 0.5622,
+   "false_merge_rate": 0.0499,
+   "threshold": 0.866,
+   "n_pairs": 6848,
+   "description": "BGE token-level IDF-weighted MaxSim (test only)"
+  },
+  {
+   "config": "C2-infonce-only",
+   "auc": 0.9063,
+   "f1": 0.6013,
+   "precision": 0.9506,
+   "recall": 0.4398,
+   "false_merge_rate": 0.0185,
+   "threshold": 0.7867,
+   "n_pairs": 6848,
+   "description": "projection trained with boundary_weight=0"
+  },
+  {
+   "config": "C3-boundary-only",
+   "auc": 0.9155,
+   "f1": 0.5868,
+   "precision": 0.9656,
+   "recall": 0.4215,
+   "false_merge_rate": 0.0122,
+   "threshold": 0.7131,
+   "n_pairs": 6848,
+   "description": "projection trained with boundary term only"
+  },
+  {
+   "config": "D-calibration",
+   "auc": 0.9193,
+   "f1": 0.5997,
+   "precision": 0.9484,
+   "recall": 0.4385,
+   "false_merge_rate": 0.0193,
+   "threshold": 0.6778,
+   "n_pairs": 6848,
+   "description": "A3 scores + temperature scaling (tau on dev NLL)",
+   "ece_before": 0.2662,
+   "ece_after": 0.266,
+   "brier_before": 0.2095,
+   "brier_after": 0.2094,
+   "tau": 0.997714
+  }
+ ],
+ "a4_leak_vs_clean_delta": {
+  "auc": 0.0711,
+  "f1": 0.2337,
+  "precision": 0.018,
+  "recall": 0.2854,
+  "false_merge_rate": 0.0,
+  "interpretation": "gain attributable to identifier_match alone, i.e. the silver-label shortcut leaked into the gate (negatives are defined as ID-disjoint)"
+ },
+ "notes": {
+  "A4-leak": "oracle upper bound: identifier_match coincides with the silver label by construction (negatives are ID-disjoint pairs); never the paper main row",
+  "paper_main_row": "A4-projection-gate-clean",
+  "B1_test_only": "B1 encodes only test-fold texts (scale control, training-free method); threshold calibrated in-fold on test negatives, so its F1/precision/recall/false-merge are optimistic vs other rows; AUC is threshold-free and comparable; IDF df uses test texts + seeded train-text sample",
+  "gate_feature_limits": "same_doc is constant-true on this within-doc pair set (constant shift, no ranking effect); same_section=False mapped to unknown, not incompatible, because cross-section coreference is legitimate; same_role/same_scope default unknown — the clean gate carries almost no discriminative signal on this silver data",
+  "threshold_protocol": "dev negative-score 95th percentile (B1 exception above)",
+  "D_calibration": "temperature scaling is a strictly monotonic remap: ranking metrics are unchanged (AUC identical by construction; F1 identical up to threshold rounding); only ECE/Brier move",
+  "C3_boundary_only": "boundary-only variant trains on negative pairs only (margin penalty); positives are unused, so no term pulls similar pairs together",
+  "C2_infonce_only": "boundary_weight=0; the dead negative sampling is dropped along with the zero-weight term (identical gradients, faster epochs)",
+  "A3_reference_check": {
+   "archived_run": "train_shared_projection_3408ed57_20261022_073000",
+   "dev_auc_this": 0.8539,
+   "test_auc_this": 0.9193,
+   "dev_auc_archived": 0.8539,
+   "test_auc_archived": 0.9193,
+   "matches_archive": true
+  }
+ }
+}

@@ -1,0 +1,518 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "checkpoint": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\egt_finetuned_v2",
+ "nli_gate": 0.7,
+ "keep_confidence": 0.95,
+ "configs": {
+  "baseline": {
+   "accuracy": 0.8791,
+   "macro_f1": 0.5628,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.1667,
+     "f1": 0.25
+    },
+    "refute": {
+     "precision": 0.75,
+     "recall": 0.375,
+     "f1": 0.5
+    },
+    "not_in_evidence": {
+     "precision": 0.8941,
+     "recall": 0.987,
+     "f1": 0.9383
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 76
+   },
+   "claim_methods": {
+    "semantic_unresolved": 328,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 29,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "l2_nli": {
+   "accuracy": 0.8022,
+   "macro_f1": 0.5437,
+   "per_class": {
+    "support": {
+     "precision": 0.3333,
+     "recall": 0.1667,
+     "f1": 0.2222
+    },
+    "refute": {
+     "precision": 0.3684,
+     "recall": 0.875,
+     "f1": 0.5185
+    },
+    "not_in_evidence": {
+     "precision": 0.942,
+     "recall": 0.8442,
+     "f1": 0.8904
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 2,
+    "refute|support": 2,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 10,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 65
+   },
+   "claim_methods": {
+    "semantic_unresolved": 229,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 103,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "l3_llm": {
+   "accuracy": 0.9011,
+   "macro_f1": 0.7098,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.6364,
+     "recall": 0.875,
+     "f1": 0.7368
+    },
+    "not_in_evidence": {
+     "precision": 0.9481,
+     "recall": 0.9481,
+     "f1": 0.9481
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 3,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 73
+   },
+   "claim_methods": {
+    "semantic_unresolved": 233,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 23,
+    "llm_residual": 101,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "cascade": {
+   "accuracy": 0.8901,
+   "macro_f1": 0.6266,
+   "per_class": {
+    "support": {
+     "precision": 0.3333,
+     "recall": 0.1667,
+     "f1": 0.2222
+    },
+    "refute": {
+     "precision": 0.8333,
+     "recall": 0.625,
+     "f1": 0.7143
+    },
+    "not_in_evidence": {
+     "precision": 0.9146,
+     "recall": 0.974,
+     "f1": 0.9434
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 2,
+    "refute|support": 1,
+    "refute|refute": 5,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 3,
+    "not_in_evidence|not_in_evidence": 75
+   },
+   "claim_methods": {
+    "semantic_unresolved": 239,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 84,
+    "llm_residual": 9,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "cascade_conformal": {
+   "accuracy": 0.8352,
+   "macro_f1": 0.5605,
+   "per_class": {
+    "support": {
+     "precision": 0.3333,
+     "recall": 0.1667,
+     "f1": 0.2222
+    },
+    "refute": {
+     "precision": 0.4286,
+     "recall": 0.75,
+     "f1": 0.5455
+    },
+    "not_in_evidence": {
+     "precision": 0.9324,
+     "recall": 0.8961,
+     "f1": 0.9139
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 2,
+    "refute|support": 2,
+    "refute|refute": 6,
+    "refute|not_in_evidence": 6,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 2,
+    "not_in_evidence|not_in_evidence": 69
+   },
+   "claim_methods": {
+    "semantic_unresolved": 234,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 95,
+    "explicit_quote_polarity": 1,
+    "llm_residual": 3,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  }
+ },
+ "llm_stats": {
+  "baseline": {
+   "invocations": 0,
+   "api_calls": 0,
+   "cache_hits": 0
+  },
+  "l2_nli": {
+   "invocations": 0,
+   "api_calls": 4,
+   "cache_hits": -4
+  },
+  "l3_llm": {
+   "invocations": 85,
+   "api_calls": 135,
+   "cache_hits": -50
+  },
+  "cascade": {
+   "invocations": 15,
+   "api_calls": 15,
+   "cache_hits": 0
+  },
+  "cascade_conformal": {
+   "invocations": 8,
+   "api_calls": 3,
+   "cache_hits": 5
+  }
+ },
+ "cost_quality_table": [
+  {
+   "config": "baseline",
+   "macro_f1": 0.5628,
+   "refute_precision": 0.75,
+   "refute_recall": 0.375,
+   "llm_invocations": 0,
+   "llm_api_calls": 0
+  },
+  {
+   "config": "l2_nli",
+   "macro_f1": 0.5437,
+   "refute_precision": 0.3684,
+   "refute_recall": 0.875,
+   "llm_invocations": 0,
+   "llm_api_calls": 4
+  },
+  {
+   "config": "l3_llm",
+   "macro_f1": 0.7098,
+   "refute_precision": 0.6364,
+   "refute_recall": 0.875,
+   "llm_invocations": 85,
+   "llm_api_calls": 135
+  },
+  {
+   "config": "cascade",
+   "macro_f1": 0.6266,
+   "refute_precision": 0.8333,
+   "refute_recall": 0.625,
+   "llm_invocations": 15,
+   "llm_api_calls": 15
+  },
+  {
+   "config": "cascade_conformal",
+   "macro_f1": 0.5605,
+   "refute_precision": 0.4286,
+   "refute_recall": 0.75,
+   "llm_invocations": 8,
+   "llm_api_calls": 3
+  }
+ ],
+ "cascade_escalation": {
+  "nli_claims_judged": 413,
+  "escalated_claims": 19,
+  "kept_high_confidence_claims": 0,
+  "escalated_instances": [
+   "S1QA-006",
+   "S1QA-007",
+   "S1QA-020",
+   "S1QA-030",
+   "S1QA-033",
+   "S1QA-034",
+   "S1QA-040",
+   "S1QA-044",
+   "S1QA-056",
+   "S1QA-063",
+   "S1QA-067",
+   "S1QA-068",
+   "S1QA-074",
+   "S1QA-076",
+   "S1QA-078"
+  ],
+  "kept_only_instances": [],
+  "instances_with_llm_failure": 0
+ },
+ "cascade_conformal_escalation": {
+  "nli_claims_judged": 413,
+  "escalated_claims": 8,
+  "kept_high_confidence_claims": 11,
+  "escalated_instances": [
+   "S1QA-007",
+   "S1QA-030",
+   "S1QA-033",
+   "S1QA-040",
+   "S1QA-044",
+   "S1QA-068",
+   "S1QA-074",
+   "S1QA-078"
+  ],
+  "kept_only_instances": [
+   "S1QA-006",
+   "S1QA-020",
+   "S1QA-034",
+   "S1QA-056",
+   "S1QA-063",
+   "S1QA-067",
+   "S1QA-076"
+  ],
+  "instances_with_llm_failure": 0
+ },
+ "l2_to_cascade_flips": {
+  "corrected": [
+   {
+    "instance_id": "S1QA-007",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-020",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-030",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "该用例支持从数据库获取大量记录并以矩阵形式返回，同时处理连接失败等情况",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.75,
+      "rationale": "LLM残差判定：ev-2表明查询结果以二维数组（矩阵）形式返回且行数代表记录数，ev-3、ev-5表明处理连接失败/获取失败情况"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-033",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-034",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-040",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-044",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "逐行获取INT值：提供逐行读取整数字段的功能，方便用户处理数值型数据",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：查询数据功能包括逐行获取INT（ev-19），其需求描述为逐行获取INT值（ev-8），与声明一致；'方便用户处理数值型数据'为解释性扩展，不影响判定"
+     },
+     {
+      "claim_text": "逐行获取STRING值：支持逐行读取字符串类型的数据，适用于文本分析和处理任务",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：查询数据功能包括逐行获取STRING（ev-19），需求描述为逐行获取STRING值（ev-2），与声明一致；'适用于文本分析'为解释性扩展"
+     },
+     {
+      "claim_text": "逐行获取LOB值：提供对大型对象（如图像、音频等非结构化数据）的逐行读取功能",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：查询数据功能包括逐行获取LOB（ev-19），需求描述为逐行获取LOB值（ev-14），与声明一致；'图像、音频等非结构化数据'为解释性扩展"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-067",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "SQLite，这是一个轻量级的数据库内核，常用于 mobile 设备或其他资源有限的环境中",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：数据源适配功能描述明确支持在服务器数据库（达梦）和本地数据库（sqlite3）之间切换，sqlite3即SQLite；但'轻量级、mobile设备'等解释性扩展无证据，核心值sqlite3被支持"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-076",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-078",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "如果连接成功，系统会保存连接句柄",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：读取配置文件连接的系统动作明确说明'连接成功则保存连接句柄'，与声明一致。"
+     }
+    ]
+   }
+  ],
+  "regressed": [
+   {
+    "instance_id": "S1QA-068",
+    "silver": "refute",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-074",
+    "silver": "refute",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   }
+  ],
+  "moved": [
+   {
+    "instance_id": "S1QA-006",
+    "silver": "support",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "BLOB数据插入：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：BLOB数据操作功能包括BLOB数据插入（ev-3），其方式名称为平板、桌面（ev-5），运行状态为运行阶段、开发阶段（ev-6），与声明一致。"
+     }
+    ]
+   }
+  ]
+ },
+ "conformal_two_tier": {
+  "kept_tier_ge_keep_confidence": {
+   "n_instances": 7,
+   "n_predicted_refute": 7,
+   "n_correct": 2,
+   "precision": 0.2857
+  },
+  "escalated_tier": {
+   "n_instances": 8,
+   "n_predicted_refute": 3,
+   "n_correct": 1,
+   "precision": 0.3333
+  }
+ },
+ "targets": {
+  "macro_f1_ge_0.75": false,
+  "refute_precision_ge_0.9": false,
+  "llm_invocations_le_30": true
+ }
+}

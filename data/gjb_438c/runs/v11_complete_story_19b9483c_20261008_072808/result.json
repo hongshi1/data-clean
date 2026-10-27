@@ -1,0 +1,31 @@
+{
+ "method": "Qwen2.5-1.5B-Instruct QLoRA SFT(证据条件输入: 表格/图上下文+陈述对→一致判定)",
+ "data": "13.6k平衡(域内5.6k含扩充变异2.8k + PAWS释义难负4k + OCNLI中继4k)",
+ "results": {
+  "srs_anchor_真实48条": {
+   "F1": 0.897,
+   "P": 0.812,
+   "R": 1.0,
+   "注": "全模型最佳"
+  },
+  "canonical_srs_433": {
+   "F1": 0.839,
+   "P": 0.844,
+   "R": 0.835,
+   "注": "P-R平衡(过报警已修复)"
+  },
+  "pair_mutation_58": {
+   "F1": 1.0
+  },
+  "expanded_mut_300": {
+   "P": 1.0,
+   "R": 0.56,
+   "注": "新变异保守"
+  },
+  "z3前置": {
+   "6/6正确": "PARAM确定性求解"
+  }
+ },
+ "training_recipe": "难例负样本(anchor良性+PAWS释义) + 1ep SFT + fp16修复NaN",
+ "fixes": "4bit+bf16→NaN问题用fp16计算精度解决; 349退化变异过滤"
+}

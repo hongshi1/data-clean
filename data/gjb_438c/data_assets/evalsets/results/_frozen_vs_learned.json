@@ -1,0 +1,78 @@
+{
+ "protocol": "冻结骨干论据: 全部可学习组件在该数据规模(~250对)下的负结果链 vs 零训练方法的增益; 依据docs/srs_project/27+runs归档",
+ "rows": [
+  {
+   "method": "冻结基线(无训练)",
+   "train": "—",
+   "protocol": "O1-unit",
+   "eval_R@1": 0.34,
+   "gap": "—",
+   "lesson": "参照系"
+  },
+  {
+   "method": "域适配v1(caption分布)",
+   "train": "1541 caption对",
+   "protocol": "全量训练→deep评测",
+   "eval_R@1": 0.107,
+   "gap": "训练分布≠评测分布",
+   "lesson": "负迁移(−23.3pt)"
+  },
+  {
+   "method": "域适配v2(deep分布,含评测)",
+   "train": "294对(含250/262评测)",
+   "protocol": "全量训练",
+   "eval_R@1": 0.889,
+   "gap": "训练集拟合(不可报告)",
+   "lesson": "上界幻觉, 必须held-out"
+  },
+  {
+   "method": "域适配v3(4折CV)",
+   "train": "250对(3折训练)",
+   "protocol": "训3折测1折",
+   "eval_R@1": 0.199,
+   "gap": "过拟合(−14.1pt vs 基线)",
+   "lesson": "小数据下adapter必过拟合"
+  },
+  {
+   "method": "域适配v4(超参扫描)",
+   "train": "同上",
+   "protocol": "5配置(hidden/ep/reg)CV",
+   "eval_R@1": 0.267,
+   "gap": "最好配置仍低于基线",
+   "lesson": "恒等映射=该函数族最优点"
+  },
+  {
+   "method": "CMSC投影头",
+   "train": "3724对(预训练)",
+   "protocol": "跨折替换BGE",
+   "eval_R@1": 0.34,
+   "gap": "负迁移(默认cmsc_fuse=0)",
+   "lesson": "折内+2.3pt≠泛化增益"
+  },
+  {
+   "method": "BGE-LoRA",
+   "train": "对训练",
+   "protocol": "微调骨干",
+   "eval_R@1": null,
+   "gap": "−4.3pt(含泄漏审计0.49)",
+   "lesson": "微调泄漏风险"
+  },
+  {
+   "method": "UAA聚合器",
+   "train": "warm-start",
+   "protocol": "训练收敛观测",
+   "eval_R@1": null,
+   "gap": "收敛回固定公式",
+   "lesson": "固定聚合器=学习族不动点"
+  },
+  {
+   "method": "冻结+交互侧(最终方法)",
+   "train": "零训练参数",
+   "protocol": "O1+单元聚焦重排",
+   "eval_R@1": 0.486,
+   "gap": "+14.6pt vs 冻结召回",
+   "lesson": "语体鸿沟的正解=交互侧而非训练侧"
+  }
+ ],
+ "claim": "6次独立尝试证明: 军事SRS小数据域中, 任何可训练组件要么负迁移要么过拟合; 唯一有效增益来自交互侧(cross-encoder)与结构设计(单元切分+IDF), 全部零训练"
+}

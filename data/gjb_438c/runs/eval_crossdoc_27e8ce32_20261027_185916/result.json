@@ -1,0 +1,947 @@
+{
+ "benchmark": "crossdoc06_generalization",
+ "evalset": {
+  "path": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\qa_frozen\\crossdoc06_evalset_v1.jsonl",
+  "n": 30,
+  "label_distribution": {
+   "support": 10,
+   "refute": 10,
+   "not_in_evidence": 10
+  },
+  "family_distribution": {
+   "capability_device": 9,
+   "capability_state": 6,
+   "interface_flow": 5,
+   "param_value": 3,
+   "trace_binding": 6,
+   "usecase_e1": 1
+  }
+ },
+ "label_type": "constructive_sound (label_proof; no LLM silver)",
+ "configs": {
+  "deterministic": {
+   "metrics": {
+    "n": 30,
+    "accuracy": 0.2667,
+    "macro_f1": 0.1524,
+    "per_class": {
+     "support": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "refute": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "not_in_evidence": {
+      "precision": 0.32,
+      "recall": 0.8,
+      "f1": 0.4571
+     }
+    },
+    "confusion[predicted, gold]": {
+     "support|refute": 2,
+     "support|not_in_evidence": 2,
+     "refute|support": 1,
+     "not_in_evidence|support": 9,
+     "not_in_evidence|refute": 8,
+     "not_in_evidence|not_in_evidence": 8
+    }
+   },
+   "llm_stats": {
+    "invocations": 0,
+    "api_calls": 0,
+    "cache_hits": 0
+   },
+   "attribution": {
+    "methods_by_gold": {
+     "support": {
+      "semantic_unresolved": 5,
+      "conservative_unresolved": 3,
+      "l0_entity_detector:TERM-07": 4,
+      "numeric_z3_expert": 1,
+      "identifier_exact_match": 1,
+      "sequence_alignment": 2
+     },
+     "refute": {
+      "semantic_unresolved": 5,
+      "identifier_exact_match": 4,
+      "l0_entity_detector:TERM-07": 4,
+      "conservative_unresolved": 1,
+      "sequence_alignment": 2
+     },
+     "not_in_evidence": {
+      "semantic_unresolved": 7,
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 3,
+      "conservative_unresolved": 1,
+      "sequence_alignment": 1
+     }
+    },
+    "decisive_by_gold": {
+     "support": {
+      "numeric_z3_expert": 1
+     },
+     "refute": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     },
+     "not_in_evidence": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     }
+    },
+    "methods_by_confusion_cell": {
+     "not_in_evidence|support": {
+      "semantic_unresolved": 5,
+      "conservative_unresolved": 3,
+      "l0_entity_detector:TERM-07": 4,
+      "identifier_exact_match": 1,
+      "sequence_alignment": 2
+     },
+     "refute|support": {
+      "numeric_z3_expert": 1
+     },
+     "not_in_evidence|refute": {
+      "semantic_unresolved": 5,
+      "conservative_unresolved": 1,
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2,
+      "sequence_alignment": 2
+     },
+     "support|refute": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     },
+     "not_in_evidence|not_in_evidence": {
+      "semantic_unresolved": 7,
+      "conservative_unresolved": 1,
+      "l0_entity_detector:TERM-07": 1,
+      "sequence_alignment": 1
+     },
+     "support|not_in_evidence": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     }
+    },
+    "misclassified": [
+     {
+      "instance_id": "C06QA-001",
+      "family": "capability_device",
+      "operator": "s_device_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:应用界面集成功能支持在桌面、平板、手持设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板、手持终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-002",
+      "family": "capability_device",
+      "operator": "s_device_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:日志清理功能支持在桌面、平板设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-003",
+      "family": "capability_device",
+      "operator": "s_device_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:数据库连接状态提示功能支持在桌面、平板、手持设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板、手持终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-004",
+      "family": "capability_state",
+      "operator": "s_state_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:前端组件集成功能在运行阶段提供",
+       "not_in_evidence:semantic_unresolved:该功能的运行状态绑定为运行阶段，覆盖上述阶段"
+      ]
+     },
+     {
+      "instance_id": "C06QA-005",
+      "family": "capability_state",
+      "operator": "s_state_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:系统基础信息维护功能在开发阶段、集成阶段、运行阶段提供",
+       "not_in_evidence:semantic_unresolved:该功能的运行状态绑定为开发阶段、集成阶段、运行阶段，覆盖上述阶段"
+      ]
+     },
+     {
+      "instance_id": "C06QA-006",
+      "family": "interface_flow",
+      "operator": "s_interface_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "conservative_unresolved",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:conservative_unresolved:PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK",
+       "support:l0_entity_detector:TERM-07:系统运行监控与日志服务接口通过接口PZXQ-NBJK-YXZCFW-XTYXJK"
+      ]
+     },
+     {
+      "instance_id": "C06QA-007",
+      "family": "interface_flow",
+      "operator": "s_interface_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "conservative_unresolved",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:conservative_unresolved:PZXQ-NBJK-YXZCFW-XXFWRZFWJK",
+       "support:l0_entity_detector:TERM-07:消息服务与日志服务接口通过接口PZXQ-NBJK-YXZCFW-XXFWRZFW"
+      ]
+     },
+     {
+      "instance_id": "C06QA-008",
+      "family": "param_value",
+      "operator": "s_param_narrative",
+      "gold": "support",
+      "pred": "refute",
+      "methods": [
+       "numeric_z3_expert"
+      ],
+      "decisive": [
+       "numeric_z3_expert"
+      ],
+      "claim_summary": [
+       "refute:numeric_z3_expert:最大连接数的最大值 为200"
+      ]
+     },
+     {
+      "instance_id": "C06QA-009",
+      "family": "trace_binding",
+      "operator": "s_trace_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC追溯至任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.2 c），对应任务书4.1.2 c）的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-010",
+      "family": "trace_binding",
+      "operator": "s_trace_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "conservative_unresolved",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:conservative_unresolved:PZXQ-YXZCFW-GN-YWGL",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-YWGL追溯至任务书4.1.7，对应任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.7，对应任务书4.1.7的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-011",
+      "family": "capability_device",
+      "operator": "r_device_member_drop",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:计算机内存状态详细信息功能仅在平板、手持设备上使用，不支持桌面设备"
+      ]
+     },
+     {
+      "instance_id": "C06QA-012",
+      "family": "capability_device",
+      "operator": "r_device_member_add",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:软件状态监控功能支持在桌面、平板设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-013",
+      "family": "capability_device",
+      "operator": "r_device_member_add",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:消息提示与管理功能支持在桌面、手持设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、手持终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-014",
+      "family": "capability_state",
+      "operator": "r_state_member_drop",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:重要信息提示功能仅在开发阶段、集成阶段提供，不在运行阶段提供"
+      ]
+     },
+     {
+      "instance_id": "C06QA-015",
+      "family": "capability_state",
+      "operator": "r_state_member_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:semantic_unresolved:参数配置管理功能在开发阶段、集成阶段提供",
+       "not_in_evidence:semantic_unresolved:该功能的运行状态绑定为开发阶段、集成阶段，覆盖上述阶段"
+      ]
+     },
+     {
+      "instance_id": "C06QA-016",
+      "family": "interface_flow",
+      "operator": "r_sender_swap",
+      "gold": "refute",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-RJJHJK",
+       "support:l0_entity_detector:TERM-07:人机交互接口通过接口PZXQ-WBJK-YXZCFW-RJJHJK实现，由界面集"
+      ]
+     },
+     {
+      "instance_id": "C06QA-017",
+      "family": "interface_flow",
+      "operator": "r_sender_swap",
+      "gold": "refute",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-YYRJ",
+       "support:l0_entity_detector:TERM-07:与应用软件接口通过接口PZXQ-WBJK-YXZCFW-YYRJ实现，由统一传输"
+      ]
+     },
+     {
+      "instance_id": "C06QA-018",
+      "family": "param_value",
+      "operator": "r_value_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "conservative_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:conservative_unresolved:通联方式的最大值 为100"
+      ]
+     },
+     {
+      "instance_id": "C06QA-019",
+      "family": "trace_binding",
+      "operator": "r_task_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS追溯至任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.1 c)，对应任务书4.1.1 c)的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-020",
+      "family": "trace_binding",
+      "operator": "r_task_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX追溯至任务书",
+       "not_in_evidence:sequence_alignment:4．1.3 a)，对应任务书4.1.3 a)的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-026",
+      "family": "interface_flow",
+      "operator": "n_effect_claim",
+      "gold": "not_in_evidence",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-TYCSFW",
+       "support:l0_entity_detector:TERM-07:接口PZXQ-WBJK-YXZCFW-TYCSFW采用加密传输保障数据安全，并支"
+      ]
+     },
+     {
+      "instance_id": "C06QA-029",
+      "family": "trace_binding",
+      "operator": "n_effect_claim",
+      "gold": "not_in_evidence",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXX"
+      ]
+     }
+    ]
+   }
+  },
+  "cascade": {
+   "metrics": {
+    "n": 30,
+    "accuracy": 0.5333,
+    "macro_f1": 0.5309,
+    "per_class": {
+     "support": {
+      "precision": 0.4444,
+      "recall": 0.4,
+      "f1": 0.4211
+     },
+     "refute": {
+      "precision": 0.7143,
+      "recall": 0.5,
+      "f1": 0.5882
+     },
+     "not_in_evidence": {
+      "precision": 0.5,
+      "recall": 0.7,
+      "f1": 0.5833
+     }
+    },
+    "confusion[predicted, gold]": {
+     "support|support": 4,
+     "support|refute": 3,
+     "support|not_in_evidence": 2,
+     "refute|support": 1,
+     "refute|refute": 5,
+     "refute|not_in_evidence": 1,
+     "not_in_evidence|support": 5,
+     "not_in_evidence|refute": 2,
+     "not_in_evidence|not_in_evidence": 7
+    }
+   },
+   "llm_stats": {
+    "invocations": 11,
+    "api_calls": 11,
+    "cache_hits": 0
+   },
+   "attribution": {
+    "methods_by_gold": {
+     "support": {
+      "llm_residual": 3,
+      "semantic_unresolved": 2,
+      "nli_residual": 4,
+      "l0_entity_detector:TERM-07": 4,
+      "conservative_unresolved": 1,
+      "numeric_z3_expert": 1,
+      "identifier_exact_match": 1,
+      "sequence_alignment": 2
+     },
+     "refute": {
+      "llm_residual": 5,
+      "identifier_exact_match": 4,
+      "l0_entity_detector:TERM-07": 4,
+      "nli_residual": 1,
+      "sequence_alignment": 2
+     },
+     "not_in_evidence": {
+      "semantic_unresolved": 6,
+      "llm_residual": 1,
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 3,
+      "conservative_unresolved": 1,
+      "sequence_alignment": 1
+     }
+    },
+    "decisive_by_gold": {
+     "support": {
+      "llm_residual": 1,
+      "nli_residual": 3,
+      "l0_entity_detector:TERM-07": 1,
+      "numeric_z3_expert": 1
+     },
+     "refute": {
+      "llm_residual": 5,
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2,
+      "nli_residual": 1
+     },
+     "not_in_evidence": {
+      "llm_residual": 1,
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     }
+    },
+    "methods_by_confusion_cell": {
+     "support|support": {
+      "llm_residual": 1,
+      "nli_residual": 3,
+      "l0_entity_detector:TERM-07": 1
+     },
+     "not_in_evidence|support": {
+      "llm_residual": 2,
+      "semantic_unresolved": 2,
+      "conservative_unresolved": 1,
+      "l0_entity_detector:TERM-07": 3,
+      "identifier_exact_match": 1,
+      "sequence_alignment": 2,
+      "nli_residual": 1
+     },
+     "refute|support": {
+      "numeric_z3_expert": 1
+     },
+     "refute|refute": {
+      "llm_residual": 5
+     },
+     "support|refute": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2,
+      "nli_residual": 1
+     },
+     "not_in_evidence|refute": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2,
+      "sequence_alignment": 2
+     },
+     "not_in_evidence|not_in_evidence": {
+      "semantic_unresolved": 6,
+      "conservative_unresolved": 1,
+      "l0_entity_detector:TERM-07": 1,
+      "sequence_alignment": 1
+     },
+     "refute|not_in_evidence": {
+      "llm_residual": 1
+     },
+     "support|not_in_evidence": {
+      "identifier_exact_match": 2,
+      "l0_entity_detector:TERM-07": 2
+     }
+    },
+    "misclassified": [
+     {
+      "instance_id": "C06QA-002",
+      "family": "capability_device",
+      "operator": "s_device_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "llm_residual",
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:llm_residual:日志清理功能支持在桌面、平板设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-003",
+      "family": "capability_device",
+      "operator": "s_device_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "llm_residual",
+       "semantic_unresolved"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:llm_residual:数据库连接状态提示功能支持在桌面、平板、手持设备上使用",
+       "not_in_evidence:semantic_unresolved:也就是说，用户在桌面、平板、手持终端上均可以使用该功能"
+      ]
+     },
+     {
+      "instance_id": "C06QA-007",
+      "family": "interface_flow",
+      "operator": "s_interface_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "conservative_unresolved",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "not_in_evidence:conservative_unresolved:PZXQ-NBJK-YXZCFW-XXFWRZFWJK",
+       "support:l0_entity_detector:TERM-07:消息服务与日志服务接口通过接口PZXQ-NBJK-YXZCFW-XXFWRZFW"
+      ]
+     },
+     {
+      "instance_id": "C06QA-008",
+      "family": "param_value",
+      "operator": "s_param_narrative",
+      "gold": "support",
+      "pred": "refute",
+      "methods": [
+       "numeric_z3_expert"
+      ],
+      "decisive": [
+       "numeric_z3_expert"
+      ],
+      "claim_summary": [
+       "refute:numeric_z3_expert:最大连接数的最大值 为200"
+      ]
+     },
+     {
+      "instance_id": "C06QA-009",
+      "family": "trace_binding",
+      "operator": "s_trace_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC追溯至任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.2 c），对应任务书4.1.2 c）的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-010",
+      "family": "trace_binding",
+      "operator": "s_trace_narrative",
+      "gold": "support",
+      "pred": "not_in_evidence",
+      "methods": [
+       "l0_entity_detector:TERM-07",
+       "nli_residual",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:nli_residual:PZXQ-YXZCFW-GN-YWGL",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-YWGL追溯至任务书4.1.7，对应任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.7，对应任务书4.1.7的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-016",
+      "family": "interface_flow",
+      "operator": "r_sender_swap",
+      "gold": "refute",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-RJJHJK",
+       "support:l0_entity_detector:TERM-07:人机交互接口通过接口PZXQ-WBJK-YXZCFW-RJJHJK实现，由界面集"
+      ]
+     },
+     {
+      "instance_id": "C06QA-017",
+      "family": "interface_flow",
+      "operator": "r_sender_swap",
+      "gold": "refute",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-YYRJ",
+       "support:l0_entity_detector:TERM-07:与应用软件接口通过接口PZXQ-WBJK-YXZCFW-YYRJ实现，由统一传输"
+      ]
+     },
+     {
+      "instance_id": "C06QA-018",
+      "family": "param_value",
+      "operator": "r_value_swap",
+      "gold": "refute",
+      "pred": "support",
+      "methods": [
+       "nli_residual"
+      ],
+      "decisive": [
+       "nli_residual"
+      ],
+      "claim_summary": [
+       "support:nli_residual:通联方式的最大值 为100"
+      ]
+     },
+     {
+      "instance_id": "C06QA-019",
+      "family": "trace_binding",
+      "operator": "r_task_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS追溯至任务书4.",
+       "not_in_evidence:sequence_alignment:4．1.1 c)，对应任务书4.1.1 c)的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-020",
+      "family": "trace_binding",
+      "operator": "r_task_swap",
+      "gold": "refute",
+      "pred": "not_in_evidence",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07",
+       "sequence_alignment"
+      ],
+      "decisive": [],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX追溯至任务书",
+       "not_in_evidence:sequence_alignment:4．1.3 a)，对应任务书4.1.3 a)的功能/性能要求"
+      ]
+     },
+     {
+      "instance_id": "C06QA-024",
+      "family": "capability_state",
+      "operator": "n_value_absent",
+      "gold": "not_in_evidence",
+      "pred": "refute",
+      "methods": [
+       "llm_residual"
+      ],
+      "decisive": [
+       "llm_residual"
+      ],
+      "claim_summary": [
+       "support:llm_residual:服务故障预警功能在开发阶段提供",
+       "refute:llm_residual:该功能的运行状态绑定为开发阶段，覆盖上述阶段"
+      ]
+     },
+     {
+      "instance_id": "C06QA-026",
+      "family": "interface_flow",
+      "operator": "n_effect_claim",
+      "gold": "not_in_evidence",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-WBJK-YXZCFW-TYCSFW",
+       "support:l0_entity_detector:TERM-07:接口PZXQ-WBJK-YXZCFW-TYCSFW采用加密传输保障数据安全，并支"
+      ]
+     },
+     {
+      "instance_id": "C06QA-029",
+      "family": "trace_binding",
+      "operator": "n_effect_claim",
+      "gold": "not_in_evidence",
+      "pred": "support",
+      "methods": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "decisive": [
+       "identifier_exact_match",
+       "l0_entity_detector:TERM-07"
+      ],
+      "claim_summary": [
+       "support:identifier_exact_match:PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS",
+       "support:l0_entity_detector:TERM-07:需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXX"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "doc04_reference": {
+  "run": "eval_cascade_1e92cdce_20261027_124941",
+  "label_type": "glm53_silver_not_gold",
+  "n": 91,
+  "configs": {
+   "deterministic": {
+    "macro_f1": 0.6381,
+    "accuracy": 0.9011,
+    "per_class": {
+     "support": {
+      "precision": 0.5,
+      "recall": 0.1667,
+      "f1": 0.25
+     },
+     "refute": {
+      "precision": 0.8333,
+      "recall": 0.625,
+      "f1": 0.7143
+     },
+     "not_in_evidence": {
+      "precision": 0.9157,
+      "recall": 0.987,
+      "f1": 0.95
+     }
+    }
+   },
+   "cascade": {
+    "macro_f1": 0.7185,
+    "accuracy": 0.9121,
+    "per_class": {
+     "support": {
+      "precision": 0.5,
+      "recall": 0.3333,
+      "f1": 0.4
+     },
+     "refute": {
+      "precision": 0.8571,
+      "recall": 0.75,
+      "f1": 0.8
+     },
+     "not_in_evidence": {
+      "precision": 0.9375,
+      "recall": 0.974,
+      "f1": 0.9554
+     }
+    }
+   }
+  }
+ },
+ "generalization_gap": {
+  "available": true,
+  "doc04_run": "eval_cascade_1e92cdce_20261027_124941",
+  "deterministic": {
+   "doc04_macro_f1": 0.6381,
+   "doc06_macro_f1": 0.1524,
+   "delta_macro_f1": -0.4857,
+   "delta_per_class_f1": {
+    "support": -0.25,
+    "refute": -0.7143,
+    "not_in_evidence": -0.4929
+   }
+  },
+  "cascade": {
+   "doc04_macro_f1": 0.7185,
+   "doc06_macro_f1": 0.5309,
+   "delta_macro_f1": -0.1876,
+   "delta_per_class_f1": {
+    "support": 0.0211,
+    "refute": -0.2118,
+    "not_in_evidence": -0.3721
+   }
+  }
+ },
+ "nli_gate": 0.7,
+ "model_key": "egt_finetuned_v2"
+}

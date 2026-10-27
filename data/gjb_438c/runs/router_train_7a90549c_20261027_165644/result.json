@@ -1,0 +1,191 @@
+{
+ "n": {
+  "egt": 422,
+  "qa": 91
+ },
+ "egt": {
+  "n_instances": 422,
+  "n_feature_rows": 300,
+  "excluded": {
+   "no_residual_decision_point": 122
+  },
+  "oracle_distribution": {
+   "accept_l2": 174,
+   "accept_l1": 120,
+   "escalate_l3": 6
+  },
+  "route_outcome_accuracy": {
+   "v_l1": {
+    "n_probed": 300,
+    "accuracy": 0.4
+   },
+   "v_l2": {
+    "n_probed": 180,
+    "accuracy": 0.9056
+   },
+   "v_cascade": {
+    "n_probed": 17,
+    "accuracy": 0.0
+   },
+   "v_l3": {
+    "n_probed": 17,
+    "accuracy": 0.3529
+   }
+  }
+ },
+ "qa_test": {
+  "n_instances": 91,
+  "n_feature_rows": 80,
+  "excluded": {
+   "no_residual_decision_point": 11
+  },
+  "oracle_distribution": {
+   "accept_l1": 73,
+   "escalate_l3": 2,
+   "accept_l2": 5
+  },
+  "route_outcome_accuracy": {
+   "v_l1": {
+    "n_probed": 80,
+    "accuracy": 0.9125
+   },
+   "v_l2": {
+    "n_probed": 7,
+    "accuracy": 0.2857
+   },
+   "v_cascade": {
+    "n_probed": 5,
+    "accuracy": 0.2
+   },
+   "v_l3": {
+    "n_probed": 5,
+    "accuracy": 0.4
+   }
+  }
+ },
+ "training": {
+  "seed": 42,
+  "n_train_rows": 300,
+  "route_distribution": {
+   "accept_l2": 174,
+   "accept_l1": 120,
+   "escalate_l3": 6
+  },
+  "feature_order": [
+   "n_evidence",
+   "evidence_table_fraction",
+   "question_len",
+   "answer_len",
+   "n_claims",
+   "claim_numeric",
+   "claim_identifier",
+   "claim_enum",
+   "claim_quoted",
+   "claim_semantic",
+   "n_check_items",
+   "check_term",
+   "check_param",
+   "check_logic",
+   "check_gjb",
+   "l1_support",
+   "l1_refute",
+   "l1_nie",
+   "l1_expert_hits",
+   "residual_count"
+  ],
+  "models": {
+   "gradient_boosting": {
+    "cv_macro_f1": 0.456,
+    "cv_accuracy": 0.6933,
+    "cv_splits": 5
+   },
+   "logistic_regression": {
+    "cv_macro_f1": 0.3326,
+    "cv_accuracy": 0.6067,
+    "cv_splits": 5
+   }
+  },
+  "selected_model": "gradient_boosting"
+ },
+ "train_routing_in_sample": {
+  "n": 300,
+  "routing_agreement": 0.8233,
+  "route_distribution": {
+   "accept_l2": 187,
+   "accept_l1": 108,
+   "escalate_l3": 5
+  },
+  "oracle_distribution": {
+   "accept_l2": 174,
+   "accept_l1": 120,
+   "escalate_l3": 6
+  },
+  "simulated_accuracy": 0.7867,
+  "simulated_confusion": {
+   "not_in_evidence|not_in_evidence": 81,
+   "not_in_evidence|refute": 13,
+   "not_in_evidence|support": 17,
+   "refute|refute": 78,
+   "support|refute": 2,
+   "support|support": 77
+  },
+  "simulated_llm_calls": 5,
+  "oracle_llm_calls": 6
+ },
+ "heldout_qa_routing": {
+  "n": 80,
+  "routing_agreement": 0.0875,
+  "route_distribution": {
+   "escalate_l3": 70,
+   "accept_l1": 5,
+   "accept_l2": 5
+  },
+  "oracle_distribution": {
+   "accept_l1": 73,
+   "escalate_l3": 2,
+   "accept_l2": 5
+  },
+  "simulated_accuracy": 0.0875,
+  "simulated_confusion": {
+   "not_in_evidence|not_in_evidence": 4,
+   "not_in_evidence|support": 3,
+   "refute|refute": 1,
+   "support|support": 2
+  },
+  "simulated_llm_calls": 70,
+  "oracle_llm_calls": 2
+ },
+ "llm_probe": {
+  "invocations": 23,
+  "api_calls": 0,
+  "cache_hits": 23
+ },
+ "leakage_guards": {
+  "qa_instance_ids_in_train": 0,
+  "qa_questions_in_train_pool": 10,
+  "train_split": "egt_nli_dev_split_minus_qa_question_overlap"
+ },
+ "router_path": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\runs\\router_train_7a90549c_20261027_165644\\router.joblib",
+ "feature_order": [
+  "n_evidence",
+  "evidence_table_fraction",
+  "question_len",
+  "answer_len",
+  "n_claims",
+  "claim_numeric",
+  "claim_identifier",
+  "claim_enum",
+  "claim_quoted",
+  "claim_semantic",
+  "n_check_items",
+  "check_term",
+  "check_param",
+  "check_logic",
+  "check_gjb",
+  "l1_support",
+  "l1_refute",
+  "l1_nie",
+  "l1_expert_hits",
+  "residual_count"
+ ]
+}

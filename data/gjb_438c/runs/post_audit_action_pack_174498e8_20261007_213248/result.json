@@ -1,0 +1,31 @@
+{
+ "experiment": "多agent审计后行动包: 数据卫生+PU+conformal+检索",
+ "1_数据卫生": {
+  "提示泄漏标记": "211条(全benign) quality_flags=prompt_leakage",
+  "干净子集": "366条(255real+111benign, 70%真比率)",
+  "文档修正": "v9 md F1=0.819<全报0.847已修正; th后验选点已标注"
+ },
+ "2_金标重裁协议探针": {
+  "设计": "证据注入(table.csv行+visio节点文本)+本地Qwen1.5B-Instruct裁决",
+  "结果": "前120条: 证据100%可用, 协议一致率73.3%, 但1.5B裁判100%判real_bug(过弱)",
+  "结论": "协议可行但需7B+裁判; 7B下载因GPU异常中断, 待续",
+  "产出": "tools/md_gold_readjudicate.py(可续跑)"
+ },
+ "3_nnPU_v10": {
+  "设计": "CE(构造确定3147)+P(双一致real 111)+U(银标忽略189), nnPU非负风险π=0.5",
+  "结果": "md F1=0.016(P=1.0,R=0.008)崩溃 | clean 0.566 | bench 0.978",
+  "结论": "诚实负结果: U项负向拉力在小U集下压垮md模式召回; 需数据驱动π估计(Elkan-Noto)或场景条件π",
+  "产出": "models/nli/erlangshen-330m-qlora-v10-pu + tools/train_v10_pu.py"
+ },
+ "4_conformal选择性预测": {
+  "v9@md": "AURC=0.117, coverage@risk≤10%=39%(置信度可用!)",
+  "v8@md": "AURC=0.166, coverage=1%(置信度不辨识错误)",
+  "v9@clean": "AURC=0.370, coverage=1%",
+  "结论": "v9在md上可做样本级abstain级联; clean130上双峰置信度是自信错误(需外部证据)"
+ },
+ "5_检索增强kNN案例插值": {
+  "v8+kNN@md": "F1 0.779→0.800(+0.021, α=0.5混合)",
+  "v8+kNN@clean": "0.629→0.629(无增益)",
+  "结论": "小案例库(220可信条)下增益温和; 案例库扩大是免费增益路径(零训练回流)"
+ }
+}

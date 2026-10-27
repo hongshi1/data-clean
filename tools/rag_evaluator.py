@@ -7,12 +7,10 @@
 
 复用: LightRAG查询 + Gold Standard + 评估指标(recall@k)
 """
-import argparse
 import asyncio
 import json
 import os
 import sys
-import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -22,7 +20,7 @@ from lightrag.utils import EmbeddingFunc
 from sentence_transformers import SentenceTransformer
 
 BASE_URL = "https://api.moonshot.cn/v1"
-API_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY as API_KEY
 LLM_MODEL = "kimi-k2.6"
 WORKING_DIR = "data/gjb_438c/data_assets/lightrag_store"
 GOLD_PATH = "data/gjb_438c/data_assets/gold_standard/multi_scene_gold_standard.json"

@@ -1,0 +1,32 @@
+{
+ "script": "ensemble_per_type",
+ "git_sha": "ff0d4950",
+ "config": {
+  "strategy": "b_wavg_bacc",
+  "weights": {
+   "v12": 0.2755,
+   "v15": 0.2675,
+   "v13": 0.1917,
+   "svm": 0.2653
+  },
+  "models": {
+   "v12": "models/nli/roberta-v12-anchor",
+   "v15": "models/nli/roberta-v15",
+   "v13": "models/nli/macbert-v13",
+   "svm": "retrain-svm"
+  },
+  "data": [
+   "real296",
+   "srs_mutation",
+   "expanded_test",
+   "symmetric"
+  ],
+  "compare": [
+   "ens",
+   "v12",
+   "v13"
+  ]
+ },
+ "config_hash": "52e8678a",
+ "opened_at": 1791486471.5
+}

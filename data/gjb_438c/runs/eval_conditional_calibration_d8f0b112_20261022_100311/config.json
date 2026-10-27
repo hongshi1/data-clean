@@ -1,0 +1,35 @@
+{
+ "script": "eval_conditional_calibration",
+ "git_sha": "ff0d4950",
+ "config": {
+  "protocol": "conditional calibration + bucketed ECE decomposition + D3 + E50 conformal",
+  "pairs": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\training_pairs_v1\\pairs.jsonl",
+  "snapshot": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\feature_snapshot_v1\\vectors.npz",
+  "score": "native BGE cosine (vectors.npz dot, unit rows)",
+  "folds": "stored split field in pairs.jsonl (dev fit, test eval)",
+  "ece_bins": 15,
+  "c_grid": [
+   0.1,
+   1.0,
+   10.0,
+   100.0
+  ],
+  "confidence_sweep": [
+   0.5,
+   0.55,
+   0.6,
+   0.65,
+   0.7,
+   0.75,
+   0.8,
+   0.85,
+   0.9,
+   0.95
+  ],
+  "alpha": 0.1,
+  "buckets": "kind_pair x same_section (observed of the 12 theoretical cells)",
+  "limit": null
+ },
+ "config_hash": "d8f0b112",
+ "opened_at": 1792634591.6
+}

@@ -450,11 +450,11 @@ def main():
         print(f"  89对映射中锚点可连接: {matched}/{len(mapping)}")
 
     # 质量快照: 有文本节点率、边端点解析率
-    print(f"\n  质量指标:")
+    print("\n  质量指标:")
     print(f"    有文本节点率:   {total_text/max(total_nodes,1):.1%}  (旧: 22%)")
     print(f"    边端点悬空率:   {total_dangling/max(total_dangling+total_edges,1):.1%}")
     raw_conn = sum(d['visio_count'] for d in all_anchors.values())
-    print(f"  ✓ 坐标提取: 现全部非零(旧: 100%为0)")
+    print("  ✓ 坐标提取: 现全部非零(旧: 100%为0)")
 
 
 if __name__ == "__main__":

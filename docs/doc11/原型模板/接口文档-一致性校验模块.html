@@ -1,0 +1,577 @@
+<!DOCTYPE html><html lang=zh-CN><head><meta charset=utf-8><title>一致性校验模块 对外接口与数据规范</title>
+<style>
+body{font-family:'Microsoft YaHei',sans-serif;max-width:960px;margin:24px auto;padding:0 24px;line-height:1.75;color:#1f2733;background:#fafbfd}
+h1{border-bottom:2px solid #2f7ef4;padding-bottom:8px;color:#1c62d0}h2{border-left:4px solid #2f7ef4;padding-left:10px;margin-top:28px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+th,td{border:1px solid #dde3ec;padding:6px 10px}th{background:#eef3fb}
+code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12px}
+pre{background:#f6f8fa;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px}
+blockquote{border-left:4px solid #cfe1ff;background:#f0f6ff;padding:8px 14px;margin:10px 0;color:#3a4a5e}
+</style></head><body><h1>一致性校验模块 对外接口与数据规范 V1.0</h1>
+<blockquote>
+<p>模块全称：数据一致性校验模块（含两个智能体：特征提取与上下文关联智能体 / 数据一致性校验智能体）
+在平台中的位置：微调数据集构建平台 · 一致性校验环节（数据集管理 → <strong>本模块</strong> → 质量评估）
+技术形态：FastAPI 服务（默认 127.0.0.1:8300）+ React 前端 + 上下文图谱数据层
+数据范围：GJB 438C 软件需求规格说明（SRS），当前 16 份内置 + 支持上传</p>
+</blockquote>
+<hr />
+<h2>一、接口总览</h2>
+<p>本模块对外提供<strong>两层接口</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>面向</th>
+<th>形态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L1 平台集成接口</strong></td>
+<td>平台其他模块（数据集管理/质量评估）</td>
+<td>数据契约（对象结构+状态流转）</td>
+<td>模块间数据交接，对接原型平台各环节</td>
+</tr>
+<tr>
+<td><strong>L2 服务接口</strong></td>
+<td>前端页面 / 外部调用方</td>
+<td>HTTP REST API（12个端点）</td>
+<td>已实现运行，JSON协议</td>
+</tr>
+</tbody>
+</table>
+<pre><code>┌──────────┐  专家知识(规则/词典/标准)  ┌───────────────────────────┐
+│ 数据转换  │ ──────────────────────→ │       一致性校验模块         │  校验报告+状态  ┌──────────┐
+└──────────┘  校验知识基准              │  ┌─────────────┐ ┌──────┐ │ ────────────→ │ 质量评估  │
+                                       │  │上下文关联服务 │ │校验服务│ │  报告对象+处置   │ (下游)   │
+┌──────────┐   ┌──────────┐           │  │(方向A·图谱召回)│→│(方向B)│ │  标记+图谱统计  └──────────┘
+│ 问题生成  │→ │ 答案生成  │           │  └─────────────┘ └──────┘ │
+└────┬─────┘   └────┬─────┘           └──────────△────────────────┘
+     │    问答对     │                           │ 送检数据集(含问答对+源文档)
+     └──────→ ┌─────┴──────┐                   │
+              │  数据集管理  │ ──────────────────┘
+              └────────────┘    数据集打包汇聚
+                                     ↑ L2 HTTP API
+                              前端/外部调用方
+</code></pre>
+<hr />
+<h2>二、L1 平台集成接口（模块间数据契约）</h2>
+<h3>2.1 向上：本模块消费的输入</h3>
+<h4>① 专家知识（来自「数据转换」，校验的知识基准）</h4>
+<p>数据转换模块产出的专家知识进入本模块，作为一致性校验的判定依据（对应图谱 KNW 层与校验引擎规则库）：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th style="text-align: center;">必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rules</td>
+<td>object[]</td>
+<td style="text-align: center;">✓</td>
+<td>校验规则集：<code>{rule_id, type(术语/参数/逻辑/GJB合规/多模态), description, check_method, inject_methods[], applies_to[], severity, example}</code></td>
+</tr>
+<tr>
+<td>dictionaries</td>
+<td>object</td>
+<td style="text-align: center;">-</td>
+<td>术语词典：参数词典（同义词族）、单位族（换算基准）、接口/操作符词典</td>
+</tr>
+<tr>
+<td>standards</td>
+<td>object[]</td>
+<td style="text-align: center;">-</td>
+<td>标准条款（GJB 438C/439A等），可追溯原文行号</td>
+</tr>
+<tr>
+<td>conflict_rules</td>
+<td>object[]</td>
+<td style="text-align: center;">-</td>
+<td>冲突判定规则（合理差异 vs 真实矛盾的区分准则）</td>
+</tr>
+</tbody>
+</table>
+<p>本模块当前内置的知识资产规模：GJB 120条规则 + 23参数/13接口/10单位族词典 + 14条四类不一致规则（全部HIGH可信度标注）。数据转换侧可增补/更新，本模块热加载。</p>
+<h4>② 数据集送检（来自「数据集管理」，汇聚问题生成+答案生成的产物）</h4>
+<p>问题生成与答案生成的问答对<strong>经数据集管理打包成数据集</strong>后统一送检：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th style="text-align: center;">必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataset_id</td>
+<td>string</td>
+<td style="text-align: center;">✓</td>
+<td>数据集唯一标识</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td style="text-align: center;">✓</td>
+<td>数据集名称</td>
+</tr>
+<tr>
+<td>ver</td>
+<td>string</td>
+<td style="text-align: center;">-</td>
+<td>数据版本（如 V1.2）</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>string</td>
+<td style="text-align: center;">-</td>
+<td>数据分类（SRS类挂"软件需求规格数据"）</td>
+</tr>
+<tr>
+<td>qa_pairs</td>
+<td>object[]</td>
+<td style="text-align: center;">✓</td>
+<td>问答对：<code>{id, question, answer, evidence, doc_ref, label?, is_injected?}</code>（来自问题/答案生成）</td>
+</tr>
+<tr>
+<td>source_docs</td>
+<td>string[]</td>
+<td style="text-align: center;">✓</td>
+<td>源SRS文档清单（.docx/.md路径或ID）——校验对象</td>
+</tr>
+<tr>
+<td>std_data</td>
+<td>object[]</td>
+<td style="text-align: center;">-</td>
+<td>标准数据（切片/表格/图片引用）</td>
+</tr>
+</tbody>
+</table>
+<p>触发方式：数据集管理页「送一致性校验」动作 / 本模块上传接口（L2-2）。</p>
+<h4>③ 模块内部数据准备（本模块自行完成，不依赖上游）</h4>
+<p>源SRS文档的解析与特征提取由本模块的<strong>特征提取与上下文关联智能体</strong>自行执行：
+- 文档结构化解析（章节/表格/图片，MinerU管线）
+- born-digital锚点提取（.doc内嵌Visio XML直读：节点/边/坐标）
+- Mermaid结构图导出（锚点→mermaid，89%覆盖）
+- 上下文图谱构建（六类节点+加权边+聚合条目）</p>
+<blockquote>
+<p>边界说明：解析/锚点/mermaid属于本模块内部数据层（graph_store），不作为对上游的接口依赖；上游仅需提供源文档本体与专家知识。</p>
+</blockquote>
+<h3>2.2 向下：本模块输出给「质量评估」（简化契约）</h3>
+<h4>① 校验结果对象（按原始数据元素组织，字段从简）</h4>
+<pre><code class="language-json">{
+  &quot;check_id&quot;: &quot;chk-20260830-001&quot;,
+  &quot;ran_at&quot;: &quot;2026-08-30T17:36:37&quot;,
+  &quot;summary&quot;: { &quot;total&quot;: 12, &quot;pass&quot;: 8, &quot;warn&quot;: 2, &quot;fail&quot;: 2 },
+  &quot;samples&quot;: [
+    {
+      &quot;sample_id&quot;: &quot;qa_0001_01&quot;,
+      &quot;source&quot;: { &quot;doc_ref&quot;: &quot;01数据获取转换分系统需求规格说明&quot;, &quot;section&quot;: &quot;3.2.1.2&quot; },
+      &quot;status&quot;: &quot;fail&quot;,
+      &quot;issues&quot;: [
+        { &quot;type&quot;: &quot;语义不一致&quot;, &quot;desc&quot;: &quot;「结构化数据归集」跨位置名称冲突&quot; }
+      ]
+    },
+    {
+      &quot;sample_id&quot;: &quot;qa_0003_07&quot;,
+      &quot;source&quot;: { &quot;doc_ref&quot;: &quot;02界面集成框架软件需求规格说明&quot;, &quot;section&quot;: &quot;1.8.1&quot; },
+      &quot;status&quot;: &quot;pass&quot;
+    }
+  ]
+}
+</code></pre>
+<p><strong>设计原则</strong>：
+- <strong>以原始数据元素（问答对）为标注单位</strong>：<code>sample_id</code> = 问答对ID；<code>source</code> 为可选的数据源定位（doc_ref + 章节），不按文档组织返回；
+- <strong>字段从简</strong>：<code>status</code>（pass/warn/fail）为唯一必需字段；<code>issues</code> 为<strong>可选</strong>（type按语法/语义/逻辑三类 + 一句话描述）——并非所有场景都能提供明细，给不了就只回状态；
+- <strong>52项分类统计、逐项明细、图谱统计属于模块内部数据</strong>：由本模块前端报告页呈现（L2 /api/check 获取），<strong>不下发给质量评估</strong>；
+- <strong>处置规则</strong>：fail → 剔除（不进质量评估）；warn → 人工复核后决定；pass → 放行。</p>
+<h4>② 校验状态流转（质量评估门禁的数据源）</h4>
+<pre><code>wait(未校验) ──发起──→ running(校验中) ──完成──→ pass / fail
+                                                    │
+                        质量评估模块读此状态 ←───────┘
+                        （pass 才允许发起质量评估，fail/wait 阻断）
+</code></pre>
+<p>状态落点（原型平台数据模型）：<code>DB.catCst[分类ID].st</code> + <code>dataset.cstStatus</code>。质量评估页现有门禁逻辑（<code>catCst(catId) !== 'pass'</code> 阻断）<strong>无需改造自动对接</strong>。</p>
+<h3>2.3 上下文关联能力输出（供平台其他环节复用）</h3>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>结构</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>激活子图 ActivateResult</td>
+<td>见 4.2</td>
+<td>证据定位、问题溯源、检索增强</td>
+</tr>
+<tr>
+<td>聚合条目 RequirementItem</td>
+<td><code>{entity_id, sections[], n_occurrences, media[], chain_completeness{4格}}</code></td>
+<td>条目级质检、追溯审查</td>
+</tr>
+<tr>
+<td>图谱统计</td>
+<td>节点/边/条目计数</td>
+<td>数据画像、模块监控</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、L2 服务接口（HTTP REST，已实现运行）</h2>
+<p>Base URL: <code>http://&lt;host&gt;:8300</code>，JSON协议，全部支持 HTTP Basic 认证（ACCESS_TOKEN 启用时）。</p>
+<h3>3.0 原型集成层（页面级接口，优先实时·离线自动降级）</h3>
+<p>原型页面（《微调数据集构建平台-一致性校验增强版》）按以下契约调用本模块：</p>
+<table>
+<thead>
+<tr>
+<th>原型页面</th>
+<th>调用接口</th>
+<th>参数</th>
+<th>降级行为（引擎离线时）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上下文关联图谱</td>
+<td><code>POST /api/activate</code></td>
+<td><code>{question, k(1\|2), top_k(4~12), min_w(0.3~0.7)}</code> + Basic认证</td>
+<td>跨16份预置图谱按中心实体匹配切换；提示"启动实时引擎可任意查询"</td>
+</tr>
+<tr>
+<td>校验总览·开始校验</td>
+<td>执行52项（当前预置真实结果+确定性变体）</td>
+<td>数据范围=全部/指定数据集</td>
+<td>状态流转 wait→running→pass/fail 本地管理</td>
+</tr>
+<tr>
+<td>不一致性校验页</td>
+<td>52项注册表内嵌（语法12·语义22·逻辑18三级分类）</td>
+<td>—</td>
+<td>离线只读</td>
+</tr>
+</tbody>
+</table>
+<p>原型页面向平台侧提供（输出，2.2①简化契约的页面形态）：
+- 校验记录状态（数据范围/发现数/状态/时间）→ 质量评估门禁数据源
+- 逐问答对状态（通过/发现问题）+ 可选问题摘要（语法/语义/逻辑三类 + 一句话描述）
+- 报告钻取链（记录→批次→52项明细→证据）为模块内部呈现，不下发
+- 问答对↔数据源配对关系表（12条，doc_ref可追溯）</p>
+<h3>3.1 数据集管理</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>端点</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>/api/datasets</code></td>
+<td>GET</td>
+<td>-</td>
+<td><code>{datasets:[{doc_num,doc,n_nodes,n_edges,n_items,uploaded,checked,check_summary}], check_items_total}</code></td>
+<td>数据集注册表+校验状态</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>/api/upload</code></td>
+<td>POST</td>
+<td>multipart file(.md/.txt)</td>
+<td><code>{ok, doc_num, doc, n_nodes}</code></td>
+<td>上传数据集→章节解析→轻量图谱注册</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>/api/docs</code></td>
+<td>GET</td>
+<td>-</td>
+<td><code>{docs:[{doc_num,doc,n_nodes,n_edges,n_items}]}</code></td>
+<td>文档清单（轻量版）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 上下文关联（方向A）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>端点</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td><code>/api/activate</code></td>
+<td>POST</td>
+<td><code>{question, doc?, k=2, top_k=12, min_w=0.3}</code></td>
+<td>ActivateResult（见4.2）</td>
+<td><strong>核心</strong>：问题→思维导图激活子图（中心实体/相关实体/模态分组/聚合条目）</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>/api/graph/{doc_num}</code></td>
+<td>GET</td>
+<td><code>?node_types=E,TXT,...</code></td>
+<td>完整文档图谱</td>
+<td>浏览模式，可按节点类型过滤</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 一致性校验（方向B）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>端点</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td><code>/api/check/{doc_num}</code></td>
+<td>POST</td>
+<td>-</td>
+<td>校验结果（模块内部完整版：52项+分类统计+证据，供报告页呈现）</td>
+<td><strong>核心</strong>：执行52项校验（单文档≈0.3s，结果缓存）</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>/api/check/{doc_num}</code></td>
+<td>GET</td>
+<td>-</td>
+<td>同上</td>
+<td>读取缓存结果（无缓存则触发执行）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：<code>/api/check</code> 返回的是<strong>模块内部完整结果</strong>（52项明细+证据，供本模块报告页呈现）；
+<strong>下发给质量评估的是2.2①的简化契约</strong>（按问答对sample_id组织、status必需、issues可选）——两者是同一数据两个视图。</p>
+</blockquote>
+<h3>3.4 内容与资产服务</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>端点</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td><code>/api/section/{doc}/{section}</code></td>
+<td>GET</td>
+<td>-</td>
+<td><code>{doc,section,title,text}</code></td>
+<td>章节全文（校验证据定位用）</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>/api/table/{doc}</code></td>
+<td>GET</td>
+<td><code>?caption=</code></td>
+<td><code>{doc,caption,html}</code></td>
+<td>表格HTML（证据渲染）</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>/api/mermaid/{doc}/{fig_num}</code></td>
+<td>GET</td>
+<td>-</td>
+<td><code>{has_mermaid, mermaid, diagram_type}</code></td>
+<td>图片的结构图导出</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>/api/assets/{doc_num}/{path}</code></td>
+<td>GET</td>
+<td>-</td>
+<td>image/png</td>
+<td>图片文件服务</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>/api/qa</code></td>
+<td>GET</td>
+<td><code>?q&amp;scenario&amp;qa_type&amp;label&amp;injected&amp;page&amp;page_size</code></td>
+<td><code>{total,items[]}</code></td>
+<td>QA对查询（6189条）</td>
+</tr>
+</tbody>
+</table>
+<p>补充：<code>/api/knw</code> → 155条专家知识规则registry（GJB规则/参数词典/单位族/14条不一致规则）。</p>
+<hr />
+<h2>四、核心数据结构定义</h2>
+<h3>4.1 图谱节点（六类，全量 5619 节点 / 23850 边 / 16 文档）</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+<th>规模</th>
+<th>关键载荷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E</td>
+<td>需求实体（ID锚定）</td>
+<td>978</td>
+<td>id_str、aliases[]、n_occ</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>文本章节</td>
+<td>1444</td>
+<td>title、level、text_preview、text_len</td>
+</tr>
+<tr>
+<td>TBL</td>
+<td>表格</td>
+<td>1197</td>
+<td>caption、table_type、row_count、headers[]</td>
+</tr>
+<tr>
+<td>IMG</td>
+<td>图片</td>
+<td>373</td>
+<td>caption、img_type、path、mermaid_key</td>
+</tr>
+<tr>
+<td>SEQ</td>
+<td>时序结构（步骤链/异常流）</td>
+<td>783</td>
+<td>seq_type、steps[]、dangling[]（悬空引用红色标记）</td>
+</tr>
+<tr>
+<td>KNW</td>
+<td>专家知识规则</td>
+<td>844</td>
+<td>rule_type、description、severity</td>
+</tr>
+</tbody>
+</table>
+<p>边：<code>{s, t, type, w(0~1), ev(证据文本)}</code>。边类型含同模态（章节层级/版本对齐/接口拓扑/步骤链）与跨模态（实体出现/位置邻接/交叉引用/图-表映射/规则适用）两大类，权重三档（确定性0.85-0.95 / 计算0.4-0.8 / 对齐置信）。</p>
+<h3>4.2 ActivateResult（激活子图，方向A核心输出）</h3>
+<pre><code class="language-json">{
+  &quot;ok&quot;: true, &quot;question&quot;: &quot;界面开发功能包含哪些子功能?&quot;, &quot;doc&quot;: &quot;02&quot;,
+  &quot;center&quot;: { &quot;id&quot;: &quot;e:PZXQ-GN-JMJCKJ-JMKF&quot;, &quot;type&quot;: &quot;E&quot;,
+              &quot;label&quot;: &quot;PZXQ-GN-JMJCKJ-JMKF&quot;, &quot;section&quot;: &quot;1.8.1&quot;,
+              &quot;payload&quot;: { &quot;id_str&quot;: &quot;...&quot;, &quot;aliases&quot;: [&quot;界面开发功能&quot;] }, &quot;score&quot;: 0.97 },
+  &quot;related_entities&quot;: [
+    { &quot;id&quot;: &quot;...&quot;, &quot;aliases&quot;: [&quot;界面集成功能&quot;], &quot;id_str&quot;: &quot;...&quot;,
+      &quot;score&quot;: 0.9, &quot;rel&quot;: &quot;问题直接命中|ID父子|同章节|同表&quot;, &quot;ev&quot;: &quot;...&quot; }
+  ],
+  &quot;groups&quot;: {
+    &quot;TXT&quot;: [ { &quot;id&quot;:&quot;t:02:1.8.1&quot;, &quot;label&quot;:&quot;1.8.1 界面开发功能&quot;, &quot;section&quot;:&quot;1.8.1&quot;,
+               &quot;payload&quot;:{&quot;title&quot;:&quot;...&quot;,&quot;text_preview&quot;:&quot;...&quot;}, &quot;score&quot;:0.87, &quot;via&quot;:&quot;e:...&quot;, &quot;via_label&quot;:&quot;界面开发功能&quot; } ],
+    &quot;TBL&quot;: [...], &quot;IMG&quot;: [...], &quot;SEQ&quot;: [...], &quot;KNW&quot;: [...]
+  },
+  &quot;items&quot;: [ RequirementItem... ],
+  &quot;stats&quot;: { &quot;n_related&quot;: 3, &quot;n_content&quot;: 52, &quot;by_modality&quot;: {&quot;TXT&quot;:12,&quot;TBL&quot;:10,...} }
+}
+</code></pre>
+<h3>4.3 52项校验项注册表（CHECK_ITEMS）</h3>
+<p>每项：<code>{id(TERM/PARAM/LOGIC/GJB/MM-01~12), category, name, desc, modality, mode(auto|llm)}</code>。
+<strong>呈现分类（原型页面）</strong>：语法不一致12项（命名与代号规范1·结构完备性8·模态格式规范3）+ 语义不一致22项（术语语义7·参数取值10·业务语义完备3·值与完备性冲突2）+ 逻辑不一致18项（控制与推理11·时序与流程2·拓扑与结构3·内容对应2）。
+执行方式：<strong>auto 35项</strong>（图谱规则/单位换算/Z3/资产统计，确定性）+ <strong>llm 17项</strong>（kimi-k2.6业务推理）。</p>
+<hr />
+<h2>五、质量与运行指标（模块对外承诺）</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图谱规模</td>
+<td>16文档 / 5619节点 / 23850边 / 978聚合条目</td>
+<td>零孤立节点</td>
+</tr>
+<tr>
+<td>单文档52项校验耗时</td>
+<td>≈0.3s</td>
+<td>CheckEngine确定性项</td>
+</tr>
+<tr>
+<td>激活召回耗时</td>
+<td>60~200ms</td>
+<td>种子匹配+k-hop扩展</td>
+</tr>
+<tr>
+<td>Mermaid结构图覆盖</td>
+<td>pair级89% (325/366) / 图级49% (181/373)</td>
+<td>born-digital对齐率决定</td>
+</tr>
+<tr>
+<td>校验证据</td>
+<td>每条finding带{desc, section, evidence}</td>
+<td>全部可追溯到原文位置</td>
+</tr>
+<tr>
+<td>内置评测</td>
+<td>合成集F1=0.978（参数/逻辑/GJB层=1.0）</td>
+<td>235条·39种注入·盲测协议</td>
+</tr>
+</tbody>
+</table>
+<h2>六、错误与降级约定</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>激活无种子</td>
+<td><code>{ok:false, message:"未找到种子实体,尝试包含功能名/ID/图表号"}</code>，HTTP 200</td>
+</tr>
+<tr>
+<td>数据集不存在</td>
+<td>HTTP 404 + 明确错误消息</td>
+</tr>
+<tr>
+<td>上传非md/过短</td>
+<td>HTTP 400</td>
+</tr>
+<tr>
+<td>无锚点/图片资产</td>
+<td>多模态校验项自动降级为 pass(不适用)，报告注明</td>
+</tr>
+<tr>
+<td>LLM项未执行</td>
+<td>status="llm"，不阻塞下游（仅确定性项参与pass/fail判定）</td>
+</tr>
+</tbody>
+</table></body></html>

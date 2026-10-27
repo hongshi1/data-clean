@@ -15,10 +15,9 @@ import base64
 import glob
 import json
 import os
-import sys
 import time
 
-API_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY as API_KEY
 URL = "https://api.moonshot.cn/v1/chat/completions"
 MODEL = "kimi-k2.6"
 IMAGE_DIR = "data/gjb_438c/mineru_standard"
@@ -56,7 +55,7 @@ def analyze_image(img_path, use_requests=True):
                 except json.JSONDecodeError:
                     return {"figure_type": "未知", "key_elements": [], "summary": content[:100]}
             time.sleep(5)
-        except Exception as e:
+        except Exception:
             time.sleep(5)
     return {"figure_type": "分析失败", "key_elements": [], "summary": ""}
 

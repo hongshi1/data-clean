@@ -1,0 +1,1079 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "label_distribution": {
+  "not_in_evidence": 77,
+  "support": 6,
+  "refute": 8
+ },
+ "baselines": {
+  "B0": {
+   "description": "majority-NIE (collapse baseline)",
+   "config": {
+    "mode": "majority_nie"
+   },
+   "note": "",
+   "accuracy": 0.8462,
+   "macro_f1": 0.3056,
+   "per_class": {
+    "support": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "refute": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "not_in_evidence": {
+     "precision": 0.8462,
+     "recall": 1.0,
+     "f1": 0.9167
+    }
+   },
+   "confusion[predicted, silver]": {
+    "not_in_evidence|support": 6,
+    "not_in_evidence|refute": 8,
+    "not_in_evidence|not_in_evidence": 77
+   },
+   "claim_methods": {},
+   "llm_calls": {
+    "invocations": 0,
+    "api_calls": 0,
+    "cache_hits": 0
+   }
+  },
+  "B1": {
+   "description": "zero-shot NLI residual (raw mDeBERTa, no experts)",
+   "config": {
+    "use_experts": false,
+    "use_nli_residual": true,
+    "nli_model_path": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
+   },
+   "note": "residual dispatch keeps zero-shot channel; NIE fallback if model unavailable",
+   "accuracy": 0.5714,
+   "macro_f1": 0.3272,
+   "per_class": {
+    "support": {
+     "precision": 0.1176,
+     "recall": 0.3333,
+     "f1": 0.1739
+    },
+    "refute": {
+     "precision": 0.0667,
+     "recall": 0.125,
+     "f1": 0.087
+    },
+    "not_in_evidence": {
+     "precision": 0.8305,
+     "recall": 0.6364,
+     "f1": 0.7206
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|refute": 1,
+    "support|not_in_evidence": 14,
+    "refute|refute": 1,
+    "refute|not_in_evidence": 14,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 6,
+    "not_in_evidence|not_in_evidence": 49
+   },
+   "claim_methods": {
+    "nli_residual": 273,
+    "semantic_unresolved": 130,
+    "conservative_unresolved": 16,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "exact_statement": 9
+   },
+   "llm_calls": {
+    "invocations": 0,
+    "api_calls": 0,
+    "cache_hits": 0
+   }
+  },
+  "B2": {
+   "description": "LLM direct (one call per QA, no cascade)",
+   "config": {
+    "mode": "direct_llm",
+    "calls_per_qa": 1
+   },
+   "note": "",
+   "accuracy": 0.7143,
+   "macro_f1": 0.6105,
+   "per_class": {
+    "support": {
+     "precision": 0.2143,
+     "recall": 1.0,
+     "f1": 0.3529
+    },
+    "refute": {
+     "precision": 0.7143,
+     "recall": 0.625,
+     "f1": 0.6667
+    },
+    "not_in_evidence": {
+     "precision": 0.9643,
+     "recall": 0.7013,
+     "f1": 0.812
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 6,
+    "support|refute": 1,
+    "support|not_in_evidence": 21,
+    "refute|refute": 5,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|refute": 2,
+    "not_in_evidence|not_in_evidence": 54
+   },
+   "claim_methods": {
+    "direct_llm": 91
+   },
+   "llm_calls": {
+    "invocations": 91,
+    "api_calls": 0,
+    "cache_hits": 91
+   }
+  },
+  "B3": {
+   "description": "deterministic channels only (use_experts, no residual)",
+   "config": {
+    "use_experts": true
+   },
+   "note": "",
+   "accuracy": 0.9011,
+   "macro_f1": 0.6381,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.1667,
+     "f1": 0.25
+    },
+    "refute": {
+     "precision": 0.8333,
+     "recall": 0.625,
+     "f1": 0.7143
+    },
+    "not_in_evidence": {
+     "precision": 0.9157,
+     "recall": 0.987,
+     "f1": 0.95
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 5,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 3,
+    "not_in_evidence|not_in_evidence": 76
+   },
+   "claim_methods": {
+    "semantic_unresolved": 328,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 29,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 0,
+    "api_calls": 0,
+    "cache_hits": 0
+   }
+  },
+  "B4": {
+   "description": "full cascade = strongest L3 config",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true
+   },
+   "note": "NLI/LLM residual dispatch is mutually exclusive; L3 config used",
+   "accuracy": 0.9121,
+   "macro_f1": 0.7257,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.9487,
+     "recall": 0.961,
+     "f1": 0.9548
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 246,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 89,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "B5": {
+   "description": "pure LLM residual (no deterministic experts)",
+   "config": {
+    "use_experts": false,
+    "use_llm_residual": true
+   },
+   "note": "",
+   "accuracy": 0.8681,
+   "macro_f1": 0.7085,
+   "per_class": {
+    "support": {
+     "precision": 0.3846,
+     "recall": 0.8333,
+     "f1": 0.5263
+    },
+    "refute": {
+     "precision": 0.7143,
+     "recall": 0.625,
+     "f1": 0.6667
+    },
+    "not_in_evidence": {
+     "precision": 0.9718,
+     "recall": 0.8961,
+     "f1": 0.9324
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 5,
+    "support|refute": 2,
+    "support|not_in_evidence": 6,
+    "refute|refute": 5,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 1,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 69
+   },
+   "claim_methods": {
+    "semantic_unresolved": 274,
+    "conservative_unresolved": 22,
+    "llm_residual": 123,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "exact_statement": 9
+   },
+   "llm_calls": {
+    "invocations": 86,
+    "api_calls": 0,
+    "cache_hits": 86
+   }
+  }
+ },
+ "ablations": {
+  "-e1_expert": {
+   "description": "B4 without the E1 template expert",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.9011,
+   "macro_f1": 0.6869,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.3333,
+     "f1": 0.4
+    },
+    "refute": {
+     "precision": 0.6667,
+     "recall": 0.75,
+     "f1": 0.7059
+    },
+    "not_in_evidence": {
+     "precision": 0.9487,
+     "recall": 0.961,
+     "f1": 0.9548
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|refute": 1,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 6,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 250,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 100,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 84,
+    "api_calls": 0,
+    "cache_hits": 84
+   }
+  },
+  "-entity_detector": {
+   "description": "B4 without the L0 entity detector",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.9121,
+   "macro_f1": 0.7257,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.9487,
+     "recall": 0.961,
+     "f1": 0.9548
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 280,
+    "e1_template_match": 24,
+    "sequence_alignment": 230,
+    "conservative_unresolved": 22,
+    "llm_residual": 96,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "exact_statement": 9,
+    "enum_join_registry": 2
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "-sequence_expert": {
+   "description": "B4 without the sequence expert",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "trace",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.8791,
+   "macro_f1": 0.729,
+   "per_class": {
+    "support": {
+     "precision": 0.3636,
+     "recall": 0.6667,
+     "f1": 0.4706
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.9857,
+     "recall": 0.8961,
+     "f1": 0.9388
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 4,
+    "support|refute": 1,
+    "support|not_in_evidence": 6,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 1,
+    "not_in_evidence|not_in_evidence": 69
+   },
+   "claim_methods": {
+    "semantic_unresolved": 246,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "conservative_unresolved": 22,
+    "llm_residual": 90,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "-trace_expert": {
+   "description": "B4 without the trace expert",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "gjb",
+     "id_join",
+     "enum_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.9121,
+   "macro_f1": 0.7257,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.9487,
+     "recall": 0.961,
+     "f1": 0.9548
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 246,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 89,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "-id_join_expert": {
+   "description": "B4 without the ID→registry join expert",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "enum_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.9121,
+   "macro_f1": 0.7257,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.9487,
+     "recall": 0.961,
+     "f1": 0.9548
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 246,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 89,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "-enum_join_expert": {
+   "description": "B4 without the enumeration join expert",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "expert_filter": [
+     "entity",
+     "e1",
+     "sequence",
+     "trace",
+     "gjb",
+     "id_join"
+    ]
+   },
+   "note": "",
+   "accuracy": 0.9011,
+   "macro_f1": 0.6997,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.6667,
+     "recall": 0.75,
+     "f1": 0.7059
+    },
+    "not_in_evidence": {
+     "precision": 0.9367,
+     "recall": 0.961,
+     "f1": 0.9487
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 6,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 2,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 235,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 100,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 85,
+    "api_calls": 0,
+    "cache_hits": 85
+   }
+  },
+  "-per_claim_fusion": {
+   "description": "B4 without per-claim channel fusion",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "fuse_per_claim": false
+   },
+   "note": "",
+   "accuracy": 0.8901,
+   "macro_f1": 0.5735,
+   "per_class": {
+    "support": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "refute": {
+     "precision": 0.7,
+     "recall": 0.875,
+     "f1": 0.7778
+    },
+    "not_in_evidence": {
+     "precision": 0.925,
+     "recall": 0.961,
+     "f1": 0.9427
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 5,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 391,
+    "l0_entity_detector:TERM-05": 54,
+    "e1_template_match": 50,
+    "sequence_alignment": 259,
+    "llm_residual": 395,
+    "conservative_unresolved": 31,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 13,
+    "l0_entity_detector:TERM-07": 20,
+    "id_join_registry": 10,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 83,
+    "api_calls": 0,
+    "cache_hits": 83
+   }
+  },
+  "-llm_residual": {
+   "description": "B4 with the L3 residual off",
+   "config": {
+    "use_experts": true
+   },
+   "note": "identical configuration to B3",
+   "accuracy": 0.9011,
+   "macro_f1": 0.6381,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.1667,
+     "f1": 0.25
+    },
+    "refute": {
+     "precision": 0.8333,
+     "recall": 0.625,
+     "f1": 0.7143
+    },
+    "not_in_evidence": {
+     "precision": 0.9157,
+     "recall": 0.987,
+     "f1": 0.95
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 5,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 3,
+    "not_in_evidence|not_in_evidence": 76
+   },
+   "claim_methods": {
+    "semantic_unresolved": 328,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 29,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 11,
+    "id_join_registry": 1,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "enum_join_registry": 2,
+    "l0_entity_detector:TERM-08:warning": 3
+   },
+   "llm_calls": {
+    "invocations": 0,
+    "api_calls": 0,
+    "cache_hits": 0
+   }
+  },
+  "-all_experts": {
+   "description": "B4 with every deterministic expert off",
+   "config": {
+    "use_experts": false,
+    "use_llm_residual": true
+   },
+   "note": "identical configuration to B5 (L3 residual working alone)",
+   "accuracy": 0.8681,
+   "macro_f1": 0.7085,
+   "per_class": {
+    "support": {
+     "precision": 0.3846,
+     "recall": 0.8333,
+     "f1": 0.5263
+    },
+    "refute": {
+     "precision": 0.7143,
+     "recall": 0.625,
+     "f1": 0.6667
+    },
+    "not_in_evidence": {
+     "precision": 0.9718,
+     "recall": 0.8961,
+     "f1": 0.9324
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 5,
+    "support|refute": 2,
+    "support|not_in_evidence": 6,
+    "refute|refute": 5,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 1,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 69
+   },
+   "claim_methods": {
+    "semantic_unresolved": 274,
+    "conservative_unresolved": 22,
+    "llm_residual": 123,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "exact_statement": 9
+   },
+   "llm_calls": {
+    "invocations": 86,
+    "api_calls": 0,
+    "cache_hits": 86
+   }
+  },
+  "deq_on_off": {
+   "description": "DEQ evidence pipeline on/off on B4",
+   "config": {
+    "use_experts": true,
+    "use_llm_residual": true,
+    "use_deq": true
+   },
+   "note": "off row reuses the B4 run (use_deq defaults to False)",
+   "on": {
+    "description": "",
+    "config": {},
+    "note": "",
+    "accuracy": 0.9121,
+    "macro_f1": 0.7329,
+    "per_class": {
+     "support": {
+      "precision": 0.6667,
+      "recall": 0.3333,
+      "f1": 0.4444
+     },
+     "refute": {
+      "precision": 0.6667,
+      "recall": 1.0,
+      "f1": 0.8
+     },
+     "not_in_evidence": {
+      "precision": 0.9605,
+      "recall": 0.9481,
+      "f1": 0.9542
+     }
+    },
+    "confusion[predicted, silver]": {
+     "support|support": 2,
+     "support|not_in_evidence": 1,
+     "refute|support": 1,
+     "refute|refute": 8,
+     "refute|not_in_evidence": 3,
+     "not_in_evidence|support": 3,
+     "not_in_evidence|not_in_evidence": 73
+    },
+    "claim_methods": {
+     "semantic_unresolved": 242,
+     "e1_template_match": 18,
+     "l0_entity_detector:TERM-05": 51,
+     "sequence_alignment": 225,
+     "conservative_unresolved": 28,
+     "llm_residual": 89,
+     "explicit_quote_polarity": 1,
+     "identifier_exact_match": 11,
+     "id_join_registry": 1,
+     "l0_entity_detector:TERM-07": 18,
+     "exact_statement": 9,
+     "enum_join_registry": 2,
+     "l0_entity_detector:TERM-08:warning": 2
+    },
+    "llm_calls": {
+     "invocations": 82,
+     "api_calls": 0,
+     "cache_hits": 82
+    }
+   },
+   "off": {
+    "description": "",
+    "config": {},
+    "note": "",
+    "accuracy": 0.9121,
+    "macro_f1": 0.7257,
+    "per_class": {
+     "support": {
+      "precision": 0.6667,
+      "recall": 0.3333,
+      "f1": 0.4444
+     },
+     "refute": {
+      "precision": 0.7,
+      "recall": 0.875,
+      "f1": 0.7778
+     },
+     "not_in_evidence": {
+      "precision": 0.9487,
+      "recall": 0.961,
+      "f1": 0.9548
+     }
+    },
+    "confusion[predicted, silver]": {
+     "support|support": 2,
+     "support|not_in_evidence": 1,
+     "refute|support": 1,
+     "refute|refute": 7,
+     "refute|not_in_evidence": 2,
+     "not_in_evidence|support": 3,
+     "not_in_evidence|refute": 1,
+     "not_in_evidence|not_in_evidence": 74
+    },
+    "claim_methods": {
+     "semantic_unresolved": 246,
+     "e1_template_match": 19,
+     "l0_entity_detector:TERM-05": 51,
+     "sequence_alignment": 225,
+     "conservative_unresolved": 22,
+     "llm_residual": 89,
+     "explicit_quote_polarity": 1,
+     "identifier_exact_match": 11,
+     "id_join_registry": 1,
+     "l0_entity_detector:TERM-07": 18,
+     "exact_statement": 9,
+     "enum_join_registry": 2,
+     "l0_entity_detector:TERM-08:warning": 3
+    },
+    "llm_calls": {
+     "invocations": 83,
+     "api_calls": 0,
+     "cache_hits": 83
+    }
+   }
+  }
+ },
+ "join_experts_off": {
+  "description": "B4 with both join experts off",
+  "config": {
+   "use_experts": true,
+   "use_llm_residual": true,
+   "expert_filter": [
+    "entity",
+    "e1",
+    "sequence",
+    "trace",
+    "gjb"
+   ]
+  },
+  "note": "bootstrap pair B4_vs_no_join_experts; not an ablation-table row",
+  "accuracy": 0.9011,
+  "macro_f1": 0.6997,
+  "per_class": {
+   "support": {
+    "precision": 0.6667,
+    "recall": 0.3333,
+    "f1": 0.4444
+   },
+   "refute": {
+    "precision": 0.6667,
+    "recall": 0.75,
+    "f1": 0.7059
+   },
+   "not_in_evidence": {
+    "precision": 0.9367,
+    "recall": 0.961,
+    "f1": 0.9487
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 2,
+   "support|not_in_evidence": 1,
+   "refute|support": 1,
+   "refute|refute": 6,
+   "refute|not_in_evidence": 2,
+   "not_in_evidence|support": 3,
+   "not_in_evidence|refute": 2,
+   "not_in_evidence|not_in_evidence": 74
+  },
+  "claim_methods": {
+   "semantic_unresolved": 235,
+   "e1_template_match": 19,
+   "l0_entity_detector:TERM-05": 51,
+   "sequence_alignment": 225,
+   "conservative_unresolved": 22,
+   "llm_residual": 100,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 18,
+   "exact_statement": 9,
+   "l0_entity_detector:TERM-08:warning": 3
+  },
+  "llm_calls": {
+   "invocations": 85,
+   "api_calls": 0,
+   "cache_hits": 85
+  }
+ },
+ "bootstrap": {
+  "B4_vs_B3": {
+   "metric": "macro_f1",
+   "delta": 0.0876,
+   "ci95": [
+    -0.0511,
+    0.2666
+   ],
+   "p": 0.276,
+   "n_boot": 1000,
+   "seed": 42
+  },
+  "B4_vs_B5": {
+   "metric": "macro_f1",
+   "delta": 0.0172,
+   "ci95": [
+    -0.1641,
+    0.2094
+   ],
+   "p": 0.834,
+   "n_boot": 1000,
+   "seed": 42
+  },
+  "B4_vs_B2": {
+   "metric": "macro_f1",
+   "delta": 0.1151,
+   "ci95": [
+    -0.098,
+    0.313
+   ],
+   "p": 0.314,
+   "n_boot": 1000,
+   "seed": 42
+  },
+  "B4_vs_no_join_experts": {
+   "metric": "macro_f1",
+   "delta": 0.026,
+   "ci95": [
+    0.0,
+    0.1019
+   ],
+   "p": 0.666,
+   "n_boot": 1000,
+   "seed": 42
+  }
+ },
+ "b1_zero_shot_nli_available": true,
+ "strongest": "B4",
+ "summary_table": "## Baselines (B0-B5)\n\n| system | description | acc | macro-F1 | S-F1 | R-F1 | N-F1 | LLM api/cache |\n|---|---|---|---|---|---|---|---|\n| B0 | majority-NIE (collapse baseline) | 0.846 | 0.306 | 0.000 | 0.000 | 0.917 | 0/0 |\n| B1 | zero-shot NLI residual (raw mDeBERTa, no experts) | 0.571 | 0.327 | 0.174 | 0.087 | 0.721 | 0/0 |\n| B2 | LLM direct (one call per QA, no cascade) | 0.714 | 0.611 | 0.353 | 0.667 | 0.812 | 0/91 |\n| B3 | deterministic channels only (use_experts, no residual) | 0.901 | 0.638 | 0.250 | 0.714 | 0.950 | 0/0 |\n| B4 | full cascade = strongest L3 config | 0.912 | 0.726 | 0.444 | 0.778 | 0.955 | 0/83 |\n| B5 | pure LLM residual (no deterministic experts) | 0.868 | 0.709 | 0.526 | 0.667 | 0.932 | 0/86 |\n\n\n\n## Component ablations (on B4 = strongest L3)\n\n| ablation | description | acc | macro-F1 | Δ macro-F1 | LLM api/cache |\n|---|---|---|---|---|---|\n| -e1_expert | B4 without the E1 template expert | 0.901 | 0.687 | -0.039 | 0/84 |\n| -entity_detector | B4 without the L0 entity detector | 0.912 | 0.726 | +0.000 | 0/83 |\n| -sequence_expert | B4 without the sequence expert | 0.879 | 0.729 | +0.003 | 0/83 |\n| -trace_expert | B4 without the trace expert | 0.912 | 0.726 | +0.000 | 0/83 |\n| -id_join_expert | B4 without the ID→registry join expert | 0.912 | 0.726 | +0.000 | 0/83 |\n| -enum_join_expert | B4 without the enumeration join expert | 0.901 | 0.700 | -0.026 | 0/85 |\n| -per_claim_fusion | B4 without per-claim channel fusion | 0.890 | 0.574 | -0.152 | 0/83 |\n| -llm_residual | B4 with the L3 residual off | 0.901 | 0.638 | -0.088 | 0/0 |\n| -all_experts | B4 with every deterministic expert off | 0.868 | 0.709 | -0.017 | 0/86 |\n| deq_off (B4) | DEQ on/off comparison on B4 | 0.912 | 0.726 | +0.000 | 0/83 |\n| deq_on | DEQ on/off comparison on B4 | 0.912 | 0.733 | +0.007 | 0/82 |\n\n\n\n## Paired bootstrap on macro-F1 (1000 resamples, seed 42)\n\n| comparison | Δ macro-F1 | 95% CI | p (two-sided) |\n|---|---|---|---|\n| B4_vs_B3 | +0.0876 | [-0.0511, +0.2666] | 0.276 |\n| B4_vs_B5 | +0.0172 | [-0.1641, +0.2094] | 0.834 |\n| B4_vs_B2 | +0.1151 | [-0.0980, +0.3130] | 0.314 |\n| B4_vs_no_join_experts | +0.0260 | [+0.0000, +0.1019] | 0.666 |",
+ "runtime_seconds": 33.3
+}

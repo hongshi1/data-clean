@@ -1,0 +1,21 @@
+{
+ "script": "task2_v2_full_pipeline",
+ "git_sha": "ff0d4950",
+ "config": {
+  "重构": "严格按用户六步流水线",
+  "关键改进": [
+   "变异算子必须验证与premise的冲突(不构成→is_valid=False不入库)",
+   "SemanticGroup被实际构建(build_semantic_groups)",
+   "evidence_chain必须填充",
+   "QA槽位完整性检查(空槽→质控不通过→拒绝生成)",
+   "答案有信息量(含原因/位置/修复建议,非单个词)",
+   "quality_filter过滤低质量QA(空问题/空答案/无证据/无解释/空槽)",
+   "变异位置用文档级描述(非字符偏移)",
+   "变异记录含conflict_verified字段",
+   "变异后Evidence保留metadata",
+   "唯一ID后缀(算子名后缀避免冲突)"
+  ]
+ },
+ "config_hash": "8b7830f6",
+ "opened_at": 1791793287.2
+}

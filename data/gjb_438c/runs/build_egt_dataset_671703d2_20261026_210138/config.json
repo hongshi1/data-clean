@@ -1,0 +1,30 @@
+{
+ "script": "build_egt_dataset",
+ "git_sha": "ff0d4950",
+ "config": {
+  "input": "data\\gjb_438c\\qa_frozen\\scene1_qa_frozen_v1.jsonl",
+  "docs": "all",
+  "n_qa": 91,
+  "n_doc_dirs": 16,
+  "allowed_seed_methods": [
+   "e1_template_match",
+   "exact_statement",
+   "identifier_exact_match",
+   "l0_entity_detector:TERM-05",
+   "sequence_alignment"
+  ],
+  "cap_per_label": 1500,
+  "balance": true,
+  "max_peers": 8,
+  "narrative_shares": {
+   "support": 0.6,
+   "refute": 0.6,
+   "not_in_evidence": 0.6
+  },
+  "statement_question": "该声明是否与文档一致",
+  "module": "QAConsistencyModule(use_experts=True)",
+  "version": "egt_synthesis_v3_narrative"
+ },
+ "config_hash": "671703d2",
+ "opened_at": 1793019698.7
+}

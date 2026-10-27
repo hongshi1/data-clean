@@ -36,7 +36,7 @@ OCR_OUT = BASE / "data/gjb_438c/anchor_v2/scene_ocr_extractions.json"
 CENSUS_OUT = BASE / "data/gjb_438c/anchor_v2/scene_drift_census.json"
 
 KIMI_URL = "https://api.moonshot.cn/v1/chat/completions"
-KIMI_KEY = "sk-7QY7n6oFclVqgANKwJnyiVYAgSjueGSEO4NPYfS4jBwFPbaT"
+from ai_config import KIMI_KEY
 KIMI_MODEL = "kimi-k2.6"
 
 EXTRACT_PROMPT = """你是软件需求文档图表解析专家。请精确提取这张SRS文档中的图表结构。
@@ -331,7 +331,7 @@ def main():
     if args.phase in ('all', 'analyze'):
         census, stats = phase_analyze(pairs_by_scene, vlm, ocr)
         print(f"\n{'='*64}")
-        print(f"Drift普查结果")
+        print("Drift普查结果")
         print(f"{'='*64}")
         print(f"  锚定: {stats['anchored']}对 (重对齐修复映射: {stats['remapped']}, "
               f"无锚: {stats['unanchored']})")
@@ -342,7 +342,7 @@ def main():
               f"两者都有={stats['ambiguous_both']} 存疑={stats['inconclusive']}")
 
         # 真drift明细
-        print(f"\n  ★ 确认的真drift(text_drift且OCR支持图版):")
+        print("\n  ★ 确认的真drift(text_drift且OCR支持图版):")
         for pk, c in sorted(census.items()):
             for d in c.get('diffs', []):
                 if d.get('verdict') == 'real_drift':
@@ -354,7 +354,7 @@ def main():
             scene_stats[c['scene']]['n'] += 1
             if c.get('n_drift'):
                 scene_stats[c['scene']]['drift'] += 1
-        print(f"\n  按场景: " + " ".join(
+        print("\n  按场景: " + " ".join(
             f"{s[:8]}:{v['drift']}/{v['n']}" for s, v in scene_stats.items()))
         print(f"\n  输出: {CENSUS_OUT}")
 

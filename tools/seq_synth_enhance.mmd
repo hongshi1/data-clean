@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant PRE as 标准化预处理智能体
+    participant SYN as 数据合成与增强智能体<br/>数据合成
+    participant AUG as 样本增强
+    participant BAL as 类别均衡
+    participant QF as 质量过滤
+    participant DS as 微调数据集
+
+    PRE->>SYN: 基础样本
+    SYN->>SYN: 基于领域模板与生成模型合成多样化样本
+    SYN->>AUG: 合成样本
+    AUG->>AUG: 改写/回译/噪声注入增强多样性
+    AUG->>BAL: 增强后样本
+    BAL->>BAL: 过采样/欠采样平衡类别
+    BAL->>QF: 均衡样本
+    QF->>QF: 去重与质量把关
+    QF-->>DS: 均衡化样本(供微调数据集)

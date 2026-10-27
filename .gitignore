@@ -39,10 +39,22 @@ dataflow_repos/
 .codeflicker/
 .omo/
 
-# Models
+# Models (local weights, re-creatable: tools/train_residual_nli.py + EGT dataset)
 *.bin
 *.pt
 *.ckpt
+*.safetensors
+*.msgpack
+*.onnx
+models/embedding/bge_lora/   # LoRA adapter(safetensors+缓存, 训练产物)
+models/nli/
+models/reranker/
+models/embedding/
+data/models/
+
+# Training checkpoints in runs (regenerable, multi-GB optimizer states)
+data/gjb_438c/runs/**/trainer/
+data/gjb_438c/runs/**/checkpoint-*/
 
 # Secrets
 .env
@@ -50,3 +62,16 @@ dataflow_repos/
 .venv-srs/
 emb_cache.pkl
 *.pkl
+
+# LLM response cache + blackboard run artifacts (regenerable)
+data/gjb_438c/llm_cache/
+data/gjb_438c/blackboard/runs/
+
+# External app sandbox (node_modules/.next junk)
+easy-dataset/
+frontend/node_modules/
+frontend/dist/
+
+# Old large data assets not under MANIFEST (vectors/vector stores)
+data/gjb_438c/feature_snapshot_v1/vectors.npz
+data/gjb_438c/data_assets/lightrag_store/

@@ -1,0 +1,124 @@
+{
+ "rows": {
+  "B1-idf-maxsim": {
+   "method": "IDF-weighted MaxSim (B1 protocol reproduction)",
+   "threshold_source": "in-fold test negatives 95th percentile (B1 convention)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.8479,
+    "precision": 0.9011,
+    "recall": 0.5622,
+    "f1": 0.6924,
+    "false_merge_rate": 0.0499,
+    "threshold": 0.866
+   }
+  },
+  "B2-topk3": {
+   "method": "IDF-weighted MaxSim, doc-side max -> top-3 mean",
+   "threshold_source": "in-fold test negatives 95th percentile (B1 convention)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.8342,
+    "precision": 0.9012,
+    "recall": 0.5628,
+    "f1": 0.6929,
+    "false_merge_rate": 0.0499,
+    "threshold": 0.8022
+   },
+   "k": 3
+  },
+  "B2-topk5": {
+   "method": "IDF-weighted MaxSim, doc-side max -> top-5 mean",
+   "threshold_source": "in-fold test negatives 95th percentile (B1 convention)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.8289,
+    "precision": 0.903,
+    "recall": 0.5743,
+    "f1": 0.7021,
+    "false_merge_rate": 0.0499,
+    "threshold": 0.7694
+   },
+   "k": 5
+  },
+  "B2-noidf": {
+   "method": "MaxSim without IDF (w = 1), original max aggregation",
+   "threshold_source": "in-fold test negatives 95th percentile (B1 convention)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.828,
+    "precision": 0.9018,
+    "recall": 0.5788,
+    "f1": 0.7051,
+    "false_merge_rate": 0.051,
+    "threshold": 0.8725
+   },
+   "idf": "none"
+  },
+  "B4-gate": {
+   "method": "best B variant (B1-idf-maxsim) min-max normalized + structural gate (alpha=0.7, identifier_match forced False)",
+   "threshold_source": "in-fold test negatives 95th percentile (B1 convention)",
+   "test": {
+    "n_pairs": 6848,
+    "auc": 0.7985,
+    "precision": 0.8947,
+    "recall": 0.5273,
+    "f1": 0.6635,
+    "false_merge_rate": 0.0502,
+    "threshold": 0.6587
+   },
+   "base_variant": "B1-idf-maxsim",
+   "gate_alpha": 0.7,
+   "identifier_match": false
+  }
+ },
+ "encode_stats": {
+  "n_test_pairs": 6848,
+  "n_test_sides": 13696,
+  "n_unique_test_texts_encoded": 646,
+  "idf_corpus_documents": 2425,
+  "idf_train_texts_available": 1779,
+  "idf_train_texts_sampled": 1779,
+  "idf_train_sample_target": 5000,
+  "token_max_length": 256,
+  "bge_mode": "cuda",
+  "bge_device": "cuda",
+  "bge_dim": 1024
+ },
+ "reproduction_check": {
+  "archived_run": "eval_ablation_matrix_aacbb70e_20261022_080237",
+  "b1_auc_this": 0.8479,
+  "b1_auc_archived": 0.8479,
+  "delta": 0.0,
+  "n_unique_test_texts_this": 646,
+  "n_unique_test_texts_archived": 646,
+  "idf_corpus_this": 2425,
+  "idf_corpus_archived": 2425
+ },
+ "verdict": {
+  "b2_vs_b1": {
+   "best_b2_variant": "B2-topk3",
+   "delta_auc": -0.0137,
+   "rule": "聚合松弛有害: dAUC = -0.0137 — doc侧max→top-k均值/去IDF损害ranking: max捕获的是单个最匹配token的精确证据, top-k均值把它与弱匹配平均掉"
+  },
+  "b4_vs_references": {
+   "b4_base": "B1-idf-maxsim",
+   "b4_auc": 0.7985,
+   "a4_clean_auc": 0.9114,
+   "gate_gain_on_b": -0.0494,
+   "gate_gain_on_a_archived": -0.0079,
+   "rule": "B4 < A4-clean → 门控增益与表征正交: 门控叠加在B表征上不改变B<A的表征差距 (gate增益 B -0.0494 vs A -0.0079); 表征质量主导"
+  },
+  "b_family_vs_a_family": {
+   "best_b_auc": 0.8479,
+   "a1_native": 0.8774,
+   "gap_to_a1": -0.0295
+  }
+ },
+ "notes": [
+  "B协议口径: 只编码test fold文本(646条去重, 与B1同法同序), 阈值in-fold于各自test负例95%分位 — 行间可比, 但F1/precision/recall相对A行乐观; AUC无阈值, 跨行可比",
+  "B4基变体按test AUC在B族内选择(in-fold选择, 已标注): B协议无dev误差棒, 选择本身也是单点估计的一部分",
+  "B2-noidf保留max聚合仅去掉IDF — 与B2-topk(k隔离聚合方式)互补, 两者合起来分离'聚合方式'与'IDF权重'两个因子",
+  "门控防泄漏: identifier_match强制False(silver正例=共享ID对, 开启即喂标签); same_section=False映射unknown(跨章节共指合法), same_doc恒compatible(库内pair), 门控判别信号只剩same_section一项"
+ ]
+}

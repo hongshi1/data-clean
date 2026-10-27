@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <style>
+    .fail{fill:#ffebee;stroke:#c62828;stroke-width:1.5}
+    .ok{fill:#e8f5e9;stroke:#2e7d32;stroke-width:1.5}
+    .clm{fill:#e3f2fd;stroke:#1565c0;stroke-width:1.5}
+    .t1{font-size:13px;fill:#263238;font-weight:bold}
+    .t2{font-size:12px;fill:#37474f}
+    .t3{font-size:11px;fill:#546e7a}
+    .verdict-bad{fill:#c62828;font-weight:bold}
+    .verdict-ok{fill:#2e7d32;font-weight:bold}
+  </style>
+
+  <text x="480" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#263238">方法核心一：闭世界声明模板（修复NLI的枚举盲区）</text>
+  <text x="480" y="48" text-anchor="middle" font-size="12" fill="#607d8b">同一份差异，两种声明形式 → NLI判定结果完全不同（真实SRS语句，mDeBERTa当日复现验证）</text>
+
+  <!-- ══ 左: 裸枚举(失败) ══ -->
+  <rect x="30" y="66" width="440" height="290" class="fail" rx="10"/>
+  <rect x="30" y="66" width="440" height="40" fill="#c62828" rx="10"/>
+  <rect x="30" y="92" width="440" height="14" fill="#c62828"/>
+  <text x="250" y="92" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">✗ 裸枚举声明（零样本直用NLI）</text>
+
+  <rect x="50" y="122" width="400" height="72" fill="#ffffff" stroke="#ef9a9a"/>
+  <text x="66" y="144" font-size="11" fill="#546e7a">前提（表格侧）</text>
+  <text x="66" y="168" class="t2">「本功能包括：数据插入、数据删除、数据查询」</text>
+  <text x="66" y="186" font-size="11" fill="#78909c">（穷举语义：清单即完整规格）</text>
+
+  <rect x="50" y="204" width="400" height="72" fill="#ffffff" stroke="#ef9a9a"/>
+  <text x="66" y="226" font-size="11" fill="#546e7a">假设（图侧）</text>
+  <text x="66" y="250" class="t2">「本功能包括：数据修改、数据查询、数据插入」</text>
+  <text x="66" y="268" font-size="11" fill="#78909c">（删除被替换为修改 = 规格矛盾）</text>
+
+  <!-- NLI判定 -->
+  <rect x="50" y="288" width="400" height="50" fill="#ffffff" stroke="#c62828" stroke-width="2"/>
+  <text x="250" y="308" text-anchor="middle" class="t1">NLI判定：<tspan class="verdict-bad">蕴含（entailment）</tspan></text>
+  <text x="250" y="328" text-anchor="middle" font-size="11" fill="#c62828">矛盾概率 p = 0.00 —— 集合重叠偏置：NLI把"部分重叠"当蕴含</text>
+
+  <text x="250" y="348" text-anchor="middle" font-size="11" fill="#78909c">XNLI类训练数据中"部分重叠"不算矛盾，但需求清单是穷举语义</text>
+
+  <!-- ══ 右: 闭世界(成功) ══ -->
+  <rect x="490" y="66" width="440" height="290" class="ok" rx="10"/>
+  <rect x="490" y="66" width="440" height="40" fill="#2e7d32" rx="10"/>
+  <rect x="490" y="92" width="440" height="14" fill="#2e7d32"/>
+  <text x="710" y="92" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">✓ 闭世界声明（本文方法）</text>
+
+  <rect x="510" y="122" width="400" height="72" fill="#ffffff" stroke="#a5d6a7"/>
+  <text x="526" y="144" font-size="11" fill="#546e7a">前提（表格侧）</text>
+  <text x="526" y="168" class="t2">「子功能共<tspan font-weight="bold">2</tspan>项，包括：A、B，</text>
+  <text x="526" y="186" class="t2" fill="#1b5e20" font-weight="bold">除此之外没有其他子功能」</text>
+
+  <rect x="510" y="204" width="400" height="72" fill="#ffffff" stroke="#a5d6a7"/>
+  <text x="526" y="226" font-size="11" fill="#546e7a">假设（图侧）</text>
+  <text x="526" y="250" class="t2">「相连节点共<tspan font-weight="bold">1</tspan>个，包括：A，</text>
+  <text x="526" y="268" class="t2" fill="#1b5e20" font-weight="bold">除此之外没有其他相连节点」</text>
+
+  <rect x="510" y="288" width="400" height="50" fill="#ffffff" stroke="#2e7d32" stroke-width="2"/>
+  <text x="710" y="308" text-anchor="middle" class="t1">NLI判定：<tspan class="verdict-ok">矛盾（contradiction）</tspan></text>
+  <text x="710" y="328" text-anchor="middle" font-size="11" fill="#2e7d32">矛盾概率 p = 1.00，双向对称一致（SYM）</text>
+
+  <text x="710" y="348" text-anchor="middle" font-size="11" fill="#78909c">闭世界后缀把"清单=完整注册表"的文档约定显式化，集合差异进入可判范围</text>
+
+  <!-- 底部: 双向对称准则 -->
+  <rect x="30" y="378" width="900" height="120" class="clm" rx="10"/>
+  <text x="480" y="402" text-anchor="middle" font-size="15" font-weight="bold" fill="#0d47a1">方法核心二：双向对称矛盾准则</text>
+
+  <rect x="60" y="416" width="400" height="30" fill="#ffffff" stroke="#90caf9"/>
+  <text x="260" y="436" text-anchor="middle" class="t2">正向推理（前提→假设）: 矛盾 p=0.98</text>
+  <rect x="60" y="452" width="400" height="30" fill="#ffffff" stroke="#90caf9"/>
+  <text x="260" y="472" text-anchor="middle" class="t2">逆向推理（假设→前提）: 矛盾 p=0.99</text>
+  <text x="260" y="496" text-anchor="middle" font-size="12" fill="#1b5e20" font-weight="bold">双向均矛盾 → sym_contra = 真（强信号/工作点）</text>
+
+  <rect x="500" y="416" width="400" height="30" fill="#ffffff" stroke="#90caf9"/>
+  <text x="700" y="436" text-anchor="middle" class="t2">正向推理: 矛盾 p=0.72</text>
+  <rect x="500" y="452" width="400" height="30" fill="#ffffff" stroke="#90caf9" stroke-dasharray="4 2"/>
+  <text x="700" y="472" text-anchor="middle" class="t2">逆向推理: 矛盾 p=0.04 ← 单向偏置(实测假阳性模式)</text>
+  <text x="700" y="496" text-anchor="middle" font-size="12" fill="#c62828" font-weight="bold">双向不一致 → 过滤（以召回换精确）</text>
+
+  <!-- 消融量化 -->
+  <rect x="30" y="516" width="900" height="64" rx="8" fill="#fafafa" stroke="#cfd8dc"/>
+  <text x="480" y="540" text-anchor="middle" font-size="13" fill="#37474f">消融量化：<tspan font-weight="bold" fill="#2e7d32">闭世界模板召回 +0.222</tspan>（裸枚举 R=0.326 → 闭世界 R=0.548）· <tspan font-weight="bold" fill="#0d47a1">AUC 0.778 → 0.795</tspan></text>
+  <text x="480" y="562" text-anchor="middle" font-size="11" fill="#78909c">边界如实：闭世界修复计数/缺失型矛盾；成员替换（计数相同、成员互换）判中立——逻辑上两功能可共存，成员身份核对归词法通道</text>
+</svg>

@@ -1,0 +1,23 @@
+# 核心分析栈 (唯一可用解释器: 系统 Python 3.12 / Anaconda, Windows)
+# 说明: .venv 与 .venv-srs 为macOS时代残留(Windows不可用), .venv-embed 仅含numpy
+requests>=2.32        # LLM/embedding API客户端(m1/vlm通道等)
+numpy>=1.26           # 图方法/嵌入
+scipy>=1.13           # 图方法(谱聚类等)
+scikit-learn>=1.4     # sc1学习型检测器(LR/GCN对比)
+networkx>=3.6         # ID-Graph/图算法
+httpx>=0.27           # 异步API调用(gen_qa/lightrag等)
+Pillow>=12.0          # 图片处理(高清图提取)
+matplotlib>=3.8       # 论文图表(可选, 仅绘图脚本需要)
+
+# 工具链
+pytest>=7.4           # 测试(tests/ + algorithms/)
+ruff>=0.11            # lint: `ruff check algorithms` 必须零报错
+
+# 可选(按需安装, 不默认)
+z3-solver>=5.0        # L1数值约束专家(algorithms/consistency/numeric_z3_expert.py) + 逻辑层SMT
+# sentence-transformers # 本地embedding(需模型下载)
+#
+# 本地深度模型(已装于系统Python3.12, 供NLI/embedding通道; 见tools/download_*.py)
+# torch==2.11.0+cu128  # GPU版(必须cu版, 勿装CPU版) — RTX 4060
+# transformers>=5.17   # models/nli/(mDeBERTa,Erlangshen) + models/embedding/bge-large-zh-v1.5
+# 模型资产: models/embedding/bge-large-zh-v1.5 (1024维, GPU校验脚本 tools/test_bge_gpu.py)

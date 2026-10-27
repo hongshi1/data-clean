@@ -1,529 +1,288 @@
-# GJB SRS数据一致性校验项目指导文档
+# GJB SRS研究项目指南
 
-> 版本：v3.0 | 日期：2026-08-12
-> 状态：四类不一致框架确立 + Pair Dataset重建(366实例) + QA数据集(6189条)
-> 数据源：16份真实GJB 438C SRS + MinerU标准解析 + 温老师会议反馈
-> 更新: 根据温老师8/12会议反馈, 项目范围聚焦四类不一致合规
+> 版本：10.0 | 更新：2026-10-27
+> 状态：**CascadeVerify v2审计响应收口（M28）**。可信度审计→P0/P1修复→诚实数字完整链条已固化：持久dev/test切分+test侧诚实评测（修复后test=0.8286）、P1三项确定性修复（support召回2/6→5/6）、06号跨文档sound评测集与gap量化（-0.486）；级联全链路（DEQ→L0→L1专家族9个→per-claim融合→L2 NLI→级联升级→L3 LLM）实现并在91QA上完成论文矩阵评测；结果总览见 `49_cascadeverify_v2_results.md`（论文数字唯一权威来源，审计响应=其§10）。
+> 本文件是当前项目入口。旧文档已归档至 `archive_20261022/`（91份）。
 
----
+## 1. 权威数据源（不可修改，不可派生覆盖）
 
-## 项目全貌（v3.0 更新）
+### 源A：实施方案文档（40项校验的原始定义）
 
-```
-输入: SRS文档(16份) + 问答对(含{image}/{table}/{text}占位符) + 专家知识(规则形式)
-  ↓
-问题 → 上下文召回(从SRS文档召回相关的图+表+正文)
-  ↓
-四类不一致校验:
-  1.术语层面: 同名实体/多实体映射 (图/表/文功能名一致性)
-  2.参数指标: 参数/单位/数字一致 (接口属性/数值/单位对比)
-  3.业务逻辑: 时序/流程一致 (流程图步骤vs正文/表描述)
-  4.GJB合规: 模板/接口定义规范 (表头字段/ID格式/章节结构)
-  ↓
-输出: 四类一致性校验结果(每类含issues列表, 每个issue含类型/证据/修复建议)
-```
+- 文件：`docs/srs_project/软件需求规格说明辅助生成场景微调数据应用设计与落地实施文档.docx`
+- 关键章节：**技术三——面向武器装备科研数据的多层级跨模态一致性校验技术功能需求**（段[116]-[211]）
+- 内容：四层校验体系（术语8+参数10+业务逻辑11+国军标合规11=40项），每项带原始示例
+- 原始意图：**跨文档、跨资料比对检测**，作为数据质量审校规则、负样本构造规则和问答对过滤标准
+- GJB层参照标准：国军标841、国军标2438、国军标438C等（不仅438C）
 
-### 输入输出格式（v3.0 更新）
+### 源B：官方QA对 + 04号SRS
 
-**输入（问答对，含多模态占位符）**：
-```json
-{
-  "id": "qa_0001_01",
-  "inconsistency_type": "terminology",
-  "label": "inconsistent",
-  "is_injected": true,
-  "question": "表{table}中功能「结操化数据归集」与图{image}中的用例名称是否一致？",
-  "placeholders": {
-    "image": "data/.../image.png",
-    "table": "data/.../table.csv",
-    "text": "data/.../text.txt"
-  },
-  "answer": "不一致。图中为「结构化数据归集」，表中写为「结操化数据归集」，第2字错字。",
-  "evidence": {"image_caption": "图3...", "table_caption": "表3...", "section": "3.2.1.2"}
-}
-```
-```
+- QA对：`docs/doc11/场景1-*/高质量问答对（配套…04数据统一访问服务…）.json`（91条Alpaca格式）
+- SRS原始：`docs/doc11/场景1-*/2-某项目的合同、需归文档/数据服务软件需求规格说明.docx`
+- 解析后：`data/gjb_438c/mineru_standard/04…/office/*content_list.json`（411块：text235+table82+image48+list43）
+- 官方整合资产：`data/gjb_438c/qa_frozen/scene1_official_reference_v1.jsonl`（91行：Alpaca源+冻结证据+语句+silver标签）
 
-**输出（一致性校验结果）**：
-```json
-{
-  "id": "case_001",
-  "consistency_results": {
-    "syntax": {"status": "pass", "issues": []},
-    "semantic": {
-      "status": "fail",
-      "issues": [{
-        "type": "version_conflict",
-        "description": "回答称达梦V7.6，但文档3.10.3软件清单表标注V7.2",
-        "evidence": {"recall_sections": ["3.9.1", "3.10.3"],
-                     "doc_values": [{"section":"3.9.1","value":"V7.6"},
-                                    {"section":"3.10.3","value":"V7.2"}]},
-        "resolution": "回答应说明3.9.1运行环境与3.10.3软件清单的版本不一致"
-      }]
-    },
-    "logic": {"status": "pass", "issues": []}
-  }
-}
-```
+### 已删除的派生文档（2026-10-22，偏离原始意图）
 
----
+以下文档曾对40项进行了错误改造（丢失跨模态维度、GJB层虚构了7项不存在的标准条款、把跨文档校验改成单文档内校验），已全部删除：
 
-## 一、数据集
+- `knowledge/consistency_taxonomy_v2.json` → 已被 **taxonomy v3** 替代
+- `knowledge/inconsistency_rules.json` → 旧规则库，与原文不符
+- `docs/srs_project/14_strict_40_design.md` / `14_strict_40_items_design.md` → 注入设计，基于错误分类
+- `docs/srs_project/13_alignment_analysis.md` / `13_dataset_synthesis_progress.md` → 对齐分析，基于错误基准
 
-### 1.1 SRS文档
+## 2. 当前taxonomy（v3）
 
-- 16份GJB 438C SRS，MinerU正确解析（content_list.json）
-- 数据路径：`data/gjb_438c/mineru_correct/`
-- 文档结构共性：6大章 + 3.1~3.18标准18节 + 15种表型 + 7种图型
-- 总量：329张图片 + 1119张表格 + 1029个需求ID + 33组版本对(9组冲突) + 433张用例表(87个悬空引用)
+- 文件：`knowledge/consistency_taxonomy_v3.json`
+- 内容：40项，每项包含：
+  - `original_example`：实施方案文档的原始示例（逐字引用）
+  - `cross_modal_pair`：该项校验的跨模态对象（如「文本术语 vs 框图术语」）
+  - `doc04_evidence`：04号SRS中的实际证据形态（具体block/表）
+  - `qa_coverage`：91条QA对中触及该项的instance_id列表
+  - `doc04_violations`：深读04号SRS发现的**真实不一致**（17个）
+  - `note`：该项在04号上是否适用（7项零证据不适用）
 
-**3个离群点**：
+### 04号SRS上的真实不一致清单（17个，全部来自深读）
 
-| 文档 | 离群特征 | 影响 |
-|------|----------|------|
-| doc01(数据获取转换) | 不同ID前缀(ZZSJHQZHFW) + 3.7/3.8语义对调 + 章节标题用旧版GJB 438B命名 | 需按标题语义而非编号对齐 |
-| doc11(语音综合处理) | 3.1被误编为3.3(编号bug) → 3.3出现2次、3.1缺失、3.8保密性整节缺失 | 编号断裂 |
-| doc05(软件部署管理) | 缺3.1"要求的状态和方式" | 3.1在14/16中存在 |
+| 类别 | 违例 | 相关项 | block |
+|---|---|---|---|
+| 标识符 | 连接池配置/初始化同ID | TERM-07 | b220/225 |
+| 标识符 | 数据库关闭ID跨位置矛盾 | TERM-07 | b057/040 |
+| 标识符 | 表48前缀SJTBGX vs 节标题SJTYFW | TERM-07 | b267/268 |
+| 标识符 | 表53组件顺序颠倒 | TERM-07 | b285/286 |
+| 标识符 | 表23 BLOB子项ID缺段 | TERM-07 | b139/140 |
+| 枚举 | 3.2.1文本5项 vs 表3仅4行 | TERM-03 | b032/b035 |
+| 枚举 | 「缓存修改」vs「缓存更新」 | TERM-03 | b181/b184 |
+| 枚举 | 1.2两套分类法 vs 3.2六项分类 | TERM-03 | b011/b024 |
+| 枚举 | 表9「平版」错别字 | LOGIC-05 | b067/087 |
+| 追溯 | 表81/82正逆追踪矛盾 | GJB-05 | b407/408 |
+| 追溯 | 追踪锚点失效(3.2.1.7不存在) | GJB-05 | b407 |
+| 追溯 | 同行矛盾(映射非空+说明不追踪) | GJB-05 | b407 |
+| 异常流 | E1内容与用例主题错位 | LOGIC-02 | b192/222/227 |
+| 异常流 | 申请/释放句柄错误归属 | LOGIC-02 | b237/242 |
+| 文档名 | 误写「数据同步共享服务」 | TERM-05 | b348 |
+| 功能 | 1.2声称审计日志但3.2无对应 | GJB-04 | b011 |
+| 合格性 | 表80覆盖缺口(3.3~3.17无方法) | GJB-06 | b404 |
 
-**表格类型分布（15种）**：
+### 91条QA与40项的映射统计
 
-| 表型 | 数量 | 占比 | 所在章节 |
-|------|------|------|---------|
-| 用例表(usecase) | 442 | 39.5% | 3.2.x |
-| 追踪表(traceability) | 166 | 14.8% | 第5章 |
-| 数据规格表(data_spec) | 149 | 13.3% | 3.3/3.4/3.5 |
-| 其他表(other) | 80 | 7.1% | 3.1/3.9/3.10/3.12 |
-| 数据约束表(data_constraint) | 69 | 6.2% | 3.3/3.4 |
-| 接口表(interface) | 58 | 5.2% | 3.3.1/3.4.1 |
-| 环境表(environment) | 29 | 2.6% | 3.10 |
-| 软件清单表(software_list) | 26 | 2.3% | 3.10 |
-| 设计约束表(design_constraint) | 20 | 1.8% | 3.3/3.4 |
-| 合格性表(qualification) | 16 | 1.4% | 第4章 |
-| 引用文档表(reference) | 14 | 1.3% | 第2章 |
-| 质量表(quality) | 14 | 1.3% | 3.6 |
-| 支持表(support) | 14 | 1.3% | 3.12 |
-| 培训表(training) | 12 | 1.1% | 3.12 |
-| 能力标识表(capability) | 10 | 0.9% | 3.2.x |
-
-**图片类型分布（7种）**：
-
-| 图型 | 数量 | 占比 | 所在章节 |
-|------|------|------|---------|
-| 用例图 | 134 | 40.7% | 3.2.x |
-| 流程图 | 125 | 38.0% | 3.2.x |
-| 接口图 | 29 | 8.8% | 3.3/3.4 |
-| 其他 | 13 | 4.0% | 各处 |
-| 活动图 | 13 | 4.0% | 3.1.2 |
-| 功能图 | 13 | 4.0% | 3.2 |
-| 功能框架图 | 2 | 0.6% | 3.2.x.1 |
-
-> 注：329张图片全部有caption（HD替换后从Visio OLE对象提取）。
-
-### 1.2 问答对（已生成）
-
-- **格式**：`{id, instruction, output, label, layer, inconsistency_type, evidence}`
-- **总量**：2170条（原生1221 + 增强946 + 多模态3）
-  - **原生QA对**（1221条，来自16份GJB SRS，8场景多模态）：
-    - 正例592 / 负例629
-    - 场景分布：0:188 / 1:691 / 2:173 / 3:54 / 4:54 / 5:14 / 7:18 / 8:29（8场景全覆盖）
-    - 负例类型：name_inconsistency(376) + dangling_exception(117) + qualification_mismatch(91) + interface_type_mismatch(27) + image_caption_mismatch(14) + version_conflict(4)
-    - 三层：semantic 850(正429/负421) / logic 191(正74/负117) / syntax 180(正89/负91)
-    - image_path完整：除sc0(纯文本)外全部100%覆盖
-  - **增强QA对**（946条，来自4个外部数据集）：
-    - ContractNLI 546条（正432/负114）— 合同NLI，场景0(纯文本)
-    - Fault-prone SRS 200条（正49/负151）— 需求歧义，场景0(纯文本)
-    - FinBalance 200条（正100/负100）— 会计不一致，场景0(纯文本)
-    - ScholScan 3条（正2/负1）— 学术论文，场景6/8(内容级多模态)
-  - **场景0(纯文本)**：946条外部数据，无图片/表格模态
-  - **场景1-8(多模态)**：1221条原生（8场景全覆盖，caption级+image_path） + ScholScan 3 内容级
-  - **8场景定义(按精确模态组合)**：sc1用例图+capability表 / sc2流程图+usecase表 / sc3接口图+interface表 / sc4流程图+capability表 / sc5功能图+capability表 / sc6功能框架图+其他表 / sc7用例图+usecase表 / sc8纯图片+正文
-  - **数据集划分**：train 832条(文档01-08) / test 389条(文档09-16)，0指令跨split泄漏
-- **正负比**：1:0.85（正1175/负995）
-- **设计原则**：外部数据正负例output统一(不泄露标签)，模型必须查文档判断claim是否成立
-- **警示**：负例必须人工验证（Korn 2026, arXiv:2606.25550 证明LLM无法可靠生成requirement smells）
-- **数据路径**：`data/gjb_438c/data_assets/native_qa_pairs.json` + `external_qa_pairs.json` + `external_multimodal_qa.json`
-
-### 1.3 专家知识
-
-| GJB标准 | 内容 | 当前状态 | 对检测层的贡献 |
-|---------|------|---------|--------------|
-| GJB 438C-2021 | 《军用软件开发文档通用要求》 | **已有120条规则** | 语法层(A+B类) + 逻辑层 |
-| GJB 439A-2013 | 《军品软件质量保证通用要求》 | 待扩充 | 逻辑层(质量保证规则) |
-| GJB/Z 102A-2012 | 《军用软件安全性设计指南》 | 待扩充 | 逻辑层(安全约束) |
-| GJB 2786A-2009 | 《军用软件开发通用要求》 | 待扩充 | 逻辑层(开发流程一致性) |
-| GJB 1268A-2004 | 《军用软件验收要求》 | 待扩充 | 逻辑层(合格性与验收对齐) |
-| GJB 5235-2004 | 《军用软件配置管理》 | 待扩充 | 逻辑层(版本管理一致性) |
-| GJB 1267-1991 | 《军用软件维护》 | 待扩充 | 逻辑层(可维护性) |
-
-**已有资源**：
-- `knowledge/gjb_438c_rules_full.json`：GJB 438C的120条规则（可追溯到OCR行号）
-- `knowledge/srs_kb.json`：术语词典（23参数 + 13接口 + 10单位族）
-
----
-
-## 二、上下文关联与特征提取
-
-### 2.1 规则化关联信号（12种）
-
-| # | 信号 | 类型 | 说明 | 数据规模 |
-|---|------|------|------|---------|
-| 1 | ID精确匹配 | 结构化 | 正则提取7位置ID | 标题539 + 功能表707 + 接口表211 + 合格性113 + 追踪217 + 正文351 + 表格57 |
-| 2 | 追踪表章节号映射 | 结构化 | 5列追踪表的上级章节号↔本文档章节号显式映射 | 16/16份有追踪表, 2042条边 |
-| 3 | 合格性表章节号桥接 | 结构化 | 合格性表"本文档章节号"→section_registry→ID | 16/16份有合格性表 |
-| 4 | 正文交叉引用解析 | 结构化 | "见表X"/"如图X"/"见X节"→图号/表号/章节号索引 | doc03: 82处表引用 + 16处图引用 |
-| 5 | 接口表拓扑构建 | 结构化 | 发送方/接收方→跨文档接口拓扑图 | 58个接口表, 325条接口, 10个跨文档共享ID |
-| 6 | 版本跨表对齐 | 结构化 | 3.9环境表 vs 3.10软件清单表按软件名对齐 | 29个环境表 + 26个软件清单表, 33组版本对, 9组冲突 |
-| 7 | 位置邻接 | 启发式 | 同一3.2.X.Y子节内的图+表+文字归属 | 329张图片全在第3章 |
-| 8 | 语义相似度匹配 | 语义化 | embedding匹配回答内容与文档内容 | TODO: 接入Embedding API |
-| 9 | 表格结构解析 | 结构化 | colspan/rowspan展开→行列对齐→单元格提取 | 77/115个表格含合并单元格 |
-| 10 | 图片caption解析 | 结构化 | 图号索引+图片类型分类+图文引用边 | 329/329张有caption(100%) |
-| 11 | 章节层级遍历 | 结构化 | 父子章节关系(3.2→3.2.1→3.2.1.1) | 16份文档, 1249个标题, 平均78个/份 |
-| 12 | 跨文档ID注册表 | 结构化 | 全局ID→多文档出现位置 | 5个ID出现在2+份文档 |
-
-### 2.2 高级召回方法（TODO - 待研究）
-
-基于Agentic RAG前沿调研（2025-2026），以下技术可增强上下文召回：
-
-| 方法 | 用途 | 参考工作 | 优先级 |
-|------|------|---------|--------|
-| **结构化文档图+在线证据子图激活** | 12种规则信号编码为图边，查询时按预算激活证据子图 | MAGE-RAG(arXiv:2606.15906), LAD-RAG(arXiv:2510.07233) | P1 |
-| **VLM图片内容理解** | 理解用例图/流程图/接口图的内容，与文字描述比对 | TechRAG(arXiv:2606.01613), ColSmol视觉检索 | P1 |
-| **Evidence-gated多Agent** | Planner/Researcher/Writer/Critic四Agent+证据充分性评分+drift-guarded重试 | TechRAG(arXiv:2606.01613) | P2 |
-| **多跳推理+工具调用** | 回答→表格→章节号→ID→另一表格的链式追溯，Agent用search/read/link-following工具 | LLM-Wiki(arXiv:2605.25480), N2N-GQA(arXiv:2601.06603) | P2 |
-| **IsConsistent判断器** | 改造Self-RAG的IsSup为"多源证据间是否一致"判断，区分合理差异vs真实矛盾 | Self-RAG(arXiv:2310.11511), Self-Correcting RAG(arXiv:2604.10734) | P2 |
-| **工业标准文档原子命题分解** | 把SRS条件规则/数值约束分解为原子命题入本体KG | Industrial Standards KG(arXiv:2512.08398) | P3 |
-| **Table QA模型** | TAPAS/TabFact类模型验证回答claim与表格内容的一致性 | — | P3 |
-| **文档布局分析** | 理解图/表/文字的空间关系，辅助位置邻接 | DeCoRAG(arXiv:2607.24554) | P3 |
-
-**核心创新点**：GJB SRS的12种规则关联信号是确定性、可追溯的图边源——GraphRAG的图构建从"LLM抽取(昂贵且噪声)"变成"规则产边(确定性且可追溯)"，这是相对现有Agentic RAG工作的独特优势。
-
-### 2.3 特征提取（按表型）
-
-| 表型 | 提取特征 |
-|------|---------|
-| **usecase表** | usecase_name, actors, overview, preconditions, main_flow[], exception_flows[{id, definition, triggered}], postconditions, action_constraints[] |
-| **capability表** | function_name, project_id, requirement_description, reuse_type, run_modes, run_stage, task_ref |
-| **interface表** | interface_id, name, type, sender, receiver, content, priority |
-| **data_spec表** | dataset_name, data_composition, data_constraint |
-| **环境表** | device_name, hardware_req, software_req(含版本号) |
-| **合格性表** | req_section, methods{A,D,T,I,S}, level |
-| **追踪表** | upstream_section, this_doc_section, note, direction |
-
-### 2.4 聚合输出
-
-```python
-RequirementItem = {
-    item_id: str,           # 规范化后的需求ID
-    item_type: str,         # function|interface|parameter|version|quality
-    doc_id: str,
-    occurrences: [{         # 每个位置一条
-        section: str,
-        location_type: str, # title|func_table|interface_table|qualification|traceability
-        features: dict,     # 按表型的特征schema
-        evidence_snippet: str  # 原文片段
-    }],
-    media: [{image_id, role, confidence}],
-    trace: {upstream_section, status},
-    qualification: {methods, level, status},
-    chain_completeness: {has_title, has_func, has_qualification, has_trace, score}
-}
+```text
+LOGIC-02 异常处置 → 16条QA触及（R样本最集中区）
+LOGIC-03 事件时序 → 14条QA
+TERM-03 枚举集合 → 9条QA
+TERM-07 接口标识 → 5条QA
+前置条件 → 7条QA
+参数/接口 → 15条QA
+状态/设备 → 6条QA
 ```
 
----
+## 3. 04号SRS文档结构（411块）
 
-## 三、数据不一致检查
+| 内容类型 | 块数 | 具体形态 | 可校验面 |
+|---|---|---|---|
+| 正文 | 235 | 章节描述、「包括」枚举句 | 文本枚举↔表成员比对 |
+| 能力表 | 10张 | 表2/3/4/9/13/23/27/32/36/39/45/48 | ID+需求描述+方式+运行状态+任务书映射 |
+| 用例表 | ~30张 | 表5~47（Use Case名称/Actors/前置/主事件流/异常流E1/后置） | E1模板+步骤编号+字段比对 |
+| 接口表 | ~16张 | 表48~61（外部4+内部8+数据元素） | 接口ID双登记+数据特征 |
+| 数据表 | 6张 | 表63~67（min/max/精度/单位） | 值域区间判定 |
+| 追溯表 | 2张 | 表81正向+表82逆向 | 双向join+矛盾检测 |
+| 合格性表 | 1张 | 表80（6行） | 覆盖完备性 |
+| 质量/安全/保密 | 3张 | 表73/68/69 | 封闭清单成员检查 |
+| 环境/交付/优先级 | 3张 | 表70/71、78、79 | 硬件跨表+优先级 |
+| 图片 | 48张 | 功能框图(图1)+用例图(图2-47)+接口图(图48) | 跨模态（需VLM前置解析） |
 
-### 3.1 语法层（不依赖上下文，直接与GJB一对一校验）
+## 4. 40项在04号上的适用性
 
-**特点**：拿回答直接和GJB标准比对，不需要理解回答在说什么功能、引用了哪个表格。纯粹是格式/术语/编号的正则匹配和规则校验。
+| 适用性 | 项数 | 项 |
+|---|---|---|
+| 有丰富证据 | 14 | TERM-01/02/03/04/06/07/08, LOGIC-01/02/03/04/05/08/11 |
+| 有稀缺证据 | 7 | PARAM-01/05/06/07/10, LOGIC-09/10 |
+| 零证据（不适用） | 7 | PARAM-02/03/04/08/09, LOGIC-06/07 |
+| 有无检查（GJB） | 11 | GJB-01~11（全部可做封闭清单有无比对） |
+| GJB缺失真实样本 | 3 | GJB-04/08/10（审计/掉电/升级条款完全缺失） |
 
-#### A类：正则表达式检测（一个正则 = 一个检测器）
+## 5. 当前架构组件
 
-| 检测器 | 正则 | 检测内容 | 真实例子 |
-|--------|------|---------|---------|
-| ID格式 | `[A-Z]{4,}-[A-Z]{2,}-[A-Z0-9-]+` | 回答中的ID格式是否规范 | 回答写"PZXQ-GN-FWGC"(层级不足) |
-| ID占位符 | `X{4,}` | 回答中的ID是否含XXXX占位符 | 回答引用"...XXXX" |
-| 章节号 | `^(\d+(?:\.\d+)*)\s+(.+)` | 回答引用的章节号格式 | 回答写"3.2.1"(应写"3.2.1.1") |
-| 图号引用 | `(?:如图\|见图\|图)\s*(\d+)` | 回答引用的图号是否存在 | 回答"如图4所示"但图4不存在 |
-| 表号引用 | `(?:如表\|见表\|表)\s*(\d+)` | 回答引用的表号是否存在 | 回答"见表37"但表37不存在 |
-| caption格式 | `(图\|表)\s*(\d+)\s*(.*)` | 回答中的图表编号格式 | 回答"图3-1"(应为"图3") |
-| 版本号 | `(达梦\|银河麒麟\|WPS\|Qt)[^。]*?(V?\d+\.?\d*)` | 回答中的版本号格式 | 回答"达梦7.6"(应为"达梦V7.6") |
-| 约束格式 | `(?:不低于\|≥)\s*(\d+\.?\d*)\s*(unit)?` | 回答中的约束表达格式 | 回答"≥256"(缺单位) |
-| 异常流定义 | `异常流\s*(E\d+)[：:]` | 回答中的异常流编号格式 | 回答"异常流E1:"(格式正确) |
-| 异常流引用 | `(?:进入\|执行\|转)\s*异常流\s*(E\d+)` | 回答引用的异常流是否存在 | 回答"执行异常流E2"但E2未定义 |
+```text
+已建（保留）:
+  answer_structure.py      answer→原子claim+scope槽
+  evidence_statements.py   evidence→字段级语句+行级ref
+  qa_module.py             统一校验器（4通道+聚合+statement精确匹配）
+  nli_local.py             本地NLI（mDeBERTa/Erlangshen）
+  nli通道                  scope+槽位配对+阈值守卫（需校准）
+  identifier通道           精确ID匹配（已抓到S1QA-084）
+  54个变异算子             按五线路组织（L1值/L2集合/L3数值/L4结构/L5语义）
+  /api/verify              服务API
+  官方参考数据集            scene1_official_reference_v1.jsonl
 
-#### B类：GJB标准规则校验（依赖GJB 438C规则库120条）
-
-| 检测器 | GJB规则 | 检测内容 | 真实例子 |
-|--------|---------|---------|---------|
-| 章节完整性 | 3.1~3.18必须存在 | 回答引用的章节是否都在文档中存在 | 回答引用"3.8保密性"但doc11缺3.8 |
-| 章节顺序 | 3.7=适应性/3.8=安全性/3.9=保密性 | 回答中的章节顺序描述是否正确 | 回答"3.7是保密性"(实际应3.7=安全性) |
-| 用例表结构 | 必须含概述/前置条件/主事件流/异常流/后置条件 | 回答描述的用例结构是否完整 | 回答缺少异常流描述 |
-| 追踪表完整性 | 必须有正向+逆向 | 回答是否提到逆向追踪 | 回答只提正向追踪 |
-| 合格性表结构 | 必须含需求标识/章节号/方法/级别 | 回答描述的合格性信息是否完整 | 回答缺少合格性级别 |
-
-### 3.2 语义层（依赖上下文，涉及文本+表格+图片）
-
-**特点**：需要先召回文档中的相关多模态内容，再把回答和召回的内容做比对。
-
-#### 8个场景
-
-| # | 场景 | 实例数 | strong | 图片 | 表格 |
-|---|------|--------|--------|------|------|
-| 1 | 用例图+capability表+正文 | 120 | 99 | 用例图 | capability表 |
-| 2 | 流程图+usecase表+正文 | 78 | 70 | 流程图 | usecase表 |
-| 3 | 接口图+interface表+正文 | 29 | 27 | 接口图 | interface表 |
-| 4 | 流程图+capability表+正文 | 49 | 34 | 流程图 | capability表 |
-| 5 | 功能图+capability表+正文 | 25 | 23 | 功能图/功能框架图 | capability表 |
-| 6 | 功能框架图+其他表+正文 | 1 | 0 | 功能框架图 | 其他表 |
-| 7 | 用例图+usecase表+正文 | 15 | 10 | 用例图 | usecase表 |
-| 8 | 纯图片+正文 | 18 | 0 | 活动图/功能图/其他 | (无表) |
-
-> 注：另有29个unclassified实例（图片类型无法确定），全部为weak匹配。场景6实例极少（1个），因功能框架图多与capability表关联而非其他表。
-
-#### 检测内容（待确认）
-
-| 候选检测项 | 说明 | 真实例子 |
-|-----------|------|---------|
-| 名称一致性 | 回答中的功能名 vs 标题/正文/caption/表内名。例：doc03的3.2.1.6节，章节标题="服务工程编译"，但正文="服务插件编译用例场景"，表格caption="服务插件编译用例描述"，表内概述="对服务插件代码进行编译"——四个位置全部写成了"服务插件编译"，与标题的"服务工程编译"矛盾（两个是完全不同的功能，疑似复制粘贴3.2.1.5后未修改） |
-| 值一致性 | 回答中的参数值/版本号 vs 文档表格值 | 回答"达梦V7.6"但3.10表写"V7.2" |
-| 引用完整性 | 回答引用的表/图/章节是否存在 | 回答"见表37"但表37不存在 |
-| 跨表值比对 | 回答是否同时考虑多个表格中的值 | 回答只引用3.9的V7.6未提及3.10的V7.2 |
-| 图表内容对齐 | 回答描述的内容 vs 引用的图片/表格 | 回答"步骤1-5"但用例表有步骤1-9 |
-| 接口描述一致性 | 回答的接口类型/发送方/接收方 vs 接口表 | 回答"API接口"但文档写"HTTP接口" |
-
-### 3.3 逻辑层（依赖上下文，但与多模态文字内容无关，专家知识）
-
-**特点**：需要上下文（知道问题在问什么），但检测本身不是比文字/表格/图片内容，而是用专家知识做逻辑推理。
-
-#### 专家知识来源
-
-| 来源 | 知识类型 | 检测内容 |
-|------|---------|---------|
-| GJB 438C(120条) | 文档格式/结构规则 | 章节完整性/编号连续/ID规范 |
-| GJB 439A | 质量保证规则 | 合格性方法合理性(性能需求应有D测试) |
-| GJB/Z 102A | 安全性设计指南 | 安全约束可满足性 |
-| GJB 2786A | 开发通用要求 | 开发流程一致性 |
-| GJB 1268A | 验收要求 | 合格性与验收要求对齐 |
-| GJB 5235 | 配置管理 | 版本管理一致性 |
-| GJB 1267 | 软件维护 | 可维护性检查 |
-
-#### 检测内容（待确认）
-
-| 候选检测项 | 专家知识 | 真实例子 |
-|-----------|---------|---------|
-| 异常流定义-引用一致性 | GJB用例表结构规则 | 回答提到E2但E2未定义 |
-| 约束可满足性 | GJB约束规范 | 回答"≥3000且≤2000"(矛盾) |
-| 追溯链路完整性 | GJB追溯要求 | 回答说"3.2.1.1对应任务书4.1.1"但追踪表无此映射 |
-| 合格性方法合理性 | GJB 439A/1268A | 性能需求回答只有A(分析)无D(测试) |
-| 版本管理一致性 | GJB 5235 | 回答的版本号与配置管理基线不一致 |
-
----
-
-## 四、评测方案
-
-| 维度 | 方案 |
-|------|------|
-| Gold Standard | 从真实矛盾构建：版本冲突4处 + 悬空异常流59个 + 名称不一致261条 + 接口类型矛盾23条 + 合格性章节不匹配91条(已过滤15条方法列误提取) + 幽灵引用16条 + 追溯不对称9条 |
-| 语法层评测 | 二分类（合规/不合规），P/R/F1 |
-| 语义层评测 | 按场景分别评测，claim三态标注（entailed/contradicted/baseless） |
-| 逻辑层评测 | 二分类（有逻辑漏洞/无漏洞），P/R/F1 |
-| 消融实验 | 有无上下文召回对比 / 有无图片对比 / 纯LLM vs 混合方法 |
-| 数据集划分 | 原生1221条(train 832/test 389, 文档级隔离) + 增强949条(泛化测试) |
-
----
-
-## 五、文献定位
-
-| 空白 | 证据 | 我们的贡献 |
-|------|------|-----------|
-| SRS文档级理解不存在 | arXiv全库0条"document-level requirement" | 首个面向GJB SRS的多模态QA一致性校验 |
-| LLM4RE缺陷检测从#1跌至#8 | Zadenoori 2025 SLR(74篇, arXiv:2509.11446) | 填补LLM4RE一致性检测空白 |
-| GJB标准学术零覆盖 | arXiv检索"GJB"返回0条 | 首个GJB SRS QA benchmark |
-| 无中文/军事SRS数据集 | 无公开中文需求NLP数据 | 16份真实GJB SRS + QA对 |
-| 合理差异vs矛盾未被讨论 | LegalWiz Specificity最接近但归为矛盾 | 首次形式化区分准则 |
-| Agentic RAG面向QA不面向一致性检测 | 现有RAG都面向"找答案证据" | 检索目标从"找答案"变成"找矛盾证据对" |
-
-**关键竞品**：
-
-| 竞品 | arXiv | 与我们的差异 |
-|------|-------|-------------|
-| TSRCDF-SS | 2511.23007 | 句对级(我们文档级) + 纯文本(我们多模态) + 合成数据(我们真实GJB) |
-| DeepSpecs | 2511.01305 | 显式引用解析(我们隐式关联) + QA(我们一致性检测) |
-| ContractCheck | 2504.18422 | 法律合同(我们军事SRS) + 仅逻辑层(我们三层) |
-| ContractNLI | 2110.01799 | 文档级NLI(我们多模态) + 法律(我们GJB) |
-| DoRA | 2604.17943 | 防务文档QA(我们SRS一致性) + 单模态(我们多模态) |
-
----
-
-## 六、待确认/待补充
-
-| 项目 | 状态 | 说明 |
-|------|------|------|
-| 问答对格式 | **已确定** | {id, instruction, output, label, layer, inconsistency_type, evidence} |
-| 回答是否可引用图表 | **已确定** | 含引用（evidence含image_caption+table_caption） |
-| 专家知识范围 | **待与老师确认** | 是否仅GJB 438C还是7个标准 |
-| 语义层检测内容 | **待确认** | 候选6项，需确认哪些做 |
-| 逻辑层检测内容 | **待确认** | 候选5项，需确认哪些做 |
-| 6个GJB标准规则提取 | **待扩充** | 目前只有438C的120条 |
-| 高级召回方法 | **TODO** | VLM/GNN/多跳推理/结构化RAG/Agentic RAG |
-| 评测方式 | **待与老师确认** | 逐条二分类 vs claim三态 |
-| 负例注入策略 | **已完成** | 原生QA对已按3种类型注入(name_inconsistency/dangling_exception/interface_type_mismatch) |
-
----
-
-## 附录：关键文献清单
-
-| 优先级 | 论文 | arXiv | 精读重点 |
-|--------|------|-------|----------|
-| 1 | DeepSpecs | 2511.01305 | 跨引用递归解析方法论 |
-| 2 | S3CDA | 2206.13690 | GPT-4o领域退化数据 |
-| 3 | Zadenoori LLM4RE SLR | 2509.11446 | LLM4RE全景 |
-| 4 | DoRA | 2604.17943 | 防务文档QA benchmark构建 |
-| 5 | QAssist | 2302.04793 | 唯一RE领域QA |
-| 6 | RT4CHART | 2603.27752 | claim三态标注评测 |
-| 7 | MAGE-RAG | 2606.15906 | 多粒度图证据+在线激活 |
-| 8 | TechRAG | 2606.01613 | 技术文献多模态Agentic RAG |
-| 9 | Self-RAG | 2310.11511 | reflection tokens→IsConsistent |
-| 10 | LAD-RAG | 2510.07233 | 符号化文档图+跨页依赖 |
-| 11 | LLM-Wiki | 2605.25480 | 可编译结构+工具调用多跳 |
-| 12 | ContractCheck | 2504.18422 | 本体+FOL+SMT逻辑层 |
-| 13 | ContractNLI | 2110.01799 | 文档级NLI+证据span |
-| 14 | Korn 2026 | 2606.25550 | 合成smell不可靠(负面结果) |
-| 15 | Industrial Standards KG | 2512.08398 | 工业标准文档KG-RAG(镜像问题) |
-
----
-
-*本文档基于多Agent调研（6组arXiv检索+8篇竞品深挖+3篇方法论专题+Agentic RAG前沿调研）+ 16份真实GJB SRS数据验证。所有真实例子可通过.venv-srs/bin/python从content_list.json复现。*
-
----
-
-## ★ 四类不一致框架（v3.0 核心 — 温老师8/12会议反馈）
-
-### 背景
-
-2026-08-12与温老师会议确认，项目范围聚焦**四个合规方向**的不一致性校验：
-
-| # | 合规方向 | 检测内容 | 对应现有工作 | Pair Dataset场景 |
-|---|---------|---------|-------------|-----------------|
-| 1 | **术语层面** | 同名实体(上下文中)、多实体映射为一个 | scene1名称不一致 + 语法层S2 | sc1用例图+能力表 |
-| 2 | **参数指标** | 前后文参数数据/单位/数字是否一致 | 逻辑层L1/L3 | sc3接口表 |
-| 3 | **业务逻辑** | 时序逻辑(文本流程与时序是否一致) | scene2异常流(部分) | sc2流程图+用例表 |
-| 4 | **GJB合规** | 根据模板的接口定义等规范 | 语法层S1-S7 | sc3接口表 |
-
-### 待同步项
-
-1. **温老师将分享目标文档** — 进一步同步项目范围
-2. **207所前驱合同/约束** — 207所会尝试提供部分前驱合同，是否使用留作后续讨论（已在规则库预留接口）
-3. **6个GJB附加标准PDF** — 待老师提供，到后补充为规则
-
----
-
-## ★ 专家知识规则库（v3.0 — 规则形式存放）
-
-**文件**: `knowledge/inconsistency_rules.json`
-**格式**:
-```json
-{
-  "rule_id": "TERM-001",
-  "type": "terminology",           // 四类之一
-  "description": "同一需求ID在不同位置的名称应完全一致",
-  "check_method": "字符串精确匹配",    // 检测方法
-  "inject_methods": ["typo改一字", "truncation截断", ...],  // 注入方法
-  "applies_to": ["capability_table", "usecase_diagram"],     // 适用模态
-  "severity": "HIGH",
-  "example": "ID=KJCK, 1.8.3.4='快捷操控', 1.8.5.4='触摸操控'"
-}
+待建:
+  GJB"有无"专家             11项封闭清单成员检查
+  E1模板专家                模板匹配+引用双向join
+  序列专家                  编号提取+重排校验
+  追踪表join专家            表81↔82双向
+  证据门控                  每项先验探针（6零证据项拦截）
 ```
 
-**规则统计**: 14条 = 术语3 + 参数3 + 逻辑3 + GJB合规5
-**207所预留**: `reserved.207所前驱合同` 字段待材料到位后追加
+## 6. 数据与结果状态
 
----
+| 资产 | 状态 |
+|---|---|
+| `scene1_official_reference_v1.jsonl` | 91行官方整合（Alpaca+证据+语句+silver） |
+| silver标签 | GLM-5.3复核：S6/R8/N77（**非gold**） |
+| 17个真实文档违例 | 04号深读发现（real_observed候选） |
+| 6个baseline | B0/B2/B3已跑（全部坍缩NIE） |
+| 当前方法评测 | acc 82.4%, macro-F1 0.432（确定性通道） |
+| **M26评测矩阵（2026-10-27）** | B0-B5六基线+8消融+3对bootstrap：B4 acc **0.9011**/macro-F1 0.6997；cascade refute F1 **0.7143**@17次LLM调用（`runs/eval_paper_matrix_0fabaced_20261027_023711`、`runs/eval_cascade_1e92cdce_20261027_024429`） |
+| **EGT合成数据+微调NLI** | v3叙事文法4500样本→egt_finetuned_v2：L2 refute召回0.375→**0.875**（`runs/build_egt_dataset_8a8716bb_20261027_003528`、`runs/train_residual_nli_acfead4b_20261027_013647`） |
+| **L3 LLM残差通道** | 历史参照macro-F1 0.7799（`runs/eval_llm_residual_5dd69927_20261026_173434`，旧线性化）；同管线当日0.6997 |
+| **M28诚实评测（2026-10-27晚）** | 冻结dev/test切分（29主题簇，dev45/test46）+test一次评测：修复后**test=0.8286/acc 0.9348**（refute P=1.0/F1=0.8571）；乐观偏差量化+0.0145（2%）；06号跨文档sound集gap det -0.486/cascade -0.188（`runs/eval_test_honest_6740ed5c_20261027_195753`、`runs/eval_crossdoc_27e8ce32_20261027_195859`） |
 
-## ★ QA数据集（v3.0 — 含多模态占位符 + 四类注入）
+> 以上M26行的完整表格、数字核对记录与负结果集见 `docs/srs_project/49_cascadeverify_v2_results.md`。
 
-**文件**: `data/gjb_438c/data_assets/srs_qa_final.json`
-**规模**: 6189条 = 3481(pair生成) + 2708(四类注入)
+## 7. 实施路线
 
-### QA格式（含占位符）
-```json
-{
-  "id": "qa_0001_01",
-  "pair_id": "1_001",
-  "inconsistency_type": "terminology",    // 四类之一
-  "subtype": "name_typo",
-  "label": "inconsistent",                // consistent / inconsistent
-  "is_injected": true,                    // 是否注入
-  "inject_detail": "功能名「结构化数据归集」被改为「结操化数据归集」",
-  "rule_id": "TERM-001",
-  "question": "表{table}中功能「结操化数据归集」与图{image}中的用例名称是否一致？",
-  "placeholders": {                       // 多模态占位符
-    "image": "data/.../image.png",
-    "table": "data/.../table.csv",
-    "text": "data/.../text.txt"
-  },
-  "answer": "不一致。图中为「结构化数据归集」，表中为「结操化数据归集」，错字。",
-  "evidence": {"image_caption": "图3...", "table_caption": "表3...", "section": "3.2.1.2"},
-  "difficulty": "medium"
-}
+| 阶段 | 目标 | 状态 |
+|---|---|---|
+| M-1 权威源锚定 | taxonomy v3+删除派生+project_guide | ✅ 本轮完成 |
+| M0 方法架构重设计 | 五线路架构（L1值/L2集合/L3数值/L4结构/L5语义） | 设计完成 |
+| M1 GJB有无专家 | 11项封闭清单检查 | ✅ M26实现（gjb_presence_expert.py） |
+| M2 结构专家 | E1模板+序列+追踪join | ✅ M26实现（e1/sequence/trace_expert.py+entity_detector.py） |
+| M3 NLI校准 | 阈值扫描+域微调 | ✅ M26实现（EGT合成+egt_finetuned_v2，gate=0.7） |
+| M4 数据集构建 | 17真实违例+变异+标注 | ⬜ EGT合成已完成（4500样本）；17违例转化集+gold标注待做 |
+| M5 评测+论文 | baseline矩阵+消融 | ✅ M26评测矩阵完成（B0-B5+8消融+bootstrap+级联五配置）；论文写作进行中 |
+
+## 8. 文档导航
+
+| 文档 | 状态/职责 |
+|---|---|
+| `docs/srs_project/49_cascadeverify_v2_results.md` | **M26-M28结果总览（论文数字唯一权威来源）**：架构/主表/消融/bootstrap/EGT演化/科研发现/审计响应与诚实评测（§10）/runs清单 |
+| `docs/srs_project/50_support_recall_analysis.md` | support召回失败分析+P1三项修复落地结果（§7） |
+| `knowledge/consistency_taxonomy_v3.json` | **当前taxonomy**（40项原始定义+04号证据+QA映射+17违例） |
+| `docs/srs_project/45_official_reference_dataset.md` | 官方参考数据集规范 |
+| `docs/srs_project/42_mutation_coverage_diagnosis.md` | 变异覆盖诊断（历史参考） |
+| `docs/srs_project/implementation_doc_analysis.md` | 实施方案文档分析（历史参考，其中部分结论基于已删除的旧分类） |
+| `docs/srs_project/40_method_reconstruction_plan.md` | 方法重构计划（历史参考，部分基于旧taxonomy） |
+| `docs/srs_project/28_answer_evidence_task_reconstruction_plan.md` | 数据重构方案（历史参考） |
+
+**项目优先事项**：实现级联架构三层（L0 NER检测→L1 符号验证→L2 残差NLI），每层检测到→报告→提前退出。
+
+## 9. 级联验证架构（CascadeVerify）
+
+### 9.1 三层设计
+
+```text
+Layer 0: Entity Detection (NER检测层)
+  检测: answer中的实体/术语与证据是否一致
+  项: TERM-01同义异名/TERM-02同名异义/TERM-05指令名称/
+      TERM-07接口标识/TERM-08缩写代号
+  检测到 → 报告{检测项ID+错误内容+证据位置} → 退出
+  方法: GLiNER式NER + 文档内实体链接 + NIL决策(GenDecider式)
+
+Layer 1: Symbolic Verification (符号验证层)
+  检测: 结构化比对 + 国军标合规
+  项: TERM-03枚举/TERM-04状态/TERM-06量纲/PARAM-01~10数值/
+      LOGIC-01/02/03/05结构/GJB-01~11有无
+  检测到 → 报告{规则ID+GJB标准OCR行号+证据单元格} → 退出
+  方法: ID精确join + 集合运算 + 区间算术 + E1模板 +
+        序列比对 + Chain-of-Table + Logic-LM(Z3) + GJB有无检查
+
+Layer 2: Residual NLI (残差NLI层)
+  检测: 剩余语义矛盾
+  项: LOGIC-02残差/LOGIC-04流向/LOGIC-08仲裁/LOGIC-11重搜
+  三态判定 → 报告{NLI概率+不确定度+人工复核建议}
+  方法: 只在残差集R上训练的域适配NLI + conformal校准
+  残差集定义: R = {claim对 | L0对齐成功 ∧ L1规则未触发 ∧ L1不可形式化}
 ```
 
-### 四类注入QA统计
+### 9.2 每层退出输出
 
-| 类型 | 正例 | 注入(不一致) | 合计 |
-|------|:---:|:---:|:---:|
-| 术语层面 | 366 | 589 | 955 |
-| 参数指标 | 37 | 51 | 88 |
-| 业务逻辑 | 366 | 360 | 726 |
-| GJB合规 | 223 | 716 | 939 |
-| **合计** | **992** | **1716** | **2708** |
+| 退出类型 | 触发条件 | 报告内容 | 可靠性 |
+|---|---|---|---|
+| 确定性退出 | L0/L1规则/Z3判定 | 规则ID+OCR行号+证据单元格+判定 | soundness保证 |
+| 置信度退出 | L2 NLI校准概率超阈值 | NLI概率+不确定度+复核建议 | P(误报)≤α |
+| 弃权 | L2不确定 | 路由人工审阅 | — |
 
-### 现有pair生成QA统计（3481条）
+### 9.3 算法创新点（论文贡献）
 
-| 类型 | 数量 | 说明 |
-|------|:---:|------|
-| T2 表格事实检索 | 1623 | 功能名↔ID/描述 |
-| T7 矛盾检测 | 462 | 图文计数/功能缺失/ID重复 |
-| T4 功能溯源 | 346 | 功能在表/图/文位置 |
-| T3 跨模态计数 | 336 | 功能数量 |
-| T5 正文理解 | 265 | 功能列表 |
-| T8 跨场景关联 | 251 | 跨章节引用 |
-| T1 视觉一致性 | 198 | VLM看图→参与者/用例 |
+| # | 创新点 | 层 | 文献空白 |
+|---|---|---|---|
+| C1 | 残差NLI训练范式 | L2 | 层间可计算函数定义残差集+残差集专门微调 |
+| C2 | GJB域Logic-LM管线 | L1 | 需求→Z3+可形式化边界显式刻画 |
+| C3 | 文档内实体链接+NIL | L0 | 无外部KB的实体聚合+同名消歧 |
+| C4 | 双模式退出+层级归因 | 层间 | 确定性/统计两档可靠性+退出报告设计 |
+| C5 | 真实GJB数据集 | 评测 | 91条官方QA+17个真实违例 |
 
----
+### 9.4 相关文献锚点
 
-## ★ Pair Dataset（v3.0 — 多模态配对数据）
+| 创新 | 核心引证 |
+|---|---|
+| 级联+提前退出 | FrugalGPT(2023), RouteLLM(ICLR'25), GPTScan(ICSE'24) |
+| NLI只做残差 | MiniCheck(EMNLP'24), Setty(SIGIR'24), ContractNLI(EMNLP'21) |
+| 实体链接前置 | BEAR-FACT(EACL'24), GenDecider(EMNLP'23), 定义增强(TACL) |
+| 层级错误归因 | Factcheck-Bench(EMNLP'24), GREEN(EMNLP'24F), AVeriTeC(NeurIPS'23) |
+| 神经符号混合 | Lemur(ICLR'24), Logic-LM(EMNLP'23F), ProgramFC(ACL'23) |
+| 表格推理 | Chain-of-Table(ICLR'24), TART(NAACL'25), TabFormer(SIGIR'25) |
+| 最近竞品 | SAGE(arXiv'26, 必须引用+差异化), TSRCDF-SS(arXiv'25, 纯语义基线) |
 
-**路径**: `data/gjb_438c/pair_dataset/`
-**规模**: 366实例 × 4文件(image.png + table.csv + text.txt + meta.json)
+## 10. 里程碑记录
 
-| 场景 | 配对组合 | 实例数 |
-|------|---------|:---:|
-| sc1 | 用例图+能力表+正文 | 141 |
-| sc2 | 流程图+用例表+正文 | 90 |
-| sc3 | 接口图+接口表+正文 | 30 |
-| sc4 | 流程图+能力表+正文 | 49 |
-| sc5 | 功能图+能力表+正文 | 27 |
-| sc7 | 用例图+用例表+正文 | 9 |
-| sc8 | 纯图片+正文 | 20 |
+### M26（2026-10-26/27）：CascadeVerify v2全栈实现与评测
 
-**构建脚本**: `tools/build_pair_dataset.py`（从mineru_standard重建，表格清洗+正文兄弟章节补全+质量分级）
+**范围**：把§9的三层级联设计从图纸变成全栈可评测系统，完成S1-S6全部实施步（对齐方法设计文档§6.8的实施顺序）。
 
----
+**实现**（algorithms/consistency/新模块，均配测试）：
+- DEQ证据管线（deq_pipeline.py）+ 证据线性化修复（evidence_statements.py：能力表列错位124/181表+thead误派发两个premise bug）
+- L0/L1确定性专家族5个：entity_detector / e1_expert / sequence_expert / trace_expert / gjb_presence_expert
+- EGT三态合成管线（egt_synthesis.py：v1近拷贝117→v2语句3000→v3叙事4500）
+- L2 NLI残差（nli_residual.py+egt_finetuned_v2本地ckpt，gate=0.7）
+- L3 LLM残差（llm_residual.py，llm_json缓存接口）+ L2→L3级联升级路由（use_cascade）+conformal档
+- per-claim通道融合（fuse_per_claim）+ 跨claim聚合
 
-## 文件索引（v3.0 更新）
+**评测**（91QA vs GLM-5.3 silver，S6/R8/N77）：
+- B0-B5六基线+8消融+3对bootstrap（`runs/eval_paper_matrix_0fabaced_20261027_023711`）
+- 级联五配置含conformal两档（`runs/eval_cascade_1e92cdce_20261027_024429`）
+- 头条数字：B4 acc 0.9011；cascade refute F1 0.7143（P 0.8333）仅17次LLM调用；EGT叙事文法把L2 refute召回从0.375拉到0.875
 
-| 文件 | 说明 |
-|------|------|
-| knowledge/inconsistency_rules.json | ★四类不一致专家知识规则(14条) |
-| data/gjb_438c/data_assets/srs_qa_final.json | ★最终QA数据集(6189条) |
-| data/gjb_438c/data_assets/injected_qa.json | 四类注入QA(2708条) |
-| data/gjb_438c/data_assets/srs_multimodal_qa.json | pair生成QA(3481条) |
-| data/gjb_438c/pair_dataset/ | 多模态配对数据(366实例) |
-| tools/build_pair_dataset.py | Pair Dataset构建脚本 |
-| tools/gen_srs_qa.py | pair生成QA脚本(8类型) |
-| tools/gen_injected_qa.py | ★四类注入QA脚本 |
-| algorithms/syntax/syntax_checker.py | 语法层校验(112条) |
-| algorithms/logic/logic_checker.py | 逻辑层校验(专家知识+Z3+LLM) |
-| algorithms/semantic/scene1/kg_context_matcher.py | 双图融合聚合器(方向A) |
+**科研发现**（按重要性）：EGT文法设计定律（dev≈0.97与真实迁移脱钩，叙事文法定召回）/ 两个premise bug及修复 / 级联经济学 / 负结果集（零样本NLI坍缩0.327、L2单独0.5437、conformal高置信档P≤0.33、fp16训练波动±0.05、silver边界模糊）/ per-claim融合放大器（-0.152消融）/ 068/074 claim级归因错位。
+
+**详细结果、全部数字的run溯源与核对记录**：`docs/srs_project/49_cascadeverify_v2_results.md`（论文数字唯一权威来源）。
+
+**遗留**：91条gold人工标注（最高优先级）、068/074 claim锚定闭合、v2代码git提交、论文写作。
+
+**Wave 5进展（2026-10-27午，17真实违例驱动的专家补全收口）**：L1专家族5→7（新增`id_join_expert.py`/`enum_join_expert.py`两个跨位置join专家），17违例检出52.9%→**88.2%**（15/17，`runs/eval_violations_5d5c92a8_20261027_124733`），91QA确定性基线macro-F1 **0.6381**、cascade refute F1 0.800（论文矩阵全量重跑：`runs/eval_paper_matrix_c409df7f_20261027_125551`、`runs/eval_cascade_1e92cdce_20261027_124941`，数字以49号文档为准）。
+
+### M27（2026-10-27晚）：Wave 6设计组件全量补全与稳健性诊断
+
+**范围**：L1专家族补至设计§6.3全量9行（+`numeric_z3_expert.py`/`coverage_expert.py`），17违例检出**16/17（94.1%）**；完成设计§6.5的变异注入评测（robustness漏检率矩阵）与设计§6.4的学习路由器（C4学习半边）——后两者产出负结果/诊断性结果，如实报告。**算法侧（设计§6组件清单）至此全部完成**；剩余遗留=人工项（gold标注）、论文写作、可选VIO-15、代码提交。
+
+**实现**（algorithms/consistency/新模块，均配测试）：
+- `numeric_z3_expert.py`（600行+21测试）：量纲换算/区间三态Z3判定（PARAM-03/06/07）/跨参数聚合（PARAM-01/05）；SMT-LIB+unsat core完整输出协议（防scope laundering）；04号全文档92条数值事实、91QA冻结证据**0条**（证据构成发现：scene1 QA不含数值声明，PARAM类检测在该评测集结构性无对象）
+- `coverage_expert.py`（693行+32测试）：合格性逐章覆盖+条款覆盖join（GJB-01/04/06）；**VIO-17闭合**（表80合格性仅覆盖3.2.1~3.2.6 vs answer声称3.1-3.17全覆盖）→违例集检出15/17→**16/17（94.1%）**（`runs/eval_violations_5d5c92a8_20261027_165400`）
+- `router.py`+`build_router_dataset.py`+`eval_router.py`（23测试）：**学习路由器负结果**——91QA路由一致率0.0875（EGT监督学不出；EGT内样本0.8233），oracle上限**0.7867 macro-F1@2次调用** vs 固定级联0.7185@15次；三重归因=特征分布外推（EGT单claim短问句1.02/10/24.06 vs QA 5.01/20.64/218.34）/通道强度漂移（L2 EGT dev 0.9056 vs QA refute P 0.3684）/gold先验漂移（EGT均衡 vs QA 85% NIE）；严格防泄漏体制（qa实例零进训练+10条问题重叠行剔除）
+- `build_mutation_injection_eval.py`+`eval_mutation_detection.py`（7测试）：48注册算子×91QA→**394条注入**，总检出率**10.4%**；族级GJB 25% > TERM 19.4% > BASE 9.4% > STRUCT 8.1% > LOGIC 5.5% > **PARAM 0%**（证据无数值事实）
+
+**科研发现**：**证据侧双登记**（论文级）——真实违例=证据侧多处登记冲突（identifier 5/5、enumeration 4/4），answer侧单边注入破坏同通道近乎失明（0.526/1/24=0.042）→**符号层检出能力依赖证据侧冲突登记的存在=方向A上下文聚合的实证论据**（§6.7闭环的反方向一环）；学习路由负结果与零样本NLI坍缩、conformal不可信并列第三大负结果。
+
+**零回归**：9专家栈91QA四配置与Wave 5定稿逐位一致（B3 0.9011/0.6381、cascade 0.7185@15；两新专家91QA零触发，`runs/eval_router_2b76c358_20261027_170640`核验）。
+
+**runs**：`router_train_7a90549c_20261027_165644`、`eval_router_2b76c358_20261027_170640`、`eval_mutation_detection_750b7b7d_20261027_165008`、`eval_violations_5d5c92a8_20261027_165400`。
+
+**详细结果、全部数字的run溯源与核对记录（verify脚本412项PASS）**：`docs/srs_project/49_cascadeverify_v2_results.md` §8（Wave 6章节）——论文数字唯一权威来源。
+
+**遗留**：91条gold人工标注（最高优先级，人工项；claim级归因评测侧挂起于此）、论文写作、代码提交（HEAD停在ff0d4950）、可选VIO-15文档名通道（17违例唯一未检出）。
+
+### M28（2026-10-27晚）：审计响应收口——切分/诚实数字/三项修复/跨文档gap
+
+**范围**：对49号文档全部声明做可信度审计→P0/P1修复→诚实数字的完整链条落地，把评测效度（dev-on-test、跨文档零验证、silver非gold、support召回）从审计发现变成已量化/已修复/已排期三类状态。**审计-响应对照表终版见 `49_cascadeverify_v2_results.md` §10.4（八项）。**
+
+**落地**（全部runs协议落盘，git_sha=ff0d4950）：
+
+- **持久切分与诚实评测（P0-1）**：`data/gjb_438c/qa_frozen/dev_test_split_v1.json`（`tools/build_dev_test_split.py`，seed=42，29功能主题簇整簇原子分配，dev=45[S3/R4/N38]/test=46[S3/R4/N39]，同主题零跨侧）；dev扫参60配置只在冻结dev上（`tools/calibrate_on_dev.py`，阈值空间被压平——60配置仅3个macro-F1值）；test一次评测（`tools/eval_test_honest.py`）。**修复前test=0.704 vs legacy全91自评0.7185——乐观偏差仅+0.0145（2%）；修复后test=0.8286/acc 0.9348**（refute P=1.0/F1=0.8571）；dev调参在test零分歧。口径警告：修复后run的`optimistic_bias=-0.1101`是"legacy（旧代码自评）−test（新代码）"混合口径（含代码改进），非纯乐观偏差。
+- **P1三项确定性修复**（失败分析=`50_support_recall_analysis.md`）：①融合键剥离编号前缀（qa_module）②序列专家适用性门（sequence_expert）③id_join精确绑定+TERM-07护栏（id_join/entity_detector）——**support召回2/6→5/6**（053/066/069翻正，077留P2证据投递缺口）；全91确定性0.9011/0.6381→**0.9121/0.7212**；**违例集16/17零回退**（定位gold 24→23，VIO-03第二锚点，机制已注明）；dev侧B4=0.8875。诚实声明：诊断用了全91失败分析（含test侧053/066），oracle验证零副作用——test数字纯净度有此折扣。
+- **跨文档泛化（P1）**：06号30条**构造性sound标签**评测集（S/R/N各10，`crossdoc06_evalset_v1.jsonl`，label_proof逐条可溯，零LLM silver）；**deterministic 0.1524 vs 04号0.6381（Δ=-0.486）、cascade 0.5309 vs 0.7185（Δ=-0.188）**。四条失效归因（answer文法不迁移/numeric_z3跨行伪refute/identifier在场即support假设失效/cascade保留L1终态误判）；P1修复对06号零改善（修复前后两run逐位一致）——**泛化缺口是正则文法层的结构性问题，升级路线=语义匹配（P2）**。
+- **gold标注工作台（响应"silver非gold"）**：`build_annotation_sheet.py`→`collect_gold_annotation.py`→`finalize_gold.py`三工具链（108实例/525 claim预填+TSV+校验+双人κ+gold_v1导出；速查手册`gold_annotation_sheet_v1.md`，协议48号）——**待人工标注（估6-9小时）**。
+
+**runs**：`calibrate_on_dev_a069227d_20261027_185110`、`eval_test_honest_6740ed5c_20261027_185819/195753`、`eval_qa_module_silver_f119425e_20261027_190326/195515`、`eval_qa_dev_split_6d4e96bb_20261027_195532`、`eval_violations_5d5c92a8_20261027_195407/195501`、`eval_crossdoc_27e8ce32_20261027_190259/195859`、`build_crossdoc_evalset_1a7c8719_20261027_190350`。
+
+**详细数字、口径声明与审计-响应对照表（verify脚本583项PASS，含Wave 7新增171项核对）**：`49_cascadeverify_v2_results.md` §10（Wave 7章节）；修复逐claim机制=`50_support_recall_analysis.md` §7。
+
+**遗留**：gold人工标注（工作台已建，待人工6-9h，最高优先级人工项）、077 L3证据投递（P2）、跨文档正则文法升级=语义匹配（P2）、论文写作、代码提交（HEAD停在ff0d4950）。

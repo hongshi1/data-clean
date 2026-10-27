@@ -1,0 +1,46 @@
+{
+  "counts": {
+    "by_kind_pair": {
+      "claim+requirement": 4645,
+      "claim+table_row": 4414,
+      "diagram_node+diagram_node": 5378,
+      "requirement+requirement": 8046,
+      "requirement+table_row": 4428,
+      "table_row+table_row": 780
+    },
+    "by_label_basis": {
+      "explicit_identifier": 13487,
+      "sibling_distinct_identifier": 14204
+    },
+    "excluded": 822,
+    "excluded_cross_doc": 0,
+    "excluded_unknown_identity": 822,
+    "negative": 14204,
+    "object_by_kind": {
+      "claim": 11869,
+      "diagram_node": 2831,
+      "requirement": 2327,
+      "table_row": 10446
+    },
+    "objects": 27473,
+    "pairs": 27691,
+    "positive": 13487,
+    "split_dev": 11647,
+    "split_test": 5369,
+    "split_train": 10675
+  },
+  "fold_rule": "fold=int(sha1(f'doc:{doc_id}')[:12],16)%4; 0=test 1=dev 2=train 3=train",
+  "policy": {
+    "cross_document_pairs_excluded": true,
+    "diagram_sibling_negative_requires_different_text": true,
+    "negative_requires_distinct_identifier_sets": true,
+    "no_human_labels": true,
+    "positive_requires_shared_identifier_and_distinct_kinds": true,
+    "quality_tier": "silver",
+    "same_kind_shared_identifier_excluded": true,
+    "same_normalized_name_without_identifier_distinction_excluded": true
+  },
+  "schema_version": "training_pairs_v1",
+  "source_corpus": "data\\gjb_438c\\structured_corpus_v1",
+  "source_manifest_sha256": "fd63637084589c9bab137de6834e3839ea5bf3a081a2f7e2c28bbe3110bcf3b6"
+}

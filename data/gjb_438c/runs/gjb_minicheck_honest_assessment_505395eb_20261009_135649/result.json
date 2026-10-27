@@ -1,0 +1,22 @@
+{
+ "minicheck_原文": {
+  "论文": "MiniCheck: Efficient Fact-Checking of LLMs on Grounding Documents",
+  "venue": "EMNLP 2024 主会(2024.emnlp-main.499)",
+  "核心": "C2D/D2C结构化合成(GPT-4原子事实删除+幂集对比集)+21K ANLI=35K训练",
+  "结果": "770M FT5超GPT-4(74.7 vs 75.3 BAcc, 400x便宜), 超Claude-3-Opus",
+  "代码": "github.com/Liyan06/MiniCheck (Apache-2.0), pip install minicheck"
+ },
+ "我们的GJB-MiniCheck": {
+  "与MiniCheck的共享": "仅'合成+真实混合'抽象配方(1/6维度一致)",
+  "实质差异": "GPT-4→48变异算子; ANLI→锚点; 英文→中文; DeBERTa→RoBERTa+DoRA",
+  "判定": "配方借鉴(recipe adaptation), 非复现(reproduction)",
+  "消融结果": "md166=0.726(混合) vs 0.940(纯锚点) — 域内负收益",
+  "论文表述": "应写'adapted from/inspired by', 不写'reproduce/replicate'"
+ },
+ "审稿风险": [
+  "声称复现但LLM-AggreFact分数对不上 = misrepresenting prior work",
+  "声称复现但消融为负收益 = 自相矛盾",
+  "确定性生成器'严格优于'GPT-4生成 = 无证据支持"
+ ],
+ "诚实表述建议": "首个对该配方在中文需求一致性任务上做受控迁移研究, 并报告其边界条件(负结果) — 负结果+边界分析在RE会议是可发表贡献"
+}

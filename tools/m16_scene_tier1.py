@@ -357,7 +357,7 @@ def main():
                 print(f"    {dt}: {s[dt]}")
 
     # 抽样drift候选
-    print(f"\n  TABLE_ITEM_MISSING样例(每场景2条):")
+    print("\n  TABLE_ITEM_MISSING样例(每场景2条):")
     seen_scene = set()
     for pk, v in results.items():
         sc = v['scene']

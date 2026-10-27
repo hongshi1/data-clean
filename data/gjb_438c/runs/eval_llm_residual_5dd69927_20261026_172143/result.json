@@ -1,0 +1,245 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "baseline": {
+  "accuracy": 0.8791,
+  "macro_f1": 0.576,
+  "per_class": {
+   "support": {
+    "precision": 0.1667,
+    "recall": 0.5,
+    "f1": 0.25
+   },
+   "refute": {
+    "precision": 0.375,
+    "recall": 1.0,
+    "f1": 0.5455
+   },
+   "not_in_evidence": {
+    "precision": 0.987,
+    "recall": 0.8837,
+    "f1": 0.9325
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 1,
+   "support|not_in_evidence": 1,
+   "refute|refute": 3,
+   "not_in_evidence|support": 5,
+   "not_in_evidence|refute": 5,
+   "not_in_evidence|not_in_evidence": 76
+  },
+  "claim_methods": {
+   "semantic_unresolved": 312,
+   "e1_template_match": 31,
+   "l0_entity_detector:TERM-05": 56,
+   "sequence_alignment": 225,
+   "conservative_unresolved": 29,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 17,
+   "exact_statement": 9,
+   "l0_entity_detector:TERM-08:warning": 4
+  }
+ },
+ "residual": {
+  "accuracy": 0.9121,
+  "macro_f1": 0.6857,
+  "per_class": {
+   "support": {
+    "precision": 0.1667,
+    "recall": 0.5,
+    "f1": 0.25
+   },
+   "refute": {
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571
+   },
+   "not_in_evidence": {
+    "precision": 0.987,
+    "recall": 0.9157,
+    "f1": 0.95
+   }
+  },
+  "confusion[predicted, silver]": {
+   "support|support": 1,
+   "support|not_in_evidence": 1,
+   "refute|refute": 6,
+   "not_in_evidence|support": 5,
+   "not_in_evidence|refute": 2,
+   "not_in_evidence|not_in_evidence": 76
+  },
+  "claim_methods": {
+   "semantic_unresolved": 235,
+   "e1_template_match": 31,
+   "l0_entity_detector:TERM-05": 56,
+   "sequence_alignment": 225,
+   "conservative_unresolved": 21,
+   "llm_residual": 85,
+   "explicit_quote_polarity": 1,
+   "identifier_exact_match": 12,
+   "l0_entity_detector:TERM-07": 17,
+   "exact_statement": 9,
+   "l0_entity_detector:TERM-08:warning": 4
+  },
+  "support_recall": 0.1667
+ },
+ "llm_stats": {
+  "invocations": 85,
+  "api_calls": 85,
+  "cache_hits": 0,
+  "llm_residual_failed_claims": 0
+ },
+ "flips": {
+  "corrected": [
+   {
+    "instance_id": "S1QA-068",
+    "silver": "refute",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "代码生成功能是通过以下步骤实现的",
+      "verdict": "support",
+      "confidence": 0.7,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2描述了配置转换、生成接口文件、提供下载等实现内容，与声明的步骤框架一致"
+     },
+     {
+      "claim_text": "系统转换数据结构：基于提供的配置，系统将关系型数据库中的表和视图转化为对应的目标语言代码",
+      "verdict": "refute",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确产物为'数据对象'，与声明的'目标语言代码'是不同产物"
+     },
+     {
+      "claim_text": "生成接口文件：自动生成与外部系统集成所需的接口文件，简化了与数据库的交互",
+      "verdict": "support",
+      "confidence": 0.7,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确'支持自动生成接口文件'，核心值一致；'简化交互'为效果性扩展不作为判定依据"
+     },
+     {
+      "claim_text": "下载功能：提供下载选项，方便用户直接获取生成的代码和接口文件",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-068-ev-000030"
+      ],
+      "rationale": "LLM残差判定：ev-2明确'提供下载'，与声明的下载功能一致"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-074",
+    "silver": "refute",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "BLOB数据操作的具体操作 根据提供的参考内容，BLOB数据操作包括以下具体操作",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-074-ev-000035"
+      ],
+      "rationale": "LLM残差判定：ev-8明确列出BLOB数据操作功能包括的具体操作"
+     },
+     {
+      "claim_text": "插入：允许用户向数据库中的BLOB类型字段插入新的数据记录",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-074-ev-000035"
+      ],
+      "rationale": "LLM残差判定：ev-8列出BLOB数据插入功能"
+     },
+     {
+      "claim_text": "删除：支持删除特定BLOB类型的记录，这通常涉及找到并移除对应的数据行",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-074-ev-000035"
+      ],
+      "rationale": "LLM残差判定：ev-8列出BLOB删除数据记录功能"
+     },
+     {
+      "claim_text": "提供多种查询功能，包括",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-074-ev-000035"
+      ],
+      "rationale": "LLM残差判定：ev-8列出BLOB数据查询功能"
+     },
+     {
+      "claim_text": "获取 LOB（大型对象）类型的数据 这些操作均基于SQL语言实现，并且在桌面版、平板版和手持版上均可使用",
+      "verdict": "refute",
+      "confidence": 0.8,
+      "evidence_refs": [
+       "S1QA-074-ev-000035"
+      ],
+      "rationale": "LLM残差判定：BLOB数据操作仅包括插入、删除、查询（ev-8），且需求重用仅为平板、桌面（ev-10），与'均可在桌面、平板、手持使用'矛盾"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-079",
+    "silver": "refute",
+    "before": "not_in_evidence",
+    "after": "refute",
+    "llm_claims": [
+     {
+      "claim_text": "在读取配置文件连接时，系统会返回以下参数",
+      "verdict": "support",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-1显示系统输出连接状态和连接错误信息，ev-2显示连接成功保存连接句柄，均为返回内容"
+     },
+     {
+      "claim_text": "用户输入的配置文件路径等必要参数：这包括用户调用接口时提供的配置文件路径和相关参数",
+      "verdict": "refute",
+      "confidence": 0.85,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-1明确配置文件路径等参数是调用接口时的输入参数，而非系统返回的参数"
+     },
+     {
+      "claim_text": "连接结果的状态信息：系统会根据连接是否成功返回状态",
+      "verdict": "support",
+      "confidence": 0.9,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-1明确应用软件输出连接状态，连接失败时输出错误信息"
+     },
+     {
+      "claim_text": "如果连接成功，则保存连接句柄",
+      "verdict": "support",
+      "confidence": 0.95,
+      "evidence_refs": [
+       "S1QA-079-ev-000049"
+      ],
+      "rationale": "LLM残差判定：ev-2明确连接成功则保存连接句柄"
+     }
+    ]
+   }
+  ],
+  "regressed": [],
+  "moved": []
+ },
+ "false_refutes": [],
+ "false_supports": [
+  "S1QA-064"
+ ]
+}

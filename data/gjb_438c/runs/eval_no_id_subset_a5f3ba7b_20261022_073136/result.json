@@ -1,0 +1,35 @@
+{
+ "protocol": "native frozen-BGE cosine AUC on explicit-ID lexical subsets of training_pairs_v1; no projection, no training",
+ "id_regex": "\\b[A-Z]{3,}(?:-[A-Z0-9]{2,}){2,}\\b",
+ "total_pairs": 27694,
+ "no_id_subset": {
+  "n_pairs": 5378,
+  "n_pos": 0,
+  "n_neg": 5378,
+  "auc_native_bge": null,
+  "mean_score_pos": null,
+  "mean_score_neg": 0.5518,
+  "skipped_missing_vector": 0
+ },
+ "control_pos_id_neg_noid": {
+  "n_pairs": 18852,
+  "n_pos": 13474,
+  "n_neg": 5378,
+  "auc_native_bge": 0.8743,
+  "mean_score_pos": 0.8115,
+  "mean_score_neg": 0.5518,
+  "skipped_missing_vector": 15
+ },
+ "control_both_sides_with_id": {
+  "n_pairs": 22301,
+  "n_pos": 13474,
+  "n_neg": 8827,
+  "auc_native_bge": 0.6385,
+  "mean_score_pos": 0.8115,
+  "mean_score_neg": 0.7407,
+  "skipped_missing_vector": 15
+ },
+ "pos_without_id_total": 0,
+ "auc_gap_control_minus_no_id": null,
+ "conclusion": "no-ID positives = 0: every silver P1 positive carries an explicit identifier, so an ID-free AUC is undefined; the identifier shortcut is not merely present, it constitutes the entire positive supervision basis. Control AUC (pos-with-ID vs neg-without-ID) = 0.8743 measures the shortcut's separability; the both-sides-with-ID control (0.6385) measures discriminability once negatives also carry identifiers."
+}

@@ -1,0 +1,36 @@
+{
+ "experiment": "QLoRA vs Zero-shot vs Lexical (Scene 1)",
+ "scene": "sc1_usecase_capability",
+ "test_set": {
+  "n": 149,
+  "neg": 137,
+  "pos": 12
+ },
+ "baselines": {
+  "B1_mdeberta_zeroshot": {
+   "P": 1.0,
+   "R": 0.674,
+   "F1": 0.805
+  },
+  "B2_erlangshen_zeroshot": {
+   "P": 1.0,
+   "R": 0.348,
+   "F1": 0.516
+  },
+  "B3_lexical": {
+   "P": 1.0,
+   "R": 1.0,
+   "F1": 1.0,
+   "note": "quick test only"
+  }
+ },
+ "ours": {
+  "method": "QLoRA(Erlangshen-330M, LoRA r=8, 5 epochs)",
+  "P": 1.0,
+  "R": 0.993,
+  "F1": 0.996,
+  "train_size": 500,
+  "train_time_min": 3,
+  "vram_gb": 4
+ }
+}

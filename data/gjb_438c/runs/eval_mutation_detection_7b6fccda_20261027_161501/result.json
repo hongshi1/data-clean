@@ -1,0 +1,1866 @@
+{
+ "evalset": "data\\gjb_438c\\mutation_injection_evalset_v1.jsonl",
+ "protocol": "注入实例answer已受控变异(变异破坏answer对冻结evidence的grounding), 期望verdict=refute; verdict==refute计检出, support/NIE计漏检; 被测系统为纯确定性符号层(QAConsistencyModule use_experts=True, 零LLM调用)。",
+ "family_matrix": {
+  "BASE": {
+   "n_injected": 8,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {
+    "nie": 8
+   },
+   "worst_operators": [
+    {
+     "operator": "ANSWER-NUM-EQ-CONFLICT-V1",
+     "n": 3,
+     "detected": 0,
+     "rate": 0.0
+    },
+    {
+     "operator": "ANSWER-PARAM-06-OUT-OF-RANGE-V1",
+     "n": 3,
+     "detected": 0,
+     "rate": 0.0
+    },
+    {
+     "operator": "ANSWER-LOGIC-04-REVERSED-FLOW-V1",
+     "n": 2,
+     "detected": 0,
+     "rate": 0.0
+    }
+   ],
+   "example_miss_ids": [
+    "MIJ-000007",
+    "MIJ-000008",
+    "MIJ-000009"
+   ]
+  },
+  "STRUCT": {
+   "n_injected": 6,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {
+    "nie": 6
+   },
+   "worst_operators": [
+    {
+     "operator": "ANSWER-STRUCT-STEP-REORDER-V1",
+     "n": 4,
+     "detected": 0,
+     "rate": 0.0
+    },
+    {
+     "operator": "ANSWER-STRUCT-STEP-DELETE-V1",
+     "n": 2,
+     "detected": 0,
+     "rate": 0.0
+    }
+   ],
+   "example_miss_ids": [
+    "MIJ-000001",
+    "MIJ-000002",
+    "MIJ-000003"
+   ]
+  },
+  "TERM": {
+   "n_injected": 1,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {
+    "nie": 1
+   },
+   "worst_operators": [
+    {
+     "operator": "ANSWER-TERM-02-DEFINITION-SWAP-V1",
+     "n": 1,
+     "detected": 0,
+     "rate": 0.0
+    }
+   ],
+   "example_miss_ids": [
+    "MIJ-000004"
+   ]
+  },
+  "PARAM": {
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {},
+   "worst_operators": [],
+   "example_miss_ids": []
+  },
+  "LOGIC": {
+   "n_injected": 5,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {
+    "nie": 5
+   },
+   "worst_operators": [
+    {
+     "operator": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+     "n": 5,
+     "detected": 0,
+     "rate": 0.0
+    }
+   ],
+   "example_miss_ids": [
+    "MIJ-000005",
+    "MIJ-000006",
+    "MIJ-000013"
+   ]
+  },
+  "GJB": {
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "main_detection_channel": "",
+   "detection_channels": {},
+   "miss_kind_counts": {},
+   "worst_operators": [],
+   "example_miss_ids": []
+  },
+  "OVERALL": {
+   "n_injected": 20,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "miss_rate": 1.0,
+   "miss_kind_counts": {
+    "nie": 20
+   }
+  }
+ },
+ "operator_table": [
+  {
+   "operator": "ANSWER-NUM-IDENTITY-V1",
+   "family": "BASE",
+   "check_item": "TERM-06",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "family": "BASE",
+   "check_item": "TERM-06",
+   "refute_semantics": true,
+   "n_injected": 3,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 3
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-NUM-EQUIV-V1",
+   "family": "BASE",
+   "check_item": "TERM-06",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-QUOTE-EXPLICIT-CONFLICT-V1",
+   "family": "BASE",
+   "check_item": "TERM-01",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-ENUM-EXPLICIT-CONFLICT-V1",
+   "family": "BASE",
+   "check_item": "TERM-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-TERM-08-EXPANSION-V1",
+   "family": "BASE",
+   "check_item": "TERM-08",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-06-OUT-OF-RANGE-V1",
+   "family": "BASE",
+   "check_item": "PARAM-06",
+   "refute_semantics": true,
+   "n_injected": 3,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 3
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-LOGIC-04-REVERSED-FLOW-V1",
+   "family": "BASE",
+   "check_item": "LOGIC-04",
+   "refute_semantics": true,
+   "n_injected": 2,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 2
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-STRUCT-CLOSED-LIST-ADD-SUPPORT-V2",
+   "family": "STRUCT",
+   "check_item": "TERM-03",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-STRUCT-CLOSED-LIST-REMOVE-V1",
+   "family": "STRUCT",
+   "check_item": "TERM-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "refute_semantics": true,
+   "n_injected": 4,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 4
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-STRUCT-STEP-DELETE-V1",
+   "family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "refute_semantics": true,
+   "n_injected": 2,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 2
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-STRUCT-EXCEPTION-OUTCOME-SWAP-V1",
+   "family": "STRUCT",
+   "check_item": "LOGIC-06",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-STRUCT-ACTOR-ADD-SUPPORT-V2",
+   "family": "STRUCT",
+   "check_item": "TERM-03",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-STRUCT-ACTOR-REMOVE-REFUTE-V2",
+   "family": "STRUCT",
+   "check_item": "TERM-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-TERM-02-DEFINITION-SWAP-V1",
+   "family": "TERM",
+   "check_item": "TERM-02",
+   "refute_semantics": true,
+   "n_injected": 1,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 1
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-TERM-04-STATUS-CONFLICT-V1",
+   "family": "TERM",
+   "check_item": "TERM-04",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-TERM-05-COMMAND-SWAP-V1",
+   "family": "TERM",
+   "check_item": "TERM-05",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-TERM-07-INTERFACE-CONFLICT-V1",
+   "family": "TERM",
+   "check_item": "TERM-07",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-01-TIME-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-01",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-02-PERIOD-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-02",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-03-THRESHOLD-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-05-RESOURCE-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-05",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-07-RETENTION-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-07",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-08-SYNC-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-08",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-09-DEGRADE-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-09",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-10-FAULT-CONFLICT-V1",
+   "family": "PARAM",
+   "check_item": "PARAM-10",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-PARAM-NUM-EQUIV-SUPPORT-V1",
+   "family": "PARAM",
+   "check_item": "TERM-06",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-01-PRIORITY-REVERSAL-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-01",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "refute_semantics": true,
+   "n_injected": 5,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {
+    "adaptive": 5
+   },
+   "refute_methods": []
+  },
+  {
+   "operator": "ANSWER-LOGIC-03-ORDER-SWAP-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-07-ATOMICITY-CONFLICT-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-07",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-08-ARBITRATION-SWAP-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-08",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-09-PERMISSION-CONFLICT-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-09",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-10-RECOVERY-CONFLICT-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-10",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-LOGIC-11-SCOPE-CONFLICT-V1",
+   "family": "LOGIC",
+   "check_item": "LOGIC-11",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-01-QUANTIFIER-FABRICATION-V1",
+   "family": "GJB",
+   "check_item": "GJB-01",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-02-FT-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-02",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-03-ACL-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-03",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-04-AUDIT-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-04",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-05-TRACE-CONFLICT-V1",
+   "family": "GJB",
+   "check_item": "GJB-05",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-05-TRACE-MATCH-V1",
+   "family": "GJB",
+   "check_item": "GJB-05",
+   "refute_semantics": false,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-06-ALARM-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-06",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-07-SELFTEST-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-07",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-08-POWERLOSS-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-08",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-09-INPUTGUARD-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-09",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-10-ROLLBACK-CONFLICT-V1",
+   "family": "GJB",
+   "check_item": "GJB-10",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  },
+  {
+   "operator": "ANSWER-GJB-11-DEGRADE-EXCLUSION-V1",
+   "family": "GJB",
+   "check_item": "GJB-11",
+   "refute_semantics": true,
+   "n_injected": 0,
+   "n_detected": 0,
+   "detection_rate": 0.0,
+   "modes": {}
+  }
+ ],
+ "miss_reason_stats": {
+  "n_missed": 20,
+  "miss_kinds": {
+   "nie": 20
+  },
+  "nie_causing_methods": {
+   "semantic_unresolved": 30,
+   "conservative_unresolved": 16
+  },
+  "support_causing_methods": {
+   "l0_entity_detector:TERM-05": 10,
+   "e1_template_match": 4
+  }
+ },
+ "miss_samples": [
+  {
+   "instance_id": "MIJ-000008",
+   "source_instance_id": "S1QA-002",
+   "operator": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "family": "BASE",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过72088.5字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为72088.5字节(eq); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000019",
+   "source_instance_id": "S1QA-003",
+   "operator": "ANSWER-STRUCT-STEP-DELETE-V1",
+   "family": "STRUCT",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "应用软件调用接口正确性：应用软件必须能够正确调用所需的数据查询接口，并提供相应的参数（如SQL语句、插入的BLOB数组、需要插入的字段个数等），以便进行正确的数据传输和处理",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer的用例「所需的数据查询」与evidence用例「查询数据」指向同一用例（前缀/字符重合匹配）"
+    }
+   ],
+   "mutation_rationale": "受控步骤删除: 步骤2整体删除并重编号; 破坏evidence对齐的完整步骤序列, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000005",
+   "source_instance_id": "S1QA-001",
+   "operator": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "family": "LOGIC",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会删除",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「直接返回连接错误信息」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000004",
+   "source_instance_id": "S1QA-001",
+   "operator": "ANSWER-TERM-02-DEFINITION-SWAP-V1",
+   "family": "TERM",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会直接返回连接错误信息",
+     "verdict": "support",
+     "method": "e1_template_match",
+     "rationale": "提示内容匹配：answer声称『连接错误信息』与读取配置文件连接的E1prompt『连接失败』keyword匹配(score=1.00)"
+    }
+   ],
+   "mutation_rationale": "受控释义错配: 「如果出现执行错误（如数据库拒绝插入BLOB数据）」的括注释义替换为「BLOB」(evidence其它术语释义); 同名异义, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000007",
+   "source_instance_id": "S1QA-002",
+   "operator": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "family": "BASE",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过72088.5字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为72088.5字节(eq); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000001",
+   "source_instance_id": "S1QA-001",
+   "operator": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "family": "STRUCT",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "JSON解析失败： 如果应用软件将SQL语句和blob数据组织成的JSON格式无法正确解析，系统返回解析失败的错误信息，并触发异常流E1",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤1与步骤2整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000020",
+   "source_instance_id": "S1QA-003",
+   "operator": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "family": "LOGIC",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "BLOB数据大小限制：每个BLOB数据的大小不应删除，否则可能导致插入失败或性能问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「超过65535字节」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000012",
+   "source_instance_id": "S1QA-002",
+   "operator": "ANSWER-LOGIC-04-REVERSED-FLOW-V1",
+   "family": "BASE",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控流向反转: 收集到的JSON数据向服务端进行解析 → 服务端进行解析向收集到的JSON数据; 数据流向与evidence声明相反, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000018",
+   "source_instance_id": "S1QA-003",
+   "operator": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "family": "STRUCT",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "应用软件调用接口正确性：应用软件必须能够正确调用所需的数据查询接口，并提供相应的参数（如SQL语句、插入的BLOB数组、需要插入的字段个数等），以便进行正确的数据传输和处理",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer的用例「所需的数据查询」与evidence用例「查询数据」指向同一用例（前缀/字符重合匹配）"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤2与步骤3整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000014",
+   "source_instance_id": "S1QA-002",
+   "operator": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "family": "LOGIC",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "miss_kind": "NIE漏检: 声明未被冻结evidence判定, 系统保守返回not_in_evidence",
+   "deciding_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应删除口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「用软件通过调用数据库的数据查询接」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  }
+ ],
+ "violation_cross_reference": {
+  "note": "真实违例=real_observed(04号文档人工深读17条); 注入=受控变异同类不一致性; 两列检出率对照反映'合成变异可检出性'与'真实缺陷可检出性'的分布差异。",
+  "real_total": 17,
+  "real_detected": 16,
+  "real_detection_rate": 0.9412,
+  "rows": [
+   {
+    "violation_category": "identifier",
+    "vio_ids": [
+     "DOC04-VIO-01",
+     "DOC04-VIO-02",
+     "DOC04-VIO-03",
+     "DOC04-VIO-04",
+     "DOC04-VIO-05"
+    ],
+    "n_real": 5,
+    "real_detected": 5,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "e1_L1",
+     "entity_L0",
+     "id_join_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-TERM-07-INTERFACE-CONFLICT-V1"
+    ],
+    "injection_n": 0,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "enumeration",
+    "vio_ids": [
+     "DOC04-VIO-06",
+     "DOC04-VIO-07",
+     "DOC04-VIO-08",
+     "DOC04-VIO-09"
+    ],
+    "n_real": 4,
+    "real_detected": 4,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "enum_join_L1",
+     "gjb_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-ENUM-EXPLICIT-CONFLICT-V1",
+     "ANSWER-STRUCT-CLOSED-LIST-REMOVE-V1",
+     "ANSWER-STRUCT-ACTOR-REMOVE-REFUTE-V2"
+    ],
+    "injection_n": 0,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "traceability",
+    "vio_ids": [
+     "DOC04-VIO-10",
+     "DOC04-VIO-11",
+     "DOC04-VIO-12"
+    ],
+    "n_real": 3,
+    "real_detected": 3,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "entity_L0",
+     "trace_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-GJB-05-TRACE-CONFLICT-V1"
+    ],
+    "injection_n": 0,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "exception_template",
+    "vio_ids": [
+     "DOC04-VIO-13",
+     "DOC04-VIO-14"
+    ],
+    "n_real": 2,
+    "real_detected": 2,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "e1_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-STRUCT-EXCEPTION-OUTCOME-SWAP-V1",
+     "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1"
+    ],
+    "injection_n": 5,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "document_name",
+    "vio_ids": [
+     "DOC04-VIO-15"
+    ],
+    "n_real": 1,
+    "real_detected": 0,
+    "real_detection_rate": 0.0,
+    "real_detection_channels": [],
+    "injection_operators": [
+     "ANSWER-TERM-05-COMMAND-SWAP-V1",
+     "ANSWER-TERM-02-DEFINITION-SWAP-V1"
+    ],
+    "injection_n": 1,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "function_coverage",
+    "vio_ids": [
+     "DOC04-VIO-16"
+    ],
+    "n_real": 1,
+    "real_detected": 1,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "gjb_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-GJB-02-FT-EXCLUSION-V1",
+     "ANSWER-GJB-03-ACL-EXCLUSION-V1",
+     "ANSWER-GJB-04-AUDIT-EXCLUSION-V1",
+     "ANSWER-GJB-06-ALARM-EXCLUSION-V1",
+     "ANSWER-GJB-07-SELFTEST-EXCLUSION-V1",
+     "ANSWER-GJB-08-POWERLOSS-EXCLUSION-V1",
+     "ANSWER-GJB-09-INPUTGUARD-EXCLUSION-V1",
+     "ANSWER-GJB-11-DEGRADE-EXCLUSION-V1"
+    ],
+    "injection_n": 0,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   },
+   {
+    "violation_category": "qualification_coverage",
+    "vio_ids": [
+     "DOC04-VIO-17"
+    ],
+    "n_real": 1,
+    "real_detected": 1,
+    "real_detection_rate": 1.0,
+    "real_detection_channels": [
+     "coverage_L1"
+    ],
+    "injection_operators": [
+     "ANSWER-GJB-01-QUANTIFIER-FABRICATION-V1"
+    ],
+    "injection_n": 0,
+    "injection_detected": 0,
+    "injection_detection_rate": 0.0
+   }
+  ]
+ },
+ "capability_gaps": [
+  {
+   "family": "BASE",
+   "n_injected": 8,
+   "detection_rate": 0.0,
+   "miss_kind_counts": {
+    "nie": 8
+   },
+   "gap_statement": "BASE家族注入8条, 检出率仅0.0; 数值/引用项变异依赖evidence侧显式数值约束或显式否定; 冻结证据缺少数值声明时数值通道无从比对——数值证据缺失型漏检, 需要参数约束抽取与跨块聚合前置(方向A上下文关联)。"
+  },
+  {
+   "family": "STRUCT",
+   "n_injected": 6,
+   "detection_rate": 0.0,
+   "miss_kind_counts": {
+    "nie": 6
+   },
+   "gap_statement": "STRUCT家族注入6条, 检出率仅0.0; 步骤重排/删除仅被sequence_alignment与e1模板通道覆盖, 枚举删元在开放scope下不可证伪——需要closed-scope证据或计数型枚举声明检测。"
+  },
+  {
+   "family": "LOGIC",
+   "n_injected": 5,
+   "detection_rate": 0.0,
+   "miss_kind_counts": {
+    "nie": 5
+   },
+   "gap_statement": "LOGIC家族注入5条, 检出率仅0.0; 异常处置动作的域外替换缺少语义级处置动作比对——确定性符号层只覆盖模板级e1/时序/优先级形状, 语义级动作冲突需要L2 NLI或L3 LLM残差通道。"
+  }
+ ],
+ "records": [
+  {
+   "instance_id": "MIJ-000001",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "JSON解析失败： 如果应用软件将SQL语句和blob数据组织成的JSON格式无法正确解析，系统返回解析失败的错误信息，并触发异常流E1",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤1与步骤2整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000002",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会直接返回连接错误信息",
+     "verdict": "support",
+     "method": "e1_template_match",
+     "rationale": "提示内容匹配：answer声称『连接错误信息』与读取配置文件连接的E1prompt『连接失败』keyword匹配(score=1.00)"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤2与步骤3整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000003",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-STRUCT-STEP-DELETE-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会直接返回连接错误信息",
+     "verdict": "support",
+     "method": "e1_template_match",
+     "rationale": "提示内容匹配：answer声称『连接错误信息』与读取配置文件连接的E1prompt『连接失败』keyword匹配(score=1.00)"
+    }
+   ],
+   "mutation_rationale": "受控步骤删除: 步骤2整体删除并重编号; 破坏evidence对齐的完整步骤序列, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000004",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-TERM-02-DEFINITION-SWAP-V1",
+   "operator_family": "TERM",
+   "check_item": "TERM-02",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会直接返回连接错误信息",
+     "verdict": "support",
+     "method": "e1_template_match",
+     "rationale": "提示内容匹配：answer声称『连接错误信息』与读取配置文件连接的E1prompt『连接失败』keyword匹配(score=1.00)"
+    }
+   ],
+   "mutation_rationale": "受控释义错配: 「如果出现执行错误（如数据库拒绝插入BLOB数据）」的括注释义替换为「BLOB」(evidence其它术语释义); 同名异义, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000005",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "operator_family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会删除",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「直接返回连接错误信息」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000006",
+   "source_instance_id": "S1QA-001",
+   "operator_name": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "operator_family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入过程中，系统如何处理异常情况，并提示错误信息",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "连接检查： 系统首先验证数据库连接是否正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，会直接返回连接错误信息",
+     "verdict": "support",
+     "method": "e1_template_match",
+     "rationale": "提示内容匹配：answer声称『连接错误信息』与读取配置文件连接的E1prompt『连接失败』keyword匹配(score=1.00)"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「用软件将SQL语句和blob数据」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000007",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "operator_family": "BASE",
+   "check_item": "TERM-06",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过72088.5字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为72088.5字节(eq); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000008",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "operator_family": "BASE",
+   "check_item": "TERM-06",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过72088.5字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为72088.5字节(eq); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000009",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-PARAM-06-OUT-OF-RANGE-V1",
+   "operator_family": "BASE",
+   "check_item": "PARAM-06",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过6.5535",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为6.5535e+06字节(oor); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000010",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-PARAM-06-OUT-OF-RANGE-V1",
+   "operator_family": "BASE",
+   "check_item": "PARAM-06",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过6.5535",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为6.5535e+06字节(oor); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000011",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-LOGIC-04-REVERSED-FLOW-V1",
+   "operator_family": "BASE",
+   "check_item": "LOGIC-04",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控流向反转: 件提供的JSON数据向服务端进行解析 → 服务端进行解析向件提供的JSON数据; 数据流向与evidence声明相反, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000012",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-LOGIC-04-REVERSED-FLOW-V1",
+   "operator_family": "BASE",
+   "check_item": "LOGIC-04",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控流向反转: 收集到的JSON数据向服务端进行解析 → 服务端进行解析向收集到的JSON数据; 数据流向与evidence声明相反, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000013",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "operator_family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应删除* 应用软件通过调用数据库的数据查询接口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer的用例「数据库的数据查询」与evidence用例「查询数据」指向同一用例（前缀/字符重合匹配）"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「用软件调用数据查询接口输入参数*」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000014",
+   "source_instance_id": "S1QA-002",
+   "operator_name": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "operator_family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "mode": "adaptive",
+   "question": "描述BLOB数据插入的主事件流及其关键步骤.",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "统必须确保每个BLOB数据的大小 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "查每个BLOB数据的大小是否符合 不超过65535字节",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved",
+     "rationale": "context无同subject/单位数值证据"
+    },
+    {
+     "claim_text": "应用软件调用数据查询接口输入参数 应删除口，提供所需的信息，如执行SQL语句、插入BLOB数据数组以及相关的字段数量",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer提到的指令/用例「数据查询」在evidence中明确出现"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「用软件通过调用数据库的数据查询接」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000015",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "operator_family": "BASE",
+   "check_item": "TERM-06",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "BLOB数据大小限制：每个BLOB数据的大小不应超过72088.5字节，否则可能导致插入失败或性能问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为72088.5字节(eq); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000016",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-PARAM-06-OUT-OF-RANGE-V1",
+   "operator_family": "BASE",
+   "check_item": "PARAM-06",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "BLOB数据大小限制：每个BLOB数据的大小不应超过6.5535e+06字节，否则可能导致插入失败或性能问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控数值变异: answer数值65535字节变异为6.5535e+06字节(oor); 原值来自evidence grounding, 变异破坏数值一致性, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000017",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "BLOB数据大小限制：每个BLOB数据的大小不应超过65535字节，否则可能导致插入失败或性能问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "如果数据大小超出限制，可能需要采取分段存储或其他优化措施",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤1与步骤2整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000018",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-STRUCT-STEP-REORDER-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "应用软件调用接口正确性：应用软件必须能够正确调用所需的数据查询接口，并提供相应的参数（如SQL语句、插入的BLOB数组、需要插入的字段个数等），以便进行正确的数据传输和处理",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer的用例「所需的数据查询」与evidence用例「查询数据」指向同一用例（前缀/字符重合匹配）"
+    }
+   ],
+   "mutation_rationale": "受控步骤重排: 步骤2与步骤3整体交换; 破坏evidence对齐的步骤顺序, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000019",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-STRUCT-STEP-DELETE-V1",
+   "operator_family": "STRUCT",
+   "check_item": "LOGIC-05",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "应用软件调用接口正确性：应用软件必须能够正确调用所需的数据查询接口，并提供相应的参数（如SQL语句、插入的BLOB数组、需要插入的字段个数等），以便进行正确的数据传输和处理",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05",
+     "rationale": "answer的用例「所需的数据查询」与evidence用例「查询数据」指向同一用例（前缀/字符重合匹配）"
+    }
+   ],
+   "mutation_rationale": "受控步骤删除: 步骤2整体删除并重编号; 破坏evidence对齐的完整步骤序列, 期望refute(注入协议)。"
+  },
+  {
+   "instance_id": "MIJ-000020",
+   "source_instance_id": "S1QA-003",
+   "operator_name": "ANSWER-LOGIC-02-EXCEPTION-SWAP-V1",
+   "operator_family": "LOGIC",
+   "check_item": "LOGIC-02",
+   "mode": "adaptive",
+   "question": "在进行BLOB数据插入操作前需要满足哪些前置条件",
+   "expected_verdict": "refute",
+   "predicted_verdict": "not_in_evidence",
+   "detected": false,
+   "miss_kind": "nie",
+   "refute_methods": [],
+   "refute_channels": [],
+   "miss_claims": [
+    {
+     "claim_text": "在进行BLOB数据插入操作前需要满足以下前置条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "数据库连接正常：确保数据库能够通过正常的SQL访问流程与系统通信",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    },
+    {
+     "claim_text": "BLOB数据大小限制：每个BLOB数据的大小不应删除，否则可能导致插入失败或性能问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved",
+     "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+    }
+   ],
+   "mutation_rationale": "受控异常策略错配: 处置动作「超过65535字节」替换为域外「删除」; 与evidence规定的处置策略冲突, 期望refute(注入协议)。"
+  }
+ ]
+}

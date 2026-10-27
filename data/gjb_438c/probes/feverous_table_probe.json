@@ -1,0 +1,1441 @@
+{
+ "meta": {
+  "probe_type": "feverous_table",
+  "purpose": "表格蕴含探针: 声明(claim)与结构化表格证据的核对能力(SUPPORTS→consistent, REFUTES→inconsistent)",
+  "source": {
+   "dataset": "FEVEROUS (fact verification against tables+text)",
+   "files": [
+    "data/gjb_438c/public_nli/feverous_train.jsonl"
+   ],
+   "raw_label_map": {
+    "0=SUPPORTS": "consistent",
+    "1=REFUTES": "inconsistent",
+    "2=NEI": "弃用"
+   },
+   "filter": "表格证据启发式: evidence含≥3行(≥2个换行); NEI弃用",
+   "selection": "SUPPORTS100 + REFUTES100, random.Random('p0probe:feverous_table').sample",
+   "truncation": "hypothesis取evidence.strip()前100字符"
+  },
+  "template": "premise=文档某节记载：「claim」/ hypothesis=证据表格显示：「evidence前100字」",
+  "item_schema": [
+   "id",
+   "premise",
+   "hypothesis",
+   "label",
+   "probe_type"
+  ],
+  "positive_class": "inconsistent",
+  "built_at": "2026-10-13T19:01:34",
+  "builder": "tools/build_probes.py",
+  "git_sha": "ff0d4950",
+  "frozen": true,
+  "freeze_declaration": "冻结评测资产(eval-only): 本集永不进入任何训练/微调/验证集, 仅允许推理期评测; 任何修改须以--force显式重建并同步MANIFEST与快照测试",
+  "n_items": 200,
+  "label_dist": {
+   "consistent": 100,
+   "inconsistent": 100
+  }
+ },
+ "items": [
+  {
+   "id": "feverous-39950",
+   "premise": "文档某节记载：「Juan José Esparragoza Moreno (February 3, 1949-June 7, 2014), known by his alias El Azul, was a fugitive leader of the Sinaloa Cartel, a large international drug trafficking, money laundering, and organized crime syndicate established during the late 1980s, who had a bounty on his head for $30 Million Mexican Pesos ($5 million USD).」",
+   "hypothesis": "证据表格显示：「Juan José Esparragoza Moreno (born February 3, 1949), commonly referred to by his alias El Azul ([[」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-79442",
+   "premise": "文档某节记载：「Avrohom Yitzchok Ulman is a rabbi.」",
+   "hypothesis": "证据表格显示：「Rabbi Avruhum Yitzchok Ulman (also Ullman or Olman) ([[Hebrew_language|Hebrew]]: אברהם יצחק אולמן) i」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-85180",
+   "premise": "文档某节记载：「Gizella Tary, who competed in the women's individual foil at the 1924 and 1928 Summer Olympics, was a Hungarian fencer who was born on 19 November 1884 and died on 8 February 1960.」",
+   "hypothesis": "证据表格显示：「She competed in the women's individual [[Foil_(fencing)|foil]] at the [[1924_Summer_Olympics|1924]] 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-72929",
+   "premise": "文档某节记载：「Domenic Pittis, born on October 1, 1974 at Calgary, Alberta, Canada, was a former center from 1994 to 2013 who had his NHL Draft with Pittsburgh Penguins—a professional ice hockey team in Pittsburgh owned by Mario Lemieux and Ronald Burkle.」",
+   "hypothesis": "证据表格显示：「(1974-10-01) October 1, 1974 (age 46)\n[[Calgary|Calgary]], [[Alberta|Alberta]], Canada [[Centre_(ice」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-39012",
+   "premise": "文档某节记载：「Christophe Guyot had six triumphs one of which was the Oscherleben.」",
+   "hypothesis": "证据表格显示：「France Superbike Champion [[FIM_Endurance_World_Championship|Endurance World Championship]] – runner」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-61602",
+   "premise": "文档某节记载：「Andrzej Wójs competed at the 1996 Junior World Championships and the 1995 Junior European Championships for men's canoe slalom.」",
+   "hypothesis": "证据表格显示：「[[1996_World_Junior_Canoe_Slalom_Championships|1996 Lipno]] [[1995_European_Junior_Canoe_Slalom_Cham」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-24622",
+   "premise": "文档某节记载：「Lydia Shum (born in Shanghai, China on July 21, 1945) was Hong Kong MC, actress, and singer who made her film debut in 1960, and was awarded the Professional Spirit Award at the Hong Kong Film Awards.」",
+   "hypothesis": "证据表格显示：「Lydia Shum Din-ha\n(1945-07-21)21 July 1945\nShanghai, China Lydia Shum Din-ha or Lydia Sum ([[Chinese」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-24273",
+   "premise": "文档某节记载：「The Secretary for Innovation and Technology in Hong Kong were Henry Tang Ying-yen from July 2002 - August 2003 and John Tsang Chun-wah from August 2003 - January 2006.」",
+   "hypothesis": "证据表格显示：「The Secretary for Innovation and Technology ([[Chinese_language|Chinese]]: 創新及科技局局長) of the [[Hong_K」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-68604",
+   "premise": "文档某节记载：「Belkis Ayón 1967-01-23)23 January 1967 Havana, Cuba and he died 11 September 1999(1999-09-11) (aged 32) Havana, Cuba.」",
+   "hypothesis": "证据表格显示：「(1967-01-23)23 January 1967\n[[Havana|Havana]], [[Cuba|Cuba]] 11 September 1999(1999-09-11) (aged 32)」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-60100",
+   "premise": "文档某节记载：「Megumi Yokota(born 5 October 1964) who married Kim Young-nam is believed to have been abducted by Sin Gwang-su.」",
+   "hypothesis": "证据表格显示：「The three included Kim Young-nam [], who would reportedly later marry Yokota. She is believed to hav」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-52863",
+   "premise": "文档某节记载：「Larry Peerce born in April 19, 1930 in The Bronx, New York was married to Marilyn Hassett.」",
+   "hypothesis": "证据表格显示：「Lawrence Peerce\n(1930-04-19) April 19, 1930 (age 90)\n[[The_Bronx|The Bronx]], New York City, New Yor」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-29778",
+   "premise": "文档某节记载：「6882 Sormano was discovered in February 5, 1995 by P. Sicoli and V. Giuliani.」",
+   "hypothesis": "证据表格显示：「It was discovered on 5 February 1995, by Italian amateur astronomers [[Piero_Sicoli|Piero Sicoli]] a」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-39235",
+   "premise": "文档某节记载：「Just Another Saturday is a film directed by John Mackenzie, starring Jon Morrison, Billy Connolly, Eileen McCallum and Bill Henderson.」",
+   "hypothesis": "证据表格显示：「[[John_Mackenzie_(film_director)|John Mackenzie]] Jon Morrison\n[[Billy_Connolly|Billy Connolly]]\nEil」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-7621",
+   "premise": "文档某节记载：「Guilty of Treason, directed by Felix E. Feist (an American film and television director born on February 28, 1910) and written by Emmet Lavery, stars Charles Bickford.」",
+   "hypothesis": "证据表格显示：「[[Felix_E._Feist|Felix E. Feist]] [[Emmet_Lavery|Emmet Lavery]] [[Charles_Bickford|Charles Bickford]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-2804",
+   "premise": "文档某节记载：「Tobi Wong Vancouver (June 10, 1974 – May 30, 2010)  was a a Canadian that received the awards called Young Designer of the Year, Brooklyn Museum of Art (2006).」",
+   "hypothesis": "证据表格显示：「Donald Tobias Wong (June 10, 1974 – May 30, 2010) was a Canadian-born [[Designer|designer]] and [[Ar」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-41707",
+   "premise": "文档某节记载：「At the ATP Athens Open, the doubles championship was won by teams with an Argentinian in 1993 (Horacio de la Peña) and 1994 (Luis Lobo).」",
+   "hypothesis": "证据表格显示：「1993 [[Argentina]] [[Horacio_de_la_Peña|Horacio de la Peña]]\n[[Mexico]] [[Jorge_Lozano|Jorge Lozan」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-18312",
+   "premise": "文档某节记载：「Integrin alpha 5 is a protein, or large biomolecules, or macromolecules, consisting of one or more long chains of amino acid residues, that in humans is encoded by the ITGA5 gene and and in which the product of such belongs to the integrin alpha chain family.」",
+   "hypothesis": "证据表格显示：「Integrin alpha-5 is a [[Protein|protein]] that in humans is encoded by the ITGA5 [[Gene|gene]]. \nPro」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-31997",
+   "premise": "文档某节记载：「The ACC has been active for 74 years as the successor to TAC and it augments forces and operates over 1000 aircraft.」",
+   "hypothesis": "证据表格显示：「[[Air_Combat_Command|Air Combat Command]], a major command of the US Air Force headquartered at Lang」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-47056",
+   "premise": "文档某节记载：「No Limite 2 had twelve voters including Sole Survivor Léo, Runner-up Cristina, Danilo, and Dada.」",
+   "hypothesis": "证据表格显示：「Leon Ramos\n25, [[Recife|Recife, PE]] Roberta Mayanah\n25, [[Recife|Recife, PE]] Antero Temoteo\n44, [[」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-68558",
+   "premise": "文档某节记载：「Ameerat's pedigree shows British-bred Shirley Heights and High Top were its third-degree ancestors.」",
+   "hypothesis": "证据表格显示：「[[Darshaan|Darshaan]]\n1981 [[Shirley_Heights_(horse)|Shirley Heights]] [[Top_Ville|Top Ville]]\n1976 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-17081",
+   "premise": "文档某节记载：「Ren Osugi (27 September 1951-21 February 2018) was an actor from Japan.」",
+   "hypothesis": "证据表格显示：「Ren Osugi (大杉 漣, Ōsugi Ren), born Takashi Osugi (大杉 孝, Ōsugi Takashi, in [[Komatsushima,_Tokushima」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64026",
+   "premise": "文档某节记载：「During the 1972 United States presidential election in Wyoming, Richard Nixon won more votes than George McGovern and John G. Schmitz who was born 1930 in Wisconsin.」",
+   "hypothesis": "证据表格显示：「[[Richard_Nixon|Richard Nixon]] 100,464 [[George_McGovern|George McGovern]] 44,358 [[John_G._Schmitz」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-73392",
+   "premise": "文档某节记载：「Arne Berge was a priest born in Norway to stereotyper Alfred Berge.」",
+   "hypothesis": "证据表格显示：「Arne Berge (29 June 1908 – 13 August 1988) was a Norwegian priest. Berge was born in [[Stavanger|Sta」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-51303",
+   "premise": "文档某节记载：「Kerstin Ekman was born in Risinge, Sweden, and has won the Best Swedish Crime Novel Award.」",
+   "hypothesis": "证据表格显示：「Kerstin Lillemor Hjorth\n(1933-08-27) 27 August 1933 (age 87)\nRisinge, Sweden [[Best_Swedish_Crime_No」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-51633",
+   "premise": "文档某节记载：「American Fanny Bullock Workman, who was not only a Mountaineer, but also a cartographer, travel writer and explorer, was born January 8, 1859 in Worcester, Massachusetts and died on January 22, 1925 in Cannes, France.」",
+   "hypothesis": "证据表格显示：「Fanny Bullock Workman (January 8, 1859 – January 22, 1925) was an American [[Geographer|geographer]]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-15007",
+   "premise": "文档某节记载：「Michael Vick was the first player to be drafted by the Atlanta Falcons in the 2001 NFL Draft.」",
+   "hypothesis": "证据表格显示：「He played [[College_football|college football]] at [[Virginia_Tech_Hokies_football|Virginia Tech]] a」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-90682",
+   "premise": "文档某节记载：「The 2959 Scholl was discovered by E. Bowell who named it after Hans Scholl, a german astronomer.」",
+   "hypothesis": "证据表格显示：「[[Edward_Bowell|E. Bowell]] [[Hans_Scholl_(astronomer)|Hans Scholl]]\n(German astronomer) \nIt was dis」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-66783",
+   "premise": "文档某节记载：「Tanu Roy (born 26 December 1980 in India) is an Indian film actress and model.」",
+   "hypothesis": "证据表格显示：「Tanu Roy is an Indian film actress and model. Tanu Roy\n26 December 1980\n(age 39)\n[[Kolkata|Kolkata]]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-21889",
+   "premise": "文档某节记载：「China dominated in the men's diving events in the 1998 World Aquatics Championships, held from 8 to 17 January 1998 in Perth, Western Australia.」",
+   "hypothesis": "证据表格显示：「Zhuocheng Yu (CHN) Hao Xu (CHN)\nZhuocheng Yu (CHN) [[Tian_Liang|Tian Liang]] (CHN)\n[[Sun_Shuwei|Sun 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-82181",
+   "premise": "文档某节记载：「A former center was born on October 1, 1974 at Calgary, Alberta, Canada, Domenic Pittis played from 1994 to 2013 wherein he was drafted by a professional ice hockey team—Pittsburgh Penguins—owned by Mario Lemieux and Ronald Burkle.」",
+   "hypothesis": "证据表格显示：「Domenico Pittis (born October 1, 1974) is a Canadian former professional [[Ice_hockey|ice hockey]] [」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-17608",
+   "premise": "文档某节记载：「Hiram Giles served in the Wisconsin State Assembly and Wisconsin Senate from the 11th district, under the Whig political party and then with the Republicans.」",
+   "hypothesis": "证据表格显示：「Hiram H. Giles Member of the [[Wisconsin_State_Assembly|Wisconsin State Assembly]]\nfrom the [[Dane_C」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-12069",
+   "premise": "文档某节记载：「François Rozier (ordained priest but lacked a vocation ) studied in the college at Villefranche-sur-Saône ( a commune in the Rhône department in eastern France. ), and preferred to devote himself to science.」",
+   "hypothesis": "证据表格显示：「He was ordained priest but lacked a vocation and thus became manager of his elder brother's estate i」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-7885",
+   "premise": "文档某节记载：「Laura Harring was born in Los Mochis, Sinaloa, Mexico on March 3, 1964 she  began her acting career in the film Silent Night, Deadly Night 3: Better Watch Out!.」",
+   "hypothesis": "证据表格显示：「Harring was born in [[Los_Mochis|Los Mochis]], [[Sinaloa|Sinaloa]], [[Mexico|Mexico]] on March 3, 19」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-80281",
+   "premise": "文档某节记载：「Armed Forces Reserve Medal, established on September 25, 1950, is presented by Department of Defense and Department of Homeland Security, eligible to officers and enlisted personnel of the US Armed Forces reserve components.」",
+   "hypothesis": "证据表格显示：「, September 25, 1950, as amended the\n[[United_States_Department_of_Defense|Department of Defense]]\n[」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-20565",
+   "premise": "文档某节记载：「In 2009 Take One was released by Adam Lambert , who came in 2nd place behind Kris Allen in American Idol 8 at the Nokia Theatre, and his first and third studio albums both made it to number three in the US.」",
+   "hypothesis": "证据表格显示：「He also worked as a demo singer and a session musician; a compilation of his 2005 recordings were re」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-63598",
+   "premise": "文档某节记载：「Richard Andrew, born on February 17, 1983 in Yonkers, New York, plays the guitar and piano.」",
+   "hypothesis": "证据表格显示：「Richard Andrew, (born February 17, 1983) better known by his stage name Outasight, is an American si」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-72764",
+   "premise": "文档某节记载：「Denis Perez, a French ice hockey player and coach, played for various teams such as the Hockey Club de Caen and has also played for the French National Team.」",
+   "hypothesis": "证据表格显示：「Denis Perez (born 25 April 1965 in [[Caen|Caen]], [[France|France]]), is a French ice hockey player 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-71734",
+   "premise": "文档某节记载：「Dale Rudge was born in 1963 and played never got the chance to play as a Goalie.」",
+   "hypothesis": "证据表格显示：「[[Midfielder|Midfielder]] (1963-09-09) 9 September 1963 (age 57) \nPlaying as a [[Midfielder|midfield」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-32228",
+   "premise": "文档某节记载：「Kamal Kumari National Award, first awarded in 1991, is awarded for art, culture and literature and sponsored by The Kamal Kumari Foundation in memory of Kamal Kumari Barooah.」",
+   "hypothesis": "证据表格显示：「1991 Art, Culture & Literature,\nScience & Technology [[The_Kamal_Kumari_Foundation|The Kamal Kumari 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-24913",
+   "premise": "文档某节记载：「Sho Dozono is a Japanese-American Business owner and CEO who studied at the University of Washington, and Portland State University.」",
+   "hypothesis": "证据表格显示：「[[Business_owner|Business owner]], [[CEO|CEO]] [[University_of_Washington|University of Washington]]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-68908",
+   "premise": "文档某节记载：「Adam Tafralis born 1983 in Daly City, he was a quarterback for San José State.」",
+   "hypothesis": "证据表格显示：「(1983-08-30) August 30, 1983 (age 37)\n[[Daly_City,_California|Daly City, California]] [[San_José_St」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-4742",
+   "premise": "文档某节记载：「In the women Sepak takraw at the 2018 Asian Games, Thailand (an Asian coutry) and Vietnam won two medals while South Korea won one.」",
+   "hypothesis": "证据表格显示：「The women's team regu [[Sepak_takraw|sepak takraw]] competition at the [[2018_Asian_Games|2018 Asian」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-62631",
+   "premise": "文档某节记载：「Ludwig Ramberg was born in Hälsingborg, Sweden and died in Uppsala, Sweden.」",
+   "hypothesis": "证据表格显示：「(1874-02-21)21 February 1874\n[[Hälsingborg|Hälsingborg]], [[Sweden|Sweden]] 25 December 1940(1940-」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-5871",
+   "premise": "文档某节记载：「Eberhard Heinrich is a  journalist who was conscripted for National Labour service where he deserted from the army in 1945 and spent 1945/46 as a Prisoner of War of the United States.」",
+   "hypothesis": "证据表格显示：「In 1944 he was excluded from the [[Hitler_Youth|Hitler Youth]] and conscripted for National Labour s」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-6390",
+   "premise": "文档某节记载：「Tushar Makwana(born 2 February 1967 in Jinja, Uganda) was a British radio presenter  who won a Silver Award at the Sony Radio Academy Awards and was a victim of manslaughter in a  hit-and-run incident during a botched robbery attempt.」",
+   "hypothesis": "证据表格显示：「Tushar Mulji Makwana (2 February 1967 – 12 February 2004) was a British radio personality of Indian 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-91039",
+   "premise": "文档某节记载：「James Suckling (born September 29, 1958) is an American wine and cigar critic from Los Angeles who was regarded as one of the world's most influential wine critics, and one of the most experienced critics of vintage cigars.」",
+   "hypothesis": "证据表格显示：「James Suckling (born September 29, 1958) is an [[United_States|American]] [[Wine|wine]] and [[Cigar|」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-24447",
+   "premise": "文档某节记载：「Alys Pearsall Smith was born 21 July 1867 in Philadelphia and married Bertrand Russell.」",
+   "hypothesis": "证据表格显示：「Alyssa Whitall \"Alys\" Pearsall Smith (21 July 1867 – 22 January 1951) was an American-born [[Quaker|」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-40372",
+   "premise": "文档某节记载：「In the Men's Greco-Roman event at the 1983 Asian Wrestling Championships (held in Tehran, Iran in November 1983), Ram Pal (India), Sanaullah (Pakistan), Gholam Mohseni (Iran) and Kokichi Sugino (Japan) all were awarded silver medals.」",
+   "hypothesis": "证据表格显示：「The 1983 [[Asian_Wrestling_Championships|Asian Wrestling Championships]] were held in [[Tehran|Tehra」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-89397",
+   "premise": "文档某节记载：「In the 1999 Seattle Mariners (an American professional baseball team based in Seattle, Washington) draft picks chart, \"Position\" indicates the secondary/collegiate position at which the player was drafted, rather than the professional position the player may have gone on to play, names in bold indicate the player signed with the Mariners and names in italics means the player did not sign with the Mariners.」",
+   "hypothesis": "证据表格显示：「2009 Game Log (85-77)\nRosteredit\n2009 Seattle Mariners\nRoster\nPitchers\nCatchers\nInfielders\nOutfielde」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-10665",
+   "premise": "文档某节记载：「Bruce Carmichael was born on March 28, 1934 in Canada and played as a left wing for various teams during his career.」",
+   "hypothesis": "证据表格显示：「(1934-03-28) March 28, 1934 (age 86)\n[[Winnipeg|Winnipeg]], [[Manitoba|Manitoba]], Canada [[Winger_(」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-18199",
+   "premise": "文档某节记载：「Born Nobermber 13, 1931 in Seattle, Washington, Robert Landsburg was. a photographer who was known for photographing the 1980 eruption of Mount St. Helens .」",
+   "hypothesis": "证据表格显示：「Robert Emerson Landsburg\n(1931-11-13)November 13, 1931\n[[Seattle,_Washington|Seattle, Washington]], 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-6007",
+   "premise": "文档某节记载：「Marie de Rohan (born in 1600) had two husbands, Charles d'Albert, Duke of Luynes who died in 1621, and Claude of Lorraine, Duke of Chevreuse, the third son of Henry I, Duke of Guise and Catherine de Clèves.」",
+   "hypothesis": "证据表格显示：「[[Charles_d'Albert|Charles d'Albert, Duke of Luynes]]\n​ ​(m. 1617; died 1621)​\n[[Claude,_Duke_of_Che」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-53089",
+   "premise": "文档某节记载：「James Milligan has starred as The Pirate King in The Pirates of Penzance, Gilbert and Sullivan's opera.」",
+   "hypothesis": "证据表格显示：「This is a partial discography of [[Gilbert_and_Sullivan|Gilbert and Sullivan]]'s opera [[The_Pirates」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-19662",
+   "premise": "文档某节记载：「Can Yücel, a Turkish poet born to Hasan Âli Yücel, had three children with his wife Güler Yücel.」",
+   "hypothesis": "证据表格显示：「Can Yücel was the son of a former Minister of National Education, [[Hasan_Âli_Yücel|Hasan Âli Yu」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-71198",
+   "premise": "文档某节记载：「The story of Goodbye Casanova, a 2000 made-for-TV romance film that starred American former actress Yasmine Bleeth, and Gian-Carlo Scandiuzzi, revolves around Robert, an aspiring novelist, and his wife, Claudia, a talented painter, who are about to sign their divorce papers.」",
+   "hypothesis": "证据表格显示：「Goodbye Casanova was a 2000 [[Television_movie|made-for-TV]] romance film that starred [[Yasmine_Ble」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-61548",
+   "premise": "文档某节记载：「The last race of the sailing event at the 1908 Summer Olympics was held in Hunters Quay, a village on the Cowal peninsula in Argyll and Bute, Scottish Highlands, on 29 July 1908.」",
+   "hypothesis": "证据表格显示：「Hunters Quay ([[Scottish_Gaelic_language|Scottish Gaelic]]: Camas Rainich) is a village, on the [[Co」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64567",
+   "premise": "文档某节记载：「Estadio Municipal Rumiñahui, owned by Municipality of Rumiñahui and located at Sangolquí, Ecuador, was opened on May 30, 1941.」",
+   "hypothesis": "证据表格显示：「Municipality of [[Rumiñahui_(canton)|Rumiñahui]]\nLiga Deportiva Cantonal de Rumiñahui [[Sangolqui」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-67592",
+   "premise": "文档某节记载：「Kim Johnsson, a Swedish former professional ice hockey defenceman, was born March 16, 1976 in Malmo, Sweden and played defence for the Malmo Redhawks.」",
+   "hypothesis": "证据表格显示：「Kim Emil Jorgen Johnsson (born March 16, 1976) is a [[Sweden|Swedish]] former professional [[Ice_hoc」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64107",
+   "premise": "文档某节记载：「In the Tongguan subdistrict of 2016, there were five residential communities and nine villages, including Caitaoyuan village.」",
+   "hypothesis": "证据表格显示：「[[Administrative_centre|administrative centre]]: Baoyong neighborhood of Huacheng (华城村保拥小区)\namount o」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-1297",
+   "premise": "文档某节记载：「Herbert Emery Schonland (September 7, 1900 – November 13, 1984) was misremembered as having worked through the nigh to stop flooding and save the ship, and his actions during this encounter demonstrated his acumen」",
+   "hypothesis": "证据表格显示：「Herbert Emery Schonland (September 7, 1900 – November 13, 1984) was a [[United_States_Navy|United St」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78946",
+   "premise": "文档某节记载：「House of Bluebird is a 50- episode South Korean romance, comedy and drama television series directed by Ji Byung-hyun.」",
+   "hypothesis": "证据表格显示：「Bluebird's House) is a 2015 [[South_Korea|South Korean]] [[Korean_drama|television series]] starring」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-90321",
+   "premise": "文档某节记载：「Gloria Hatrick McLean was a model and actress from Larchmont, New York, who was born in 1918.」",
+   "hypothesis": "证据表格显示：「Gloria Hatrick McLean (March 10, 1918 – February 16, 1994) was an American actress and model. (1918-」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-67120",
+   "premise": "文档某节记载：「The Shanghai International Circuit (opened 2004) is a 200,000 capacity race track built by Hermann Tilke in Shanghai, China that is the venue for the annual Formula 1 Chinese Grand Prix.」",
+   "hypothesis": "证据表格显示：「The circuit is best known as the venue for the annual [[Chinese_Grand_Prix|Formula 1 Chinese Grand P」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-31146",
+   "premise": "文档某节记载：「McKay, born on January 25, 1967, was selected by the Detroit Red Wings in the sixth round of the 1985 NHL Entry Draft, but stuck with the Wings in the NHL for the 1990–91 season.」",
+   "hypothesis": "证据表格显示：「[[Randy_McKay|Randy McKay]] Detroit Red Wings McKay stuck with the Wings in the NHL for the [[1990–9」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-84140",
+   "premise": "文档某节记载：「The Central New England Railway was a  railroad company operating from 1871–1927 in Connecticut, Massachusetts and New York.」",
+   "hypothesis": "证据表格显示：「1871–1927 [[Connecticut|Connecticut]]\n[[Massachusetts|Massachusetts]]\n[[New_York_(state)|New York]] 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-53620",
+   "premise": "文档某节记载：「Alan Coleman was associated with The Restless Years and The Young Doctors.」",
+   "hypothesis": "证据表格显示：「Alan James Coleman (28 December 1936 – 10 December 2013) was an [[England|English]]-born TV series w」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-5373",
+   "premise": "文档某节记载：「The rare-type asteroid 4713 Steel, named after the New Zealand astronomer Duncan Steel, belongs to the main-belt Hungaria.」",
+   "hypothesis": "证据表格显示：「4713 Steel, provisional designation 1989 QL, is a rare-type Hungaria [[Asteroid|asteroid]] from the 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78044",
+   "premise": "文档某节记载：「Screenwriter, producer and actress, Ann Elder, who was born on September 21, 1942 as Anna Velders in Cleveland, Ohio, produced a satirical election special called A Funny Thing Happened on the Way to the White House on HBO in 1980.」",
+   "hypothesis": "证据表格显示：「Ann Elder (born Anna Velders; September 21, 1942) is an American actress, producer and [[Screenwrite」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-43618",
+   "premise": "文档某节记载：「Wallace Langham was born in Fort Worth, Texas and he pleaded no contest to battery charges and the prosecutors dropped the hate crime.」",
+   "hypothesis": "证据表格显示：「James Wallace Langham II\n(1965-03-11) March 11, 1965 (age 55)\n[[Fort_Worth,_Texas|Fort Worth, Texas]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-15980",
+   "premise": "文档某节记载：「Josef Peukert, a journalist known for anarchist activism, was born in 1855 in the Austrian Empire, and died at the age of 55 in Chicago, Illinois.」",
+   "hypothesis": "证据表格显示：「[[Journalist|Journalist]] [[Anarchist|Anarchist]] activism (1855-01-22)January 22, 1855\n[[Albrechtsd」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-71396",
+   "premise": "文档某节记载：「John James Appleton, an American diplomat (a person appointed by a state or an intergovernmental institution such as the United Nations or the European Union to conduct diplomacy with one or more other States or international organizations) who attended Harvard University, was born in 1789 in Calais and died in 1864 in Rennes.」",
+   "hypothesis": "证据表格显示：「John James Appleton (September 22, 1792 – March 4, 1864) was an American [[Diplomat|diplomat]] who s」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-91825",
+   "premise": "文档某节记载：「Written and directed by Dito Tsintsadze, the film Lost Killers is a 2000 German crime black comedy starring Lasha Bakradze and Misel Maticevic.」",
+   "hypothesis": "证据表格显示：「Dito Tsintsadze Lost Killers is a 2000 German crime [[Black_comedy|black comedy]] film directed by [」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-6789",
+   "premise": "文档某节记载：「Born in 1765, Alexander Smyth was a member of the U.S. House of Representatives for two different Districts in the state of Virginia.」",
+   "hypothesis": "证据表格显示：「Alexander Smyth (1765 – April 17, 1830) was an [[United_States|American]] [[Lawyer|lawyer]], soldier」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-65128",
+   "premise": "文档某节记载：「The 2017 KBS Drama Awards included a few special performances, including \"Bat Song\" by artist Poppin' Hyun Joon & Park Ae-ri, \"Ambiguous\" by BtoB, and \"Wind Song\" by Sohyang.」",
+   "hypothesis": "证据表格显示：「Poppin' Hyun Joon & Park Ae-ri [] \"Bat Song\" (뱃 노래) \"Ambiguous\" (알듯 말듯해)\n([[Fight_for_M」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-40167",
+   "premise": "文档某节记载：「MoD Sealand is a Royal Air Force station under the Ministry of Defense, the headquarters of the British Armed Forces, built in 1916.」",
+   "hypothesis": "证据表格显示：「[[Royal_Air_Force_station|Royal Air Force station]] [[Ministry_of_Defence_(United_Kingdom)|Ministry 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-9223",
+   "premise": "文档某节记载：「Ltc Joseph H. Barnes led the First Division of the IX Corps under MG John Parke in the Globe Tavern Union Order of Battle.」",
+   "hypothesis": "证据表格显示：「1st Brigade\nLtc Joseph H. Barnes First Division\nBG [[Julius_White|Julius White]] MG [[John_Parke|Joh」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-36493",
+   "premise": "文档某节记载：「Baby Blood, a French film, was co-produced by Ariel Zeitoun, a Tunisian-born director, producer and Screenwriter」",
+   "hypothesis": "证据表格显示：「(1949-09-26) 26 September 1949 (age 71)\n[[Tunisia|Tunisia]] Film director, film producer, screenwrit」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-67382",
+   "premise": "文档某节记载：「Tom Rodriguez played as Mike in Maalaala Mo Kaya's episode titled \"Litrato\" (a Philippine drama anthology series broadcast on ABS-CBN every Saturday evening and hosted by Charo Santos-Concio); then as Chadilton \"Chad\" Barrera in Precious Hearts Romances Presents: Love Me Again.」",
+   "hypothesis": "证据表格显示：「[[Maalaala_Mo_Kaya|Maalaala Mo Kaya]] Mike Episode: \"Litrato\" It has become the longest-running dram」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-53489",
+   "premise": "文档某节记载：「Adam Tafralis born 1983 in Daly City, he was a quarterback for San José State whose first season was in 1893.」",
+   "hypothesis": "证据表格显示：「(1983-08-30) August 30, 1983 (age 37)\n[[Daly_City,_California|Daly City, California]] [[Quarterback|」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-50756",
+   "premise": "文档某节记载：「The list of justices of the Tennessee Supreme Court includes Joseph Anderson who served from 1791 to 1796 and Willie Blount who served for barely a year.」",
+   "hypothesis": "证据表格显示：「[[Joseph_Anderson|Joseph Anderson]] Judge 1791 Began active\nservice Ended active\nservice 1796 [[Will」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-95184",
+   "premise": "文档某节记载：「Dmitriy Kaltenberger competed in the K2 500 meter event at the 2006 Asian Games held in Doha.」",
+   "hypothesis": "证据表格显示：「[[Doha|Doha]], Qatar XV Asian Games [[Kazakhstan_at_the_2006_Asian_Games|Kazakhstan]] (KAZ)\n[[Dmitri」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-7524",
+   "premise": "文档某节记载：「1 pun (a Korean yang coin composed of 95% copper and 5% aluminum) is lighter than a 5 pun which weighs 6.9 grams.」",
+   "hypothesis": "证据表格显示：「Korean yang coins 1 pun\n(一分) [[Brass|Brass]]\n(95% [[Copper|copper]] and 5% [[Aluminum|aluminum]]) 3.」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-29928",
+   "premise": "文档某节记载：「Xuzhou Metro Line 1 began construction in February 2014 to run from Luwo to Zushoudong Raily Station.」",
+   "hypothesis": "证据表格显示：「Construction began in February 2014, and Line 1 was opened on September 28, 2019. [[Line_1_(Xuzhou_M」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-39986",
+   "premise": "文档某节记载：「Stella Hume (4 October 1882 – 3 January 1954) was a radio announcer, theatre art director and elocution teacher from Victoria, Australia.」",
+   "hypothesis": "证据表格显示：「Stella Leonora Harriette Jeremy\n(1882-10-04)4 October 1882\n[[South_Yarra,_Victoria|South Yarra, Vict」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-44763",
+   "premise": "文档某节记载：「Samuel Gargan was defeated by Liberal Party's Michael McLeod in the 1999 Northwest Territories general election.」",
+   "hypothesis": "证据表格显示：「In that election he was defeated by candidate [[Michael_McLeod_(politician)|Michael McLeod]] losing 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-57828",
+   "premise": "文档某节记载：「The 1956 Eastern Michigan Hurons football team played eight games for the season and won four out of the eight games.」",
+   "hypothesis": "证据表格显示：「In their fifth season under head coach [[Fred_Trosko|Fred Trosko]], the Hurons compiled a 4–4 record」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-18181",
+   "premise": "文档某节记载：「Cheri Jo Bates was an American student who was murdered in Riverside California on October 30, 1966.」",
+   "hypothesis": "证据表格显示：「The murder of Cheri Jo Bates is an unsolved murder that occurred in [[Riverside,_California|Riversid」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-60662",
+   "premise": "文档某节记载：「Khursheed Kamal Aziz (born on December 11, 1927) is a Pakistani historian and a professor who authored 44 valuable books on the modern history of the Muslims of the Indian subcontinent.」",
+   "hypothesis": "证据表格显示：「Khursheed Kamal Aziz\n11 December 1927 (1927-12-11)\nBallamabad, [[Chiniot|Chiniot]], [[Punjab,_Britis」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-48101",
+   "premise": "文档某节记载：「Swedish journalist Cissi Elwin Frenkel (born June 1, 1965) became CEO of Svenska filminstitutet in 2006.」",
+   "hypothesis": "证据表格显示：「On 25 March 2006. she became the [[CEO|CEO]] of Svenska filminstitutet, a post she held until 2010. 」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-58848",
+   "premise": "文档某节记载：「Joseph Riddick, born on 1735 at Perquimans County, North Carolina, was a Member of the North Carolina House of Representatives from the Gates County district.」",
+   "hypothesis": "证据表格显示：「1735\n[[Perquimans_County,_North_Carolina|Perquimans County, North Carolina]] Member of the [[North_C」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-70126",
+   "premise": "文档某节记载：「Konstantin Khrenov was born 13 February 1894 in Borovsk, Russian Empire and educated at Saint Petersburg State Electrotechnical University and became an Engineer and professor.」",
+   "hypothesis": "证据表格显示：「Константин Константинович Хренов\n(1894-02-13)13 February 1894\n[[Borovsk|Borovsk]], [[Russian_Empire|」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-82678",
+   "premise": "文档某节记载：「Legacy of Kain  Blood Omen: Legacy of Kain; November 1, 1996- Legacy of Kain: Defiance; November 11, 2003) is a series of action-adventure video games primarily developed by Crystal Dynamics and published by Square Enix Europe .」",
+   "hypothesis": "证据表格显示：「Legacy of Kain is a series of action-adventure video games primarily developed by Crystal Dynamics a」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-75865",
+   "premise": "文档某节记载：「Penn State has 491 total yards and 226 yards passing, while Baylor (in its first appearance in the Cotton Bowl Classic) has 313 total yards and 175 yards passing.」",
+   "hypothesis": "证据表格显示：「Statistics\nNebraska\nTexas\nFirst Downs\n21\n11\nRushes–Yards\n58–240\n37–106\nPassing Yards\n91\n90\nPasses\n7–」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-14120",
+   "premise": "文档某节记载：「Jô scored the most goals in the 2018 Nagoya Grampus season with a total of 25 goals, comprising of 24 goals in the J-League and one goal in the J-League Cup.」",
+   "hypothesis": "证据表格显示：「24 Goals League [[J1_League|J1 League]] 1 Goals League Cup League:\n[[Jô|Jô]] (24 goals)\nAll:\nJô (」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-22506",
+   "premise": "文档某节记载：「Gymnopilus weberi is a species of mushroom in the family Strophariaceae, order Agaricales from the kingdom Fungi.」",
+   "hypothesis": "证据表格显示：「Gymnopilus weberi is a species of [[Mushroom|mushroom]] in the family [[Strophariaceae|Strophariacea」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-79919",
+   "premise": "文档某节记载：「Piers Morgan (born in 1965 in Surrey, England), from BBC's You Can't Fire Me, I'm Famous, is a television personality that presented the T.V Series that only ran for eight episodes: The Dark Side of Fame with Piers Morgan.」",
+   "hypothesis": "证据表格显示：「Piers Stefan O'Meara\n(1965-03-30) 30 March 1965 (age 55)\n[[Surrey|Surrey]], England He also presente」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-71967",
+   "premise": "文档某节记载：「Eduardo Zaplana, Minister of Labour and Social Issues from 2002 to 2004, is a politician born on April 3, 1956 in a city in Spain.」",
+   "hypothesis": "证据表格显示：「Eduardo Andrés Julio Zaplana Hernández-Soro (born 3 April 1956) is a Spanish politician who served」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-87520",
+   "premise": "文档某节记载：「Frank McGill, born on June 20, 1894 in Montreal, Quebec, played as a quarterback for McGill University.」",
+   "hypothesis": "证据表格显示：「(1894-06-20)June 20, 1894\n[[Montreal,_Quebec|Montreal, Quebec]] [[Quarterback|Quarterback]] [[McGill」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-32321",
+   "premise": "文档某节记载：「The 1999 Primera B de Chile's Northern Zone had eight clubs with Everton winning the division and getting promoted.」",
+   "hypothesis": "证据表格显示：「[[Club_Deportivo_Magallanes|Magallanes]] [[Santiago_Wanderers|Santiago Wanderers]] [[Deportes_Arica|」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-84940",
+   "premise": "文档某节记载：「Coinside, an electronic body/industrial/techno music group from Hoyerswerda in Germany, includes members Torsten Bessert, Veit Beck, Sven Bussier, and Ronny Marschner, and has been active since 1993.」",
+   "hypothesis": "证据表格显示：「Coinside is an [[Electronic_body_music|electronic body music]] group from [[Hoyerswerda|Hoyerswerda]」",
+   "label": "consistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-87181",
+   "premise": "文档某节记载：「The Hyacinthus orientalis is a grass-like plant in the Asparagales family and Scillodiae sub-family.」",
+   "hypothesis": "证据表格显示：「It is a [[Bulb|bulbous]] plant, with a 3–7 cm diameter bulb. \nFamily: [[Asparagaceae|Asparagaceae]] 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-71790",
+   "premise": "文档某节记载：「Brazilian actor Walter Kreye figured in 26 television appearances from 1989 to 2018.」",
+   "hypothesis": "证据表格显示：「Walter Kreye (born 18 July 1942 in [[Oldenburg_(city)|Oldenburg]]) is a German actor. \nGerman \n1989 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-41457",
+   "premise": "文档某节记载：「Joyce Culpeper was born to Sir Ralph Leigh and his second wife, Isabel Worsley, in 1480, was married twice and had two sons and three daughters.」",
+   "hypothesis": "证据表格显示：「Jocasta \"Joyce\" Culpeper, of Oxon Hoath (c. 1480 – c. 1528) was the mother of [[Katherine_Howard|Cat」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-23591",
+   "premise": "文档某节记载：「In 2011 Asian Amateur Boxing Championships, light flyweight event, Shin Jong-hun (born May 5, 1989, Seoul) of North Korea won the gold medal while Amandeep Singh of India won the silver medal.」",
+   "hypothesis": "证据表格显示：「[[Shin_Jong-hun|Shin Jong-hun]]\n[[South_Korea|South Korea]] \nShin Jong-hun (born May 5, 1989, Seoul)」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-41590",
+   "premise": "文档某节记载：「In 1985 National Invitation Tournament there are 18 teams competed and the finals was held in Madison Square Garden California in which the Princeton Tigers won the 1st title.」",
+   "hypothesis": "证据表格显示：「32 [[Madison_Square_Garden|Madison Square Garden]]\n[[New_York_City|New York City]] [[1984–85_UCLA_Br」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-86058",
+   "premise": "文档某节记载：「Over 20 teams in the 2010-11 Israeli Premier league replaced managers, just under half in the pre-season, and The Red Demons, established in 1923, were the champs.」",
+   "hypothesis": "证据表格显示：「[[Maccabi_Haifa_F.C.|Maccabi Haifa]]\n7th Premier League title\n12th [[List_of_Israeli_football_champi」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-74155",
+   "premise": "文档某节记载：「During Aminishiki Ryūji's career, he competed at Aki basho, Tokyo, in March 1997 and at Natsu basho, Tokyo in August of 1998.」",
+   "hypothesis": "证据表格显示：「East Sandanme #31\n5–2 West Jonokuchi #42\n7–0–P」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-60877",
+   "premise": "文档某节记载：「Perfect Sting, owned by Stronach Stables, was sired by Red Ransom and an unverified horse.」",
+   "hypothesis": "证据表格显示：「Valid Victress \nDam\nValid Victress \nBred by [[Frank_Stronach|Frank Stronach's]] [[Adena_Springs_Farm」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-14124",
+   "premise": "文档某节记载：「Monroe Eliot Wall, born in 1916 at Trenton, New Jersey, was a honorary doctorate recipient chemist who co-discovered two anti-cancer drugs.」",
+   "hypothesis": "证据表格显示：「1916\nNewark, New Jersey \nWall was born in Newark, New Jersey, in 1916.」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-50984",
+   "premise": "文档某节记载：「NMath is a grammar correcting app that was developed by Mac and runs on iOS.」",
+   "hypothesis": "证据表格显示：「NMath is a numerical package for the [[Microsoft|Microsoft]] [[.NET_Framework|.NET Framework]]. \n[[C」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78730",
+   "premise": "文档某节记载：「The 1st ECO Summit was only attended by the foreign ministers of the participating countries, including Hashemi Rafsanjani and Turgut Ozal.」",
+   "hypothesis": "证据表格显示：「President Government leaders [[Hashemi_Rafsanjani|Hashemi Rafsanjani]] \nPrime Minister [[Nawaz_Shari」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-6903",
+   "premise": "文档某节记载：「2009–10 SLC Super Provincial Twenty20 had many teams, but Basnahira South Elevens, with Chamara Silva as captain, and Kandurata Elevens, with Kumar Sangakkara as captain, were not present.」",
+   "hypothesis": "证据表格显示：「Six teams in total, five representing four [[Provinces_of_Sri_Lanka|provinces of Sri Lanka]] and a [」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-33257",
+   "premise": "文档某节记载：「Hadewych Minis has not appeared in any films since 2003.」",
+   "hypothesis": "证据表格显示：「2016 [[The_Fury_(2016_film)|The Fury]] \n2013 [[Borgman_(film)|Borgman]] \n2009 [[My_Queen_Karo|My Que」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-56585",
+   "premise": "文档某节记载：「Bedri Rahmi Eyüboğlu was born in Greece and has never married.」",
+   "hypothesis": "证据表格显示：「Mehmet Bedri Rahmi\n1911\nGörele, [[Giresun_Province|Giresun Province]], [[Ottoman_Empire|Ottoman Emp」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-55866",
+   "premise": "文档某节记载：「Rafael Nuritdinov was born on 12 June 1967  and is currently retired after being involved with Team Colpack-Astro and De Nardi-Colpack.」",
+   "hypothesis": "证据表格显示：「Rafael Nuritdinov (born 12 June 1977 in [[Fergana|Fergana]]) is an [[Uzbekistan|Uzbek]] former road 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-81529",
+   "premise": "文档某节记载：「The Life of Charlotte Brontëm, which is the autobiography of novelist Elizabeth Gaskell,  was published in 1857 by Harper Collins, and in 2018, Forbes named it one of the best ten fiction stories of all time.」",
+   "hypothesis": "证据表格显示：「The Life of Charlotte Brontë is the posthumous [[Biography|biography]] of [[Charlotte_Brontë|Charl」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-93580",
+   "premise": "文档某节记载：「Joseph Boatner led various groups using the \"Ink Spots\" name until his death May 8, 1999.」",
+   "hypothesis": "证据表格显示：「Boatner died on May 8, 1989 at the age of 70 at the Lakes Region General Hospital in [[Laconia,_New_」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78323",
+   "premise": "文档某节记载：「The 2010 Universal Forum of Cultures begins on the 24th of January of 2010 and ends on the twelfth of  February of 2010, and it was held in Arica, Chile.」",
+   "hypothesis": "证据表格显示：「22 October 2010 \n5 December 2010 \n[[Valparaíso|Valparaíso]], [[Chile|Chile]]」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-39792",
+   "premise": "文档某节记载：「Linnéa Handberg Lund is a singer that was born in the 2000s.」",
+   "hypothesis": "证据表格显示：「(1976-10-22) 22 October 1976 (age 44)\n[[Hillerød|Hillerød]], [[Denmark|Denmark]] \nLinnéa Handberg L」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64795",
+   "premise": "文档某节记载：「The 1917 Western State Hilltoppers football team, under head coach Tackle Warren Allen, played seven games for the season and secured four wins out of these games.」",
+   "hypothesis": "证据表格显示：「In their 11th season under head coach [[William_H._Spaulding|William H. Spaulding]], the Hilltoppers」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-58245",
+   "premise": "文档某节记载：「French politician Nicolas Sarkozy (25 November 1760-6 January 1834) served as the 14th President of the National Convention of France, a parliament of the French Revolution, following the two-year National Constituent Assembly and the one-year Legislative Assembly.」",
+   "hypothesis": "证据表格显示：「Nicolas Paul Stéphane Sarközy de Nagy-Bocsa ([[English|/sɑːrˈkoʊzi/]]; French: [[French|[nikɔla pɔ」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-43872",
+   "premise": "文档某节记载：「Joseph Ervin, born on May 3, 1901, committed suicide by inhaling gas from a kitchen stove, due to the pain from osteomyelitis that he was suffering from.」",
+   "hypothesis": "证据表格显示：「Joseph Wilson Ervin (March 3, 1901 – December 25, 1945) was a member of the [[United_States_House_of」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-50062",
+   "premise": "文档某节记载：「Triangle Studios from Leeuwarden, Netherlands (population 123,107) released five games between 2009 and 2019, one of which was Dancepad.」",
+   "hypothesis": "证据表格显示：「Battleflip December 12, 2013 Stumpy's Alphabet Dinner July 5, 2013 Dancepad June 28, 2012 Graffiti W」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-79172",
+   "premise": "文档某节记载：「In Byat Za's Forty Years' War (a military conflict fought between the Burmese-speaking Kingdom of Ava and the Mon-speaking Kingdom of Hanthawaddy Pegu): Third Campaign, which happened from 1401-1403, troops commanded twelve naval squadrons and they defeated an Aba invasion force at the battle of Thawutti.」",
+   "hypothesis": "证据表格显示：「Forty Years' War: Forth Campaign\nPegu invasion of Ava 1401–1403 12 naval squadrons (5000–7000)\n7 reg」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-52248",
+   "premise": "文档某节记载：「Saša Zorić played for the teams Crvena Zvezda, Smederevo and Obilić, though he only played for each team once.」",
+   "hypothesis": "证据表格显示：「[[FK_Crvena_Zvezda|Crvena Zvezda]] 22 \n[[FK_Obilić|Obilić]] 20 \n[[FK_Smederevo|Smederevo]] 22」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-50961",
+   "premise": "文档某节记载：「The Zambezian coastal flooded savanna is a 19,500 km² flooded grasslands and savannas ecoregion in the deltas of the Zambezi, Pungwe, Buzi, and Save rivers in Mauritania.」",
+   "hypothesis": "证据表格显示：「The Zambezian coastal flooded savanna is a [[Flooded_grasslands_and_savannas|flooded grasslands and 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-31834",
+   "premise": "文档某节记载：「Among Giants, a 2000 American film written and directed by Baz Luhrmann, is set in New Jersey, USA, and stars  Leonardo DiCaprio  Tobey Maguire and Carey Mulligan.」",
+   "hypothesis": "证据表格显示：「Among Giants is a 1998 British film directed by [[Sam_Miller|Sam Miller]] and written by [[Simon_Bea」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-13767",
+   "premise": "文档某节记载：「As a Coach, Scotty Bowman's team won every Stanley Cup final they competed in from 1967 to 1970.」",
+   "hypothesis": "证据表格显示：「Lost in [[1968_Stanley_Cup_Finals|Stanley Cup Finals]] ([[Montreal_Canadiens|MTL]]) \nLost in [[1969_」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-76957",
+   "premise": "文档某节记载：「The 1996 World Weightlifting Championships which took place in the capital and largest city of Poland, came up with various weightlifting events for different weight divisions which were mostly won by participants from Japan.」",
+   "hypothesis": "证据表格显示：「Snatch Guan Hong\n[[China|China]] Clean & Jerk Guan Hong\n[[China|China]] Total Guan Hong\n[[China|Chin」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-23324",
+   "premise": "文档某节记载：「Ivy Lavinia Weber  (7 June 1892 – 6 March 1976) was a politician, a physical culturist and office-bearer in numerous community and womenís organisations from Captains Flat, New South Wales who served as a Member of the Victorian Legislative Assembly for Blackburn.」",
+   "hypothesis": "证据表格显示：「In 1937, she was elected to the [[Victorian_Legislative_Assembly|Victorian Legislative Assembly]] fo」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-11134",
+   "premise": "文档某节记载：「In the April 23, 1869 premier cast of \"Le petit Faust\", Anna Van Ghell (a.k.a. Vanghell in France) performed the role Marguerite, while Blanche d'Antigny (model of Émile Zola's \"Nana\") played as Faust.」",
+   "hypothesis": "证据表格显示：「Roles, voice types, and premiere cast Mephisto (trousers role) [[Anna_Van_Ghell|Anna Van Ghell]] \nRo」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78194",
+   "premise": "文档某节记载：「The Divine Spark was both written and directed by Carmine Gallone, and produced by Arnold Pressburger.」",
+   "hypothesis": "证据表格显示：「[[Walter_Reisch|Walter Reisch]]\nRichard Benson\nEmlyn Williams」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-20882",
+   "premise": "文档某节记载：「FC Ufa has only been managed by Andrew Kanchelskis since its 2011 season.」",
+   "hypothesis": "证据表格显示：「The head coaching position of the team was first assigned to Andrei Kanchelskis, who was tasked with」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64406",
+   "premise": "文档某节记载：「Kent Carter, who was born in New Hampshire, is an avid music fan who abhors jazz and avant-garde jazz.」",
+   "hypothesis": "证据表格显示：「Kent Carter (born June 14, 1939 in [[Hanover,_New_Hampshire|Hanover, New Hampshire]]) is an American」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-63782",
+   "premise": "文档某节记载：「Kirill Kombarov has made 26 appearances both in the 2008 and 2009 Russian Premier League\tunder Spartak Moscow.」",
+   "hypothesis": "证据表格显示：「[[FC_Spartak_Moscow|Spartak Moscow]] [[2010_Russian_Premier_League|2010]] [[2011–12_Russian_Premier_」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-14642",
+   "premise": "文档某节记载：「Robert Amirkhanyan is a composer and songwriter that was born some time in the 1960s in Yerevan that is currently a professor at the Yerevan State Conservatory.」",
+   "hypothesis": "证据表格显示：「(1939-11-16) November 16, 1939 (age 81)\n[[Yerevan|Yerevan]] \nRobert Amirkhanyan ([[Armenian_language」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64998",
+   "premise": "文档某节记载：「There are no people who live in Digdoh, located in the Maharashtra state of India.」",
+   "hypothesis": "证据表格显示：「As of 2001 India [[Census|census]], Digdoh had a population of 31,498. \n31,498 \nMales constitute 56%」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-30329",
+   "premise": "文档某节记载：「Emmanuelle Bercot was the director of the 2011 film Polisse, which led to her nomination in César Award for Best Original Screenplay.」",
+   "hypothesis": "证据表格显示：「[[Maïwenn|Maïwenn]] \nPolisse (released at some film festivals as Poliss, French pronunciation: ​[[」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-94267",
+   "premise": "文档某节记载：「Armed Forces Reserve Medal, established on November 25, 1950, is presented by Department of Defense and Department of Homeland Security, eligible to officers and enlisted personnel of the US Armed Forces reserve components.」",
+   "hypothesis": "证据表格显示：「The Armed Forces Reserve Medal (AFRM) is a [[Awards_and_decorations_of_the_United_States_Armed_Force」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-41265",
+   "premise": "文档某节记载：「The feminist art movement in the United States is shown through the Mary Beth Edelson's artwork where heads of notable male artists are featured.」",
+   "hypothesis": "证据表格显示：「Mary Beth Edelson (born Mary Elizabeth Johnson; 1933) is an American artist and pioneer of the [[Fem」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-12172",
+   "premise": "文档某节记载：「Danny Boshell played for the club Grimsby Town from seasons 1999-2000 up to season 2004-05 where he has 85 apps and 4 goals in total.」",
+   "hypothesis": "证据表格显示：「[[Grimsby_Town_F.C.|Grimsby Town]] \n[[Grimsby_Town_F.C.|Grimsby Town]] Apps 99 \n[[Grimsby_Town_F.C.|」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-95138",
+   "premise": "文档某节记载：「The Bentley Hotel in Alexandria, Louisiana, was created in the Gothic style by architect George Mann, and opened in 1979.」",
+   "hypothesis": "证据表格显示：「Bentley Hotel, usually known as the Hotel Bentley, is a classic Renaissance-style hotel located near」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-92876",
+   "premise": "文档某节记载：「During the 1993–94 UEFA Champions League group stage which began on 24 November 1993, Monaco and Galatasaray won less points than Barcelona.」",
+   "hypothesis": "证据表格显示：「18 August – 1 September 1993 (qualifying)\n15 September 1993 – 18 May 1994 (competition proper)\n24 No」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-63970",
+   "premise": "文档某节记载：「Jenson Tunnel, located on private property northeast of Rock Island, is now used by the Kansas City Southern, and is the only known railroad tunnel in Texas.」",
+   "hypothesis": "证据表格显示：「Jenson Railroad Tunnel is the first and only railroad tunnel in the present state of [[Oklahoma|Okla」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-94378",
+   "premise": "文档某节记载：「In the United States congressional delegations from Mississippi, Republican Trent Kelly of Tupelo has represented the fourth district since June 2015.」",
+   "hypothesis": "证据表格显示：「[[Trent_Kelly|Trent Kelly]]\n([[Tupelo,_Mississippi|Tupelo]]) District since June 2, 2015 \nDistrict [」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-30267",
+   "premise": "文档某节记载：「Transocean and Occidental Petroleum Parker Drilling are tenants of Four Greenway Plaza which opened in 1975; while the branch office of Boardwalk Pipeline Partners and Humana Mitsui Oil Exploration is located in Nine Greenway Plaza.」",
+   "hypothesis": "证据表格显示：「Nine Greenway Plaza 1978 Boardwalk Pipeline Partners (HQ)\nHumana\n[[Mitsui_Oil_Exploration|Mitsui Oil」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-16837",
+   "premise": "文档某节记载：「Gloria DeHaven only acted in films.」",
+   "hypothesis": "证据表格显示：「DeHaven appeared in the [[Soap_opera|soap operas]] [[Ryan's_Hope|Ryan's Hope]] (as [[Bess_Shelby|Bes」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-77256",
+   "premise": "文档某节记载：「Denis Perez, a French ice hockey player and coach, played for only one team which is the Hockey Club de Caen and has also played for the French National Team.」",
+   "hypothesis": "证据表格显示：「[[Drakkars_de_Caen|Hockey Club de Caen]]\n[[Français_Volants|Français Volants]]\n[[Dragons_de_Rouen|」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-40389",
+   "premise": "文档某节记载：「James Akintunde was welcomed by Chester for the 2015–16 season.」",
+   "hypothesis": "证据表格显示：「Akintunde joined [[Chester_F.C.|Chester]] for the 2016–17 season. \n[[Chester_F.C.|Chester]] [[2016–1」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-72246",
+   "premise": "文档某节记载：「3401 Vanphilos was discovered by the Harvard College Observatory at the Oak Ridge Observatory in August 1981 wherein it was named after a hallway in the observatory.」",
+   "hypothesis": "证据表格显示：「Vanessa Hall\nPhilip Osborne\n(friends of G. V. Williams) \nThis minor planet was named for Vanessa Hal」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-27527",
+   "premise": "文档某节记载：「Distant Trumpet is a 63 min. film directed by Derek Elphinstone, starring Derek Bond and Jean Patterson.」",
+   "hypothesis": "证据表格显示：「Terence Fisher \nDerek Elphinstone\nHarold Richmond \nDerek Elphinstone」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-45354",
+   "premise": "文档某节记载：「56 Old Church Street has always been the home to the rector of Chelsea parish church and was where the Battle of Waterloo was planned.」",
+   "hypothesis": "证据表格显示：「It was formerly home to the [[Rector_(ecclesiastical)|rector]] of Chelsea parish church, which was [」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-26382",
+   "premise": "文档某节记载：「The Lonely Villa is based on an original screenplay.」",
+   "hypothesis": "证据表格显示：「It is based on the 1901 French play Au Telephone (At the Telephone) by André de Lorde. \nAu Telephon」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-22729",
+   "premise": "文档某节记载：「Pee Wee King singles includes \"Tennessee Waltz\" (1949), \"Bonaparte's Retreat\" (1951) and \"Silver and Gold\" (1954).」",
+   "hypothesis": "证据表格显示：「\"[[Tennessee_Waltz|Tennessee Waltz]]\" 1948 \n\"[[Bonaparte's_Retreat_(Pee_Wee_King_song)|Bonaparte's R」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-35573",
+   "premise": "文档某节记载：「Ring ni Kakero's second season The Pacific Arc started with the 13th series titled \"Start! Golden Japan Jr.\" and ended with the 24th series titled \"Black Flash\".」",
+   "hypothesis": "证据表格显示：「13 \"Start! Golden Japan Jr.\"\n\"Shidou! Ougon no Nihon Jr.\" (始動!黄金の日本Jr.) 24 \"...And So the Boy Flies 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-91184",
+   "premise": "文档某节记载：「Uttam Khobragade (born 8 May 1951 in Aurangabad, Maharashtra.) is a retired officer of the Indian Administrative Service, Collector and District Magistrate of Mumbai Suburban District and father of Devyani Khobragade.」",
+   "hypothesis": "证据表格显示：「(1951-05-08) 8 May 1951 (age 69)\n[[Mumbai|Mumbai]], [[Maharashtra|Maharashtra]], [[India|India]] \nKh」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-75546",
+   "premise": "文档某节记载：「Henry Woo (born March 20, 1929 in Lethbridge, Alberta) was a Member of the Legislative Assembly for Edmonton-Sherwood Park, and was part of Progressive Conservative party, who retired from provincial politics in 1986..」",
+   "hypothesis": "证据表格显示：「(1929-03-18)March 18, 1929\n[[Lethbridge|Lethbridge]], [[Alberta|Alberta]] \nHenry Woo (March 18, 1929」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-15122",
+   "premise": "文档某节记载：「In the Le Mans 24-hour race in 2006, Lawrence Tomlinson drove the Ginetta-Zytek GZ09S with two co-drivers, taking first place, and in 2007, he and two co-drivers took fifth place in the Panoz Esperante GT-LM.」",
+   "hypothesis": "证据表格显示：「[[United_Kingdom]] [[Lawrence_Tomlinson|Lawrence Tomlinson]]\n[[United_Kingdom]] [[Tom_Kimber-Smith|T」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-85738",
+   "premise": "文档某节记载：「Gazell is falsely believed to have been created by John Engelbrekt who also later founded a jazz club, some recordings were sold to Sonet Records.」",
+   "hypothesis": "证据表格显示：「In 1949, John Engelbrekt created the label Gazell in Stockholm, Sweden, to distribute [[Jazz|jazz]] 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-48792",
+   "premise": "文档某节记载：「Donald Hornig(born March 17, 1920) in Providence, Rhode Island, U.S., was the 14th President of Brown University.」",
+   "hypothesis": "证据表格显示：「14th [[President_of_Brown_University|President of Brown University]] Donald Frederick Hornig\n(1920-0」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-16535",
+   "premise": "文档某节记载：「Bharat stage emission standards, instituted by the Indian government in 2000 based on European regulations, is a way to regulate air pollutants’ output such as in light-duty diesel engines wherein it shows that the carbon monoxide was the highest in 1992 while the lowest recorded was in 2005.」",
+   "hypothesis": "证据表格显示：「Bharat stage emission standards (BSES) are emission standards instituted by the [[Government_of_Indi」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-77364",
+   "premise": "文档某节记载：「List of Final Fantasy video games has four games released between 1997 and 2013, one of which is Final Fantasy Tactics S (Ivalice is described as a complex world with a very long history)」",
+   "hypothesis": "证据表格显示：「Release years by system:\n1987 – [[Nintendo_Entertainment_System|Nintendo Entertainment System]]\n1989」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-61822",
+   "premise": "文档某节记载：「Hal Goldman, who dies in 2001, was a screenwriter and television producer who never won an Emmy award.」",
+   "hypothesis": "证据表格显示：「(1919-12-05)December 5, 1919\n[[St._Paul,_Minnesota|St. Paul, Minnesota]] June 27, 2001(2001-06-27) (」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-39277",
+   "premise": "文档某节记载：「Jake Roche was born in Scotland in 1992 to actor, Shane Richie, who divorced his mother when Jake was nine years old; Jake read in the papers about his father cheating on his mother, but he did not fully believe it at the time.」",
+   "hypothesis": "证据表格显示：「Jake Peter Roche\n(1992-09-16) 16 September 1992 (age 28)\n[[Reigate,_Surrey|Reigate, Surrey]], Englan」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-25463",
+   "premise": "文档某节记载：「Cathleen Mae Webb was born in Oklahoma on August 26, 1961 and she died in Harrisville, New Hampshire ( town in Cheshire County) on September 15, 2008 at the age of 64.」",
+   "hypothesis": "证据表格显示：「Cathleen Mae Crowell\n(1961-06-26)June 26, 1961\n[[Illinois|Illinois]] Cathleen Mae Webb (also known a」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-12956",
+   "premise": "文档某节记载：「The democratic party won all seven seats in South Carolina at the 1882 United States House of Representatives elections.」",
+   "hypothesis": "证据表格显示：「6 1 \nDemocratic Incumbent retired.\nNew member elected.\nDemocratic hold. Democratic Incumbent re-elec」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-15553",
+   "premise": "文档某节记载：「George Ignatieff was a highly influential Canadian during the 17th century.」",
+   "hypothesis": "证据表格显示：「George Pavlovich Ignatieff, [[Order_of_Canada|CC]] ([[Russian_language|Russian]]: Георгий Па́влович」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-57736",
+   "premise": "文档某节记载：「In the 2012 Lesotho general election, the Democratic Congress Party obtained almost 40% of the votes while All Basotho Convention obtained the rest of the total votes.」",
+   "hypothesis": "证据表格显示：「[[All_Basotho_Convention|All Basotho Convention]] 25.18 \nLesotho Congress for Democracy 121,076 \n[[B」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-83769",
+   "premise": "文档某节记载：「Dave Boat, born on September 22, 1959 neither in Santa Clara County nor in California, U.S., is a voice actor since 1991.」",
+   "hypothesis": "证据表格显示：「David Derrick Boat\n(1959-09-22) September 22, 1959 (age 61)\n[[Santa_Clara_County,_California|Santa C」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-11178",
+   "premise": "文档某节记载：「Abel Fernandez (July 14, 1930- May 3, 2016) is wrongly thought to have been born in East Los Angeles, California, U.S. and was an actor with four children.」",
+   "hypothesis": "证据表格显示：「Abel Gonzalez Fernandez\n(1930-07-14)July 14, 1930\n[[East_Los_Angeles,_California|East Los Angeles, C」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-44247",
+   "premise": "文档某节记载：「Parris Afton Bonds is an American historical romantic fiction editor.」",
+   "hypothesis": "证据表格显示：「Parris Afton Bonds is an American historical romantic fiction novelist. She is the co-founder of [[R」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-38861",
+   "premise": "文档某节记载：「Anna Maria is a British mycologist born 1805 in Southampton which has a population of 192 as of 2011.」",
+   "hypothesis": "证据表格显示：「Anna Maria Reed\n(1805-06-05)5 June 1805\nLeckhampstead, Buckinghamshire \nAnna Maria Reed was born in 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-76778",
+   "premise": "文档某节记载：「Herbager sired Vandale bay in 1943 and dam was Flagette chestnut brown in 1950.」",
+   "hypothesis": "证据表格显示：「Pedigree of Herbager, bay stallion, 1956 Dam\nFlagette\nchestnut 1951」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-41381",
+   "premise": "文档某节记载：「As of 2016, the Ontario Student Classics Conference gives out more than 20 awards in the Academics category.」",
+   "hypothesis": "证据表格显示：「ACADEMIC Junior Pentathlon Trophy and Medal Intermediate Pentathlon Trophy and Medal The Nancy Karra」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-56352",
+   "premise": "文档某节记载：「Peter Wuffli is a Swiss engineer born on October 26, 1967 in Zürich, Canton of Zürich.」",
+   "hypothesis": "证据表格显示：「Peter A. Wuffli (born 26 October 1957) is a Swiss businessman who was appointed president and chief 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-43459",
+   "premise": "文档某节记载：「St. Francis of Assisi (born 784) is venerated in Eastern Orthodoxy and Roman Catholicism.」",
+   "hypothesis": "证据表格显示：「Giovanni di Pietro di Bernardone la singlas\n1181 or 1182\n[[Assisi|Assisi]], Duchy of Spoleto, [[Holy」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-58450",
+   "premise": "文档某节记载：「Fritz Baer, born Yitzhak Baer, was a mathmatician born in Jerusalem.」",
+   "hypothesis": "证据表格显示：「Fritz Baer\n(1888-12-20)20 December 1888\n[[Halberstadt|Halberstadt]], Saxony, [[German_Empire|Germany」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-44698",
+   "premise": "文档某节记载：「Annie Duke born September 13, 1965 lives in Los Angeles, California, U.S. and is known as the Duchess of Poker」",
+   "hypothesis": "证据表格显示：「Anne LaBarr Duke (née Lederer; September 13, 1965) is an [[United_States|American]] former professi」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-23795",
+   "premise": "文档某节记载：「Massachusetts Route 40 is a long straight highway without intersections.」",
+   "hypothesis": "证据表格显示：「Its western end is at an intersection with [[Massachusetts_Route_119|Massachusetts Route 119]] and [」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-44056",
+   "premise": "文档某节记载：「Teresa del Conde received many fellowship, served as director of Fine Arts and published biographies on Julio Ruelas.」",
+   "hypothesis": "证据表格显示：「Teresa del Conde Pontones (January 12, 1935 – February 16, 2017) was a Mexican art critic and art hi」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-92271",
+   "premise": "文档某节记载：「R. N. Jayagopal sang all the songs used in Appaji.」",
+   "hypothesis": "证据表格显示：「[[S._P._Balasubrahmanyam|S. P. Balasubrahmanyam]] \"Ene Kannadathi\" \n[[Mano_(singer)|Mano]], K. S. Ch」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-30591",
+   "premise": "文档某节记载：「The Ferdinando Marinelli Artistic Foundry boasts of a selection of ten most important works and monuments in a span of 88 years made in eight countries.」",
+   "hypothesis": "证据表格显示：「A selection of the most important works and monuments executed by the Ferdinando Marinelli Artistic 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-81498",
+   "premise": "文档某节记载：「The team of Turkey, comprising of Yasemin Can, Meryem Akda, Özlem Kaya, and Sevilay Eytemis, failed to win in the team race event with a consolidated points of 35 points in the 2016 European Cross Country Championships.」",
+   "hypothesis": "证据表格显示：「[[Turkey|Turkey]]\n[[Yasemin_Can|Yasemin Can]], [[Meryem_Akda|Meryem Akda]], [[Özlem_Kaya|Özlem Kay」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-61367",
+   "premise": "文档某节记载：「At the 2011 Wonderful Pistachios 400 Kyle Busch came in first and Kevin Harvick in second.」",
+   "hypothesis": "证据表格显示：「[[Kevin_Harvick|Kevin Harvick]] [[Carl_Edwards|Carl Edwards]] \n[[Kyle_Busch|Kyle Busch]] [[Kevin_Har」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-75612",
+   "premise": "文档某节记载：「1937 Duquesne Dukes football team played a total of ten games from September until December wherein they won all of the match.」",
+   "hypothesis": "证据表格显示：「6–4 \nIn its second season under head coach [[John_\"Clipper\"_Smith|John \"Clipper\" Smith]], Duquesne c」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-92968",
+   "premise": "文档某节记载：「In the 1974 South African Grand Prix, Emerson Fittipaldi (born April 12, 1942) from Argentina ranked the first position with 78 laps and a time of 1:42:40.96 and received nine points, beating out fellow competitor Mike Hallwood (United Kingdom) who ranked right below him.」",
+   "hypothesis": "证据表格显示：「[[Argentina]] [[Carlos_Reutemann|Carlos Reutemann]] 78 9 \n[[France]] [[Jean-Pierre_Beltoise|Jean-Pie」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-23620",
+   "premise": "文档某节记载：「Jason Bare released two albums in 2001 under the direction of Stephen Yake and Dan Ostrem & Andy Didway, and under the directoin of Daniel Whisnant-Suissemade, he released two videos in 2014.」",
+   "hypothesis": "证据表格显示：「Have you Heard (EP) (2011) \nBare completed and released a Christmas EP in November 2011. \nJason comp」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-47821",
+   "premise": "文档某节记载：「Richard Wimbush never married or had children and was part of the Scottish Episcopal Church where he was elected as Bishop in 1963.」",
+   "hypothesis": "证据表格显示：「Mollie Smith The Most Reverend\nRichard Wimbush \n4 The Most Reverend\nRichard Wimbush」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-50069",
+   "premise": "文档某节记载：「Palup Qaqa high point is the tallest among 38 ultra-prominent mountain peaks of Greenland with an elevation of 3694 m, 1513 m taller than the second ultra-prominent peak Stauning Alper.」",
+   "hypothesis": "证据表格显示：「3694 m\n12,119 ft [[Gunnbjørn_Fjeld|Gunnbjørn Fjeld]] \nPalup Qaqa high point 2105 m\n6,906 ft」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-31049",
+   "premise": "文档某节记载：「English actress Danniella Westbrook portrayed different roles in 13 movies in a span of three decades.」",
+   "hypothesis": "证据表格显示：「[[EastEnders|EastEnders]] (1990–1993, 1995–1996, 1999–2000, 2009–2010, 2016)\n[[I'm_a_Celebrity...Get」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-56109",
+   "premise": "文档某节记载：「The State of Paraguay's Paraguayan Army has only gone to war on three different occasions, one of which was the War of 1812, during which the country fought Argentina, Brazil and Uruguay.」",
+   "hypothesis": "证据表格显示：「[[Paraguay_campaign|Paraguayan Campaign]]\n(1810-1811) [[Paraguayan_War|Paraguayan War]]\n(1864–1870) 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-64489",
+   "premise": "文档某节记载：「Dudley Devere Manlove (June 11, 1914 in  Alameda County– April 17, 1996 in  San Bernardino County) was an American radio announcer and an actor who played the role of Ted Wallace in Ten North Frederick and Arnold in Official Detective in 1958.」",
+   "hypothesis": "证据表格显示：「Dudley Devere Manlove\n(1914-06-11)June 11, 1914\n[[Alameda_County,_California|Alameda County, Califor」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-49987",
+   "premise": "文档某节记载：「Entries in 2015 Skate America included two women in the Ladies competition from Russia and four women in the Ladies competition from the United States, one of whom was Mariah Cheyenne Bell (born April 18, 1996).」",
+   "hypothesis": "证据表格显示：「[[United_States|United States]] [[Mariah_Bell|Mariah Bell]]\n[[Karen_Chen|Karen Chen]]\n[[Gracie_Gold|」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-74833",
+   "premise": "文档某节记载：「Van Full of Pakistans was written by S. Bailey, R. Days, and R. Senhouse, and produced by Merchants, who later helped form the group Massinfluence.」",
+   "hypothesis": "证据表格显示：「Spearhead X\n(Co-produced by The Soul Merchants) Spearhead X\n(Co-produced by The Soul Merchants) Spea」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-55678",
+   "premise": "文档某节记载：「The United States presidential election in Illinois took place on November 6, 1928 in which Al Smith got the highest votes of 34, 212 while Henry T. Rainey got the lowest votes of 57.」",
+   "hypothesis": "证据表格显示：「The 1928 United States presidential election in Illinois took place on November 6, 1928, as part of 」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-48750",
+   "premise": "文档某节记载：「Dalton Kellett does not know how to drive.」",
+   "hypothesis": "证据表格显示：「Dalton Kellett (born August 19, 1993) is a [[Canadians|Canadian]] racing driver from [[Stouffville,_」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-81489",
+   "premise": "文档某节记载：「Dao County is located in Hunan province at Yongzhou prefecture in People's Republic of Malysia with a total population of 905, 599.」",
+   "hypothesis": "证据表格显示：「[[People's_Republic_of_China|People's Republic of China]] \nDao County (simplified Chinese: 道县; tradi」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-78812",
+   "premise": "文档某节记载：「Bill Wentworth (born in 1907), also known as  \"William Charles Wentworth IV,\" was a Communist Party member from 1943-1945, then changed to an Independent runner from 1945-197; then,  stood for the Senate in New South Wales at the December 1977 election, polling 2.1 percent of the vote.」",
+   "hypothesis": "证据表格显示：「Independent (1943–1945)\n[[Liberal_Party_of_Australia|Liberal Party of Australia]] (1945–1977)\nIndepe」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-61413",
+   "premise": "文档某节记载：「2016 IHF Super Globe had referees from six countries, one of which was Denmark.」",
+   "hypothesis": "证据表格显示：「[[Argentina|Argentina]] Julian Lopez Grillo\nSebastián Lenci [[Denmark|Denmark]] Martin Gjeding\nMads」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  },
+  {
+   "id": "feverous-54523",
+   "premise": "文档某节记载：「Founded on 15 October 1862, the Industrial and Commercial Bank of China made a revenue of US$ 8.61 Billion in 2016.」",
+   "hypothesis": "证据表格显示：「Founded as a [[Limited_company|limited company]] on January 1, 1984, ICBC is a state-owned [[Commerc」",
+   "label": "inconsistent",
+   "probe_type": "feverous_table"
+  }
+ ]
+}

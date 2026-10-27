@@ -1,0 +1,14 @@
+{
+ "script": "v8_cct_experiment",
+ "git_sha": "ff0d4950",
+ "config": {
+  "data": "cct_train 3978条 = 基础2972 + 表面反事实748(同内容换模板,不变性) + 内容反事实258(数值回退/顺序反转,敏感性)",
+  "loss": "CE(label_smoothing=0.05) + λ=1.0对称KL(锚vs表面变体) + 内容CF翻转标签(数据级)",
+  "batch": "分组批构造: 5组/批保证同批KL计算",
+  "epochs": 15,
+  "final": "CE=0.215, KL=0.020",
+  "time": "30min"
+ },
+ "config_hash": "e8de9658",
+ "opened_at": 1791358835.6
+}

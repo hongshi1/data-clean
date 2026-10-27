@@ -1,0 +1,1978 @@
+{
+ "n": 45,
+ "accuracy": 0.9556,
+ "macro_f1": 0.8875,
+ "per_class": {
+  "support": {
+   "precision": 1.0,
+   "recall": 0.6667,
+   "f1": 0.8
+  },
+  "refute": {
+   "precision": 0.8,
+   "recall": 1.0,
+   "f1": 0.8889
+  },
+  "not_in_evidence": {
+   "precision": 0.9737,
+   "recall": 0.9737,
+   "f1": 0.9737
+  }
+ },
+ "confusion[predicted, silver]": {
+  "support|support": 2,
+  "refute|refute": 4,
+  "refute|not_in_evidence": 1,
+  "not_in_evidence|support": 1,
+  "not_in_evidence|not_in_evidence": 37
+ },
+ "per_row": [
+  {
+   "instance_id": "S1QA-005",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "conservative_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "对BLOB数据的支持（修改、查询、插入）、确保了任务书中所列功能的实现",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-015",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "在数据库连接正常的情况下，获取STRING接口是否会导致异常流E1的发生取决于接口的可用性和调用时的具体情况",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "根据提供的信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "前置条件明确要求“数据库连接正常”",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "主事件流中提到，如果接口调用失败，则会触发异常流E1",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "因此，在数据库连接正常的前提下，若接口调用失败（如接口不可达、参数错误等），则会导致异常流E1的发生",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-016",
+   "predicted": "refute",
+   "silver": "refute",
+   "claim_methods": [
+    "explicit_quote_polarity",
+    "e1_template_match"
+   ],
+   "claims": [
+    {
+     "claim_text": "无法连接到服务端",
+     "verdict": "support",
+     "method": "explicit_quote_polarity"
+    },
+    {
+     "claim_text": "如果SQL查询失败，系统会返回提示信息：\"无法连接到服务端\"",
+     "verdict": "refute",
+     "method": "e1_template_match"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-017",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "当应用软件在获取STRING数据时处理输入参数时，系统会按照以下步骤操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "调用接口：应用软件向数据库发送获取STRING的接口请求，并提供如字段名或索引等参数",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "参数处理与查询执行：系统接收这些参数后进行查询",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "如果参数正确（如存在有效字段），则执行查询并返回结果转换成字符串格式",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "错误处理：当输入参数错误时，例如字段不存在或索引无效，系统会检测到错误并触发异常流E1，提示获取失败，并终止流程",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "返回结果或错误信息：根据查询成功与否，系统将数据返回或发送错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "用户可基于返回的错误信息进行进一步处理或调整输入参数",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "总之，应用软件在获取STRING数据时，通过调用接口、执行查询并处理输入参数来确保数据正确性，并及时反馈任何可能的问题",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "2．参数处理与查询执行：系统接收这些参数后进行查询。如果参数正确（如存在有效字段），则执行查询并返回结果转换成字符串格式",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "4．返回结果或错误信息：根据查询成功与否，系统将数据返回或发送错误信息。用户可基于返回的错误信息进行进一步处理或调整输入参数",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-018",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "conservative_unresolved",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "处理成功或失败、并在失败时触发异常流E1",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "所有主要的功能和事件流、未发现遗漏",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "1．SQL文件输出",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "2．获取INT",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-021",
+   "predicted": "support",
+   "silver": "support",
+   "claim_methods": [
+    "l0_entity_detector:TERM-05"
+   ],
+   "claims": [
+    {
+     "claim_text": "如果无法连接到服务端，系统会触发异常流E1，并显示“无法连接到服务端，提示连接错误",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-025",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "e1_template_match"
+   ],
+   "claims": [
+    {
+     "claim_text": "当应用软件无法通过数据库建立连接时，系统会触发“连接错误”的异常流（通常标记为E1），并显示相应的错误提示信息",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "具体提示内容可能包括",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "连接失败原因：如“无法建立数据库连接”或“服务器不可用”",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "连接状态：提示当前连接的状态，例如“已断开”、“拒绝访问”等",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "操作日志（如果可用）：显示最近的连接尝试及其详细信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些错误提示会终止当前的事件流，确保系统能够及时发现并处理连接问题",
+     "verdict": "support",
+     "method": "e1_template_match"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-031",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "conservative_unresolved",
+    "e1_template_match"
+   ],
+   "claims": [
+    {
+     "claim_text": "秒内查询 最多1000条",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "确保良好的连接机制：当无法与服务端建立连接时，系统应提示错误并终止该用例",
+     "verdict": "not_in_evidence",
+     "method": "e1_template_match"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-032",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据查询的时间限制是 1秒，而获取错误信息的时间限制在当前提供的信息中并未明确说明",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-034",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "在数据查询过程中，如果返回的数据量超过了1000条，系统将执行以下措施",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "抛出错误信息：通过异常流E1提示获取失败，应用软件无法继续操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "限制查询数量：当处理超过1000条数据时，系统会触发错误并终止该用例",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "提前通知：错误信息将及时返回给应用软件，避免长时间处理大量数据",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些措施确保系统的稳定性和可靠性，同时符合性能约束条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-035",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据查询流程图展示了SQL访问扩展用例，描述了数据查询和错误信息获取的过程",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "应用软件调用SQL接口输入参数（如SQL语句）",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "数据库执行查询并返回结果为JSON格式",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "时间限制：1秒内返回1000条数据",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "如果无法连接到服务端，显示“提示连接错误”",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "获取错误信息时，系统会返回错误码和信息描述",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "连接不上时，返回相应提示并终止用例",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "流程图通过两个部分完整地展示了数据查询的正常操作及其潜在的错误处理机制",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "1．数据查询",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "2．错误处理",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-037",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据查询的主事件流包括以下关键动作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "应用程序发起请求：应用软件向数据库发送SQL语句，并提供相关参数",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "数据库执行查询：数据库接收SQL后，执行数据查询操作",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "连接管理：服务端从连接池中获取并申请连接句柄，用于执行SQL",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "结果传输与处理：查询完成后，结果以JSON格式返回，确保错误信息的正确处理和返回",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些步骤确保了数据查询流程的高效、准确和可靠性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-038",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "llm_residual",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "查询数据功能的运行状态分为两个阶段：开发阶段和运行阶段",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "每个功能标识如数据查询、获取错误信息等都沿用这两个阶段的状态说明",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "开发阶段涉及测试和优化，运行阶段则是指正常应用运作状态",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "答案：查询数据功能的运行状态分为“开发阶段”和“运行阶段”",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "每个功能标识都有明确的运行状态标记，确保在不同阶段的功能行为一致且有效",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-044",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "查询数据功能包含以下主要操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "数据查询：允许用户通过SQL语句进行数据检索",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "获取错误信息：支持在数据库操作中捕获并显示错误提示信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "二维数组输出：将查询结果以二维数组的形式呈现，便于多行数据浏览和分析",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "JSON 输出：将查询结果转换为JSON格式，便于数据的结构化处理和传输",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "SQL 文件输出：将查询结果导出为SQL文件，适合进一步的数据操作或集成到其他系统中",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "逐行获取INT值：提供逐行读取整数字段的功能，方便用户处理数值型数据",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "逐行获取STRING值：支持逐行读取字符串类型的数据，适用于文本分析和处理任务",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "逐行获取FLOAT值：允许用户逐行提取浮点数字段的值，适合需要精确计算的应用场景",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "逐行获取LOB值：提供对大型对象（如图像、音频等非结构化数据）的逐行读取功能",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "这些操作涵盖了数据检索的不同需求和应用场景",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-046",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "增加数据记录的异常情况主要包括以下两种",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "执行失败：系统在执行增加数据记录操作时返回错误提示，导致用例结束",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "服务端连接失败：无法成功连接到服务端，系统会报错并终止该用例",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些情况都会导致增加数据记录的流程中断，并根据具体原因触发相应的错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-047",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "在增加数据记录过程中，如果发生错误，系统会按照以下步骤处理",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "检测错误：应用软件调用接口输入参数后，数据库执行SQL语句",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "如果SQL执行出错，系统会触发异常流E1",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "返回错误信息：系统将错误信息返回给客户端，提示操作失败",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "结束流程：用例因此而终止，用户可能需要重新进行操作或联系管理员解决连接问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "连接验证：若数据库连接不正常，则会直接显示连接错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "1．检测错误：应用软件调用接口输入参数后，数据库执行SQL语句。如果SQL执行出错，系统会触发异常流E1",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-049",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "在增加数据记录的过程中，应用软件调用了“增加数据记录接口”，并按照以下步骤进行操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "调用接口：应用软件通过“增加数据记录接口”输入相关参数，包括修改的SQL语句",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "传输SQL语句：将输入的SQL语句传输至服务端",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "服务端从连接池中申请连接句柄",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "执行增加数据记录的操作",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "释放连接句柄，同时在发生执行错误时触发异常流E1，系统提示执行失败",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "整个流程确保了数据的准确性和完整性，并对潜在错误进行了处理",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "3．数据库操作",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-051",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "增加数据记录的前置条件是：数据库连接正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这意味着在执行任何增加或修改操作之前，必须确保系统能够正常连接到数据库，否则可能导致连接失败或其他相关错误",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "答案：增加数据记录的前置条件是数据库连接正常",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-052",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "删除数据记录时可能出现以下异常情况",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "数据库连接失败：当应用软件无法建立与数据库的连接时，系统会提示无法连接到服务端",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "SQL语句语法错误：用户提供的删除SQL语句存在语法问题，导致数据库无法执行删除操作，系统会返回相应的错误信息",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "数据不存在：尝试删除的是一个不存在的数据记录，系统会显示找不到该数据的错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "插入约束或外键引用失败：如果删除的数据依赖其他表中的外键，而这些外键未被正确插入或满足时，可能导致删除操作失败，系统会提示相关约束不一致的问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "连接池资源耗尽或满：当数据库连接池没有足够的连接句柄可用时，无法进行删除操作，系统可能返回资源不足的错误信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-054",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "增加数据记录的功能基于以下前提条件",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "数据库连接已建立且正常运行",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "系统能够接收和处理从应用软件传来的相关SQL指令",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些条件确保了数据记录的正确插入，避免因连接错误或其他系统异常导致的数据丢失或操作失败",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-055",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "删除数据记录的操作步骤如下",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "应用软件调用修改数据记录接口：用户或应用程序通过指定接口输入需要删除的数据SQL语句",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "数据库处理事务提交：系统验证事务提交并确认数据结构完整性，确保删除操作不会影响其他数据",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "将SQL传输到服务端：通过网络将SQL语句发送至服务端执行，服务端从中获取相应的连接句柄进行操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "执行删除SQL语句：在数据库中执行删除指定记录的SQL语句，并释放相关资源",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "处理异常情况：如果出现错误，如连接失败或SQL语句无效，系统会报错并终止操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "以上步骤确保了删除数据操作的安全性和有效性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-057",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-08:warning",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据库关闭操作的后置条件通常包括以下几点",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "断开连接句柄：确保在关闭数据库之前调用关闭接口，并且在成功断开连接后立即释放连接句柄",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "这有助于避免未处理的操作对象或资源",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "断开服务端连接：在断开本地数据库连接的同时，系统应尝试断开远程服务上的连接",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-08:warning"
+    },
+    {
+     "claim_text": "如果无法断开到服务端，则会触发异常流E1，并提示相关错误信息",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "资源释放：所有与数据库相关的资源，如句柄、指针等，必须被正确释放或关闭，以防止内存泄漏或其他潜在的问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "系统检测：系统应通过内部检查确保所有操作已完成，没有未处理的异常情况发生",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "稳定状态：在完成数据库关闭后，系统应处于一个稳定的状态，不会因未处理的操作而引发后续问题",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "1．断开连接句柄：确保在关闭数据库之前调用关闭接口，并且在成功断开连接后立即释放连接句柄。这有助于避免未处理的操作对象或资源",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "2．断开服务端连接：在断开本地数据库连接的同时，系统应尝试断开远程服务上的连接。如果无法断开到服务端，则会触发异常流E1，并提示相关错误信息",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-058",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "l0_entity_detector:TERM-05",
+    "l0_entity_detector:TERM-08:warning",
+    "llm_residual",
+    "l0_entity_detector:TERM-05",
+    "e1_template_match",
+    "semantic_unresolved",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据库连接流程图中的主事件流包括以下步骤",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "应用软件调用数据库连接接口：输入用户名、密码、IP地址和sqlite3的db文件路径等参数",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "系统处理连接请求：根据输入的参数尝试连接服务端或本地数据库",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-08:warning"
+    },
+    {
+     "claim_text": "如果成功，保存连接句柄并返回状态",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果失败，则触发异常流E1，提示连接错误",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "异常处理（E1）：当无法建立连接时，系统会输出具体的错误信息并结束该用例",
+     "verdict": "support",
+     "method": "e1_template_match"
+    },
+    {
+     "claim_text": "流程图详细展示了这些步骤，确保操作的准确性和可靠性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "2．系统处理连接请求：根据输入的参数尝试连接服务端或本地数据库。如果成功，保存连接句柄并返回状态",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-059",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "e1_template_match",
+    "e1_template_match",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "在数据库连接过程中，如果用户输入错误的参数（如用户名、密码、IP地址或sqlite3的db文件路径等），系统将检测到这些错误并执行以下操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "异常流E1触发：系统将返回具体的错误信息，提示无法建立连接",
+     "verdict": "support",
+     "method": "e1_template_match"
+    },
+    {
+     "claim_text": "结束用例：连接过程终止，并输出错误提示",
+     "verdict": "support",
+     "method": "e1_template_match"
+    },
+    {
+     "claim_text": "用户指导：用户需要检查输入参数是否正确，并进行相应的调整",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "继续尝试或重启：用户可以根据需要重新输入正确的参数尝试连接，或者按照系统的提示重启应用软件以进行重新配置",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-060",
+   "predicted": "refute",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "l0_entity_detector:TERM-05",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "但不限于确保数据库已创建、设置正确的访问权限以及确保网络连接正常",
+     "verdict": "refute",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "这意味着在调用数据库连接接口之前，数据库必须已正确配置并准备好接受来自应用程序的请求",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "数据库连接成功的前置条件是数据库初始化成功",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "只有当数据库处于可连接状态时，应用程序才能输入必要的参数（如用户名、密码、IP地址等）并与数据库服务器建立会话",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-061",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "l0_entity_detector:TERM-05",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "在数据库关闭操作中，应用软件需要调用数据库关闭接口，并传入一个有效的连接句柄",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "调用接口：应用软件必须调用数据库关闭接口",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "传递参数：需要提供一个已建立的数据库连接句柄作为参数",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "执行操作：系统会断开与服务端的连接，并释放相关的数据结构体",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些步骤确保了数据库资源被正确地关闭，符合SQL访问的扩展用例要求",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "调用接口时必须确保数据库连接已成功建立，以避免错误",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-062",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "conservative_unresolved",
+    "conservative_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "根据给定的内容，当系统运行状态为'开发阶段'时，任务书功能并不会失效",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "任务书功能在开发阶段是被支持的，并且可以在该状态下正常运行，满足其相应的任务需求",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-068",
+   "predicted": "refute",
+   "silver": "refute",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "代码生成功能是通过以下步骤实现的",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "用户或应用程序提供配置：用户定义需要处理的表和视图，并指定目标语言（如Java、Python）",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "系统转换数据结构：基于提供的配置，系统将关系型数据库中的表和视图转化为对应的目标语言代码",
+     "verdict": "refute",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "生成接口文件：自动生成与外部系统集成所需的接口文件，简化了与数据库的交互",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "下载功能：提供下载选项，方便用户直接获取生成的代码和接口文件",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "该功能适用于需要将数据库数据结构转换为目标语言的应用场景，特别在构建API或业务逻辑时非常有用",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-069",
+   "predicted": "support",
+   "silver": "support",
+   "claim_methods": [
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual"
+   ],
+   "claims": [
+    {
+     "claim_text": "对象化访问功能支持以下操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "添加：向数据库中插入数据",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "删除：从数据库中删除已存在的数据",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "修改：对数据库中的数据进行更新或修改",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "查询：根据特定条件检索数据库中的数据",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "这些操作通过数据对象方式实现，支持在应用软件中进行相应的操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-070",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "逐行、二维数据组、JSON 格式或下载为 SQL 文件",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "1．原生 SQL 访问功能：允许用户使用 SQL 语句进行操作，并支持原生的数据库连接和关闭",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "2．表及视图的数据增删改查：用户可以通过 SQL 语句对表和视图进行添加、删除、修改以及查询操作",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "3．查询结果返回形式：提供多种格式的结果返回方式，包括逐行、二维数据组、JSON 格式或下载为 SQL 文件",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "4．大字段(BLOB)数据的操作：支持对大字段（BLOB）数据进行删除、更新和查询",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-071",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "exact_statement",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved",
+    "exact_statement",
+    "semantic_unresolved",
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "exact_statement",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据统一访问服务的主要功能包括以下几个方面",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "SQL访问功能",
+     "verdict": "support",
+     "method": "exact_statement"
+    },
+    {
+     "claim_text": "提供原生 SQL 访问功能，支持数据库连接及关闭操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "通过 SQL 语句进行表的增删改查操作",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "支持对表、视图的查询，并以逐行获取、二维数据组、JSON格式或 SQL 文件形式返回结果",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "提供大字段（BLOB）的数据删除、更新、查询及添加功能",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "对象化访问功能",
+     "verdict": "support",
+     "method": "exact_statement"
+    },
+    {
+     "claim_text": "支持通过数据对象方式对数据库中的数据进行增删改查操作，应用软件可以方便地使用数据对象模型与数据库交互",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "提供自动代码生成功能，能够将关系型数据库中的表和视图转换为数据对象，并自动生成相关的接口文件，便于应用下载和集成使用",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "支持在服务器数据库（达梦数据库 V7.6）与本地数据库（SQLite3）之间自动切换数据源",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "根据运行支撑服务软件的状态信息进行动态数据源切换，确保数据访问的流畅性和稳定性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "热点数据缓存",
+     "verdict": "support",
+     "method": "exact_statement"
+    },
+    {
+     "claim_text": "提供查询结果的缓存功能，支持对缓存大小进行配置",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "当发生修改数据操作时，能够重新从数据库中获取最新数据并加载至内存更新缓存，提高数据访问效率",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "支持达梦数据库 V7.6 的连接池管理功能",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "用户可以根据需要配置连接池大小，并支持新增连接的创建、分配及管理操作，优化资源利用率",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "3．代码生成",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "7．6）与本地数据库（SQLite3）之间自动切换数据源",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "6．连接池管理",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "7．6 的连接池管理功能",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-073",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据库连接需要提供的参数包括",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "数据库名称（Database Name）：用于标识具体的数据库",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "用户名（Username）：用于访问数据库的用户标识",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "密码（Password）：与用户名配对，用于认证用户的权限",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些基本参数通常在数据库初始化和配置过程中 essential，以确保可以顺利进行数据库连接操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-075",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "当进行查询操作时，涉及的功能模块包括",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "数据查询：直接搜索和提取所需的数据",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "二维数据输出：将数据以表格形式展示，便于直观查看",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "JSON输出：将数据转换为JSON格式供其他系统使用",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "DML输出功能：支持数据库中的数据操作，如插入、更新等",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "逐行获取数据功能：提供逐行拷贝或提取特定字段的数据",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "这些功能模块共同构成了查询数据的完整流程，确保数据可以被高效地访问和处理",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "因此，在设计或实施微调数据集时，应涵盖所有上述步骤，以全面覆盖查询操作所需的各种功能",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-077",
+   "predicted": "not_in_evidence",
+   "silver": "support",
+   "claim_methods": [
+    "conservative_unresolved",
+    "llm_residual",
+    "conservative_unresolved",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "初始化、读取配置文件连接、数据库连接和关闭功能",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能、如逐行拷贝、获取INT、STRING和FLOAT等",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "插入、删除和查询BLOB（大型对象块）数据记录",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "1．数据库操作：包括初始化、读取配置文件连接、数据库连接和关闭功能",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "2．修改数据：涉及删除、增加或修改数据库中的记录",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "3．查询数据：不仅限于常规查询，还包括错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能，如逐行拷贝、获取INT、STRING和FLOAT等",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "4．BLOB数据操作：包括插入、删除和查询BLOB（大型对象块）数据记录",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-078",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "e1_template_match",
+    "llm_residual",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "llm_residual",
+    "e1_template_match"
+   ],
+   "claims": [
+    {
+     "claim_text": "读取配置文件连接的前置条件是数据库初始化必须成功",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "当应用软件调用该接口时，系统会检查数据库是否已初始化，如果初始化失败，将触发异常流E1并结束用例",
+     "verdict": "support",
+     "method": "e1_template_match"
+    },
+    {
+     "claim_text": "数据库初始化已成功",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "系统已处理数据库初始化过程中的相关参数和错误情况",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "当应用软件调用读取配置文件连接接口时",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "如果连接成功，系统会保存连接句柄",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果出现连接失败，则触发异常流E1并提示连接错误",
+     "verdict": "support",
+     "method": "e1_template_match"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-079",
+   "predicted": "refute",
+   "silver": "refute",
+   "claim_methods": [
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "在读取配置文件连接时，系统会返回以下参数",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "用户输入的配置文件路径等必要参数：这包括用户调用接口时提供的配置文件路径和相关参数",
+     "verdict": "refute",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "连接结果的状态信息：系统会根据连接是否成功返回状态",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果连接成功，则保存连接句柄",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果失败，将通过异常流E1返回具体的错误信息",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "具体连接错误信息（异常流E1）：在连接失败时，系统会提供关于连接错误的详细信息，指导用户进行故障排查或重新尝试",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些参数确保了系统的稳定运行和用户的操作反馈的有效性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "2．连接结果的状态信息：系统会根据连接是否成功返回状态。如果连接成功，则保存连接句柄",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-080",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "llm_residual",
+    "semantic_unresolved",
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据库初始化流程图的主要步骤包括",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "调用初始化接口：应用软件调用数据库初始化接口并输入相关参数，如软件实体号",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "连接到数据统一访问服务端：系统与服务端进行交互",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果连接成功，则根据返回的结果（软件ID或提示错误）处理相应的操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "处理连接结果：如果连接失败，系统会提示错误信息，并生成新的软件ID并注册相关信息",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "如果连接成功，则继续后续操作",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "这些步骤确保了数据库初始化的正确性和可靠性",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "2．连接到数据统一访问服务端：系统与服务端进行交互。如果连接成功，则根据返回的结果（软件ID或提示错误）处理相应的操作",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-081",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "当读取配置文件连接操作出现失败时，系统会触发异常流 E1",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "触发原因：在尝试读取配置文件并建立数据库连接时，如果连接到服务端发生故障，例如网络问题、认证失败或服务器不可用等",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "系统会提示具体的错误信息，帮助诊断连接失败的原因",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "操作将停止，并显示错误消息，供用户排查问题",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "因此，连接失败直接触发异常流 E1，系统通过错误信息引导用户进行故障排除",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-082",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "在数据库初始化过程中，应用软件调用了以下接口",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "数据库初始化接口：该接口被调用以输入相关参数（如软件实体号）",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "状态输出接口：用于输出数据库初始化的状态信息",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "当连接到服务端时，可能会触发错误处理流程，但主要的接口调用集中在上述两个方面",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-083",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "llm_residual",
+    "semantic_unresolved",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "读取配置文件连接用例的前置条件是数据库初始化成功",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "这一步骤完成后，系统准备好必要的数据库环境和参数（如用户名、密码等），为后续的连接操作打下基础",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "因此，在调用该接口之前，必须确保数据库初始化已经完成",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-084",
+   "predicted": "refute",
+   "silver": "refute",
+   "claim_methods": [
+    "identifier_exact_match",
+    "l0_entity_detector:TERM-07"
+   ],
+   "claims": [
+    {
+     "claim_text": "PZXQ-GN-SQLFW-SJKCZ-SJKCSH",
+     "verdict": "refute",
+     "method": "identifier_exact_match"
+    },
+    {
+     "claim_text": "数据库初始化用例的名称是 PZXQ-GN-SQLFW-SJKCZ-SJKCSH",
+     "verdict": "not_in_evidence",
+     "method": "l0_entity_detector:TERM-07"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-088",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "identifier_exact_match",
+    "l0_entity_detector:TERM-07",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "PZXQ-GN-DXHFW",
+     "verdict": "support",
+     "method": "identifier_exact_match"
+    },
+    {
+     "claim_text": "对象化访问接口（PZXQ-GN-DXHFW）与SQL访问接口的连接方式是基于“代码生成”（DMSC）",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-07"
+    },
+    {
+     "claim_text": "这种连接方式通过接口说明中的描述实现了两者的关联",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-089",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "identifier_exact_match",
+    "identifier_exact_match",
+    "l0_entity_detector:TERM-07",
+    "l0_entity_detector:TERM-08:warning",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "PZXQ-GN-SQLFW",
+     "verdict": "support",
+     "method": "identifier_exact_match"
+    },
+    {
+     "claim_text": "PZXQ-GN",
+     "verdict": "support",
+     "method": "identifier_exact_match"
+    },
+    {
+     "claim_text": "SQL访问接口（PZXQ-GN-SQLFW）负责将SQL语句转换为数据库操作，并接收处理后的结果",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-07"
+    },
+    {
+     "claim_text": "该接口遵循PZXQ-GN的命名规则，并与其他高级功能如代码生成、连接池管理等有明确的交互关系",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-08:warning"
+    },
+    {
+     "claim_text": "答案基于给定的内容，准确描述了该接口的功能和标识符",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-090",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "conservative_unresolved",
+    "sequence_alignment",
+    "sequence_alignment",
+    "sequence_alignment"
+   ],
+   "claims": [
+    {
+     "claim_text": "一个运行状态、这意味着在该系统中、所有操作和流程都处于同一运行状态",
+     "verdict": "not_in_evidence",
+     "method": "conservative_unresolved"
+    },
+    {
+     "claim_text": "数据统一访问服务的状态图设计仅包含一个运行状态，这意味着在该系统中，所有操作和流程都处于同一运行状态",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "因此，该描述是正确的",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    },
+    {
+     "claim_text": "答案：是的，数据统一访问服务的状态图只有一个运行状态",
+     "verdict": "not_in_evidence",
+     "method": "sequence_alignment"
+    }
+   ]
+  },
+  {
+   "instance_id": "S1QA-091",
+   "predicted": "not_in_evidence",
+   "silver": "not_in_evidence",
+   "claim_methods": [
+    "semantic_unresolved",
+    "semantic_unresolved",
+    "l0_entity_detector:TERM-05",
+    "llm_residual",
+    "llm_residual",
+    "e1_template_match",
+    "l0_entity_detector:TERM-05",
+    "semantic_unresolved"
+   ],
+   "claims": [
+    {
+     "claim_text": "数据库连接用例的主要目的是确保用户能够成功地建立一个有效的数据库连接",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "具体来说，该用例包括以下几个方面",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    },
+    {
+     "claim_text": "调用数据库连接接口：用户需要输入必要的参数（如用户名、密码、IP地址和数据库路径）来尝试连接到目标数据库",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "处理连接成功与失败的情况",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "成功时，系统会保存连接句柄并返回状态信息",
+     "verdict": "support",
+     "method": "llm_residual"
+    },
+    {
+     "claim_text": "失败时，系统会通过错误接口提示具体连接错误，并终止当前用例流程",
+     "verdict": "support",
+     "method": "e1_template_match"
+    },
+    {
+     "claim_text": "异常处理：如果在连接过程中遇到问题（如无法连接到服务端），系统会触发异常流E1，并显示相应的错误信息，以便用户及时了解情况并采取相应措施",
+     "verdict": "support",
+     "method": "l0_entity_detector:TERM-05"
+    },
+    {
+     "claim_text": "确保系统的可靠性与稳定性：通过完整的主事件流和异常处理机制，该用例能够有效检测和报告连接过程中的潜在问题，从而提高系统的整体可靠性和容错能力",
+     "verdict": "not_in_evidence",
+     "method": "semantic_unresolved"
+    }
+   ]
+  }
+ ]
+}

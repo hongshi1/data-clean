@@ -1,0 +1,189 @@
+<svg viewBox="0 0 1280 720" width="1280" height="720" xmlns="http://www.w3.org/2000/svg" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="1280" height="720" fill="#FCFBF9"/>
+  <text x="60" y="44" font-family="Noto Serif SC, SimSun, serif" font-size="20" fill="#6A4FB5" letter-spacing="6">南开大学</text>
+  <text x="1220" y="44" text-anchor="end" font-size="11" fill="#6B6875" letter-spacing="2">SYNTHESIS ROUTE</text>
+  <text x="60" y="95" font-family="Noto Serif SC, SimSun, serif" font-size="30" font-weight="bold" fill="#2A2833">数据合成技术路线：五层架构与受控注入</text>
+  <text x="60" y="119" font-size="13" fill="#6B6875">16份GJB SRS → 五层算子流水线 → 受控注入（变异算子 · 领域约束 · 双池Pair） → 28,761条（域内18,119 ⊕ 外部10,642）</text>
+  <line x1="60" y1="133" x2="1220" y2="133" stroke="#6A4FB5" stroke-width="3"/>
+  <line x1="60" y1="139" x2="1220" y2="139" stroke="#B8934A" stroke-width="1"/>
+
+  <defs>
+    <marker id="a7" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#6A4FB5"/></marker>
+    <marker id="aG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8A94A6"/></marker>
+  </defs>
+
+  <!-- ============ 左区（60%）：五层带 ============ -->
+
+  <!-- L1 -->
+  <rect x="60" y="152" width="696" height="58" rx="8" fill="#F7F6FB" stroke="#E5E1F0"/>
+  <rect x="60" y="152" width="6" height="58" rx="3" fill="#6A4FB5"/>
+  <text x="84" y="170" font-size="12.5" font-weight="bold" fill="#45337E">L1 资产解析层</text>
+  <text x="84" y="184" font-size="9.5" fill="#5A5666">MinerU content_list + Visio XML直读（born-digital资产）</text>
+  <rect x="84" y="190" width="56" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="112" y="202" text-anchor="middle" font-size="9" fill="#45337E">章节切分</text>
+  <rect x="148" y="190" width="94" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="195" y="202" text-anchor="middle" font-size="9" fill="#45337E">表格HTML→行结构</text>
+  <rect x="250" y="190" width="72" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="286" y="202" text-anchor="middle" font-size="9" fill="#45337E">Shape→锚点</text>
+  <rect x="330" y="190" width="56" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="358" y="202" text-anchor="middle" font-size="9" fill="#45337E">编号修复</text>
+
+  <!-- gap1: L1→L2 -->
+  <line x1="92" y1="212" x2="92" y2="219" stroke="#6A4FB5" stroke-width="1.6" marker-end="url(#a7)"/>
+  <text x="106" y="221" font-size="8" font-weight="bold" fill="#6A4FB5">Chunk ×1,413</text>
+
+  <!-- L2 -->
+  <rect x="60" y="224" width="696" height="58" rx="8" fill="#F7F6FB" stroke="#E5E1F0"/>
+  <rect x="60" y="224" width="6" height="58" rx="3" fill="#6A4FB5"/>
+  <text x="84" y="242" font-size="12.5" font-weight="bold" fill="#45337E">L2 实体抽取层</text>
+  <text x="84" y="256" font-size="9.5" fill="#5A5666">分类型实体schema（ID / 表格 / 锚点 / 条目，不强行统一IR）</text>
+  <rect x="84" y="262" width="48" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="108" y="274" text-anchor="middle" font-size="9" fill="#45337E">ID注册</text>
+  <rect x="140" y="262" width="52" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="166" y="274" text-anchor="middle" font-size="9" fill="#45337E">别名归并</text>
+  <rect x="200" y="262" width="52" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="226" y="274" text-anchor="middle" font-size="9" fill="#45337E">表型分类</text>
+  <rect x="260" y="262" width="96" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="308" y="274" text-anchor="middle" font-size="9" fill="#45337E">UML关系规则分类</text>
+
+  <!-- gap2: L2→L3 -->
+  <line x1="92" y1="284" x2="92" y2="291" stroke="#6A4FB5" stroke-width="1.6" marker-end="url(#a7)"/>
+  <text x="106" y="292" font-size="8" font-weight="bold" fill="#6A4FB5">ID×971 · 表格×1,207 · 图锚点×373</text>
+
+  <!-- L3 -->
+  <rect x="60" y="296" width="696" height="58" rx="8" fill="#F7F6FB" stroke="#E5E1F0"/>
+  <rect x="60" y="296" width="6" height="58" rx="3" fill="#6A4FB5"/>
+  <text x="84" y="314" font-size="12.5" font-weight="bold" fill="#45337E">L3 关联聚合层</text>
+  <text x="84" y="328" font-size="9.5" fill="#5A5666">graph_store：6类节点 + 跨模态边 → item条目证据包</text>
+  <rect x="84" y="334" width="126" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="147" y="346" text-anchor="middle" font-size="9" fill="#45337E">(doc, embed_index)对齐</text>
+  <rect x="218" y="334" width="126" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="281" y="346" text-anchor="middle" font-size="9" fill="#45337E">E实体→各模态出现聚合</text>
+
+  <!-- gap3: L3→L4 -->
+  <line x1="92" y1="356" x2="92" y2="363" stroke="#6A4FB5" stroke-width="1.6" marker-end="url(#a7)"/>
+  <text x="106" y="364" font-size="8" font-weight="bold" fill="#6A4FB5">item条目证据包 → 方向B检测对象</text>
+
+  <!-- L4（核心，扩展带：算子chips + 受控注入框三子块） -->
+  <rect x="60" y="368" width="696" height="182" rx="10" fill="#EFEAF8" stroke="#6A4FB5" stroke-width="1.5"/>
+  <rect x="60" y="368" width="6" height="182" rx="3" fill="#B8934A"/>
+  <rect x="616" y="372" width="124" height="18" rx="9" fill="#B8934A"/>
+  <text x="678" y="384.5" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#FFFFFF">核心创新 · 受控注入</text>
+  <text x="84" y="388" font-size="12.5" font-weight="bold" fill="#45337E">L4 受控合成层</text>
+  <text x="84" y="402" font-size="9.5" fill="#5A5666">算子注册表：输入schema → 输出schema（可复用模块）</text>
+  <rect x="84" y="408" width="58" height="19" rx="9.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="113" y="421" text-anchor="middle" font-size="9.5" fill="#45337E">模板填充</text>
+  <rect x="150" y="408" width="58" height="19" rx="9.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="179" y="421" text-anchor="middle" font-size="9.5" fill="#45337E">等价变换</text>
+  <rect x="216" y="408" width="58" height="19" rx="9.5" fill="#FFFFFF" stroke="#B8934A" stroke-width="1.5"/>
+  <text x="245" y="421" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#8A6D2E">语义注入</text>
+  <rect x="282" y="408" width="66" height="19" rx="9.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="315" y="421" text-anchor="middle" font-size="9.5" fill="#45337E">章节QA合成</text>
+  <rect x="672" y="408" width="72" height="19" rx="9.5" fill="#FFFFFF" stroke="#45337E" stroke-dasharray="4,3"/>
+  <text x="708" y="421" text-anchor="middle" font-size="9.5" fill="#45337E">外部适配</text>
+  <line x1="245" y1="427" x2="245" y2="436" stroke="#B8934A" stroke-width="1.4"/>
+
+  <!-- 受控注入框（三子块） -->
+  <rect x="76" y="436" width="668" height="106" rx="8" fill="#FFFFFF" stroke="#B8934A" stroke-width="1.5"/>
+  <rect x="84" y="429" width="126" height="14" rx="7" fill="#B8934A"/>
+  <text x="147" y="439.5" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#FFFFFF">受控注入框 · 三子块</text>
+  <rect x="84" y="446" width="212" height="78" rx="5" fill="#FDF3E7"/>
+  <text x="92" y="461" font-size="9.5" font-weight="bold" fill="#8A6D2E">① 变异算子库（按检测项族反推）</text>
+  <text x="92" y="475" font-size="8.5" fill="#5A5666">参数族：区间平移 · 单位错换</text>
+  <text x="92" y="488" font-size="8.5" fill="#5A5666">逻辑族：方向反转 · 删分支 · 引环</text>
+  <text x="92" y="501" font-size="8.5" fill="#5A5666">术语族：别名错绑 ｜ 多模态族：计数 · 拓扑不符</text>
+  <text x="92" y="514" font-size="8.5" fill="#8A94A6">（各带等价边界：合理差异 ≠ 矛盾）</text>
+  <rect x="304" y="446" width="212" height="78" rx="5" fill="#FDF3E7"/>
+  <text x="312" y="461" font-size="9.5" font-weight="bold" fill="#8A6D2E">② 领域知识约束（配置空间）</text>
+  <text x="312" y="475" font-size="8.5" fill="#5A5666">GJB 120规则 + srs_kb（23参数/13接口）</text>
+  <text x="312" y="488" font-size="8.5" fill="#5A5666">→ 领域配置空间（生成前形式化）</text>
+  <text x="312" y="501" font-size="8.5" fill="#5A5666">注入后过滤：oracle自检（P1）</text>
+  <text x="312" y="514" font-size="8.5" fill="#5A5666">ρ加权采样：匹配真实缺陷分布</text>
+  <rect x="524" y="446" width="212" height="78" rx="5" fill="#FDF3E7"/>
+  <text x="532" y="461" font-size="9.5" font-weight="bold" fill="#8A6D2E">③ 双池Pair（域内 + 域外）</text>
+  <text x="532" y="475" font-size="8.5" fill="#5A5666">池A · GJB域内：真实SRS Pair（真实性）</text>
+  <text x="532" y="488" font-size="8.5" fill="#5A5666">池B · 域外：PURE / NLI-RE / MMQA → Pair</text>
+  <text x="532" y="501" font-size="8.5" fill="#5A5666">NLI-RE 137对 = 人工注入对照组</text>
+  <text x="532" y="514" font-size="8.5" fill="#8A94A6">（合成 vs 天然 · 分布对照）</text>
+  <text x="84" y="537" font-size="8" fill="#8A94A6">＊公式细节退脚注（§九）：μ ← argmin δ(P, μ(P))  s.t.  T_k ∪ facts(μ(P)) ⊢ ⊥（最小反事实 · 变异测试理论）</text>
+
+  <!-- gap4: L4→L5 -->
+  <line x1="92" y1="552" x2="92" y2="559" stroke="#6A4FB5" stroke-width="1.6" marker-end="url(#a7)"/>
+  <text x="106" y="560" font-size="8" font-weight="bold" fill="#6A4FB5">QA记录：域内 18,119 ⊕ 外部 10,642</text>
+
+  <!-- L5 -->
+  <rect x="60" y="564" width="696" height="58" rx="8" fill="#F7F6FB" stroke="#E5E1F0"/>
+  <rect x="60" y="564" width="6" height="58" rx="3" fill="#6A4FB5"/>
+  <text x="84" y="582" font-size="12.5" font-weight="bold" fill="#45337E">L5 质控导出层</text>
+  <text x="84" y="596" font-size="9.5" fill="#5A5666">md5去重 · 长度 · 正负平衡 · seed=42 → 双格式导出</text>
+  <rect x="84" y="601" width="56" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="112" y="613" text-anchor="middle" font-size="9" fill="#45337E">md5去重</text>
+  <rect x="148" y="601" width="56" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="176" y="613" text-anchor="middle" font-size="9" fill="#45337E">长度校验</text>
+  <rect x="212" y="601" width="56" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="240" y="613" text-anchor="middle" font-size="9" fill="#45337E">正负平衡</text>
+  <rect x="276" y="601" width="52" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="302" y="613" text-anchor="middle" font-size="9" fill="#45337E">seed=42</text>
+  <rect x="336" y="601" width="64" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="368" y="613" text-anchor="middle" font-size="9" fill="#45337E">Alpaca导出</text>
+  <rect x="408" y="601" width="74" height="17" rx="8.5" fill="#FFFFFF" stroke="#45337E"/>
+  <text x="445" y="613" text-anchor="middle" font-size="9" fill="#45337E">ShareGPT导出</text>
+
+  <!-- ============ 右区（40%）：六张实体卡 + 外部源虚线框 ============ -->
+
+  <line x1="780" y1="177" x2="758" y2="180" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="152" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="170" font-size="11" font-weight="bold" fill="#45337E">Chunk 章节块</text>
+  <text x="1206" y="170" text-anchor="end" font-size="9.5" font-weight="bold" fill="#6A4FB5">×1,413</text>
+  <text x="794" y="188" font-size="8.5" fill="#5A5666">{name, content, metadata{doc, section, images[:5], tables[:5]}}</text>
+
+  <line x1="780" y1="235" x2="758" y2="251" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="210" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="228" font-size="11" font-weight="bold" fill="#45337E">ID实体</text>
+  <text x="1206" y="228" text-anchor="end" font-size="9.5" font-weight="bold" fill="#6A4FB5">×971 · 2,016处</text>
+  <text x="794" y="246" font-size="8.5" fill="#5A5666">{ID, occurrences[{doc, section, content, modality}]}</text>
+
+  <line x1="780" y1="293" x2="758" y2="262" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="268" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="286" font-size="11" font-weight="bold" fill="#45337E">表格实体</text>
+  <text x="1206" y="286" text-anchor="end" font-size="9.5" font-weight="bold" fill="#6A4FB5">×1,207</text>
+  <text x="794" y="304" font-size="8.5" fill="#5A5666">{caption, section, rows[[cell]], 表型∈{接口/合格性/状态/…}}</text>
+
+  <line x1="780" y1="351" x2="758" y2="272" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="326" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="344" font-size="11" font-weight="bold" fill="#45337E">图锚点</text>
+  <text x="1206" y="344" text-anchor="end" font-size="9.5" font-weight="bold" fill="#6A4FB5">×373 · 5,165节点</text>
+  <text x="794" y="362" font-size="8.5" fill="#5A5666">nodes[{id, text, type}] + edges[{s, t, uml_type}] + diagram_type</text>
+
+  <line x1="780" y1="409" x2="758" y2="330" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="384" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="402" font-size="11" font-weight="bold" fill="#45337E">条目 item</text>
+  <text x="1206" y="402" text-anchor="end" font-size="9.5" font-weight="bold" fill="#8A6D2E">方向B检测对象</text>
+  <text x="794" y="420" font-size="8.5" fill="#5A5666">{entity_id, aliases[], occurrences[{doc, section, modality}]}</text>
+
+  <line x1="780" y1="467" x2="758" y2="442" stroke="#B8934A" stroke-width="0.9" opacity="0.75"/>
+  <rect x="780" y="442" width="440" height="50" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="794" y="460" font-size="11" font-weight="bold" fill="#45337E">QA记录</text>
+  <text x="1206" y="460" text-anchor="end" font-size="9.5" font-weight="bold" fill="#6A4FB5">×28,761</text>
+  <text x="794" y="478" font-size="8.5" fill="#5A5666">{instruction, input, output, tags[来源, 类型, 难度, 语言]}</text>
+
+  <!-- 外部源虚线框 → 外部适配算子 -->
+  <line x1="780" y1="527" x2="760" y2="527" stroke="#8A94A6" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#aG)"/>
+  <rect x="780" y="500" width="440" height="54" rx="8" fill="#FFFFFF" stroke="#8A94A6" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="794" y="518" font-size="10" font-weight="bold" fill="#6B6875">外部源（5个公开数据集 → 外部适配算子）</text>
+  <text x="794" y="534" font-size="8.5" fill="#5A5666">PURE · NLI-RE · Ambiguity · FlowVQA · LLM-Gen</text>
+  <text x="794" y="548" font-size="8.5" fill="#8A6D2E">经外部适配算子并入 10,642（37%，难负例同池采样）</text>
+
+  <!-- ============ 底部：28,761 总账条 ============ -->
+  <rect x="60" y="628" width="1160" height="36" rx="8" fill="#FFFFFF" stroke="#E5E1F0"/>
+  <text x="76" y="642" font-size="11" font-weight="bold" fill="#45337E">总账</text>
+  <rect x="126" y="634" width="661" height="12" rx="3" fill="#45337E"/>
+  <text x="456" y="643" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#FFFFFF">域内（中文）18,119 · 63%</text>
+  <rect x="787" y="634" width="389" height="12" rx="3" fill="#B8934A"/>
+  <text x="981" y="643" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#FFFFFF">外部（英文）10,642 · 37%</text>
+  <text x="76" y="659" font-size="8" fill="#8A94A6">总账 28,761 = 域内 18,119 ⊕ 外部 10,642 ｜ md5去重 · 正负平衡 · seed=42 ｜ Alpaca + ShareGPT 双格式导出</text>
+
+  <line x1="60" y1="682" x2="1220" y2="682" stroke="#E5E1F0"/>
+  <text x="60" y="702" font-size="11" fill="#6B6875">面向GJB 438C需求文档的一致性校验研究</text>
+  <text x="1220" y="702" text-anchor="end" font-size="11" fill="#6A4FB5">2 / 3</text>
+</svg>

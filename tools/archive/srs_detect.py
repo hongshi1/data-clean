@@ -15,10 +15,8 @@ SRS不一致性校验 (方向B) — 基于条目的三层检测
   python3 tools/srs_detect.py --syntax-only            # 仅语法层
 """
 import json
-import re
 import sys
 import argparse
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from datetime import datetime
 from collections import Counter, defaultdict
@@ -28,11 +26,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "prompts"))
 
 from srs_context import (
-    Item, ItemOccurrence, ItemFeature,
-    run_context_aggregation,
-    CONSTRAINT_RE, CONSTRAINT_RE_GE, _extract_param_name, _classify_role,
+    Item, run_context_aggregation,
 )
-from srs_tool import srs_search, srs_read_section, srs_z3_check
+from srs_tool import srs_z3_check
 
 BASE = Path(__file__).resolve().parent.parent
 CONFIG_PATH = BASE / "configs/srs_config.json"
@@ -232,7 +228,7 @@ def detect_document(doc_name: str, config: dict, syntax_only: bool = False) -> d
     all_violations = []
     
     # B1: 语法层(不需要条目)
-    print(f"  B1 语法层检测...")
+    print("  B1 语法层检测...")
     syntax_v = detect_syntax(content_xml_path)
     all_violations.extend(syntax_v)
     print(f"    {len(syntax_v)}条违规")
@@ -243,12 +239,12 @@ def detect_document(doc_name: str, config: dict, syntax_only: bool = False) -> d
         return _generate_report(doc_id, all_violations)
     
     # 方向A: 上下文关联+特征提取
-    print(f"  方向A: 上下文关联+特征提取...")
+    print("  方向A: 上下文关联+特征提取...")
     items, phantoms = run_context_aggregation(content_xml_path)
     print(f"    {len(items)}个条目, {sum(len(i.features) for i in items)}个特征, {len(phantoms)}个幽灵需求")
     
     # B2: 语义层(基于条目)
-    print(f"  B2 语义层检测(基于条目)...")
+    print("  B2 语义层检测(基于条目)...")
     semantic_v = detect_semantic(items, phantoms)
     all_violations.extend(semantic_v)
     print(f"    {len(semantic_v)}条违规")
@@ -256,7 +252,7 @@ def detect_document(doc_name: str, config: dict, syntax_only: bool = False) -> d
         print(f"    [{v['check']}] {v['description'][:60]}")
     
     # B3: 逻辑层(基于条目约束)
-    print(f"  B3 逻辑层检测(基于条目约束)...")
+    print("  B3 逻辑层检测(基于条目约束)...")
     logic_v = detect_logic(items)
     all_violations.extend(logic_v)
     print(f"    {len(logic_v)}条违规")

@@ -1,0 +1,32 @@
+{
+ "v1_caption_distribution": {
+  "train": "domain_adapt_pairs.json 1541 caption pairs",
+  "eval": "R@1=0.107 (vs 0.340)",
+  "verdict": "训练分布错位→负迁移"
+ },
+ "v2_deep_distribution_trainset_fit": {
+  "train": "294 deep pairs (含250/262评测查询)",
+  "eval": "R@1=0.889",
+  "verdict": "拟合上界, 不可报告"
+ },
+ "v3_4fold_CV": {
+  "hidden=256, ep=40, reg=0.1": "R@1=0.199",
+  "fold_detail": {
+   "fold0": 0.328,
+   "fold1": 0.039,
+   "fold2": 0.061,
+   "fold3": 0.214
+  },
+  "verdict": "过拟合, 低于基线0.340"
+ },
+ "v4_hyperparam_sweep_4foldCV": {
+  "hidden=256,ep=40,reg=0.1": 0.118,
+  "hidden=64,ep=10,reg=0.1": 0.16,
+  "hidden=64,ep=40,reg=0.5": 0.248,
+  "hidden=32,ep=10,reg=0.5": 0.252,
+  "hidden=16,ep=5,reg=1.0": 0.267,
+  "verdict": "全配置低于基线; 减容量/强正则→逼近恒等但不超基线; 恒等映射为该函数族最优点"
+ },
+ "conclusion": "冻结BGE之上任何可训练adapter在~250对数据下必过拟合. L4语体鸿沟不可由事后适配解决, 需更大训练集(扩展完成后~550对)或换路线(检索侧/交互侧改进)",
+ "negative_result_index": "#8 in negative result chain (CMSC, GMC, MLP, ...)"
+}

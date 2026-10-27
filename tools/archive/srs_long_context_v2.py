@@ -22,7 +22,6 @@ from pathlib import Path
 from datetime import datetime
 from collections import defaultdict, Counter
 from dataclasses import dataclass, field
-from itertools import combinations
 
 BASE = Path(__file__).resolve().parent.parent
 PARSED_DIR = BASE / "data/gjb_438c/mineru_parsed"
@@ -30,7 +29,7 @@ OUTPUT_DIR = BASE / "data/srs_context_v2"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 EMB_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/embeddings"
-EMB_KEY = "n6nbxgo0fk4g48dpdylw51plxjnv8smp6ml7"
+from ai_config import WQ_API_KEY as EMB_KEY
 EMB_MODEL = "ep-qrkeon-1785654358657880827"
 
 REQ_ID_RE = re.compile(r'[A-Z]{4,}-[A-Z]{2,}-[A-Z0-9]+')

@@ -1,0 +1,112 @@
+{
+ "native_bge_noprefix": {
+  "R@10": 0.5096,
+  "R@20": 0.6449,
+  "MRR@10": 1.0,
+  "n": 30
+ },
+ "native_bge_prefix_ref": {
+  "R@10": 0.5403,
+  "R@20": 0.6934,
+  "MRR@10": 1.0,
+  "n": 30
+ },
+ "lora_bge_noprefix": {
+  "R@10": 0.543,
+  "R@20": 0.6328,
+  "MRR@10": 0.95,
+  "n": 30
+ },
+ "delta_vs_native_symmetric": {
+  "R@10": 0.0334,
+  "R@20": -0.0121,
+  "MRR@10": -0.05
+ },
+ "by_region": {
+  "first_2_3(train_source)": {
+   "native": {
+    "R@10": 0.5096,
+    "R@20": 0.6449,
+    "MRR@10": 1.0,
+    "n": 30
+   },
+   "lora": {
+    "R@10": 0.543,
+    "R@20": 0.6328,
+    "MRR@10": 0.95,
+    "n": 30
+   }
+  },
+  "last_1_3(held_out)": {
+   "native": {
+    "R@10": NaN,
+    "R@20": NaN,
+    "MRR@10": NaN,
+    "n": 0
+   },
+   "lora": {
+    "R@10": NaN,
+    "R@20": NaN,
+    "MRR@10": NaN,
+    "n": 0
+   }
+  }
+ },
+ "leakage": {
+  "n_train_queries": 0,
+  "n_train_passages": 0,
+  "overall": {
+   "n": 30,
+   "entity_overlap": 0,
+   "entity_overlap_rate": 0.0,
+   "entity_id_overlap_rate": 0.0,
+   "query_text_overlap_rate": 0.0,
+   "entity_in_train_passage_rate": 0.0
+  },
+  "by_region": {
+   "first_2_3(train_source)": {
+    "n": 30,
+    "entity_overlap": 0,
+    "entity_overlap_rate": 0.0,
+    "entity_id_overlap_rate": 0.0,
+    "query_text_overlap_rate": 0.0,
+    "entity_in_train_passage_rate": 0.0
+   },
+   "last_1_3(held_out)": {
+    "n": 0,
+    "entity_overlap": 0,
+    "entity_overlap_rate": 0.0,
+    "entity_id_overlap_rate": 0.0,
+    "query_text_overlap_rate": 0.0,
+    "entity_in_train_passage_rate": 0.0
+   }
+  },
+  "reported": true,
+  "data_stat": {
+   "n_raw": 6639,
+   "n_ok": 0,
+   "n_skipped": 6639
+  },
+  "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\data_assets\\retrieval_train\\triples.json"
+ },
+ "adapter_meta": {},
+ "adapter_stats": {
+  "device": "cuda",
+  "dim": 1024,
+  "n_embed_calls": 2,
+  "n_cache_hits": 0,
+  "n_cache_texts": 4481,
+  "embed_ms": 64.5
+ },
+ "gpu_mem_gb": 2.79,
+ "chunks": 5231,
+ "native_stats": {
+  "n_embed_calls": 4,
+  "n_texts": 10522,
+  "n_cache_hits": 8958,
+  "n_batches": 1,
+  "embed_ms": 8232.8,
+  "device": "cuda",
+  "dim": 1024
+ }
+}

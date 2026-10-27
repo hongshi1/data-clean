@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#455a64"/>
+    </marker>
+  </defs>
+  <style>
+    .stage{fill:#eef3f8;stroke:#3d5a80;stroke-width:1.5;rx:8}
+    .stagehead{fill:#3d5a80}
+    .box{fill:#ffffff;stroke:#78909c;stroke-width:1}
+    .hi{fill:#fff3e0;stroke:#e07b00;stroke-width:1.5}
+    .num{fill:#b71c1c;font-weight:bold}
+    .lbl{fill:#455a64;font-size:13px}
+    .ttl{fill:#ffffff;font-size:15px;font-weight:bold}
+    .sm{font-size:12px}
+  </style>
+
+  <text x="480" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#263238">SRS跨模态不一致性检测：三阶段流水线</text>
+  <text x="480" y="52" text-anchor="middle" font-size="12" fill="#607d8b">检测单元 = 证据对（表格 ↔ 图，346对；图侧来自Visio XML锚点解析，零识别误差）</text>
+
+  <!-- 输入层 -->
+  <rect x="30" y="80" width="900" height="64" rx="6" fill="#f5f5f5" stroke="#90a4ae" stroke-dasharray="4 3"/>
+  <text x="70" y="105" font-size="13" fill="#37474f" font-weight="bold">输入：16份GJB需求文档</text>
+  <text x="70" y="128" font-size="12" class="lbl">表格编译为结构化条目（功能名+ID / 步骤序列 / 接口收发方）</text>
+  <text x="560" y="105" font-size="12" class="lbl">图：373张 / 3759节点 / 2680边</text>
+  <text x="560" y="128" font-size="12" class="lbl">（born-digital Visio XML直读）</text>
+
+  <!-- 箭头: 输入→阶段一 -->
+  <line x1="480" y1="144" x2="480" y2="168" stroke="#455a64" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 阶段一 -->
+  <rect x="30" y="172" width="280" height="150" class="stage"/>
+  <rect x="30" y="172" width="280" height="34" rx="8" class="stagehead"/>
+  <text x="170" y="194" text-anchor="middle" class="ttl">阶段一 · 发现（词法比对）</text>
+  <rect x="46" y="216" width="248" height="30" class="box"/>
+  <text x="170" y="236" text-anchor="middle" font-size="12">确定性词法匹配（阈值0.5）</text>
+  <rect x="46" y="252" width="248" height="30" class="box"/>
+  <text x="170" y="272" text-anchor="middle" font-size="12">语义向量余弦补充（0.62）</text>
+  <text x="170" y="308" text-anchor="middle" font-size="13">产出：<tspan class="num">1005条分歧</tspan></text>
+
+  <line x1="310" y1="247" x2="340" y2="247" stroke="#455a64" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="325" y="234" text-anchor="middle" font-size="11" fill="#607d8b">分歧</text>
+  <text x="325" y="268" text-anchor="middle" font-size="10" fill="#607d8b">嫌疑清单</text>
+
+  <!-- 阶段二 NLI (高亮) -->
+  <rect x="344" y="172" width="280" height="150" class="hi"/>
+  <rect x="344" y="172" width="280" height="34" fill="#e07b00"/>
+  <text x="484" y="194" text-anchor="middle" class="ttl">阶段二 · 复核（NLI）★本文</text>
+  <rect x="360" y="216" width="248" height="30" fill="#ffffff" stroke="#e07b00" stroke-width="1"/>
+  <text x="484" y="236" text-anchor="middle" font-size="12">闭世界声明模板 + 双向推理</text>
+  <rect x="360" y="252" width="248" height="30" fill="#ffffff" stroke="#e07b00" stroke-width="1"/>
+  <text x="484" y="272" text-anchor="middle" font-size="12">本地mDeBERTa（649条, 3.7秒）</text>
+  <text x="484" y="308" text-anchor="middle" font-size="13">产出：矛盾信号（<tspan class="num">P=0.971</tspan>）</text>
+
+  <line x1="624" y1="247" x2="654" y2="247" stroke="#455a64" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="639" y="234" text-anchor="middle" font-size="11" fill="#607d8b">复核</text>
+  <text x="639" y="268" text-anchor="middle" font-size="10" fill="#607d8b">消化误报91.7%</text>
+
+  <!-- 阶段三 -->
+  <rect x="658" y="172" width="272" height="150" class="stage"/>
+  <rect x="658" y="172" width="272" height="34" rx="8" class="stagehead"/>
+  <text x="794" y="194" text-anchor="middle" class="ttl">阶段三 · 裁决（LLM+人工）</text>
+  <rect x="674" y="216" width="240" height="30" class="box"/>
+  <text x="794" y="236" text-anchor="middle" font-size="12">双LLM异构（看图 vs 看结构）</text>
+  <rect x="674" y="252" width="240" height="30" class="box"/>
+  <text x="794" y="272" text-anchor="middle" font-size="12">五票集成（≥3/5多数）</text>
+  <text x="794" y="308" text-anchor="middle" font-size="13">产出：<tspan class="num">664条三分类银标</tspan></text>
+
+  <!-- 每阶段回答的问题 -->
+  <rect x="30" y="340" width="900" height="60" rx="6" fill="#fafafa" stroke="#cfd8dc"/>
+  <text x="50" y="364" font-size="12" fill="#37474f"><tspan font-weight="bold">发现</tspan>回答：表与图哪里对不上？</text>
+  <text x="360" y="364" font-size="12" fill="#37474f"><tspan font-weight="bold">复核</tspan>回答：差异是真实的，还是匹配引擎误报？</text>
+  <text x="710" y="364" font-size="12" fill="#37474f"><tspan font-weight="bold">裁决</tspan>回答：真实差异违反惯例吗？</text>
+  <text x="50" y="386" font-size="11" fill="#78909c">确定性词法 · 免费可复现</text>
+  <text x="360" y="386" font-size="11" fill="#e07b00">语义判断 · 本地NLI · 免费</text>
+  <text x="710" y="386" font-size="11" fill="#78909c">需要UML/GJB惯例知识 · LLM API成本</text>
+
+  <!-- 输出层 -->
+  <line x1="480" y1="400" x2="480" y2="424" stroke="#455a64" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="130" y="428" width="700" height="106" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="480" y="454" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">最终输出：分歧责任归属三分类</text>
+  <rect x="160" y="466" width="200" height="52" fill="#ffffff" stroke="#c62828"/>
+  <text x="260" y="486" text-anchor="middle" font-size="13" font-weight="bold" fill="#c62828">real_bug 真实缺陷</text>
+  <text x="260" y="506" text-anchor="middle" font-size="12">176条 (26.5%) · 修文档</text>
+  <rect x="380" y="466" width="200" height="52" fill="#ffffff" stroke="#f9a825"/>
+  <text x="480" y="486" text-anchor="middle" font-size="13" font-weight="bold" fill="#f57f17">benign 合理差异</text>
+  <text x="480" y="506" text-anchor="middle" font-size="12">378条 (56.9%) · 无需修</text>
+  <rect x="600" y="466" width="200" height="52" fill="#ffffff" stroke="#1565c0"/>
+  <text x="700" y="486" text-anchor="middle" font-size="13" font-weight="bold" fill="#1565c0">compiler 引擎误报</text>
+  <text x="700" y="506" text-anchor="middle" font-size="12">110条 (16.6%) · NLI自动消化</text>
+
+  <text x="480" y="548" text-anchor="middle" font-size="11" fill="#90a4ae">账目：1005条分歧 → 702条裁决（362双LLM一致 + 302五票多数）→ 664条银标 + 38条未决（不进评测）</text>
+</svg>

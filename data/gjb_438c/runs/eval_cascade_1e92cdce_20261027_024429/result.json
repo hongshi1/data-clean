@@ -1,0 +1,696 @@
+{
+ "n": 91,
+ "label_type": "glm53_silver_not_gold",
+ "checkpoint": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\egt_finetuned_v2",
+ "nli_gate": 0.7,
+ "keep_confidence": 0.95,
+ "configs": {
+  "baseline": {
+   "accuracy": 0.8791,
+   "macro_f1": 0.5628,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.1667,
+     "f1": 0.25
+    },
+    "refute": {
+     "precision": 0.75,
+     "recall": 0.375,
+     "f1": 0.5
+    },
+    "not_in_evidence": {
+     "precision": 0.8941,
+     "recall": 0.987,
+     "f1": 0.9383
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 3,
+    "not_in_evidence|support": 4,
+    "not_in_evidence|refute": 5,
+    "not_in_evidence|not_in_evidence": 76
+   },
+   "claim_methods": {
+    "semantic_unresolved": 328,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 29,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "l2_nli": {
+   "accuracy": 0.8022,
+   "macro_f1": 0.5437,
+   "per_class": {
+    "support": {
+     "precision": 0.3333,
+     "recall": 0.1667,
+     "f1": 0.2222
+    },
+    "refute": {
+     "precision": 0.3684,
+     "recall": 0.875,
+     "f1": 0.5185
+    },
+    "not_in_evidence": {
+     "precision": 0.942,
+     "recall": 0.8442,
+     "f1": 0.8904
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 2,
+    "refute|support": 2,
+    "refute|refute": 7,
+    "refute|not_in_evidence": 10,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 1,
+    "not_in_evidence|not_in_evidence": 65
+   },
+   "claim_methods": {
+    "semantic_unresolved": 229,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 103,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "l3_llm": {
+   "accuracy": 0.9011,
+   "macro_f1": 0.6997,
+   "per_class": {
+    "support": {
+     "precision": 0.6667,
+     "recall": 0.3333,
+     "f1": 0.4444
+    },
+    "refute": {
+     "precision": 0.6667,
+     "recall": 0.75,
+     "f1": 0.7059
+    },
+    "not_in_evidence": {
+     "precision": 0.9367,
+     "recall": 0.961,
+     "f1": 0.9487
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 1,
+    "refute|support": 1,
+    "refute|refute": 6,
+    "refute|not_in_evidence": 2,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 2,
+    "not_in_evidence|not_in_evidence": 74
+   },
+   "claim_methods": {
+    "semantic_unresolved": 235,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 22,
+    "llm_residual": 100,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "cascade": {
+   "accuracy": 0.9011,
+   "macro_f1": 0.6879,
+   "per_class": {
+    "support": {
+     "precision": 0.5,
+     "recall": 0.3333,
+     "f1": 0.4
+    },
+    "refute": {
+     "precision": 0.8333,
+     "recall": 0.625,
+     "f1": 0.7143
+    },
+    "not_in_evidence": {
+     "precision": 0.9259,
+     "recall": 0.974,
+     "f1": 0.9494
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 2,
+    "support|not_in_evidence": 2,
+    "refute|support": 1,
+    "refute|refute": 5,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 3,
+    "not_in_evidence|not_in_evidence": 75
+   },
+   "claim_methods": {
+    "semantic_unresolved": 228,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 68,
+    "llm_residual": 36,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  },
+  "cascade_conformal": {
+   "accuracy": 0.8352,
+   "macro_f1": 0.5605,
+   "per_class": {
+    "support": {
+     "precision": 0.3333,
+     "recall": 0.1667,
+     "f1": 0.2222
+    },
+    "refute": {
+     "precision": 0.4286,
+     "recall": 0.75,
+     "f1": 0.5455
+    },
+    "not_in_evidence": {
+     "precision": 0.9324,
+     "recall": 0.8961,
+     "f1": 0.9139
+    }
+   },
+   "confusion[predicted, silver]": {
+    "support|support": 1,
+    "support|not_in_evidence": 2,
+    "refute|support": 2,
+    "refute|refute": 6,
+    "refute|not_in_evidence": 6,
+    "not_in_evidence|support": 3,
+    "not_in_evidence|refute": 2,
+    "not_in_evidence|not_in_evidence": 69
+   },
+   "claim_methods": {
+    "semantic_unresolved": 220,
+    "e1_template_match": 19,
+    "l0_entity_detector:TERM-05": 51,
+    "sequence_alignment": 225,
+    "conservative_unresolved": 25,
+    "nli_residual": 79,
+    "llm_residual": 33,
+    "explicit_quote_polarity": 1,
+    "identifier_exact_match": 12,
+    "l0_entity_detector:TERM-07": 18,
+    "exact_statement": 9,
+    "l0_entity_detector:TERM-08:warning": 3
+   }
+  }
+ },
+ "llm_stats": {
+  "baseline": {
+   "invocations": 0,
+   "api_calls": 0,
+   "cache_hits": 0
+  },
+  "l2_nli": {
+   "invocations": 0,
+   "api_calls": 0,
+   "cache_hits": 0
+  },
+  "l3_llm": {
+   "invocations": 85,
+   "api_calls": 0,
+   "cache_hits": 85
+  },
+  "cascade": {
+   "invocations": 17,
+   "api_calls": 0,
+   "cache_hits": 17
+  },
+  "cascade_conformal": {
+   "invocations": 15,
+   "api_calls": 9,
+   "cache_hits": 6
+  }
+ },
+ "cost_quality_table": [
+  {
+   "config": "baseline",
+   "macro_f1": 0.5628,
+   "refute_precision": 0.75,
+   "refute_recall": 0.375,
+   "llm_invocations": 0,
+   "llm_api_calls": 0
+  },
+  {
+   "config": "l2_nli",
+   "macro_f1": 0.5437,
+   "refute_precision": 0.3684,
+   "refute_recall": 0.875,
+   "llm_invocations": 0,
+   "llm_api_calls": 0
+  },
+  {
+   "config": "l3_llm",
+   "macro_f1": 0.6997,
+   "refute_precision": 0.6667,
+   "refute_recall": 0.75,
+   "llm_invocations": 85,
+   "llm_api_calls": 0
+  },
+  {
+   "config": "cascade",
+   "macro_f1": 0.6879,
+   "refute_precision": 0.8333,
+   "refute_recall": 0.625,
+   "llm_invocations": 17,
+   "llm_api_calls": 0
+  },
+  {
+   "config": "cascade_conformal",
+   "macro_f1": 0.5605,
+   "refute_precision": 0.4286,
+   "refute_recall": 0.75,
+   "llm_invocations": 15,
+   "llm_api_calls": 9
+  }
+ ],
+ "cascade_escalation": {
+  "nli_claims_judged": 413,
+  "escalated_claims": 93,
+  "kept_high_confidence_claims": 0,
+  "escalated_instances": [
+   "S1QA-006",
+   "S1QA-007",
+   "S1QA-020",
+   "S1QA-030",
+   "S1QA-033",
+   "S1QA-034",
+   "S1QA-040",
+   "S1QA-044",
+   "S1QA-056",
+   "S1QA-063",
+   "S1QA-067",
+   "S1QA-068",
+   "S1QA-074",
+   "S1QA-076",
+   "S1QA-078"
+  ],
+  "kept_only_instances": [],
+  "instances_with_llm_failure": 0
+ },
+ "cascade_conformal_escalation": {
+  "nli_claims_judged": 413,
+  "escalated_claims": 82,
+  "kept_high_confidence_claims": 11,
+  "escalated_instances": [
+   "S1QA-006",
+   "S1QA-007",
+   "S1QA-030",
+   "S1QA-033",
+   "S1QA-034",
+   "S1QA-040",
+   "S1QA-044",
+   "S1QA-056",
+   "S1QA-063",
+   "S1QA-067",
+   "S1QA-068",
+   "S1QA-074",
+   "S1QA-076",
+   "S1QA-078"
+  ],
+  "kept_only_instances": [
+   "S1QA-020"
+  ],
+  "instances_with_llm_failure": 0
+ },
+ "l2_to_cascade_flips": {
+  "corrected": [
+   {
+    "instance_id": "S1QA-006",
+    "silver": "support",
+    "before": "refute",
+    "after": "support",
+    "cascade_claims": [
+     {
+      "claim_text": "项目中对BLOB数据进行修改、查询和插入的功能均沿用“桌面”和“平板”设备，并且在开发阶段和运行阶段均进行了支持",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：BLOB数据操作功能（含插入、删除、查询）锚定ev-12/ev-13，方式名称为平板、桌面，运行状态为运行阶段、开发阶段，与声明一致"
+     },
+     {
+      "claim_text": "BLOB数据修改：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：BLOB数据修改属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     },
+     {
+      "claim_text": "BLOB数据查询：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：BLOB数据查询属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     },
+     {
+      "claim_text": "BLOB数据插入：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：BLOB数据插入属于BLOB数据操作功能，锚定行设备为平板、桌面，阶段为运行阶段、开发阶段"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-007",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-020",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-030",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "该用例支持从数据库获取大量记录并以矩阵形式返回，同时处理连接失败等情况",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.75,
+      "rationale": "LLM残差判定：ev-2表明查询结果组织到二维数组（矩阵）中返回且行数代表记录数，ev-3/ev-5表明处理连接失败和获取失败"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-033",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "如果在获取错误信息的过程中无法连接到服务端，系统将触发以下异常",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：证据显示无法连接到服务端时提示连接错误并执行异常流E1"
+     },
+     {
+      "claim_text": "异常E1：提示连接到服务端失败，导致用例结束",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-13明确异常流E1为系统提示连接失败，用例结束"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-034",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-040",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-044",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "查询数据功能包含以下主要操作",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-18明确列出查询数据功能包含的各项主要操作"
+     },
+     {
+      "claim_text": "二维数组输出：将查询结果以二维数组的形式呈现，便于多行数据浏览和分析",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：ev-24明确将查询结果以二维数组形式输出，ev-2描述数组组织方式"
+     },
+     {
+      "claim_text": "JSON 输出：将查询结果转换为JSON格式，便于数据的结构化处理和传输",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.7,
+      "rationale": "LLM残差判定：ev-18列出JSON输出功能，与声明核心一致"
+     },
+     {
+      "claim_text": "逐行获取INT值：提供逐行读取整数字段的功能，方便用户处理数值型数据",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.8,
+      "rationale": "LLM残差判定：ev-18列出逐行获取数据功能包括获取INT"
+     },
+     {
+      "claim_text": "逐行获取STRING值：支持逐行读取字符串类型的数据，适用于文本分析和处理任务",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：ev-5明确需求描述为逐行获取STRING值"
+     },
+     {
+      "claim_text": "逐行获取FLOAT值：允许用户逐行提取浮点数字段的值，适合需要精确计算的应用场景",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：ev-11明确需求描述为逐行获取FLOAT值"
+     },
+     {
+      "claim_text": "逐行获取LOB值：提供对大型对象（如图像、音频等非结构化数据）的逐行读取功能",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.8,
+      "rationale": "LLM残差判定：ev-18列出逐行获取数据功能包括获取LOB"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-067",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "数据源适配功能支持以下两个数据库类型",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-2明确支持在达梦数据库V7.6和sqlite3两个数据库间切换"
+     },
+     {
+      "claim_text": "达梦数据库（MengDatabase），具体版本为V7.6",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-2明确写明服务器数据库为达梦数据库V7.6"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-076",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": []
+   },
+   {
+    "instance_id": "S1QA-078",
+    "silver": "not_in_evidence",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "读取配置文件连接的前置条件是数据库初始化必须成功",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：前置条件行明确为数据库初始化成功"
+     },
+     {
+      "claim_text": "数据库初始化已成功",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：前置条件即数据库初始化成功"
+     },
+     {
+      "claim_text": "如果连接成功，系统会保存连接句柄",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：连接成功则保存连接句柄"
+     }
+    ]
+   }
+  ],
+  "regressed": [
+   {
+    "instance_id": "S1QA-063",
+    "silver": "refute",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "平板、桌面和手持）中都支持相同的连接方式名称",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：数据库操作的方式名称为平板、桌面、手持，与声明一致"
+     },
+     {
+      "claim_text": "初始化数据库、读取配置文件连接、数据库连接和关闭数据库",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：数据库操作功能包括数据库初始化、读取配置文件连接、数据库连接、数据库关闭，与声明一致"
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-074",
+    "silver": "refute",
+    "before": "refute",
+    "after": "not_in_evidence",
+    "cascade_claims": [
+     {
+      "claim_text": "BLOB数据操作的具体操作 根据提供的参考内容，BLOB数据操作包括以下具体操作",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-2明确列出BLOB数据操作包括插入、删除、查询"
+     },
+     {
+      "claim_text": "插入：允许用户向数据库中的BLOB类型字段插入新的数据记录",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：ev-2包含BLOB数据插入"
+     },
+     {
+      "claim_text": "删除：支持删除特定BLOB类型的记录，这通常涉及找到并移除对应的数据行",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：ev-2包含BLOB删除数据记录"
+     },
+     {
+      "claim_text": "提供多种查询功能，包括",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：ev-2包含BLOB数据查询功能"
+     },
+     {
+      "claim_text": "逐行获取数据：支持逐行拷贝功能，具体包括",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.9,
+      "rationale": "LLM残差判定：各获取功能均为逐行获取"
+     },
+     {
+      "claim_text": "获取 INT 类型的数据",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-20逐行获取INT值"
+     },
+     {
+      "claim_text": "获取 STRING 类型的数据",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-8逐行获取STRING值"
+     },
+     {
+      "claim_text": "获取 FLOAT 类型的数据",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.95,
+      "rationale": "LLM残差判定：ev-14逐行获取FLOAT值"
+     },
+     {
+      "claim_text": "获取 LOB（大型对象）类型的数据 这些操作均基于SQL语言实现，并且在桌面版、平板版和手持版上均可使用",
+      "verdict": "support",
+      "method": "llm_residual",
+      "confidence": 0.85,
+      "rationale": "LLM残差判定：ev-26逐行获取LOB值，ev-28方式为桌面、平版、手持"
+     }
+    ]
+   }
+  ],
+  "moved": []
+ },
+ "conformal_two_tier": {
+  "kept_tier_ge_keep_confidence": {
+   "n_instances": 1,
+   "n_predicted_refute": 1,
+   "n_correct": 0,
+   "precision": 0.0
+  },
+  "escalated_tier": {
+   "n_instances": 14,
+   "n_predicted_refute": 9,
+   "n_correct": 3,
+   "precision": 0.3333
+  }
+ },
+ "llm_reference_drift": {
+  "l3_reference_1026": {
+   "run": "eval_llm_residual_5dd69927_20261026_173434",
+   "macro_f1": 0.7799,
+   "accuracy": 0.9341,
+   "refute_recall": 0.875,
+   "refute_precision": 1.0
+  },
+  "l3_current": {
+   "macro_f1": 0.6997,
+   "refute_precision": 0.6667,
+   "refute_recall": 0.75
+  },
+  "note": "10-26的L3参照(0.7799/refute P=1.0)基于当时的语句线性化; evidence_statements.py在10-26 20:52(最后一次L3评测17:34之后)被修改, 当前管线下L3提示词未命中旧缓存(今日重新采样); 另有并行会话在同一llm_cache上评测eval_llm_residual(相同提示词), 共享缓存后写覆盖前写, 今日L3数(本表l3_llm)为当前缓存状态的确定值(两次独立运行复现一致); 四配置对比以本次同管线同日测量为准"
+ },
+ "targets": {
+  "macro_f1_ge_0.75": false,
+  "refute_precision_ge_0.9": false,
+  "llm_invocations_le_30": true
+ }
+}

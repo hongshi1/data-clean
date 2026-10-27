@@ -1,0 +1,22 @@
+{
+ "功能测试": {
+  "数值同参数不同值": "inconsistent(channel=numeric)",
+  "数值符号操作符": "inconsistent(channel=numeric, 处理时延100ms vs 200ms)",
+  "核验有证据反驳": "consistent(channel=verify)",
+  "核验无证据降级": "consistent(channel=nli, 降级正常)",
+  "语义NLI兜底": "inconsistent(channel=nli)"
+ },
+ "真实金标": {
+  "clean130": 0.7,
+  "md166": 0.94
+ },
+ "通道分布": {
+  "clean130": {
+   "nli": 130
+  },
+  "md166": {
+   "nli": 166
+  }
+ },
+ "结论": "v3与v12持平(0.700/0.940),但架构诚实: 3个通道全部可达且有效; 不再维护六族幻觉"
+}

@@ -1,0 +1,24 @@
+digraph claw {
+  graph [rankdir=TB, fontname="Heiti SC", dpi=150, bgcolor="white", nodesep=0.35, ranksep=0.6];
+  node [shape=box, fontname="Heiti SC", style=filled];
+  edge [arrowhead=none];
+  center [label="特征提取与上下文关联智能体", fillcolor=lightyellow, fontsize=14, width=2.4, height=0.7];
+  p0 [label="多模态特征提取", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p0;
+  p0_c0 [label="语义编码与特征表示", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p0 -> p0_c0;
+  p0_c1 [label="跨模态特征对齐", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p0 -> p0_c1;
+  p1 [label="跨源实体关联", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p1;
+  p1_c0 [label="语义相似度计算", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p1 -> p1_c0;
+  p1_c1 [label="结构邻接分析", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p1 -> p1_c1;
+  p2 [label="条目汇聚管理", fillcolor=lightcyan, fontsize=12, width=1.8, height=0.6];
+  center -> p2;
+  p2_c0 [label="条目构建与组装", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p2 -> p2_c0;
+  p2_c1 [label="去重与冲突预检", fillcolor=white, fontsize=10, width=1.6, height=0.5];
+  p2 -> p2_c1;
+}

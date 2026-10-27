@@ -1,0 +1,150 @@
+{
+ "meta": {
+  "version": "legacy_answer_mutation_audit_v1",
+  "date": "2026-10-20",
+  "scope": "answer-side QA mutation only; retrieval/context linking excluded",
+  "notes": [
+   "quarantined means not valid for the new benchmark without rebuilding input and gold",
+   "audit statuses are engineering triage, not label gold"
+  ],
+  "total": 17
+ },
+ "operators": [
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "TERM-01",
+   "mutated_side": "premise",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "旧算子改premise并生成‘是否一致’答案；不是QA answer侧变异。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "TERM-02",
+   "mutated_side": "hypothesis",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "无定义scope证据；不能证明同名异义gold。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "TERM-03",
+   "mutated_side": "premise",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "删除枚举项未携带封闭范围证明。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "TERM-06",
+   "mutated_side": "premise unit text",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "只替换单位表面且不换算；等价单位会被伪造成冲突。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "PARAM-01/02/05/07",
+   "mutated_side": "premise numeric",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "旧正则仅局部改数，未冻结QA answer/context或完整scope proof。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "PARAM-06",
+   "mutated_side": "premise operator",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "翻转操作符未证明与同一context claim互斥。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "LOGIC-01/03/05",
+   "mutated_side": "premise sequence/branch",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_legacy",
+   "reason": "缺少条件路径、并行和完整枚举证明。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "GJB-01/02/04",
+   "mutated_side": "premise/hypothesis text",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_compliance_pair",
+   "reason": "旧二分类/模糊条款变异，没有规则context和QA answer proof。"
+  },
+  {
+   "source": "qa_mutation_ops",
+   "legacy_check_item": "TABLE_ITEM_MISSING/ACTOR_MISSING/STEP_MISSING",
+   "mutated_side": "hypothesis",
+   "old_input_contract": "pair premise/hypothesis",
+   "status": "quarantined_cross_source_pair",
+   "reason": "旧来源间差异标签，不是answer对冻结retrieved context的检验。"
+  },
+  {
+   "source": "mmqa.MutationEngine40",
+   "legacy_check_item": "TERM/PARAM/LOGIC/GJB",
+   "mutated_side": "virtual text/table/graph",
+   "old_input_contract": "pair directory",
+   "status": "quarantined_context_mutation",
+   "reason": "改变pair context而非answer；expected_label固定inconsistent且verify_gate未证明claim。"
+  },
+  {
+   "source": "mutation_v2",
+   "legacy_check_item": "40-item generic",
+   "mutated_side": "premise/hypothesis or source artifact",
+   "old_input_contract": "pair occurrence",
+   "status": "quarantined_legacy",
+   "reason": "同一编辑原语被复用于多个类型，缺QA answer/context proof。"
+  },
+  {
+   "source": "gen_injected_qa",
+   "legacy_check_item": "TERM/PARAM/LOGIC/GJB",
+   "mutated_side": "question/answer metadata",
+   "old_input_contract": "original pair files",
+   "status": "quarantined_metadata_only",
+   "reason": "inject_detail/question声称已变异，但原pair文件未被改写；存在标签泄漏。"
+  },
+  {
+   "source": "build_answer_evidence_evalset",
+   "legacy_check_item": "A1/A3/B3/C1/family",
+   "mutated_side": "synthesized answer + legacy evidence",
+   "old_input_contract": "AEE v1",
+   "status": "quarantined_for_gold_rebuild",
+   "reason": "缺原始question/冻结context或gold继承旧标签；只作迁移审计素材。"
+  },
+  {
+   "source": "answer_mutations",
+   "legacy_check_item": "ANSWER-NUM-EQ-CONFLICT-V1",
+   "mutated_side": "answer only",
+   "old_input_contract": "QAInput + selected evidence",
+   "status": "deterministic_prototype",
+   "reason": "仅支持subject/unit完全一致的显式等式数值冲突；未证明为通用算子。"
+  },
+  {
+   "source": "answer_mutations",
+   "legacy_check_item": "ANSWER-NUM-EQUIV-V1",
+   "mutated_side": "answer only",
+   "old_input_contract": "QAInput + selected evidence",
+   "status": "deterministic_prototype",
+   "reason": "只在冻结单位换算表内、question/subject对齐且原answer已被context支持时生成等价表面。"
+  },
+  {
+   "source": "answer_mutations",
+   "legacy_check_item": "ANSWER-NUM-IDENTITY-V1",
+   "mutated_side": "answer unchanged control",
+   "old_input_contract": "QAInput + selected evidence",
+   "status": "deterministic_prototype",
+   "reason": "生成数值answer冲突算子的support控制样本；question、answer、context保持原样。"
+  },
+  {
+   "source": "answer_mutations",
+   "legacy_check_item": "ANSWER-UNSUPPORTED-REVIEW",
+   "mutated_side": "answer only",
+   "old_input_contract": "QAInput",
+   "status": "manual_review_candidate",
+   "reason": "不自动标NIE；需人工确认context scope和是否存在隐含支持/反证。"
+  }
+ ]
+}

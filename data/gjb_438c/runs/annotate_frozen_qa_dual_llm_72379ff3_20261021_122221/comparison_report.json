@@ -1,0 +1,2882 @@
+{
+  "pilot": true,
+  "gold_label": null,
+  "input": "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl",
+  "n_frozen": 91,
+  "annotators": {
+    "gpt": {
+      "model": "gpt-5.6-sol (in-session)",
+      "valid": 91,
+      "distribution": {
+        "not_in_evidence": 76,
+        "support": 8,
+        "refute": 7
+      }
+    },
+    "glm": {
+      "model": "glm-5",
+      "valid": 75,
+      "invalid_or_wrong_model": 16,
+      "distribution": {
+        "not_in_evidence": 67,
+        "refute": 3,
+        "support": 5
+      }
+    }
+  },
+  "n_valid_pairs": 75,
+  "qa_agreement": {
+    "agree": 63,
+    "disagree": 12,
+    "rate": 0.84,
+    "same_label_pair_counts": {
+      "not_in_evidence": 61,
+      "refute": 0,
+      "support": 2
+    },
+    "cohen_kappa": 0.22680412371133993,
+    "kappa_note": "Undefined when expected agreement equals one."
+  },
+  "qa_disagreements_for_adjudication": [
+    {
+      "instance_id": "S1QA-011",
+      "gpt_verdict": "support",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "BLOB data operations include insertion.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000030"
+          ],
+          "check_items": [
+            "TERM-03"
+          ],
+          "rationale": "The SQL access capability row explicitly includes adding BLOB data.",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "BLOB data operations include deletion of records.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000030"
+          ],
+          "check_items": [
+            "TERM-03"
+          ],
+          "rationale": "The same row explicitly includes deletion of BLOB data.",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "BLOB data operations include querying or retrieving BLOB data.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000030"
+          ],
+          "check_items": [
+            "TERM-03"
+          ],
+          "rationale": "The same row explicitly includes querying BLOB data.",
+          "confidence": 0.99
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "BLOB数据操作包括插入功能",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000035"
+          ],
+          "check_items": [
+            "BLOB数据操作功能包括BLOB数据插入"
+          ],
+          "rationale": "证据S1QA-011-ev-000035明确列出'BLOB数据操作功能包括BLOB数据插入、BLOB删除数据记录、BLOB数据查询功能'，其中包含BLOB数据插入。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "插入允许将新BLOB数据添加到数据库表中指定的位置",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "证据是否描述插入功能的具体操作细节"
+          ],
+          "rationale": "证据仅列出'BLOB数据插入'这一功能名称，未描述其具体为'将新BLOB数据添加到数据库表中指定的位置'。该描述性细节在证据中未出现。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "BLOB数据操作包括删除功能",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000035"
+          ],
+          "check_items": [
+            "BLOB数据操作功能包括BLOB删除数据记录"
+          ],
+          "rationale": "证据S1QA-011-ev-000035明确列出'BLOB数据操作功能包括BLOB数据插入、BLOB删除数据记录、BLOB数据查询功能'，其中包含BLOB删除数据记录。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "删除允许删除存储在BLOB中的特定数据记录",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "证据是否描述删除功能的具体操作细节"
+          ],
+          "rationale": "证据仅列出'BLOB删除数据记录'这一功能名称，未描述其具体为'删除存储在BLOB中的特定数据记录'。该描述性细节在证据中未出现。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "BLOB数据操作包括查询功能",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000035"
+          ],
+          "check_items": [
+            "BLOB数据操作功能包括BLOB数据查询功能"
+          ],
+          "rationale": "证据S1QA-011-ev-000035明确列出'BLOB数据操作功能包括BLOB数据插入、BLOB删除数据记录、BLOB数据查询功能'，其中包含BLOB数据查询功能。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "查询允许从BLOB中检索和获取相关的数据",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "证据是否描述查询功能的具体操作细节"
+          ],
+          "rationale": "证据仅列出'BLOB数据查询功能'这一功能名称，未描述其具体为'从BLOB中检索和获取相关的数据'。该描述性细节在证据中未出现。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "这些功能涵盖了对BLOB数据进行增删查的基本操作",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-011-ev-000035"
+          ],
+          "check_items": [
+            "证据是否列出插入、删除、查询三种功能"
+          ],
+          "rationale": "证据S1QA-011-ev-000035列出BLOB数据操作功能包括BLOB数据插入（增）、BLOB删除数据记录（删）、BLOB数据查询功能（查），与答案所述增删查一致。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c8",
+          "claim_text": "支持数据库的完整管理与维护",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "证据是否提及数据库完整管理与维护"
+          ],
+          "rationale": "证据中未出现关于'支持数据库的完整管理与维护'的表述，该结论无法从证据中得出。",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-016",
+      "gpt_verdict": "not_in_evidence",
+      "glm_verdict": "refute",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "When SQL query fails, the system returns the exact message \"unable to connect to the service side\".",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [],
+          "rationale": "The evidence gives that message for inability to connect during other documented operations, not for SQL query failure generally.",
+          "confidence": 0.98
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "如果SQL查询失败，系统会返回提示信息",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "证据中是否存在关于SQL查询失败的描述"
+          ],
+          "rationale": "三段证据分别描述数据库初始化、读取配置文件连接、数据库连接用例，均未提及SQL查询失败的场景。证据上下文为开放且不完整，不能断言SQL查询失败的相关信息不存在于其他未冻结证据中。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "系统会返回提示信息：\"无法连接到服务端\"",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-016-ev-000043",
+            "S1QA-016-ev-000049",
+            "S1QA-016-ev-000054"
+          ],
+          "check_items": [
+            "证据中提示信息的具体内容",
+            "\"无法连接到服务端\"是条件还是提示内容"
+          ],
+          "rationale": "三段证据均写明\"如果无法连接到服务端，提示连接错误\"，其中\"无法连接到服务端\"是触发条件，实际提示信息为\"连接错误\"。异常流E1中提示分别为\"初始化失败\"或\"连接失败\"，均非\"无法连接到服务端\"。答案将条件误当作提示信息内容，与证据明确矛盾。",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-024",
+      "gpt_verdict": "support",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "The application calls the two-dimensional-array data-retrieval interface with required parameters and a database connection.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "LOGIC-04"
+          ],
+          "rationale": "The use-case block states that the application calls the interface and supplies relevant parameters and a database connection.",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "The system organizes query results into a two-dimensional array, with each record's fields represented as the array content.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "LOGIC-04"
+          ],
+          "rationale": "The system action explicitly describes organizing query results into a two-dimensional array and mapping records and fields.",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "If data retrieval fails, the system executes E1, displays a connection error, and ends the use case.",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "LOGIC-02"
+          ],
+          "rationale": "The block states E1 on retrieval failure, a connection-error constraint, and an E1 post-action that ends the use case.",
+          "confidence": 0.98
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "调用二维数据获取数据接口：应用软件通过相关参数（如数据库句柄）调用该接口。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "主事件流Actor动作步骤1"
+          ],
+          "rationale": "证据ev-000101主事件流Actor动作第1步明确记载：'应用软件调用通过二维数据获取数据的接口输入相关参数，如数据库句柄'，与该claim一致。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "组织查询结果为二维数组：将收集到的数据按照每条记录的字段数作为列数，记录数作为行数，返回给系统。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "主事件流系统动作步骤2"
+          ],
+          "rationale": "证据ev-000101主事件流系统动作第2步记载：'将查询结果组织到二维数组中返回，其中数组的列数对应每条记录的字段数，数组的行数代表共有多少条记录'，与claim中列数=字段数、行数=记录数的描述一致。claim中'返回给系统'与证据'返回'略有出入但核心一致。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "处理失败情况：在数据获取失败时，执行异常流E1，提示连接错误并结束用例。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-024-ev-000101"
+          ],
+          "check_items": [
+            "主事件流步骤2失败分支",
+            "异常流E1",
+            "动作约束"
+          ],
+          "rationale": "证据ev-000101记载：系统动作第2步含'如果获取失败，则执行异常流E1'；异常流E1为'系统提示获取失败，用例结束'；动作约束列记载'如果无法连接到服务端，提示连接错误'。claim综合了这些内容。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "这些操作确保了二维数组输出过程的有效性和可靠性。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否存在关于有效性或可靠性的明确陈述"
+          ],
+          "rationale": "证据中未出现关于'确保有效性和可靠性'的明确陈述，此为answer的总结性评价，无法从证据中找到对应支持。",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-049",
+      "gpt_verdict": "support",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "删除数据记录的能力存在。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000035",
+            "S1QA-049-ev-000064",
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "表格明确将删除数据记录列为修改数据功能子项。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "增加数据记录的能力存在。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000035",
+            "S1QA-049-ev-000064",
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "表格明确列有增加数据记录能力。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "修改数据记录的能力存在。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000035",
+            "S1QA-049-ev-000064",
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "表格明确列有修改数据记录能力。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "功能在桌面、平板和手持方式提供。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三个子功能行的方式名称均列桌面、平板、手持。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "功能状态包含开发阶段和运行阶段。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "各行运行状态列出开发阶段、运行阶段。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "SQL访问的修改数据功能包含删除、增加、修改数据记录。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000064",
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "证据明确列出三项子功能并对应表格行。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "每个条目有不同的项目唯一标识符。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三个标识符不同。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c8",
+          "claim_text": "三项能力的需求重用策略为沿用。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三个表格行的需求重用列均写沿用。",
+          "confidence": 0.99
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "应用软件调用了\"增加数据记录接口\"",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否存在增加数据记录用例的详细接口调用描述"
+          ],
+          "rationale": "证据ev-000067仅列出'增加数据记录'用例标识PZXQ-GN-SQLFW-ZXSW及描述'支持增加数据记录'，但未提供该用例的详细描述，未明确提及'增加数据记录接口'这一接口名称及其调用过程。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "应用软件通过\"增加数据记录接口\"输入相关参数，包括修改的SQL语句",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述增加数据记录接口输入参数包含SQL语句"
+          ],
+          "rationale": "证据中无增加数据记录用例的详细事件流描述，无法确认输入参数包含SQL语句。其他用例（如ev-000043数据库初始化）描述了输入参数，但增加数据记录用例的详细描述未在证据中出现。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "将输入的SQL语句传输至服务端",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述SQL语句传输至服务端的步骤"
+          ],
+          "rationale": "证据中无增加数据记录用例的详细步骤描述，无法确认SQL语句传输至服务端这一步骤。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "服务端从连接池中申请连接句柄",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述增加数据记录过程中服务端从连接池申请连接句柄"
+          ],
+          "rationale": "证据ev-000030提到连接池管理功能，但未描述增加数据记录用例中服务端从连接池申请连接句柄的步骤。该用例的详细事件流未在证据中出现。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "执行增加数据记录的操作",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-049-ev-000067"
+          ],
+          "check_items": [
+            "是否有证据描述增加数据记录的具体执行操作步骤"
+          ],
+          "rationale": "ev-000067仅说明'支持增加数据记录'功能存在，但未描述具体执行操作的步骤。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "释放连接句柄",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述增加数据记录后释放连接句柄的步骤"
+          ],
+          "rationale": "证据中无增加数据记录用例的详细事件流描述，无法确认释放连接句柄这一步骤。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "在发生执行错误时触发异常流E1，系统提示执行失败",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述增加数据记录用例中的异常流E1"
+          ],
+          "rationale": "ev-000043和ev-000049中其他用例（数据库初始化、读取配置文件连接）提到了异常流E1，但增加数据记录用例的详细描述未在证据中出现，无法确认该用例也有异常流E1。",
+          "confidence": 0.88
+        },
+        {
+          "claim_id": "c8",
+          "claim_text": "整个流程确保了数据的准确性和完整性，并对潜在错误进行了处理",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据描述增加数据记录流程确保数据准确性和完整性"
+          ],
+          "rationale": "证据中无关于增加数据记录流程确保数据准确性和完整性的描述。",
+          "confidence": 0.92
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-052",
+      "gpt_verdict": "support",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "表头包括序号、Use case名称、项目唯一标识符、需求描述、需求重用、方式名称、运行状态和对应的任务书功能/性能。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "证据表9表头包含这些列。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "删除数据记录行标识符为PZXQ-GN-SQLFW-SJXG，描述为支持删除数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "第一行字段均与答案所述一致，证据原表写'平板'而答案以'平版'表述，视为同一设备名称的轻微字形差异。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "增加数据记录行标识符为PZXQ-GN-SQLFW-ZXSW，描述为支持增加数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "第二行字段与证据一致。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "修改数据记录行标识符为PZXQ-GN-SQLFW-TJSW，描述为支持修改数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "第三行字段与证据一致。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "三条能力标识对应删除、增加和修改数据记录功能。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000064",
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "概述和表格共同支持这三项功能映射。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "每个条目有独特的能力标识。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三行的项目唯一标识符各不相同。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "三项能力均采用需求重用沿用策略。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-052-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三行的需求重用列均为沿用。",
+          "confidence": 0.99
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "删除数据记录时可能出现数据库连接失败的情况",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据表明删除数据记录用例中存在连接失败异常"
+          ],
+          "rationale": "证据ev-000067仅说明'支持删除数据记录'，未提及任何异常情况。ev-000043和ev-000049中提到的连接失败异常属于数据库初始化和读取配置文件连接用例，并非删除数据记录用例的异常流。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "删除数据记录时可能出现SQL语句语法错误的情况",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据表明删除数据记录用例中存在SQL语法错误异常"
+          ],
+          "rationale": "所有冻结证据中均未提及删除数据记录时可能出现SQL语句语法错误的异常情况。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "删除数据记录时可能出现数据不存在的情况",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据表明删除数据记录用例中存在数据不存在的异常"
+          ],
+          "rationale": "所有冻结证据中均未提及删除数据记录时可能出现数据不存在的异常情况。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "删除数据记录时可能出现插入约束或外键引用失败的情况",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据表明删除数据记录用例中存在约束或外键引用失败异常"
+          ],
+          "rationale": "所有冻结证据中均未提及删除数据记录时可能出现约束或外键引用失败的异常情况。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "删除数据记录时可能出现连接池资源耗尽或满的情况",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有证据表明删除数据记录用例中存在连接池资源耗尽异常"
+          ],
+          "rationale": "ev-000030提到连接池管理功能，但未提及删除数据记录时可能出现连接池资源耗尽的异常情况。删除数据记录用例描述（ev-000067）中无此异常流。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-053",
+      "gpt_verdict": "not_in_evidence",
+      "glm_verdict": "support",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "增加数据记录用例前置条件是数据库连接已建立且正常运行。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-053-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "增加记录行只列能力描述；读取配置连接和数据库连接用例前置条件是数据库初始化成功，但不能据此确定增加记录用例前置条件。",
+          "confidence": 0.97
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "系统接收和处理应用软件传来的SQL指令是增加数据记录的前提条件。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [],
+          "rationale": "没有该前置条件描述。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "上述条件确保正确插入，并避免连接错误、系统异常导致数据丢失或操作失败。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [],
+          "rationale": "证据没有这些条件、保证目的或数据丢失因果陈述。",
+          "confidence": 0.99
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "修改数据记录的功能标识表包含删除数据记录条目：Use case名称为删除数据记录，项目唯一标识符为PZXQ-GN-SQLFW-SJXG，需求描述为支持删除数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-053-ev-000067"
+          ],
+          "check_items": [
+            "Use case名称",
+            "项目唯一标识符",
+            "需求描述",
+            "需求重用",
+            "方式名称",
+            "运行状态",
+            "对应的任务书功能/性能"
+          ],
+          "rationale": "证据S1QA-053-ev-000067的表9中第一行完全匹配该条目的所有字段值。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "修改数据记录的功能标识表包含增加数据记录条目：Use case名称为增加数据记录，项目唯一标识符为PZXQ-GN-SQLFW-ZXSW，需求描述为支持增加数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-053-ev-000067"
+          ],
+          "check_items": [
+            "Use case名称",
+            "项目唯一标识符",
+            "需求描述",
+            "需求重用",
+            "方式名称",
+            "运行状态",
+            "对应的任务书功能/性能"
+          ],
+          "rationale": "证据S1QA-053-ev-000067的表9中第二行完全匹配该条目的所有字段值。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "修改数据记录的功能标识表包含修改数据记录条目：Use case名称为修改数据记录，项目唯一标识符为PZXQ-GN-SQLFW-TJSW，需求描述为支持修改数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-053-ev-000067"
+          ],
+          "check_items": [
+            "Use case名称",
+            "项目唯一标识符",
+            "需求描述",
+            "需求重用",
+            "方式名称",
+            "运行状态",
+            "对应的任务书功能/性能"
+          ],
+          "rationale": "证据S1QA-053-ev-000067的表9中第三行完全匹配该条目的所有字段值。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "这些能力标识基于删除、增加和修改数据记录的功能，每个条目具有其独特的能力标识，并符合需求重用沿用的策略",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-053-ev-000067",
+            "S1QA-053-ev-000064"
+          ],
+          "check_items": [
+            "功能包含删除、增加、修改数据记录",
+            "每个条目有独特标识符",
+            "需求重用为沿用"
+          ],
+          "rationale": "证据S1QA-053-ev-000064明确修改数据功能包括删除、增加、修改数据记录；证据S1QA-053-ev-000067表9显示三个条目各有不同的项目唯一标识符，且需求重用均为沿用。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-055",
+      "gpt_verdict": "refute",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "修改数据功能包含删除数据记录。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-055-ev-000064",
+            "S1QA-055-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "能力描述明确将删除数据记录列为修改数据功能子项。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "修改数据功能包含增加数据记录。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-055-ev-000064",
+            "S1QA-055-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "证据明确列出增加数据记录。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "修改数据功能包含修改数据记录。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-055-ev-000064",
+            "S1QA-055-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "证据明确列出修改数据记录。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "删除记录时用户通过删除SQL语句调用删除操作。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "一般SQL能力说明表数据可通过SQL添加删除修改，但未描述具体用户调用删除SQL步骤。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "系统将SQL转发至服务端，服务端连接数据库执行删除并处理错误返回。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030",
+            "S1QA-055-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "没有删除记录操作的服务端传输、执行或错误返回流程证据。",
+          "confidence": 0.97
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "增加记录通过调用增加SQL语句执行。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "SQL能力表明可以通过SQL增加数据，但没有具体的增加记录调用步骤。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "增加记录时系统将SQL转发至服务端并连接数据库执行。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030",
+            "S1QA-055-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "没有增加记录场景中的传输和执行流程证据。",
+          "confidence": 0.97
+        },
+        {
+          "claim_id": "c8",
+          "claim_text": "修改记录通过调用修改SQL语句执行更新。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "通用SQL修改能力存在，但具体接口调用和步骤未说明。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c9",
+          "claim_text": "修改记录时SQL转发至服务端执行并处理错误返回。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-055-ev-000030",
+            "S1QA-055-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "没有具体修改记录流程及错误返回描述。",
+          "confidence": 0.97
+        },
+        {
+          "claim_id": "c10",
+          "claim_text": "所有操作支持桌面、平板和平板设备。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-055-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "原表对三项能力列出桌面、平板、手持；答案末句重复平板而漏掉手持，故其設備集合與证据明确列表不一致。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c11",
+          "claim_text": "所有操作在开发阶段和运行阶段实施。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-055-ev-000067"
+          ],
+          "check_items": [],
+          "rationale": "三个子功能行均列开发阶段、运行阶段。",
+          "confidence": 0.99
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "删除数据记录的操作步骤如下",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否存在删除数据记录操作步骤的描述"
+          ],
+          "rationale": "证据仅提及系统支持删除数据记录功能，未描述具体操作步骤。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "应用软件调用修改数据记录接口：用户或应用程序通过指定接口输入需要删除的数据SQL语句",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有应用软件调用修改数据记录接口输入删除SQL语句的描述"
+          ],
+          "rationale": "证据中未提及调用修改数据记录接口输入删除SQL语句的步骤。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "数据库处理事务提交：系统验证事务提交并确认数据结构完整性，确保删除操作不会影响其他数据",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有事务提交验证及数据结构完整性确认的描述"
+          ],
+          "rationale": "证据中未提及事务提交处理、数据结构完整性验证等内容。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "将SQL传输到服务端：通过网络将SQL语句发送至服务端执行，服务端从中获取相应的连接句柄进行操作",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有SQL传输到服务端并获取连接句柄的描述"
+          ],
+          "rationale": "证据中未描述SQL传输到服务端及获取连接句柄执行操作的步骤。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "执行删除SQL语句：在数据库中执行删除指定记录的SQL语句，并释放相关资源",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有执行删除SQL语句并释放资源的描述"
+          ],
+          "rationale": "证据仅提及支持删除数据记录，未描述执行删除SQL语句及释放资源的具体步骤。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "处理异常情况：如果出现错误，如连接失败或SQL语句无效，系统会报错并终止操作",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有删除数据记录异常处理流程的描述"
+          ],
+          "rationale": "证据中数据库初始化、连接等用例有异常流描述，但未涉及删除数据记录的异常处理。",
+          "confidence": 0.9
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "以上步骤确保了删除数据操作的安全性和有效性",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "是否有关于删除数据操作安全性和有效性的描述"
+          ],
+          "rationale": "证据中未提及删除数据操作的安全性和有效性保证。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-063",
+      "gpt_verdict": "not_in_evidence",
+      "glm_verdict": "refute",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "所有设备类型（平板、桌面、手持）都支持相同的连接方式名称。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-063-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "表格行列出设备/方式名称，但不能据设备覆盖范围推导出各设备使用相同连接方式名称；冻结文本没有这种对照。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "所有记录中的设备类型仅为平板、桌面或手持，没有其他设备类型。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-063-ev-000011",
+            "S1QA-063-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "证据是局部功能和表格记录，未声明其穷尽所有记录或设备类型。",
+          "confidence": 0.92
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "相关Use case包括数据库初始化、读取配置文件连接、数据库连接和数据库关闭。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [],
+          "rationale": "数据库操作表格明确列出这四项。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "这些操作在各设备上使用相同的连接方式名称。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-063-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "表格描述的是各功能的方式名称，而非上述操作逐一对应到设备的连接方式名称。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "所有设备类型都支持相同的连接方式名称，且不需要不同处理。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-063-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "证据没有覆盖不同设备的连接方式差异或处理需求；未出现差异不等于证明不存在差异。",
+          "confidence": 0.97
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "在所有设备类型（包括平板、桌面和手持）中都支持相同的连接方式名称。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "各能力对应的设备类型是否完全一致"
+          ],
+          "rationale": "证据表2显示代码生成仅桌面、数据源适配仅平板、热点数据缓存仅桌面、连接池管理仅桌面；表3显示BLOB数据操作仅平板、桌面（不含手持）。不同能力对应的设备类型并不相同，直接反驳'所有设备类型支持相同连接方式名称'的论断。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "所有的需求描述都与数据库操作相关。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030"
+          ],
+          "check_items": [
+            "需求描述是否全部为数据库操作"
+          ],
+          "rationale": "表2中代码生成需求描述为'支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载'，数据源适配为'数据源切换功能'，热点数据缓存为'查询数据的缓存功能'，连接池管理为'连接池管理功能'。这些并非全部属于'数据库操作'范畴，与claim矛盾。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "在这些记录中没有发现任何特定于某一种设备类型的特殊处理或不同的连接方式。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "是否存在仅特定设备类型支持的能力"
+          ],
+          "rationale": "表2明确显示代码生成仅桌面、数据源适配仅平板、热点数据缓存仅桌面、连接池管理仅桌面；表3显示BLOB数据操作仅平板、桌面。这些就是特定于某设备类型的差异化处理，直接反驳claim。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "所有记录中的设备类型均为平板、桌面或手持，没有出现不同设备类型的情况。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "设备类型取值范围"
+          ],
+          "rationale": "证据中方式名称列出现的设备类型仅为平板、桌面、手持三种，未出现其他设备类型名称。",
+          "confidence": 0.8
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "所有的Use case都与数据库操作相关，包括初始化数据库、读取配置文件连接、数据库连接和关闭数据库。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "Use case是否全部为数据库操作类"
+          ],
+          "rationale": "表2列出Use case包括SQL访问功能、对象化访问功能、代码生成、数据源适配、热点数据缓存、连接池管理，其中代码生成、数据源适配、热点数据缓存、连接池管理并非'数据库操作'（初始化/连接/关闭）。claim将所有Use case限定为数据库操作相关与证据不符。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "这些操作在各设备上使用相同的连接方式名称。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "各能力在各设备上方式名称是否一致"
+          ],
+          "rationale": "表2和表3显示不同能力对应不同设备类型组合，如BLOB数据操作仅平板、桌面，代码生成仅桌面，数据源适配仅平板等，并非各设备上方式名称完全相同。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c7",
+          "claim_text": "所有设备类型都支持相同的连接方式名称，没有需要不同处理的设备类型。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-063-ev-000030",
+            "S1QA-063-ev-000035"
+          ],
+          "check_items": [
+            "是否存在设备类型差异化"
+          ],
+          "rationale": "证据明确显示多个能力仅支持部分设备类型（代码生成仅桌面、数据源适配仅平板、BLOB数据操作不含手持等），说明存在需要不同处理的设备类型，直接反驳claim。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-064",
+      "gpt_verdict": "refute",
+      "glm_verdict": "support",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "多个Use case共享相同的需求重用方式。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "表格显示数据库操作相关Use case的需求重用方式为沿用。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "序号1 PZXQ-GN-SJKCZ-SJKCSH、序号2 PZXQ-GN-SJKCZ-DQPZWJLJ、序号3 PZXQ-GN-SJKCZ-SJKLJ、序号4 PZXQ-GN-SJKCZ-SJKGBGN均沿用相同的重用方式。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-064-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "该表格明确列出数据库初始化、读取配置文件连接、数据库连接、数据库关闭四项及对应标识符；答案列举的序号/标识符与表格行不一致。表格对该四项是完整列举，因此存在显式行映射冲突。",
+          "confidence": 0.86
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "存在多个Use case共享相同的需求重用方式",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "多个Use case",
+            "相同需求重用方式"
+          ],
+          "rationale": "证据S1QA-064-ev-000040中表格列出四个Use case（数据库初始化、读取配置文件连接、数据库连接、数据库关闭），其需求重用列均为'沿用'，表明多个Use case共享相同的需求重用方式。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "序号1：PZXQ-GN-SJKCZ-SJKCSH",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "项目唯一标识符PZXQ-GN-SJKCZ-SJKCSH",
+            "需求重用方式为沿用"
+          ],
+          "rationale": "证据S1QA-064-ev-000040表格第一行显示Use case名称'数据库初始化'，项目唯一标识符为PZXQ-GN-SJKCZ-SJKCSH，需求重用为'沿用'。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "序号2：PZXQ-GN-SJKCZ-DQPZWJLJ",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "项目唯一标识符PZXQ-GN-SJKCZ-DQPZWJLJ",
+            "需求重用方式为沿用"
+          ],
+          "rationale": "证据S1QA-064-ev-000040表格第二行显示Use case名称'读取配置文件连接'，项目唯一标识符为PZXQ-GN-SJKCZ-DQPZWJLJ，需求重用为'沿用'。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "序号3：PZXQ-GN-SJKCZ-SJKLJ",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "项目唯一标识符PZXQ-GN-SJKCZ-SJKLJ",
+            "需求重用方式为沿用"
+          ],
+          "rationale": "证据S1QA-064-ev-000040表格第三行显示Use case名称'数据库连接'，项目唯一标识符为PZXQ-GN-SJKCZ-SJKLJ，需求重用为'沿用'。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c5",
+          "claim_text": "序号4：PZXQ-GN-SJKCZ-SJKGBGN",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "项目唯一标识符PZXQ-GN-SJKCZ-SJKGBGN",
+            "需求重用方式为沿用"
+          ],
+          "rationale": "证据S1QA-064-ev-000040表格第四行显示Use case名称'数据库关闭'，项目唯一标识符为PZXQ-GN-SJKCZ-SJKGBGN，需求重用为'沿用'。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c6",
+          "claim_text": "这些项目唯一标识符的Use case都沿用相同的重用方式",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-064-ev-000040"
+          ],
+          "check_items": [
+            "四个标识符均对应'沿用'重用方式"
+          ],
+          "rationale": "证据S1QA-064-ev-000040中四个Use case的需求重用列均为'沿用'，且方式名称均为'平板、桌面、手持'，证明它们共享相同的需求重用方式。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-066",
+      "gpt_verdict": "not_in_evidence",
+      "glm_verdict": "support",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "热点数据缓存会缓存查询结果，并将数据库返回的结果集缓存在内存中。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "该证据表格中可见内容未描述热点缓存行为。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "用户可以配置缓存容量。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "冻结证据没有缓存容量配置描述。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "数据修改后，后续查询会自动从数据库取最新数据并更新缓存。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [],
+          "rationale": "证据没有描述缓存刷新或修改后查询行为。",
+          "confidence": 0.98
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [
+            "查询结果缓存功能",
+            "结果集缓存在内存中"
+          ],
+          "rationale": "证据明确指出热点数据缓存'提供查询数据的缓存功能，支持对查询的结果集进行缓存'，且后文提到'加载至内存中更新缓存'，表明缓存位于内存中，与声明一致。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [
+            "缓存大小可配置"
+          ],
+          "rationale": "证据明确指出'支持对缓存大小进行配置'，支持缓存大小可配置的声明。但声明中'以调节内存使用和性能表现'的目的说明在证据中未明确提及，属于附加解释。",
+          "confidence": 0.8
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-066-ev-000030"
+          ],
+          "check_items": [
+            "修改数据后重新获取数据",
+            "更新缓存"
+          ],
+          "rationale": "证据明确指出'支持当发生修改数据操作时，再次查询数据时，重新从数据库中获取数据并加载至内存中更新缓存'，与声明描述的动态刷新机制一致。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-083",
+      "gpt_verdict": "refute",
+      "glm_verdict": "not_in_evidence",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "读取配置文件连接用例的前置条件是数据库初始化成功。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "该用例表格明确给出前置条件为“无”，与答案声称的前置条件相矛盾。",
+          "confidence": 0.99
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "系统准备必要数据库环境和参数（如用户名、密码）供后续连接。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "没有证据支持此准备行为或用户名、密码参数。",
+          "confidence": 0.96
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "调用接口前必须确保数据库初始化已完成。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [],
+          "rationale": "把初始化完成规定为调用前置条件与表格的“前置条件：无”冲突。",
+          "confidence": 0.98
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "读取配置文件连接用例的前置条件是数据库初始化成功。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [
+            "前置条件字段内容"
+          ],
+          "rationale": "证据S1QA-083-ev-000049的用例描述表格中明确列出'前置条件：数据库初始化成功。'，直接支持该claim。",
+          "confidence": 0.98
+        },
+        {
+          "claim_id": "c2",
+          "claim_text": "这一步骤完成后，系统准备好必要的数据库环境和参数（如用户名、密码等），为后续的连接操作打下基础。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [],
+          "check_items": [
+            "数据库初始化后系统准备参数的描述",
+            "用户名密码等参数在初始化阶段准备的描述"
+          ],
+          "rationale": "证据中数据库初始化用例(S1QA-083-ev-000043)未提及初始化后准备用户名、密码等参数；用户名、密码等参数出现在读取配置文件连接用例的主事件流中(S1QA-083-ev-000049)，是从配置文件中读取的，而非初始化阶段准备。该claim无明确证据支持。",
+          "confidence": 0.85
+        },
+        {
+          "claim_id": "c3",
+          "claim_text": "在调用该接口之前，必须确保数据库初始化已经完成。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [
+            "前置条件语义"
+          ],
+          "rationale": "证据S1QA-083-ev-000049明确列出前置条件为'数据库初始化成功'，语义上即要求在执行该用例（调用该接口）之前数据库初始化必须已完成。",
+          "confidence": 0.95
+        },
+        {
+          "claim_id": "c4",
+          "claim_text": "读取配置文件连接用例的前置条件是数据库初始化成功。",
+          "verdict": "support",
+          "evidence_refs": [
+            "S1QA-083-ev-000049"
+          ],
+          "check_items": [
+            "前置条件字段内容"
+          ],
+          "rationale": "答案末尾重复结论，与c1相同，证据S1QA-083-ev-000049直接支持。",
+          "confidence": 0.98
+        }
+      ]
+    },
+    {
+      "instance_id": "S1QA-084",
+      "gpt_verdict": "not_in_evidence",
+      "glm_verdict": "refute",
+      "gpt_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "数据库初始化用例的名称/标识符是PZXQ-GN-SQLFW-SJKCSH。",
+          "verdict": "not_in_evidence",
+          "evidence_refs": [
+            "S1QA-084-ev-000035",
+            "S1QA-084-ev-000037"
+          ],
+          "check_items": [],
+          "rationale": "这些冻结块指向数据库操作结构但未给出具体初始化用例标识符；数据库操作标识符也不能代替其子用例ID。",
+          "confidence": 0.94
+        }
+      ],
+      "glm_claims": [
+        {
+          "claim_id": "c1",
+          "claim_text": "数据库初始化用例的名称是 PZXQ-GN-SQLFW-SJKCZ-SJKCSH。",
+          "verdict": "refute",
+          "evidence_refs": [
+            "S1QA-084-ev-000040"
+          ],
+          "check_items": [
+            "identifier exact match"
+          ],
+          "rationale": "Evidence S1QA-084-ev-000040 table lists Use case名称 '数据库初始化' with 项目唯一标识符 'PZXQ-GN-SJKCZ-SJKCSH'. The answer claims 'PZXQ-GN-SQLFW-SJKCZ-SJKCSH', which inserts an extra 'SQLFW-' segment not present in the evidence identifier. This is an explicit contradiction with the frozen evidence.",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "claim_alignment_review": [
+    {
+      "instance_id": "S1QA-001",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A JSON parsing failure returns a parse-failure message and triggers exception flow E1.",
+        "A SQL execution failure during BLOB insertion triggers E1 and reports an error.",
+        "The BLOB insertion process checks the database connection first and returns a connection error when the service cannot be reached.",
+        "The exception path releases all resources and promptly notifies the user of the error."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在异常处理过程中，系统确保所有资源得到妥善释放，并及时通知相关错误信息以供用户处理。",
+        "如果应用软件将SQL语句和blob数据组织成的JSON格式无法正确解析，系统返回解析失败的错误信息，并触发异常流E1。",
+        "当从连接池中申请连接句柄并执行SQL语句时，如果出现执行错误（如数据库拒绝插入BLOB数据），系统会捕捉到错误并触发异常流E1，提示相应的错误信息。",
+        "系统首先验证数据库连接是否正常。如果无法连接到服务端，会直接返回连接错误信息。",
+        "这些流程确保了在BLOB数据插入过程中的错误被捕获和报告，保证系统的可靠性和用户体验。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-002",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "After parsing, the system obtains a connection handle from a pool, executes the SQL insertion, and releases the handle.",
+        "Each BLOB must be no larger than 65535 bytes, and an oversized BLOB causes an error and terminates the flow.",
+        "The application calls a database query interface and supplies an SQL statement, a BLOB array, and a field count.",
+        "The system transfers application JSON to the server, parses it, and triggers E1 if parsing fails."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "BLOB数据插入的主事件流第一步：应用软件调用数据查询接口输入参数，包括执行SQL语句、插入BLOB数据数组以及相关的字段数量。",
+        "如果发现无法连接到服务端的情况，系统将返回相应的错误信息并终止该用例流程。",
+        "如果解析失败，系统立即返回错误信息，并触发异常流E1。",
+        "成功解析后，系统从连接池中获取数据库的连接句柄，执行SQL语句以插入BLOB数据，并在完成后释放连接句柄。",
+        "系统将收集的应用软件提供的JSON数据传输至服务端进行解析。",
+        "系统必须确保每个BLOB数据的大小不超过65535字节。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-003",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A normal database connection is a prerequisite before BLOB insertion.",
+        "Each BLOB must not exceed 65535 bytes, with oversized data requiring chunking or optimization.",
+        "The application must correctly call the query interface and provide an SQL statement, a BLOB array, and a field count."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在进行BLOB数据插入操作前需要满足数据库连接正常的前置条件",
+        "如果数据大小超出限制，可能需要采取分段存储或其他优化措施",
+        "应用软件必须能够正确调用所需的数据查询接口进行BLOB数据插入",
+        "每个BLOB数据的大小不应超过65535字节",
+        "需要提供参数（如SQL语句、插入的BLOB数组、需要插入的字段个数等）进行BLOB数据插入"
+      ]
+    },
+    {
+      "instance_id": "S1QA-004",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "The application and database interact through the system to complete BLOB insertion.",
+        "The application software is a participant that initiates BLOB insertion by calling a query interface and supplying SQL and BLOB-array parameters.",
+        "The database is a participant that performs the actual insertion and ensures connection correctness."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在BLOB数据插入用例中，主要参与者是应用程序软件和数据库。",
+        "应用程序软件负责发起操作，调用数据查询接口并提供相关参数，如SQL语句和BLOB数据数组。",
+        "数据库执行实际的插入操作，处理BLOB数据，并确保连接正确性。",
+        "这两个参与者通过系统进行交互，完成BLOB数据的插入过程。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-005",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "The system has both development-stage and runtime-stage status.",
+        "The system successfully realizes all functions required by the task book.",
+        "The system supports BLOB modification, querying, and insertion."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "包括对BLOB数据的支持（修改、查询、插入）",
+        "确保了任务书中所列功能的实现",
+        "系统在开发阶段和运行阶段的运行状态均为'开发阶段、运行阶段'",
+        "该系统成功实现了任务书中要求的功能需求"
+      ]
+    },
+    {
+      "instance_id": "S1QA-007",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A successful insertion creates a new row and reports the result to the application, while failure reports an error and terminates the use case.",
+        "The application calls a BLOB insertion interface with form data and a field name or index.",
+        "The application should use a wait time and retry failed insertion requests.",
+        "The system generates and executes the shown INSERT SQL statement for the target table and BLOB column.",
+        "The system reads BLOB data line by line and validates and converts its format and type."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在应用软件中实现错误处理逻辑，如重试失败请求或向用户提示错误信息",
+        "系统对输入数据进行格式检查和类型转换，确保符合数据库列定义要求",
+        "系统生成并执行INSERT INTO SQL语句插入BLOB数据",
+        "系统返回插入结果：成功则生成新数据行并反馈，失败则返回错误信息并终止用例流程",
+        "系统逐行读取数据，将BLOB数据分割成单行或多行逐行传递给数据库",
+        "设置适当的等待时间避免插入操作因超时而中断",
+        "请参考表21中的相关用例描述",
+        "调用BLOB插入接口，传递表单参数（指定插入数据）和字段名或索引"
+      ]
+    },
+    {
+      "instance_id": "S1QA-008",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "The recommended response is to check the database service, network, permissions, and input parameters and monitor performance.",
+        "The system records the connection failure in a log and may notify operators.",
+        "When retrieving LOB, the system detects a failed database connection and triggers exception flow E1."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在获取LOB数据时，如果发生无法连接到服务端的情况，系统将执行异常流E1。",
+        "定期监控数据库性能和系统稳定性。",
+        "并可能向相关操作人员发送错误提示信息。",
+        "确保数据库服务正常运行，检查网络连接状况。",
+        "系统响应连接失败事件，并根据预先定义的异常处理流程进行处理。",
+        "系统将此次连接失败事件记录到日志中。",
+        "系统首先检查数据库连接状态，发现连接不成功。",
+        "通过以上步骤，系统能够及时识别并处理无法连接到服务端的情况，避免数据访问过程中的中断。",
+        "验证用户权限和输入参数的有效性。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-009",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A failed get-FLOAT call returns the exact message \"get FLOAT failed\".",
+        "The exception terminates the current use-case flow.",
+        "The failure reason shown is exactly \"unable to connect to the service side\"."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "此异常将终止当前用例的执行流程",
+        "用户将收到\"获取FLOAT失败\"提示",
+        "系统将显示\"无法连接到服务端\""
+      ]
+    },
+    {
+      "instance_id": "S1QA-010",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Get-FLOAT takes field name, index name or value, and a unique identifier such as a column number as inputs.",
+        "These inputs identify the target record and ensure extraction accuracy and efficiency."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在获取FLOAT时输入的参数通常是与目标列相关的具体信息，例如字段名或索引",
+        "常见的输入参数类型包括唯一标识符（如列号）",
+        "常见的输入参数类型包括字段名",
+        "常见的输入参数类型包括索引名称或值",
+        "这些参数用于识别需要查询的数据记录",
+        "这些参数确保了数据提取过程的准确性和效率"
+      ]
+    },
+    {
+      "instance_id": "S1QA-011",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "BLOB data operations include deletion of records.",
+        "BLOB data operations include insertion.",
+        "BLOB data operations include querying or retrieving BLOB data."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "BLOB数据操作包括删除功能",
+        "BLOB数据操作包括插入功能",
+        "BLOB数据操作包括查询功能",
+        "删除允许删除存储在BLOB中的特定数据记录",
+        "插入允许将新BLOB数据添加到数据库表中指定的位置",
+        "支持数据库的完整管理与维护",
+        "查询允许从BLOB中检索和获取相关的数据",
+        "这些功能涵盖了对BLOB数据进行增删查的基本操作"
+      ]
+    },
+    {
+      "instance_id": "S1QA-012",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A failed call triggers E1, and a server connection failure displays an error.",
+        "A successful call returns converted floating-point data to the application.",
+        "Get FLOAT is a listed row-level data retrieval function.",
+        "The application calls get FLOAT after row-wise retrieval and supplies parameters such as a field name or index."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在执行上述操作前，确保数据库连接的正常性。",
+        "如果发生失败情况，则触发异常流E1。",
+        "如果无法建立服务端的连接，则提示相应的错误信息。",
+        "如果调用成功，系统将转换后的浮点数格式数据返回给应用软件。",
+        "应用软件在逐行获取数据后，通过调用获取FLOAT的接口，并输入相关参数（如字段名或索引）。",
+        "此流程确保了数据获取过程的准确性和可靠性，并按预期转换数据格式返回给应用软件。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-013",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A connection error during LOB retrieval triggers E1 and indicates inability to connect to the service side.",
+        "The exception ends the use case.",
+        "The user should inspect logs to resolve the connection problem."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "E1表示无法连接到服务端",
+        "当在获取LOB时发生连接错误，系统将触发一个名为E1的异常",
+        "用户应查看相关日志以解决连接问题",
+        "该异常导致用例结束"
+      ]
+    },
+    {
+      "instance_id": "S1QA-014",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "An error triggers E1, and inability to connect displays a connection error and terminates the operation.",
+        "Get FLOAT is included in the query-data capability set.",
+        "The application calls get FLOAT after row-wise retrieval and supplies a field name or index.",
+        "The system converts the query result to float format and returns it to the application."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果在过程中发生错误，则触发异常流E1",
+        "如果无法连接到服务端，系统会提示连接错误并终止操作流程",
+        "应用软件调用获取FLOAT的接口",
+        "应用软件逐行获取数据后，通过调用获取FLOAT的接口",
+        "系统将查询数据转换为float格式返回给应用软件",
+        "输入相关参数（如字段名或索引）",
+        "这些步骤确保了获取FLOAT过程的正确性和可靠性，符合数据库访问扩展用例的要求"
+      ]
+    },
+    {
+      "instance_id": "S1QA-015",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Examples of such failure include an unreachable interface or invalid parameters.",
+        "If the get-STRING interface call fails, it triggers exception flow E1.",
+        "Normal database connection is an explicit precondition for get STRING."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "主事件流中提到，如果接口调用失败，则会触发异常流E1",
+        "前置条件明确要求'数据库连接正常'",
+        "在数据库连接正常的前提下，若接口调用失败（如接口不可达、参数错误等），则会导致异常流E1的发生"
+      ]
+    },
+    {
+      "instance_id": "S1QA-016",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "When SQL query fails, the system returns the exact message \"unable to connect to the service side\"."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果SQL查询失败，系统会返回提示信息",
+        "系统会返回提示信息：\"无法连接到服务端\""
+      ]
+    },
+    {
+      "instance_id": "S1QA-017",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "After a successful query, the system returns data or error information for further analysis.",
+        "Get STRING is a listed query-data function.",
+        "Invalid or missing fields cause E1 and an extraction-failure message, terminating the flow.",
+        "The application calls the interface with field and index parameters, after which the system queries and converts the result to a string."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "应用软件向数据库发送获取STRING的接口请求，并提供如字段名或索引等参数。",
+        "应用软件在获取STRING数据时，通过调用接口、执行查询并处理输入参数来确保数据正确性，并及时反馈任何可能的问题。",
+        "当输入参数错误时，例如字段不存在或索引无效，系统会检测到错误并触发异常流E1，提示获取失败，并终止流程。",
+        "根据查询成功与否，系统将数据返回或发送错误信息。用户可基于返回的错误信息进行进一步处理或调整输入参数。",
+        "系统接收这些参数后进行查询。如果参数正确（如存在有效字段），则执行查询并返回结果转换成字符串格式。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-018",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Get INT is a listed row-wise retrieval function.",
+        "SQL file output and get INT each have the described interface, event flow, E1 handling, and no postcondition.",
+        "SQL file output is a listed query-data function."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "\"SQL文件输出\"和\"获取INT\"两个用例的主要功能和事件流已全面覆盖，符合其设计需求。",
+        "SQL文件输出主要功能：调用接口输入参数（如数据库句柄），组织DML语句并输出数据至内存或文件。",
+        "SQL文件输出事件流：系统响应动作包括处理成功或失败，并在失败时触发异常流E1。",
+        "SQL文件输出后置条件：无。",
+        "两个用例的描述已包含所有主要的功能和事件流，未发现遗漏。",
+        "获取INT主要功能：调用接口输入参数（如字段名或索引），将查询结果转换为int格式返回。",
+        "获取INT事件流：系统响应动作包括处理成功或失败，并在失败时触发异常流E1。",
+        "获取INT后置条件：无。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-019",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "An inability to connect during an interface call causes a connection error and E1.",
+        "An interface call must provide correct field and index parameters.",
+        "Input data formats must match expected formats and returned database data must be converted to the correct type.",
+        "The database connection must be normal before calling an interface."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "保证数据库连接正常：在调用接口之前，必须确保数据库连接是正常的，避免因连接失败而导致的数据获取中断",
+        "在'获取INT'用例中，需确保返回的数据可以正确转换为整数类型，以避免类型转换错误",
+        "在调用参数时需确保参数的有效性，避免因无效或不完整参数导致系统的错误响应",
+        "如果接口调用过程中出现无法连接到服务端的情况，系统应提示相应的错误信息，并执行相应的异常流程（如E1），从而结束该用例",
+        "必须正确配置这些参数以确保数据的准确获取和处理",
+        "提供正确的接口输入参数：如数据库句柄、字段名或索引等",
+        "检查输入数据格式和类型：确保输入的参数符合预期的格式和数据类型要求",
+        "通过满足以上动作约束，可以确保应用软件在调用接口时的高效、安全和可靠的运行，避免因参数输入问题导致的数据处理失败或系统崩溃"
+      ]
+    },
+    {
+      "instance_id": "S1QA-020",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL file output and get INT are both listed query-data functions.",
+        "The two functions have no essential difference in process or output."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "SQL文件输出用例的后置条件为无。",
+        "获取INT用例的后置条件为无。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-021",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "E1 indicates that the inability to connect is handled as an exception.",
+        "If the system cannot connect to the service side, it triggers exception flow E1.",
+        "The system displays a connection error when it cannot connect to the service side."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果无法连接到服务端，系统会触发异常流E1",
+        "并显示'无法连接到服务端，提示连接错误。'"
+      ]
+    },
+    {
+      "instance_id": "S1QA-022",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Get INT is a listed row-wise retrieval function.",
+        "The application calls get INT with a field name, index, and other necessary parameters.",
+        "The system converts query data to an integer value and returns it to the application."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "应用软件调用获取INT接口，并输入字段名或索引等必要参数",
+        "系统将查询结果的数据转换为整数值格式",
+        "转换后的整数数据被返回，供应用软件处理"
+      ]
+    },
+    {
+      "instance_id": "S1QA-023",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "A data-acquisition problem triggers E1, reports an error, and terminates processing.",
+        "SQL file output is a listed query-data function.",
+        "The application calls the SQL-file-output interface with database and other required parameters.",
+        "The system organizes query results into DML statements and writes them to a specified file."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果在数据获取过程中发生任何问题，例如无法连接到服务端，则系统会触发异常流E1，并提示相关错误信息",
+        "将这些数据输出到内存或指定的文件中，这些数据可以被其他软件调用以便进一步处理",
+        "应用软件调用SQL文件输出接口，并输入必要的数据库句柄或其他相关参数",
+        "确保流程在遇到问题时能够及时终止并提供有效的反馈",
+        "系统将收集到的查询数据组织成特定格式的DML语句"
+      ]
+    },
+    {
+      "instance_id": "S1QA-024",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "If data retrieval fails, the system executes E1, displays a connection error, and ends the use case.",
+        "The application calls the two-dimensional-array data-retrieval interface with required parameters and a database connection.",
+        "The system organizes query results into a two-dimensional array, with each record's fields represented as the array content."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "处理失败情况：在数据获取失败时，执行异常流E1，提示连接错误并结束用例。",
+        "组织查询结果为二维数组：将收集到的数据按照每条记录的字段数作为列数，记录数作为行数，返回给系统。",
+        "调用二维数据获取数据接口：应用软件通过相关参数（如数据库句柄）调用该接口。",
+        "这些操作确保了二维数组输出过程的有效性和可靠性。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-025",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Failure to establish a database connection triggers E1.",
+        "The error stops the current operation and ensures the problem is detected promptly.",
+        "The message may include causes, connection state, and detailed log information such as latency.",
+        "The system displays a corresponding connection-error message."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "具体提示内容可能包括连接失败原因，如\"无法建立数据库连接\"或\"服务器不可用\"",
+        "当应用软件无法通过数据库建立连接时，系统会触发\"连接错误\"的异常流（通常标记为E1）",
+        "提示当前连接的状态，例如\"已断开\"、\"拒绝访问\"等",
+        "操作日志（如果可用）：显示最近的连接尝试及其详细信息",
+        "显示相应的错误提示信息",
+        "确保系统能够及时发现并处理连接问题",
+        "这些错误提示会终止当前的事件流"
+      ]
+    },
+    {
+      "instance_id": "S1QA-026",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "The JSON response includes a data key containing the query result.",
+        "The JSON response includes a query-status key indicating whether data retrieval succeeded.",
+        "The JSON response includes a record-count key."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在JSON输出中，系统返回的数据包含内容关键字，包含具体的数据结果",
+        "在JSON输出中，系统返回的数据包含查询状态关键字，表示是否成功获取到数据",
+        "在JSON输出中，系统返回的数据包含记录数关键字，表示获取到的记录总数",
+        "这些信息帮助判断查询结果的正确性和具体内容"
+      ]
+    },
+    {
+      "instance_id": "S1QA-027",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "JSON output contains status, record-count, and data keys and is human-readable and extensible.",
+        "The query service provides both JSON output and two-dimensional-array output formats.",
+        "Two-dimensional-array output is a fixed, direct, efficient representation suitable for simple applications."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "JSON是一种人机-readable、结构清晰的数据交换格式",
+        "JSON输出使用JSON格式返回数据，包含状态、记录数和具体内容关键字",
+        "JSON输出提供更详细的状态信息，如是否成功获取数据（通过状态关键字表示），这在复杂或动态的数据场景中特别有用",
+        "JSON输出由于其标准化和广泛支持特性，在处理复杂或需要动态字段调整的场景中表现更好",
+        "二维数组输出仅展示查询到的具体数据，适用于简单、固定结构的数据场景",
+        "二维数组输出在数据结构较为固定的场景中更为直接和高效，适合简单应用",
+        "二维数组输出将数据组织为行和列的二维数组形式，直接展示查询结果"
+      ]
+    },
+    {
+      "instance_id": "S1QA-029",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Each record becomes a row and each field becomes a column in the two-dimensional array.",
+        "On retrieval failure or inability to connect, the system triggers E1 and displays an error before ending processing.",
+        "The application calls the two-dimensional-array retrieval interface with required parameters and a database connection.",
+        "The records are ordered by field sequence to form the array.",
+        "The system returns the structured two-dimensional result to the application."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果数据获取失败或出现错误（如无法连接到服务端），系统触发异常流E1，提示相关错误信息并结束用例流程",
+        "将各条记录的数据按字段顺序排列，形成一个二维数组",
+        "应用软件调用数据库接口输入相关参数（如数据库句柄）获取查询结果",
+        "每一行代表一条记录，每一列对应一个字段的内容",
+        "每条记录的字段数决定了二维数组的列数",
+        "系统确保了查询结果以结构化的二维数组形式返回给应用软件",
+        "记录的条数即为二维数组的行数"
+      ]
+    },
+    {
+      "instance_id": "S1QA-030",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "Applications can use it to display structured data, including in web applications, and APIs can return the two-dimensional structure.",
+        "The application also handles retrieval failures.",
+        "The main application of two-dimensional-array output is to organize database query results into a two-dimensional format for application use.",
+        "The output mainly serves record display and processing and supports direct database-record retrieval in a tabular form."
+      ],
+      "claims_only_in_glm_segmentation": [
+        "二维数组输出用例的主要应用场景是将数据库查询的结果组织为二维数组的形式",
+        "以便于在应用程序中以表格结构显示或作为其他用途使用",
+        "可以在Web应用中将ResultSet转换为二维数组供用户查看",
+        "同时处理连接失败等情况",
+        "在API设计中返回符合二维结构的数据格式",
+        "该用例支持从数据库获取大量记录并以矩阵形式返回",
+        "该用例适用于需要多条记录的展示和处理场景",
+        "这通常用于数据展示、API返回和数据分析等场景"
+      ]
+    },
+    {
+      "instance_id": "S1QA-031",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据查询的性能要求是在1秒内查询最多1000条数据。",
+        "无法与服务端建立连接时，系统提示错误并终止该用例。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在数据查询中，确保良好的连接机制：当无法与服务端建立连接时，系统应提示错误并终止该用例。",
+        "在数据查询中，系统能够快速处理大量数据：在1秒内查询最多1000条数据。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-032",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "当前提供的信息没有明确说明获取错误信息的时间限制。",
+        "数据查询的时间限制是1秒。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据查询的时间限制是1秒",
+        "获取错误信息的时间限制在当前提供的信息中并未明确说明"
+      ]
+    },
+    {
+      "instance_id": "S1QA-033",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "处理超过1000条数据时系统触发错误并终止该用例。",
+        "应用软件无法继续操作。",
+        "返回数据量超过1000条时系统执行异常流E1并提示获取失败。",
+        "这些措施确保系统稳定可靠并符合性能约束。",
+        "错误信息会及时返回给应用软件，以避免长时间处理大量数据。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果在获取错误信息的过程中无法连接到服务端，系统将触发异常E1",
+        "异常E1提示连接到服务端失败，导致用例结束",
+        "该异常反映了在数据查询过程中因网络或连接问题而未能成功访问服务端的行为"
+      ]
+    },
+    {
+      "instance_id": "S1QA-034",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL执行成功时系统返回正确的错误信息。",
+        "应用软件接收并处理捕获的错误信息以进一步分析或采取措施。",
+        "执行错误时系统捕获错误信息并传递给应用软件。",
+        "网络异常或资源不足等连接问题触发获取错误信息用例的E1，提示获取失败并结束用例。",
+        "获取错误信息过程中会验证连接；无法连接服务端时提示连接错误并终止该用例。",
+        "该流程及时反馈错误并提高系统可靠性。",
+        "调用获取错误信息接口时，系统首先执行相关SQL语句。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在数据查询过程中，如果返回的数据量超过了1000条，系统将执行以下措施",
+        "抛出错误信息：通过异常流E1提示获取失败，应用软件无法继续操作",
+        "提前通知：错误信息将及时返回给应用软件，避免长时间处理大量数据",
+        "这些措施确保系统的稳定性和可靠性，同时符合性能约束条件",
+        "限制查询数量：当处理超过1000条数据时，系统会触发错误并终止该用例"
+      ]
+    },
+    {
+      "instance_id": "S1QA-035",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "上述步骤确保数据查询高效、准确和可靠。",
+        "数据库接收SQL后执行数据查询。",
+        "数据查询主事件流包括应用软件向数据库发送SQL语句并提供参数。",
+        "服务端从连接池申请连接句柄用于执行SQL。",
+        "查询结果以JSON返回，并正确处理和返回错误信息。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果无法连接到服务端，显示'提示连接错误'",
+        "应用软件调用SQL接口输入参数（如SQL语句）",
+        "描述了数据查询和错误信息获取的过程",
+        "数据库执行查询并返回结果为JSON格式",
+        "数据查询流程图展示了SQL访问扩展用例",
+        "时间限制：1秒内返回1000条数据",
+        "流程图通过两个部分完整地展示了数据查询的正常操作及其潜在的错误处理机制",
+        "获取错误信息时，系统会返回错误码和信息描述",
+        "连接不上时，返回相应提示并终止用例"
+      ]
+    },
+    {
+      "instance_id": "S1QA-036",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "开发阶段涉及测试和优化。",
+        "数据查询、获取错误信息等各功能标识沿用这两个阶段的状态说明。",
+        "查询数据功能状态分为开发阶段和运行阶段。",
+        "查询数据功能运行状态为开发阶段和运行阶段。",
+        "每个功能标识都有明确的运行状态标记。",
+        "运行状态标记确保不同阶段功能行为一致且有效。",
+        "运行阶段指正常应用运作状态。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "后续处理：捕捉到的错误信息会被应用软件接收和处理，以便进一步分析或采取相应措施解决问题。",
+        "异常处理：如果在连接到服务端时出现问题（如网络异常、资源不足等），系统会触发异常流E1，提示获取失败，并结束用例。",
+        "捕捉错误：如果SQL语句执行成功，系统会返回正确的错误信息；如果发生执行错误，系统会将错误信息捕获并传递给应用软件。",
+        "调用接口：当应用软件调用错误信息获取接口时，系统首先尝试执行相关SQL语句。",
+        "连接检查：在执行过程中，系统会进行必要的连接验证。如果无法连接到服务端，系统会直接提示连接错误并终止该用例的执行流程。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-037",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL文件输出便于后续自动化处理或集成到其他系统。",
+        "SQL文件输出将查询结果以SQL语句形式保存为文件。",
+        "用户可以在本地存储查询结果。",
+        "用户可以按需在运行时调整和执行该文件。",
+        "该功能提高数据处理效率和灵活性。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据库执行查询：数据库接收SQL后，执行数据查询操作。",
+        "数据查询的主事件流包括应用程序发起请求：应用软件向数据库发送SQL语句，并提供相关参数。",
+        "结果传输与处理：查询完成后，结果以JSON格式返回，确保错误信息的正确处理和返回。",
+        "这些步骤确保了数据查询流程的高效、准确和可靠性。",
+        "连接管理：服务端从连接池中获取并申请连接句柄，用于执行SQL。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-038",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "JSON以结构化数据呈现，SQL文件输出为可执行语句。",
+        "JSON使用JavaScript Object Notation。",
+        "JSON格式使数据易于解析和交换。",
+        "JSON输出与SQL文件输出基于相同查询结果。",
+        "JSON输出把查询结果转换成JSON格式。",
+        "JSON输出适用于需要结构化数据的场景。",
+        "JSON适合数据交换与处理，SQL文件适合进一步数据操作或系统集成。",
+        "SQL文件使用标准数据库查询语言。",
+        "SQL文件输出方便进一步数据操作或集成现有数据库。",
+        "SQL文件输出生成可编辑SQL语句。",
+        "两种输出方式各有适用场景和优势，应按需求选择。",
+        "两种输出适用于开发阶段和运行阶段。",
+        "两项功能标识符沿用自同一版本。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "开发阶段涉及测试和优化。",
+        "查询数据功能的运行状态分为\"开发阶段\"和\"运行阶段\"。",
+        "查询数据功能的运行状态分为两个阶段：开发阶段和运行阶段。",
+        "每个功能标识如数据查询、获取错误信息等都沿用这两个阶段的状态说明。",
+        "每个功能标识都有明确的运行状态标记",
+        "确保在不同阶段的功能行为一致且有效。",
+        "运行阶段则是指正常应用运作状态。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-039",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "二维数组格式方便排序、筛选或其他复杂操作。",
+        "二维数组输出将查询结果以二维数组形式呈现。",
+        "它适合多维度分析或进一步操作场景。",
+        "数据可能导出到Excel进行可视化分析。",
+        "该形式有助于用户直观地组织和处理数据。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "例如语法错误、数据不存在或类型不匹配等问题。",
+        "在执行数据库操作时，获取错误信息是确保操作顺利进行的重要步骤。",
+        "在数据库操作中，错误信息获取扮演着关键的角色。",
+        "确保系统的稳定性和可靠性。",
+        "还能提高数据库操作的成功率和效率。",
+        "这不仅有助于诊断问题。",
+        "通过这个功能，系统能够及时捕获并记录查询过程中的任何错误信息。",
+        "错误信息的详细记录为后续优化提供了依据。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-040",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "典型场景包括数据统计、库存管理、成绩评分和生成报告。",
+        "常见场景包括统计、库存、评分和报告生成。",
+        "该功能允许用户逐行提取整数值。",
+        "该功能用于处理整数值数据。",
+        "该功能适用于涉及大量整数的数据处理需求。",
+        "逐行获取INT值用于需要精确处理整数数据的场景。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "SQL文件输出的功能是将查询结果以SQL语句的形式保存为文件",
+        "从而提高数据处理的效率和灵活性",
+        "以便后续的自动化处理或集成到其他系统中",
+        "并根据需要在运行时进行调整和执行",
+        "用户可以在本地存储查询结果"
+      ]
+    },
+    {
+      "instance_id": "S1QA-041",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "JSON输出将结果转换为JSON格式，便于结构化处理和传输。",
+        "SQL文件输出将结果导出为SQL文件，适于数据操作或系统集成。",
+        "上述操作覆盖不同数据检索需求和应用场景。",
+        "二维数组输出便于多行数据浏览和分析。",
+        "数据查询允许用户通过SQL语句检索数据。",
+        "数据查询功能包含数据查询、获取错误信息、二维数据输出、JSON输出、SQL文件输出以及逐行获取INT、STRING、FLOAT、LOB。",
+        "获取错误信息支持捕获并显示错误提示。",
+        "逐行获取FLOAT提取浮点数字段值，适合精确计算应用。",
+        "逐行获取INT读取整数字段，便于处理数值型数据。",
+        "逐行获取LOB读取大型对象，例如图像和音频等非结构化数据。",
+        "逐行获取STRING读取字符串数据，适用于文本分析和处理。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "JSON使用JavaScript Object Notation",
+        "JSON输出以结构化数据呈现",
+        "JSON输出和SQL文件输出是两种不同的数据输出方式",
+        "JSON输出将查询结果转换为JSON格式",
+        "JSON适合数据交换与处理",
+        "SQL文件则是标准的数据库查询语言",
+        "SQL文件则适合进一步的数据操作或系统集成",
+        "SQL文件输出为可执行的语句",
+        "SQL文件输出则生成可编辑的SQL语句",
+        "两者均基于相同的查询结果",
+        "功能标识符沿用自同一版本",
+        "方便进一步的数据操作或集成到现有数据库系统中",
+        "用户应根据具体需求选择合适的方式进行数据处理",
+        "这使得数据易于解析和交换，适用于需要结构化数据的场景",
+        "适用于不同阶段的开发和运行环境"
+      ]
+    },
+    {
+      "instance_id": "S1QA-042",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "修改SQL发生语法错误或资源占用过大时，系统返回错误提示并结束用例。",
+        "修改数据记录可能出现提交失败。",
+        "修改数据记录可能出现数据库连接失败。",
+        "修改数据记录无法连接服务端时会提示连接错误并终止该用例。",
+        "用户应确保数据库连接正常并检查SQL正确性以避免这些异常。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "二维数组输出的功能主要是将查询结果以二维数组的形式呈现。",
+        "在数据分析或数据库管理中，这种格式可以方便地用于排序、筛选或其他复杂操作。",
+        "并可能通过导出到其他工具如Excel进行可视化分析。",
+        "这有助于用户直观地组织和处理数据。",
+        "适合需要多维度分析或进一步操作的场景。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-043",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "增加数据记录执行失败时系统提示错误并结束用例。",
+        "增加数据记录用例连接服务端失败时系统报错并终止该用例。",
+        "增加数据记录的异常情况主要包括执行失败和服务端连接失败两种。",
+        "这些情况会中断增加记录流程并按原因触发相应错误信息。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在数据统计、库存管理、成绩评分系统或生成报告等任务中使用",
+        "常见场景包括数据统计、库存管理、成绩评分和生成报告等",
+        "该功能允许用户逐行提取整数值",
+        "适用于涉及大量整数的数据处理需求",
+        "逐行获取INT值的功能主要用于在需要精确处理整数数据的场景中使用",
+        "逐行获取INT值的功能用于处理整数值数据"
+      ]
+    },
+    {
+      "instance_id": "S1QA-045",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL语句通过网络传输至服务端。",
+        "应用软件调用修改数据记录接口并输入SQL语句参数。",
+        "执行正常后释放连接句柄。",
+        "执行错误时返回错误信息并触发E1，提示提交失败。",
+        "操作完成后无后续步骤需要执行。",
+        "服务端从连接池申请句柄并用其执行修改SQL。",
+        "系统按输入参数执行修改数据记录操作。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "修改数据记录可能会遇到提交失败异常：当执行修改的SQL语句时，如果发生错误（如语法错误、资源占用过大等），系统会返回错误提示并结束用例。",
+        "修改数据记录可能会遇到数据库连接失败异常：如果无法与服务端建立连接，则系统会提示连接错误信息，并终止用例。",
+        "用户应确保数据库连接正常，并检查SQL语句的正确性以避免上述异常。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-046",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "增加数据记录时应用软件调用名为'增加数据记录接口'的接口。",
+        "执行增加数据记录操作。",
+        "操作后释放连接句柄，且执行错误触发E1并提示执行失败。",
+        "整个流程确保数据准确性和完整性，并处理潜在错误。",
+        "服务端从连接池申请连接句柄。",
+        "该接口输入相关参数，包括修改的SQL语句。",
+        "输入SQL语句传输至服务端。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "增加数据记录的异常情况主要包括执行失败和服务端连接失败两种",
+        "执行失败：系统在执行增加数据记录操作时返回错误提示，导致用例结束",
+        "服务端连接失败：无法成功连接到服务端，系统会报错并终止该用例",
+        "这些情况都会导致增加数据记录的流程中断，并根据具体原因触发相应的错误信息"
+      ]
+    },
+    {
+      "instance_id": "S1QA-047",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "修改数据记录操作前必须建立有效数据库连接。",
+        "修改数据记录的前置条件是数据库连接正常。",
+        "无法建立数据库连接就不能执行修改数据记录操作。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "应用软件调用接口输入参数后，数据库执行SQL语句。如果SQL执行出错，系统会触发异常流E1。",
+        "用例因此而终止，用户可能需要重新进行操作或联系管理员解决连接问题。",
+        "系统将错误信息返回给客户端，提示操作失败。",
+        "若数据库连接不正常，则会直接显示连接错误信息。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-048",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "不确保连接可能导致连接失败或其他相关错误。",
+        "增加数据记录的前置条件是数据库连接正常。",
+        "执行增加或修改操作前必须确保系统正常连接数据库。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "修改数据记录的操作流程包括以下步骤",
+        "如果在执行过程中出现错误，系统将返回相应的错误信息，并触发异常流E1，提示用户提交失败",
+        "将获取到的SQL语句通过网络传输至服务端",
+        "应用软件向系统调用修改数据记录的接口，并输入相关参数，例如需要修改的SQL语句",
+        "操作完成后无后续步骤需要执行",
+        "服务端从连接池中申请一个连接句柄，并使用该句柄执行相应的修改SQL语句",
+        "根据输入参数，系统执行修改的数据记录操作",
+        "若执行正常，则连接句柄被释放"
+      ]
+    },
+    {
+      "instance_id": "S1QA-049",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL访问的修改数据功能包含删除、增加、修改数据记录。",
+        "三项能力的需求重用策略为沿用。",
+        "修改数据记录的能力存在。",
+        "删除数据记录的能力存在。",
+        "功能在桌面、平板和手持方式提供。",
+        "功能状态包含开发阶段和运行阶段。",
+        "增加数据记录的能力存在。",
+        "每个条目有不同的项目唯一标识符。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在发生执行错误时触发异常流E1，系统提示执行失败",
+        "将输入的SQL语句传输至服务端",
+        "应用软件调用了\"增加数据记录接口\"",
+        "应用软件通过\"增加数据记录接口\"输入相关参数，包括修改的SQL语句",
+        "执行增加数据记录的操作",
+        "整个流程确保了数据的准确性和完整性，并对潜在错误进行了处理",
+        "服务端从连接池中申请连接句柄",
+        "释放连接句柄"
+      ]
+    },
+    {
+      "instance_id": "S1QA-050",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "增加数据记录的前提条件包括数据库连接已建立并正常运行。",
+        "系统能够接收和处理应用软件传来的SQL指令是该功能的前提。",
+        "这些条件确保记录正确插入，并避免连接错误或其他异常导致数据丢失或操作失败。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "修改数据记录的前置条件是：数据库连接正常。",
+        "如果无法实现数据库连接，则无法执行修改数据记录的操作。",
+        "这意味着在进行修改数据记录操作前，必须确保数据库已经建立了一个有效的连接。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-051",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "删除SQL語法错误會使操作失敗並返回错误信息。",
+        "删除不存在的数据记录会显示找不到数据错误。",
+        "删除数据记录可能出现数据库连接失败。",
+        "外键引用或插入约束失败可能导致删除失败并提示约束不一致。",
+        "连接失败时删除记录用例提示无法连接服务端。",
+        "连接池耗尽时删除无法进行并可能返回资源不足错误。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在执行任何增加或修改操作之前，必须确保系统能够正常连接到数据库，否则可能导致连接失败或其他相关错误。",
+        "增加数据记录的前置条件是数据库连接正常。",
+        "增加数据记录的前置条件是：数据库连接正常。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-052",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "三条能力标识对应删除、增加和修改数据记录功能。",
+        "三项能力均采用需求重用沿用策略。",
+        "修改数据记录行标识符为PZXQ-GN-SQLFW-TJSW，描述为支持修改数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+        "删除数据记录行标识符为PZXQ-GN-SQLFW-SJXG，描述为支持删除数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+        "增加数据记录行标识符为PZXQ-GN-SQLFW-ZXSW，描述为支持增加数据记录，重用沿用，方式桌面/平板/手持，状态开发/运行阶段，任务书4.1.1。",
+        "每个条目有独特的能力标识。",
+        "表头包括序号、Use case名称、项目唯一标识符、需求描述、需求重用、方式名称、运行状态和对应的任务书功能/性能。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "删除数据记录时可能出现SQL语句语法错误的情况",
+        "删除数据记录时可能出现插入约束或外键引用失败的情况",
+        "删除数据记录时可能出现数据不存在的情况",
+        "删除数据记录时可能出现数据库连接失败的情况",
+        "删除数据记录时可能出现连接池资源耗尽或满的情况"
+      ]
+    },
+    {
+      "instance_id": "S1QA-053",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "上述条件确保正确插入，并避免连接错误、系统异常导致数据丢失或操作失败。",
+        "增加数据记录用例前置条件是数据库连接已建立且正常运行。",
+        "系统接收和处理应用软件传来的SQL指令是增加数据记录的前提条件。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "修改数据记录的功能标识表包含修改数据记录条目：Use case名称为修改数据记录，项目唯一标识符为PZXQ-GN-SQLFW-TJSW，需求描述为支持修改数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+        "修改数据记录的功能标识表包含删除数据记录条目：Use case名称为删除数据记录，项目唯一标识符为PZXQ-GN-SQLFW-SJXG，需求描述为支持删除数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+        "修改数据记录的功能标识表包含增加数据记录条目：Use case名称为增加数据记录，项目唯一标识符为PZXQ-GN-SQLFW-ZXSW，需求描述为支持增加数据记录，需求重用为沿用，方式名称为桌面、平版、手持，运行状态为开发阶段、运行阶段，对应的任务书功能/性能为4.1.1",
+        "这些能力标识基于删除、增加和修改数据记录的功能，每个条目具有其独特的能力标识，并符合需求重用沿用的策略"
+      ]
+    },
+    {
+      "instance_id": "S1QA-054",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "SQL通过网络传输至服务端，服务端据此获取连接句柄。",
+        "删除数据记录的操作流程包括应用软件调用修改数据记录接口并输入删除SQL。",
+        "数据库执行删除指定记录的SQL并释放相关资源。",
+        "系统验证事务提交和数据结构完整性，以确保删除不影响其他数据。",
+        "这些步骤确保删除操作安全有效。",
+        "连接失败或SQL无效时系统报错并终止删除操作。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "增加数据记录的功能基于以下前提条件：数据库连接已建立且正常运行。",
+        "系统能够接收和处理从应用软件传来的相关SQL指令。",
+        "这些条件确保了数据记录的正确插入，避免因连接错误或其他系统异常导致的数据丢失或操作失败。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-055",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "修改数据功能包含修改数据记录。",
+        "修改数据功能包含删除数据记录。",
+        "修改数据功能包含增加数据记录。",
+        "修改记录时SQL转发至服务端执行并处理错误返回。",
+        "修改记录通过调用修改SQL语句执行更新。",
+        "删除记录时用户通过删除SQL语句调用删除操作。",
+        "增加记录时系统将SQL转发至服务端并连接数据库执行。",
+        "增加记录通过调用增加SQL语句执行。",
+        "所有操作在开发阶段和运行阶段实施。",
+        "所有操作支持桌面、平板和平板设备。",
+        "系统将SQL转发至服务端，服务端连接数据库执行删除并处理错误返回。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "以上步骤确保了删除数据操作的安全性和有效性",
+        "删除数据记录的操作步骤如下",
+        "处理异常情况：如果出现错误，如连接失败或SQL语句无效，系统会报错并终止操作",
+        "将SQL传输到服务端：通过网络将SQL语句发送至服务端执行，服务端从中获取相应的连接句柄进行操作",
+        "应用软件调用修改数据记录接口：用户或应用程序通过指定接口输入需要删除的数据SQL语句",
+        "执行删除SQL语句：在数据库中执行删除指定记录的SQL语句，并释放相关资源",
+        "数据库处理事务提交：系统验证事务提交并确认数据结构完整性，确保删除操作不会影响其他数据"
+      ]
+    },
+    {
+      "instance_id": "S1QA-057",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "失败时输出具体错误信息并结束用例。",
+        "数据库连接流程图主事件流包括应用软件调用接口并输入用户名、密码、IP地址和sqlite3文件路径。",
+        "流程图详细展示这些步骤。",
+        "系统根据输入参数连接服务端或本地数据库。",
+        "这些步骤确保操作准确性和可靠性。",
+        "连接失败时触发E1并提示连接错误。",
+        "连接成功时保存连接句柄并返回连接状态。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据库关闭操作的后置条件包括断开连接句柄，确保在关闭数据库之前调用关闭接口，并在成功断开连接后立即释放连接句柄",
+        "断开服务端连接：在断开本地数据库连接的同时，系统应尝试断开远程服务上的连接，如果无法断开到服务端，则会触发异常流E1，并提示相关错误信息",
+        "稳定状态：在完成数据库关闭后，系统应处于一个稳定的状态，不会因未处理的操作而引发后续问题",
+        "系统检测：系统应通过内部检查确保所有操作已完成，没有未处理的异常情况发生",
+        "资源释放：所有与数据库相关的资源，如句柄、指针等，必须被正确释放或关闭，以防止内存泄漏或其他潜在的问题"
+      ]
+    },
+    {
+      "instance_id": "S1QA-058",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "参数错误时触发E1并返回具体错误信息，提示无法建立连接。",
+        "参数错误时连接过程终止并输出错误提示。",
+        "用户可以重新输入正确参数再次尝试连接。",
+        "用户需要检查参数是否正确并作相应调整。",
+        "系统提示用户重启应用软件重新配置。",
+        "输入错误参数会被系统检测出来。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "如果失败，则触发异常流E1，提示连接错误。",
+        "如果成功，保存连接句柄并返回状态",
+        "应用软件调用数据库连接接口：输入用户名、密码、IP地址和sqlite3的db文件路径等参数。",
+        "异常处理（E1）：当无法建立连接时，系统会输出具体的错误信息并结束该用例。",
+        "流程图详细展示了这些步骤，确保操作的准确性和可靠性。",
+        "系统处理连接请求：根据输入的参数尝试连接服务端或本地数据库。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-059",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "应用程序通过输入这些参数与数据库服务器建立会话。",
+        "数据库初始化成功意味着数据库正确配置并准备接受应用程序请求。",
+        "数据库处于可连接状态时，应用程序才能输入用户名、密码、IP地址等参数。",
+        "数据库连接用例的前置条件是数据库初始化成功。",
+        "该前置条件具体包括数据库已创建、访问权限正确和网络连接正常。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在数据库连接过程中，如果用户输入错误的参数（如用户名、密码、IP地址或sqlite3的db文件路径等）",
+        "用户可以根据需要重新输入正确的参数尝试连接，或者按照系统的提示重启应用软件以进行重新配置",
+        "用户需要检查输入参数是否正确，并进行相应的调整",
+        "系统将检测到这些错误并触发异常流E1",
+        "系统将返回具体的错误信息，提示无法建立连接",
+        "连接过程终止，并输出错误提示（用例结束）"
+      ]
+    },
+    {
+      "instance_id": "S1QA-060",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "只有数据库处于可连接状态时，应用程序才能输入用户名、密码和IP地址等必要参数。",
+        "应用程序使用这些参数与数据库服务器建立会话。",
+        "数据库连接用例的前置条件是数据库初始化成功。",
+        "该条件具体包括数据库已创建、访问权限正确和网络连接正常。",
+        "调用数据库连接接口前，数据库必须正确配置并准备好接受应用程序请求。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "具体包括但不限于确保数据库已创建、设置正确的访问权限以及确保网络连接正常。",
+        "只有当数据库处于可连接状态时，应用程序才能输入必要的参数（如用户名、密码、IP地址等）并与数据库服务器建立会话。",
+        "数据库连接成功的前置条件是数据库初始化成功。",
+        "这意味着在调用数据库连接接口之前，数据库必须已正确配置并准备好接受来自应用程序的请求。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-061",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "关闭操作会断开与服务端的连接并释放相关数据结构体。",
+        "应用软件需要调用数据库关闭接口。",
+        "数据库关闭接口需要传入一个有效且已建立的连接句柄。",
+        "数据库关闭用例是符合SQL访问扩展用例要求的用例。",
+        "调用关闭接口前必须确保数据库连接已成功建立，以避免错误。",
+        "这些步骤确保数据库资源被正确关闭。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在数据库关闭操作中，应用软件需要调用数据库关闭接口",
+        "并传入一个有效的连接句柄",
+        "应用软件必须调用数据库关闭接口",
+        "系统会断开与服务端的连接，并释放相关的数据结构体",
+        "调用接口时必须确保数据库连接已成功建立，以避免错误",
+        "这些步骤确保了数据库资源被正确地关闭，符合SQL访问的扩展用例要求",
+        "需要提供一个已建立的数据库连接句柄作为参数"
+      ]
+    },
+    {
+      "instance_id": "S1QA-062",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "任务书功能在开发阶段不会失效，而是受到支持并可正常运行。",
+        "该支持满足任务书的相应需求。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "任务书功能在开发阶段是被支持的，并且可以在该状态下正常运行，满足其相应的任务需求。",
+        "当系统运行状态为'开发阶段'时，任务书功能并不会失效。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-063",
+      "exact_text_verdict_or_ref_mismatches": [
+        "这些操作在各设备上使用相同的连接方式名称。"
+      ],
+      "claims_only_in_gpt_segmentation": [
+        "所有记录中的设备类型仅为平板、桌面或手持，没有其他设备类型。",
+        "所有设备类型都支持相同的连接方式名称，且不需要不同处理。",
+        "所有设备类型（平板、桌面、手持）都支持相同的连接方式名称。",
+        "相关Use case包括数据库初始化、读取配置文件连接、数据库连接和数据库关闭。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在所有设备类型（包括平板、桌面和手持）中都支持相同的连接方式名称。",
+        "在这些记录中没有发现任何特定于某一种设备类型的特殊处理或不同的连接方式。",
+        "所有的Use case都与数据库操作相关，包括初始化数据库、读取配置文件连接、数据库连接和关闭数据库。",
+        "所有的需求描述都与数据库操作相关。",
+        "所有记录中的设备类型均为平板、桌面或手持，没有出现不同设备类型的情况。",
+        "所有设备类型都支持相同的连接方式名称，没有需要不同处理的设备类型。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-064",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "多个Use case共享相同的需求重用方式。",
+        "序号1 PZXQ-GN-SJKCZ-SJKCSH、序号2 PZXQ-GN-SJKCZ-DQPZWJLJ、序号3 PZXQ-GN-SJKCZ-SJKLJ、序号4 PZXQ-GN-SJKCZ-SJKGBGN均沿用相同的重用方式。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "存在多个Use case共享相同的需求重用方式",
+        "序号1：PZXQ-GN-SJKCZ-SJKCSH",
+        "序号2：PZXQ-GN-SJKCZ-DQPZWJLJ",
+        "序号3：PZXQ-GN-SJKCZ-SJKLJ",
+        "序号4：PZXQ-GN-SJKCZ-SJKGBGN",
+        "这些项目唯一标识符的Use case都沿用相同的重用方式"
+      ]
+    },
+    {
+      "instance_id": "S1QA-065",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "用户可以配置连接池大小。",
+        "该功能管理达梦数据库V7.6连接。",
+        "连接池管理功能允许用户创建数据库连接。",
+        "连接池管理包括禁用或移除已存在连接。",
+        "连接池管理可分配多个并发连接，并支持配置和调整池内连接数量。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "分配连接：管理多个并发连接",
+        "创建连接：允许用户建立数据库连接",
+        "可以对其进行大小的配置",
+        "支持池内连接数量的配置和调整",
+        "管理连接：包括禁用或移除已存在的连接",
+        "该功能还支持对达梦数据库V7.6的连接进行管理"
+      ]
+    },
+    {
+      "instance_id": "S1QA-066",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据修改后，后续查询会自动从数据库取最新数据并更新缓存。",
+        "热点数据缓存会缓存查询结果，并将数据库返回的结果集缓存在内存中。",
+        "用户可以配置缓存容量。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息。",
+        "可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现。",
+        "查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-069",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "对象化访问支持修改数据库中的数据。",
+        "对象化访问支持删除数据库中的数据。",
+        "对象化访问支持向数据库添加数据。",
+        "对象化访问支持查询数据库中的数据。",
+        "这些操作通过数据对象方式实现，应用软件可以使用数据对象执行相应操作。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "对象化访问功能支持修改操作（对数据库中的数据进行更新或修改）",
+        "对象化访问功能支持删除操作（从数据库中删除已存在的数据）",
+        "对象化访问功能支持查询操作（根据特定条件检索数据库中的数据）",
+        "对象化访问功能支持添加操作（向数据库中插入数据）",
+        "支持在应用软件中进行相应的操作",
+        "这些操作通过数据对象方式实现"
+      ]
+    },
+    {
+      "instance_id": "S1QA-072",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据库操作功能的唯一标识符是PZXQ-GN-SQLFW-SJKCZ。",
+        "该标识符在表2和具体的1.2.1.1节中都被明确指出。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据库操作功能的唯一标识符是 PZXQ-GN-SQLFW-SJKCZ",
+        "这一标识符在表2和具体的1.2.1.1节中都被明确指出"
+      ]
+    },
+    {
+      "instance_id": "S1QA-073",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据库名称、用户名和密码通常是数据库初始化和配置过程中的必要参数。",
+        "数据库连接需要密码作为参数。",
+        "数据库连接需要数据库名称作为参数。",
+        "数据库连接需要用户名作为参数。",
+        "这些参数确保数据库连接操作顺利进行。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据库连接需要提供的参数包括密码（Password），与用户名配对，用于认证用户的权限。",
+        "数据库连接需要提供的参数包括数据库名称（Database Name），用于标识具体的数据库。",
+        "数据库连接需要提供的参数包括用户名（Username），用于访问数据库的用户标识。",
+        "这些基本参数通常在数据库初始化和配置过程中essential，以确保可以顺利进行数据库连接操作。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-076",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "修改数据后需要保存更改。",
+        "修改数据时要确认目标数据并选择要修改的数据记录。",
+        "操作需要通过功能按钮或菜单进入数据编辑界面。",
+        "用户用键盘、鼠标或其他工具定位并修改字段值。",
+        "这些步骤帮助用户成功修改数据库数据。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "保存修改：确保所有更改后保存数据。",
+        "修改数据通常包括以下步骤：确认目标数据：选择您希望进行修改的数据记录。",
+        "定位和修改所需字段：使用键盘、鼠标或其他工具找到需要修改的字段。修改字段值，例如文本、数字等。",
+        "这些步骤帮助您成功地对数据库中的数据进行修改。",
+        "进入编辑状态：通过相关功能按钮或菜单进入数据编辑界面。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-081",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "系统提示具体错误信息以帮助诊断失败原因。",
+        "系统通过错误信息引导用户故障排除。",
+        "读取配置文件连接失败时触发异常流E1。",
+        "连接失败原因可能包括网络问题、认证失败或服务器不可用。",
+        "连接失败后操作停止并显示错误消息供用户排查问题。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "例如网络问题、认证失败或服务器不可用等",
+        "当读取配置文件连接操作出现失败时，系统会触发异常流 E1",
+        "操作将停止，并显示错误消息，供用户排查问题",
+        "系统会提示具体的错误信息，帮助诊断连接失败的原因",
+        "触发原因：在尝试读取配置文件并建立数据库连接时，如果连接到服务端发生故障",
+        "连接失败直接触发异常流 E1，系统通过错误信息引导用户进行故障排除"
+      ]
+    },
+    {
+      "instance_id": "S1QA-082",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "存在一个用于输出数据库初始化状态信息的接口。",
+        "应用软件调用数据库初始化接口输入相关参数（如软件实体号）。",
+        "当连接到服务端时可能触发错误处理流程。",
+        "数据库初始化用例主要集中在数据库初始化接口和状态输出接口这两个接口调用。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "主要的接口调用集中在上述两个方面（数据库初始化接口和状态输出接口）",
+        "当连接到服务端时，可能会触发错误处理流程",
+        "数据库初始化接口被调用以输入相关参数（如软件实体号）",
+        "状态输出接口用于输出数据库初始化的状态信息"
+      ]
+    },
+    {
+      "instance_id": "S1QA-083",
+      "exact_text_verdict_or_ref_mismatches": [
+        "读取配置文件连接用例的前置条件是数据库初始化成功。"
+      ],
+      "claims_only_in_gpt_segmentation": [
+        "系统准备必要数据库环境和参数（如用户名、密码）供后续连接。",
+        "调用接口前必须确保数据库初始化已完成。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "在调用该接口之前，必须确保数据库初始化已经完成。",
+        "这一步骤完成后，系统准备好必要的数据库环境和参数（如用户名、密码等），为后续的连接操作打下基础。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-084",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据库初始化用例的名称/标识符是PZXQ-GN-SQLFW-SJKCSH。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据库初始化用例的名称是 PZXQ-GN-SQLFW-SJKCZ-SJKCSH。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-085",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "数据源适配接口与SQL访问接口的连接方式是明确的。",
+        "数据源适配接口和SQL访问接口通过热插拔连接。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据源适配接口（PZXQ-GN-SJYSP）与SQL访问接口的连接方式已明确，采用'热插拔'方法。",
+        "数据源适配接口（PZXQ-GN-SJYSP）与SQL访问接口的连接方式是明确的。",
+        "根据CSCI内部接口需求中的描述，二者之间的连接方式是通过热插拔实现的。"
+      ]
+    },
+    {
+      "instance_id": "S1QA-086",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "上述接口分别用于与特定应用软件、运行支撑服务、界面集成框架和数据库进行交互或通信。",
+        "这些接口定义系统与其他外部实体的通信方式，并确保系统功能模块正常集成和数据交互。",
+        "适应性需求包含接口PZXQ-JK-SJTYFW-YYRJ、PZXQ-JK-SJTYFW-YXZCFW、PZXQ-JK-SJTYFW-JMJCKJ和PZXQ-JK-SJTYFW-SJK。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "与应用软件接口的接口图名称为未明确",
+        "与应用软件接口的接口标识为PZXQ-JK-SJTYFW-YYRJ",
+        "与应用软件接口的描述为：用于与特定应用软件进行交互的接口",
+        "与数据库接口的接口标识为PZXQ-JK-SJTYFW-SJK",
+        "与数据库接口的描述为：用于与数据库进行数据交换和操作的接口",
+        "与界面集成框架接口的接口标识为PZXQ-JK-SJTYFW-JMJCKJ",
+        "与界面集成框架接口的描述为：用于与界面集成框架进行交互的接口",
+        "与运行支撑服务接口的接口标识为PZXQ-JK-SJTYFW-YXZCFW",
+        "与运行支撑服务接口的描述为：用于与运行支撑服务进行通信的接口",
+        "这些接口定义了系统与其他外部实体之间的通信方式，确保系统的功能模块能够正常集成并进行数据交互",
+        "适应性需求中与应用软件接口的具体内容包括：与应用软件接口、与运行支撑服务接口、与界面集成框架接口、与数据库接口"
+      ]
+    },
+    {
+      "instance_id": "S1QA-087",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "3.4.1部分的标识为PZXQ-NBJK-DXHFW-DMSC。",
+        "其他接口包括PZXQ-NBJK-DXHFW-SQLFW。",
+        "图中展示DXHFW与DMSC的连接。",
+        "图中展示SQLFW与SJYSP、RDSJHC等组件的连接。",
+        "接口图展示各组件之间的连接方式和依赖关系。",
+        "每个内部接口通过唯一的组件名称进行标识。",
+        "这种结构化方法确保系统各部分清晰关联。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "3.4.1部分标识为PZXQ-NBJK-DXHFW-DMSC",
+        "SQLFW与其他组件（如SJYSP, RDSJHC）的连接",
+        "其他接口如PZXQ-NBJK-DXHFW-SQLFW等",
+        "接口图例如DXHFW与DMSC的连接",
+        "接口图通过图表形式展示各组件之间的连接方式和依赖关系",
+        "每个接口通过唯一的组件名称进行标识",
+        "这种结构化的方法确保了系统各部分的清晰关联"
+      ]
+    },
+    {
+      "instance_id": "S1QA-088",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "对象化访问接口与SQL访问接口通过代码生成（DMSC）连接。",
+        "接口说明中的描述实现了对象化访问与SQL访问之间的关联。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "对象化访问接口（PZXQ-GN-DXHFW）与SQL访问接口的连接方式是基于\"代码生成\"（DMSC）",
+        "这种连接方式通过接口说明中的描述实现了两者的关联"
+      ]
+    },
+    {
+      "instance_id": "S1QA-090",
+      "exact_text_verdict_or_ref_mismatches": [],
+      "claims_only_in_gpt_segmentation": [
+        "单一状态设计避免多态运行状态带来的复杂性或混乱。",
+        "单一运行状态有助于确保系统稳定性和一致性。",
+        "数据统一访问服务状态图只有一个运行状态。",
+        "该描述是正确的。",
+        "该设计使所有操作和流程都處于同一运行状态。"
+      ],
+      "claims_only_in_glm_segmentation": [
+        "数据统一访问服务的状态图设计仅包含一个运行状态",
+        "是的，数据统一访问服务的状态图只有一个运行状态",
+        "该描述是正确的",
+        "这意味着在该系统中，所有操作和流程都处于同一运行状态",
+        "这种设计有助于确保系统的稳定性和一致性，避免多态运行状态带来的复杂性或混乱"
+      ]
+    }
+  ],
+  "aggregation_corrections": [
+    {
+      "instance_id": "S1QA-067",
+      "annotator_id": "codex_gpt5_6_sol",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-068",
+      "annotator_id": "codex_gpt5_6_sol",
+      "recorded": "not_in_evidence",
+      "computed_from_claims": "refute"
+    },
+    {
+      "instance_id": "S1QA-074",
+      "annotator_id": "codex_gpt5_6_sol",
+      "recorded": "not_in_evidence",
+      "computed_from_claims": "refute"
+    },
+    {
+      "instance_id": "S1QA-078",
+      "annotator_id": "codex_gpt5_6_sol",
+      "recorded": "not_in_evidence",
+      "computed_from_claims": "refute"
+    },
+    {
+      "instance_id": "S1QA-090",
+      "annotator_id": "codex_gpt5_6_sol",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-011",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-024",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-029",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-058",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-059",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-081",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    },
+    {
+      "instance_id": "S1QA-083",
+      "annotator_id": "dual_qa_glm",
+      "recorded": "support",
+      "computed_from_claims": "not_in_evidence"
+    }
+  ],
+  "gpt_rows": "data/gjb_438c/runs/annotate_frozen_qa_dual_llm_72379ff3_20261021_122221/raw_gpt5_6_sol.jsonl",
+  "glm_rows": "data/gjb_438c/runs/annotate_frozen_qa_dual_llm_72379ff3_20261021_122221/raw_glm.jsonl",
+  "protocol": {
+    "claim_first": true,
+    "aggregation": "any refute -> refute; otherwise any not_in_evidence -> not_in_evidence; otherwise support",
+    "open_context_absence_is_refute": false,
+    "invalid_rows_are_guessed": false,
+    "claim_text_alignment": "exact string only; segmentation differences are separately queued, not silently aligned",
+    "warning": "GPT is an in-session annotator, not an independent API run. GLM invalid rows are excluded. This is not gold until manual adjudication."
+  }
+}

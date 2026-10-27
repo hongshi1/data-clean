@@ -1,0 +1,58 @@
+{
+ "dev": {
+  "n_pairs": 16,
+  "auc": 0.619,
+  "precision": 0.5,
+  "recall": 0.1111,
+  "f1": 0.1818,
+  "false_merge_rate": 0.1429,
+  "threshold": 0.9549
+ },
+ "history": [
+  {
+   "epoch": 1,
+   "infonce": 1.5304,
+   "boundary": 0.9456
+  }
+ ],
+ "threshold_from_dev": 0.9549,
+ "config": {
+  "epochs": 1,
+  "batch_size": 256,
+  "shared_dim": 256,
+  "lr": 0.0001,
+  "temperature": 0.07,
+  "boundary_margin": 0.1,
+  "boundary_weight": 0.5,
+  "seed": 42,
+  "limit": 64,
+  "snapshot": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\feature_snapshot_v1",
+  "pairs": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\training_pairs_v1\\pairs.jsonl",
+  "n_train": 64,
+  "n_dev": 16,
+  "n_test": 16,
+  "fold_map": null,
+  "loss": "infonce_plus_identity_boundary",
+  "supervision": "silver_p1_identifier_plus_sibling_negatives"
+ },
+ "test": {
+  "n_pairs": 16,
+  "auc": 1.0,
+  "precision": 1.0,
+  "recall": 0.5,
+  "f1": 0.6667,
+  "false_merge_rate": 0.0,
+  "threshold": 0.9549
+ },
+ "native_control_dev": {
+  "n_pairs": 16,
+  "auc": 0.5873,
+  "threshold": 0.933
+ },
+ "native_control_test": {
+  "n_pairs": 16,
+  "auc": 1.0,
+  "false_merge_rate": 0.0,
+  "threshold": 0.933
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "native_bge_noprefix": {
+  "R@10": 0.3727,
+  "R@20": 0.4493,
+  "MRR@10": 0.7833,
+  "n": 300
+ },
+ "native_bge_prefix_ref": {
+  "R@10": 0.3888,
+  "R@20": 0.4757,
+  "MRR@10": 0.7919,
+  "n": 300
+ },
+ "lora_bge_noprefix": {
+  "R@10": 0.3127,
+  "R@20": 0.3831,
+  "MRR@10": 0.7446,
+  "n": 300
+ },
+ "delta_vs_native_symmetric": {
+  "R@10": -0.06,
+  "R@20": -0.0662,
+  "MRR@10": -0.0387
+ },
+ "by_region": {
+  "first_2_3(train_source)": {
+   "native": {
+    "R@10": 0.3951,
+    "R@20": 0.4763,
+    "MRR@10": 0.935,
+    "n": 201
+   },
+   "lora": {
+    "R@10": 0.3395,
+    "R@20": 0.4299,
+    "MRR@10": 0.8935,
+    "n": 201
+   }
+  },
+  "last_1_3(held_out)": {
+   "native": {
+    "R@10": 0.3273,
+    "R@20": 0.3945,
+    "MRR@10": 0.4753,
+    "n": 99
+   },
+   "lora": {
+    "R@10": 0.2583,
+    "R@20": 0.2878,
+    "MRR@10": 0.4422,
+    "n": 99
+   }
+  }
+ },
+ "leakage": {
+  "n_train_queries": 9436,
+  "n_train_passages": 149926,
+  "overall": {
+   "n": 300,
+   "entity_overlap": 237,
+   "entity_overlap_rate": 0.79,
+   "entity_id_overlap_rate": 0.33,
+   "query_text_overlap_rate": 0.67,
+   "entity_in_train_passage_rate": 0.96
+  },
+  "by_region": {
+   "first_2_3(train_source)": {
+    "n": 201,
+    "entity_overlap": 201,
+    "entity_overlap_rate": 1.0,
+    "entity_id_overlap_rate": 0.4925,
+    "query_text_overlap_rate": 1.0,
+    "entity_in_train_passage_rate": 1.0
+   },
+   "last_1_3(held_out)": {
+    "n": 99,
+    "entity_overlap": 36,
+    "entity_overlap_rate": 0.3636,
+    "entity_id_overlap_rate": 0.0,
+    "query_text_overlap_rate": 0.0,
+    "entity_in_train_passage_rate": 0.8788
+   }
+  },
+  "reported": true,
+  "data_stat": {
+   "n_raw": 9436,
+   "n_ok": 9436,
+   "n_skipped": 0
+  },
+  "resolve_stat": {
+   "n_raw": 9436,
+   "n_text_schema": 0,
+   "n_chunkid_schema": 9436,
+   "n_pos_missing": 0,
+   "n_neg_missing": 0,
+   "n_ok": 9436
+  },
+  "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\data_assets\\retrieval_train\\triples.json"
+ },
+ "adapter_meta": {},
+ "adapter_stats": {
+  "device": "cuda",
+  "dim": 1024,
+  "n_embed_calls": 2,
+  "n_cache_hits": 0,
+  "n_cache_texts": 4571,
+  "embed_ms": 232.6
+ },
+ "gpu_mem_gb": 3.14,
+ "chunks": 5231,
+ "native_stats": {
+  "n_embed_calls": 4,
+  "n_texts": 11062,
+  "n_cache_hits": 9077,
+  "n_batches": 5,
+  "embed_ms": 452.3,
+  "device": "cuda",
+  "dim": 1024
+ }
+}

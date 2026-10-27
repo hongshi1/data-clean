@@ -1,11 +1,11 @@
-"""GJB SRS一致性检测算法库
+"""GJB SRS算法层.
 
-组织:
-  common/    - 共享基础(图/文本/评测)
-  semantic/  - 语义层(按场景)
-    scene1/  - 用例图+capability表+正文
-    scene2/  - 流程图+usecase表+正文
-    scene3/  - 接口图+interface表+正文
-  logic/     - 逻辑层(约束/异常流)
-  syntax/    - 语法层(格式/规则)
+平行方向(本层仅治理方向B):
+  方向A 上下文关联: blackboard/ trimodal/ mmqa/ 及context_*等(原位, 待专项治理)
+  方向B 一致性校验: consistency/ ← 2026-10-14治理
+      checker.py(v4.1六通道κD) / nli_local / nli_pair_claims /
+      nli_discrepancy_review / srs_calib / semantic|syntax|logic三层
+  Task 2 QA合成: qa_synth.py / qa_mutation_ops.py(原位)
+  共享设施: llm_client.py / bge_local.py / base.py / common/
+数据流: 文档 → [方向A聚合] → Pair → [方向B校验] → 判定
 """

@@ -1,0 +1,30 @@
+[project]
+name = "gjb-srs-consistency"
+version = "0.1.0"
+description = "GJB SRS 一致性校验研究项目 (16份真实SRS: 上下文关联+不一致检测)"
+requires-python = ">=3.12"
+
+# 依赖锁定见 requirements.txt; 本文件承载工具链配置(ruff/pytest)
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [
+    "easy-dataset",   # 第三方应用
+    "literature",
+    "references",
+    ".venv", ".venv-srs", ".venv-embed",
+    "models",
+]
+
+[tool.ruff.lint]
+# 刻意不含E501(行宽)与格式化规则: 存量脚本长行多, 先管正确性
+select = ["E4", "E7", "E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+"tools/**" = ["E722", "E402"]  # 存量裸except/后置import: 逐文件偿还, 不新增
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "algorithms"]
+filterwarnings = ["ignore::DeprecationWarning"]
+markers = ["slow: 加载大资产的慢测试(matcher等)"]

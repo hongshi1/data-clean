@@ -1,0 +1,24 @@
+@startuml
+!pragma layout smetana
+state "数据获取转换服务" as S60
+state "数据获取" as S61
+state "数据转换" as S63
+state "数据结构转换" as S69
+state "典型应用专题库管理" as S70
+state "数据组织管理" as S73
+state "数据订阅推送" as S74
+state "流式数据引接" as S77
+state "结构化数据归集" as S78
+state "半构化数据归集" as S79
+state "非 结构化数据归集" as S80
+S77 --> S61
+S80 --> S61
+S79 --> S61
+S78 --> S61
+S74 --> S63
+S73 --> S63
+S60 --> S61
+S63 --> S60
+S69 --> S63
+S70 --> S63
+@enduml
