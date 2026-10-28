@@ -60,6 +60,7 @@ EXPERT_METHOD_PREFIXES: tuple[str, ...] = (
     "sequence_alignment",
     "trace_bidirectional_join",
     "gjb_presence_check",
+    "gjb_rule_engine",
     "id_join_registry",
     "enum_join_registry",
 )

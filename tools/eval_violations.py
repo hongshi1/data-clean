@@ -59,6 +59,7 @@ _CHANNEL_BY_METHOD = (
     ("sequence_alignment", "sequence_L1"),
     ("trace_bidirectional_join", "trace_L1"),
     ("gjb_presence_check", "gjb_L1"),
+    ("gjb_rule_engine", "gjb_L1"),
     ("id_join_registry", "id_join_L1"),
     ("enum_join_registry", "enum_join_L1"),
     ("coverage_join", "coverage_L1"),

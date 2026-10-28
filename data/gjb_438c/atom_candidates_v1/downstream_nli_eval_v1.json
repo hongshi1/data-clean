@@ -1,0 +1,174 @@
+{
+  "n_pairs": 48,
+  "results": {
+    "B0-report_all": {
+      "smell": {
+        "precision": 0.1458,
+        "recall": 1.0,
+        "f1": 0.2545,
+        "tp": 7,
+        "fp": 41,
+        "fn": 0
+      },
+      "nli_calls": 0,
+      "desc": "全报不筛选(锚点)"
+    },
+    "B1-nli_only": {
+      "smell": {
+        "tau": 0.95,
+        "precision": 0.1923,
+        "recall": 0.7143,
+        "f1": 0.303,
+        "tp": 5,
+        "fp": 21,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 0.1316,
+        "recall": 0.7143,
+        "f1": 0.2222,
+        "tp": 5,
+        "fp": 33,
+        "fn": 2
+      },
+      "nli_calls": 48,
+      "desc": "NLI直判全部候选(基线)"
+    },
+    "P1-rule_gate": {
+      "smell": {
+        "tau": 0.95,
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 0.3571,
+        "recall": 0.7143,
+        "f1": 0.4762,
+        "tp": 5,
+        "fp": 9,
+        "fn": 2
+      },
+      "nli_calls": 24,
+      "desc": "规则门(≥0.5)→NLI"
+    },
+    "P2-fusion_rank@6": {
+      "smell": {
+        "tau": 0.1,
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "nli_calls": 6,
+      "desc": "廉价融合top-6→NLI"
+    },
+    "P2-fusion_rank@12": {
+      "smell": {
+        "tau": 0.3,
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "nli_calls": 12,
+      "desc": "廉价融合top-12→NLI"
+    },
+    "P2-fusion_rank@24": {
+      "smell": {
+        "tau": 0.95,
+        "precision": 0.3846,
+        "recall": 0.7143,
+        "f1": 0.5,
+        "tp": 5,
+        "fp": 8,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 0.3125,
+        "recall": 0.7143,
+        "f1": 0.4348,
+        "tp": 5,
+        "fp": 11,
+        "fn": 2
+      },
+      "nli_calls": 24,
+      "desc": "廉价融合top-24→NLI"
+    },
+    "P3-nli_veto": {
+      "smell": {
+        "tau": 0.2,
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "nli_calls": 48,
+      "desc": "NLI全判+同作用域否决"
+    },
+    "P4-full_fusion": {
+      "smell": {
+        "tau": 0.75,
+        "precision": 1.0,
+        "recall": 0.7143,
+        "f1": 0.8333,
+        "tp": 5,
+        "fp": 0,
+        "fn": 2
+      },
+      "fixed_0.5": {
+        "precision": 0.1795,
+        "recall": 1.0,
+        "f1": 0.3043,
+        "tp": 7,
+        "fp": 32,
+        "fn": 0
+      },
+      "nli_calls": 48,
+      "desc": "全融合(r+t+b+n)阈值"
+    }
+  },
+  "nli_calls_saved": {
+    "B0-report_all": 48,
+    "B1-nli_only": 0,
+    "P1-rule_gate": 24,
+    "P2-fusion_rank@6": 42,
+    "P2-fusion_rank@12": 36,
+    "P2-fusion_rank@24": 24,
+    "P3-nli_veto": 0,
+    "P4-full_fusion": 0
+  }
+}

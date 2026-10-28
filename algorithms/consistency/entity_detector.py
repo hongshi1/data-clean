@@ -1,20 +1,26 @@
-"""L0 entity detection layer for cascaded QA verification.
+"""L0 entity detection layer for cascaded QA verification (config-driven).
 
 Position in the cascade: layer 0, before the rule layer. Fully deterministic
 (regex + counting only, no model calls, no I/O). Three jobs:
 
 1. Entity extraction (``extract_entities``): domain terms (BLOB/SQL/...),
-   PZXQ identifiers, stopword-filtered Chinese runs, quoted terms and mixed
-   domain-term+Chinese surfaces (e.g. "BLOB数据插入").
+    PZXQ identifiers, stopword-filtered Chinese runs, quoted terms and mixed
+    domain-term+Chinese surfaces (e.g. "BLOB数据插入").
 2. Document lexicon freezing (``build_document_lexicon``): frozen evidence
-   statements -> capability names / use-case names / interface ids /
-   方式名称 and 运行状态 value domains / database names / bracketed alias
-   pairs such as 大字段(BLOB) or E1(异常流).
+    statements -> capability names / use-case names / interface ids /
+    方式名称 and 运行状态 value domains / database names / bracketed alias
+    pairs such as 大字段(BLOB) or E1(异常流).
 3. Term-level conflict detection (``detect_term_conflicts``):
     TERM-01 同义异名 (warning), TERM-02 同名异义/定义互换 (refute),
     TERM-05 指令/用例名错配 (support or refute), TERM-07 接口标识冲突
     (refute, 全证据命中护栏见_check_interface_ids), TERM-08 缩写不一致
     (warning).
+
+配置/引擎分离: 场景知识(域术语/停用词/ID正则/值域/数据库名/别名模式/
+用例动词宾语)全部来自NerLexicon(config/ner_lexicons/*.json), 本模块只
+保留GJB结构通用逻辑——换一份配置即切换场景, 引擎代码不动. 词表来源:
+调用方注入``lexicon``参数, 或模块级惰性默认场景srs_scene1.
+``build_document_lexicon``保持从证据动态学习(运行时配置, 本就不硬编码).
 
 Warning-level reports carry verdict="support" with a ":warning" method
 suffix so downstream layers can filter or downgrade them.
@@ -27,71 +33,44 @@ from typing import Literal
 
 from algorithms.consistency.answer_structure import StructuredClaim
 from algorithms.consistency.evidence_statements import EvidenceStatement
+from algorithms.consistency.ner_lexicon import (
+    NerLexicon,
+    NerPatterns,
+    compile_patterns,
+    default_lexicon,
+)
 from algorithms.consistency.qa_models import ClaimResult, QAInput, Verdict
 
 EntityKind = Literal["domain_term", "pzxq_id", "chinese", "quoted", "mixed"]
 LinkType = Literal["exact", "alias", "prefix", "nil"]
 
-DOMAIN_TERMS: frozenset[str] = frozenset(
-    {"BLOB", "SQL", "JSON", "INT", "STRING", "FLOAT", "LOB", "DML", "API"})
-
-CHINESE_STOPWORDS: frozenset[str] = frozenset({
-    "的", "了", "是", "在", "和", "与", "或", "及", "等", "系统", "软件", "服务",
-    "进行", "描述", "需要", "可以", "必须", "应当", "提供", "使用", "数据", "信息",
-    "接口", "功能", "需求", "规格", "说明", "文档", "项目", "唯一", "标识", "名称",
-    "方式", "状态", "阶段", "开发", "运行",
-})
-
-_DOMAIN_TERM_RE = re.compile(
-    r"(?<![A-Za-z0-9])(?:BLOB|SQL|JSON|INT|STRING|FLOAT|LOB|DML|API)(?![A-Za-z0-9])")
-_MIXED_TERM_RE = re.compile(
-    r"(?:BLOB|SQL|JSON|INT|STRING|FLOAT|LOB|DML|API)[\u4e00-\u9fff]{1,8}")
-PZXQ_ID_RE = re.compile(r"PZXQ-[A-Z0-9-]+")
+#: 引擎侧GJB结构通用正则(与场景无关, 不进lexicon配置)
 _CHINESE_RUN_RE = re.compile(r"[\u4e00-\u9fff]{2,}")
-_QUOTED_TERM_RE = re.compile(r"[「\"『]([^「」\"『』]+)[」\"』]")
-
-_IDENTIFIER_STATEMENT_RE = re.compile(
-    r"^(?P<name>.+?)的项目唯一标识符[：:](?P<id>PZXQ-[A-Z0-9-]+)$")
 _ENUM_SPLIT_RE = re.compile(r"[、,，/]")
 _ENUM_LIST_RE = re.compile(
     r"(?:包括|包含|划分为|分为)(?:以下)?[：:]?(?P<items>[^，。；!,\n]{4,120})")
 _ENUM_LIST_FIELDS = ("sentence", "需求描述", "标识符")
-_STATUS_TOKENS = ("运行阶段", "开发阶段")
-_DATABASE_RE = re.compile(r"达梦(?:数据库)?\s*(?:V[\d.]+)?|sqlite\d*", re.IGNORECASE)
-_ALIAS_FORWARD_RE = re.compile(
-    r"([\u4e00-\u9fffA-Za-z]{2,12})[（(]([A-Za-z0-9]{2,12})[）)]")
-_ALIAS_REVERSE_RE = re.compile(
-    r"([A-Za-z0-9]{1,10})[（(]([\u4e00-\u9fff]{2,10})[）)]")
-_DEFINITION_PAIR_RE = re.compile(
-    r"([A-Za-z\u4e00-\u9fff]{1,12})[（(]([^（）()]{1,24})[）)]")
-
 _USECASE_MENTION_RE = re.compile(
     r"(?:调用|执行|触发|发出)(?:「(?P<quoted>[^「」]{2,16})」"
     r"|(?P<bare>[\u4e00-\u9fffA-Za-z0-9]{2,12}?))"
     r"(?=指令|用例|功能|接口|操作|服务|流程|，|。|；|！|、)")
-_USECASE_VERBS = ("插入", "删除", "修改", "查询", "管理", "转换", "绑定", "输出",
-                  "获取", "变更", "授权", "统计", "审计", "初始化", "连接", "生成",
-                  "更新", "配置", "释放")
-_USECASE_OBJECTS = ("数据", "对象", "字典", "类型", "数组", "错误", "权限", "用户",
-                    "配置", "资源", "代码", "缓存", "连接", "池")
-_USECASE_FIELDS = {"前置条件", "后置条件", "简要说明", "参与者",
-                   "系统的动作", "Actor的动作", "动作约束"}
 
-_STRIP_PREFIX_WORDS = ("提供", "支持", "包括", "包含", "使用", "通过", "采用", "调用",
-                       "执行", "触发", "发出", "对于", "如果", "例如", "以及", "系统",
-                       "软件", "服务", "进行", "描述", "需要", "可以", "必须", "应当",
-                       "和", "及", "或", "与")
+
+def _patterns(lexicon: NerLexicon | None = None) -> NerPatterns:
+    """调用方注入的lexicon(或模块级默认场景)→编译好的模式包(带缓存)."""
+    return compile_patterns(lexicon or default_lexicon())
 
 
 def _compact(text: str) -> str:
     return re.sub(r"\s+", "", text)
 
 
-def _strip_leading_prefixes(surface: str) -> str:
+def _strip_leading_prefixes(surface: str,
+                            prefix_words: tuple[str, ...]) -> str:
     """Trim leading verb/connective prefixes: 提供大字段（BLOB） -> 大字段."""
     stripped = surface
     while True:
-        for prefix in _STRIP_PREFIX_WORDS:
+        for prefix in prefix_words:
             remainder = stripped[len(prefix):]
             if stripped.startswith(prefix) and len(remainder) >= 2:
                 stripped = remainder
@@ -168,41 +147,54 @@ class LinkResult:
     confidence: float
 
 
-def extract_entities(text: str) -> list[Entity]:
-    """Extract domain terms, PZXQ ids, Chinese runs, quoted and mixed terms.
-
-    Chinese runs equal to a stopword are dropped; results are deduplicated
-    by (surface, kind) and ordered by source position.
-    """
+def _extract_entities(text: str, p: NerPatterns) -> list[Entity]:
+    """Gazetteer NER内核: 词典匹配(域词/ID/引号)+正则切分+停用词过滤."""
     entities: list[Entity] = []
-    for match in _DOMAIN_TERM_RE.finditer(text):
-        entities.append(Entity(match.group(0), "domain_term", match.start(), match.end()))
-    for match in PZXQ_ID_RE.finditer(text):
+    if p.domain_term_re is not None:
+        for match in p.domain_term_re.finditer(text):
+            entities.append(
+                Entity(match.group(0), "domain_term", match.start(), match.end()))
+    for match in p.id_re.finditer(text):
         entities.append(Entity(match.group(0), "pzxq_id", match.start(), match.end()))
     for match in _CHINESE_RUN_RE.finditer(text):
         surface = match.group(0)
-        if surface not in CHINESE_STOPWORDS:
+        if surface not in p.stopwords:
             entities.append(Entity(surface, "chinese", match.start(), match.end()))
-    for match in _QUOTED_TERM_RE.finditer(text):
-        surface = match.group(1)
-        if surface and surface not in CHINESE_STOPWORDS:
-            entities.append(Entity(surface, "quoted", match.start() + 1, match.end() - 1))
-    for match in _MIXED_TERM_RE.finditer(text):
-        entities.append(Entity(match.group(0), "mixed", match.start(), match.end()))
+    for quote_re in p.quote_res:
+        for match in quote_re.finditer(text):
+            surface = match.group(1)
+            if surface and surface not in p.stopwords:
+                entities.append(
+                    Entity(surface, "quoted", match.start(1), match.end(1)))
+    if p.mixed_term_re is not None:
+        for match in p.mixed_term_re.finditer(text):
+            entities.append(Entity(match.group(0), "mixed", match.start(), match.end()))
     unique: dict[tuple[str, str], Entity] = {}
     for entity in entities:
         unique.setdefault((entity.surface, entity.kind), entity)
     return sorted(unique.values(), key=lambda e: (e.start, e.end))
 
 
-def _is_usecase_field(field_name: str) -> bool:
+def extract_entities(text: str,
+                     lexicon: NerLexicon | None = None) -> list[Entity]:
+    """Extract domain terms, PZXQ ids, Chinese runs, quoted and mixed terms.
+
+    Chinese runs equal to a stopword are dropped; results are deduplicated
+    by (surface, kind) and ordered by source position. ``lexicon``不注入时
+    用模块级默认场景(srs_scene1).
+    """
+    return _extract_entities(text, _patterns(lexicon))
+
+
+def _is_usecase_field(field_name: str,
+                      usecase_fields: frozenset[str]) -> bool:
     return (field_name.startswith("Use") or field_name.startswith("Actor")
             or field_name.startswith("异常流")
-            or field_name in _USECASE_FIELDS)
+            or field_name in usecase_fields)
 
 
-def _status_values(value: str) -> list[str]:
-    found = [token for token in _STATUS_TOKENS if token in value]
+def _status_values(value: str, status_tokens: tuple[str, ...]) -> list[str]:
+    found = [token for token in status_tokens if token in value]
     if found:
         return found
     return [piece.strip() for piece in _ENUM_SPLIT_RE.split(value) if piece.strip()]
@@ -213,8 +205,9 @@ def _normalize_db_name(raw: str) -> str:
     return name or raw
 
 
-def _valid_alias_pair(surface: str, target: str) -> bool:
-    if surface == target or surface in CHINESE_STOPWORDS or target in CHINESE_STOPWORDS:
+def _valid_alias_pair(surface: str, target: str,
+                      stopwords: frozenset[str]) -> bool:
+    if surface == target or surface in stopwords or target in stopwords:
         return False
     if surface.isdigit() or target.isdigit():
         return False
@@ -222,21 +215,24 @@ def _valid_alias_pair(surface: str, target: str) -> bool:
 
 
 def build_document_lexicon(
-        evidence_statements: list[EvidenceStatement]) -> DocumentLexicon:
+        evidence_statements: list[EvidenceStatement],
+        lexicon: NerLexicon | None = None) -> DocumentLexicon:
     """Freeze one document's known entities from its evidence statements.
 
     Capability vs use-case names come from three sources: identifier
     statements (PZXQ-GN-XXX = capability, deeper ids = use case), use-case
     table field statements (Use Case 名称 / 前置条件 / 异常流...), and
     enumeration lists in prose (X包括A、B、C / 划分为A、B及C) which recover
-    sub-table names lost to empty leading cells.
+    sub-table names lost to empty leading cells. 词表/模式来自``lexicon``
+    (默认srs_scene1), 条目本身始终从证据动态学习(运行时配置).
     """
+    p = _patterns(lexicon)
     name_class: dict[str, str] = {}
     interface_ids: list[str] = []
     mode_values: list[str] = []
     status_values: list[str] = []
     for statement in evidence_statements:
-        identifier_match = _IDENTIFIER_STATEMENT_RE.match(statement.text)
+        identifier_match = p.identifier_statement_re.match(statement.text)
         if identifier_match:
             name = identifier_match.group("name")
             identifier = identifier_match.group("id")
@@ -247,20 +243,23 @@ def build_document_lexicon(
             depth = identifier.count("-") + 1
             name_class.setdefault(name, "capability" if depth <= 3 else "usecase")
             continue
-        if _is_usecase_field(statement.field_name) and statement.scope_key:
+        if _is_usecase_field(statement.field_name, p.usecase_fields) \
+                and statement.scope_key:
             name_class.setdefault(statement.scope_key, "usecase")
         elif statement.field_name == "方式名称":
             value = statement.text.rsplit("：", 1)[-1]
             mode_values.extend(
                 piece.strip() for piece in _ENUM_SPLIT_RE.split(value)
                 if piece.strip() and re.search(r"[\u4e00-\u9fff]", piece)
-                and not re.fullmatch(r"(?:运行阶段|开发阶段)+", piece.strip()))
+                and not (p.status_filter_re is not None
+                         and p.status_filter_re.fullmatch(piece.strip())))
         elif statement.field_name == "运行状态":
             status_values.extend(
-                piece for piece in _status_values(statement.text.rsplit("：", 1)[-1])
+                piece for piece in
+                _status_values(statement.text.rsplit("：", 1)[-1], p.status_tokens)
                 if re.search(r"[\u4e00-\u9fff]", piece))
     for statement in evidence_statements:
-        for identifier in PZXQ_ID_RE.findall(statement.text):
+        for identifier in p.id_re.findall(statement.text):
             if identifier not in interface_ids:
                 interface_ids.append(identifier)
     for statement in evidence_statements:
@@ -268,30 +267,29 @@ def build_document_lexicon(
             continue
         for match in _ENUM_LIST_RE.finditer(statement.text):
             for raw in re.split(r"[、及和]", match.group("items")):
-                item = _strip_leading_prefixes(raw.strip())
+                item = _strip_leading_prefixes(raw.strip(), p.strip_prefix_words)
                 if item.endswith("功能") and len(item) > 4:
                     item = item[:-2]
                 if (3 <= len(item) <= 20 and re.search(r"[\u4e00-\u9fff]", item)
-                        and item not in CHINESE_STOPWORDS):
+                        and item not in p.stopwords):
                     name_class.setdefault(item, "usecase")
 
     database_names: list[str] = []
     alias_pairs: list[AliasPair] = []
     seen_pairs: set[tuple[str, str]] = set()
     for statement in evidence_statements:
-        for raw in _DATABASE_RE.findall(statement.text):
-            name = _normalize_db_name(raw)
-            if name and name not in database_names:
-                database_names.append(name)
-        for raw_surface, inner in _ALIAS_FORWARD_RE.findall(statement.text):
-            surface = _strip_leading_prefixes(raw_surface)
-            if _valid_alias_pair(surface, inner) and (surface, inner) not in seen_pairs:
-                seen_pairs.add((surface, inner))
-                alias_pairs.append(AliasPair(surface=surface, target=inner))
-        for outer, inner in _ALIAS_REVERSE_RE.findall(statement.text):
-            if _valid_alias_pair(outer, inner) and (outer, inner) not in seen_pairs:
-                seen_pairs.add((outer, inner))
-                alias_pairs.append(AliasPair(surface=outer, target=inner))
+        if p.database_re is not None:
+            for raw in p.database_re.findall(statement.text):
+                name = _normalize_db_name(raw)
+                if name and name not in database_names:
+                    database_names.append(name)
+        for alias_re in p.alias_res:
+            for raw_surface, inner in alias_re.findall(statement.text):
+                surface = _strip_leading_prefixes(raw_surface, p.strip_prefix_words)
+                if _valid_alias_pair(surface, inner, p.stopwords) \
+                        and (surface, inner) not in seen_pairs:
+                    seen_pairs.add((surface, inner))
+                    alias_pairs.append(AliasPair(surface=surface, target=inner))
 
     return DocumentLexicon(
         capability_names=tuple(n for n, c in name_class.items() if c == "capability"),
@@ -407,7 +405,7 @@ def _id_prefix_of(a: str, b: str) -> bool:
 def _check_interface_ids(claim: StructuredClaim,
                          scoped_statements: list[EvidenceStatement],
                          all_statements: list[EvidenceStatement],
-                         ) -> list[ClaimResult]:
+                         p: NerPatterns) -> list[ClaimResult]:
     """TERM-07 接口标识冲突（含全证据命中优先护栏, G4 P1 a-fix）.
 
     - claim的ID在scope语句中出现 → support;
@@ -419,17 +417,17 @@ def _check_interface_ids(claim: StructuredClaim,
     - scope同族冲突 → refute（answer使用了evidence中不存在的同族ID）;
     - 前缀缩短 → TERM-08 warning; 其余 → NIE。
     """
-    claim_ids = sorted({e.surface for e in extract_entities(claim.text)
+    claim_ids = sorted({e.surface for e in _extract_entities(claim.text, p)
                         if e.kind == "pzxq_id"})
     if not claim_ids:
         return []
     evidence_id_refs: dict[str, list[str]] = {}
     for statement in scoped_statements:
-        for identifier in PZXQ_ID_RE.findall(statement.text):
+        for identifier in p.id_re.findall(statement.text):
             evidence_id_refs.setdefault(identifier, []).append(statement.statement_id)
     full_id_refs: dict[str, list[str]] = {}
     for statement in all_statements:
-        for identifier in PZXQ_ID_RE.findall(statement.text):
+        for identifier in p.id_re.findall(statement.text):
             full_id_refs.setdefault(identifier, []).append(statement.statement_id)
     results: list[ClaimResult] = []
     for identifier in claim_ids:
@@ -471,20 +469,25 @@ def _check_interface_ids(claim: StructuredClaim,
 
 
 def _check_definitions(claim: StructuredClaim,
-                       statements: list[EvidenceStatement]) -> list[ClaimResult]:
-    claim_pairs = _DEFINITION_PAIR_RE.findall(claim.text)
+                       statements: list[EvidenceStatement],
+                       p: NerPatterns) -> list[ClaimResult]:
+    claim_pairs: list[tuple[str, str]] = []
+    for definition_re in p.definition_res:
+        claim_pairs.extend(definition_re.findall(claim.text))
     if not claim_pairs:
         return []
-    claim_pairs = [(_strip_leading_prefixes(term), definition)
+    claim_pairs = [(_strip_leading_prefixes(term, p.strip_prefix_words), definition)
                    for term, definition in claim_pairs]
     evidence_defs: dict[str, dict[str, str]] = {}
     for statement in statements:
-        for raw_term, definition in _DEFINITION_PAIR_RE.findall(statement.text):
-            term = _strip_leading_prefixes(raw_term)
-            evidence_defs.setdefault(term, {}).setdefault(definition, statement.statement_id)
+        for definition_re in p.definition_res:
+            for raw_term, definition in definition_re.findall(statement.text):
+                term = _strip_leading_prefixes(raw_term, p.strip_prefix_words)
+                evidence_defs.setdefault(term, {}).setdefault(
+                    definition, statement.statement_id)
     results: list[ClaimResult] = []
     for term, definition in claim_pairs:
-        if len(term) < 2 or term in CHINESE_STOPWORDS:
+        if len(term) < 2 or term in p.stopwords:
             continue
         defs = evidence_defs.get(term)
         if not defs:
@@ -516,9 +519,10 @@ def _usecase_mentions(text: str) -> list[str]:
     return mentions
 
 
-def _usecase_like(mention: str) -> bool:
-    return (any(mention.endswith(verb) for verb in _USECASE_VERBS)
-            and any(obj in mention for obj in _USECASE_OBJECTS))
+def _usecase_like(mention: str, usecase_verbs: tuple[str, ...],
+                  usecase_objects: tuple[str, ...]) -> bool:
+    return (any(mention.endswith(verb) for verb in usecase_verbs)
+            and any(obj in mention for obj in usecase_objects))
 
 
 def _overlap_score(a: str, b: str) -> float:
@@ -542,7 +546,8 @@ def _usecase_match(a: str, b: str) -> bool:
 
 def _check_usecase_mentions(request: QAInput, claim: StructuredClaim,
                             statements: list[EvidenceStatement],
-                            lexicon: DocumentLexicon) -> list[ClaimResult]:
+                            lexicon: DocumentLexicon,
+                            p: NerPatterns) -> list[ClaimResult]:
     """TERM-05: 指令/用例名错配.
 
     Same use case (verbatim hit, containment or char-set overlap >= 0.75,
@@ -575,7 +580,8 @@ def _check_usecase_mentions(request: QAInput, claim: StructuredClaim,
                 f"answer的用例「{mention}」与evidence用例「{matched}」"
                 f"指向同一用例（前缀/字符重合匹配）", 0.8, "TERM-05"))
             continue
-        if names and _usecase_like(mention_compact):
+        if names and _usecase_like(
+                mention_compact, p.usecase_verbs, p.usecase_objects):
             best = max(names, key=lambda n: _overlap_score(mention_compact, n))
             topic = next((n for n in names if n in question_text), "")
             suffix = f"，question围绕「{topic}」" if topic else ""
@@ -588,7 +594,8 @@ def _check_usecase_mentions(request: QAInput, claim: StructuredClaim,
 
 def _check_alias_preferences(claim: StructuredClaim,
                              evidence_statements: list[EvidenceStatement],
-                             lexicon: DocumentLexicon) -> list[ClaimResult]:
+                             lexicon: DocumentLexicon,
+                             p: NerPatterns) -> list[ClaimResult]:
     """TERM-01 同义异名 / TERM-08 缩写不一致 (both warning-level).
 
     Fires when the answer picks one side of an evidence alias pair while the
@@ -610,7 +617,8 @@ def _check_alias_preferences(claim: StructuredClaim,
             continue
         if evidence_text.count(evidence_form) <= evidence_text.count(answer_form):
             continue
-        code = ("TERM-01" if evidence_form in DOMAIN_TERMS or answer_form in DOMAIN_TERMS
+        code = ("TERM-01" if evidence_form in p.domain_terms
+                or answer_form in p.domain_terms
                 else "TERM-08")
         label = "同义异名" if code == "TERM-01" else "缩写不一致"
         refs = tuple(s.statement_id for s in evidence_statements
@@ -624,16 +632,24 @@ def _check_alias_preferences(claim: StructuredClaim,
 
 def detect_term_conflicts(request: QAInput,
                           evidence_statements: list[EvidenceStatement],
-                          claims: list[StructuredClaim]) -> list[ClaimResult]:
-    """Run all five TERM checks over every answer claim (L0, deterministic)."""
-    lexicon = build_document_lexicon(evidence_statements)
+                          claims: list[StructuredClaim],
+                          lexicon: NerLexicon | None = None) -> list[ClaimResult]:
+    """Run all five TERM checks over every answer claim (L0, deterministic).
+
+    ``lexicon``不注入时用模块级默认场景(srs_scene1); 前三个位置参数与
+    返回结构保持v1不变(qa_module/既有测试零改动).
+    """
+    p = _patterns(lexicon)
+    doc_lexicon = build_document_lexicon(evidence_statements, lexicon)
     results: list[ClaimResult] = []
     for claim in claims:
         scoped = _scope_statements(claim, evidence_statements)
-        results.extend(_check_interface_ids(claim, scoped, evidence_statements))
-        results.extend(_check_definitions(claim, scoped))
-        results.extend(_check_usecase_mentions(request, claim, scoped, lexicon))
-        results.extend(_check_alias_preferences(claim, evidence_statements, lexicon))
+        results.extend(_check_interface_ids(claim, scoped, evidence_statements, p))
+        results.extend(_check_definitions(claim, scoped, p))
+        results.extend(
+            _check_usecase_mentions(request, claim, scoped, doc_lexicon, p))
+        results.extend(
+            _check_alias_preferences(claim, evidence_statements, doc_lexicon, p))
     return results
 
 

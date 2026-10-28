@@ -47,40 +47,73 @@ from algorithms.common.bge_local import BgeLocal
 from algorithms.consistency.answer_structure import StructuredClaim
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.qa_models import ClaimResult, QAInput, Verdict
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 _CHECK_ITEM = "LOGIC-03"
-_STEP_RE = re.compile(r"(\d+)[.．、]\s*([^；;\n]+)")
-_FLOW_FIELDS = ("Actor的动作", "系统的动作")
-_EXCEPTION_FIELD_RE = re.compile(r"^异常流E?\d*$")
-_QUESTION_SCOPE_RE = re.compile(
-    r"(?P<name>[\u4e00-\u9fffA-Za-z0-9-]{2,24}?)(?:的)?"
-    r"(?:主事件流|事件流|用例描述)")
-_PREAMBLE_RE = re.compile(r"包括以下|如下|这些操作|确保")
-_PUNCT_RE = re.compile(r"[\s：:，,。；;、（）()「」\[\]【】*·]")
-_STRIP_CHARS = " \n。；;，,：:"
-_MATCH_TH_DET = 0.28   # 字符重合阈值(S1QA-024: 正确对≥0.31, 次优误配≤0.25)
-_MATCH_TH_BGE = 0.60   # BGE步骤句级阈值(04号fixture: 改写对≥0.62, 编造对
-                       # ≤0.55; 异于锚点EMB_TH_LOCAL=0.78——句级分布不同,
-                       # 阈值各自校准, 不可互换)
+#: NW对齐算法参数与异常流位置基准——"怎么比"的引擎能力, 留在源码
+#: (docs/srs_project/64_rulepack_design.md §4配置化分层)
 _GAP_PENALTY = -0.5
 _EXCEPTION_BASE = 10_000.0
-_MIN_STEP_CHARS = 8
 
-# ── 适用性门(G4 P1粒度治理) ──────────────────────────────
-#: 流程/步骤型问题的指示词——只有这类问题的answer编号项才可能是事件流
-_FLOW_QUESTION_RE = re.compile(r"主事件流|事件流|步骤|流程|时序|顺序|依次|先后")
-#: 异常类型枚举指示词(编号项是异常/错误类型清单而非步骤序列)
-_FAILURE_KEYWORDS: tuple[str, ...] = ("失败", "错误", "异常")
-#: 时序连接词(真事件流的编号项通常显式衔接)
-_TEMPORAL_CONNECTORS: tuple[str, ...] = (
-    "然后", "随后", "之后", "接着", "下一步", "紧接着", "依次", "重新")
-#: 并列长项判定的平均长度阈值(S1QA-024真序列平均39字符; 066/077并列项47+)
-_PARALLEL_ITEM_AVG_LEN = 40
-#: 异常类型枚举的关键词占比阈值
-_FAILURE_KEYWORD_RATIO = 0.5
-#: 实质步骤文本判定: 至少2个连续汉字——纯编号/表格单元格残片
-#: ("1.1 |", "4．1.1 |")不是可判定的内容
-_SUBSTANTIVE_STEP_RE = re.compile(r"[\u4e00-\u9fff]{2,}")
+
+@dataclass(frozen=True)
+class _SequenceConfig:
+    """从rule pack编译的序列对齐配置(步骤模式+词表+窗口+阈值)."""
+
+    step: re.Pattern[str]
+    exception_field: re.Pattern[str]
+    question_scope: re.Pattern[str]
+    preamble: re.Pattern[str]
+    punct: re.Pattern[str]
+    flow_question: re.Pattern[str]
+    substantive_step: re.Pattern[str]
+    flow_fields: tuple[str, ...]
+    failure_keywords: tuple[str, ...]
+    temporal_connectors: tuple[str, ...]
+    strip_chars: str
+    min_step_chars: int
+    parallel_item_avg_len: int
+    pair_det: float
+    pair_bge: float
+    failure_keyword_ratio: float
+    conf_det: float
+    conf_bge: float
+
+
+def _build_config(pack: RulePack) -> _SequenceConfig:
+    return _SequenceConfig(
+        step=pack.template("seq_step"),
+        exception_field=pack.template("seq_exception_field"),
+        question_scope=pack.template("seq_question_scope"),
+        preamble=pack.template("seq_preamble"),
+        punct=pack.template("seq_punct"),
+        flow_question=pack.template("seq_flow_question"),
+        substantive_step=pack.template("seq_substantive_step"),
+        flow_fields=pack.vocabulary("seq_flow_fields"),
+        failure_keywords=pack.vocabulary("seq_failure_keywords"),
+        temporal_connectors=pack.vocabulary("seq_temporal_connectors"),
+        strip_chars=str(pack.join_param("sequence", "strip_chars", "")),
+        min_step_chars=int(pack.join_param("sequence", "min_step_chars", 8)),
+        parallel_item_avg_len=int(
+            pack.join_param("sequence", "parallel_item_avg_len", 40)),
+        pair_det=pack.threshold("seq_pair_det"),
+        pair_bge=pack.threshold("seq_pair_bge"),
+        failure_keyword_ratio=pack.threshold("seq_failure_keyword_ratio"),
+        conf_det=pack.threshold("seq_conf_det"),
+        conf_bge=pack.threshold("seq_conf_bge"),
+    )
+
+
+_SEQ_CONFIG: _SequenceConfig | None = None
+
+
+def _cfg() -> _SequenceConfig:
+    """惰性加载默认rule pack并编译序列配置(模块级缓存, import期零I/O)."""
+    global _SEQ_CONFIG
+    if _SEQ_CONFIG is None:
+        _SEQ_CONFIG = _build_config(default_rulepack())
+    return _SEQ_CONFIG
+
 
 
 @dataclass(frozen=True)
@@ -134,13 +167,13 @@ def _compact(text: str) -> str:
 def _clean_step_text(text: str) -> str:
     """去markdown强调与首尾标点; 保留内部结构(『标签：内容』)."""
     cleaned = text.replace("**", "")
-    return cleaned.strip().strip(_STRIP_CHARS).strip()
+    return cleaned.strip().strip(_cfg().strip_chars).strip()
 
 
 def char_jaccard(left: str, right: str) -> float:
     """字符集合Jaccard(去标点空白): 确定性词面重合度."""
-    a = set(_PUNCT_RE.sub("", left))
-    b = set(_PUNCT_RE.sub("", right))
+    a = set(_cfg().punct.sub("", left))
+    b = set(_cfg().punct.sub("", right))
     if not a or not b:
         return 0.0
     return len(a & b) / len(a | b)
@@ -158,8 +191,8 @@ def _argmax(scores: list[float]) -> int:
 
 
 def _is_flow_field(field_name: str) -> bool:
-    return field_name in _FLOW_FIELDS or bool(
-        _EXCEPTION_FIELD_RE.match(field_name))
+    return field_name in _cfg().flow_fields or bool(
+        _cfg().exception_field.match(field_name))
 
 
 def _cell_body(statement_text: str, field_name: str) -> str:
@@ -168,7 +201,7 @@ def _cell_body(statement_text: str, field_name: str) -> str:
     if index < 0:
         return statement_text
     body = statement_text[index + len(field_name):]
-    return body.lstrip(_STRIP_CHARS).strip()
+    return body.lstrip(_cfg().strip_chars).strip()
 
 
 def _numbered_segments(body: str) -> tuple[list[tuple[int, str]], list[str]]:
@@ -176,17 +209,17 @@ def _numbered_segments(body: str) -> tuple[list[tuple[int, str]], list[str]]:
     numbered: list[tuple[int, str]] = []
     unnumbered: list[str] = []
     cursor = 0
-    for match in _STEP_RE.finditer(body):
+    for match in _cfg().step.finditer(body):
         if match.start() > cursor:
             segment = _clean_step_text(body[cursor:match.start()])
-            if len(segment) >= _MIN_STEP_CHARS:
+            if len(segment) >= _cfg().min_step_chars:
                 unnumbered.append(segment)
         content = _clean_step_text(match.group(2))
         if content:
             numbered.append((int(match.group(1)), content))
         cursor = match.end()
     trailing = _clean_step_text(body[cursor:])
-    if len(trailing) >= _MIN_STEP_CHARS:
+    if len(trailing) >= _cfg().min_step_chars:
         unnumbered.append(trailing)
     return numbered, unnumbered
 
@@ -224,7 +257,7 @@ def extract_flow_steps(statements: list[EvidenceStatement],
     unnumbered: list[tuple[str, EvidenceStatement]] = []
     exceptions: list[tuple[str, EvidenceStatement]] = []
     for statement in _flow_pool(statements, scope):
-        if _EXCEPTION_FIELD_RE.match(statement.field_name):
+        if _cfg().exception_field.match(statement.field_name):
             body = _cell_body(statement.text, statement.field_name)
             if body:
                 exceptions.append((body, statement))
@@ -240,7 +273,7 @@ def extract_flow_steps(statements: list[EvidenceStatement],
         if index < len(missing):
             numbered.append((missing[index], content, statement))
     numbered.sort(key=lambda item: (
-        item[0], item[2].row_index, _FLOW_FIELDS.index(item[2].field_name)))
+        item[0], item[2].row_index, _cfg().flow_fields.index(item[2].field_name)))
     flow: list[FlowStep] = [
         FlowStep(text=content, field_name=statement.field_name,
                  scope_key=statement.scope_key, number=num,
@@ -270,7 +303,7 @@ def resolve_flow_scope(question: str,
     if not flow_scopes:
         return None
     candidates: list[str] = []
-    match = _QUESTION_SCOPE_RE.search(question)
+    match = _cfg().question_scope.search(question)
     if match:
         candidates.append(match.group("name"))
     candidates.extend(
@@ -304,7 +337,7 @@ def extract_answer_steps(answer: str,
     """提取answer声称的编号步骤(同证据正则); 无编号时回退
     structure="step"claims的出现序(过滤导语/结语, 且至少2条才构成序列)."""
     steps: list[AnswerStep] = []
-    for match in _STEP_RE.finditer(answer):
+    for match in _cfg().step.finditer(answer):
         content = _clean_step_text(match.group(2))
         if not content:
             continue
@@ -316,8 +349,8 @@ def extract_answer_steps(answer: str,
     fallback: list[AnswerStep] = []
     for claim in claims or []:
         if (claim.structure == "step"
-                and len(claim.text) >= _MIN_STEP_CHARS
-                and not _PREAMBLE_RE.search(claim.text)):
+                and len(claim.text) >= _cfg().min_step_chars
+                and not _cfg().preamble.search(claim.text)):
             fallback.append(AnswerStep(
                 text=claim.text, number=None, order=len(fallback),
                 claim_id=claim.claim_id))
@@ -341,18 +374,19 @@ def is_sequence_applicable(question: str,
     """
     if not answer_steps:
         return False
-    if not _FLOW_QUESTION_RE.search(question):
+    if not _cfg().flow_question.search(question):
         return False
     texts = [step.text for step in answer_steps]
     failure_hits = sum(
         1 for text in texts
-        if any(keyword in text for keyword in _FAILURE_KEYWORDS))
-    if failure_hits / len(texts) >= _FAILURE_KEYWORD_RATIO:
+        if any(keyword in text for keyword in _cfg().failure_keywords))
+    if failure_hits / len(texts) >= _cfg().failure_keyword_ratio:
         return False
     joined = "".join(texts)
-    if not any(connector in joined for connector in _TEMPORAL_CONNECTORS):
+    if not any(connector in joined
+                for connector in _cfg().temporal_connectors):
         avg_len = sum(len(text) for text in texts) / len(texts)
-        if avg_len > _PARALLEL_ITEM_AVG_LEN:
+        if avg_len > _cfg().parallel_item_avg_len:
             return False
     return True
 
@@ -511,7 +545,7 @@ def verify_sequence(request: QAInput,
                         "answer编号项为并列枚举(非事件流), 时序通道不适用; "
                         "该项内容未被本通道验证")
             for order, step in enumerate(answer_steps)
-            if step.claim_id and _SUBSTANTIVE_STEP_RE.search(step.text)
+            if step.claim_id and _cfg().substantive_step.search(step.text)
         ]
     scope = resolve_flow_scope(request.question, claims, statements)
     flow_scopes = _distinct_flow_scopes(statements)
@@ -536,7 +570,7 @@ def verify_sequence(request: QAInput,
     match: dict[int, tuple[int, str, float]] = {}
     for i in range(len(answer_steps)):
         j = _argmax(det_sim[i])
-        if det_sim[i][j] >= _MATCH_TH_DET:
+        if det_sim[i][j] >= _cfg().pair_det:
             match[i] = (j, "deterministic", det_sim[i][j])
 
     bge_sim: list[list[float]] | None = None
@@ -553,7 +587,7 @@ def verify_sequence(request: QAInput,
                 if i in match:
                     continue
                 j = _argmax(bge_sim[i])
-                if bge_sim[i][j] >= _MATCH_TH_BGE:
+                if bge_sim[i][j] >= _cfg().pair_bge:
                     match[i] = (j, "bge", bge_sim[i][j])
 
     inversions = _find_inversions({i: j for i, (j, _, _) in match.items()},
@@ -573,7 +607,8 @@ def verify_sequence(request: QAInput,
             continue
         j, channel, sim = match[i]
         target = flow_steps[j]
-        confidence = 0.8 if channel == "bge" else 0.9
+        confidence = (_cfg().conf_bge if channel == "bge"
+                      else _cfg().conf_det)
         refs = (target.evidence_id,)
         if i in involved:
             pair = next(p for p in inversions if i in p)

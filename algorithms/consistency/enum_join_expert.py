@@ -47,91 +47,85 @@ from dataclasses import dataclass
 
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.qa_models import ClaimResult, QAInput
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "enum_join_registry"
 CHECK_ITEMS: tuple[str, ...] = ("TERM-03",)
 
-#: 终端形态（方式名称）与运行状态（阶段）的封闭值域——错字检测锚
-_TERMINAL_BASES = frozenset({"桌面", "平板", "手持"})
-_PHASE_BASES = frozenset({"开发阶段", "运行阶段"})
 
-#: 声明kind → 参与比对的注册条目source_field
-_KIND_BY_FIELD = {
-    "方式名称": "terminal",
-    "运行状态": "phase",
-    "prose": "functional",
-    "row_enum": "functional",
-}
-_FIELD_LABEL = {
-    "方式名称": "方式名称",
-    "运行状态": "运行状态",
-    "prose": "正文枚举",
-    "row_enum": "能力表行",
-}
+@dataclass(frozen=True)
+class _EnumConfig:
+    """从rule pack编译的枚举join配置(字段模式+值域+词表+错字距离)."""
 
-#: 表格字段语句（能力表线性化形态）："X的方式名称：平板、桌面"
-_FIELD_VALUE_RE = re.compile(
-    r"(?P<subj>[\u4e00-\u9fffA-Za-z0-9]{2,20})的"
-    r"(?P<field>需求重用|方式名称|运行状态|对应的任务书功能性能)[：:]"
-    r"(?P<value>.+)")
+    field_value: re.Pattern[str]
+    enum_sentence: re.Pattern[str]
+    id_binding: re.Pattern[str]
+    section_title: re.Pattern[str]
+    device: re.Pattern[str]
+    question_subject: re.Pattern[str]
+    member_valid: re.Pattern[str]
+    member_split: re.Pattern[str]
+    count_function_suffix: re.Pattern[str]
+    subject_role_suffix: re.Pattern[str]
+    leading_table: re.Pattern[str]
+    generic_subject: re.Pattern[str]
+    phase_words: re.Pattern[str]
+    member_split_device: re.Pattern[str]
+    device_subject_run: re.Pattern[str]
+    terminal_bases: frozenset[str]
+    phase_bases: frozenset[str]
+    subject_garbage_infixes: tuple[str, ...]
+    generic_subjects: frozenset[str]
+    dev_tail_strip: tuple[str, ...]
+    field_kinds: dict[str, str]
+    field_labels: dict[str, str]
+    typo_distance: int
+    device_subject_window: int
+    row_enum_block_isolated: bool
 
-#: 枚举句（正文/answer共用）："X[功能]包括：A、B、C"——主体后缀
-#: （功能/操作/服务/内容）可选吞掉，主体取最短合法形态
-_ENUM_RE = re.compile(
-    r"(?P<subj>[\u4e00-\u9fffA-Za-z0-9]{2,20}?)"
-    r"(?:功能|操作|服务|内容)?(?:包括|包含|分为|划分为)[：:]?"
-    r"(?P<items>[^，,。；;\n]{4,120})")
 
-#: ID绑定（能力表"X的项目唯一标识符：ID"），供行主体→父主体聚合
-_ID_BINDING_RE = re.compile(
-    r"(?P<subj>[\u4e00-\u9fffA-Za-z0-9]{2,20}?)的"
-    r"(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识)[：:]"
-    r"(?P<id>PZXQ-[A-Z0-9-]+)")
+def _build_config(pack: RulePack) -> _EnumConfig:
+    return _EnumConfig(
+        field_value=pack.template("enum_field_value"),
+        enum_sentence=pack.template("enum_sentence"),
+        id_binding=pack.template("enum_id_binding"),
+        section_title=pack.template("enum_section_title"),
+        device=pack.template("enum_device"),
+        question_subject=pack.template("enum_question_subject"),
+        member_valid=pack.template("enum_member_valid"),
+        member_split=pack.template("enum_member_split"),
+        count_function_suffix=pack.template("enum_count_function_suffix"),
+        subject_role_suffix=pack.template("enum_subject_role_suffix"),
+        leading_table=pack.template("enum_leading_table"),
+        generic_subject=pack.template("enum_generic_subject"),
+        phase_words=pack.template("enum_phase_words"),
+        member_split_device=pack.template("enum_member_split_device"),
+        device_subject_run=pack.template("enum_device_subject_run"),
+        terminal_bases=frozenset(pack.vocabulary("enum_terminal_bases")),
+        phase_bases=frozenset(pack.vocabulary("enum_phase_bases")),
+        subject_garbage_infixes=pack.vocabulary("enum_subject_garbage_infixes"),
+        generic_subjects=frozenset(pack.vocabulary("enum_generic_subjects")),
+        dev_tail_strip=pack.vocabulary("enum_dev_tail_strip"),
+        field_kinds=dict(pack.join_param("enum_join", "field_kinds", {})),
+        field_labels=dict(pack.join_param("enum_join", "field_labels", {})),
+        typo_distance=int(pack.join_param("enum_join", "typo_distance", 1)),
+        device_subject_window=int(
+            pack.join_param("enum_join", "device_subject_window", 24)),
+        row_enum_block_isolated=bool(
+            pack.join_param("enum_join", "row_enum_block_isolated", True)),
+    )
 
-#: 节标题绑定："3.2.1.2 SQL访问-修改数据（PZXQ-GN-SQLFW-XGSJ）"
-_SECTION_TITLE_RE = re.compile(
-    r"\d+(?:\.\d+)+(?P<name>[\u4e00-\u9fffA-Za-z0-9-]{2,40}?)"
-    r"[（(](?P<id>PZXQ-[A-Z0-9-]+)[）)]")
 
-#: answer侧终端形态声明："支持在桌面、平版和平板设备上运行"
-_DEVICE_ENUM_RE = re.compile(
-    r"在(?P<items>[\u4e00-\u9fffA-Za-z0-9、和]{6,60}?)"
-    r"(?:等)?(?:种版本|版本|设备|终端|平台)?"
-    r"上(?:运行|使用|提供|均可|实施)")
+_ENUM_CONFIG: _EnumConfig | None = None
 
-#: 问题主题回退（DEV声明缺局部主体时）："SQL访问修改数据功能包括哪些操作"
-_QUESTION_SUBJECT_RE = re.compile(
-    r"(?P<subj>[\u4e00-\u9fffA-Za-z0-9]{2,24}?)"
-    r"(?:包括|包含|涉及|以哪些|有哪些|哪些)")
 
-_MEMBER_VALID_RE = re.compile(r"[\u4e00-\u9fffA-Za-z0-9]{2,16}")
-_MEMBER_SPLIT_RE = re.compile(r"[、，,]|以及|和")
-_COUNT_FUNCTION_SUFFIX_RE = re.compile(r"(?:[一二三四五六七八九十两\d]+)?项功能$")
-_SUBJECT_ROLE_SUFFIX_RE = re.compile(
-    r"(?:的支持方式|的方式名称|的运行状态|的功能标识表|的具体操作"
-    r"|的主要功能|的核心操作|的子功能)$")
-_LEADING_TABLE_RE = re.compile(r"^表\d+")
-_GENERIC_SUBJECT_RE = re.compile(
-    r"^(?:所有|这些|上述|全部|该|其|每|各)?"
-    r"(?:操作|功能|用例|设备|版本|步骤|内容|方面|模块|场景|参数)$")
+def _cfg() -> _EnumConfig:
+    """惰性加载默认rule pack并编译枚举join配置(模块级缓存, import期零I/O)."""
+    global _ENUM_CONFIG
+    if _ENUM_CONFIG is None:
+        _ENUM_CONFIG = _build_config(default_rulepack())
+    return _ENUM_CONFIG
 
-#: 提取主体含这些词→垃圾主体（"…按照其功能需求，包含…"式）
-_SUBJECT_GARBAGE_INFIXES = (
-    "按照", "如下", "以下", "上述", "其中", "以及", "并且", "还是",
-    "通常", "主要", "常见", "需要", "但不限于",
-)
-_GENERIC_SUBJECTS = frozenset({
-    "具体", "内容", "方面", "步骤", "类型", "模块", "场景", "参数",
-    "系统", "软件", "服务", "功能", "操作", "数据", "需求", "能力",
-    "该用例", "该功能", "其功能", "该操作", "这些操作", "所有操作",
-    "上述操作", "全部操作", "这些功能", "所有功能", "这些设备",
-    "所有设备", "以上内容", "以下内容",
-})
-
-_DEV_TAIL_STRIP = (
-    "并且在", "并且", "支持", "提供", "使用", "运行", "实施", "基于",
-    "实现", "在", "均", "都", "也", "和", "，", "。", "；", "、",
-)
 
 
 def levenshtein(a: str, b: str) -> int:
@@ -157,16 +151,16 @@ def levenshtein(a: str, b: str) -> int:
 
 def _norm_terminal(member: str) -> str:
     """终端形态归一：桌面版→桌面（值域外词如"平版"保持原样供错字检测）。"""
-    if member in _TERMINAL_BASES:
+    if member in _cfg().terminal_bases:
         return member
-    if member.endswith("版") and member[:-1] in _TERMINAL_BASES:
+    if member.endswith("版") and member[:-1] in _cfg().terminal_bases:
         return member[:-1]
     return member
 
 
 def _norm_functional(member: str) -> str:
     """功能成员归一：去"N项功能/功能/等"尾缀（最短保留原词）。"""
-    stripped = _COUNT_FUNCTION_SUFFIX_RE.sub("", member)
+    stripped = _cfg().count_function_suffix.sub("", member)
     stripped = stripped.removesuffix("等")
     if stripped.endswith("功能") and len(stripped) >= 4:
         stripped = stripped[:-2]
@@ -176,8 +170,8 @@ def _norm_functional(member: str) -> str:
 def _norm_subject(raw: str) -> str:
     """主体归一：去表引用前缀/角色尾缀/「功能」尾缀。"""
     subject = raw.strip().strip("「」『』\"' ")
-    subject = _LEADING_TABLE_RE.sub("", subject)
-    subject = _SUBJECT_ROLE_SUFFIX_RE.sub("", subject)
+    subject = _cfg().leading_table.sub("", subject)
+    subject = _cfg().subject_role_suffix.sub("", subject)
     while len(subject) > 4 and subject.endswith("功能"):
         subject = subject[:-2]
     return subject.strip()
@@ -199,7 +193,7 @@ def _subject_match(a: str, b: str) -> bool:
 
 
 def _entry_kind(entry: "DomainEntry") -> str:
-    return _KIND_BY_FIELD.get(entry.source_field, "other")
+    return _cfg().field_kinds.get(entry.source_field, "other")
 
 
 @dataclass(frozen=True)
@@ -216,7 +210,7 @@ class DomainEntry:
     statement_ids: tuple[str, ...]
 
     def describe(self) -> str:
-        field = _FIELD_LABEL.get(self.source_field, self.source_field)
+        field = _cfg().field_labels.get(self.source_field, self.source_field)
         refs = "、".join(self.statement_ids[:3])
         more = "" if len(self.statement_ids) <= 3 else "等"
         return (f"{self.subject}的{field}{{{'、'.join(self.members)}}}"
@@ -239,18 +233,18 @@ class EnumAssertion:
 
 
 def _valid_member(member: str) -> bool:
-    return bool(_MEMBER_VALID_RE.fullmatch(member))
+    return bool(_cfg().member_valid.fullmatch(member))
 
 
 def _split_items(items_text: str) -> list[str]:
-    return [part for part in _MEMBER_SPLIT_RE.split(items_text) if part]
+    return [part for part in _cfg().member_split.split(items_text) if part]
 
 
 def _field_members(field: str, value: str) -> tuple[str, ...]:
     """字段单元格→成员：运行状态按阶段词切（"运行阶段开发阶段"无分隔符）。"""
     value = value.strip().rstrip("。；;、")
     if field == "运行状态":
-        words = re.findall(r"开发阶段|运行阶段", value)
+        words = _cfg().phase_words.findall(value)
         if words:
             return tuple(dict.fromkeys(words))
     items = [item for item in re.split(r"[、，,]", value) if item]
@@ -261,11 +255,11 @@ def _field_members(field: str, value: str) -> tuple[str, ...]:
 
 
 def _subject_rejected(raw: str) -> bool:
-    if any(term in raw for term in _SUBJECT_GARBAGE_INFIXES):
+    if any(term in raw for term in _cfg().subject_garbage_infixes):
         return True
     subject = _norm_subject(raw)
-    return (not subject or subject in _GENERIC_SUBJECTS
-            or bool(_GENERIC_SUBJECT_RE.fullmatch(subject)))
+    return (not subject or subject in _cfg().generic_subjects
+            or bool(_cfg().generic_subject.fullmatch(subject)))
 
 
 def build_domain_registry(
@@ -283,7 +277,7 @@ def build_domain_registry(
     rows: list[tuple[str, str, EvidenceStatement]] = []
     for statement in statements:
         compact = re.sub(r"\s+", "", statement.text)
-        for match in _FIELD_VALUE_RE.finditer(compact):
+        for match in _cfg().field_value.finditer(compact):
             subject = _norm_subject(match.group("subj"))
             members = _field_members(match.group("field"), match.group("value"))
             if subject and members:
@@ -292,17 +286,17 @@ def build_domain_registry(
                     source_field=match.group("field"),
                     evidence_ids=(statement.evidence_id,),
                     statement_ids=(statement.statement_id,)))
-        for match in _ENUM_RE.finditer(compact):
+        for match in _cfg().enum_sentence.finditer(compact):
             subject = _make_prose_entry(match, statement)
             if subject is not None:
                 entries.append(subject)
-        for match in _ID_BINDING_RE.finditer(compact):
+        for match in _cfg().id_binding.finditer(compact):
             subject = _norm_subject(match.group("subj"))
             identifier = match.group("id")
             if len(subject) >= 2:
                 id_subject.setdefault(identifier, subject)
                 rows.append((subject, identifier, statement))
-        for match in _SECTION_TITLE_RE.finditer(compact):
+        for match in _cfg().section_title.finditer(compact):
             name = match.group("name")
             leaf = name.rsplit("-", 1)[-1] if "-" in name else name
             subject = _norm_subject(leaf)
@@ -312,12 +306,14 @@ def build_domain_registry(
     # 标识"行）。分块聚合：同一父ID前缀常被多张表共用（真实04文档表9的
     # 行ID PZXQ-GN-SQLFW-SJXG与表3的行共用PZXQ-GN-SQLFW父段），跨块
     # 合并会把两张表的行集错并成一个封闭集合。
+    block_isolated = _cfg().row_enum_block_isolated
     groups: dict[tuple[str, str], list[tuple[str, EvidenceStatement]]] = {}
     for scope, identifier, statement in rows:
         parent = identifier.rsplit("-", 1)[0]
         if parent and parent != identifier and parent in id_subject:
-            groups.setdefault((parent, statement.evidence_id),
-                              []).append((scope, statement))
+            block_key = (parent, statement.evidence_id) if block_isolated else (
+                parent, "")
+            groups.setdefault(block_key, []).append((scope, statement))
     for (parent, _), items in groups.items():
         scopes: list[str] = []
         statement_ids: list[str] = []
@@ -362,14 +358,14 @@ def _classify_members(raw_members: tuple[str, ...]) -> str:
     if not raw_members:
         return "functional"
     terminal = [_norm_terminal(member) for member in raw_members]
-    if all(member in _TERMINAL_BASES for member in terminal):
+    if all(member in _cfg().terminal_bases for member in terminal):
         return "terminal"
     if all(
-            member in _TERMINAL_BASES
-            or any(levenshtein(member, base) == 1 for base in _TERMINAL_BASES)
+            member in _cfg().terminal_bases
+            or any(levenshtein(member, base) == _cfg().typo_distance for base in sorted(_cfg().terminal_bases))
             for member in terminal):
         return "terminal"
-    if all(member in _PHASE_BASES for member in raw_members):
+    if all(member in _cfg().phase_bases for member in raw_members):
         return "phase"
     return "functional"
 
@@ -389,7 +385,7 @@ def _strip_tail(text: str) -> str:
     changed = True
     while changed and stripped:
         changed = False
-        for suffix in _DEV_TAIL_STRIP:
+        for suffix in _cfg().dev_tail_strip:
             if stripped.endswith(suffix) and len(stripped) > len(suffix):
                 stripped = stripped[: -len(suffix)]
                 changed = True
@@ -399,13 +395,13 @@ def _strip_tail(text: str) -> str:
 
 def _question_subject(question: str) -> str | None:
     compact = re.sub(r"\s+", "", question)
-    match = _QUESTION_SUBJECT_RE.search(compact)
+    match = _cfg().question_subject.search(compact)
     if match is None:
         return None
     subject = _norm_subject(match.group("subj"))
-    if not subject or subject in _GENERIC_SUBJECTS:
+    if not subject or subject in _cfg().generic_subjects:
         return None
-    if _GENERIC_SUBJECT_RE.fullmatch(subject):
+    if _cfg().generic_subject.fullmatch(subject):
         return None
     return subject
 
@@ -413,13 +409,13 @@ def _question_subject(question: str) -> str | None:
 def _device_subject_candidates(text: str, start: int,
                                question: str) -> tuple[str, ...]:
     """DEV声明的候选主体：局部名词（去泛指/anaphor）优先，问题主题回退。"""
-    window = _strip_tail(text[max(0, start - 24):start])
+    window = _strip_tail(text[max(0, start - _cfg().device_subject_window):start])
     candidates: list[str] = []
-    run = re.search(r"[\u4e00-\u9fffA-Za-z0-9]{2,16}$", window)
+    run = _cfg().device_subject_run.search(window)
     if run:
         subject = _norm_subject(run.group(0))
-        if (subject and subject not in _GENERIC_SUBJECTS
-                and not _GENERIC_SUBJECT_RE.fullmatch(subject)):
+        if (subject and subject not in _cfg().generic_subjects
+                and not _cfg().generic_subject.fullmatch(subject)):
             candidates.append(subject)
     fallback = _question_subject(question)
     if fallback:
@@ -438,7 +434,7 @@ def extract_enum_assertions(answer: str,
     compact = re.sub(r"\s+", "", answer)
     assertions: list[EnumAssertion] = []
     seen: set[tuple[str, ...]] = set()
-    for match in _ENUM_RE.finditer(compact):
+    for match in _cfg().enum_sentence.finditer(compact):
         items_text = match.group("items")
         if "但不限于" in items_text:
             continue
@@ -460,9 +456,9 @@ def extract_enum_assertions(answer: str,
             subjects=(subject,), raw_members=tuple(raw_items),
             members=_normalize_members(tuple(raw_items), kind), kind=kind,
             closed=not items_text.endswith("等")))
-    for match in _DEVICE_ENUM_RE.finditer(compact):
+    for match in _cfg().device.finditer(compact):
         raw_items = [item for item in
-                     re.split(r"[、和]", match.group("items")) if item]
+                     _cfg().member_split_device.split(match.group("items")) if item]
         if len(raw_items) < 2 or not all(_valid_member(i) for i in raw_items):
             continue
         subjects = _device_subject_candidates(compact, match.start(), question)
@@ -514,9 +510,9 @@ def _dedupe_entries(entries: list[DomainEntry]) -> list[DomainEntry]:
 
 def _bases_for(kind: str) -> frozenset[str]:
     if kind == "terminal":
-        return _TERMINAL_BASES
+        return _cfg().terminal_bases
     if kind == "phase":
-        return _PHASE_BASES
+        return _cfg().phase_bases
     return frozenset()
 
 
@@ -524,7 +520,7 @@ def _typo_target(member: str, bases: frozenset[str],
                  union: set[str]) -> str | None:
     """成员不在值域但与值域词/注册成员编辑距离=1→返回正确词。"""
     for candidate in sorted(bases | union):
-        if candidate != member and levenshtein(member, candidate) == 1:
+        if candidate != member and levenshtein(member, candidate) == _cfg().typo_distance:
             return candidate
     return None
 
@@ -552,7 +548,7 @@ def _compare(assertion: EnumAssertion,
         if not bases or member in bases:
             continue
         for base in sorted(bases):
-            if levenshtein(member, base) == 1 and base in answer_members:
+            if levenshtein(member, base) == _cfg().typo_distance and base in answer_members:
                 signals.append(
                     f"证据侧疑似错别字：{member}→{base}（answer声明了正确值"
                     f"「{base}」，注册值「{member}」不在值域"
@@ -594,7 +590,7 @@ def _compare(assertion: EnumAssertion,
             if bases and member not in bases:
                 corrected = next(
                     (base for base in sorted(bases)
-                     if levenshtein(member, base) == 1), None)
+                     if levenshtein(member, base) == _cfg().typo_distance), None)
                 if corrected is not None and corrected in answer_members:
                     continue
             signals.append(

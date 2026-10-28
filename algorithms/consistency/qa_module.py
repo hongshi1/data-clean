@@ -212,8 +212,8 @@ def _expert_registry(use_bge: bool) -> tuple[ExpertSpec, ...]:
     from algorithms.consistency.e1_expert import verify_e1_consistency
     from algorithms.consistency.entity_detector import detect_term_conflicts
     from algorithms.consistency.enum_join_expert import verify_enum_joins
-    from algorithms.consistency.gjb_presence_expert import (
-        verify_gjb_presence)
+    from algorithms.consistency.gjb_rule_engine import (
+        verify_gjb_rules)
     from algorithms.consistency.id_join_expert import verify_id_joins
     from algorithms.consistency.numeric_z3_expert import (
         verify_numeric_constraints)
@@ -225,7 +225,7 @@ def _expert_registry(use_bge: bool) -> tuple[ExpertSpec, ...]:
         ExpertSpec("e1", three_arg(verify_e1_consistency)),
         ExpertSpec("sequence", bge_switch(verify_sequence), takes_bge=True),
         ExpertSpec("trace", request_only(verify_trace), takes_claims=False),
-        ExpertSpec("gjb", statements_only(verify_gjb_presence),
+        ExpertSpec("gjb", statements_only(verify_gjb_rules),
                    takes_claims=False),
         ExpertSpec("id_join", statements_only(verify_id_joins),
                    takes_claims=False),

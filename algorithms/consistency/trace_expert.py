@@ -35,21 +35,57 @@ from algorithms.consistency.qa_models import (
     RetrievedEvidence,
     Verdict,
 )
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "trace_bidirectional_join"
 CHECK_ITEMS: tuple[str, ...] = ("GJB-05",)
 
-_NON_TRACK_NOTES = frozenset({"不追踪", "不跟踪", "不追溯"})
-_NOTE_COLUMN_COUNT = 5
-_MAX_ANSWER_PAIRS = 4
 
-_SECTION_SPLIT = re.compile(r"[、，,]")
-_SEGMENT_SPLIT = re.compile(r"[。；;\n]")
-_RELATION_WORDS = re.compile(r"对应|追溯|映射|追踪|关联|引用|来自|源于|依据")
-_TRACE_RELATION_WORDS = re.compile(r"追溯|追踪|映射")
-_SECTION_TOKEN = re.compile(r"\d+(?:\.\d+)+\s*[a-hA-H]?[)）]?")
-_TASKBOOK_SECTION = re.compile(r"^4(?:\.\d+)+")
-_HEADING_NUMBER = re.compile(r"^\s*(\d+(?:\.\d+)*)\s")
+@dataclass(frozen=True)
+class _TraceConfig:
+    """从rule pack编译的追踪表join配置(方向标记+词表+窗口+模式)."""
+
+    direction_markers: tuple[str, ...]
+    non_track_notes: frozenset[str]
+    note_column_count: int
+    max_answer_pairs: int
+    section_split: re.Pattern[str]
+    segment_split: re.Pattern[str]
+    relation_words: re.Pattern[str]
+    trace_relation_words: re.Pattern[str]
+    section_token: re.Pattern[str]
+    taskbook_section: re.Pattern[str]
+    heading_number: re.Pattern[str]
+
+
+def _build_config(pack: RulePack) -> _TraceConfig:
+    trace = pack.table_spec("trace_table")
+    return _TraceConfig(
+        direction_markers=trace.direction_markers,
+        non_track_notes=frozenset(pack.vocabulary("trace_non_track_notes")),
+        note_column_count=int(
+            pack.join_param("trace", "note_column_count", 5)),
+        max_answer_pairs=int(pack.join_param("trace", "max_answer_pairs", 4)),
+        section_split=pack.template("trace_section_split"),
+        segment_split=pack.template("trace_segment_split"),
+        relation_words=pack.template("trace_relation_words"),
+        trace_relation_words=pack.template("trace_trace_relation_words"),
+        section_token=pack.template("trace_section_token"),
+        taskbook_section=pack.template("trace_taskbook_section"),
+        heading_number=pack.template("trace_heading_number"),
+    )
+
+
+_TRACE_CONFIG: _TraceConfig | None = None
+
+
+def _cfg() -> _TraceConfig:
+    """惰性加载默认rule pack并编译追踪join配置(模块级缓存, import期零I/O)."""
+    global _TRACE_CONFIG
+    if _TRACE_CONFIG is None:
+        _TRACE_CONFIG = _build_config(default_rulepack())
+    return _TRACE_CONFIG
+
 
 
 @dataclass(frozen=True)
@@ -92,13 +128,14 @@ def _norm_note(cell: str) -> str:
 
 
 def _is_non_track(note: str) -> bool:
-    return _norm_note(note) in _NON_TRACK_NOTES
+    return _norm_note(note) in _cfg().non_track_notes
 
 
 def _table_direction(header_text: str) -> str | None:
-    if "任务书" not in header_text or "本文档" not in header_text:
+    first, second = _cfg().direction_markers[:2]
+    if first not in header_text or second not in header_text:
         return None
-    if header_text.find("任务书") < header_text.find("本文档"):
+    if header_text.find(first) < header_text.find(second):
         return "forward"
     return "reverse"
 
@@ -115,7 +152,7 @@ def _classify_row(cells: list[str],
     n = len(cells)
     if n == 0:
         return None
-    if n >= _NOTE_COLUMN_COUNT:
+    if n >= _cfg().note_column_count:
         return cells[0], cells[1], cells[2], cells[3], cells[4]
     if n == 4:
         if _is_non_track(cells[3]):
@@ -134,12 +171,14 @@ def _pair_side(name_cell: str,
                section_cell: str) -> tuple[tuple[str, str], ...]:
     """Explode one side's (name, section) cell pair into single anchors."""
     sections = tuple(
-        _norm_section(part) for part in _SECTION_SPLIT.split(section_cell))
+        _norm_section(part) for part in _cfg().section_split.split(
+            section_cell))
     sections = tuple(section for section in sections if section)
     if not sections:
         return ()
-    names = tuple(name.strip() for name in _SECTION_SPLIT.split(name_cell)
-                  if name.strip())
+    names = tuple(name.strip()
+                   for name in _cfg().section_split.split(name_cell)
+                   if name.strip())
     if len(names) == len(sections):
         return tuple(zip(names, sections))
     whole = name_cell.strip()
@@ -200,7 +239,7 @@ def sections_from_content_list(
     for item in items:
         if item.get("type") != "text" or item.get("text_level") is None:
             continue
-        match = _HEADING_NUMBER.match(str(item.get("text", "")))
+        match = _cfg().heading_number.match(str(item.get("text", "")))
         if match:
             sections.add(match.group(1))
     return frozenset(sections)
@@ -330,7 +369,8 @@ def _check_same_row(mappings: tuple[TraceMapping, ...]) -> list[ClaimResult]:
 
 
 def _section_tokens(segment: str) -> list[str]:
-    return [_norm_section(token) for token in _SECTION_TOKEN.findall(segment)]
+    return [_norm_section(token)
+            for token in _cfg().section_token.findall(segment)]
 
 
 def _resolve_anchors(segment: str, tokens: list[str],
@@ -362,11 +402,11 @@ def _answer_trace_pairs(answer: str, tables: TraceTables,
             tb_names.setdefault(mapping.tb_name, set()).add(
                 mapping.tb_section)
     pairs: list[tuple[str, str, str]] = []
-    for raw_segment in _SEGMENT_SPLIT.split(answer):
+    for raw_segment in _cfg().segment_split.split(answer):
         segment = raw_segment.strip()
-        if not segment or not _RELATION_WORDS.search(segment):
+        if not segment or not _cfg().relation_words.search(segment):
             continue
-        if "任务书" not in segment and not _TRACE_RELATION_WORDS.search(
+        if "任务书" not in segment and not _cfg().trace_relation_words.search(
                 segment):
             continue
         tokens = _section_tokens(segment)
@@ -375,14 +415,14 @@ def _answer_trace_pairs(answer: str, tables: TraceTables,
         tb_hits = {token for token in tokens
                    if token in tb_anchors and token not in doc_anchors}
         tb_hits |= {token for token in tokens
-                    if _TASKBOOK_SECTION.match(token)
+                    if _cfg().taskbook_section.match(token)
                     and token not in doc_anchors}
         if not tb_hits:
             tb_hits = _resolve_anchors(segment, tokens, tb_anchors,
                                         doc_anchors, tb_names)
         if not doc_hits or not tb_hits:
             continue
-        if len(doc_hits) * len(tb_hits) > _MAX_ANSWER_PAIRS:
+        if len(doc_hits) * len(tb_hits) > _cfg().max_answer_pairs:
             continue
         for doc_section, tb_section in product(sorted(doc_hits),
                                                sorted(tb_hits)):

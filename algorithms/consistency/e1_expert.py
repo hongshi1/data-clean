@@ -28,7 +28,9 @@ any-match语义与全部模板比对(检索已是question条件化的).
 
 复用: evidence_statements.EvidenceStatement / answer_structure.
 StructuredClaim / qa_models.ClaimResult. 本层完全确定性: 无模型调用、无
-文件读取、import期零I/O.
+文件读取、import期零I/O. 模板正则/词表/阈值取自rule pack
+(config/rulepacks/srs_gjb_v1.json, 见docs/srs_project/64_rulepack_design.md),
+经_cfg()惰性编译——配置内容与迁移前源码逐字一致(行为保持).
 """
 from __future__ import annotations
 
@@ -42,6 +44,7 @@ from algorithms.consistency.answer_structure import (
 )
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.qa_models import ClaimResult, QAInput, Verdict
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "e1_template_match"
 CHECK_ITEMS: tuple[str, ...] = ("LOGIC-02",)
@@ -49,75 +52,87 @@ CHECK_ITEMS: tuple[str, ...] = ("LOGIC-02",)
 PromptMatchType = Literal["exact", "substring", "keyword", "no"]
 EndingKind = Literal["end", "continue"]
 
-_E_ENTRY_HEAD = re.compile(r"(?:异常流)?E\d?\s*[：:]")
-_E_ENTRY_PARSE = re.compile(
-    r"(?:异常流)?(?P<id>E\d?)\s*[：:]\s*(?:系统提示)?"
-    r"(?P<prompt>[^，,。；;\n]*)(?:[，,]\s*(?P<ending>.*))?")
 
-_EXCEPTION_CLAIM = re.compile(r"异常|E\d|触发|提示|失败|错误|终止|结束|恢复|故障")
-_CLAIMED_E_ID = re.compile(r"(?<![A-Za-z0-9])(E\d)(?![A-Za-z0-9])")
-_ANSWER_PROMPT_QUOTED = re.compile(
-    r"(?:提示|显示|给出|返回|弹出)(?:信息|内容)?\s*[：:]?\s*[“\"]"
-    r"(?P<quoted>[^”\"]{1,60})"
-    r"(?:[”\"]|$)")
-_ANSWER_PROMPT_PLAIN = re.compile(
-    r"(?:提示|显示|给出|弹出|返回)(?P<plain>[^，,。；;”\"「」“]{1,30})")
-_PROMPT_CONNECTIVE = re.compile(
-    r"(?:并且|并|且|同时|然后|随后|之后)(?="
-    r"继续|终止|结束|返回|恢复|提示|显示|退出|执行).*$")
-# generic noun phrases carry no specific prompt content ("错误信息"/"相应的
-# 错误提示信息"/"信息" etc.); claiming them as prompt text is never checkable
-_GENERIC_PROMPT_TEXT = re.compile(
-    r"^(?:相应|相关|对应|适当|合适|具体|详细)?的?"
-    r"(?:错误|警告|失败|成功|提示|异常)*"
-    r"(?:信息|内容|消息|文本)?$")
-# a valid prompt-content span is a noun phrase; modal verbs / process verbs
-# signal that the regex crossed a clause boundary (garbage span)
-_INVALID_PROMPT_WORDS = re.compile(
-    r"可能|包括|会|将|可以|确保|通过|以及|或者|并且|然后|触发|执行|处理"
-    r"|终止|继续|结束|重启|重新|检测|尝试|输出|提供|返回|状态|断开|拒绝")
-# question asks for the prompt text itself (not for exception kinds/flows):
-# only then is a trigger-text-as-prompt claim a decisive contradiction
-_PROMPT_Q = re.compile(
-    r"提示信息|什么提示|哪些提示|返回什么|显示什么|提示什么|提示内容")
-# evidence-side span anchors: what the system actually prompts (text right
-# after a prompt verb) vs what triggers the exception (condition clause)
-_EVIDENCE_PROMPT_VERB = re.compile(
-    r"(?:提示|显示|给出)(?:信息|内容)?[：:]?"
-    r"(?P<span>[^，,。；;”\"「」“\n]{1,40})")
-_EVIDENCE_TRIGGER = re.compile(
-    r"(?:如果|若|当|在)(?P<span>[^，,。；;\n]{2,40}?)"
-    r"(?:时|情况下|条件下)?[，,]")
-_CONTINUE_WORDS = re.compile(r"继续|恢复|重试|重新(?:执行|开始|处理)")
-_END_WORDS = re.compile(r"结束|终止|中止")
-# answer-side disposition claims: the disposition verb must be anchored to a
-# use-case noun; user-behavior verb chains ("继续尝试"/"重启应用软件") are
-# not E1 disposition assertions
-_CONTINUE_CLAIM = re.compile(
-    r"(?:继续|恢复|重试|重新(?:执行|开始|处理|输入|配置|尝试))"
-    r"(?=[^，,。；;]{0,8}(?:用例|流程|事件流|过程|步骤))"
-    r"|(?:用例|流程|事件流|过程|步骤)(?:继续|恢复)")
-_END_CLAIM = re.compile(
-    r"(?:结束|终止|中止)(?=[^，,。；;]{0,8}(?:用例|流程|事件流|过程|步骤))"
-    r"|(?:用例|流程|事件流|过程|步骤)(?:结束|终止|中止)")
-_ENDING_ONLY = re.compile(
-    r"^\s*(?:用例|流程|步骤)?\s*(?:结束|终止|中止|继续|恢复)\s*[。.；;]?\s*$")
+@dataclass(frozen=True)
+class _E1Config:
+    """从rule pack编译的E1专家配置(模板正则+词表+字符集+阈值)."""
 
-_GENERIC_WORDS = re.compile(
-    r"系统|用户|提示|失败|错误|信息|无法|不能|异常|用例|结束|终止|中止"
-    r"|流程|操作|并且")
-_PUNCT = re.compile(r"[\s，,。；;、：:！？“”\"'（）()\[\]【】·-]")
-_TRIM_EDGES = " \n\t。，,；;：:“”\"'"
+    entry_head: re.Pattern[str]
+    entry_parse: re.Pattern[str]
+    exception_claim: re.Pattern[str]
+    claimed_e_id: re.Pattern[str]
+    answer_prompt_quoted: re.Pattern[str]
+    answer_prompt_plain: re.Pattern[str]
+    prompt_connective: re.Pattern[str]
+    generic_prompt_text: re.Pattern[str]
+    prompt_q: re.Pattern[str]
+    evidence_prompt_verb: re.Pattern[str]
+    evidence_trigger: re.Pattern[str]
+    continue_claim: re.Pattern[str]
+    end_claim: re.Pattern[str]
+    ending_only: re.Pattern[str]
+    continue_words: re.Pattern[str]
+    e1_assertion: re.Pattern[str]
+    exception_q: re.Pattern[str]
+    punct: re.Pattern[str]
+    end_words: re.Pattern[str]
+    generic_words: re.Pattern[str]
+    invalid_prompt_words: re.Pattern[str]
+    flow_fields: tuple[str, ...]
+    trim_edges: str
+    conf_exact: float
+    conf_substring: float
+    conf_keyword: float
+    conf_ending: float
+    conf_refute_prompt: float
+    conf_refute_ending: float
+    conf_topic: float
 
-_FLOW_FIELDS = ("Actor的动作", "系统的动作", "动作约束")
 
-_CONF_EXACT = 1.0
-_CONF_SUBSTRING = 0.9
-_CONF_KEYWORD = 0.75
-_CONF_ENDING = 0.8
-_CONF_REFUTE_PROMPT = 0.85
-_CONF_REFUTE_ENDING = 0.9
-_CONF_TOPIC = 0.8
+def _build_config(pack: RulePack) -> _E1Config:
+    return _E1Config(
+        entry_head=pack.template("e1_entry_head"),
+        entry_parse=pack.template("e1_entry_parse"),
+        exception_claim=pack.template("e1_exception_claim"),
+        claimed_e_id=pack.template("e1_claimed_e_id"),
+        answer_prompt_quoted=pack.template("e1_answer_prompt_quoted"),
+        answer_prompt_plain=pack.template("e1_answer_prompt_plain"),
+        prompt_connective=pack.template("e1_prompt_connective"),
+        generic_prompt_text=pack.template("e1_generic_prompt_text"),
+        prompt_q=pack.template("e1_prompt_q"),
+        evidence_prompt_verb=pack.template("e1_evidence_prompt_verb"),
+        evidence_trigger=pack.template("e1_evidence_trigger"),
+        continue_claim=pack.template("e1_continue_claim"),
+        end_claim=pack.template("e1_end_claim"),
+        ending_only=pack.template("e1_ending_only"),
+        continue_words=pack.template("e1_continue_words"),
+        e1_assertion=pack.template("e1_e1_assertion"),
+        exception_q=pack.template("e1_exception_q"),
+        punct=pack.template("e1_punct"),
+        end_words=pack.vocabulary_regex("e1_end_words"),
+        generic_words=pack.vocabulary_regex("e1_generic_words"),
+        invalid_prompt_words=pack.vocabulary_regex("e1_invalid_prompt_words"),
+        flow_fields=pack.vocabulary("e1_flow_fields"),
+        trim_edges=str(pack.join_param("e1", "trim_edges", "")),
+        conf_exact=pack.threshold("e1_conf_exact"),
+        conf_substring=pack.threshold("e1_conf_substring"),
+        conf_keyword=pack.threshold("e1_conf_keyword"),
+        conf_ending=pack.threshold("e1_conf_ending"),
+        conf_refute_prompt=pack.threshold("e1_conf_refute_prompt"),
+        conf_refute_ending=pack.threshold("e1_conf_refute_ending"),
+        conf_topic=pack.threshold("e1_conf_topic"),
+    )
+
+
+_E1_CONFIG: _E1Config | None = None
+
+
+def _cfg() -> _E1Config:
+    """惰性加载默认rule pack并编译E1配置(模块级缓存, import期零I/O)."""
+    global _E1_CONFIG
+    if _E1_CONFIG is None:
+        _E1_CONFIG = _build_config(default_rulepack())
+    return _E1_CONFIG
 
 
 @dataclass(frozen=True)
@@ -146,7 +161,7 @@ def _compact(text: str) -> str:
 
 
 def _entry_chunks(text: str) -> list[str]:
-    heads = list(_E_ENTRY_HEAD.finditer(text))
+    heads = list(_cfg().entry_head.finditer(text))
     if not heads:
         return []
     bounds = [match.start() for match in heads] + [len(text)]
@@ -156,13 +171,13 @@ def _entry_chunks(text: str) -> list[str]:
 
 def _template_from_chunk(chunk: str, statement: EvidenceStatement,
                          order: int) -> E1Template:
-    parse = _E_ENTRY_PARSE.search(chunk)
+    parse = _cfg().entry_parse.search(chunk)
     e1_id = parse.group("id") if parse else ""
     prompt = (parse.group("prompt").strip() if parse
               and parse.group("prompt") else "")
     ending = (parse.group("ending").strip() if parse
               and parse.group("ending") else "")
-    if prompt and _ENDING_ONLY.match(prompt):
+    if prompt and _cfg().ending_only.match(prompt):
         ending = ending or prompt
         prompt = ""
     return E1Template(
@@ -188,19 +203,19 @@ def extract_e1_templates(
         if "异常流" not in statement.field_name:
             continue
         for order, chunk in enumerate(_entry_chunks(statement.text)):
-            if _E_ENTRY_PARSE.search(chunk):
+            if _cfg().entry_parse.search(chunk):
                 templates.append(
                     _template_from_chunk(chunk, statement, order))
     return templates
 
 
 def _keywords(text: str) -> frozenset[str]:
-    cleaned = _PUNCT.sub("", _GENERIC_WORDS.sub("", text))
+    cleaned = _cfg().punct.sub("", _cfg().generic_words.sub("", text))
     return frozenset(cleaned[i:i + 2] for i in range(len(cleaned) - 1))
 
 
 def _norm_prompt(text: str) -> str:
-    return text.strip().strip(_TRIM_EDGES)
+    return text.strip().strip(_cfg().trim_edges)
 
 
 def compare_prompts(answer_prompt: str,
@@ -215,7 +230,7 @@ def compare_prompts(answer_prompt: str,
     if not answer or not evidence:
         return PromptMatch("no", 0.0)
     if answer == evidence:
-        return PromptMatch("exact", _CONF_EXACT)
+        return PromptMatch("exact", _cfg().conf_exact)
     answer_c, evidence_c = _compact(answer), _compact(evidence)
     if answer_c in evidence_c or evidence_c in answer_c:
         shorter, longer = sorted((len(answer_c), len(evidence_c)))
@@ -231,9 +246,9 @@ def ending_kind(ending: str | None) -> EndingKind | None:
     """把E1/answer的处置文本归类为end/continue(无法归类返回None)."""
     if not ending:
         return None
-    if _CONTINUE_WORDS.search(ending):
+    if _cfg().continue_words.search(ending):
         return "continue"
-    if _END_WORDS.search(ending):
+    if _cfg().end_words.search(ending):
         return "end"
     return None
 
@@ -247,18 +262,18 @@ def extract_prompt_claims(text: str) -> list[str]:
     提示声称, 一律丢弃.
     """
     prompts: list[str] = []
-    for match in _ANSWER_PROMPT_QUOTED.finditer(text):
+    for match in _cfg().answer_prompt_quoted.finditer(text):
         quoted = _norm_prompt(match.group("quoted"))
-        if (quoted and not _GENERIC_PROMPT_TEXT.match(quoted)
-                and not _INVALID_PROMPT_WORDS.search(quoted)):
+        if (quoted and not _cfg().generic_prompt_text.match(quoted)
+                and not _cfg().invalid_prompt_words.search(quoted)):
             prompts.append(quoted)
     if prompts:
         return prompts
-    for match in _ANSWER_PROMPT_PLAIN.finditer(text):
-        plain = _PROMPT_CONNECTIVE.sub("", match.group("plain"))
+    for match in _cfg().answer_prompt_plain.finditer(text):
+        plain = _cfg().prompt_connective.sub("", match.group("plain"))
         plain = _norm_prompt(plain)
-        if (plain and not _GENERIC_PROMPT_TEXT.match(plain)
-                and not _INVALID_PROMPT_WORDS.search(plain)):
+        if (plain and not _cfg().generic_prompt_text.match(plain)
+                and not _cfg().invalid_prompt_words.search(plain)):
             prompts.append(plain)
     return prompts
 
@@ -270,9 +285,9 @@ def extract_ending_claim(text: str) -> EndingKind | None:
     "继续尝试"/"重启应用软件"/"重新输入参数"等用户行为动词串不是E1处置
     声称, 不参与处置比对.
     """
-    if _CONTINUE_CLAIM.search(text):
+    if _cfg().continue_claim.search(text):
         return "continue"
-    if _END_CLAIM.search(text):
+    if _cfg().end_claim.search(text):
         return "end"
     return None
 
@@ -317,7 +332,7 @@ def _topic_pool(statements: list[EvidenceStatement],
     parts.extend(
         statement.text for statement in statements
         if _compact(statement.scope_key) == _compact(use_case_name)
-        and statement.field_name in _FLOW_FIELDS)
+        and statement.field_name in _cfg().flow_fields)
     return " ".join(parts)
 
 
@@ -353,13 +368,13 @@ def check_e1_topic_mismatch(
                            f"（用例名+主事件流）中，疑似从其他用例复制"
                            f"（LOGIC-02）"),
                 method=METHOD,
-                confidence=_CONF_TOPIC,
+                confidence=_cfg().conf_topic,
             ))
     return results
 
 
 def _claimed_e_id(text: str) -> str:
-    match = _CLAIMED_E_ID.search(text)
+    match = _cfg().claimed_e_id.search(text)
     return match.group(1) if match else ""
 
 
@@ -445,7 +460,7 @@ def _judge_prompt(prompt_text: str, candidates: list[E1Template],
                  f"scope用例的E1模板prompt为"
                  f"『{best_template.prompt}』(关键词无重合，LOGIC-02)"),
                 tuple(dict.fromkeys(t.evidence_id for t in comparable)),
-                _CONF_REFUTE_PROMPT)
+                _cfg().conf_refute_prompt)
     refs = tuple(dict.fromkeys(
         t.evidence_id for t, match in matches if match.match_type != "no"))
     return ("support",
@@ -454,8 +469,8 @@ def _judge_prompt(prompt_text: str, candidates: list[E1Template],
              f"『{best_template.prompt}』{best.match_type}匹配"
              f"(score={best.score:.2f})"),
             refs,
-            {"exact": _CONF_EXACT, "substring": _CONF_SUBSTRING,
-             "keyword": _CONF_KEYWORD}[best.match_type])
+            {"exact": _cfg().conf_exact, "substring": _cfg().conf_substring,
+             "keyword": _cfg().conf_keyword}[best.match_type])
 
 
 def _judge_ending(kind: EndingKind,
@@ -476,7 +491,7 @@ def _judge_ending(kind: EndingKind,
                  f"{'结束/终止用例' if kind == 'end' else '继续/恢复'}，与E1模板"
                  f"处置『{matched[0].ending}』一致"),
                 tuple(dict.fromkeys(t.evidence_id for t in matched)),
-                _CONF_ENDING)
+                _cfg().conf_ending)
     opposite = [t for t in candidates if ending_kind(t.ending) not in
                 (None, kind)]
     if unscoped:
@@ -493,7 +508,7 @@ def _judge_ending(kind: EndingKind,
              f"E1模板处置为『{opposite[0].ending}』"
              f"(LOGIC-02异常处置策略)"),
             tuple(dict.fromkeys(t.evidence_id for t in opposite)),
-            _CONF_REFUTE_ENDING)
+            _cfg().conf_refute_ending)
 
 
 def _evidence_span_context(
@@ -507,11 +522,11 @@ def _evidence_span_context(
     prompts: list[tuple[str, str]] = []
     triggers: list[tuple[str, str]] = []
     for statement in statements:
-        for match in _EVIDENCE_PROMPT_VERB.finditer(statement.text):
+        for match in _cfg().evidence_prompt_verb.finditer(statement.text):
             span = _compact(match.group("span"))
             if span:
                 prompts.append((span, statement.evidence_id))
-        for match in _EVIDENCE_TRIGGER.finditer(statement.text):
+        for match in _cfg().evidence_trigger.finditer(statement.text):
             span = _compact(match.group("span"))
             if span:
                 triggers.append((span, statement.evidence_id))
@@ -548,12 +563,7 @@ def _trigger_swap_part(
              f"但该文本在证据中仅作为触发条件出现（『如果{prompt_text}，"
              f"提示<其他内容>』式子句），并非系统实际返回的提示内容(LOGIC-02)"),
             tuple(dict.fromkeys(ref for _, ref in hit_triggers)),
-            _CONF_REFUTE_PROMPT)
-
-
-_E1_ASSERTION = re.compile(r"异常流\s*E\d?\s*[：:]")
-_EXCEPTION_Q = re.compile(
-    r"异常处理|异常流|异常情况|触发.{0,6}异常|发生错误|出现异常")
+            _cfg().conf_refute_prompt)
 
 
 def _judge_claim(request: QAInput, claim: StructuredClaim,
@@ -589,8 +599,8 @@ def _judge_claim(request: QAInput, claim: StructuredClaim,
             request, claim, "冻结证据中无任何异常流E1行，异常处置声称无法核对")
     candidates = _candidate_templates(claim.text, scoped)
     exception_focused = bool(
-        _E1_ASSERTION.search(claim.text)
-        or _EXCEPTION_Q.search(request.question))
+        _cfg().e1_assertion.search(claim.text)
+        or _cfg().exception_q.search(request.question))
 
     parts: list[tuple[Verdict, str, tuple[str, ...], float]] = []
     if prompts:
@@ -599,7 +609,7 @@ def _judge_claim(request: QAInput, claim: StructuredClaim,
         # answering with a condition-clause text is a decisive contradiction
         # (S1QA-016). For exception-kind/flow questions the same wording is
         # an embedded detail graded leniently (S1QA-052 silver=NIE).
-        if _PROMPT_Q.search(request.question):
+        if _cfg().prompt_q.search(request.question):
             swap = _trigger_swap_part(
                 prompts[0], span_context, trigger_context)
             if swap is not None:
@@ -649,7 +659,7 @@ def verify_e1_consistency(
         return results
     scope = resolve_e1_scope(request.question, structured, statements)
     for claim in structured:
-        if not _EXCEPTION_CLAIM.search(claim.text):
+        if not _cfg().exception_claim.search(claim.text):
             continue
         result = _judge_claim(request, claim, templates, statements, scope)
         if result is not None:

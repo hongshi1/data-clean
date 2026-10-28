@@ -41,54 +41,74 @@ from dataclasses import dataclass
 
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.qa_models import ClaimResult, QAInput
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "id_join_registry"
 CHECK_ITEMS: tuple[str, ...] = ("TERM-07",)
 
-#: PZXQ域标识符模式（与entity_detector的域术语模式同族）
-PZXQ_ID_RE = re.compile(r"PZXQ-[A-Z0-9-]+")
 
-#: 语句级绑定："X的项目唯一标识符：ID"（能力表）/"X的接口需求标识：ID"
-#: （接口表）以及散文形态"X的标识为ID"（系词可组合，如"均为"）
-_BINDING_RE = re.compile(
-    r"(?P<name>[A-Za-z0-9\u4e00-\u9fff][A-Za-z0-9\u4e00-\u9fff-]{0,40}?)"
-    r"的(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识|标识符|标识|编号|代号)"
-    r"(?:(?:分别|均|都|也|是|为)[：:]?)*[：:]?"
-    r"(?P<id>PZXQ-[A-Z0-9-]+)")
+@dataclass(frozen=True)
+class _IdJoinConfig:
+    """从rule pack编译的ID join配置(ID模式+绑定策略+窗口+词表)."""
 
-#: 节标题绑定："3.2.1.1.1.4 数据库操作-数据库关闭（PZXQ-GN-...）"
-_SECTION_TITLE_RE = re.compile(
-    r"(?P<sec>\d+(?:\.\d+)+)"
-    r"(?P<name>[\u4e00-\u9fffA-Za-z][\u4e00-\u9fffA-Za-z0-9-]{0,40}?)"
-    r"[（(](?P<id>PZXQ-[A-Z0-9-]+)[）)]")
+    id_pattern: re.Pattern[str]
+    binding: re.Pattern[str]
+    section_title: re.Pattern[str]
+    role_tail: re.Pattern[str]
+    bracket_subject: re.Pattern[str]
+    segment_split: re.Pattern[str]
+    noun_run: re.Pattern[str]
+    window_tail_strip: re.Pattern[str]
+    leading_table_ref: re.Pattern[str]
+    subject_role_trim: re.Pattern[str]
+    subject_stopwords: frozenset[str]
+    segment_edge_strip: str
+    id_window: int
+    family_segments: int
+    subject_contain_min_chars: int
+    id_family_prefixes: tuple[str, ...]
+    support_conf: float
+    nie_conf: float
 
-#: answer侧ID声明的角色词尾（"X的项目唯一标识符为ID"的"的…为"部分，
-#: 系词可组合如"均为/都是"）
-_ROLE_TAIL_RE = re.compile(
-    r"的?(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识|标识符|标识"
-    r"|编号|代号|名称|序号)"
-    r"(?:(?:分别|均|都|也|是|为)[：:]?)*[：:]?$")
 
-#: 别名形态："数据源适配接口（PZXQ-GN-SJYSP）"——ID前的括号主体
-_BRACKET_SUBJECT_RE = re.compile(
-    r"(?P<subj>[A-Za-z0-9\u4e00-\u9fff]{2,24})[（(]\s*[「\"]?\s*$")
+def _build_config(pack: RulePack) -> _IdJoinConfig:
+    return _IdJoinConfig(
+        id_pattern=pack.template("id_pattern"),
+        binding=pack.template("id_binding"),
+        section_title=pack.template("id_section_title"),
+        role_tail=pack.template("id_role_tail"),
+        bracket_subject=pack.template("id_bracket_subject"),
+        segment_split=pack.template("id_segment_split"),
+        noun_run=pack.template("id_noun_run"),
+        window_tail_strip=pack.template("id_window_tail_strip"),
+        leading_table_ref=pack.template("id_leading_table_ref"),
+        subject_role_trim=pack.template("id_subject_role_trim"),
+        subject_stopwords=frozenset(pack.vocabulary("id_subject_stopwords")),
+        segment_edge_strip=str(
+            pack.join_param("id_join", "segment_edge_strip", "")),
+        id_window=int(pack.join_param("id_join", "id_window", 32)),
+        family_segments=int(pack.join_param("id_join", "family_segments", 2)),
+        subject_contain_min_chars=int(
+            pack.join_param("id_join", "subject_contain_min_chars", 3)),
+        id_family_prefixes=tuple(
+            pack.join_param("id_join", "id_family_prefixes", ()) or ()),
+        support_conf=pack.threshold("id_join_support_conf", 0.9),
+        nie_conf=pack.threshold("id_join_nie_conf", 0.5),
+    )
 
-#: answer侧主体提取的窗口（ID前文字）与分段边界
-_ID_WINDOW = 32
-_SEGMENT_SPLIT_RE = re.compile(r"[：:\n|，,。；;]")
-_NOUN_RUN_RE = re.compile(r"[A-Za-z0-9\u4e00-\u9fff]{2,24}")
-_WINDOW_TAIL_STRIP_RE = re.compile(r"[\s*_`#>|·]+$")
-_SEGMENT_EDGE_STRIP_RE = " -—-*_`#>|·"
-_LEADING_TABLE_REF_RE = re.compile(r"^表\d+中")
-_SUBJECT_ROLE_TRIM_RE = re.compile(r"(?:用例|能力|功能)$")
 
-#: 提取出的claimed subject若是这些泛指词/引导动词则视为无主体（裸ID路径）
-_SUBJECT_STOPWORDS = frozenset({
-    "接口", "标识", "标识符", "名称", "序号", "编号", "代号", "系统", "软件",
-    "服务", "功能", "用例", "部分", "文档", "项目", "需求", "能力", "其他",
-    "其他接口", "类似", "答案", "内容", "描述", "提供", "支持", "包括",
-    "包含", "使用", "采用",
-})
+_IDJOIN_CONFIG: _IdJoinConfig | None = None
+
+
+def _cfg(pack: RulePack | None = None) -> _IdJoinConfig:
+    """惰加载rule pack并编译ID join配置(默认pack模块级缓存, import期零I/O)."""
+    global _IDJOIN_CONFIG
+    if pack is not None:
+        return _build_config(pack)
+    if _IDJOIN_CONFIG is None:
+        _IDJOIN_CONFIG = _build_config(default_rulepack())
+    return _IDJOIN_CONFIG
+
 
 
 def _key(text: str) -> str:
@@ -99,9 +119,9 @@ def _key(text: str) -> str:
 def _norm_subject(raw: str) -> str:
     """规范化主体：去表引用前缀/引号/空白，迭代去"用例|能力|功能"后缀。"""
     subject = raw.strip().strip("「」『』\"' ")
-    subject = _LEADING_TABLE_REF_RE.sub("", subject)
+    subject = _cfg().leading_table_ref.sub("", subject)
     while True:
-        trimmed = _SUBJECT_ROLE_TRIM_RE.sub("", subject)
+        trimmed = _cfg().subject_role_trim.sub("", subject)
         if trimmed == subject or len(trimmed) < 2:
             break
         subject = trimmed
@@ -116,7 +136,8 @@ def _subject_match(a: str, b: str) -> bool:
     if key_a == key_b:
         return True
     shorter = min(len(key_a), len(key_b))
-    return shorter >= 3 and (key_a in key_b or key_b in key_a)
+    return (shorter >= _cfg().subject_contain_min_chars
+            and (key_a in key_b or key_b in key_a))
 
 
 def _id_segments(identifier: str) -> list[str]:
@@ -124,9 +145,19 @@ def _id_segments(identifier: str) -> list[str]:
 
 
 def _id_family(identifier: str) -> tuple[str, ...]:
-    """ID族键=前两段（PZXQ-GN / PZXQ-JK / PZXQ-NBJK），限定冲突比对范围。"""
+    """ID族键=前N段（默认2段: PZXQ-GN / PZXQ-JK / PZXQ-NBJK），限定冲突
+    比对范围；rule pack可经id_family_prefixes把join限定到声明的族。"""
     segments = _id_segments(identifier)
-    return tuple(segments[:2]) if len(segments) >= 2 else tuple(segments)
+    n = _cfg().family_segments
+    return tuple(segments[:n]) if len(segments) >= n else tuple(segments)
+
+
+def _family_in_scope(identifier: str, cfg: _IdJoinConfig) -> bool:
+    """pack声明了id_family_prefixes时, ID族须在声明范围内才参与join。"""
+    prefixes = cfg.id_family_prefixes
+    if not prefixes:
+        return True
+    return "-".join(_id_family(identifier)) in prefixes
 
 
 @dataclass(frozen=True)
@@ -176,6 +207,7 @@ def _register(registry: dict[str, list[IdRegistration]], identifier: str,
 
 def build_id_registry(
         statements: list[EvidenceStatement],
+        rulepack: RulePack | None = None,
         ) -> dict[str, tuple[IdRegistration, ...]]:
     """从线性化证据语句构建 ID → [(主体, 位置, 字段)] 注册表。
 
@@ -184,15 +216,18 @@ def build_id_registry(
     （ID）"，主体取"父-子"叶子名）。空白先折叠——真实文档存在
     "PZXQ-GN-SQLFW- BLOBSJXG"这类ID内空格。
     """
+    cfg = _cfg(rulepack)
     registry: dict[str, list[IdRegistration]] = {}
     for statement in statements:
         compact = re.sub(r"\s+", "", statement.text)
-        for match in _BINDING_RE.finditer(compact):
-            _register(registry, match.group("id"), match.group("name"),
-                      statement)
-        for match in _SECTION_TITLE_RE.finditer(compact):
-            _register(registry, match.group("id"), match.group("name"),
-                      statement)
+        for match in cfg.binding.finditer(compact):
+            if _family_in_scope(match.group("id"), cfg):
+                _register(registry, match.group("id"), match.group("name"),
+                          statement)
+        for match in cfg.section_title.finditer(compact):
+            if _family_in_scope(match.group("id"), cfg):
+                _register(registry, match.group("id"), match.group("name"),
+                          statement)
     return {identifier: tuple(items) for identifier, items in registry.items()}
 
 
@@ -203,32 +238,36 @@ def _claimed_subject(window: str) -> str | None:
     不跨列表/标题边界——markdown列表项"- 接口标识：ID"的上一行标题不算
     主体（裸ID路径）。角色词尾（"的项目唯一标识符为"）先剥离。
     """
-    trimmed = _WINDOW_TAIL_STRIP_RE.sub("", window)
+    trimmed = _cfg().window_tail_strip.sub("", window)
     if not trimmed:
         return None
-    bracket = _BRACKET_SUBJECT_RE.search(trimmed)
+    bracket = _cfg().bracket_subject.search(trimmed)
     candidates = [bracket.group("subj")] if bracket else []
-    stripped = _ROLE_TAIL_RE.sub("", trimmed)
-    segment = _SEGMENT_SPLIT_RE.split(stripped)[-1]
-    segment = segment.strip(_SEGMENT_EDGE_STRIP_RE)
+    stripped = _cfg().role_tail.sub("", trimmed)
+    segment = _cfg().segment_split.split(stripped)[-1]
+    segment = segment.strip(_cfg().segment_edge_strip)
     if segment:
-        run = _NOUN_RUN_RE.search(segment)
+        run = _cfg().noun_run.search(segment)
         if run:
             candidates.append(run.group(0))
     for candidate in candidates:
         subject = _norm_subject(candidate)
-        if len(subject) >= 2 and _key(subject) not in _SUBJECT_STOPWORDS:
+        if len(subject) >= 2 and _key(subject) not in _cfg().subject_stopwords:
             return subject
     return None
 
 
-def extract_id_claims(answer: str) -> list[IdClaim]:
+def extract_id_claims(
+        answer: str, rulepack: RulePack | None = None) -> list[IdClaim]:
     """提取answer的 (ID, claimed_subject) 声明，按(ID, 主体)去重。"""
+    cfg = _cfg(rulepack)
     claims: list[IdClaim] = []
     seen: set[tuple[str, str | None]] = set()
-    for match in PZXQ_ID_RE.finditer(answer):
+    for match in cfg.id_pattern.finditer(answer):
         identifier = match.group(0).rstrip("-")
-        window = answer[max(0, match.start() - _ID_WINDOW):match.start()]
+        if not _family_in_scope(identifier, cfg):
+            continue
+        window = answer[max(0, match.start() - _cfg().id_window):match.start()]
         subject = _claimed_subject(window)
         if (identifier, subject) in seen:
             continue
@@ -408,6 +447,7 @@ def _check_subject_binding(
 
 def verify_id_joins(request: QAInput,
                     statements: list[EvidenceStatement],
+                    rulepack: RulePack | None = None,
                     ) -> list[ClaimResult]:
     """对冻结QA输入执行四项ID join检查（L1确定性，TERM-07）。
 
@@ -415,10 +455,10 @@ def verify_id_joins(request: QAInput,
     per-claim融合（refute>support>NIE）中本专家的refute压制identifier
     通道对同ID的误support。无PZXQ声明或注册表为空时返回[]。
     """
-    registry = build_id_registry(statements)
+    registry = build_id_registry(statements, rulepack)
     if not registry:
         return []
-    claims = extract_id_claims(request.answer)
+    claims = extract_id_claims(request.answer, rulepack)
     results: list[ClaimResult] = []
     for index, claim in enumerate(claims, start=1):
         if claim.subject is not None:
@@ -440,12 +480,13 @@ def verify_id_joins(request: QAInput,
             results.append(_claim_result(
                 request, index, claim.identifier, "support", refs,
                 f"裸ID声明{claim.identifier}与注册表绑定一致"
-                f"（{registrations[0].location()}）", 0.9))
+                f"（{registrations[0].location()}）",
+                _cfg(rulepack).support_conf))
             continue
         results.append(_claim_result(
             request, index, claim.identifier, "not_in_evidence", (),
             f"裸ID声明{claim.identifier}未在ID注册表中登记，无法绑定主体",
-            0.5))
+            _cfg(rulepack).nie_conf))
     return results
 
 

@@ -14,7 +14,10 @@ selects the minimal row/column subset relevant to its claim type:
 - step claim         -> the main-event-flow row of the matching use case
 
 This layer is deterministic: schema rules and substring anchors only, no
-model calls.
+model calls.  Table signatures, column canon maps, key columns and focused
+column profiles are declared in the rule pack (config/rulepacks/*.json,
+see docs/srs_project/64_rulepack_design.md); this module keeps the HTML
+grid mechanics, claim-type routing and focus-selection semantics.
 """
 from __future__ import annotations
 
@@ -30,6 +33,13 @@ from algorithms.consistency.evidence_statements import (
     _table_rows,
 )
 from algorithms.consistency.qa_models import RetrievedEvidence, SourceRef
+from algorithms.consistency.rulepack import (
+    RulePack,
+    TableSchemaSpec,
+    UseCaseFields,
+    compile_pattern,
+    default_rulepack,
+)
 
 BASE = Path(__file__).resolve().parents[2]
 MERMAID_EXPORT_PATH = BASE / "data/gjb_438c/anchor_v2/mermaid_export.json"
@@ -43,11 +53,6 @@ TRACE_TABLE = "trace_table"
 QUALIFICATION_TABLE = "qualification_table"
 GENERIC_TABLE = "generic_table"
 
-USE_CASE_COLUMNS = (
-    "Use Case名称", "Actors", "概述", "前置条件", "主事件流", "异常流E1", "后置条件",
-)
-FLOW_SUBCOLUMNS = ("Actor动作", "系统动作", "动作约束")
-
 _TR = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
 _CELL_TAG = re.compile(
     r"<t(?P<tag>[dh])(?P<attrs>(?:\s+[\w-]+(?:\s*=\s*\"[^\"]*\"))*)\s*>"
@@ -55,71 +60,6 @@ _CELL_TAG = re.compile(
     re.S,
 )
 _ATTR = re.compile(r"([\w-]+)\s*=\s*\"([^\"]*)\"")
-
-_USECASE_NAME = re.compile(r"^Use\s*[Cc]ase\s*名称\s*[：:]\s*(?P<name>.+)$")
-_ACTORS = re.compile(r"^Actors?\s*[：:]\s*(?P<actors>.+)$")
-_USECASE_FIELD = re.compile(
-    r"^(?P<field>Use\s*[Cc]ase\s*名称|Actors?|简要说明|概述|前置条件|后置条件|异常流E\d+)"
-    r"\s*[：:]\s*(?P<value>.*)$"
-)
-_FIELD_CANON = {"简要说明": "概述"}
-_FLOW_HEADER = re.compile(r"^主事件流")
-_SUBHEADER = re.compile(r"^Actor\s*的动作")
-
-_MINMAX_HEADERS = {"最大值", "最大差", "最小值", "最小差"}
-_USECASE_SIG = re.compile(r"Use\s*[Cc]ase\s*名称\s*[：:]")
-
-_CAPABILITY_CANON = {
-    "Usecase名称": "Use case名称",
-    "UseCase名称": "Use case名称",
-    "USECASE名称": "Use case名称",
-    "对应的任务书功能/性能": "对应任务书",
-}
-_VALUE_DOMAIN_CANON = {"最大差": "最大值", "最小差": "最小值"}
-_TRACE_CANON = {
-    "软件研制任务书名称/标识": "任务书名称标识",
-    "软件研制任务书的章节号": "任务书章节号",
-    "本文档的名称/标识": "本文档名称标识",
-    "本文档的章节号": "本文档章节号",
-    "跟踪说明": "跟踪说明",
-}
-_QUALIFICATION_CANON = {
-    "需求名称/标识": "需求名称标识",
-    "本文档的章节号": "章节号",
-    "合格性方法": "合格性方法",
-    "合格性级别": "合格性级别",
-}
-_CANON_MAPS: dict[str, dict[str, str]] = {
-    CAPABILITY_TABLE: _CAPABILITY_CANON,
-    VALUE_DOMAIN_TABLE: _VALUE_DOMAIN_CANON,
-    TRACE_TABLE: _TRACE_CANON,
-    QUALIFICATION_TABLE: _QUALIFICATION_CANON,
-}
-
-_KEY_COLUMNS: dict[str, tuple[str, ...]] = {
-    CAPABILITY_TABLE: ("Use case名称", "项目唯一标识符"),
-    INTERFACE_TABLE: ("接口需求名称", "接口需求标识"),
-    VALUE_DOMAIN_TABLE: ("数据项",),
-    QUALIFICATION_TABLE: ("需求名称标识",),
-}
-
-_COLUMN_PROFILES: dict[tuple[str, str], tuple[str, ...]] = {
-    (CAPABILITY_TABLE, "identifier"): ("Use case名称", "项目唯一标识符"),
-    (CAPABILITY_TABLE, "enumeration"): ("Use case名称", "方式名称", "运行状态"),
-    (CAPABILITY_TABLE, "default"): ("Use case名称", "项目唯一标识符", "需求描述"),
-    (INTERFACE_TABLE, "identifier"): ("接口需求名称", "接口需求标识"),
-    (INTERFACE_TABLE, "enumeration"): ("接口需求名称", "接口内容"),
-    (INTERFACE_TABLE, "default"): (
-        "接口需求名称", "接口需求标识", "接口内容", "发送方", "接收方",
-    ),
-    (VALUE_DOMAIN_TABLE, "default"): ("数据项", "最大值", "最小值", "精度", "单位"),
-    (TRACE_TABLE, "default"): (
-        "任务书名称标识", "任务书章节号", "本文档名称标识", "本文档章节号", "跟踪说明",
-    ),
-    (QUALIFICATION_TABLE, "default"): (
-        "需求名称标识", "章节号", "合格性方法", "合格性级别",
-    ),
-}
 
 _IDENTIFIER_TOKEN = re.compile(r"[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+){2,}")
 _EXCEPTION_HINT = re.compile(r"异常流|E\d+")
@@ -352,10 +292,6 @@ def _norm_header(raw: str) -> str:
     return re.sub(r"[\s*]+", "", text)
 
 
-def _canon_column(kind: str, header: str) -> str:
-    return _CANON_MAPS.get(kind, {}).get(header, header)
-
-
 def _caption_of(text: str) -> str:
     start = text.find("<table")
     end = text.rfind("</table>")
@@ -367,47 +303,32 @@ def _caption_of(text: str) -> str:
     return " ".join(lines)
 
 
-def _classify_table(headers: list[str], raw_text: str, caption: str) -> str:
-    header_set = set(headers)
-    if {"项目唯一标识符", "需求描述"} <= header_set:
-        return CAPABILITY_TABLE
-    if "接口需求标识" in header_set or {"发送方", "接收方"} <= header_set:
-        return INTERFACE_TABLE
-    if (
-        "数据项" in header_set
-        and bool(header_set & _MINMAX_HEADERS)
-        and bool({"精度", "单位"} & header_set)
-    ):
-        return VALUE_DOMAIN_TABLE
-    if "合格性方法" in header_set or "合格性级别" in header_set:
-        return QUALIFICATION_TABLE
-    if "追踪性" in caption or (
-        any("章节号" in header for header in headers)
-        and any(("名称/标识" in header or "名称标识" in header) for header in headers)
-    ):
-        return TRACE_TABLE
-    if _USECASE_SIG.search(raw_text) or "主事件流" in raw_text or "后置条件" in raw_text:
-        return USE_CASE_TABLE
-    return GENERIC_TABLE
+def _classify_table(
+        headers: list[str], raw_text: str, caption: str,
+        pack: RulePack) -> str:
+    """按rule pack的classify_order执行表头签名判定(首个命中表型)."""
+    return pack.classify_table(frozenset(headers), headers, caption, raw_text)
 
 
 def _compile_column_table(
-    grid: list[list[str]], kind: str,
+        grid: list[list[str]], kind: str, pack: RulePack,
 ) -> tuple[tuple[str, ...], tuple[TableRow, ...]]:
     if not grid:
         return (), ()
-    columns = tuple(_canon_column(kind, _norm_header(cell)) for cell in grid[0])
+    spec = pack.table_spec(kind)
+    columns = tuple(
+        spec.canon_map.get(_norm_header(cell), _norm_header(cell))
+        for cell in grid[0])
     col_index: dict[str, int] = {}
     for position, column in enumerate(columns):
         col_index.setdefault(column, position)
     if kind == TRACE_TABLE:
-        forward = bool(columns) and columns[0].startswith("任务书")
-        key_columns = (
-            ("任务书名称标识", "本文档名称标识") if forward
-            else ("本文档名称标识", "任务书名称标识")
-        )
+        forward = bool(columns) and columns[0].startswith(
+            spec.direction_first_column_prefix)
+        key_columns = spec.trace_key_columns[
+            "forward" if forward else "reverse"]
     else:
-        key_columns = _KEY_COLUMNS.get(kind, ())
+        key_columns = spec.key_columns
     key_positions = [col_index[name] for name in key_columns if name in col_index]
     rows: list[TableRow] = []
     for row_number, raw_row in enumerate(grid[1:], start=2):
@@ -429,38 +350,49 @@ def _compile_column_table(
     return columns, tuple(rows)
 
 
-def _canon_field(field: str) -> str:
+def _canon_field(field: str, spec: UseCaseFields) -> str:
     lowered = field.lower()
     if lowered.startswith("use"):
         return "Use Case名称"
     if lowered.startswith("actor"):
         return "Actors"
-    return _FIELD_CANON.get(field, field)
+    return spec.field_canon.get(field, field)
 
 
-def _compile_use_case(rows: list[list[str]]) -> tuple[TableRow, ...]:
+def _compile_use_case(
+        rows: list[list[str]], spec: TableSchemaSpec,
+) -> tuple[TableRow, ...]:
+    fields = spec.use_case_fields
+    if fields is None:
+        return ()
+    name_rx = compile_pattern(fields.name_pattern)
+    actors_rx = compile_pattern(fields.actors_pattern)
+    field_rx = compile_pattern(fields.field_pattern)
+    flow_header_rx = compile_pattern(fields.flow_header_pattern)
+    subheader_rx = compile_pattern(fields.subheader_pattern)
+    flow_subcolumns = spec.flow_subcolumns
     compiled: list[TableRow] = []
     use_case = ""
     in_flow = False
     for row_number, cells in enumerate(rows, start=1):
         if not cells:
             continue
-        name_match = _USECASE_NAME.match(cells[0])
+        name_match = name_rx.match(cells[0])
         if name_match:
             use_case = name_match.group("name").strip()
             in_flow = False
             compiled.append(TableRow(
                 row_number, use_case, "Use Case名称", (("Use Case名称", use_case),)))
             if len(cells) >= 2:
-                actors_match = _ACTORS.match(cells[1])
+                actors_match = actors_rx.match(cells[1])
                 if actors_match:
                     compiled.append(TableRow(
                         row_number, use_case, "Actors",
                         (("Actors", actors_match.group("actors").strip()),)))
             continue
-        field_match = _USECASE_FIELD.match(cells[0])
+        field_match = field_rx.match(cells[0])
         if field_match and len(cells) <= 2:
-            field = _canon_field(field_match.group("field"))
+            field = _canon_field(field_match.group("field"), fields)
             value = field_match.group("value").strip()
             if not value and len(cells) == 2:
                 value = cells[1].strip()
@@ -468,36 +400,41 @@ def _compile_use_case(rows: list[list[str]]) -> tuple[TableRow, ...]:
             if value:
                 compiled.append(TableRow(row_number, use_case, field, ((field, value),)))
             continue
-        if _FLOW_HEADER.match(cells[0]) and len(cells) == 1:
+        if flow_header_rx.match(cells[0]) and len(cells) == 1:
             in_flow = True
             continue
-        if in_flow and _SUBHEADER.match(cells[0]):
+        if in_flow and subheader_rx.match(cells[0]):
             continue
         if in_flow:
-            values = tuple(cells[: len(FLOW_SUBCOLUMNS)])
-            values = values + ("",) * (len(FLOW_SUBCOLUMNS) - len(values))
+            values = tuple(cells[: len(flow_subcolumns)])
+            values = values + ("",) * (len(flow_subcolumns) - len(values))
             pairs = tuple(
-                (column, value) for column, value in zip(FLOW_SUBCOLUMNS, values) if value
+                (column, value) for column, value in zip(flow_subcolumns, values)
+                if value
             )
             if pairs:
                 compiled.append(TableRow(row_number, use_case, "主事件流", pairs))
     return tuple(compiled)
 
 
-def _compile_table(block: RetrievedEvidence) -> TableSchema:
+def _compile_table(block: RetrievedEvidence, pack: RulePack) -> TableSchema:
     raw_text = block.text
     caption = _caption_of(raw_text)
     grid = _table_grid(raw_text)
     headers = [_norm_header(cell) for cell in grid[0]] if grid else []
-    kind = _classify_table(headers, raw_text, caption)
+    kind = _classify_table(headers, raw_text, caption, pack)
     if kind == USE_CASE_TABLE:
-        columns = USE_CASE_COLUMNS
-        rows = _compile_use_case(_table_rows(raw_text))
+        use_case_spec = pack.table_spec(USE_CASE_TABLE)
+        columns = use_case_spec.columns
+        rows = _compile_use_case(_table_rows(raw_text), use_case_spec)
     else:
-        columns, rows = _compile_column_table(grid, kind)
+        columns, rows = _compile_column_table(grid, kind, pack)
     direction = ""
     if kind == TRACE_TABLE and columns:
-        direction = "forward" if columns[0].startswith("任务书") else "reverse"
+        trace_spec = pack.table_spec(TRACE_TABLE)
+        direction = (
+            "forward" if columns[0].startswith(
+                trace_spec.direction_first_column_prefix) else "reverse")
     return TableSchema(
         evidence_id=block.evidence_id,
         kind=kind,
@@ -652,8 +589,17 @@ def load_figure_evidence(
     return tuple(blocks)
 
 
-def compile_evidence(evidence: tuple[RetrievedEvidence, ...]) -> EvidenceSchema:
-    """Compile frozen evidence blocks into the typed EvidenceSchema."""
+def compile_evidence(
+        evidence: tuple[RetrievedEvidence, ...],
+        rulepack: RulePack | None = None,
+) -> EvidenceSchema:
+    """Compile frozen evidence blocks into the typed EvidenceSchema.
+
+    ``rulepack`` selects the table-schema configuration (signatures / canon
+    maps / key columns / column profiles); the default (None) lazily loads
+    ``srs_gjb_v1`` — identical to the pre-rulepack hardcoded behavior.
+    """
+    pack = rulepack or default_rulepack()
     tables: list[TableSchema] = []
     texts: list[TextEvidence] = []
     figures: list[FigureGraph] = []
@@ -668,7 +614,7 @@ def compile_evidence(evidence: tuple[RetrievedEvidence, ...]) -> EvidenceSchema:
                 mermaid=block.text,
             ))
         elif block.source_type == "table" or "<table" in block.text:
-            tables.append(_compile_table(block))
+            tables.append(_compile_table(block, pack))
         else:
             sentences = tuple(
                 statement.text
@@ -695,11 +641,9 @@ def _match_rows(table: TableSchema, anchors: tuple[str, ...]) -> list[TableRow]:
     ]
 
 
-def _focused_columns(table: TableSchema, ctype: str) -> tuple[str, ...]:
-    profile = (
-        _COLUMN_PROFILES.get((table.kind, ctype))
-        or _COLUMN_PROFILES.get((table.kind, "default"))
-    )
+def _focused_columns(
+        table: TableSchema, ctype: str, pack: RulePack) -> tuple[str, ...]:
+    profile = pack.table_spec(table.kind).profile(ctype)
     if not profile:
         return table.columns
     selected = tuple(column for column in table.columns if column in profile)
@@ -740,8 +684,8 @@ def _use_case_rows(
 
 
 def _focus_table(
-    table: TableSchema, claim: StructuredClaim, ctype: str,
-    anchors: tuple[str, ...],
+        table: TableSchema, claim: StructuredClaim, ctype: str,
+        anchors: tuple[str, ...], pack: RulePack,
 ) -> FocusedView | None:
     if table.kind == USE_CASE_TABLE:
         rows = _use_case_rows(table, claim, ctype, anchors)
@@ -753,7 +697,7 @@ def _focus_table(
         rows = _match_rows(table, anchors)
         if not rows:
             return None
-        columns = _focused_columns(table, ctype)
+        columns = _focused_columns(table, ctype, pack)
         cells = tuple(
             (column, value)
             for row in rows
@@ -832,15 +776,21 @@ def _focus_figure(
 
 
 def focus_views(
-    schema: EvidenceSchema, claims: list[StructuredClaim],
+        schema: EvidenceSchema, claims: list[StructuredClaim],
+        rulepack: RulePack | None = None,
 ) -> list[FocusedView]:
-    """Build the focused view of every claim against every evidence block."""
+    """Build the focused view of every claim against every evidence block.
+
+    ``rulepack`` supplies the column profiles (default None → srs_gjb_v1);
+    it must match the pack used to compile ``schema``.
+    """
+    pack = rulepack or default_rulepack()
     views: list[FocusedView] = []
     for claim in claims:
         ctype = claim_type(claim)
         anchors = _claim_anchors(claim)
         for table in schema.tables:
-            view = _focus_table(table, claim, ctype, anchors)
+            view = _focus_table(table, claim, ctype, anchors, pack)
             if view:
                 views.append(view)
         for text_evidence in schema.texts:
@@ -855,11 +805,13 @@ def focus_views(
 
 
 def compile_and_focus(
-    evidence: tuple[RetrievedEvidence, ...], claims: list[StructuredClaim],
+        evidence: tuple[RetrievedEvidence, ...], claims: list[StructuredClaim],
+        rulepack: RulePack | None = None,
 ) -> tuple[EvidenceSchema, list[FocusedView]]:
     """Compile the schema and build every claim's focused views in one call."""
-    schema = compile_evidence(evidence)
-    return schema, focus_views(schema, claims)
+    pack = rulepack or default_rulepack()
+    schema = compile_evidence(evidence, pack)
+    return schema, focus_views(schema, claims, pack)
 
 
 __all__ = [
