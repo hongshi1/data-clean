@@ -1,0 +1,211 @@
+% !TeX encoding = UTF-8
+% ============================================================
+% CascadeVerify论文表格（booktabs三线表）
+% 自动生成: python tools/make_paper_tables.py （请勿手改，重跑即覆盖）
+% 全部实验数字程序化提取自 data/gjb_438c/runs/ 的 result.json：
+%   eval_paper_matrix_c409df7f_20261027_125551  (B0-B5基线/消融/bootstrap)
+%   eval_cascade_1e92cdce_20261027_124941  (五配置级联+conformal+LLM统计)
+%   eval_violations_5d5c92a8_20261027_113100 / eval_violations_5d5c92a8_20261027_120749 /
+%       eval_violations_5d5c92a8_20261027_124733 / eval_violations_5d5c92a8_20261027_165400  (违例演进四阶段)
+%   eval_mutation_detection_750b7b7d_20261027_165008  (变异注入矩阵+真实违例交叉对照)
+%   eval_crossdoc_27e8ce32_20261027_195859  (跨文档gap)
+%   eval_router_2b76c358_20261027_170640 / router_train_7a90549c_20261027_165644  (路由α扫描/oracle/held-out一致率)
+%   eval_test_honest_6740ed5c_20261027_185819 / eval_test_honest_6740ed5c_20261027_195753  (test诚实评测修复前后)
+%   train_residual_nli_ade325ae_20261026_195906 / eval_nli_residual_4971ceba_20261026_201247  (EGT近拷贝文法dev+真实)
+%   train_residual_nli_acfead4b_20261027_013647 + eval_cascade_1e92cdce_20261027_124941#l2_nli  (EGT叙事文法dev+真实)
+%   eval_nli_residual_2996af6b_20261027_003240 / eval_nli_residual_2996af6b_20261026_212915  (fp16波动端点)
+% ============================================================
+\usepackage{booktabs}  % 若主文档已加载可删除本行
+
+% 对应论文章节 §5.2 主结果（论文表1）
+\begin{table}[t]
+\centering
+\small
+\caption{主结果（91条官方QA vs GLM-5.3 silver标签；S/R/N = support/refute/not-in-evidence）。级联以15次LLM调用（全量L3为83次）取得最优refute F1。数字源：eval\_paper\_matrix\_c409df7f 与 eval\_cascade\_1e92cdce。}
+\label{tab:main}
+\begin{tabular}{lcccccccc}
+\toprule
+系统 & acc & macro-F1 & S-F1 & R-F1 & N-F1 & R-P & R-R & LLM调用 \\
+\midrule
+B0 & 0.846 & 0.306 & 0.000 & 0.000 & 0.917 & 0.000 & 0.000 & 0 \\
+\multicolumn{9}{l}{\scriptsize 多数类NIE坍缩基线} \\
+B1 & 0.571 & 0.327 & 0.174 & 0.087 & 0.721 & 0.067 & 0.125 & 0 \\
+\multicolumn{9}{l}{\scriptsize 零样本NLI残差（raw mDeBERTa，无专家）} \\
+B2 & 0.714 & 0.611 & 0.353 & 0.667 & 0.812 & 0.714 & 0.625 & 91 \\
+\multicolumn{9}{l}{\scriptsize LLM直推（每QA一次调用，无级联）} \\
+B3 & 0.901 & 0.638 & 0.250 & 0.714 & 0.950 & 0.833 & 0.625 & 0 \\
+\multicolumn{9}{l}{\scriptsize 确定性通道（专家族，无残差）} \\
+B4 & 0.912 & \textbf{0.726} & 0.444 & 0.778 & 0.955 & 0.700 & 0.875 & 83 \\
+\multicolumn{9}{l}{\scriptsize 全级联（专家+L3直连，最强L3配置）} \\
+B5 & 0.868 & 0.709 & 0.526 & 0.667 & 0.932 & 0.714 & 0.625 & 86 \\
+\multicolumn{9}{l}{\scriptsize 纯LLM残差（无确定性专家）} \\
+L2 NLI & 0.802 & 0.544 & 0.222 & 0.518 & 0.890 & 0.368 & 0.875 & 0 \\
+\multicolumn{9}{l}{\scriptsize EGT叙事文法微调残差NLI（单独）} \\
+\textbf{cascade} & 0.912 & 0.719 & 0.400 & \textbf{0.800} & 0.955 & 0.857 & 0.750 & \textbf{15} \\
+\multicolumn{9}{l}{\scriptsize L2→L3升级路由（本文系统）} \\
+cascade\_conformal & 0.846 & 0.584 & 0.222 & 0.609 & 0.920 & 0.467 & 0.875 & 13 \\
+\multicolumn{9}{l}{\scriptsize conformal高置信档（keep=0.95）} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.3 消融（论文表4）
+\begin{table}[t]
+\centering
+\small
+\caption{组件消融（基于B4 = 最强L3配置；Δ为相对B4的macro-F1变化）。四项实质损失：per-claim融合、L3残差、E1专家、enum\_join专家。数字源：eval\_paper\_matrix\_c409df7f。}
+\label{tab:ablation}
+\begin{tabular}{lcccc}
+\toprule
+消融 & acc & macro-F1 & $\Delta$ macro-F1 & LLM调用 \\
+\midrule
+B4（基准） & 0.912 & \textbf{0.726} & — & 83 \\
+\midrule
+-e1\_expert & 0.901 & 0.687 & \textbf{$ -0.039 $} & 84 \\
+-entity\_detector & 0.912 & 0.726 & $ +0.000 $ & 83 \\
+-sequence\_expert & 0.879 & 0.729 & $ +0.003 $ & 83 \\
+-trace\_expert & 0.912 & 0.726 & $ +0.000 $ & 83 \\
+-id\_join\_expert & 0.912 & 0.726 & $ +0.000 $ & 83 \\
+-enum\_join\_expert & 0.901 & 0.700 & \textbf{$ -0.026 $} & 85 \\
+-per\_claim\_fusion & 0.890 & 0.574 & \textbf{$ -0.152 $} & 83 \\
+-llm\_residual & 0.901 & 0.638 & \textbf{$ -0.088 $} & 0 \\
+-all\_experts & 0.868 & 0.709 & \textbf{$ -0.017 $} & 86 \\
+DEQ\ on & 0.912 & 0.733 & $ +0.007 $ & 82 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.2 统计显著性（论文表3）
+\begin{table}[t]
+\centering
+\small
+\caption{配对bootstrap显著性（macro-F1，1000次重采样，seed=42，双侧p）。n=91且refute仅8条正类，检验功效不足——四对比较在p<0.05下均不显著，表述使用consistent improvement。数字源：eval\_paper\_matrix\_c409df7f。}
+\label{tab:bootstrap}
+\begin{tabular}{lcccc}
+\toprule
+对比 & $\Delta$ macro-F1 & 95\% CI & $p$ & 重采样 \\
+\midrule
+B4\_vs\_B3 & $ +0.0876 $ & $[-0.0511, 0.2666]$ & 0.276 & 1000 \\
+B4\_vs\_B5 & $ +0.0172 $ & $[-0.1641, 0.2094]$ & 0.834 & 1000 \\
+B4\_vs\_B2 & $ +0.1151 $ & $[-0.0980, 0.3130]$ & 0.314 & 1000 \\
+B4\_vs\_no\_join\_experts & $ +0.0260 $ & $[0.0000, 0.1019]$ & 0.666 & 1000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.4 真实违例检测（论文表5）
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{17条真实违例的检出演进（deterministic配置；评测驱动的专家补全闭环）。每阶段一个run；终态16/17，唯一未检出为VIO-15（document\_name）。数字源：eval\_violations\_5d5c92a8\_系列（见文件头）。}
+\label{tab:violation}
+\begin{tabular}{lccccc p{3.1cm}}
+\toprule
+阶段 & 检出 & 检出率 & identifier & enumeration & traceability & 未检出 \\
+\midrule
+5专家栈(基线) & 9/17 & 0.5294 & 2/5 & 1/4 & 3/3 & 03, 04, 05, 06, 07, 09, 15, 17 \\
++id_join & 12/17 & 0.7059 & 5/5 & 1/4 & 3/3 & 06, 07, 09, 15, 17 \\
++enum_join & 15/17 & 0.8824 & 5/5 & 4/4 & 3/3 & 15, 17 \\
++coverage(终态) & 16/17 & \textbf{0.9412} & 5/5 & 4/4 & 3/3 & 15 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.5 稳健性（论文表7）
+\begin{table}[t]
+\centering
+\small
+\caption{变异注入漏检率矩阵（纯确定性符号层，9专家，0次LLM调用；注入破坏answer对冻结证据的grounding，期望verdict=refute）。总检出率10.4\%与真实违例94.1\%的对照构成证据侧双登记发现。数字源：eval\_mutation\_detection\_750b7b7d。}
+\label{tab:mutation}
+\begin{tabular}{lcccp{3.6cm}}
+\toprule
+族 & 注入 & 检出 & 检出率 & 主检出通道 \\
+\midrule
+GJB & 20 & 5 & 25.0\% & gjb_L1 \\
+TERM & 67 & 13 & 19.4\% & entity_L0 \\
+BASE & 64 & 6 & 9.4\% & entity_L0 \\
+STRUCT & 148 & 12 & 8.1\% & enum_join_L1 \\
+LOGIC & 91 & 5 & 5.5\% & enum_join_L1 \\
+PARAM & 4 & 0 & 0.0\% & —（91QA冻结证据无数值事实） \\
+\textbf{总计} & 394 & 41 & \textbf{10.4\%} & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §6.1 负结果集（论文表11）
+\begin{table}[t]
+\centering
+\small
+\caption{负结果集一览（诚实科学）。六个负结果的数字分别取自：B1/L2/conformal（eval\_paper\_matrix + eval\_cascade）、fp16波动端点（两个eval\_nli\_residual run）、路由held-out一致率（router\_train\_7a90549c）、EGT近拷贝（train\_ade325ae + eval\_4971ceba）。}
+\label{tab:negative}
+\begin{tabular}{p{2.9cm}p{4.4cm}p{4.6cm}}
+\toprule
+负结果 & 关键数字 & 归因与科学价值 \\
+\midrule
+1. 零样本NLI坍缩 & B1 macro-F1 0.327，refute F1 0.087 & 域适配必要性的直接证据 \\
+2. L2单独不成系统 & 0.544 < 确定性基线 0.638；19个预测refute中12伪 & NLI是召回引擎不是裁决器——必须配升级路由 \\
+3. conformal高置信档不可信 & kept档refute P=0.000（n=1）；整体 0.584 < 0.719 & NLI的softmax置信度不承载refute精度信息 \\
+4. fp16训练波动 & 同日重训评测macro-F1 0.4325–0.5298（极差≈0.10） & 单checkpoint数字不可复现到±0.05 \\
+5. 学习路由器学不出 & held-out路由一致率 0.0875（7/80） & oracle上限存在（0.7867@2次调用）但EGT监督学不出 \\
+6. EGT近拷贝文法迁移失败 & dev 0.9648 vs 真实 0.4963 & 合成文法定律的反面例证（dev对迁移零预测力） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.7 诚实评测（论文表10）
+\begin{table}[t]
+\centering
+\small
+\caption{test侧诚实评测（持久dev/test切分，test只在评测时整批运行一次）。修复=融合键剥离编号前缀/序列专家适用性门/id\_join精确绑定三项确定性修复；legacy口径为全91自评（同配置fixed\_cascade）。数字源：eval\_test\_honest\_6740ed5c（修复前后两run）+ eval\_router\_2b76c358。}
+\label{tab:test_honest}
+\begin{tabular}{p{3.4cm}ccccccc}
+\toprule
+口径 & macro-F1 & acc & R-P & R-R & R-F1 & S-F1 & LLM调用 \\
+\midrule
+legacy全91自评(fixed_cascade) & 0.7185 & 0.9121 & 0.857 & 0.750 & 0.800 & 0.400 & 15 \\
+test修复前(current-default) & 0.7040 & 0.9130 & 0.750 & 0.750 & 0.750 & 0.400 & 10 \\
+test修复后(current-default) & \textbf{0.8286} & 0.9348 & 1.000 & 0.750 & 0.857 & 0.667 & 10 \\
+test(dev-tuned) & 0.8286 & 0.9348 & 1.000 & 0.750 & 0.857 & 0.667 & 7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §5.6 跨文档泛化（论文表9）
+\begin{table}[t]
+\centering
+\small
+\caption{跨文档泛化gap（04号训练/评测 → 06号自然复述文法；06号为30条构造性sound标签，S/R/N各10，不依赖LLM silver）。Δ per-class为06号−04号的各类F1差。数字源：eval\_crossdoc\_27e8ce32。}
+\label{tab:crossdoc}
+\begin{tabular}{p{3.5cm}ccccc}
+\toprule
+配置 & 04号macro-F1 & 06号macro-F1 & $\Delta$ macro-F1 & $\Delta$ R-F1 & $\Delta$ S-F1 \\
+\midrule
+deterministic & 0.6381 & 0.1524 & \textbf{$ -0.4857 $} & $ -0.7143 $ & $ -0.2500 $ \\
+cascade & 0.7185 & 0.5309 & \textbf{$ -0.1876 $} & $ -0.2118 $ & $ +0.0211 $ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 对应论文章节 §4.3 专家族（论文§6.3组件B）
+\begin{table}[t]
+\centering
+\small
+\caption{L0/L1确定性专家族（九个符号通道，零LLM调用；本表为系统设计描述，检出效果的量化证据见tab:violation与tab:mutation）。}
+\label{tab:experts}
+\begin{tabular}{llp{2.6cm}p{6.2cm}}
+\toprule
+专家 & 层级 & 检测项 & 机制要点 \\
+\midrule
+entity\_detector & L0 & TERM-05/07/08 & 实体冲突检测（含ID在场护栏） \\
+e1\_expert & L1 & LOGIC-02 & E1模板文法：异常编号+触发条件+处置动作+终止/返回步骤；四项检查（锚点join/主题连贯/处置覆盖/接口存在） \\
+sequence\_expert & L1 & LOGIC-03 & 步骤序列对齐（含适用性门：仅处理事件时序形态） \\
+trace\_expert & L1 & GJB-05 & 追溯表双向join \\
+gjb\_presence\_expert & L1 & GJB-01~11 & 封闭清单有无检查（120条GJB规则库锚定OCR行号） \\
+id\_join\_expert & L1 & TERM-07 & ID注册表join：四项检查（双登记冲突/subject-ID错配/组件段比对/裸ID匹配） \\
+enum\_join\_expert & L1 & TERM-03 & 枚举主体值域join：三来源注册表+封闭集合比对+错字归因（编辑距离1） \\
+numeric\_z3\_expert & L1 & PARAM-01/03/05/06/07 & Z3数值约束：量纲换算+区间三态判定+跨参数聚合（附SMT-LIB+unsat core） \\
+coverage\_expert & L1 & GJB-01/04/06 & 覆盖完备join：合格性覆盖图×章节能力清单×章节存在性三方join \\
+\bottomrule
+\end{tabular}
+\end{table}
+
