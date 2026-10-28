@@ -105,13 +105,16 @@ def _build_config(pack: RulePack) -> _SequenceConfig:
 
 
 _SEQ_CONFIG: _SequenceConfig | None = None
+_SEQ_PACK: RulePack | None = None
 
 
 def _cfg() -> _SequenceConfig:
-    """惰性加载默认rule pack并编译序列配置(模块级缓存, import期零I/O)."""
-    global _SEQ_CONFIG
-    if _SEQ_CONFIG is None:
-        _SEQ_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译序列配置(按pack身份缓存, import期零I/O)."""
+    global _SEQ_CONFIG, _SEQ_PACK
+    pack = default_rulepack()
+    if _SEQ_CONFIG is None or _SEQ_PACK is not pack:
+        _SEQ_PACK = pack
+        _SEQ_CONFIG = _build_config(pack)
     return _SEQ_CONFIG
 
 

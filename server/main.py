@@ -37,7 +37,7 @@ from algorithms.consistency.qa_models import (  # noqa: E402
     RetrievedEvidence,
     SourceRef,
 )
-from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
+from algorithms.consistency.verifier import CascadeVerifier  # noqa: E402
 
 BASE = Path(__file__).resolve().parent.parent
 QA_PATH = BASE / "data/gjb_438c/data_assets/srs_qa_final.json"
@@ -305,7 +305,7 @@ class VerifyRequest(BaseModel):
     evidence: list[EvidenceRequest]
 
 
-QA_VERIFIER = QAConsistencyModule()
+QA_VERIFIER = CascadeVerifier(preset="fast", scene="srs_scene1")
 
 
 @app.post("/api/verify")
@@ -332,7 +332,7 @@ def verify_qa(req: VerifyRequest):
         ),
     )
     try:
-        result = QA_VERIFIER.verify(request)
+        result = QA_VERIFIER.verify_qa_input(request)
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
     return asdict(result)

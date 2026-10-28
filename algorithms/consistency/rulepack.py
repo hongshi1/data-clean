@@ -12,7 +12,8 @@
 本模块: Template/TableSchemaSpec/SignatureSpec/UseCaseFields/RulePack
 数据类 + load_rulepack(path)（schema校验+可读报错+按路径缓存） +
 default_rulepack()（惰性加载默认srs_gjb_v1, 模块顶层零I/O——import期
-不读任何文件, 首次调用时加载）。
+不读任何文件, 首次调用时加载） + set_default_rulepack(pack)（切换全局
+默认pack, 与ner_lexicon.set_default_lexicon对称, 场景迁移入口）.
 
 词表两种消费形态: (a)vocabulary() 原词元组——成员/子串/剥离判定;
 (b)vocabulary_regex() 平铺交替正则——原源码中形如re.compile("A|B|C")
@@ -40,6 +41,9 @@ _KINDS_WITH_SIGNATURE = (
 
 _PATTERN_CACHE: dict[tuple[str, int], re.Pattern[str]] = {}
 _PACK_CACHE: dict[str, RulePack] = {}
+
+#: 模块级默认pack(惰性; set_default_rulepack切换场景用, 见verifier.py)
+_DEFAULT_PACK: RulePack | None = None
 
 
 def compile_pattern(pattern: str, flags: int = 0) -> re.Pattern[str]:
@@ -522,7 +526,20 @@ def load_rulepack(path: str | Path) -> RulePack:
 
 def default_rulepack() -> RulePack:
     """惰性加载默认srs_gjb_v1规则包(首次调用时读文件, import期零I/O)."""
-    return load_rulepack(DEFAULT_PACK_PATH)
+    global _DEFAULT_PACK
+    if _DEFAULT_PACK is None:
+        _DEFAULT_PACK = load_rulepack(DEFAULT_PACK_PATH)
+    return _DEFAULT_PACK
+
+
+def set_default_rulepack(pack: RulePack) -> None:
+    """切换全局默认规则包(与ner_lexicon.set_default_lexicon对称).
+
+    引擎侧的派生配置缓存按pack身份失效重建(场景切换真实生效);
+    一般只在场景迁移/演示时使用.
+    """
+    global _DEFAULT_PACK
+    _DEFAULT_PACK = pack
 
 
 __all__ = [
@@ -535,4 +552,5 @@ __all__ = [
     "compile_pattern",
     "default_rulepack",
     "load_rulepack",
+    "set_default_rulepack",
 ]

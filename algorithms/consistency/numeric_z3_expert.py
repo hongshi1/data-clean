@@ -197,13 +197,16 @@ def _build_config(pack: RulePack) -> _NumericConfig:
 
 
 _NUMERIC_CONFIG: _NumericConfig | None = None
+_NUMERIC_PACK: RulePack | None = None
 
 
 def _cfg() -> _NumericConfig:
-    """惰性加载默认rule pack并编译数值词典（模块级缓存，import期零I/O）."""
-    global _NUMERIC_CONFIG
-    if _NUMERIC_CONFIG is None:
-        _NUMERIC_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译数值词典（按pack身份缓存, import期零I/O）."""
+    global _NUMERIC_CONFIG, _NUMERIC_PACK
+    pack = default_rulepack()
+    if _NUMERIC_CONFIG is None or _NUMERIC_PACK is not pack:
+        _NUMERIC_PACK = pack
+        _NUMERIC_CONFIG = _build_config(pack)
     return _NUMERIC_CONFIG
 
 

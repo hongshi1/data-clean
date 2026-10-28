@@ -98,15 +98,18 @@ def _build_config(pack: RulePack) -> _IdJoinConfig:
 
 
 _IDJOIN_CONFIG: _IdJoinConfig | None = None
+_IDJOIN_PACK: RulePack | None = None
 
 
 def _cfg(pack: RulePack | None = None) -> _IdJoinConfig:
-    """惰加载rule pack并编译ID join配置(默认pack模块级缓存, import期零I/O)."""
-    global _IDJOIN_CONFIG
+    """惰加载rule pack并编译ID join配置(默认pack按身份缓存, import期零I/O)."""
+    global _IDJOIN_CONFIG, _IDJOIN_PACK
     if pack is not None:
         return _build_config(pack)
-    if _IDJOIN_CONFIG is None:
-        _IDJOIN_CONFIG = _build_config(default_rulepack())
+    current = default_rulepack()
+    if _IDJOIN_CONFIG is None or _IDJOIN_PACK is not current:
+        _IDJOIN_PACK = current
+        _IDJOIN_CONFIG = _build_config(current)
     return _IDJOIN_CONFIG
 
 

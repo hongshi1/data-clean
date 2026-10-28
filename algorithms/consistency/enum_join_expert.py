@@ -117,13 +117,16 @@ def _build_config(pack: RulePack) -> _EnumConfig:
 
 
 _ENUM_CONFIG: _EnumConfig | None = None
+_ENUM_PACK: RulePack | None = None
 
 
 def _cfg() -> _EnumConfig:
-    """惰性加载默认rule pack并编译枚举join配置(模块级缓存, import期零I/O)."""
-    global _ENUM_CONFIG
-    if _ENUM_CONFIG is None:
-        _ENUM_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译枚举join配置(按pack身份缓存, import期零I/O)."""
+    global _ENUM_CONFIG, _ENUM_PACK
+    pack = default_rulepack()
+    if _ENUM_CONFIG is None or _ENUM_PACK is not pack:
+        _ENUM_PACK = pack
+        _ENUM_CONFIG = _build_config(pack)
     return _ENUM_CONFIG
 
 

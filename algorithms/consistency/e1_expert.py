@@ -125,13 +125,19 @@ def _build_config(pack: RulePack) -> _E1Config:
 
 
 _E1_CONFIG: _E1Config | None = None
+_E1_PACK: RulePack | None = None
 
 
 def _cfg() -> _E1Config:
-    """惰性加载默认rule pack并编译E1配置(模块级缓存, import期零I/O)."""
-    global _E1_CONFIG
-    if _E1_CONFIG is None:
-        _E1_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译E1配置(按pack身份缓存, import期零I/O).
+
+    pack身份(set_default_rulepack切换场景)变化时重建, 场景切换真实生效.
+    """
+    global _E1_CONFIG, _E1_PACK
+    pack = default_rulepack()
+    if _E1_CONFIG is None or _E1_PACK is not pack:
+        _E1_PACK = pack
+        _E1_CONFIG = _build_config(pack)
     return _E1_CONFIG
 
 

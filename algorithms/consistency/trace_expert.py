@@ -77,13 +77,16 @@ def _build_config(pack: RulePack) -> _TraceConfig:
 
 
 _TRACE_CONFIG: _TraceConfig | None = None
+_TRACE_PACK: RulePack | None = None
 
 
 def _cfg() -> _TraceConfig:
-    """惰性加载默认rule pack并编译追踪join配置(模块级缓存, import期零I/O)."""
-    global _TRACE_CONFIG
-    if _TRACE_CONFIG is None:
-        _TRACE_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译追踪join配置(按pack身份缓存, import期零I/O)."""
+    global _TRACE_CONFIG, _TRACE_PACK
+    pack = default_rulepack()
+    if _TRACE_CONFIG is None or _TRACE_PACK is not pack:
+        _TRACE_PACK = pack
+        _TRACE_CONFIG = _build_config(pack)
     return _TRACE_CONFIG
 
 

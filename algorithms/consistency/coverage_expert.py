@@ -127,13 +127,16 @@ def _build_config(pack: RulePack) -> _CoverageConfig:
 
 
 _COVERAGE_CONFIG: _CoverageConfig | None = None
+_COVERAGE_PACK: RulePack | None = None
 
 
 def _cfg() -> _CoverageConfig:
-    """惰性加载默认rule pack并编译coverage词表（缓存，import期零I/O）."""
-    global _COVERAGE_CONFIG
-    if _COVERAGE_CONFIG is None:
-        _COVERAGE_CONFIG = _build_config(default_rulepack())
+    """惰性加载默认rule pack并编译coverage词表（按pack身份缓存, import期零I/O）."""
+    global _COVERAGE_CONFIG, _COVERAGE_PACK
+    pack = default_rulepack()
+    if _COVERAGE_CONFIG is None or _COVERAGE_PACK is not pack:
+        _COVERAGE_PACK = pack
+        _COVERAGE_CONFIG = _build_config(pack)
     return _COVERAGE_CONFIG
 
 

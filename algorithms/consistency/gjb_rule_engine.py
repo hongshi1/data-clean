@@ -56,7 +56,7 @@ from algorithms.consistency.qa_models import (
     QAInput,
     Verdict,
 )
-from algorithms.consistency.rulepack import default_rulepack
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "gjb_rule_engine"
 
@@ -75,17 +75,20 @@ _CLUSTER_CACHE: tuple[tuple[str, tuple[str, ...], str], ...] | None = None
 _CLUSTER_RULES_CACHE: dict[str, tuple[str, ...]] | None = None
 _CLUSTER_REASONS_CACHE: dict[str, str] | None = None
 _RULE_CLUSTER_OF_CACHE: dict[str, str] | None = None
+_CLUSTER_PACK: RulePack | None = None
 
 
 def rule_clusters() -> tuple[tuple[str, tuple[str, ...], str], ...]:
-    """簇映射（(簇id, rule_ids, 映射理由)元组，默认pack惰性缓存）.
+    """簇映射（(簇id, rule_ids, 映射理由)元组，默认pack按身份缓存）.
 
     一条规则可服务多个簇（多对多，如041同属GJB-02/06/08/09）。
+    pack身份(set_default_rulepack切换场景)变化时整组缓存重建。
     """
     global _CLUSTER_CACHE, _CLUSTER_RULES_CACHE, _CLUSTER_REASONS_CACHE
-    global _RULE_CLUSTER_OF_CACHE
-    if _CLUSTER_CACHE is None:
-        clusters = default_rulepack().gjb_rule_clusters
+    global _RULE_CLUSTER_OF_CACHE, _CLUSTER_PACK
+    pack = default_rulepack()
+    if _CLUSTER_CACHE is None or _CLUSTER_PACK is not pack:
+        clusters = pack.gjb_rule_clusters
         missing = [check for check in CHECK_ITEMS
                    if check not in {c for c, _, _ in clusters}]
         if missing:
@@ -102,6 +105,7 @@ def rule_clusters() -> tuple[tuple[str, tuple[str, ...], str], ...]:
             for rule_id in rule_ids:
                 rule_cluster_of.setdefault(rule_id, cluster)
         _RULE_CLUSTER_OF_CACHE = rule_cluster_of
+        _CLUSTER_PACK = pack
     return _CLUSTER_CACHE
 
 
@@ -198,26 +202,29 @@ _QUANTIFIER_RE = re.compile(r"每[一条个]|全部|所有")
 #: answer侧极性词表取自rule pack：缺失词表与gjb_presence_expert共享
 #: （gjb_absence_words）；存在词表为引擎专用子集（gjb_rule_presence_words，
 #: 不含"应/自动*"——引擎另有治理词门控，行为与迁移前源码逐字一致）。
-#: 模块级缓存避免逐segment重建，import期零I/O。
+#: 按pack身份缓存(set_default_rulepack切换场景时重建), import期零I/O。
 _ABSENCE_RE_CACHE: re.Pattern[str] | None = None
 _PRESENCE_RE_CACHE: re.Pattern[str] | None = None
+_POLARITY_PACK: RulePack | None = None
 
 
 def _absence_re() -> re.Pattern[str]:
     """缺失语义标记词表（规则包gjb_absence_words）。"""
-    global _ABSENCE_RE_CACHE
-    if _ABSENCE_RE_CACHE is None:
-        _ABSENCE_RE_CACHE = default_rulepack().vocabulary_regex(
-            "gjb_absence_words")
+    global _ABSENCE_RE_CACHE, _POLARITY_PACK
+    pack = default_rulepack()
+    if _ABSENCE_RE_CACHE is None or _POLARITY_PACK is not pack:
+        _ABSENCE_RE_CACHE = pack.vocabulary_regex("gjb_absence_words")
+        _POLARITY_PACK = pack
     return _ABSENCE_RE_CACHE
 
 
 def _presence_re() -> re.Pattern[str]:
     """存在语义标记词表（规则包gjb_rule_presence_words，引擎子集）。"""
-    global _PRESENCE_RE_CACHE
-    if _PRESENCE_RE_CACHE is None:
-        _PRESENCE_RE_CACHE = default_rulepack().vocabulary_regex(
-            "gjb_rule_presence_words")
+    global _PRESENCE_RE_CACHE, _POLARITY_PACK
+    pack = default_rulepack()
+    if _PRESENCE_RE_CACHE is None or _POLARITY_PACK is not pack:
+        _PRESENCE_RE_CACHE = pack.vocabulary_regex("gjb_rule_presence_words")
+        _POLARITY_PACK = pack
     return _PRESENCE_RE_CACHE
 
 

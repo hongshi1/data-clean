@@ -417,18 +417,22 @@ class QAConsistencyModule:
         if self.use_subtractor and verification_request.evidence:
             from dataclasses import asdict, replace
 
-            from algorithms.consistency.evidence_subtractor import subtract
-            # 只删块不改写: 粒度归一由本模块linearize_evidence的
-            # 表格类型感知行级化负责(能力表/数据表/接口表/用例表),
-            # 证据级重写会破坏其类型检测(73号实验教训); 故语句预算关闭.
-            pack = subtract(
+            from algorithms.consistency.evidence_purifier import (
+                PurificationConfig,
+                purify,
+            )
+            # evidence模式(只删块不改写): 粒度归一由本模块
+            # linearize_evidence的表格类型感知行级化负责(能力表/
+            # 数据表/接口表/用例表), 证据级重写会破坏其类型检测
+            # (73号实验教训); 故语句预算关闭.
+            pack = purify(
                 question=verification_request.question,
                 answer=verification_request.answer,
                 evidence=[asdict(ev)
                           for ev in verification_request.evidence],
-                max_statements=10 ** 9,
+                config=PurificationConfig(mode="evidence"),
             )
-            kept_ids = {k["evidence_id"] for k in pack["kept"]}
+            kept_ids = {str(k.get("evidence_id", "")) for k in pack["kept"]}
             new_blocks = [ev for ev in verification_request.evidence
                           if ev.evidence_id in kept_ids]
             verification_request = replace(
