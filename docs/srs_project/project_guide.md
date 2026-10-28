@@ -286,3 +286,17 @@ Layer 2: Residual NLI (残差NLI层)
 **详细数字、口径声明与审计-响应对照表（verify脚本583项PASS，含Wave 7新增171项核对）**：`49_cascadeverify_v2_results.md` §10（Wave 7章节）；修复逐claim机制=`50_support_recall_analysis.md` §7。
 
 **遗留**：gold人工标注（工作台已建，待人工6-9h，最高优先级人工项）、077 L3证据投递（P2）、跨文档正则文法升级=语义匹配（P2）、论文写作、代码提交（HEAD停在ff0d4950）。
+
+### M36（2026-10-28）：L1规则层深挖审计+numeric跨行伪refute修复+三暂缓项配置迁移+67号详解文档
+
+**范围**：对L1规则模板层（rulepack+九专家）做逐文件深挖审计（对标66号NER文档工作方式），修复M28跨文档四失效归因中的**numeric_z3跨行伪refute**（C06QA-008），完成64号盘点的三个暂缓项（CV-01/NZ-01/GJ-02）配置迁移，产出67号规则层详解文档。
+
+**修复（行为变化，有意）**：numeric_z3字段类join键——数据表同一数据项的最大值/最小值/精度是三个不同的量，字段式事实携带量纲类（max/min/precision），answer主体的字段限定词（"X的最大值为200"→核心主体+类max）同样解析并按类过滤join。修复前answer的eq声明与"精度：1"行误join→UNSAT伪refute。**C06QA-008（伪refute→support）与C06QA-018（NIE→refute，证据自身UNSAT曾掩蔽矛盾）双双翻正**；跨文档det macro-F1 **0.1524→0.2619**、cascade **0.5309→0.6052**（`runs/eval_crossdoc_3c602510_20261028_180422`）；91QA numeric_z3零触发（0条数值声明）故91QA/违例零影响。
+
+**三暂缓项迁移（行为保持，程序化提取逐字一致）**：coverage词表（_QUALIFICATION_TARGETS/_GENERIC_SUBJECTS/_ALARM_ELEMENTS+共享_ABSENCE_RE——解耦gjb_presence词表import）/numeric词典（_CN_UNIT_ALIASES/_EXTRA_UNIT_FACTORS/_FIELD_NAME_OPS/_AGGREGATE_MARKERS）/GJB簇映射（RULE_CLUSTERS→pack的gjb.rule_clusters段，11簇20引用带理由）。**配置化覆盖度60项中48→58项（≈97%）**。行为保持验证：91QA **0.9121/0.7212**（`runs/eval_qa_module_silver_f119425e_20261028_180400`）、违例**16/17**（`runs/eval_violations_5d5c92a8_20261028_180406`）逐位不变。
+
+**审计要点（仅记录未修）**：evidence_statements表型启发式与pack签名重复（线性化层不吃配置）；gjb_presence(25词)与gjb_rule_engine(21词)presence词表双版本（行为保持的历史校准结果，已双双显式外置可审计）；GJB-04簇以安全保密簇承载（438C无审计专项规则）。
+
+**文档**：`docs/srs_project/67_rule_layer_architecture.md`（管线四阶段/注册表思想/六检查族真实走查/GJB引擎编译链55+32诚实覆盖率/配置引擎边界/代价账含双登记定律/演进路径）；64号§7完成度表同步回填。
+
+**测试**：rulepack/coverage/numeric_z3/gjb_rule_engine/e1/qa_consistency_module 154 passed+相关面152 passed；ruff零报错。

@@ -284,9 +284,13 @@ config/rulepacks/srs_gjb_v1.json
 | enum_join_expert | EJ-01~16 | Levenshtein/集合比对/归因策略 | ✅完成 |
 | sequence_expert | SQ-01~05,08~15 | SQ-06/07（NW罚分/异常位置基准） | ✅完成 |
 | trace_expert | TR-01~04 | TR-05行分类启发 | ✅完成 |
-| gjb_rule_engine | GJ-01路径 | GJ-03句式分析 | ✅完成（`load_rule_library/default_checks`默认路径从pack取，按仓库根绝对解析；GJ-02簇映射暂缓） |
-| coverage_expert | — | — | 暂缓（CV-01，双模块词表import耦合） |
-| numeric_z3_expert | — | — | 暂缓（NZ-01，srs_kb半配置载体） |
+| gjb_rule_engine | GJ-01路径+GJ-02簇映射 | GJ-03句式分析 | ✅完成（GJ-02簇映射迁入pack的gjb.rule_clusters段, 带映射理由; 67号文档§6） |
+| coverage_expert | CV-01词表（_QUALIFICATION_TARGETS/_GENERIC_SUBJECTS/_ALARM_ELEMENTS/共享_ABSENCE_RE） | 声明模式正则(_RANGE/_UNIVERSAL/_HEADING等, 极性裁决语义耦合) | ✅完成（词表外置+解耦gjb_presence词表import; 67号文档§6） |
+| numeric_z3_expert | NZ-01词典（_CN_UNIT_ALIASES/_EXTRA_UNIT_FACTORS/_FIELD_NAME_OPS/_AGGREGATE_MARKERS） | Z3_TIMEOUT_MS(求解器资源限制)+_UNIT_TOKEN文法+_FIELD_CLASS(join语义) | ✅完成（词典外置到join_params.numeric_z3; 67号文档§6） |
+
+> 2026-10-28更新：三个暂缓项迁移完成（程序化提取逐字一致+行为保持验证：
+> 91QA 0.9121/0.7212、违例16/17、跨文档det逐位不变）。配置化覆盖度
+> 60项中58项（≈97%），详见67号文档§6.4。
 
 ### 7.1 产出文件清单
 

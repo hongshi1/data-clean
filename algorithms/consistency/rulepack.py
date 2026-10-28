@@ -156,6 +156,7 @@ class RulePack:
     gjb_rule_library_path: str
     classify_order: tuple[str, ...] = ()
     description: str = ""
+    gjb_rule_clusters: tuple[tuple[str, tuple[str, ...], str], ...] = ()
 
     # ── 访问器(缺键时报可读错误, 不静默) ─────────────────────
     def template(self, name: str) -> re.Pattern[str]:
@@ -369,6 +370,44 @@ def _load_table_schema(kind: str, raw: object) -> TableSchemaSpec:
     )
 
 
+def _load_gjb_section(raw: object, where: str
+                      ) -> tuple[tuple[str, tuple[str, ...], str], ...]:
+    """可选gjb段: 规则簇映射(cluster, rule_ids, 映射理由)."""
+    _expect(isinstance(raw, dict), f"{where}: gjb段须为对象")
+    unknown = set(raw) - {"rule_clusters"}
+    _expect(not unknown, f"{where}: gjb段含未知字段{sorted(unknown)}")
+    entries_raw = raw.get("rule_clusters", [])
+    _expect(isinstance(entries_raw, list),
+            f"{where}: gjb.rule_clusters须为列表")
+    entries: list[tuple[str, tuple[str, ...], str]] = []
+    seen: set[str] = set()
+    for index, item in enumerate(entries_raw):
+        item_where = f"{where}.rule_clusters[{index}]"
+        _expect(isinstance(item, dict), f"{item_where}: 簇映射须为对象")
+        unknown = set(item) - {"cluster", "rule_ids", "reason"}
+        _expect(not unknown, f"{item_where}: 簇映射含未知字段{sorted(unknown)}")
+        cluster = item.get("cluster")
+        _expect(isinstance(cluster, str) and cluster,
+                f"{item_where}: cluster缺失或为空")
+        _expect(re.fullmatch(r"GJB-\d+", cluster) is not None,
+                f"{item_where}: cluster须为GJB-XX形态, got {cluster!r}")
+        _expect(cluster not in seen,
+                f"{item_where}: 簇{cluster!r}重复声明")
+        seen.add(cluster)
+        rule_ids = item.get("rule_ids")
+        _expect(isinstance(rule_ids, list) and rule_ids
+                and all(isinstance(rule_id, str) and rule_id
+                        for rule_id in rule_ids),
+                f"{item_where}: rule_ids须为非空字符串列表")
+        _expect(len(set(rule_ids)) == len(rule_ids),
+                f"{item_where}: rule_ids含重复规则号")
+        reason = item.get("reason")
+        _expect(isinstance(reason, str) and reason.strip(),
+                f"{item_where}: 映射理由reason缺失或为空")
+        entries.append((cluster, tuple(rule_ids), reason))
+    return tuple(entries)
+
+
 def _load_rulepack_data(path: Path) -> RulePack:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -451,12 +490,19 @@ def _load_rulepack_data(path: Path) -> RulePack:
     description = data.get("description", "")
     _expect(isinstance(description, str), f"{where}: description须为字符串")
 
+    gjb_section = data.get("gjb")
+    _expect(gjb_section is None or isinstance(gjb_section, dict),
+            f"{where}: gjb须为对象")
+    gjb_clusters = (_load_gjb_section(gjb_section, f"{where}.gjb")
+                    if gjb_section is not None else ())
+
     return RulePack(
         pack_id=pack_id, table_schemas=schemas,
         extraction_templates=templates, term_vocabularies=vocabs,
         join_params={k: dict(v) for k, v in join_raw.items()},
         thresholds=thresholds, gjb_rule_library_path=gjb_path,
         classify_order=tuple(order_raw), description=description,
+        gjb_rule_clusters=gjb_clusters,
     )
 
 

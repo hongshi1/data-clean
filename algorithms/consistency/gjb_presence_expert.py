@@ -28,6 +28,8 @@ QA输出审计噪音；question是否GJB类由qa_router.route_question判定并�
 consistency_taxonomy_v3.json的GJB-01~11项original_example/
 doc04_evidence，rule_ids关联knowledge/gjb_438c_rules_full.json的120条
 规则编号，tests/test_gjb_presence_expert.py核验其存在性）。
+存在/缺失极性词表外置于rule pack（gjb_absence_words/gjb_presence_words，
+与coverage_expert/gjb_rule_engine共享同一配置来源，消除词表import漂移）。
 
 条款正则校准（按04号SRS真实词频分布核验）：bare「容错」命中35个
 用例表头样板「动作约束（性能、可靠性、容错等）」，故GJB-02仅匹配
@@ -57,6 +59,7 @@ from algorithms.consistency.qa_models import (
     Verdict,
 )
 from algorithms.consistency.qa_router import route_question
+from algorithms.consistency.rulepack import default_rulepack
 
 METHOD = "gjb_presence_check"
 CHECK_ITEMS: tuple[str, ...] = tuple(
@@ -395,14 +398,30 @@ def audit_gjb_presence(
     return GjbPresenceAudit(checks=tuple(audits))
 
 
-_ABSENCE_RE = re.compile(
-    r"缺少|缺失|没有|未包含|未提供|未规定|未定义|未涉及|未设置|未明确"
-    r"|未给出|未描述|未注明|未覆盖|不包含|不存在|不满足|不符合|不支持"
-    r"|不具备|不提供|不含|不应")
-_PRESENCE_RE = re.compile(
-    r"包含|包括|提供|具备|满足|符合|支持|规定|定义|设置|存在|具有"
-    r"|实现|已有|覆盖|列出|注明|标注|标明|指定|应|自动保存|自动恢复"
-    r"|自动回滚|自动重连")
+#: 存在/缺失极性词表取自rule pack（平铺交替正则，成员与迁移前源码
+#: 逐字一致）；模块级缓存避免逐segment重建，import期零I/O。
+_ABSENCE_RE_CACHE: re.Pattern[str] | None = None
+_PRESENCE_RE_CACHE: re.Pattern[str] | None = None
+
+
+def _absence_re() -> re.Pattern[str]:
+    """缺失语义标记词表（规则包gjb_absence_words）。"""
+    global _ABSENCE_RE_CACHE
+    if _ABSENCE_RE_CACHE is None:
+        _ABSENCE_RE_CACHE = default_rulepack().vocabulary_regex(
+            "gjb_absence_words")
+    return _ABSENCE_RE_CACHE
+
+
+def _presence_re() -> re.Pattern[str]:
+    """存在语义标记词表（规则包gjb_presence_words）。"""
+    global _PRESENCE_RE_CACHE
+    if _PRESENCE_RE_CACHE is None:
+        _PRESENCE_RE_CACHE = default_rulepack().vocabulary_regex(
+            "gjb_presence_words")
+    return _PRESENCE_RE_CACHE
+
+
 _SEGMENT_SPLIT = re.compile(r"(?<=[。；！？\n])")
 _MIN_SEGMENT_CHARS = 6
 
@@ -414,13 +433,13 @@ def _segment_polarity(segment: str,
     absent：缺失语义标记，或触发词紧邻无/未/没前缀、后接缺失词；
     present：存在语义标记；均无→None（非存在性声明，跳过避免噪音）。
     """
-    if _ABSENCE_RE.search(segment):
+    if _absence_re().search(segment):
         return "absent"
     for trigger in triggers:
         if re.search(r"[无未没]" + re.escape(trigger), segment) or re.search(
                 re.escape(trigger) + r"(缺失|缺少|不存在|为空)", segment):
             return "absent"
-    if _PRESENCE_RE.search(segment):
+    if _presence_re().search(segment):
         return "present"
     return None
 

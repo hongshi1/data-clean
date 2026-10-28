@@ -20,10 +20,11 @@ knowledge/gjb_438c_rules_full.json的120条规则（87条applies_to含SRS）
    存在性命中不等于逐条覆盖达成，逐条覆盖由coverage_join通道负责）；
    部分命中=partial；零命中=violated。manual=不可编译（无规范句/
    无可提取内容/跨文档规则）——诚实报告覆盖率，不假装可检。
-3. 规则簇聚合（aggregate_clusters）：GJB-01~11簇=规则簇映射常量
-   RULE_CLUSTERS（簇id -> (rule_ids, 映射理由)）。簇裁决=簇内可审计
-   规则的best-of（satisfied>partial>violated，OR语义与旧封闭清单
-   一致：簇主题内容任一规则模式命中即存在）。簇内manual规则单列。
+3. 规则簇聚合（aggregate_clusters）：GJB-01~11簇=规则簇映射，外置于
+   rule pack（config/rulepacks/srs_gjb_v1.json的gjb.rule_clusters段，
+   每簇带rule_ids与映射理由，经rule_clusters()惰性读取）。簇裁决=簇内
+   可审计规则的best-of（satisfied>partial>violated，OR语义与旧封闭
+   清单一致：簇主题内容任一规则模式命中即存在）。簇内manual规则单列。
 4. answer侧校验（verify_gjb_rules）：answer对某簇做出存在性声明
    （segment命中该簇规则推导模式且含存在/缺失语义标记）时，用文档
    审计裁决：簇有内容+称有->support；簇violated+称有->refute；
@@ -34,7 +35,9 @@ knowledge/gjb_438c_rules_full.json的120条规则（87条applies_to含SRS）
 
 qa_module的"gjb"专家通道已切换到本引擎（verify_gjb_rules）；
 旧gjb_presence_expert保留文件供coverage_expert复用但不再注册。
-模块顶层零I/O：规则库加载在load_rule_library内（按路径缓存）。
+模块顶层零I/O：规则库加载在load_rule_library内（按路径缓存）；
+簇映射与极性词表经rule_clusters()/_absence_re()/_presence_re()惰性
+读取默认rule pack。
 """
 from __future__ import annotations
 
@@ -53,6 +56,7 @@ from algorithms.consistency.qa_models import (
     QAInput,
     Verdict,
 )
+from algorithms.consistency.rulepack import default_rulepack
 
 METHOD = "gjb_rule_engine"
 
@@ -62,57 +66,61 @@ METHOD = "gjb_rule_engine"
 CHECK_ITEMS: tuple[str, ...] = tuple(
     f"GJB-{index:02d}" for index in range(1, 12))
 
-#: 规则簇映射（簇id -> (rule_ids, 映射理由)）。映射依据=规则description
-#: 与taxonomy v3 GJB-01~11项的语义对应；理由写入常量供审计报告引用。
-RULE_CLUSTERS: tuple[tuple[str, tuple[str, ...], str], ...] = (
-    ("GJB-01", ("GJB-RULE-037", "GJB-RULE-065", "GJB-RULE-077",
-                "GJB-RULE-117"),
-     "taxonomy GJB-01=合格性方法+质量因素：037每条需求应注明合格性方法，"
-     "065质量特性含可靠性/测试性/维护性，077/117第4章合格性规定与跨规格"
-     "说明一致——两要素分别由037/077与065承载"),
-    ("GJB-02", ("GJB-RULE-041", "GJB-RULE-063"),
-     "taxonomy GJB-02=故障容错处置：041异常/非许可/超限条件下的行为与"
-     "错误处理=容错行为，063安全措施=故障防护——容错条款由两规则承载"),
-    ("GJB-03", ("GJB-RULE-062",),
-     "taxonomy GJB-03=保密性及访问控制：062保密性需求(类型级别/安全"
-     "措施)即访问控制类保密条款的规则来源"),
-    ("GJB-04", ("GJB-RULE-034", "GJB-RULE-062"),
-     "taxonomy GJB-04=审计日志：GJB 438C无审计日志专项规则，以安全保密"
-     "簇承载——034要求1.3描述使用相关安全保密要求，062要求保密性细化"
-     "要素(责任/认证认可=可审计性)"),
-    ("GJB-05", ("GJB-RULE-037", "GJB-RULE-078", "GJB-RULE-079",
-                "GJB-RULE-118"),
-     "taxonomy GJB-05=需求可追溯：037注明与系统需求可追踪性，078正向"
-     "追踪，079逆向追踪，118双向追踪章通用规则"),
-    ("GJB-06", ("GJB-RULE-041",),
-     "taxonomy GJB-06=报警要素：异常条件下所需的行为(041)涵盖异常处置"
-     "时的报警内容要素；规则库无报警专项规则"),
-    ("GJB-07", ("GJB-RULE-063",),
-     "taxonomy GJB-07=软件自检：063安全性需求的安全措施(防止意外动作"
-     "与无动作)涵盖故障检测/自检类条款"),
-    ("GJB-08", ("GJB-RULE-041",),
-     "taxonomy GJB-08=掉电数据保护：041为保证在紧急时刻运行的连续性"
-     "而引入的规定是规则库中与掉电状态保存恢复语义最近的条款；GJB 438C"
-     "无掉电专项规则"),
-    ("GJB-09", ("GJB-RULE-041",),
-     "taxonomy GJB-09=输入数据防护：041的非许可条件或超限条件下所需的"
-     "行为即非法/越界输入处置；057合法性检查属接口协议特征故不映射"),
-    ("GJB-10", ("GJB-RULE-073",),
-     "taxonomy GJB-10=版本升级安全：073软件保障需求(系统维护/保障内容)"
-     "是升级安全条款的规则来源"),
-    ("GJB-11", ("GJB-RULE-038", "GJB-RULE-097"),
-     "taxonomy GJB-11=降级运行：038要求标识和定义每一状态和方式(枚举"
-     "含降级)，097为SSS侧同文规则(跨文档校验用)"),
-)
+#: 规则簇映射（簇id -> (rule_ids, 映射理由)）已迁入rule pack的
+#: gjb.rule_clusters段（成员与迁移前源码常量逐字一致）。映射依据=
+#: 规则description与taxonomy v3 GJB-01~11项的语义对应；理由随配置
+#: 供审计报告引用。簇覆盖GJB-01~11由rule_clusters()校验（缺簇报
+#: 可读ValueError，不静默跳过）。
+_CLUSTER_CACHE: tuple[tuple[str, tuple[str, ...], str], ...] | None = None
+_CLUSTER_RULES_CACHE: dict[str, tuple[str, ...]] | None = None
+_CLUSTER_REASONS_CACHE: dict[str, str] | None = None
+_RULE_CLUSTER_OF_CACHE: dict[str, str] | None = None
 
-_CLUSTER_RULES: dict[str, tuple[str, ...]] = {
-    cluster: rule_ids for cluster, rule_ids, _ in RULE_CLUSTERS}
-_CLUSTER_REASONS: dict[str, str] = {
-    cluster: reason for cluster, _, reason in RULE_CLUSTERS}
-_RULE_CLUSTER_OF: dict[str, str] = {}
-for _cluster, _rule_ids, _ in RULE_CLUSTERS:
-    for _rule_id in _rule_ids:
-        _RULE_CLUSTER_OF.setdefault(_rule_id, _cluster)
+
+def rule_clusters() -> tuple[tuple[str, tuple[str, ...], str], ...]:
+    """簇映射（(簇id, rule_ids, 映射理由)元组，默认pack惰性缓存）.
+
+    一条规则可服务多个簇（多对多，如041同属GJB-02/06/08/09）。
+    """
+    global _CLUSTER_CACHE, _CLUSTER_RULES_CACHE, _CLUSTER_REASONS_CACHE
+    global _RULE_CLUSTER_OF_CACHE
+    if _CLUSTER_CACHE is None:
+        clusters = default_rulepack().gjb_rule_clusters
+        missing = [check for check in CHECK_ITEMS
+                   if check not in {c for c, _, _ in clusters}]
+        if missing:
+            raise ValueError(
+                "rulepack gjb.rule_clusters缺簇"
+                f"{missing}（aggregate/verify按GJB-01~11全簇口径工作）")
+        _CLUSTER_CACHE = clusters
+        _CLUSTER_RULES_CACHE = {
+            cluster: rule_ids for cluster, rule_ids, _ in clusters}
+        _CLUSTER_REASONS_CACHE = {
+            cluster: reason for cluster, _, reason in clusters}
+        rule_cluster_of: dict[str, str] = {}
+        for cluster, rule_ids, _ in clusters:
+            for rule_id in rule_ids:
+                rule_cluster_of.setdefault(rule_id, cluster)
+        _RULE_CLUSTER_OF_CACHE = rule_cluster_of
+    return _CLUSTER_CACHE
+
+
+def _cluster_rules() -> dict[str, tuple[str, ...]]:
+    rule_clusters()
+    assert _CLUSTER_RULES_CACHE is not None
+    return _CLUSTER_RULES_CACHE
+
+
+def _cluster_reasons() -> dict[str, str]:
+    rule_clusters()
+    assert _CLUSTER_REASONS_CACHE is not None
+    return _CLUSTER_REASONS_CACHE
+
+
+def _rule_cluster_of() -> dict[str, str]:
+    rule_clusters()
+    assert _RULE_CLUSTER_OF_CACHE is not None
+    return _RULE_CLUSTER_OF_CACHE
 
 _SENT_SPLIT = re.compile(r"(?<=[。；\n])")
 _MODAL_RE = re.compile(r"必须|应|宜")
@@ -187,13 +195,32 @@ _MAX_TERM_CHARS = 10
 #: 量词标记：「每条/每个/每一/全部/所有」→ 存在性命中也只判partial
 _QUANTIFIER_RE = re.compile(r"每[一条个]|全部|所有")
 
-_ABSENCE_RE = re.compile(
-    r"缺少|缺失|没有|未包含|未提供|未规定|未定义|未涉及|未设置|未明确"
-    r"|未给出|未描述|未注明|未覆盖|不包含|不存在|不满足|不符合|不支持"
-    r"|不具备|不提供|不含|不应")
-_PRESENCE_RE = re.compile(
-    r"包含|包括|提供|具备|满足|符合|支持|规定|定义|设置|存在|具有"
-    r"|实现|已有|覆盖|列出|注明|标注|标明|指定")
+#: answer侧极性词表取自rule pack：缺失词表与gjb_presence_expert共享
+#: （gjb_absence_words）；存在词表为引擎专用子集（gjb_rule_presence_words，
+#: 不含"应/自动*"——引擎另有治理词门控，行为与迁移前源码逐字一致）。
+#: 模块级缓存避免逐segment重建，import期零I/O。
+_ABSENCE_RE_CACHE: re.Pattern[str] | None = None
+_PRESENCE_RE_CACHE: re.Pattern[str] | None = None
+
+
+def _absence_re() -> re.Pattern[str]:
+    """缺失语义标记词表（规则包gjb_absence_words）。"""
+    global _ABSENCE_RE_CACHE
+    if _ABSENCE_RE_CACHE is None:
+        _ABSENCE_RE_CACHE = default_rulepack().vocabulary_regex(
+            "gjb_absence_words")
+    return _ABSENCE_RE_CACHE
+
+
+def _presence_re() -> re.Pattern[str]:
+    """存在语义标记词表（规则包gjb_rule_presence_words，引擎子集）。"""
+    global _PRESENCE_RE_CACHE
+    if _PRESENCE_RE_CACHE is None:
+        _PRESENCE_RE_CACHE = default_rulepack().vocabulary_regex(
+            "gjb_rule_presence_words")
+    return _PRESENCE_RE_CACHE
+
+
 _SEGMENT_SPLIT = re.compile(r"(?<=[。；！？\n])")
 _MIN_SEGMENT_CHARS = 6
 #: answer侧触发模式最小长度（3字以下词太泛，易把非存在性提及当声明）
@@ -464,7 +491,7 @@ def compile_rule(rule: dict) -> CompiledCheck:
     modality = str(rule.get("modality", "") or "")
     description = str(rule.get("description", "") or "")
     original_text = str(rule.get("original_text", "") or "")
-    cluster = _RULE_CLUSTER_OF.get(rule_id, "")
+    cluster = _rule_cluster_of().get(rule_id, "")
     base = CompiledCheck(
         rule_id=rule_id, check_type=rule_type, requirement="",
         source_anchor=source_anchor, patterns=(), cluster=cluster,
@@ -636,16 +663,18 @@ def aggregate_clusters(
 ) -> dict[str, ClusterAudit]:
     """GJB-01~11簇聚合：簇内可审计规则best-of（OR语义）。
 
-    簇成员取自RULE_CLUSTERS映射常量（一条规则可服务多个簇，如041
-    同属GJB-02/06/08/09）；best-of与旧封闭清单一致：簇主题的规则任一
-    satisfied即satisfied，任一partial即partial，全部violated才
+    簇成员取自rule pack的gjb.rule_clusters映射（一条规则可服务多个簇，
+    如041同属GJB-02/06/08/09）；best-of与旧封闭清单一致：簇主题的规则
+    任一satisfied即satisfied，任一partial即partial，全部violated才
     violated；manual规则单列（簇内无任何可审计规则时簇verdict=manual）。
     """
     by_rule = {result.rule_id: result for result in audit_results}
+    cluster_rules = _cluster_rules()
+    cluster_reasons = _cluster_reasons()
     audits: dict[str, ClusterAudit] = {}
     for cluster in CHECK_ITEMS:
         cluster_results = sorted(
-            (by_rule[rule_id] for rule_id in _CLUSTER_RULES[cluster]
+            (by_rule[rule_id] for rule_id in cluster_rules[cluster]
              if rule_id in by_rule), key=lambda item: item.rule_id)
         manual_ids = tuple(result.rule_id for result in cluster_results
                            if result.verdict == "manual")
@@ -672,12 +701,13 @@ def aggregate_clusters(
             verdict = "partial"
         else:
             verdict = "violated"
-        parts = [_CLUSTER_REASONS[cluster]]
+        parts = [cluster_reasons[cluster]]
         if manual_ids:
             parts.append(f"manual规则[{('、'.join(manual_ids))}]不可单文档"
                          "审计，未参与聚合")
         audits[cluster] = ClusterAudit(
-            cluster=cluster, verdict=verdict, rule_ids=_CLUSTER_RULES[cluster],
+            cluster=cluster, verdict=verdict,
+            rule_ids=cluster_rules[cluster],
             audited_rule_ids=audited_ids, manual_rule_ids=manual_ids,
             matched_patterns=tuple(matched), missed_patterns=tuple(missed),
             evidence_refs=tuple(refs), note="；".join(parts))
@@ -686,24 +716,24 @@ def aggregate_clusters(
 
 def _segment_polarity(segment: str) -> str | None:
     """segment的存在性语义：absent优先于present（语法标记，非检查内容）。"""
-    if _ABSENCE_RE.search(segment):
+    if _absence_re().search(segment):
         return "absent"
-    if _PRESENCE_RE.search(segment):
+    if _presence_re().search(segment):
         return "present"
     return None
 
 
 def _cluster_triggers(checks: Iterable[CompiledCheck],
                       ) -> dict[str, tuple[str, ...]]:
-    """簇 -> answer侧触发模式（簇映射常量中各规则的推导模式，>=3字）。
+    """簇 -> answer侧触发模式（簇映射中各规则的推导模式，>=3字）。
 
-    一条规则可服务多个簇（RULE_CLUSTERS多对多），触发模式按簇映射
-    常量收集而非单一cluster字段，与aggregate_clusters同一口径。
+    一条规则可服务多个簇（簇映射多对多），触发模式按簇映射收集而非
+    单一cluster字段，与aggregate_clusters同一口径。
     """
     by_rule: dict[str, CompiledCheck] = {check.rule_id: check
                                          for check in checks}
     triggers: dict[str, tuple[str, ...]] = {}
-    for cluster, rule_ids, _ in RULE_CLUSTERS:
+    for cluster, rule_ids, _ in rule_clusters():
         items: list[str] = []
         for rule_id in rule_ids:
             check = by_rule.get(rule_id)
@@ -859,7 +889,6 @@ __all__ = [
     "ClusterAudit",
     "CompiledCheck",
     "METHOD",
-    "RULE_CLUSTERS",
     "RuleAuditResult",
     "aggregate_clusters",
     "audit_document",
@@ -867,5 +896,6 @@ __all__ = [
     "compile_rule",
     "default_checks",
     "load_rule_library",
+    "rule_clusters",
     "verify_gjb_rules",
 ]

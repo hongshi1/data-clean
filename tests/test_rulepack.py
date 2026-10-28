@@ -349,6 +349,64 @@ def test_gjb_rule_library_path_from_pack() -> None:
     assert len(load_rule_library()) == len(rules)  # 路径缓存生效
 
 
+def test_migrated_vocabularies_and_dictionaries() -> None:
+    """三个暂缓项迁移后的实测内容(与迁移前源码常量逐字一致):
+    GJB极性词表 / coverage词表 / numeric单位词典 / gjb规则簇映射。"""
+    pack = default_rulepack()
+    # 共享缺失词表 + presence两套(旧gjb_presence全表/引擎子集)
+    absence = pack.vocabulary_regex("gjb_absence_words")
+    assert absence.search("文档缺少审计日志条款") is not None
+    assert len(pack.vocabulary("gjb_absence_words")) == 23
+    presence = pack.vocabulary_regex("gjb_presence_words")
+    assert presence.search("系统应提供自检功能") is not None
+    engine_presence = pack.vocabulary_regex("gjb_rule_presence_words")
+    assert engine_presence.search("本文档规定了合格性方法") is not None
+    assert "应" not in engine_presence.pattern.split("|")  # 引擎子集不含应
+    # coverage: 被覆盖物有序(长词在前) + 泛称主体 + 报警要素
+    assert pack.vocabulary("coverage_qualification_targets")[:2] == (
+        "合格性方法", "合格性规定")
+    assert "能力需求" in pack.vocabulary("coverage_generic_subjects")
+    elements = pack.join_param("coverage", "alarm_elements", ())
+    assert [label for label, _ in elements] == [
+        "时间戳", "位置", "等级", "原因", "处置建议"]
+    assert elements[0][1] == ["时间戳", "时间"]
+    # numeric: 单位别名/补充因子/字段算子/聚合标记
+    assert pack.join_param("numeric_z3", "cn_unit_aliases")["毫秒"] == "ms"
+    assert pack.join_param("numeric_z3", "extra_unit_factors")["天"] == [
+        "time", 86400.0]
+    field_ops = pack.join_param("numeric_z3", "field_name_ops")
+    assert list(field_ops) == [
+        "最大差", "上限", "最大值", "最小差", "下限", "最小值", "精度"]
+    assert field_ops["精度"] == "eq"
+    assert pack.join_param("numeric_z3", "aggregate_markers") == [
+        "总", "之和", "合计", "总计", "总共"]
+
+
+def test_gjb_rule_clusters_section_loads_and_validates(tmp_path: Path) -> None:
+    """gjb.rule_clusters段: 11簇/带理由/引擎可读; 坏簇配置报可读错误。"""
+    from algorithms.consistency.gjb_rule_engine import rule_clusters
+
+    clusters = rule_clusters()
+    assert len(clusters) == 11
+    assert clusters[0][0] == "GJB-01"
+    assert "GJB-RULE-041" in dict(
+        (cluster, rule_ids) for cluster, rule_ids, _ in clusters)["GJB-09"]
+    assert all(reason for _, _, reason in clusters)
+
+    data = json.loads(DEFAULT_PACK_PATH.read_text(encoding="utf-8"))
+    data["gjb"]["rule_clusters"][0]["rule_ids"] = []
+    path = _dump_bad_pack(tmp_path, {"gjb": data["gjb"]})
+    with pytest.raises(ValueError, match="rule_ids"):
+        load_rulepack(path)
+
+    data = json.loads(DEFAULT_PACK_PATH.read_text(encoding="utf-8"))
+    data["gjb"]["rule_clusters"].append(
+        {"cluster": "GJB-01", "rule_ids": ["GJB-RULE-041"], "reason": "重复"})
+    path = _dump_bad_pack(tmp_path, {"gjb": data["gjb"]})
+    with pytest.raises(ValueError, match="重复声明"):
+        load_rulepack(path)
+
+
 def test_import_has_no_module_level_io() -> None:
     """模块顶层零I/O: import rulepack不触发文件读取(默认pack惰性加载)."""
     import subprocess

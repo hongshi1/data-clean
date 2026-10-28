@@ -20,13 +20,13 @@ from algorithms.consistency.evidence_statements import (  # noqa: E402
 from algorithms.consistency.gjb_rule_engine import (  # noqa: E402
     CHECK_ITEMS,
     METHOD,
-    RULE_CLUSTERS,
     aggregate_clusters,
     audit_document,
     compile_library,
     compile_rule,
     default_checks,
     load_rule_library,
+    rule_clusters,
     verify_gjb_rules,
 )
 from algorithms.consistency.qa_models import (  # noqa: E402
@@ -168,14 +168,17 @@ def test_compilation_coverage_reported_honestly() -> None:
 
 
 def test_cluster_mapping_rules_exist_and_cover_taxonomy() -> None:
+    """簇映射已外置到rule pack(gjb.rule_clusters段, 带映射理由): 覆盖
+    taxonomy全部GJB项, 引用的规则号都在规则库中, 每簇有非空理由。"""
     taxonomy = json.loads(
         (BASE / "knowledge/consistency_taxonomy_v3.json").read_text(
             encoding="utf-8"))
     taxonomy_ids = {item["id"] for item in taxonomy["items"]
                     if str(item.get("id", "")).startswith("GJB")}
     rule_ids = {rule["rule_id"] for rule in load_rule_library()}
-    assert {cluster for cluster, _, _ in RULE_CLUSTERS} == taxonomy_ids
-    for _, rule_ids_for_cluster, reason in RULE_CLUSTERS:
+    clusters = rule_clusters()
+    assert {cluster for cluster, _, _ in clusters} == taxonomy_ids
+    for _, rule_ids_for_cluster, reason in clusters:
         assert rule_ids_for_cluster
         assert set(rule_ids_for_cluster) <= rule_ids
         assert reason

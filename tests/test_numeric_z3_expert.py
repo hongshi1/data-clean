@@ -68,6 +68,11 @@ def test_field_style_facts_from_data_table_statements() -> None:
     assert by_subject["XX参数"].value == 0.005
     assert by_subject["YY参数"].op == "eq"
     assert by_subject["YY参数"].value == 0.0005
+    # 字段类标记：同一数据项的最大值/最小值/精度是三个不同的量
+    assert by_subject["数据同步时延"].field_class == "max"
+    assert by_subject["XX参数"].field_class == "min"
+    assert by_subject["YY参数"].field_class == "precision"
+    assert by_subject["数据同步时延"].subject == "数据同步时延"
 
 
 def test_prose_facts_cover_colon_table_cells() -> None:
@@ -200,6 +205,120 @@ def test_no_numeric_facts_returns_empty() -> None:
         make_request("响应时间不超过50ms。"),
         [statement("系统提供数据查询功能。")])
     assert results == []
+
+
+# ── 字段类join键（C06QA-008修复：max/min/精度不跨字段误join） ──
+
+
+def test_claim_field_qualifier_split() -> None:
+    """answer主体字段限定词→(核心主体, 字段类)；裸"上限"是数据项名
+    的一部分（告警上限），不剥离。"""
+    from algorithms.consistency.numeric_z3_expert import (
+        _split_field_qualifier)
+    assert _split_field_qualifier("最大连接数的最大值") == (
+        "最大连接数", "max")
+    assert _split_field_qualifier("内存占用状态") == ("内存占用状态", "")
+    assert _split_field_qualifier("响应时间的下限") == ("响应时间", "min")
+    assert _split_field_qualifier("告警上限") == ("告警上限", "")
+
+
+def test_qualified_max_claim_isolated_from_min_and_precision() -> None:
+    """C06QA-008真实形态（06号表97）：answer"X的最大值为200"的eq声明
+    只与最大值行(le 200)比对，不再误join最小值(ge 0)与精度(eq 1)行
+    ——修复前三行池进同一Z3变量，eq200∧eq1撞UNSAT伪refute。"""
+    evidence = [
+        statement("最大连接数的最大值：200", field="最大值",
+                  scope="最大连接数"),
+        statement("最大连接数的最小值：0", field="最小值",
+                  scope="最大连接数"),
+        statement("最大连接数的精度：1", field="精度", scope="最大连接数"),
+    ]
+    request = make_request(
+        "最大连接数的最大值为200，该数据项的取值不能超过此限值。",
+        question="最大连接数的最大值是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "support"
+    assert "ev0(最大连接数≤200)" in results[0].rationale
+
+
+def test_unqualified_value_claim_isolated_from_precision_fact() -> None:
+    """无限定eq声明（"X为200"，值本身）与max/min事实比对（值域包含
+    →support），不与精度行(eq 1)误join。"""
+    evidence = [
+        statement("最大连接数的最大值：200", field="最大值",
+                  scope="最大连接数"),
+        statement("最大连接数的最小值：0", field="最小值",
+                  scope="最大连接数"),
+        statement("最大连接数的精度：1", field="精度", scope="最大连接数"),
+    ]
+    request = make_request("最大连接数为200。", question="最大连接数是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "support"
+
+
+def test_qualified_min_claim_joins_min_fact_only() -> None:
+    """限定min声明（"X的最小值不小于1"）只与最小值行(ge 0)比对：
+    answer下界强于文档下界→support（子集语义）；最大值行(le 200)
+    不进同一Z3问题（evidence_refs仅含最小值行所在证据块）。"""
+    evidence = [
+        statement("最大连接数的最大值：200", field="最大值",
+                  scope="最大连接数", evidence_id="e-max"),
+        statement("最大连接数的最小值：0", field="最小值",
+                  scope="最大连接数", evidence_id="e-min"),
+    ]
+    request = make_request(
+        "最大连接数的最小值不小于1。", question="最大连接数的最小值是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "support"
+    assert results[0].evidence_refs == ("e-min",)
+    assert "最大连接数≥0" in results[0].rationale
+    assert "最大连接数≤200" not in results[0].rationale
+
+
+def test_qualified_min_upper_claim_refutes_against_min_fact() -> None:
+    """限定min声明与最小值行的反向矛盾：声称"最小值至多1ms"(le)与
+    文档最小值ge 5ms无交集→refute（仅最小值行参与，unsat core可溯源）。"""
+    evidence = [
+        statement("数据同步时延的最大差：100ms", field="最大差",
+                  scope="数据同步时延", evidence_id="e-max"),
+        statement("数据同步时延的最小差：5ms", field="最小差",
+                  scope="数据同步时延", evidence_id="e-min"),
+    ]
+    request = make_request(
+        "数据同步时延的最小值至多1ms。",
+        question="数据同步时延的最小值是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "refute"
+    assert results[0].evidence_refs == ("e-min",)
+
+
+def test_precision_claim_joins_precision_fact_only() -> None:
+    """"X的精度"式声明（的-前缀限定）与精度行同类比对：值一致support。"""
+    evidence = [
+        statement("CPU占用状态的精度：1", field="精度", scope="CPU占用状态"),
+        statement("CPU占用状态的最大值：100", field="最大值",
+                  scope="CPU占用状态"),
+    ]
+    request = make_request(
+        "CPU占用状态的精度为1。", question="CPU占用状态的精度是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "support"
+
+
+def test_bare_upper_limit_name_is_not_stripped() -> None:
+    """数据项名以"上限"结尾（告警上限）：裸形不剥离字段限定词，
+    声明与算子式事实同量纲（值本身）正常join。"""
+    evidence = [statement("告警上限不超过3条。")]
+    request = make_request("告警上限不超过3条。",
+                           question="告警上限是多少？")
+    results = verify_numeric_constraints(request, evidence)
+    assert len(results) == 1
+    assert results[0].verdict == "support"
 
 
 # ── 跨参数聚合检查（PARAM-01/05，合成能力证明） ───────────

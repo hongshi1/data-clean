@@ -22,7 +22,7 @@ VIO-17模式（answer断言"3.1至3.17全部需求均规定了合格性方法"�
    - 全称声明：无显式区间的'所有/全部/每条需求都有合格性方法'；
    - 精确断言：'X功能(有/规定了)合格性规定'（主体非泛指词）；
    - GJB条款声明：复用gjb_presence_expert的_answer_gjb_claims封闭
-     清单触发词表（import避免词表漂移），仅取GJB-04审计日志/GJB-06
+     清单触发词表（import避免行为漂移），仅取GJB-04审计日志/GJB-06
      报警要素的存在正极性segment。
 3. 三项检查（verify_coverage → ClaimResult，method="coverage_join"）：
    ① 逐章覆盖比对：范围内已知章节无合格性行（路径重叠判定：行命中
@@ -37,7 +37,11 @@ VIO-17模式（answer断言"3.1至3.17全部需求均规定了合格性方法"�
      文本的深化），未断言要素时回退条款级审计。
 
 本层完全确定性：无模型调用、无检索、无文件读写；answer不含覆盖声明
-时返回[]（91条冻结QA主集零噪音，tests核验）。
+时返回[]（91条冻结QA主集零噪音，tests核验）。被覆盖物/泛称主体/报警
+要素/缺失极性词表外置于rule pack（config/rulepacks/srs_gjb_v1.json的
+term_vocabularies与join_params.coverage，经_cfg()惰性编译——成员与
+迁移前源码逐字一致）；范围/全称/标题等声明模式正则与三段流水线逻辑
+留引擎。
 """
 from __future__ import annotations
 
@@ -54,7 +58,6 @@ from algorithms.consistency.evidence_statements import (
 from algorithms.consistency.gjb_presence_expert import (
     GJB_CHECKS,
     GjbPresenceAudit,
-    _ABSENCE_RE,
     _answer_gjb_claims,
     _SEGMENT_SPLIT,
     audit_gjb_presence,
@@ -66,6 +69,7 @@ from algorithms.consistency.qa_models import (
     Verdict,
 )
 from algorithms.consistency.qa_router import route_question
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "coverage_join"
 CHECK_ITEMS: tuple[str, ...] = ("GJB-01", "GJB-04", "GJB-06")
@@ -74,10 +78,65 @@ _CHECK_BY_ID = {check.check_id: check for check in GJB_CHECKS}
 _CLAUSE_CHECK_IDS = frozenset({"GJB-04", "GJB-06"})
 _CHECK_ID_SET = frozenset(CHECK_ITEMS)
 
-#: ①②的被覆盖物词表（命中任一才构成合格性覆盖声明，防全称误触发）
-_QUALIFICATION_TARGETS: tuple[str, ...] = (
-    "合格性方法", "合格性规定", "合格性检验方法", "合格性级别", "测试方法", "合格性",
-)
+
+@dataclass(frozen=True)
+class _CoverageConfig:
+    """从rule pack编译的coverage词表配置（成员与迁移前源码逐字一致）.
+
+    qualification_targets有序（长词在前，命中优先级敏感）；alarm_elements
+    有序（要素断言顺序进rationale）；absence词表与gjb_presence/
+    gjb_rule_engine共享同一配置来源（消除跨模块词表import漂移）。
+    """
+
+    absence_re: re.Pattern[str]
+    qualification_targets: tuple[str, ...]
+    generic_subjects: frozenset[str]
+    alarm_elements: tuple[tuple[str, tuple[str, ...]], ...]
+    alarm_synonyms: dict[str, tuple[str, ...]]
+
+
+def _build_config(pack: RulePack) -> _CoverageConfig:
+    raw_elements = pack.join_param("coverage", "alarm_elements", ())
+    if not isinstance(raw_elements, (list, tuple)):
+        raise ValueError(
+            "rulepack coverage.alarm_elements须为"
+            "[[标签, [同义词...]], ...]列表")
+    elements: list[tuple[str, tuple[str, ...]]] = []
+    for item in raw_elements:
+        if (not isinstance(item, (list, tuple)) or len(item) != 2
+                or not isinstance(item[0], str) or not item[0]
+                or not isinstance(item[1], (list, tuple))
+                or not all(isinstance(s, str) and s for s in item[1])):
+            raise ValueError(
+                f"rulepack coverage.alarm_elements项{item!r}须为"
+                f"[非空标签, 非空字符串同义词列表]")
+        elements.append((item[0], tuple(item[1])))
+    if not elements:
+        raise ValueError(
+            "rulepack coverage.alarm_elements不能为空"
+            "（GJB-06逐要素比对无要素清单）")
+    return _CoverageConfig(
+        absence_re=pack.vocabulary_regex("gjb_absence_words"),
+        qualification_targets=pack.vocabulary(
+            "coverage_qualification_targets"),
+        generic_subjects=frozenset(
+            pack.vocabulary("coverage_generic_subjects")),
+        alarm_elements=tuple(elements),
+        alarm_synonyms={label: synonyms for label, synonyms in elements},
+    )
+
+
+_COVERAGE_CONFIG: _CoverageConfig | None = None
+
+
+def _cfg() -> _CoverageConfig:
+    """惰性加载默认rule pack并编译coverage词表（缓存，import期零I/O）."""
+    global _COVERAGE_CONFIG
+    if _COVERAGE_CONFIG is None:
+        _COVERAGE_CONFIG = _build_config(default_rulepack())
+    return _COVERAGE_CONFIG
+
+
 _RANGE = re.compile(
     r"(?P<start>\d+(?:\.\d+){0,5})\s*(?:个)?(?:章节|节)?\s*[至到~～]\s*"
     r"(?P<end>\d+(?:\.\d+){0,5})\s*(?:个)?\s*(?:章节|节)")
@@ -93,23 +152,9 @@ _CJK = re.compile(r"[\u4e00-\u9fff]")
 _SECTION_TOKEN = re.compile(r"\d+(?:\.\d+){0,5}")
 _SUBJECT_STRIP = re.compile(r"(?:功能|需求|能力)$")
 _SUBJECT_SPLIT = re.compile(r"[，,。；;：:（(、和与及]")
-_GENERIC_SUBJECTS = frozenset({
-    "需求", "功能", "能力", "能力需求", "系统", "本系统", "该系统", "文档", "本文档",
-    "软件", "服务", "全部", "所有", "每个", "各", "它们", "其", "该", "本",
-})
 _MIN_SEGMENT_CHARS = 6
 _MAX_HEADING_LINE_CHARS = 92
 _MIN_CONTAIN_CHARS = 3
-
-#: GJB-06报警要素封闭清单（label, 同义词）：answer断言要素→证据报警语句逐项核对
-_ALARM_ELEMENTS: tuple[tuple[str, tuple[str, ...]], ...] = (
-    ("时间戳", ("时间戳", "时间")),
-    ("位置", ("位置",)),
-    ("等级", ("等级", "级别")),
-    ("原因", ("原因",)),
-    ("处置建议", ("处置", "建议")),
-)
-_ELEMENT_SYNONYMS = {label: synonyms for label, synonyms in _ALARM_ELEMENTS}
 _ALARM_CONTEXT = re.compile(r"报警|告警|警告|警报|异常流|提示")
 
 
@@ -411,7 +456,7 @@ def _subject_before_target(segment: str, target: str) -> str:
     head = before[:verb_match.start()]
     parts = [part.strip() for part in _SUBJECT_SPLIT.split(head)]
     subject = _norm_subject(parts[-1]) if parts else ""
-    if subject in _GENERIC_SUBJECTS:
+    if subject in _cfg().generic_subjects:
         return ""
     if not re.search(r"[\u4e00-\u9fffA-Za-z]", subject):
         return ""
@@ -419,15 +464,15 @@ def _subject_before_target(segment: str, target: str) -> str:
 
 
 def _asserted_elements(segment: str) -> tuple[str, ...]:
-    """answer断言的报警要素（按_ALARM_ELEMENTS封闭清单逐项命中）。"""
+    """answer断言的报警要素（按alarm_elements封闭清单逐项命中）。"""
     return tuple(
-        label for label, synonyms in _ALARM_ELEMENTS
+        label for label, synonyms in _cfg().alarm_elements
         if any(synonym in segment for synonym in synonyms))
 
 
 def _qual_claim(segment: str, target: str) -> CoverageClaim | None:
     """合格性覆盖声明分类：范围 > 全称 > 精确断言。"""
-    if _ABSENCE_RE.search(segment):
+    if _cfg().absence_re.search(segment):
         return None
     if _OBJECT.search(segment) is None or _COVER_VERB.search(segment) is None:
         return None
@@ -471,7 +516,7 @@ def extract_coverage_claims(answer: str) -> list[CoverageClaim]:
         segment = raw_segment.strip()
         if len(segment) < _MIN_SEGMENT_CHARS:
             continue
-        target = next((term for term in _QUALIFICATION_TARGETS
+        target = next((term for term in _cfg().qualification_targets
                        if term in segment), "")
         if not target:
             continue
@@ -606,7 +651,7 @@ def _check_alarm_elements(request: QAInput, claim: CoverageClaim,
     missing = tuple(
         label for label in claim.elements
         if not any(synonym in statement.text for statement in contexts
-                   for synonym in _ELEMENT_SYNONYMS[label]))
+                   for synonym in _cfg().alarm_synonyms[label]))
     if missing:
         return _result(
             request, claim, order, "refute", context_ids,
