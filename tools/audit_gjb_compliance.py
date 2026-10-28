@@ -47,6 +47,7 @@ from algorithms.consistency.qa_models import (  # noqa: E402
     RetrievedEvidence,
     SourceRef,
 )
+from algorithms.consistency.rulepack import default_rulepack  # noqa: E402
 from tools.run_utils import open_run  # noqa: E402
 
 CONTENT_LIST_GLOB = ("data/gjb_438c/mineru_standard/"
@@ -90,12 +91,17 @@ _MATCH_MATRIX = {
 }
 
 
-def load_doc04_blocks() -> tuple[RetrievedEvidence, ...]:
-    """04号content_list -> 冻结证据块（表体+caption，text块原文）。"""
-    paths = [p for p in glob(str(BASE / CONTENT_LIST_GLOB))]
+def load_doc_blocks(content_glob: str,
+                    doc_id: str) -> tuple[RetrievedEvidence, ...]:
+    """content_list(glob) -> 冻结证据块（表体+caption，text块原文）.
+
+    参数化自原load_doc04_blocks(04号专用): onboard_new_document等工具
+    按doc号glob+doc_id复用同一冻结口径。
+    """
+    paths = [p for p in glob(str(BASE / content_glob))]
     if len(paths) != 1:
         raise FileNotFoundError(
-            f"预期1个04号content_list，实际{len(paths)}: {paths}")
+            f"预期1个content_list({content_glob})，实际{len(paths)}: {paths}")
     items = json.loads(Path(paths[0]).read_text(encoding="utf-8"))
     blocks: list[RetrievedEvidence] = []
     for index, item in enumerate(items):
@@ -117,11 +123,32 @@ def load_doc04_blocks() -> tuple[RetrievedEvidence, ...]:
             text=text,
             source_type=source_type,
             source_ref=SourceRef(
-                doc_id=DOC04_ID, block_id=f"block-{index:06d}"),
-            scope_id=f"{DOC04_ID}:block-{index:06d}",
+                doc_id=doc_id, block_id=f"block-{index:06d}"),
+            scope_id=f"{doc_id}:block-{index:06d}",
             completeness="open",
         ))
     return tuple(blocks)
+
+
+def audit_with_pack(blocks: tuple[RetrievedEvidence, ...], pack) -> dict:
+    """blocks+pack → 规则库驱动的全量审计要素（onboarding工具复用）.
+
+    pack提供gjb_rule_library_path(规则库定位); 簇映射经引擎默认pack
+    读取——onboard草稿的gjb段与基pack逐字一致(标准级知识不动), 工具侧
+    校验一致性后本函数的裁决与显式传簇映射等价。
+    """
+    statements = linearize_context(blocks)
+    rules = load_rule_library(str(BASE / pack.gjb_rule_library_path))
+    checks = [compile_rule(rule) for rule in rules]
+    results = audit_document(statements, checks)
+    audits = aggregate_clusters(results)
+    return {
+        "statements": statements,
+        "rules": rules,
+        "checks": checks,
+        "results": results,
+        "audits": audits,
+    }
 
 
 def taxonomy_gjb_items() -> dict[str, dict]:
@@ -156,12 +183,13 @@ def consistency_table(audits: dict) -> list[dict]:
 
 
 def main() -> None:
-    blocks = load_doc04_blocks()
-    statements = linearize_context(blocks)
-    rules = load_rule_library()
-    checks = [compile_rule(rule) for rule in rules]
-    results = audit_document(statements, checks)
-    audits = aggregate_clusters(results)
+    blocks = load_doc_blocks(CONTENT_LIST_GLOB, DOC04_ID)
+    elements = audit_with_pack(blocks, default_rulepack())
+    statements = elements["statements"]
+    rules = elements["rules"]
+    checks = elements["checks"]
+    results = elements["results"]
+    audits = elements["audits"]
 
     compiled = [c for c in checks if c.check_type != "manual"]
     manual = [c for c in checks if c.check_type == "manual"]

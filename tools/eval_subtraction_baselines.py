@@ -13,10 +13,11 @@
   B3-ours       三级过滤减法模块(本文)       — F1+F2+F3
   B4-oracle     gold直选+归一                — 选择上限
 
-指标(按"成功率改变×有效证据误删"框架):
+指标(按"成功率改变×gold误删"框架):
   检出成功率      17个已知违例中NLI判出"不一致"的比例(τ=0.5)
                  — 相对B0-raw的Δ即"成功率的改变"
-  误删有效证据    35个定位gold证据引用中被删掉的数量(绝对数, 0=安全)
+  误删定位gold    35个定位gold证据引用(违例位置块)中被删数(0=安全);
+                 注: 定位金标≠反驳金标, 见73号审计
   证据压缩        保留块数(97块总量)
   伪矛盾率(swap)  池×异项答案触发refute — NLI自身scope盲区的注脚指标
 用法: python tools/eval_subtraction_baselines.py
@@ -210,6 +211,7 @@ def main() -> int:
                                        - results["B0-raw"]["success_rate_pct"], 1)
             if "B0-raw" in results else 0.0,
             "valid_evidence_deleted": f"{gold_deleted}/{gold_all}",
+            "gold_deleted_note": "定位gold(违例位置块)被删数; 定位金标≠反驳金标",
             "gold_retention_pct": round(100 * gold_keep / gold_all, 1),
             "blocks_kept": sum(len(ids) for ids in kept_ids),
             "swap_fp_pct": round(100 * n_fp / max(n_swaps, 1), 1),
@@ -221,7 +223,7 @@ def main() -> int:
         print(f"{method:<15} 成功率={results[method]['success_rate']} "
               f"({results[method]['success_rate_pct']:4.1f}%)  "
               f"Δ={results[method]['delta_success_pct']:+5.1f}pt  "
-              f"误删有效证据={gold_deleted}/{gold_all}  "
+              f"误删定位gold={gold_deleted}/{gold_all}  "
               f"保留块={results[method]['blocks_kept']}  "
               f"伪矛盾率={results[method]['swap_fp_pct']:4.1f}%")
 
@@ -248,7 +250,7 @@ def main() -> int:
     ax.bar([x - w / 2 for x in xpos], recall, w,
            color="#2e7dd1", label="检出成功率%(越高越好)")
     ax.bar([x + w / 2 for x in xpos], gold_del, w,
-           color="#d95f02", label="误删有效证据数/35(越低越好, 0=安全)")
+           color="#d95f02", label="误删定位gold数/35(越低越好)")
     for x, r, d, bk in zip(xpos, recall, gold_del, blocks):
         ax.text(x - w / 2, r + 1.5, f"{r:.0f}%", ha="center", fontsize=9)
         ax.text(x + w / 2, d + 0.6, f"{d}个", ha="center", fontsize=9)

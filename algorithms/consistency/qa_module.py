@@ -250,6 +250,7 @@ class QAConsistencyModule:
                  nli_contra_threshold: float = 0.6,
                  nli_entail_threshold: float = 0.6,
                  use_deq: bool = False,
+                 use_subtractor: bool = False,
                  use_experts: bool = True,
                  use_bge_experts: bool = False,
                  use_llm_residual: bool = False,
@@ -267,6 +268,11 @@ class QAConsistencyModule:
         residual semantic channel. Thresholds are calibrated on dev splits.
         use_deq: opt-in the detection-item-aware evidence quality pipeline
         (E0 scope gate + E1 item scoring) to filter evidence before L1/L2.
+        use_subtractor: opt-in the hard-veto evidence subtractor (F1 scope
+        filter + F2 granularity normalization + F3 pointer removal, 70-72号)
+        — deletes out-of-scope blocks and rewrites each kept block's text
+        as row/sentence-level statements so NLI consumes sentence-grade
+        premises (SummaC principle); every removal is auditable.
         use_experts: opt-in the L0/L1 expert channels (entity detection,
         E1 template, sequence alignment, trace join) whose ClaimResults are
         union-merged with per-claim results before aggregation.
@@ -351,6 +357,7 @@ class QAConsistencyModule:
         self.nli_contra_threshold = nli_contra_threshold
         self.nli_entail_threshold = nli_entail_threshold
         self.use_deq = use_deq
+        self.use_subtractor = use_subtractor
         self.use_experts = use_experts
         self.use_bge_experts = use_bge_experts
         self.use_llm_residual = use_llm_residual
@@ -407,6 +414,36 @@ class QAConsistencyModule:
                 )
             if deq_result.gated_count == 0 and deq_result.original_count > 0:
                 deq_diagnostic.append("deq_all_evidence_rejected")
+        if self.use_subtractor and verification_request.evidence:
+            from dataclasses import asdict, replace
+
+            from algorithms.consistency.evidence_subtractor import subtract
+            # 只删块不改写: 粒度归一由本模块linearize_evidence的
+            # 表格类型感知行级化负责(能力表/数据表/接口表/用例表),
+            # 证据级重写会破坏其类型检测(73号实验教训); 故语句预算关闭.
+            pack = subtract(
+                question=verification_request.question,
+                answer=verification_request.answer,
+                evidence=[asdict(ev)
+                          for ev in verification_request.evidence],
+                max_statements=10 ** 9,
+            )
+            kept_ids = {k["evidence_id"] for k in pack["kept"]}
+            new_blocks = [ev for ev in verification_request.evidence
+                          if ev.evidence_id in kept_ids]
+            verification_request = replace(
+                verification_request, evidence=tuple(new_blocks))
+            stats = pack["stats"]
+            deq_diagnostic.append(
+                f"subtractor_removed_{stats['n_removed']}"
+                f"_of_{stats['n_in']}_blocks")
+            if stats["n_removed"]:
+                deq_diagnostic.append(
+                    "subtractor_reasons:"
+                    + ",".join(f"{k}x{v}"
+                               for k, v in stats["by_reason"].items()))
+            if stats["n_kept"] == 0 and stats["n_in"] > 0:
+                deq_diagnostic.append("subtractor_all_evidence_rejected")
 
         check_items = route_question(request.question)
         claims = self._decompose(request.question, request.answer)
