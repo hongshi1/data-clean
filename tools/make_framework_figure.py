@@ -4,7 +4,6 @@ from __future__ import annotations
 import pathlib
 import warnings
 
-import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
