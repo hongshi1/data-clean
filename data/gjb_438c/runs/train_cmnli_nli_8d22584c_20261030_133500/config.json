@@ -1,0 +1,39 @@
+{
+ "script": "train_cmnli_nli",
+ "git_sha": "bbeadfea",
+ "config": {
+  "base_model": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "output": "C:\\Users\\12488\\AppData\\Local\\Temp\\opencode\\cmnli_dryrun",
+  "data": {
+   "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\public_nli\\cmnli_train_raw.json",
+   "n_available": 391780,
+   "n_train": 300,
+   "n_dev": 60,
+   "sample": "random.Random(42).sample(available, 360); 前300=train, 末60=dev",
+   "excluded_test_duplicate_keys": 3,
+   "train_label_dist": {
+    "not_in_evidence": 99,
+    "refute": 103,
+    "support": 98
+   },
+   "dev_label_dist": {
+    "refute": 15,
+    "support": 25,
+    "not_in_evidence": 20
+   }
+  },
+  "n_train": 300,
+  "n_dev": 60,
+  "epochs": 1,
+  "batch": 16,
+  "lr": 2e-05,
+  "max_length": 256,
+  "eval_steps": 50,
+  "seed": 42,
+  "fp16": true,
+  "grad_ckpt": false,
+  "device": "cuda"
+ },
+ "config_hash": "8d22584c",
+ "opened_at": 1793338500.2
+}

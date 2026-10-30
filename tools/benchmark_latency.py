@@ -13,7 +13,6 @@ import json
 import statistics
 import time
 
-from algorithms.consistency.evidence_statements import linearize_context
 from algorithms.consistency.eval_lib import build_qa_input, load_frozen_qa
 from algorithms.consistency.nli_residual import DEFAULT_MODEL_KEY
 from algorithms.consistency.qa_module import QAConsistencyModule

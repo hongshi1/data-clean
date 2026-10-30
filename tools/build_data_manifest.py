@@ -105,6 +105,22 @@ ASSETS = [
     "qa_frozen/crossdoc06_evalset_v1.jsonl",
     "qa_frozen/crossdoc06_evalset_v1_metadata.json",
     "qa_frozen/crossdoc06_evalset_v1_report.json",
+    # v5.3新增: 跨文档×5扩充集(05/07/08/10各30条+合并150条, P1v2) (2026-10-30)
+    "qa_frozen/crossdoc05_evalset_v1.jsonl",
+    "qa_frozen/crossdoc05_evalset_v1_metadata.json",
+    "qa_frozen/crossdoc05_evalset_v1_report.json",
+    "qa_frozen/crossdoc07_evalset_v1.jsonl",
+    "qa_frozen/crossdoc07_evalset_v1_metadata.json",
+    "qa_frozen/crossdoc07_evalset_v1_report.json",
+    "qa_frozen/crossdoc08_evalset_v1.jsonl",
+    "qa_frozen/crossdoc08_evalset_v1_metadata.json",
+    "qa_frozen/crossdoc08_evalset_v1_report.json",
+    "qa_frozen/crossdoc10_evalset_v1.jsonl",
+    "qa_frozen/crossdoc10_evalset_v1_metadata.json",
+    "qa_frozen/crossdoc10_evalset_v1_report.json",
+    "qa_frozen/crossdoc5_evalset_v1.jsonl",
+    "qa_frozen/crossdoc5_evalset_v1_metadata.json",
+    "qa_frozen/crossdoc5_evalset_v1_report.json",
 ]
 
 

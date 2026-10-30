@@ -1,0 +1,39 @@
+{
+ "script": "train_cmnli_nli",
+ "git_sha": "bbeadfea",
+ "config": {
+  "base_model": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "output": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\cmnli_finetuned_mdeberta",
+  "data": {
+   "source": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\public_nli\\cmnli_train_raw.json",
+   "n_available": 391780,
+   "n_train": 50000,
+   "n_dev": 2000,
+   "sample": "random.Random(42).sample(available, 52000); 前50000=train, 末2000=dev",
+   "excluded_test_duplicate_keys": 3,
+   "train_label_dist": {
+    "not_in_evidence": 16682,
+    "refute": 16796,
+    "support": 16522
+   },
+   "dev_label_dist": {
+    "not_in_evidence": 649,
+    "support": 653,
+    "refute": 698
+   }
+  },
+  "n_train": 50000,
+  "n_dev": 2000,
+  "epochs": 2,
+  "batch": 16,
+  "lr": 2e-05,
+  "max_length": 256,
+  "eval_steps": 500,
+  "seed": 42,
+  "fp16": true,
+  "grad_ckpt": false,
+  "device": "cuda"
+ },
+ "config_hash": "8adad79b",
+ "opened_at": 1793338546.0
+}
