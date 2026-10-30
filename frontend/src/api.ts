@@ -1,4 +1,6 @@
-import type { ActivateResult, DocInfo, QaPage } from "./types";
+import type {
+  ActivateResult, DocInfo, QaPage, VerifyQaItem, VerifyResult,
+} from "./types";
 
 const BASE = "";
 
@@ -77,4 +79,35 @@ export async function fetchMermaid(docNum: string, figNum: string): Promise<{ ha
   if (!r.ok) return { has: false, code: "", type: "" };
   const j = await r.json();
   return { has: !!j.has_mermaid, code: j.mermaid ?? "", type: j.diagram_type ?? "" };
+}
+
+/** 91条冻结QA轻量列表 */
+export async function fetchVerifyQaList(): Promise<VerifyQaItem[]> {
+  const r = await fetch(`${BASE}/api/verify/qa_list`);
+  if (!r.ok) throw new Error(`加载冻结QA列表失败 (HTTP ${r.status})`);
+  return r.json();
+}
+
+/** 按instance_id校验冻结QA */
+export async function verifyQaById(
+  id: string,
+  preset: string,
+  scene: string
+): Promise<VerifyResult> {
+  const r = await fetch(`${BASE}/api/verify_qa/${encodeURIComponent(id)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ preset, scene }),
+  });
+  if (!r.ok) {
+    let detail = `校验请求失败 (HTTP ${r.status})`;
+    try {
+      const j = await r.json();
+      if (j?.detail) detail = String(j.detail);
+    } catch {
+      detail = `校验请求失败 (HTTP ${r.status})`;
+    }
+    throw new Error(detail);
+  }
+  return r.json();
 }

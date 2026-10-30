@@ -10,6 +10,9 @@
   GET  /api/qa/{qa_id}               QA详情
   GET  /api/assets/{doc_num}/{path}  静态资源(图片等)
   GET  /api/knw                      知识规则registry
+  GET  /api/verify/qa_list           91条冻结QA轻量列表(scene1)
+  POST /api/verify_qa/{instance_id}  按id校验冻结QA(preset/scene可选)
+  POST /api/verify                   请求级QA校验(证据由调用方提供)
 
 启动: python server/main.py  (或 uvicorn server.main:app --port 8300)
 """
@@ -18,6 +21,7 @@ import os
 import re
 import secrets
 import sys
+import time
 from dataclasses import asdict
 from pathlib import Path
 from typing import Literal
@@ -32,6 +36,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.stdout.reconfigure(encoding="utf-8")
 
 from algorithms.context_graph import ContextGraph  # noqa: E402
+from algorithms.consistency.eval_lib import (  # noqa: E402
+    build_qa_input,
+    load_frozen_qa,
+    load_silver_labels,
+)
 from algorithms.consistency.qa_models import (  # noqa: E402
     QAInput,
     RetrievedEvidence,
@@ -41,6 +50,11 @@ from algorithms.consistency.verifier import CascadeVerifier  # noqa: E402
 
 BASE = Path(__file__).resolve().parent.parent
 QA_PATH = BASE / "data/gjb_438c/data_assets/srs_qa_final.json"
+QA_FROZEN_PATH = BASE / "data/gjb_438c/qa_frozen/scene1_qa_frozen_v1.jsonl"
+SILVER_LABELS_PATH = (
+    BASE / "data/gjb_438c/runs/review_qa_with_glm53_582b51e5_20261021_145212"
+    / "final_labels.jsonl"
+)
 
 app = FastAPI(title="SRS上下文关联图谱平台", version="0.2.0")
 app.add_middleware(
@@ -349,6 +363,56 @@ def verify_qa(req: VerifyRequest):
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
     return asdict(result)
+
+
+# ---------------------------------------------------------------------------
+# 冻结QA便捷校验: 服务端托管91条scene1冻结QA(纯读), 供前端选择-校验-高亮
+# ---------------------------------------------------------------------------
+FROZEN_QA = load_frozen_qa(QA_FROZEN_PATH)
+FROZEN_QA_INDEX = {row["instance_id"]: row for row in FROZEN_QA}
+SILVER_VERDICTS = load_silver_labels(SILVER_LABELS_PATH)
+
+
+@app.get("/api/verify/qa_list")
+def verify_qa_list():
+    """91条冻结QA轻量列表(question/answer截80字, 附silver参考标签)."""
+    return [{
+        "instance_id": row["instance_id"],
+        "question": str(row["question"])[:80],
+        "answer": str(row["answer"])[:80],
+        "scene": "srs_scene1",
+        "silver_verdict": SILVER_VERDICTS.get(row["instance_id"]),
+    } for row in FROZEN_QA]
+
+
+class VerifyByIdRequest(BaseModel):
+    preset: Literal["fast", "standard", "full"] = "fast"
+    scene: str = "srs_scene1"
+
+
+@app.post("/api/verify_qa/{instance_id}")
+def verify_qa_by_id(instance_id: str, body: VerifyByIdRequest):
+    """按instance_id校验冻结QA(evidence原样透传, 供前端高亮联动)."""
+    record = FROZEN_QA_INDEX.get(instance_id)
+    if record is None:
+        raise HTTPException(404, f"冻结QA {instance_id} 不存在")
+    verifier = _get_verifier(body.preset, body.scene)
+    request = build_qa_input(record)
+    start = time.perf_counter()
+    try:
+        result = verifier.verify_qa_input(request)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    latency_ms = round((time.perf_counter() - start) * 1000.0, 3)
+    payload = asdict(result)
+    payload.update({
+        "question": record["question"],
+        "answer": record["answer"],
+        "evidence": record["evidence"],
+        "silver_verdict": SILVER_VERDICTS.get(instance_id),
+        "latency_ms": latency_ms,
+    })
+    return payload
 
 
 class ActivateReq(BaseModel):

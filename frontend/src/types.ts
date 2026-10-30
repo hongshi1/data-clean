@@ -144,6 +144,64 @@ export interface QaPage {
   items: QaEntry[];
 }
 
+/** 冻结QA一致性校验 — /api/verify/qa_list 与 /api/verify_qa/{id} 契约 */
+
+export type VerifyVerdict = "support" | "refute" | "not_in_evidence";
+
+export interface VerifyQaItem {
+  instance_id: string;
+  question: string;
+  answer: string;
+  scene: string;
+  silver_verdict?: string;
+}
+
+export interface EvidenceSourceRef {
+  doc_id: string;
+  section?: string;
+  page?: number | null;
+  block_id?: string;
+  row_id?: string;
+  region_id?: string;
+}
+
+export interface EvidenceBlock {
+  evidence_id: string;
+  text: string;
+  source_type: string;
+  source_ref: EvidenceSourceRef;
+  scope_id: string;
+  completeness?: string;
+  completeness_proof?: string;
+  extraction_method?: string;
+  extraction_confidence?: number | null;
+}
+
+export interface VerifyClaim {
+  claim_id: string;
+  claim_text: string;
+  verdict: VerifyVerdict;
+  check_item_candidates: string[];
+  evidence_refs: string[];
+  rationale: string;
+  method: string;
+  confidence: number;
+}
+
+export interface VerifyResult {
+  instance_id: string;
+  question: string;
+  answer: string;
+  verdict: VerifyVerdict;
+  status: "ok" | "partial";
+  rationale: string;
+  claim_results: VerifyClaim[];
+  evidence: EvidenceBlock[];
+  silver_verdict?: string;
+  diagnostics: string[];
+  latency_ms?: number;
+}
+
 /** 节点模态显示配置 */
 export const MODALITY_CONFIG: Record<
   NodeType | "SEED",

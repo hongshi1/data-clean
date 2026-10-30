@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Tabs } from "antd";
 import {
   DatabaseOutlined, ApartmentOutlined, FileSearchOutlined,
+  SafetyCertificateOutlined,
 } from "@ant-design/icons";
 import DatasetManager from "./pages/DatasetManager";
 import Workbench from "./pages/Workbench";
 import QaManager from "./pages/QaManager";
-import CheckPanel from "./pages/CheckPanel";
+import VerifyPanel from "./pages/VerifyPanel";
 
 type View = "datasets" | "workbench" | "qa" | "check";
 
@@ -14,14 +15,11 @@ export default function App() {
   const [view, setView] = useState<View>("datasets");
   const [pendingQuestion, setPendingQuestion] = useState<string | null>(null);
   const [workbenchDoc, setWorkbenchDoc] = useState<string | null>(null);
-  const [checkDoc, setCheckDoc] = useState<string | null>(null);
 
   const openInWorkbench = (q: string) => {
     setPendingQuestion(q);
     setView("workbench");
   };
-
-  const activeTab = view === "check" ? "datasets" : view;
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -38,13 +36,14 @@ export default function App() {
           GJB 438C · 数据集一致性校验 · 多模态动态召回
         </span>
         <Tabs
-          activeKey={activeTab}
+          activeKey={view}
           onChange={(k) => setView(k as View)}
           style={{ marginLeft: 28 }}
           items={[
             { key: "datasets", label: <span><DatabaseOutlined /> 数据集校验</span> },
             { key: "workbench", label: <span><ApartmentOutlined /> 图谱工作台</span> },
             { key: "qa", label: <span><FileSearchOutlined /> QA数据管理</span> },
+            { key: "check", label: <span><SafetyCertificateOutlined /> 一致性校验</span> },
           ]}
         />
       </header>
@@ -55,15 +54,10 @@ export default function App() {
               setWorkbenchDoc(docNum);
               setView("workbench");
             }}
-            onOpenCheck={(docNum) => {
-              setCheckDoc(docNum);
-              setView("check");
-            }}
+            onOpenCheck={() => setView("check")}
           />
         )}
-        {view === "check" && checkDoc && (
-          <CheckPanel docNum={checkDoc} onBack={() => setView("datasets")} />
-        )}
+        {view === "check" && <VerifyPanel />}
         {view === "workbench" && (
           <Workbench
             pendingQuestion={pendingQuestion}
