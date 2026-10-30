@@ -303,6 +303,18 @@ class VerifyRequest(BaseModel):
     answer: str
     context_freeze_id: str
     evidence: list[EvidenceRequest]
+    preset: Literal["fast", "standard", "full"] = "fast"
+    scene: str = "srs_scene1"
+
+
+_VERIFIER_CACHE: dict[tuple[str, str], CascadeVerifier] = {}
+
+
+def _get_verifier(preset: str, scene: str) -> CascadeVerifier:
+    key = (preset, scene)
+    if key not in _VERIFIER_CACHE:
+        _VERIFIER_CACHE[key] = CascadeVerifier(preset=preset, scene=scene)
+    return _VERIFIER_CACHE[key]
 
 
 QA_VERIFIER = CascadeVerifier(preset="fast", scene="srs_scene1")
@@ -311,6 +323,7 @@ QA_VERIFIER = CascadeVerifier(preset="fast", scene="srs_scene1")
 @app.post("/api/verify")
 def verify_qa(req: VerifyRequest):
     """Verify an answer against caller-supplied frozen evidence only."""
+    verifier = _get_verifier(req.preset, req.scene)
     request = QAInput(
         instance_id=req.instance_id,
         question=req.question,
@@ -332,7 +345,7 @@ def verify_qa(req: VerifyRequest):
         ),
     )
     try:
-        result = QA_VERIFIER.verify_qa_input(request)
+        result = verifier.verify_qa_input(request)
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
     return asdict(result)
