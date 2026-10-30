@@ -87,6 +87,43 @@ _FACADE_FREEZE_ID = "facade-frozen-context"
 #: VerdictResult.rationale的截断长度(完整rationale在VerificationResult)
 _RATIONALE_MAX = 500
 
+# Windows OpenMP顺序约束: torch须先于numpy链加载, 否则CUDA推理
+# 静默崩溃(见docs/srs_project/68号); fast档无NLI允许无torch环境.
+try:
+    import torch  # noqa: F401,E402
+except ImportError:
+    torch = None
+
+
+def _normalize_evidence(evidence: list[dict], seq: int) -> list[dict]:
+    """证据dict规范化: 极简输入({text})自动补全冻结格式的必填字段.
+
+    完整格式项原样通过(不覆盖用户字段); 缺text的项报ValueError.
+    """
+    blocks: list[dict] = []
+    for i, ev in enumerate(evidence):
+        if not isinstance(ev, dict) or not str(ev.get("text", "")).strip():
+            raise ValueError(
+                f"evidence[{i}]缺少text字段(极简格式至少需要text)")
+        if all(k in ev for k in
+               ("evidence_id", "text", "source_type", "source_ref",
+                "scope_id")):
+            blocks.append(ev)
+            continue
+        blocks.append({
+            "evidence_id": str(ev.get("evidence_id")
+                               or f"facade-{seq}-ev-{i:03d}"),
+            "text": str(ev["text"]),
+            "source_type": ev.get("source_type", "text"),
+            "source_ref": ev.get("source_ref") or {
+                "doc_id": "facade", "section": "", "page": 0,
+                "block_id": f"facade-{seq}-b{i:03d}",
+                "row_id": "", "region_id": ""},
+            "scope_id": str(ev.get("scope_id") or f"facade:{seq}"),
+            "completeness": ev.get("completeness", "open"),
+        })
+    return blocks
+
 __all__ = ["CascadeVerifier", "PRESETS", "SCENES", "VerdictResult"]
 
 
@@ -143,7 +180,8 @@ class CascadeVerifier:
     """
 
     def __init__(self, preset: str = "fast", scene: str = "srs_scene1",
-                 nli_model_path: str | None = None) -> None:
+                 nli_model_path: str | None = None,
+                 purify: bool = False) -> None:
         if preset not in PRESETS:
             raise ValueError(
                 f"未知preset: {preset!r}(可用: {sorted(PRESETS)}, "
@@ -157,6 +195,9 @@ class CascadeVerifier:
         self._preset = preset
         self._scene = scene
         self._nli_model_path = nli_model_path
+        # 证据提纯(evidence模式: F1作用域+F3指针删除, 只删块不改写;
+        # 74号收敛模块, 每次删除带审计diagnostic)
+        self._purify = purify
         lexicon_path, rulepack_path = SCENES[scene]
         self._lexicon: NerLexicon = load_lexicon(BASE / lexicon_path)
         self._rulepack: RulePack = load_rulepack(BASE / rulepack_path)
@@ -171,11 +212,14 @@ class CascadeVerifier:
 
     def verify(self, question: str, answer: str,
                evidence: list[dict]) -> VerdictResult:
-        """三参数校验(question/answer/上游冻结evidence dict列表).
+        """三参数校验(question/answer/evidence dict列表).
 
-        evidence列表项为冻结QA格式的证据dict(必填evidence_id/text/
-        source_type/source_ref/scope_id, 选填completeness等);
-        instance_id自动生成(facade-N), context_freeze_id为固定标记.
+        evidence支持两种输入(极简友好, 缺省字段自动补全):
+          极简:  [{"text": "表39: 连接池配置 PZXQ-GN-LJCGL-LJCPZ"}]
+          完整:  冻结QA格式(必填evidence_id/text/source_type/
+                 source_ref/scope_id, 选填completeness等)
+        极简项自动补: evidence_id=facade-ev-N / source_type=text /
+        source_ref占位 / scope_id=facade; instance_id自动生成.
         """
         self._auto_instance_seq += 1
         record = {
@@ -184,7 +228,8 @@ class CascadeVerifier:
             "question": question,
             "answer": answer,
             "context_freeze_id": _FACADE_FREEZE_ID,
-            "evidence": evidence,
+            "evidence": _normalize_evidence(
+                evidence, self._auto_instance_seq),
         }
         return self._run_record(record)
 
@@ -237,6 +282,8 @@ class CascadeVerifier:
             kwargs = dict(PRESETS[self._preset])
             if self._nli_model_path is not None:
                 kwargs["nli_model_path"] = self._nli_model_path
+            if self._purify:
+                kwargs["use_subtractor"] = True  # 证据提纯(74号evidence模式)
             self._engine = QAConsistencyModule(**kwargs)
         return self._engine
 

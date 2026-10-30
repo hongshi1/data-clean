@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "srs-verify"
+version = "0.1.0"
+description = "GJB SRS答案一致性校验: CascadeVerifier三档位级联(fast零依赖/standard本地NLI/full LLM仲裁)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+# 核心依赖为空: fast档纯stdlib+正则(torch/transformers/z3/jieba全惰性)
+dependencies = []
+
+[project.optional-dependencies]
+# standard档: L2本地NLI残差(微调mDeBERTa, GPU优先CPU兜底)
+standard = ["torch>=2.0", "transformers>=4.40"]
+# full档: standard + .env配置加载(也可不用dotenv, 纯环境变量)
+full = ["torch>=2.0", "transformers>=4.40", "python-dotenv"]
+# 按需惰性依赖(触发条件时安装, 见README):
+#   z3-solver  — numeric_z3专家(跨行数值约束联立); 未装时该专家按诊断降级
+#   jieba      — 仅直接调用srs_verify.ner_lexicon.tokenize()时需要
+
+[tool.setuptools.packages.find]
+include = ["srs_verify*"]
+
+[tool.setuptools.package-data]
+srs_verify = [
+    "configs/*.json",
+    "configs/ner_lexicons/*.json",
+    "configs/rulepacks/*.json",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
