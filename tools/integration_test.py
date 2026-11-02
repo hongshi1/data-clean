@@ -50,6 +50,19 @@ def wait_health(url: str, tries: int = 40, gap: float = 2.0) -> bool:
     return False
 
 
+def get_retry(url: str, tries: int = 4, gap: float = 5.0,
+              timeout: int = 30) -> dict | None:
+    """带重试的GET(werkzeug开发服务器负载下偶发连接拒绝, 重试而非判死)."""
+    for i in range(tries):
+        try:
+            return get(url, timeout=timeout)
+        except (urllib.error.URLError, TimeoutError, OSError):
+            if i == tries - 1:
+                return None
+            time.sleep(gap)
+    return None
+
+
 def main() -> int:
     procs: list[subprocess.Popen] = []
     env_vars = {
@@ -87,8 +100,10 @@ def main() -> int:
         check("发起核验job", r.get("ok") and r["data"].get("job_id"))
         job = r["data"]["job_id"]
         result = None
-        for _ in range(60):
-            s = get(f"http://127.0.0.1:8300/api/verify/status/{job}")
+        for _ in range(200):
+            s = get_retry(f"http://127.0.0.1:8300/api/verify/status/{job}")
+            if s is None:
+                continue
             if s["data"]["status"] in ("done", "error"):
                 result = s["data"]
                 break
@@ -125,8 +140,11 @@ def main() -> int:
         r = post("http://127.0.0.1:8300/api/verify/04")
         job2 = r["data"]["job_id"]
         result2 = None
-        for _ in range(90):
-            s = get(f"http://127.0.0.1:8300/api/verify/status/{job2}")
+        for _ in range(200):
+            s = get_retry(
+                f"http://127.0.0.1:8300/api/verify/status/{job2}")
+            if s is None:
+                continue
             if s["data"]["status"] in ("done", "error"):
                 result2 = s["data"]
                 break
