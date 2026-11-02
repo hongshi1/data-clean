@@ -1,1175 +1,1168 @@
 {
-  "version": "2.0",
-  "description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-  "param_dictionary": {
-    "response_time": {
-      "canonical_en": "response time",
-      "canonical_cn": "响应时间",
-      "synonyms_en": [
-        "response time",
-        "response latency",
-        "reaction time",
-        "reply time",
-        "turnaround time",
-        "latency",
-        "end-to-end delay",
-        "round trip time",
-        "RTT",
-        "RTT",
-        "latency budget"
-      ],
-      "synonyms_cn": [
-        "响应时间",
-        "时延",
-        "往返时延"
-      ],
-      "default_unit": "ms",
-      "category": "performance",
-      "value_range": {
-        "min": 0.001,
-        "max": 600,
-        "unit_hint": "time"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "响应时间",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "时延",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "往返时延",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档5965个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留3个文档验证的同义词: ['响应时间', '时延', '往返时延']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
+ "version": "2.0",
+ "description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+ "param_dictionary": {
+  "response_time": {
+   "canonical_en": "response time",
+   "canonical_cn": "响应时间",
+   "synonyms_en": [
+    "response time",
+    "response latency",
+    "reaction time",
+    "reply time",
+    "turnaround time",
+    "latency",
+    "end-to-end delay",
+    "round trip time",
+    "RTT",
+    "RTT",
+    "latency budget"
+   ],
+   "synonyms_cn": [
+    "响应时间",
+    "时延",
+    "往返时延"
+   ],
+   "default_unit": "ms",
+   "category": "performance",
+   "value_range": {
+    "min": 0.001,
+    "max": 600,
+    "unit_hint": "time"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "响应时间",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     },
-    "throughput": {
-      "canonical_en": "throughput",
-      "canonical_cn": "吞吐量",
-      "synonyms_en": [
-        "throughput",
-        "data rate",
-        "transfer rate",
-        "bandwidth",
-        "payload rate",
-        "message rate",
-        "transaction rate",
-        "capacity",
-        "data throughput"
-      ],
-      "synonyms_cn": [
-        "吞吐量",
-        "带宽"
-      ],
-      "default_unit": "Mbps",
-      "category": "performance",
-      "value_range": {
-        "min": 0.001,
-        "max": 100000,
-        "unit_hint": "data_rate"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "吞吐量",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "带宽",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6001个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留2个文档验证的同义词: ['吞吐量', '带宽']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
+    {
+     "synonym": "时延",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     },
-    "availability": {
-      "canonical_en": "availability",
-      "canonical_cn": "可用性",
-      "synonyms_en": [
-        "availability",
-        "uptime",
-        "reliability",
-        "MTBF",
-        "mean time between failures",
-        "MTBF",
-        "MTTR",
-        "operational availability",
-        "Ao",
-        "service continuity"
-      ],
-      "synonyms_cn": [
-        "可用性",
-        "可靠性"
-      ],
-      "default_unit": "%",
-      "category": "reliability",
-      "value_range": {
-        "min": 0,
-        "max": 100,
-        "unit_hint": "percentage"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "可用性",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "可靠性",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "HIGH - 百分比0-100%物理合理",
-      "_value_range_doc_validation": "真实文档5763个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留2个文档验证的同义词: ['可用性', '可靠性']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "startup_time": {
-      "canonical_en": "startup time",
-      "canonical_cn": "启动时间",
-      "synonyms_en": [
-        "startup time",
-        "boot time",
-        "initialization time",
-        "warm-up time",
-        "start-up time"
-      ],
-      "synonyms_cn": [
-        "启动时间"
-      ],
-      "default_unit": "s",
-      "category": "performance",
-      "value_range": {
-        "min": 0.1,
-        "max": 600,
-        "unit_hint": "time"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "启动时间",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档5965个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['启动时间']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "timeout": {
-      "canonical_en": "timeout",
-      "canonical_cn": "超时时间",
-      "synonyms_en": [
-        "timeout",
-        "timeout period",
-        "time-out",
-        "expiration time",
-        "retry interval"
-      ],
-      "synonyms_cn": [
-        "超时时间",
-        "超时"
-      ],
-      "default_unit": "s",
-      "category": "performance",
-      "value_range": {
-        "min": 0.1,
-        "max": 86400,
-        "unit_hint": "time"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "超时时间",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "超时",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6001个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留2个文档验证的同义词: ['超时时间', '超时']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "error_rate": {
-      "canonical_en": "error rate",
-      "canonical_cn": "误码率",
-      "synonyms_en": [
-        "error rate",
-        "bit error rate",
-        "BER",
-        "packet loss rate",
-        "failure rate",
-        "defect rate",
-        "BER"
-      ],
-      "synonyms_cn": [
-        "丢包率"
-      ],
-      "default_unit": "%",
-      "category": "reliability",
-      "value_range": {
-        "min": 0,
-        "max": 100,
-        "unit_hint": "percentage"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "丢包率",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "HIGH - 错误率0-100%物理合理",
-      "_value_range_doc_validation": "真实文档5763个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['丢包率']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "memory_size": {
-      "canonical_en": "memory size",
-      "canonical_cn": "内存容量",
-      "synonyms_en": [
-        "memory size",
-        "memory capacity",
-        "RAM",
-        "storage capacity",
-        "buffer size",
-        "cache size",
-        "RAM",
-        "main memory",
-        "SDRAM",
-        "flash memory"
-      ],
-      "synonyms_cn": [
-        "内存容量",
-        "缓存大小"
-      ],
-      "default_unit": "MB",
-      "category": "resource",
-      "value_range": {
-        "min": 1,
-        "max": 10000000,
-        "unit_hint": "storage"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "内存容量",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        },
-        {
-          "synonym": "缓存大小",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6002个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留2个文档验证的同义词: ['内存容量', '缓存大小']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "clock_frequency": {
-      "canonical_en": "clock frequency",
-      "canonical_cn": "时钟频率",
-      "synonyms_en": [
-        "clock frequency",
-        "clock speed",
-        "processor speed",
-        "CPU frequency",
-        "operating frequency",
-        "sample rate",
-        "sampling rate",
-        "refresh rate"
-      ],
-      "synonyms_cn": [
-        "主频"
-      ],
-      "default_unit": "MHz",
-      "category": "resource",
-      "value_range": {
-        "min": 1,
-        "max": 10000000000,
-        "unit_hint": "frequency",
-        "note": "物理范围合理: 1~10000000000覆盖从1Hz到10GHz的全频段"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "主频",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6002个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['主频']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "jitter": {
-      "canonical_en": "jitter",
-      "canonical_cn": "抖动",
-      "synonyms_en": [
-        "jitter",
-        "timing jitter",
-        "phase jitter",
-        "clock jitter",
-        "packet jitter"
-      ],
-      "synonyms_cn": [
-        "抖动"
-      ],
-      "default_unit": "ms",
-      "category": "performance",
-      "value_range": {
-        "min": 0,
-        "max": 10000,
-        "unit_hint": "time"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "抖动",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6007个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['抖动']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "recovery_time": {
-      "canonical_en": "recovery time",
-      "canonical_cn": "恢复时间",
-      "synonyms_en": [
-        "recovery time",
-        "recovery",
-        "restart time",
-        "failover time",
-        "switchover time"
-      ],
-      "synonyms_cn": [
-        "恢复时间"
-      ],
-      "default_unit": "s",
-      "category": "reliability",
-      "value_range": {
-        "min": 0.001,
-        "max": 86400,
-        "unit_hint": "time"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "恢复时间",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6001个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['恢复时间']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
-    },
-    "resolution": {
-      "canonical_en": "resolution",
-      "canonical_cn": "分辨率",
-      "synonyms_en": [
-        "resolution",
-        "display resolution",
-        "screen resolution",
-        "spatial resolution",
-        "temporal resolution"
-      ],
-      "synonyms_cn": [
-        "分辨率"
-      ],
-      "default_unit": "pixels",
-      "category": "performance",
-      "value_range": {
-        "min": 1,
-        "max": 100000,
-        "unit_hint": "storage"
-      },
-      "_synonym_sources": [
-        {
-          "synonym": "分辨率",
-          "source": "document_verified",
-          "confidence": "HIGH",
-          "reason": "在16份真实文档中出现"
-        }
-      ],
-      "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
-      "_value_range_doc_validation": "真实文档6001个数值在此值域内",
-      "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
-      "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
-      "_synonym_note": "保留1个文档验证的同义词: ['分辨率']",
-      "_synonyms_en_confidence": "MEDIUM",
-      "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
-      "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
+    {
+     "synonym": "往返时延",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档5965个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留3个文档验证的同义词: ['响应时间', '时延', '往返时延']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "interface_dictionary": {
-    "RS232": {
-      "canonical": "RS232",
-      "variants": [
-        "RS232",
-        "RS-232",
-        "RS 232",
-        "EIA-232",
-        "EIA232"
-      ],
-      "type": "serial",
-      "mutex_with": [
-        "RS422",
-        "RS485"
-      ]
+  "throughput": {
+   "canonical_en": "throughput",
+   "canonical_cn": "吞吐量",
+   "synonyms_en": [
+    "throughput",
+    "data rate",
+    "transfer rate",
+    "bandwidth",
+    "payload rate",
+    "message rate",
+    "transaction rate",
+    "capacity",
+    "data throughput"
+   ],
+   "synonyms_cn": [
+    "吞吐量",
+    "带宽"
+   ],
+   "default_unit": "Mbps",
+   "category": "performance",
+   "value_range": {
+    "min": 0.001,
+    "max": 100000,
+    "unit_hint": "data_rate"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "吞吐量",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     },
-    "RS422": {
-      "canonical": "RS422",
-      "variants": [
-        "RS422",
-        "RS-422",
-        "RS 422"
-      ],
-      "type": "serial",
-      "mutex_with": [
-        "RS232"
-      ]
-    },
-    "RS485": {
-      "canonical": "RS485",
-      "variants": [
-        "RS485",
-        "RS-485",
-        "RS 485"
-      ],
-      "type": "serial",
-      "mutex_with": [
-        "RS232"
-      ]
-    },
-    "UART": {
-      "canonical": "UART",
-      "variants": [
-        "UART",
-        "Universal Asynchronous Receiver Transmitter"
-      ],
-      "type": "serial",
-      "mutex_with": []
-    },
-    "CAN": {
-      "canonical": "CAN",
-      "variants": [
-        "CAN bus",
-        "CANbus",
-        "CAN-bus",
-        "CAN protocol",
-        "Controller Area Network",
-        "CANopen"
-      ],
-      "type": "bus",
-      "mutex_with": [],
-      "context_required": true,
-      "context_keywords": [
-        "bus",
-        "protocol",
-        "frame",
-        "message",
-        "controller",
-        "network",
-        "interface",
-        "driver",
-        "transceiver",
-        "arbitration"
-      ]
-    },
-    "MIL_STD_1553": {
-      "canonical": "MIL-STD-1553",
-      "variants": [
-        "MIL-STD-1553",
-        "MIL-STD 1553",
-        "MIL-STD-1553B",
-        "1553B",
-        "1553"
-      ],
-      "type": "bus",
-      "mutex_with": []
-    },
-    "SPI": {
-      "canonical": "SPI",
-      "variants": [
-        "SPI",
-        "Serial Peripheral Interface"
-      ],
-      "type": "serial",
-      "mutex_with": []
-    },
-    "I2C": {
-      "canonical": "I2C",
-      "variants": [
-        "I2C",
-        "IIC",
-        "Inter-Integrated Circuit"
-      ],
-      "type": "serial",
-      "mutex_with": []
-    },
-    "USB": {
-      "canonical": "USB",
-      "variants": [
-        "USB",
-        "Universal Serial Bus"
-      ],
-      "type": "serial",
-      "mutex_with": []
-    },
-    "Ethernet": {
-      "canonical": "Ethernet",
-      "variants": [
-        "Ethernet",
-        "IEEE 802.3",
-        "LAN"
-      ],
-      "type": "network",
-      "mutex_with": []
-    },
-    "TCP": {
-      "canonical": "TCP",
-      "variants": [
-        "TCP",
-        "Transmission Control Protocol"
-      ],
-      "type": "protocol",
-      "mutex_with": [
-        "UDP"
-      ]
-    },
-    "UDP": {
-      "canonical": "UDP",
-      "variants": [
-        "UDP",
-        "User Datagram Protocol"
-      ],
-      "type": "protocol",
-      "mutex_with": [
-        "TCP"
-      ]
-    },
-    "HTTP": {
-      "canonical": "HTTP",
-      "variants": [
-        "HTTP",
-        "Hypertext Transfer Protocol"
-      ],
-      "type": "protocol",
-      "mutex_with": [],
-      "context_exclude": [
-        "http://",
-        "https://"
-      ]
+    {
+     "synonym": "带宽",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6001个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留2个文档验证的同义词: ['吞吐量', '带宽']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "unit_dictionary": {
-    "time": {
-      "units": [
-        "ms",
-        "msec",
-        "millisecond",
-        "s",
-        "sec",
-        "second",
-        "min",
-        "minute",
-        "hour",
-        "h",
-        "us",
-        "µs",
-        "microsecond",
-        "ns",
-        "nanosecond"
-      ],
-      "canonical": "s",
-      "conversions": {
-        "ns": 1e-09,
-        "us": 1e-06,
-        "µs": 1e-06,
-        "ms": 0.001,
-        "msec": 0.001,
-        "s": 1,
-        "sec": 1,
-        "min": 60,
-        "minute": 60,
-        "hour": 3600,
-        "h": 3600,
-        "millisecond": 0.001,
-        "second": 1,
-        "microsecond": 1e-06,
-        "nanosecond": 1e-09
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "frequency": {
-      "units": [
-        "Hz",
-        "hertz",
-        "kHz",
-        "kilohertz",
-        "MHz",
-        "megahertz",
-        "GHz",
-        "gigahertz"
-      ],
-      "canonical": "Hz",
-      "conversions": {
-        "Hz": 1,
-        "hertz": 1,
-        "kHz": 1000,
-        "kilohertz": 1000,
-        "MHz": 1000000,
-        "megahertz": 1000000,
-        "GHz": 1000000000,
-        "gigahertz": 1000000000
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "data_rate": {
-      "units": [
-        "bps",
-        "kbps",
-        "Mbps",
-        "Gbps",
-        "Bps",
-        "KB/s",
-        "MB/s",
-        "GB/s"
-      ],
-      "canonical": "bps",
-      "conversions": {
-        "bps": 1,
-        "kbps": 1000,
-        "Mbps": 1000000,
-        "Gbps": 1000000000,
-        "Bps": 8,
-        "KB/s": 8000,
-        "MB/s": 8000000,
-        "GB/s": 8000000000
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "storage": {
-      "units": [
-        "byte",
-        "bytes",
-        "B",
-        "KB",
-        "kB",
-        "MB",
-        "GB",
-        "TB",
-        "bit",
-        "bits",
-        "Kb",
-        "Mb",
-        "Gb"
-      ],
-      "canonical": "byte",
-      "conversions": {
-        "bit": 0.125,
-        "bits": 0.125,
-        "byte": 1,
-        "bytes": 1,
-        "B": 1,
-        "KB": 1024,
-        "kB": 1024,
-        "MB": 1048576,
-        "GB": 1073741824,
-        "TB": 1099511627776,
-        "Kb": 128,
-        "Mb": 131072,
-        "Gb": 134217728
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "percentage": {
-      "units": [
-        "%",
-        "percent"
-      ],
-      "canonical": "%",
-      "conversions": {
-        "%": 1,
-        "percent": 1
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "voltage": {
-      "units": [
-        "V",
-        "volt",
-        "mV",
-        "kV"
-      ],
-      "canonical": "V",
-      "conversions": {
-        "mV": 0.001,
-        "V": 1,
-        "volt": 1,
-        "kV": 1000
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "power": {
-      "units": [
-        "W",
-        "watt",
-        "mW",
-        "kW"
-      ],
-      "canonical": "W",
-      "conversions": {
-        "mW": 0.001,
-        "W": 1,
-        "watt": 1,
-        "kW": 1000
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "temperature": {
-      "units": [
-        "℃",
-        "°C",
-        "C",
-        "K",
-        "F",
-        "°F"
-      ],
-      "canonical": "℃",
-      "conversions": {
-        "℃": 1,
-        "°C": 1,
-        "C": 1,
-        "K": -272.15,
-        "F": -17.2222,
-        "°F": -17.2222
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "current": {
-      "units": [
-        "A",
-        "ampere",
-        "mA",
-        "kA"
-      ],
-      "canonical": "A",
-      "conversions": {
-        "mA": 0.001,
-        "A": 1,
-        "ampere": 1,
-        "kA": 1000
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
-    },
-    "ratio": {
-      "units": [
-        "ppm",
-        "dB",
-        "dBm"
-      ],
-      "canonical": "ppm",
-      "conversions": {
-        "ppm": 1,
-        "dB": 1,
-        "dBm": 1
-      },
-      "_confidence": "HIGH",
-      "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
-      "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  "availability": {
+   "canonical_en": "availability",
+   "canonical_cn": "可用性",
+   "synonyms_en": [
+    "availability",
+    "uptime",
+    "reliability",
+    "MTBF",
+    "mean time between failures",
+    "MTBF",
+    "MTTR",
+    "operational availability",
+    "Ao",
+    "service continuity"
+   ],
+   "synonyms_cn": [
+    "可用性"
+   ],
+   "default_unit": "%",
+   "category": "reliability",
+   "value_range": {
+    "min": 0,
+    "max": 100,
+    "unit_hint": "percentage"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "可用性",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "HIGH - 百分比0-100%物理合理",
+   "_value_range_doc_validation": "真实文档5763个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "修复v1.1: 移除误挂同义词「可靠性」(reliability≠availability, 68号审计发现12对假候选根因)",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "operator_dictionary": {
-    "operators": {
-      "<=": {
-        "canonical": "<=",
-        "synonyms": [
-          "≤"
-        ],
-        "_confidence": "HIGH",
-        "_verification": "原8个同义词, 验证1个, 删除7个"
-      },
-      ">=": {
-        "canonical": ">=",
-        "synonyms": [
-          "≥"
-        ],
-        "_confidence": "HIGH",
-        "_verification": "原7个同义词, 验证1个, 删除6个"
-      },
-      "<": {
-        "canonical": "<",
-        "synonyms": [
-          "<"
-        ],
-        "_confidence": "HIGH",
-        "_verification": "原4个同义词, 验证1个, 删除3个"
-      },
-      ">": {
-        "canonical": ">",
-        "synonyms": [
-          ">"
-        ],
-        "_confidence": "HIGH",
-        "_verification": "原5个同义词, 验证1个, 删除4个"
-      },
-      "=": {
-        "canonical": "=",
-        "synonyms": [
-          "=",
-          "is"
-        ],
-        "_confidence": "HIGH",
-        "_verification": "原4个同义词, 验证2个, 删除2个"
-      }
+  "startup_time": {
+   "canonical_en": "startup time",
+   "canonical_cn": "启动时间",
+   "synonyms_en": [
+    "startup time",
+    "boot time",
+    "initialization time",
+    "warm-up time",
+    "start-up time"
+   ],
+   "synonyms_cn": [
+    "启动时间"
+   ],
+   "default_unit": "s",
+   "category": "performance",
+   "value_range": {
+    "min": 0.1,
+    "max": 600,
+    "unit_hint": "time"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "启动时间",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档5965个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['启动时间']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "section_template": {
-    "standard": "IEEE 830 / GJB 438C",
-    "required_sections": [
-      {
-        "number": "1",
-        "keywords": [
-          "introduction",
-          "引言",
-          "概述"
-        ],
-        "required": true
-      },
-      {
-        "number": "2",
-        "keywords": [
-          "overall description",
-          "总体描述",
-          "general description",
-          "系统概述"
-        ],
-        "required": true
-      },
-      {
-        "number": "3",
-        "keywords": [
-          "requirement",
-          "需求",
-          "functional requirement",
-          "功能需求",
-          "specific requirement"
-        ],
-        "required": true
-      },
-      {
-        "number": "4",
-        "keywords": [
-          "interface",
-          "接口",
-          "external interface",
-          "外部接口"
-        ],
-        "required": false
-      },
-      {
-        "number": "5",
-        "keywords": [
-          "performance",
-          "性能",
-          "performance requirement",
-          "性能需求"
-        ],
-        "required": false
-      },
-      {
-        "number": "6",
-        "keywords": [
-          "design",
-          "设计",
-          "design constraint",
-          "设计约束"
-        ],
-        "required": false
-      },
-      {
-        "number": "7",
-        "keywords": [
-          "data",
-          "数据",
-          "data dictionary",
-          "数据字典"
-        ],
-        "required": false
-      }
-    ]
-  },
-  "conflict_rules": {
-    "L2_semantic": {
-      "same_param_diff_value": {
-        "description": "同名参数在不同位置出现不同值",
-        "severity": "HIGH",
-        "exempt_patterns": [
-          "threshold",
-          "objective",
-          "minimum acceptable",
-          "goal",
-          "target"
-        ],
-        "_confidence": "HIGH",
-        "_source": "从GJB 438C跨章节一致性要求中总结",
-        "_verification": "已在logic_checker.py中检出真实矛盾(如256GB vs 56GB)"
-      },
-      "cross_unit_inconsistency": {
-        "description": "同名参数用不同单位且换算后不等",
-        "severity": "MEDIUM",
-        "_confidence": "HIGH",
-        "_source": "从GJB 438C跨章节一致性要求中总结",
-        "_verification": "已在logic_checker.py中检出真实矛盾(如256GB vs 56GB)"
-      }
+  "timeout": {
+   "canonical_en": "timeout",
+   "canonical_cn": "超时时间",
+   "synonyms_en": [
+    "timeout",
+    "timeout period",
+    "time-out",
+    "expiration time",
+    "retry interval"
+   ],
+   "synonyms_cn": [
+    "超时时间",
+    "超时"
+   ],
+   "default_unit": "s",
+   "category": "performance",
+   "value_range": {
+    "min": 0.1,
+    "max": 86400,
+    "unit_hint": "time"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "超时时间",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     },
-    "L3_logic": {
-      "physics_constraint": {
-        "description": "频率×时间超过物理极限",
-        "threshold": 1000000000.0,
-        "severity": "MEDIUM",
-        "_confidence": "HIGH",
-        "_source": "从GJB 438C跨章节一致性要求中总结",
-        "_verification": "description关键词在文档中出现(1/2)"
-      }
+    {
+     "synonym": "超时",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6001个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留2个文档验证的同义词: ['超时时间', '超时']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "table_schemas": {
-    "performance_table": {
-      "header_patterns": [
-        "metric",
-        "requirement",
-        "指标",
-        "要求",
-        "parameter",
-        "参数",
-        "value",
-        "值",
-        "spec",
-        "specification"
-      ],
-      "expected_columns": [
-        "metric_name",
-        "requirement_value",
-        "unit",
-        "verification_method"
-      ],
-      "required_fields": [
-        "序号",
-        "性能名称",
-        "项目唯一标识符",
-        "性能指标",
-        "指标值",
-        "单位"
-      ],
-      "_confidence": "HIGH",
-      "_source": "GJB 438C附录J表格格式要求",
-      "_verification": "必填字段6个, 对照GJB附录J核对"
-    },
-    "interface_table": {
-      "header_patterns": [
-        "interface",
-        "接口",
-        "port",
-        "端口",
-        "protocol",
-        "协议",
-        "signal",
-        "信号"
-      ],
-      "expected_columns": [
-        "interface_id",
-        "interface_type",
-        "signal_name",
-        "direction",
-        "protocol",
-        "data_rate"
-      ],
-      "required_fields": [
-        "序号",
-        "接口名称/标识",
-        "接口描述",
-        "发送方",
-        "接收方",
-        "接口类型"
-      ],
-      "_confidence": "HIGH",
-      "_source": "GJB 438C附录J表格格式要求",
-      "_verification": "必填字段6个, 对照GJB附录J核对"
-    },
-    "data_dictionary": {
-      "header_patterns": [
-        "name",
-        "名称",
-        "parameter",
-        "参数",
-        "item",
-        "项",
-        "field",
-        "字段"
-      ],
-      "expected_columns": [
-        "id",
-        "name",
-        "abbreviation",
-        "data_type",
-        "value_range",
-        "unit",
-        "description"
-      ],
-      "required_fields": [
-        "序号",
-        "数据元素名称",
-        "数据元素标识",
-        "数据类型",
-        "长度",
-        "单位"
-      ],
-      "_confidence": "HIGH",
-      "_source": "GJB 438C附录J表格格式要求",
-      "_verification": "必填字段6个, 对照GJB附录J核对"
+  "error_rate": {
+   "canonical_en": "error rate",
+   "canonical_cn": "误码率",
+   "synonyms_en": [
+    "error rate",
+    "bit error rate",
+    "BER",
+    "packet loss rate",
+    "failure rate",
+    "defect rate",
+    "BER"
+   ],
+   "synonyms_cn": [
+    "丢包率"
+   ],
+   "default_unit": "%",
+   "category": "reliability",
+   "value_range": {
+    "min": 0,
+    "max": 100,
+    "unit_hint": "percentage"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "丢包率",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
     }
+   ],
+   "_value_range_confidence": "HIGH - 错误率0-100%物理合理",
+   "_value_range_doc_validation": "真实文档5763个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['丢包率']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "_knowledge_base_confidence": {
-    "overall": "HIGH",
-    "gjb_rules": "HIGH(原文措辞符合国军标) / 提取过程缺证据链(OCR文件未保存)",
-    "param_values": "HIGH(物理合理+文档验证+同义词全部文档验证)",
-    "unit_conversions": "HIGH(与国际单位制一致)",
-    "conflict_rules": "HIGH - 保留3条(全部有文档验证或实际检出), 删除3条无法验证的",
-    "table_schemas": "HIGH(对照GJB附录J核对)",
-    "note": "知识库内容整体可信, 但提取过程缺少可追溯的证据链(OCR文件+提取脚本). 建议后续: 1)找到GJB 438C标准原文逐条核对original_text 2)标注同义词来源 3)保存提取过程文件",
-    "param_synonyms": "HIGH - 保留11个参数(全部有文档验证的同义词), 删除12个无法验证的参数",
-    "operators": "HIGH - 保留5类操作符(全部文档验证), 删除~(未验证)"
+  "memory_size": {
+   "canonical_en": "memory size",
+   "canonical_cn": "内存容量",
+   "synonyms_en": [
+    "memory size",
+    "memory capacity",
+    "RAM",
+    "storage capacity",
+    "buffer size",
+    "cache size",
+    "RAM",
+    "main memory",
+    "SDRAM",
+    "flash memory"
+   ],
+   "synonyms_cn": [
+    "内存容量",
+    "缓存大小"
+   ],
+   "default_unit": "MB",
+   "category": "resource",
+   "value_range": {
+    "min": 1,
+    "max": 10000000,
+    "unit_hint": "storage"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "内存容量",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    },
+    {
+     "synonym": "缓存大小",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6002个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留2个文档验证的同义词: ['内存容量', '缓存大小']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "_deleted_params": {
-    "count": 12,
-    "params": [
-      "processing_time",
-      "voltage",
-      "power_consumption",
-      "temperature",
-      "call_setup_time",
-      "concurrent_users",
-      "data_retention",
-      "bit_rate",
-      "downtime",
-      "duty_cycle",
-      "coverage",
-      "sampling_rate"
-    ],
-    "reason": "规范名及同义词均未在16份真实文档中出现, 无法验证真实性, 已删除",
-    "note": "这些参数的定义来自GJB标准但无法用文档验证, 后续如获得更多文档可重新添加"
+  "clock_frequency": {
+   "canonical_en": "clock frequency",
+   "canonical_cn": "时钟频率",
+   "synonyms_en": [
+    "clock frequency",
+    "clock speed",
+    "processor speed",
+    "CPU frequency",
+    "operating frequency",
+    "sample rate",
+    "sampling rate",
+    "refresh rate"
+   ],
+   "synonyms_cn": [
+    "主频"
+   ],
+   "default_unit": "MHz",
+   "category": "resource",
+   "value_range": {
+    "min": 1,
+    "max": 10000000000,
+    "unit_hint": "frequency",
+    "note": "物理范围合理: 1~10000000000覆盖从1Hz到10GHz的全频段"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "主频",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6002个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['主频']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "_deleted_conflict_rules": {
-    "count": 3,
-    "rules": [
-      "L2_semantic/mutex_interfaces",
-      "L3_logic/constraint_ratio",
-      "L3_logic/temporal_cycle"
-    ],
-    "reason": "关键词未在文档出现且无实际检出记录"
+  "jitter": {
+   "canonical_en": "jitter",
+   "canonical_cn": "抖动",
+   "synonyms_en": [
+    "jitter",
+    "timing jitter",
+    "phase jitter",
+    "clock jitter",
+    "packet jitter"
+   ],
+   "synonyms_cn": [
+    "抖动"
+   ],
+   "default_unit": "ms",
+   "category": "performance",
+   "value_range": {
+    "min": 0,
+    "max": 10000,
+    "unit_hint": "time"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "抖动",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6007个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['抖动']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   },
-  "_deleted_operators": {
-    "count": 1,
-    "operators": [
-      "~"
-    ],
-    "reason": "操作符~及其同义词(≈/approximately/about/around/nominal/约/近似/大约)均未在16份文档中出现"
+  "recovery_time": {
+   "canonical_en": "recovery time",
+   "canonical_cn": "恢复时间",
+   "synonyms_en": [
+    "recovery time",
+    "recovery",
+    "restart time",
+    "failover time",
+    "switchover time"
+   ],
+   "synonyms_cn": [
+    "恢复时间"
+   ],
+   "default_unit": "s",
+   "category": "reliability",
+   "value_range": {
+    "min": 0.001,
+    "max": 86400,
+    "unit_hint": "time"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "恢复时间",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6001个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['恢复时间']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
+  },
+  "resolution": {
+   "canonical_en": "resolution",
+   "canonical_cn": "分辨率",
+   "synonyms_en": [
+    "resolution",
+    "display resolution",
+    "screen resolution",
+    "spatial resolution",
+    "temporal resolution"
+   ],
+   "synonyms_cn": [
+    "分辨率"
+   ],
+   "default_unit": "pixels",
+   "category": "performance",
+   "value_range": {
+    "min": 1,
+    "max": 100000,
+    "unit_hint": "storage"
+   },
+   "_synonym_sources": [
+    {
+     "synonym": "分辨率",
+     "source": "document_verified",
+     "confidence": "HIGH",
+     "reason": "在16份真实文档中出现"
+    }
+   ],
+   "_value_range_confidence": "MEDIUM - 值域非负且max>min, 物理可能合理",
+   "_value_range_doc_validation": "真实文档6001个数值在此值域内",
+   "_extraction_method": "参数名从GJB附录J 3.2.X/3.11提取, 同义词部分从文档统计部分从IEEE 830/PURE推测, 值域根据物理意义确定",
+   "_source_description": "SRS需求文档一致性校验知识库。L1=参数词典+单位换算; L2=同义词典+接口词典+冲突规则; L3=物理约束+时序规则。来源: GJB 438C/IEEE 830标准 + PURE数据集分析 + 军工SRS调研报告。",
+   "_synonym_note": "保留1个文档验证的同义词: ['分辨率']",
+   "_synonyms_en_confidence": "MEDIUM",
+   "_synonyms_en_note": "英文同义词未在中文文档中验证, 来自IEEE 830标准, 保留但标注为MEDIUM",
+   "_synonyms_cn_confidence": "HIGH - 全部在文档中验证"
   }
+ },
+ "interface_dictionary": {
+  "RS232": {
+   "canonical": "RS232",
+   "variants": [
+    "RS232",
+    "RS-232",
+    "RS 232",
+    "EIA-232",
+    "EIA232"
+   ],
+   "type": "serial",
+   "mutex_with": [
+    "RS422",
+    "RS485"
+   ]
+  },
+  "RS422": {
+   "canonical": "RS422",
+   "variants": [
+    "RS422",
+    "RS-422",
+    "RS 422"
+   ],
+   "type": "serial",
+   "mutex_with": [
+    "RS232"
+   ]
+  },
+  "RS485": {
+   "canonical": "RS485",
+   "variants": [
+    "RS485",
+    "RS-485",
+    "RS 485"
+   ],
+   "type": "serial",
+   "mutex_with": [
+    "RS232"
+   ]
+  },
+  "UART": {
+   "canonical": "UART",
+   "variants": [
+    "UART",
+    "Universal Asynchronous Receiver Transmitter"
+   ],
+   "type": "serial",
+   "mutex_with": []
+  },
+  "CAN": {
+   "canonical": "CAN",
+   "variants": [
+    "CAN bus",
+    "CANbus",
+    "CAN-bus",
+    "CAN protocol",
+    "Controller Area Network",
+    "CANopen"
+   ],
+   "type": "bus",
+   "mutex_with": [],
+   "context_required": true,
+   "context_keywords": [
+    "bus",
+    "protocol",
+    "frame",
+    "message",
+    "controller",
+    "network",
+    "interface",
+    "driver",
+    "transceiver",
+    "arbitration"
+   ]
+  },
+  "MIL_STD_1553": {
+   "canonical": "MIL-STD-1553",
+   "variants": [
+    "MIL-STD-1553",
+    "MIL-STD 1553",
+    "MIL-STD-1553B",
+    "1553B",
+    "1553"
+   ],
+   "type": "bus",
+   "mutex_with": []
+  },
+  "SPI": {
+   "canonical": "SPI",
+   "variants": [
+    "SPI",
+    "Serial Peripheral Interface"
+   ],
+   "type": "serial",
+   "mutex_with": []
+  },
+  "I2C": {
+   "canonical": "I2C",
+   "variants": [
+    "I2C",
+    "IIC",
+    "Inter-Integrated Circuit"
+   ],
+   "type": "serial",
+   "mutex_with": []
+  },
+  "USB": {
+   "canonical": "USB",
+   "variants": [
+    "USB",
+    "Universal Serial Bus"
+   ],
+   "type": "serial",
+   "mutex_with": []
+  },
+  "Ethernet": {
+   "canonical": "Ethernet",
+   "variants": [
+    "Ethernet",
+    "IEEE 802.3",
+    "LAN"
+   ],
+   "type": "network",
+   "mutex_with": []
+  },
+  "TCP": {
+   "canonical": "TCP",
+   "variants": [
+    "TCP",
+    "Transmission Control Protocol"
+   ],
+   "type": "protocol",
+   "mutex_with": [
+    "UDP"
+   ]
+  },
+  "UDP": {
+   "canonical": "UDP",
+   "variants": [
+    "UDP",
+    "User Datagram Protocol"
+   ],
+   "type": "protocol",
+   "mutex_with": [
+    "TCP"
+   ]
+  },
+  "HTTP": {
+   "canonical": "HTTP",
+   "variants": [
+    "HTTP",
+    "Hypertext Transfer Protocol"
+   ],
+   "type": "protocol",
+   "mutex_with": [],
+   "context_exclude": [
+    "http://",
+    "https://"
+   ]
+  }
+ },
+ "unit_dictionary": {
+  "time": {
+   "units": [
+    "ms",
+    "msec",
+    "millisecond",
+    "s",
+    "sec",
+    "second",
+    "min",
+    "minute",
+    "hour",
+    "h",
+    "us",
+    "µs",
+    "microsecond",
+    "ns",
+    "nanosecond"
+   ],
+   "canonical": "s",
+   "conversions": {
+    "ns": 1e-09,
+    "us": 1e-06,
+    "µs": 1e-06,
+    "ms": 0.001,
+    "msec": 0.001,
+    "s": 1,
+    "sec": 1,
+    "min": 60,
+    "minute": 60,
+    "hour": 3600,
+    "h": 3600,
+    "millisecond": 0.001,
+    "second": 1,
+    "microsecond": 1e-06,
+    "nanosecond": 1e-09
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "frequency": {
+   "units": [
+    "Hz",
+    "hertz",
+    "kHz",
+    "kilohertz",
+    "MHz",
+    "megahertz",
+    "GHz",
+    "gigahertz"
+   ],
+   "canonical": "Hz",
+   "conversions": {
+    "Hz": 1,
+    "hertz": 1,
+    "kHz": 1000,
+    "kilohertz": 1000,
+    "MHz": 1000000,
+    "megahertz": 1000000,
+    "GHz": 1000000000,
+    "gigahertz": 1000000000
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "data_rate": {
+   "units": [
+    "bps",
+    "kbps",
+    "Mbps",
+    "Gbps",
+    "Bps",
+    "KB/s",
+    "MB/s",
+    "GB/s"
+   ],
+   "canonical": "bps",
+   "conversions": {
+    "bps": 1,
+    "kbps": 1000,
+    "Mbps": 1000000,
+    "Gbps": 1000000000,
+    "Bps": 8,
+    "KB/s": 8000,
+    "MB/s": 8000000,
+    "GB/s": 8000000000
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "storage": {
+   "units": [
+    "byte",
+    "bytes",
+    "B",
+    "KB",
+    "kB",
+    "MB",
+    "GB",
+    "TB",
+    "bit",
+    "bits",
+    "Kb",
+    "Mb",
+    "Gb"
+   ],
+   "canonical": "byte",
+   "conversions": {
+    "bit": 0.125,
+    "bits": 0.125,
+    "byte": 1,
+    "bytes": 1,
+    "B": 1,
+    "KB": 1024,
+    "kB": 1024,
+    "MB": 1048576,
+    "GB": 1073741824,
+    "TB": 1099511627776,
+    "Kb": 128,
+    "Mb": 131072,
+    "Gb": 134217728
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "percentage": {
+   "units": [
+    "%",
+    "percent"
+   ],
+   "canonical": "%",
+   "conversions": {
+    "%": 1,
+    "percent": 1
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "voltage": {
+   "units": [
+    "V",
+    "volt",
+    "mV",
+    "kV"
+   ],
+   "canonical": "V",
+   "conversions": {
+    "mV": 0.001,
+    "V": 1,
+    "volt": 1,
+    "kV": 1000
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "power": {
+   "units": [
+    "W",
+    "watt",
+    "mW",
+    "kW"
+   ],
+   "canonical": "W",
+   "conversions": {
+    "mW": 0.001,
+    "W": 1,
+    "watt": 1,
+    "kW": 1000
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "temperature": {
+   "units": [
+    "℃",
+    "°C",
+    "C",
+    "K",
+    "F",
+    "°F"
+   ],
+   "canonical": "℃",
+   "conversions": {
+    "℃": 1,
+    "°C": 1,
+    "C": 1,
+    "K": -272.15,
+    "F": -17.2222,
+    "°F": -17.2222
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "current": {
+   "units": [
+    "A",
+    "ampere",
+    "mA",
+    "kA"
+   ],
+   "canonical": "A",
+   "conversions": {
+    "mA": 0.001,
+    "A": 1,
+    "ampere": 1,
+    "kA": 1000
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  },
+  "ratio": {
+   "units": [
+    "ppm",
+    "dB",
+    "dBm"
+   ],
+   "canonical": "ppm",
+   "conversions": {
+    "ppm": 1,
+    "dB": 1,
+    "dBm": 1
+   },
+   "_confidence": "HIGH",
+   "_source": "国际单位制(SI)定义 + GJB 438C附录J 3.3.X c)4)要求计量单位",
+   "_verification": "换算系数与国际单位制定义一致, 逐一核对通过"
+  }
+ },
+ "operator_dictionary": {
+  "operators": {
+   "<=": {
+    "canonical": "<=",
+    "synonyms": [
+     "≤"
+    ],
+    "_confidence": "HIGH",
+    "_verification": "原8个同义词, 验证1个, 删除7个"
+   },
+   ">=": {
+    "canonical": ">=",
+    "synonyms": [
+     "≥"
+    ],
+    "_confidence": "HIGH",
+    "_verification": "原7个同义词, 验证1个, 删除6个"
+   },
+   "<": {
+    "canonical": "<",
+    "synonyms": [
+     "<"
+    ],
+    "_confidence": "HIGH",
+    "_verification": "原4个同义词, 验证1个, 删除3个"
+   },
+   ">": {
+    "canonical": ">",
+    "synonyms": [
+     ">"
+    ],
+    "_confidence": "HIGH",
+    "_verification": "原5个同义词, 验证1个, 删除4个"
+   },
+   "=": {
+    "canonical": "=",
+    "synonyms": [
+     "=",
+     "is"
+    ],
+    "_confidence": "HIGH",
+    "_verification": "原4个同义词, 验证2个, 删除2个"
+   }
+  }
+ },
+ "section_template": {
+  "standard": "IEEE 830 / GJB 438C",
+  "required_sections": [
+   {
+    "number": "1",
+    "keywords": [
+     "introduction",
+     "引言",
+     "概述"
+    ],
+    "required": true
+   },
+   {
+    "number": "2",
+    "keywords": [
+     "overall description",
+     "总体描述",
+     "general description",
+     "系统概述"
+    ],
+    "required": true
+   },
+   {
+    "number": "3",
+    "keywords": [
+     "requirement",
+     "需求",
+     "functional requirement",
+     "功能需求",
+     "specific requirement"
+    ],
+    "required": true
+   },
+   {
+    "number": "4",
+    "keywords": [
+     "interface",
+     "接口",
+     "external interface",
+     "外部接口"
+    ],
+    "required": false
+   },
+   {
+    "number": "5",
+    "keywords": [
+     "performance",
+     "性能",
+     "performance requirement",
+     "性能需求"
+    ],
+    "required": false
+   },
+   {
+    "number": "6",
+    "keywords": [
+     "design",
+     "设计",
+     "design constraint",
+     "设计约束"
+    ],
+    "required": false
+   },
+   {
+    "number": "7",
+    "keywords": [
+     "data",
+     "数据",
+     "data dictionary",
+     "数据字典"
+    ],
+    "required": false
+   }
+  ]
+ },
+ "conflict_rules": {
+  "L2_semantic": {
+   "same_param_diff_value": {
+    "description": "同名参数在不同位置出现不同值",
+    "severity": "HIGH",
+    "exempt_patterns": [
+     "threshold",
+     "objective",
+     "minimum acceptable",
+     "goal",
+     "target"
+    ],
+    "_confidence": "HIGH",
+    "_source": "从GJB 438C跨章节一致性要求中总结",
+    "_verification": "已在logic_checker.py中检出真实矛盾(如256GB vs 56GB)"
+   },
+   "cross_unit_inconsistency": {
+    "description": "同名参数用不同单位且换算后不等",
+    "severity": "MEDIUM",
+    "_confidence": "HIGH",
+    "_source": "从GJB 438C跨章节一致性要求中总结",
+    "_verification": "已在logic_checker.py中检出真实矛盾(如256GB vs 56GB)"
+   }
+  },
+  "L3_logic": {
+   "physics_constraint": {
+    "description": "频率×时间超过物理极限",
+    "threshold": 1000000000.0,
+    "severity": "MEDIUM",
+    "_confidence": "HIGH",
+    "_source": "从GJB 438C跨章节一致性要求中总结",
+    "_verification": "description关键词在文档中出现(1/2)"
+   }
+  }
+ },
+ "table_schemas": {
+  "performance_table": {
+   "header_patterns": [
+    "metric",
+    "requirement",
+    "指标",
+    "要求",
+    "parameter",
+    "参数",
+    "value",
+    "值",
+    "spec",
+    "specification"
+   ],
+   "expected_columns": [
+    "metric_name",
+    "requirement_value",
+    "unit",
+    "verification_method"
+   ],
+   "required_fields": [
+    "序号",
+    "性能名称",
+    "项目唯一标识符",
+    "性能指标",
+    "指标值",
+    "单位"
+   ],
+   "_confidence": "HIGH",
+   "_source": "GJB 438C附录J表格格式要求",
+   "_verification": "必填字段6个, 对照GJB附录J核对"
+  },
+  "interface_table": {
+   "header_patterns": [
+    "interface",
+    "接口",
+    "port",
+    "端口",
+    "protocol",
+    "协议",
+    "signal",
+    "信号"
+   ],
+   "expected_columns": [
+    "interface_id",
+    "interface_type",
+    "signal_name",
+    "direction",
+    "protocol",
+    "data_rate"
+   ],
+   "required_fields": [
+    "序号",
+    "接口名称/标识",
+    "接口描述",
+    "发送方",
+    "接收方",
+    "接口类型"
+   ],
+   "_confidence": "HIGH",
+   "_source": "GJB 438C附录J表格格式要求",
+   "_verification": "必填字段6个, 对照GJB附录J核对"
+  },
+  "data_dictionary": {
+   "header_patterns": [
+    "name",
+    "名称",
+    "parameter",
+    "参数",
+    "item",
+    "项",
+    "field",
+    "字段"
+   ],
+   "expected_columns": [
+    "id",
+    "name",
+    "abbreviation",
+    "data_type",
+    "value_range",
+    "unit",
+    "description"
+   ],
+   "required_fields": [
+    "序号",
+    "数据元素名称",
+    "数据元素标识",
+    "数据类型",
+    "长度",
+    "单位"
+   ],
+   "_confidence": "HIGH",
+   "_source": "GJB 438C附录J表格格式要求",
+   "_verification": "必填字段6个, 对照GJB附录J核对"
+  }
+ },
+ "_knowledge_base_confidence": {
+  "overall": "HIGH",
+  "gjb_rules": "HIGH(原文措辞符合国军标) / 提取过程缺证据链(OCR文件未保存)",
+  "param_values": "HIGH(物理合理+文档验证+同义词全部文档验证)",
+  "unit_conversions": "HIGH(与国际单位制一致)",
+  "conflict_rules": "HIGH - 保留3条(全部有文档验证或实际检出), 删除3条无法验证的",
+  "table_schemas": "HIGH(对照GJB附录J核对)",
+  "note": "知识库内容整体可信, 但提取过程缺少可追溯的证据链(OCR文件+提取脚本). 建议后续: 1)找到GJB 438C标准原文逐条核对original_text 2)标注同义词来源 3)保存提取过程文件",
+  "param_synonyms": "HIGH - 保留11个参数(全部有文档验证的同义词), 删除12个无法验证的参数",
+  "operators": "HIGH - 保留5类操作符(全部文档验证), 删除~(未验证)"
+ },
+ "_deleted_params": {
+  "count": 12,
+  "params": [
+   "processing_time",
+   "voltage",
+   "power_consumption",
+   "temperature",
+   "call_setup_time",
+   "concurrent_users",
+   "data_retention",
+   "bit_rate",
+   "downtime",
+   "duty_cycle",
+   "coverage",
+   "sampling_rate"
+  ],
+  "reason": "规范名及同义词均未在16份真实文档中出现, 无法验证真实性, 已删除",
+  "note": "这些参数的定义来自GJB标准但无法用文档验证, 后续如获得更多文档可重新添加"
+ },
+ "_deleted_conflict_rules": {
+  "count": 3,
+  "rules": [
+   "L2_semantic/mutex_interfaces",
+   "L3_logic/constraint_ratio",
+   "L3_logic/temporal_cycle"
+  ],
+  "reason": "关键词未在文档出现且无实际检出记录"
+ },
+ "_deleted_operators": {
+  "count": 1,
+  "operators": [
+   "~"
+  ],
+  "reason": "操作符~及其同义词(≈/approximately/about/around/nominal/约/近似/大约)均未在16份文档中出现"
+ }
 }

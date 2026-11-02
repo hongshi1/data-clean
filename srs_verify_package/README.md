@@ -168,6 +168,30 @@ refute > NIE > support(任一claim为NIE则整体不为support；refute最优先
 - **torch/transformers/z3/jieba没装会怎样**——torch/transformers(jieba同)
   完全不触发；z3缺失时numeric_z3专家以`expert_numeric_z3_failed:ImportError`
   诊断降级(数值区间类判定仍由per-claim数值通道承担)，其余专家照常。
-- **purify参数**——证据提纯属研究仓库模块(`evidence_purifier`)，本分发包
-  未随附；`purify=True`会在首次verify时报ImportError。
+- **purify参数**——证据提纯已随包附带(`srs_verify.evidence_purifier`,
+  74号收敛模块)：`CascadeVerifier(purify=True)`启用F1作用域+F3指针删除。
 - **Windows乱码**——控制台输出中文前设`$env:PYTHONUTF8='1'`(PowerShell)。
+
+## 算法服务与Docker(80号)
+
+包内附完整算法栈(一致性校验+上下文关联+提纯)与FastAPI服务：
+
+```bash
+# 本地起服务(三态核验+提纯, NLI惰性加载)
+cd srs_verify_package
+uvicorn service.app:app --port 8400
+
+# Docker(GPU)
+docker build -t srs-verify:1.0 .
+docker run --gpus all -p 8400:8400 -v $(pwd)/../models:/app/models:ro \
+    srs-verify:1.0
+```
+
+端点：`GET /health` · `POST /verify`(三态+claim明细) ·
+`POST /purify`(证据提纯)。模型部署契约：`models/`与运行目录同级
+(nli/mDeBERTa系必需, embedding/bge可选供召回)。
+
+上下文关联栈(`srs_verify.context`)：O1-unit召回
+(`EvidenceRecallPipeline`, BGE多头+场景路由)、原子化(`atomize_claim`
+/`atomize_tables`双通道)、打分器族(`pair_scorers`)——召回依赖
+`torch+numpy`, 精排器未随附(降级直通序)。

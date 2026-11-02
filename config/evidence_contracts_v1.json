@@ -1,0 +1,571 @@
+{
+ "schema": "evidence_contracts_v1",
+ "n_items": 40,
+ "source": "algorithms/consistency/deq_pipeline.py::DETECTION_EVIDENCE_REGISTRY",
+ "design": "70号F3: 标注优先于删除(73号教训); markers加权不否决",
+ "contracts": {
+  "GJB-01": {
+   "table_types": [
+    "qualification_table"
+   ],
+   "content_markers": [
+    "合格性",
+    "演示",
+    "测试",
+    "审查"
+   ],
+   "statement_fields": [
+    "合格性方法",
+    "合格性级别"
+   ]
+  },
+  "GJB-02": {
+   "table_types": [
+    "security_table"
+   ],
+   "content_markers": [
+    "容错",
+    "故障检测",
+    "自检"
+   ],
+   "statement_fields": [
+    "安全性需求",
+    "详细说明"
+   ]
+  },
+  "GJB-03": {
+   "table_types": [
+    "security_table"
+   ],
+   "content_markers": [
+    "访问控制",
+    "权限",
+    "安全"
+   ],
+   "statement_fields": [
+    "保密性需求",
+    "详细说明"
+   ]
+  },
+  "GJB-04": {
+   "table_types": [],
+   "content_markers": [
+    "审计",
+    "日志"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "GJB-05": {
+   "table_types": [
+    "trace_table"
+   ],
+   "content_markers": [
+    "追踪",
+    "正向",
+    "逆向",
+    "任务书"
+   ],
+   "statement_fields": [
+    "需求名称",
+    "章节号"
+   ]
+  },
+  "GJB-06": {
+   "table_types": [],
+   "content_markers": [
+    "报警",
+    "告警",
+    "时间戳",
+    "故障位置"
+   ],
+   "statement_fields": [
+    "异常流"
+   ]
+  },
+  "GJB-07": {
+   "table_types": [
+    "security_table"
+   ],
+   "content_markers": [
+    "自检",
+    "启动自检",
+    "周期"
+   ],
+   "statement_fields": [
+    "安全性需求"
+   ]
+  },
+  "GJB-08": {
+   "table_types": [],
+   "content_markers": [
+    "掉电",
+    "断电",
+    "保护"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "GJB-09": {
+   "table_types": [
+    "value_domain_table"
+   ],
+   "content_markers": [
+    "输入",
+    "校验",
+    "防护",
+    "值域"
+   ],
+   "statement_fields": [
+    "最大差",
+    "最小差"
+   ]
+  },
+  "GJB-10": {
+   "table_types": [],
+   "content_markers": [
+    "升级",
+    "回滚",
+    "版本"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "GJB-11": {
+   "table_types": [],
+   "content_markers": [
+    "降级",
+    "模式",
+    "运行状态"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "LOGIC-01": {
+   "table_types": [
+    "capability_table"
+   ],
+   "content_markers": [
+    "优先",
+    "切换",
+    "状态"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "运行状态"
+   ]
+  },
+  "LOGIC-02": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "异常流",
+    "E1",
+    "动作约束",
+    "前置条件"
+   ],
+   "statement_fields": [
+    "异常流E1",
+    "动作约束",
+    "前置条件"
+   ]
+  },
+  "LOGIC-03": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "主事件流",
+    "步骤",
+    "Actor的动作",
+    "系统的动作"
+   ],
+   "statement_fields": [
+    "Actor的动作",
+    "系统的动作"
+   ]
+  },
+  "LOGIC-04": {
+   "table_types": [
+    "interface_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "调用",
+    "发送",
+    "返回",
+    "传输",
+    "接口"
+   ],
+   "statement_fields": [
+    "Actor的动作",
+    "系统的动作"
+   ]
+  },
+  "LOGIC-05": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "方式名称",
+    "桌面",
+    "平板",
+    "手持",
+    "分支"
+   ],
+   "statement_fields": [
+    "方式名称",
+    "运行状态"
+   ]
+  },
+  "LOGIC-06": {
+   "table_types": [],
+   "content_markers": [
+    "互斥",
+    "禁止",
+    "并行"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "LOGIC-07": {
+   "table_types": [],
+   "content_markers": [
+    "原子",
+    "回滚",
+    "中断"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "LOGIC-08": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "切换",
+    "仲裁",
+    "主备",
+    "冗余"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "动作约束"
+   ]
+  },
+  "LOGIC-09": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "Actors",
+    "参与者",
+    "角色",
+    "权限"
+   ],
+   "statement_fields": [
+    "Actors",
+    "Use Case 名称"
+   ]
+  },
+  "LOGIC-10": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "恢复",
+    "重启",
+    "重连",
+    "故障后"
+   ],
+   "statement_fields": [
+    "异常流",
+    "动作约束"
+   ]
+  },
+  "LOGIC-11": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "缓存",
+    "更新",
+    "重新",
+    "搜索"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "系统的动作"
+   ]
+  },
+  "PARAM-01": {
+   "table_types": [
+    "use_case_table",
+    "value_domain_table"
+   ],
+   "content_markers": [
+    "时间",
+    "时延",
+    "延迟",
+    "ms",
+    "秒"
+   ],
+   "statement_fields": [
+    "动作约束",
+    "单位"
+   ]
+  },
+  "PARAM-02": {
+   "table_types": [],
+   "content_markers": [
+    "周期",
+    "频率",
+    "间隔"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "PARAM-03": {
+   "table_types": [],
+   "content_markers": [
+    "阈值",
+    "门限"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "PARAM-04": {
+   "table_types": [],
+   "content_markers": [
+    "对齐",
+    "融合",
+    "误差"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "PARAM-05": {
+   "table_types": [
+    "capability_table"
+   ],
+   "content_markers": [
+    "CPU",
+    "内存",
+    "资源",
+    "占用",
+    "存储"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "方式名称"
+   ]
+  },
+  "PARAM-06": {
+   "table_types": [
+    "value_domain_table"
+   ],
+   "content_markers": [
+    "最大",
+    "最小",
+    "精度",
+    "单位"
+   ],
+   "statement_fields": [
+    "最大差",
+    "最小差",
+    "精度",
+    "单位"
+   ]
+  },
+  "PARAM-07": {
+   "table_types": [
+    "capability_table",
+    "value_domain_table"
+   ],
+   "content_markers": [
+    "容量",
+    "保存",
+    "保留",
+    "存储"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "最大差"
+   ]
+  },
+  "PARAM-08": {
+   "table_types": [],
+   "content_markers": [
+    "精度",
+    "同步",
+    "守时",
+    "漂移"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "PARAM-09": {
+   "table_types": [],
+   "content_markers": [
+    "降级",
+    "触发"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  },
+  "PARAM-10": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "故障",
+    "持续",
+    "重连",
+    "恢复"
+   ],
+   "statement_fields": [
+    "动作约束",
+    "异常流"
+   ]
+  },
+  "TERM-01": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "名称",
+    "别名",
+    "称为",
+    "简称",
+    "（"
+   ],
+   "statement_fields": [
+    "Use Case 名称",
+    "标识符"
+   ]
+  },
+  "TERM-02": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "定义",
+    "描述",
+    "说明"
+   ],
+   "statement_fields": [
+    "简要说明",
+    "需求描述",
+    "概述"
+   ]
+  },
+  "TERM-03": {
+   "table_types": [
+    "capability_table"
+   ],
+   "content_markers": [
+    "包括",
+    "包含",
+    "能力标识",
+    "项目唯一标识符"
+   ],
+   "statement_fields": [
+    "Use case名称",
+    "需求描述",
+    "标识符"
+   ]
+  },
+  "TERM-04": {
+   "table_types": [
+    "capability_table",
+    "use_case_table"
+   ],
+   "content_markers": [
+    "运行状态",
+    "方式名称",
+    "告警",
+    "状态"
+   ],
+   "statement_fields": [
+    "运行状态",
+    "方式名称"
+   ]
+  },
+  "TERM-05": {
+   "table_types": [
+    "use_case_table"
+   ],
+   "content_markers": [
+    "指令",
+    "命令",
+    "调用"
+   ],
+   "statement_fields": [
+    "Actor的动作",
+    "系统的动作"
+   ]
+  },
+  "TERM-06": {
+   "table_types": [
+    "capability_table",
+    "value_domain_table"
+   ],
+   "content_markers": [
+    "ms",
+    "秒",
+    "GB",
+    "字节",
+    "单位"
+   ],
+   "statement_fields": [
+    "需求描述",
+    "单位"
+   ]
+  },
+  "TERM-07": {
+   "table_types": [
+    "capability_table",
+    "interface_table"
+   ],
+   "content_markers": [
+    "PZXQ",
+    "接口",
+    "标识",
+    "发送方"
+   ],
+   "statement_fields": [
+    "标识符",
+    "项目唯一标识符"
+   ]
+  },
+  "TERM-08": {
+   "table_types": [],
+   "content_markers": [
+    "（",
+    "缩写",
+    "简称",
+    "全称"
+   ],
+   "statement_fields": [
+    "需求描述"
+   ]
+  }
+ }
+}
