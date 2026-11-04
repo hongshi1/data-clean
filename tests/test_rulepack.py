@@ -409,6 +409,7 @@ def test_gjb_rule_clusters_section_loads_and_validates(tmp_path: Path) -> None:
 
 def test_import_has_no_module_level_io() -> None:
     """模块顶层零I/O: import rulepack不触发文件读取(默认pack惰性加载)."""
+    import os
     import subprocess
 
     code = (
@@ -419,9 +420,13 @@ def test_import_has_no_module_level_io() -> None:
         "rp.default_rulepack();"
         "assert rp._PACK_CACHE, 'lazy load fills the cache'"
     ) % str(BASE)
+    # 继承完整环境(极简env缺SYSTEMROOT会使子进程Winsock初始化失败,
+    # import链上的asyncio触发WinError 10106) + 覆盖PYTHONUTF8/PATH
+    env = dict(os.environ)
+    env.update({"PYTHONUTF8": "1", "PYTHONPATH": str(BASE)})
     result = subprocess.run(
         [sys.executable, "-c", code], capture_output=True, text=True,
-        env={"PYTHONUTF8": "1", "PYTHONPATH": str(BASE)}, timeout=60)
+        env=env, timeout=60)
     assert result.returncode == 0, result.stderr
 
 

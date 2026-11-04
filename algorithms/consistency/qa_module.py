@@ -259,7 +259,7 @@ class QAConsistencyModule:
                  cascade_keep_confidence: float | None = None,
                  use_learned_router: str | None = None,
                  nli_model_path: str = "",
-                 nli_gate: float = 0.6,
+                 nli_gate: float = 0.7,
                  llm_refute_gate: float = REFUTE_CONFIDENCE_GATE,
                  expert_filter: tuple[str, ...] | None = None,
                  fuse_per_claim: bool = True,

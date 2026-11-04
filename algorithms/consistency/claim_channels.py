@@ -320,6 +320,17 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
 
 def verify_enum(request: QAInput, claim: AnswerClaim,
                 index: int, check_items: tuple[str, ...]) -> ClaimResult:
+    """Legacy per-member substring enum channel.
+
+    Known design flaw: member-level hits can mask set-level conflicts
+    (e.g. answer {A,B,C} vs evidence {A,B} where each member hits
+    individually). The ``enum_join_expert`` (L1) handles set-level joins
+    with domain registries. This legacy channel is retained only for
+    explicit-exclusion detection (context explicitly negates a member),
+    and its per-member "all found -> support" path is downgraded to
+    NIE to avoid false supports when the evidence set is not proven
+    exhaustive.
+    """
     items = [part.strip() for part in re.split(r"[、，,；]", claim.text)
              if len(part.strip()) >= 2]
     found: dict[str, list[str]] = {}
@@ -363,10 +374,11 @@ def verify_enum(request: QAInput, claim: AnswerClaim,
     missing = [item for item, refs in found.items() if not refs]
     refs = positive_refs
     if not missing:
-        return ClaimResult(
-            f"{request.instance_id}-c{index:02d}", claim.text, "support",
-            check_items, refs, "answer枚举的每个成员均在冻结context精确出现",
-            "enum_member_exact", 1.0)
+        return unresolved(
+            request, claim, index, check_items,
+            "枚举成员均在context出现，但context未证明穷举；"
+            "集合级比对由enum_join专家负责",
+            refs)
     return unresolved(request, claim, index, check_items,
                       f"枚举成员未全部命中({len(missing)}项)；未证明context穷举", refs)
 

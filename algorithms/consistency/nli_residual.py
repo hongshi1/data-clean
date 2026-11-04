@@ -43,7 +43,7 @@ VERDICTS = ("support", "refute", "not_in_evidence")
 NLI_TO_VERDICT = {"entailment": "support", "contradiction": "refute",
                   "neutral": "not_in_evidence"}
 
-DEFAULT_GATE = 0.6
+DEFAULT_GATE = 0.7
 DEFAULT_MODEL_KEY = "egt_finetuned_v2"
 _MAX_LENGTH = 512
 _BATCH_GPU = 16

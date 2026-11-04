@@ -24,10 +24,10 @@ from algorithms.consistency.qa_models import ClaimResult, QAInput
 RESIDUAL_METHODS = ("semantic_unresolved", "conservative_unresolved")
 VERDICTS = ("support", "refute", "not_in_evidence")
 
-_STATEMENT_CAP = 30
-_STATEMENT_TRUNC = 120
+_STATEMENT_CAP = 60
+_STATEMENT_TRUNC = 160
 _CLAIM_CHUNK = 10
-REFUTE_CONFIDENCE_GATE = 0.8
+REFUTE_CONFIDENCE_GATE = 0.6
 
 _SYSTEM = (
     "你是GJB军事软件需求文档的一致性审查员。给定证据语句列表，判定answer声明属于哪种："

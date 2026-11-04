@@ -1,0 +1,125 @@
+{
+  "schema_version": "scenario5_ucf_videomae_probe_v1",
+  "created_utc": "2026-11-04T10:29:08.145728+00:00",
+  "environment": {
+    "python": "3.12.10",
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 4060"
+  },
+  "result": {
+    "video": "scenario5\\data\\ucf_crime\\Anomaly-Videos-Part-1\\Abuse\\Abuse001_x264.mp4",
+    "video_level_category": "Abuse",
+    "model": "MCG-NJU/videomae-base-finetuned-kinetics (Kinetics-400)",
+    "sampled_clips": 4,
+    "clip_frame_count": 16,
+    "elapsed_seconds": 1.4838923999923281,
+    "clips_per_second": 2.69561323989575,
+    "predictions": [
+      {
+        "start_frame": 0,
+        "end_frame": 15,
+        "top5": [
+          {
+            "label": "moving furniture",
+            "probability": 0.3291015625
+          },
+          {
+            "label": "playing harp",
+            "probability": 0.0214996337890625
+          },
+          {
+            "label": "stretching leg",
+            "probability": 0.0197601318359375
+          },
+          {
+            "label": "playing cricket",
+            "probability": 0.014068603515625
+          },
+          {
+            "label": "cracking neck",
+            "probability": 0.01251220703125
+          }
+        ]
+      },
+      {
+        "start_frame": 904,
+        "end_frame": 919,
+        "top5": [
+          {
+            "label": "moving furniture",
+            "probability": 0.1456298828125
+          },
+          {
+            "label": "stretching leg",
+            "probability": 0.06597900390625
+          },
+          {
+            "label": "yoga",
+            "probability": 0.06500244140625
+          },
+          {
+            "label": "situp",
+            "probability": 0.0198516845703125
+          },
+          {
+            "label": "washing feet",
+            "probability": 0.0172882080078125
+          }
+        ]
+      },
+      {
+        "start_frame": 1808,
+        "end_frame": 1823,
+        "top5": [
+          {
+            "label": "moving furniture",
+            "probability": 0.06793212890625
+          },
+          {
+            "label": "using remote controller (not gaming)",
+            "probability": 0.0360107421875
+          },
+          {
+            "label": "laughing",
+            "probability": 0.0289459228515625
+          },
+          {
+            "label": "making bed",
+            "probability": 0.0185394287109375
+          },
+          {
+            "label": "shaving head",
+            "probability": 0.0184783935546875
+          }
+        ]
+      },
+      {
+        "start_frame": 2713,
+        "end_frame": 2728,
+        "top5": [
+          {
+            "label": "moving furniture",
+            "probability": 0.09783935546875
+          },
+          {
+            "label": "playing cricket",
+            "probability": 0.029541015625
+          },
+          {
+            "label": "cleaning floor",
+            "probability": 0.02679443359375
+          },
+          {
+            "label": "building shed",
+            "probability": 0.021575927734375
+          },
+          {
+            "label": "spraying",
+            "probability": 0.0145111083984375
+          }
+        ]
+      }
+    ],
+    "limitation": "Qualitative transfer probe only: Kinetics-400 top-k labels do not provide UCF-Crime frame-level ground truth or establish Abuse recognition accuracy."
+  }
+}
