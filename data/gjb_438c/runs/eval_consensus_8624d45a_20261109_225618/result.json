@@ -1,0 +1,284 @@
+{
+ "nli_model_path": "models/nli/distilled_v1",
+ "nli_gate": 0.8,
+ "erlang_model": "erlangshen-330m",
+ "erlang_device": "cuda",
+ "erlang_stats": {
+  "n_calls": 2,
+  "n_pairs": 5,
+  "n_batches": 2,
+  "infer_ms": 117.0,
+  "device": "cuda",
+  "model": "erlangshen-330m"
+ },
+ "dev_baseline": {
+  "accuracy": 0.8889,
+  "macro_f1": 0.6694,
+  "per_class": {
+   "support": {
+    "precision": 1.0,
+    "recall": 0.3333,
+    "f1": 0.5
+   },
+   "refute": {
+    "precision": 0.6667,
+    "recall": 0.5,
+    "f1": 0.5714
+   },
+   "not_in_evidence": {
+    "precision": 0.9024,
+    "recall": 0.9737,
+    "f1": 0.9367
+   }
+  },
+  "confusion": {
+   "support|support": 1,
+   "refute|refute": 2,
+   "refute|not_in_evidence": 1,
+   "not_in_evidence|support": 2,
+   "not_in_evidence|refute": 2,
+   "not_in_evidence|not_in_evidence": 37
+  }
+ },
+ "dev_sweep": [
+  {
+   "erlang_gate": 0.4,
+   "metrics": {
+    "accuracy": 0.9111,
+    "macro_f1": 0.7056,
+    "per_class": {
+     "support": {
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "not_in_evidence": {
+      "precision": 0.9048,
+      "recall": 1.0,
+      "f1": 0.95
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "refute|refute": 2,
+     "not_in_evidence|support": 2,
+     "not_in_evidence|refute": 2,
+     "not_in_evidence|not_in_evidence": 38
+    }
+   },
+   "n_vetoed_claims": 2,
+   "n_vetoed_instances": 1,
+   "vetoed_on_gold_refute": 0
+  },
+  {
+   "erlang_gate": 0.5,
+   "metrics": {
+    "accuracy": 0.9111,
+    "macro_f1": 0.7056,
+    "per_class": {
+     "support": {
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "not_in_evidence": {
+      "precision": 0.9048,
+      "recall": 1.0,
+      "f1": 0.95
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "refute|refute": 2,
+     "not_in_evidence|support": 2,
+     "not_in_evidence|refute": 2,
+     "not_in_evidence|not_in_evidence": 38
+    }
+   },
+   "n_vetoed_claims": 2,
+   "n_vetoed_instances": 1,
+   "vetoed_on_gold_refute": 0
+  },
+  {
+   "erlang_gate": 0.6,
+   "metrics": {
+    "accuracy": 0.9111,
+    "macro_f1": 0.7056,
+    "per_class": {
+     "support": {
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "not_in_evidence": {
+      "precision": 0.9048,
+      "recall": 1.0,
+      "f1": 0.95
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "refute|refute": 2,
+     "not_in_evidence|support": 2,
+     "not_in_evidence|refute": 2,
+     "not_in_evidence|not_in_evidence": 38
+    }
+   },
+   "n_vetoed_claims": 2,
+   "n_vetoed_instances": 1,
+   "vetoed_on_gold_refute": 0
+  },
+  {
+   "erlang_gate": 0.7,
+   "metrics": {
+    "accuracy": 0.9111,
+    "macro_f1": 0.7056,
+    "per_class": {
+     "support": {
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "not_in_evidence": {
+      "precision": 0.9048,
+      "recall": 1.0,
+      "f1": 0.95
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "refute|refute": 2,
+     "not_in_evidence|support": 2,
+     "not_in_evidence|refute": 2,
+     "not_in_evidence|not_in_evidence": 38
+    }
+   },
+   "n_vetoed_claims": 2,
+   "n_vetoed_instances": 1,
+   "vetoed_on_gold_refute": 0
+  }
+ ],
+ "dev_best_gate": 0.4,
+ "test_baseline": {
+  "accuracy": 0.913,
+  "macro_f1": 0.8047,
+  "per_class": {
+   "support": {
+    "precision": 0.6667,
+    "recall": 0.6667,
+    "f1": 0.6667
+   },
+   "refute": {
+    "precision": 0.6667,
+    "recall": 1.0,
+    "f1": 0.8
+   },
+   "not_in_evidence": {
+    "precision": 0.973,
+    "recall": 0.9231,
+    "f1": 0.9474
+   }
+  },
+  "confusion": {
+   "support|support": 2,
+   "support|not_in_evidence": 1,
+   "refute|refute": 4,
+   "refute|not_in_evidence": 2,
+   "not_in_evidence|support": 1,
+   "not_in_evidence|not_in_evidence": 36
+  }
+ },
+ "test_consensus": {
+  "accuracy": 0.913,
+  "macro_f1": 0.7885,
+  "per_class": {
+   "support": {
+    "precision": 0.6667,
+    "recall": 0.6667,
+    "f1": 0.6667
+   },
+   "refute": {
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75
+   },
+   "not_in_evidence": {
+    "precision": 0.9487,
+    "recall": 0.9487,
+    "f1": 0.9487
+   }
+  },
+  "confusion": {
+   "support|support": 2,
+   "support|not_in_evidence": 1,
+   "refute|refute": 3,
+   "refute|not_in_evidence": 1,
+   "not_in_evidence|support": 1,
+   "not_in_evidence|refute": 1,
+   "not_in_evidence|not_in_evidence": 37
+  }
+ },
+ "test_vetoed_claims": [
+  {
+   "claim_id": "S1QA-030-c06",
+   "claim_text": "该用例支持从数据库获取大量记录并以矩阵形式返回，同时处理连接失败等情况",
+   "erlang_label": "neutral",
+   "erlang_p_contra": 0.0052,
+   "instance_id": "S1QA-030",
+   "gold": "not_in_evidence",
+   "baseline_verdict": "refute"
+  },
+  {
+   "claim_id": "S1QA-063-c01",
+   "claim_text": "平板、桌面和手持）中都支持相同的连接方式名称",
+   "erlang_label": "neutral",
+   "erlang_p_contra": 0.0045,
+   "instance_id": "S1QA-063",
+   "gold": "refute",
+   "baseline_verdict": "refute"
+  }
+ ],
+ "refute_profile": {
+  "dev": {
+   "n_refute_claims": 2,
+   "n_refute_instances": 3,
+   "erlang_contra_agreement": 0.0,
+   "erlang_p_contra_mean": 0.0008,
+   "erlang_p_contra_values": [
+    0.0014,
+    0.0002
+   ]
+  },
+  "test": {
+   "n_refute_claims": 3,
+   "n_refute_instances": 6,
+   "erlang_contra_agreement": 0.3333,
+   "erlang_p_contra_mean": 0.3121,
+   "erlang_p_contra_values": [
+    0.9265,
+    0.0052,
+    0.0045
+   ]
+  }
+ }
+}

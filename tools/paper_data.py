@@ -3,6 +3,9 @@ r"""CascadeVerify论文资产的数据提取层: 全部数字从runs的result.js
 单一事实源: make_paper_figures.py 与 make_paper_tables.py 共享本模块,
 保证图/表数字一致且可复现(禁止手抄数字). 每个提取函数标注源run目录,
 关键run用checkpoint/规模断言保护, 防止run目录错配.
+
+D1蒸馏(2026-11-09): gate=0.7口径读eval_distilled_v1.json交叉校验,
+gate=0.8(dev校准)读distillation/d1_paper_summary_v1.json(session数字登记).
 """
 from __future__ import annotations
 
@@ -30,6 +33,10 @@ RUN_EGT_NEAR_EVAL = "eval_nli_residual_4971ceba_20261026_201247"
 RUN_EGT_NARR_TRAIN = "train_residual_nli_acfead4b_20261027_013647"
 RUN_FP16_MIN = "eval_nli_residual_2996af6b_20261027_003240"
 RUN_FP16_MAX = "eval_nli_residual_2996af6b_20261026_212915"
+RUN_D1_TRAIN = "train_distilled_nli_b3838652_20261109_200219"
+
+D1_DIR = BASE / "data/gjb_438c/distillation"
+D1_SUMMARY = D1_DIR / "d1_paper_summary_v1.json"
 
 
 def load_run(name: str) -> dict[str, Any]:
@@ -197,3 +204,44 @@ def get_l2_false_refute() -> tuple[int, int]:
     n_correct = conf.get("refute|refute", 0)
     assert (n_pred, n_correct) == (19, 7)
     return n_pred, n_pred - n_correct
+
+
+def get_d1_distillation() -> dict[str, Any]:
+    """D1 LLM仲裁蒸馏(GLM-5.3教师→本地NLI残差, 推理零API)全部数字.
+
+    源: data/gjb_438c/distillation/d1_paper_summary_v1.json(2026-11-09登记).
+    gate=0.7口径与eval_distilled_v1.json逐位交叉校验(防誊抄漂移);
+    gate=0.8(dev-45校准)来自tools/calibrate_distilled_gate.py的session
+    stdout(该脚本未落run, 登记文件即数字来源). 训练run:
+    train_distilled_nli_b3838652_20261109_200219(只吃dev-45教师标签,
+    test-46/violations-17/crossdoc-150训练不可见).
+    """
+    if not D1_SUMMARY.exists():
+        raise FileNotFoundError(f"D1登记缺失: {D1_SUMMARY}")
+    d = json.loads(D1_SUMMARY.read_text(encoding="utf-8"))
+    t = d["test46"]
+    dev = t["distilled_v1_gate_dev"]
+    assert dev["accuracy"] == 0.9130 and dev["macro_f1"] == 0.8047
+    assert dev["refute"]["precision"] == 0.67 and dev["refute"]["f1"] == 0.8
+    assert t["egt_finetuned_v2"]["macro_f1"] == 0.5911
+    assert t["distilled_v1_gate07"]["macro_f1"] == 0.7758
+    # gate=0.7口径与工具产物逐位交叉校验
+    ev = json.loads((D1_DIR / "eval_distilled_v1.json").read_text(encoding="utf-8"))
+    for key, src in (("egt_finetuned_v2", "egt_finetuned_v2|gate=0.7|test46"),
+                     ("distilled_v1_gate07", "distilled_v1|gate=0.7|test46")):
+        row = t[key]
+        assert row["accuracy"] == ev[src]["accuracy"], f"{key} accuracy漂移"
+        assert row["macro_f1"] == ev[src]["macro_f1"], f"{key} macro_f1漂移"
+        assert row["refute"]["f1"] == ev[src]["per_class"]["refute"]["f1"]
+    vio = d["violations17"]["distilled_v1"]
+    vio_src = ev["distilled_v1|gate=0.7|violations"]["per_class"]["refute"]
+    assert (vio["detected"], vio["n"]) == (16, 17)
+    assert vio["refute"]["f1"] == vio_src["f1"] == 0.9697
+    assert d["crossdoc150"]["distilled_v1"]["accuracy"] == 0.5133
+    assert d["setup"]["gate"] == 0.8
+    assert d["setup"]["teacher"]["label_dist"] == {
+        "not_in_evidence": 239, "support": 103, "refute": 13}
+    tr = load_run(RUN_D1_TRAIN)
+    assert tr["checkpoint"].endswith("distilled_v1")
+    assert d["setup"]["train"]["run"] == RUN_D1_TRAIN
+    return d

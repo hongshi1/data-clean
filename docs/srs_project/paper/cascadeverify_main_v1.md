@@ -161,6 +161,8 @@ fuse(a) = R   若 ∃通道k: v_k(a) = R
 
 **级联目标**：max refute-F1 s.t. E[LLM调用] ≤ B。预设目标核对：macro-F1≥0.75（实测0.7185，✗）、refute P≥0.9（实测0.8571，✗）、LLM调用≤30（实测15，✓）——成本目标达成，质量目标未达，缺口归因于claim级归因错位与silver边界而非路由本身（源：49号§6.3）。
 
+**D1：LLM仲裁蒸馏——训练期LLM教师，推理纯本地。** 上述架构的质量关键在L3远程API，而生产环境禁用外部调用。我们把L3的仲裁能力以一次性离线蒸馏移入本地L2：GLM-5.3教师对dev-45的179条残差claim给出三态判定（重建pre-M66 L3 prompt——开放世界/锚定/值判定规则system prompt，10-claim分块，全缓存可复现），学生egt_finetuned_v2在其真实推理分布上继续微调（premise与残差通道逐字节同源；EGT合成回放2:1防灾难遗忘，refute过采样3×；lr=1e-5/4epochs/batch16/seed42，160.4秒），gate在dev上重校准为0.8（checkpoint注册MODELS["distilled_v1"]）。推理时算法退化为纯本地三层（L0 NER+L1规则+L2 NLI），零API调用。held-out test-46：macro-F1 0.5911→0.8047（EGT-only基线→蒸馏），refute精确率0.33→0.67且召回保持1.00——蒸馏修复的正是§4.2末指出的"迁移召回不迁移校准"失败模式；violations-17检出16/17与含L3的系统持平，crossdoc-150 acc=0.5133为已知弱项（E2 leave-one-doc-out蒸馏待做）。数字登记与提取层见evaluation_tables.md的D1节（tools/paper_data.py get_d1_distillation()）。
+
 [待补：方法节各组件的伪代码/算法环境（L1专家判定、融合、升级路由）；图3——EGT三代文法的样本示例对照]
 
 ---

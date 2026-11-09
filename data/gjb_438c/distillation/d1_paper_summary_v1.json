@@ -1,0 +1,116 @@
+{
+  "experiment": "D1: LLM仲裁蒸馏 (LLM arbitration distillation) — 训练期LLM教师, 推理纯本地",
+  "recorded": "2026-11-09",
+  "provenance": {
+    "teacher_labels": "data/gjb_438c/distillation/teacher_labels_v1.jsonl (tools/distill_teacher_labels.py: 重建pre-M66 L3 prompt, 开放世界/锚定/值判定规则system prompt, 10-claim分块, GLM-5.3离线生成+磁盘缓存可复现)",
+    "train_run": "data/gjb_438c/runs/train_distilled_nli_b3838652_20261109_200219 (tools/train_distilled_nli.py)",
+    "eval_gate07": "data/gjb_438c/distillation/eval_distilled_v1.json (tools/eval_distilled.py)",
+    "eval_gate_dev": "tools/calibrate_distilled_gate.py 2026-11-09 session stdout (gate在dev-45扫参校准=0.8, test-46只评一次; 脚本未落run, 本文件为数字登记)",
+    "checkpoint": "models/nli/distilled_v1 (注册: algorithms/consistency/nli_local.py MODELS[distilled_v1])"
+  },
+  "setup": {
+    "qa_corpus": "91QA (04号SRS, silver标签S=6/R=8/N=77)",
+    "split": "dev_test_split_v1: 29主题簇整簇切分 dev=45 / test=46, seed=42",
+    "teacher": {
+      "model": "glm-5.3",
+      "mode": "训练期一次性离线生成, 磁盘缓存可复现(推理零调用)",
+      "labels_total": 355,
+      "label_dist": {
+        "not_in_evidence": 239,
+        "support": 103,
+        "refute": 13
+      },
+      "premise_coverage_support_refute": 0.8448
+    },
+    "train": {
+      "teacher_claims_used": 179,
+      "honest_contract": "训练只取dev-45的教师标签(179/355条claim); test-46(176条claim)/violations-17/crossdoc-150训练不可见",
+      "bucket_train": 160,
+      "bucket_dev": 19,
+      "egt_replay": 320,
+      "egt_replay_ratio": 2.0,
+      "refute_oversample": 3,
+      "n_train_total": 498,
+      "base_checkpoint": "egt_finetuned_v2",
+      "lr": 1e-05,
+      "epochs": 4,
+      "batch": 16,
+      "seed": 42,
+      "fp16": true,
+      "train_seconds": 160.4,
+      "run": "train_distilled_nli_b3838652_20261109_200219"
+    },
+    "gate": 0.8,
+    "gate_calibration": "dev-45扫参(0.5~0.95)按macro-F1最优; egt_finetuned_v2沿用其dev校准值0.7"
+  },
+  "test46": {
+    "egt_finetuned_v2": {
+      "gate": 0.7,
+      "accuracy": 0.7826,
+      "macro_f1": 0.5911,
+      "refute": {
+        "precision": 0.3333,
+        "recall": 1.0,
+        "f1": 0.5
+      }
+    },
+    "distilled_v1_gate07": {
+      "gate": 0.7,
+      "accuracy": 0.8913,
+      "macro_f1": 0.7758,
+      "refute": {
+        "precision": 0.5714,
+        "recall": 1.0,
+        "f1": 0.7273
+      }
+    },
+    "distilled_v1_gate_dev": {
+      "gate": 0.8,
+      "accuracy": 0.9130,
+      "macro_f1": 0.8047,
+      "refute": {
+        "precision": 0.67,
+        "recall": 1.0,
+        "f1": 0.8
+      }
+    }
+  },
+  "violations17": {
+    "distilled_v1": {
+      "gate": 0.7,
+      "n": 17,
+      "detected": 16,
+      "refute": {
+        "precision": 1.0,
+        "recall": 0.9412,
+        "f1": 0.9697
+      }
+    }
+  },
+  "crossdoc150": {
+    "distilled_v1": {
+      "gate": 0.8,
+      "n": 150,
+      "accuracy": 0.5133,
+      "note": "弱项: 训练未见跨文档数据; E2 leave-one-doc-out蒸馏待做(跨文档教师标签已生成: teacher_labels_crossdoc.jsonl, 156条)"
+    }
+  },
+  "reference_full91": {
+    "note": "全91QA自评口径(含dev-45训练数据), 不可与test-46 held-out直接对比; 旧系统参考数字为2026-11-09 session登记",
+    "old_cascade_l2nli_l3glm": {
+      "accuracy": 0.9231,
+      "macro_f1": 0.7860,
+      "refute_f1": 0.857
+    },
+    "old_l3_llm_glm53": {
+      "accuracy": 0.9451,
+      "macro_f1": 0.8747,
+      "refute_f1": 0.824
+    },
+    "fast_deterministic": {
+      "accuracy": 0.9121,
+      "macro_f1": 0.7212,
+      "refute_f1": 0.769
+    }
+  }
+}

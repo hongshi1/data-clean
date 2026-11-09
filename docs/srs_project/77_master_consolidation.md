@@ -144,3 +144,29 @@
 6. **泄漏治理的最高形式是协变量化**——不是删除泄漏而是测量它、写入数据集、分层报告（overlap 0.525→0.130的治理史）。
 7. **辖区对照优于全面胜利**——诚实的评测表应该展示每个方法族的辖区边界，而不是某个方法的全胜。
 8. **复现是效度的地基**——git_sha+config哈希+LLM缓存+永不覆盖写，四个机制各防一种证据链断裂。
+
+---
+
+## 7. D1：LLM仲裁蒸馏（2026-11-09追加）
+
+### 7.1 方法定位
+
+LLM arbitration distillation：把L3 LLM仲裁能力（一次性、离线、缓存可复现）蒸馏进本地NLI残差通道。教师=GLM-5.3（tools/distill_teacher_labels.py重建pre-M66 L3 prompt：开放世界/锚定/值判定规则system prompt，10-claim分块，全缓存）；学生=egt_finetuned_v2在教师标签上继续微调——premise与学生推理时实际输入逐字节同源（residual_premise），训练组成=dev-45教师标签179条claim（内部160/19分桶）+EGT合成回放2:1（320条，防灾难遗忘）+refute过采样3×（教师refute仅13/355），共498训练对（lr=1e-5/4epochs/batch16/seed42/fp16，160.4秒）；gate在dev-45上扫参校准=0.8。推理时算法保持纯本地三层（L0 NER+L1规则+L2 NLI）**零API调用**。蒸馏目标：解决NLI开放世界三态错校准（EGT-only的refute过度触发，P=0.33）。checkpoint注册：algorithms/consistency/nli_local.py MODELS["distilled_v1"]；数字登记：data/gjb_438c/distillation/d1_paper_summary_v1.json（提取层tools/paper_data.py get_d1_distillation()）。
+
+### 7.2 结果（held-out诚实口径）
+
+**test-46（29主题簇切分，训练只见dev-45）**：
+
+| 系统 | gate | acc | macro-F1 | refute F1 (P/R) | 推理时LLM调用 |
+|---|---|---|---|---|---|
+| egt_finetuned_v2（EGT-only，旧L2） | 0.7 | 0.7826 | 0.5911 | 0.500 (0.333/1.000) | 0 |
+| distilled_v1（同gate对照） | 0.7 | 0.8913 | 0.7758 | 0.727 (0.571/1.000) | 0 |
+| **distilled_v1（dev校准gate）** | **0.8** | **0.9130** | **0.8047** | **0.800 (0.67/1.00)** | **0** |
+
+蒸馏收益：同gate口径macro-F1 **+0.1847**（0.5911→0.7758）、dev校准gate口径**+0.2136**（→0.8047）；refute精确率0.33→0.67（**+0.34**，召回1.00保持）。专项集：violations-17检出16/17（refute F1=0.9697，P=1.000/R=0.941，与含L3的旧系统持平——确定性refute短路残差派发，蒸馏不损失符号检出）；crossdoc-150 acc=**0.5133**——弱项，训练未见跨文档分布，泛化缺口未闭合（E2 leave-one-doc-out蒸馏待做，跨文档教师标签已生成：teacher_labels_crossdoc.jsonl）。
+
+参考（全91QA自评口径，含dev-45训练数据，**不可与test-46直接对比**）：旧cascade（L2 NLI→L3 GLM复核，推理需远程API）acc=0.9231/macroF1=0.7860/refuteF1=0.857；旧l3_llm（GLM-5.3直推L3，91次远程直推）acc=0.9451/macroF1=0.8747/refuteF1=0.824；fast纯确定性acc=0.9121/macroF1=0.7212/refuteF1=0.769。读法：蒸馏模型以零推理API在held-out上逼近含远程LLM系统的水平。
+
+### 7.3 诚实性声明
+
+（i）**训练只见dev-45**：教师标签全量355条claim（239 NIE/103 support/13 refute），训练只取dev-45的179条；test-46（176条claim）、violations-17、crossdoc-150在训练中不可见；gate=0.8只在dev-45上扫参校准（egt_finetuned_v2沿用其自己的dev校准值0.7——两个checkpoint各用各的dev最优gate，无test泄漏）。（ii）**教师=silver同模型**：GLM-5.3既是教师又是silver标签源，与E类"L3判定器与silver同模型"的自证循环风险同源——蒸馏把该循环从推理期移到训练期（一次性、缓存留痕），但silver边界的系统性偏差会被学生继承，gold人工标注仍是终局校验。（iii）**教师标签质量门**：premise覆盖率0.8448（98/116，support/refute口径）——16条教师引用的语句不在学生premise中，监督信号与推理分布存在错位，如实披露。（iv）**fp16训练波动**（F类）同样适用于D1，本组数字为单次训练结果。（v）**crossdoc-150的0.5133**与既有结论"跨文档×5为构造性sound标签适合LLM直读（GLM-5达0.888）"对照——蒸馏学生未见过跨文档分布，该弱项不隐瞒、列为E2工作。（vi）**旧系统参考数字为全91QA自评口径**（含训练数据），列作参照系而非对比行；test-46口径与全91口径的乐观偏差教训见§3.2。

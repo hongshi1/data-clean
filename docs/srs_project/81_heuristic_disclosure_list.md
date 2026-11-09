@@ -62,6 +62,19 @@
 | llm_cache状态依赖 | L3数字依赖缓存内容 | 写明run版本 |
 | 三个门控数字并存 | 代码默认≠部署值≠dev最优 | 已修复对齐，写明终值 |
 
+## G类：D1蒸馏训练期超参数（2026-11-09新增）
+
+> D1 = LLM仲裁蒸馏：GLM-5.3教师（训练期一次性、离线、磁盘缓存）→ 本地NLI残差通道（checkpoint distilled_v1）；推理纯本地零API。训练run: train_distilled_nli_b3838652_20261109_200219；数字登记: data/gjb_438c/distillation/d1_paper_summary_v1.json。
+
+| 项目 | 值 | 标定/来源 | 披露要求 |
+|---|---|---|---|
+| distilled_v1 nli_gate | 0.8 | dev-45扫参（0.5~0.95）按macro-F1最优（tools/calibrate_distilled_gate.py） | 与egt_finetuned_v2的0.7并存，论文须分checkpoint写明各自gate |
+| 教师 | glm-5.3（磁盘缓存） | 训练期一次性离线（tools/distill_teacher_labels.py，重建pre-M66 L3 prompt，10-claim分块） | 显式声明"推理零调用"；教师与silver同模型的自证循环风险沿E类披露 |
+| 教师标签 | 355条claim（239 NIE/103 support/13 refute），premise覆盖率0.8448 | 91QA全量标注；**训练只用dev-45的179条**（诚实契约：test-176条/violations/crossdoc不可见） | 覆盖率0.8448=16条support/refute的教师引用语句不在学生premise中（监督与推理分布错位），须披露 |
+| EGT回放比例 | 2:1（320/160） | 工程经验值，未扫参 | 附录列值+声明"未扫参" |
+| refute过采样 | 3× | 教师refute稀少（13/355） | 附录列值 |
+| 训练超参 | lr=1e-5, 4 epochs, batch=16, seed=42, fp16 | 从egt_finetuned_v2继续微调；498训练对，160.4秒 | fp16波动风险沿F类；单次训练数字 |
+
 ## 建议论文写法
 
 ### 方法节末尾加一段：
