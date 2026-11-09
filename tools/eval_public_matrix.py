@@ -90,6 +90,7 @@ ROWS: tuple[tuple[str, str, str], ...] = (
 #: 附加对照行(非外部baseline): 我们的L2域数据微调, 支撑公开/域对照
 REFERENCE_ROWS: tuple[tuple[str, str, str], ...] = (
     ("egt_finetuned_v2", "nli", "[对照]mDeBERTa+EGT域数据微调(我们的L2)"),
+    ("distilled_v1", "nli", "[对照]mDeBERTa+EGT+GLM-5.3教师蒸馏(D1)"),
 )
 
 #: 旧口径记录(eval_paper_matrix_c409df7f_20261027_125551, 同批B1/B2)

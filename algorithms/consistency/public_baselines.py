@@ -47,6 +47,7 @@ BASELINE_MODEL_DIRS: dict[str, str] = {
     "mdeberta_zero": MODELS["mdeberta"]["dir"],
     "cmnli_finetuned": CMNLI_FINETUNED_DIR,
     "egt_finetuned_v2": MODELS["egt_finetuned_v2"]["dir"],
+    "distilled_v1": MODELS["distilled_v1"]["dir"],
 }
 
 _MAX_LEN = 512
@@ -300,12 +301,11 @@ def parse_public_verdict(payload: Any) -> str:
 
 def _call_llm_json(prompt: str) -> Any:
     """一次缓存JSON调用 (惰性import: ai_config import期读.env)."""
-    from algorithms.common.llm_client import llm_json
+    from tools.llm_teacher import llm_json_teacher
 
-    payload, _model = llm_json(
-        prompt, system=_SYSTEM_PUBLIC, prefer="glm", cache=True,
-        allow_fallback=False, model_override="glm-5.3",
-        max_tokens=16000, timeout=300,
+    payload, _model, _hit = llm_json_teacher(
+        prompt, _SYSTEM_PUBLIC,
+        max_tokens=16000, temperature=0.1,
         extra_payload={
             "response_contract": "json_final_content_v2",
             "reasoning_effort": "low",

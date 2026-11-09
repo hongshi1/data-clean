@@ -51,7 +51,6 @@ BASE = Path(__file__).resolve().parents[1]
 if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
-import algorithms.common.llm_client as llm_client  # noqa: E402
 from algorithms.consistency.eval_lib import (  # noqa: E402
     LABELS,
     build_qa_input,
@@ -107,21 +106,28 @@ def cache_lines() -> int:
 # ── LLM call metering ───────────────────────────────────────────────────────
 
 class LlmMeter:
-    """Wrap llm_client.llm_json to count invocations per configuration."""
+    """Wrap tools/llm_teacher.llm_json_teacher to count invocations.
+
+    Post-M66: algorithms/common/llm_client was deleted; the GLM direct
+    baseline (this file) uses tools/llm_teacher.py, whose cache keys
+    replicate the old client byte-for-byte (historical caches still hit).
+    """
 
     def __init__(self) -> None:
         self.invocations = 0
-        self._original = llm_client.llm_json
+        from tools import llm_teacher
+        self._teacher = llm_teacher
+        self._original = llm_teacher.llm_json_teacher
 
     def _counting(self, prompt, *args, **kwargs):
         self.invocations += 1
         return self._original(prompt, *args, **kwargs)
 
     def install(self) -> None:
-        llm_client.llm_json = self._counting
+        self._teacher.llm_json_teacher = self._counting
 
     def restore(self) -> None:
-        llm_client.llm_json = self._original
+        self._teacher.llm_json_teacher = self._original
 
 
 def measured_run(runner: Callable[[list[dict]], dict[str, Outcome]],
@@ -198,14 +204,15 @@ def _parse_direct(payload: Any) -> tuple[str, str]:
 def judge_direct_llm(row: dict) -> dict:
     """One cached llm_json call per QA; the raw LLM verdict is kept (no
     cascade gating) — that is the point of the direct-LLM baseline."""
+    from tools.llm_teacher import llm_json_teacher
+
     prompt = _build_direct_prompt(row)
     note = ""
     for suffix in ("", _B2_RETRY):
         try:
-            payload, _model = llm_client.llm_json(
-                prompt + suffix, system=_B2_SYSTEM, prefer="glm", cache=True,
-                allow_fallback=False, model_override="glm-5.3",
-                max_tokens=16000, timeout=300,
+            payload, _model, _hit = llm_json_teacher(
+                prompt + suffix, _B2_SYSTEM,
+                max_tokens=16000, temperature=0.1,
                 extra_payload={
                     "response_contract": "json_final_content_v2",
                     "reasoning_effort": "low",

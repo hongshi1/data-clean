@@ -1,0 +1,57 @@
+{
+ "script": "benchmark_latency",
+ "git_sha": "f5d203c2",
+ "config": {
+  "n_instances": 91,
+  "one_time": {
+   "import_warmup_ms": 285,
+   "egt_model_load_s": 8.1,
+   "distilled_model_load_s": 2.0
+  },
+  "fast_deterministic": {
+   "n": 89,
+   "mean_ms": 9.1,
+   "median_ms": 8.6,
+   "p95_ms": 15.0,
+   "max_ms": 44.2
+  },
+  "standard_egt_v2": {
+   "n": 89,
+   "mean_ms": 123.4,
+   "median_ms": 110.3,
+   "p95_ms": 270.9,
+   "max_ms": 364.7
+  },
+  "standard_distilled_v1": {
+   "n": 89,
+   "mean_ms": 118.4,
+   "median_ms": 113.1,
+   "p95_ms": 240.8,
+   "max_ms": 372.2
+  },
+  "baseline_pair_throughput": {
+   "erlangshen-330m": {
+    "pairs_per_s": 138.6,
+    "ms_per_pair": 7.21
+   },
+   "mdeberta": {
+    "pairs_per_s": 322.7,
+    "ms_per_pair": 3.1
+   },
+   "cmnli_finetuned": {
+    "error": "ValueError: unknown nli model: cmnli_finetuned (avail: ['erlangshen', 'erlangshen-330m', 'mdeberta', 'mdeberta-mnli', 'egt_finetuned', 'egt_finetuned_v2', 'distilled_v1'])"
+   },
+   "egt_finetuned_v2": {
+    "pairs_per_s": 343.0,
+    "ms_per_pair": 2.92
+   },
+   "distilled_v1": {
+    "pairs_per_s": 388.0,
+    "ms_per_pair": 2.58
+   }
+  },
+  "note": "post-M66: no inference-time LLM; historical L3 cascade latency (~15-30s/escalated instance, network-bound) eliminated by design"
+ },
+ "config_hash": "f93317ce",
+ "opened_at": 1794245456.2
+}

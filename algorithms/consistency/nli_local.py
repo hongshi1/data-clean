@@ -55,6 +55,12 @@ MODELS: dict[str, dict[str, str]] = {
         "dir": str(BASE / "models" / "nli" / "distilled_v1"),
         "display": "mDeBERTa + EGT + GLM-5.3 teacher distillation (D1)",
     },
+    # CMNLI公开监督微调对照baseline(tools/train_cmnli_nli.py产出,
+    # 供public_baselines矩阵/延迟基准使用, 非算法通道)
+    "cmnli_finetuned": {
+        "dir": str(BASE / "models" / "nli" / "cmnli_finetuned_mdeberta"),
+        "display": "mDeBERTa-v3-base + CMNLI 50k finetune (public baseline)",
+    },
 }
 
 _BATCH_GPU = 32
