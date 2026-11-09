@@ -91,6 +91,42 @@
 
 ---
 
+## E2 跨文档迁移分析（leave-one-doc-out蒸馏，诚实负结果）
+
+> 2026-11-10实测。设计：每fold训练于qa91-dev-45教师标签+crossdoc教师标签**减去1个文档**（tools/train_distilled_nli.py新增--base-dir/--exclude-doc），评测held-out文档（30实例）+test-46（域内回归检查）。前置发现：crossdoc-150实为**平衡构造集**（support/refute/NIE各50，"sound_label"为构造性标签）；教师GLM-5.3在156条claim中标42个refute，抽查验证正确（设备/阶段集合值冲突，如C05QA-011：证据"桌面、平板"vs答案"桌面、平板、手持"）。数字登记：data/gjb_438c/distillation/e2_paper_summary_v1.json（提取层：tools/paper_data.py get_e2_loo()；结果文件：e2_loo_results_v1.json / e2_loo_curriculum_results_v1.json / e2_loo_mixed_noos_results_v1.json）。
+
+**表6 E2三变体（held-doc acc为5文档留一折均值 / test-46 macro-F1为域内回归）**
+
+| 训练配方 | held-doc acc | test-46 macro-F1（域内代价） |
+|---|---|---|
+| D1基线（无crossdoc训练） | 0.5133 | 0.8047 |
+| v1 单阶段+refute过采样3× | 0.5667 | 0.6562 |
+| v2 两阶段课程（crossdoc泛化→qa91-dev域内退火） | 0.5600 | 0.7014 |
+| v3 单阶段无过采样 | 0.5667 | 0.6921 |
+
+**gate扫描排除门控失配**：D1 distilled_v1在crossdoc-150上gate∈{0.5, 0.6, 0.7, 0.8}扫描，acc=0.5200/0.5133/0.5200/0.5133——平坦（极差0.0067），弱项非门控失配，是premise分布漂移。
+
+读数（诚实结论）：LLM蒸馏跨文档迁移收益**+0.05 acc**（0.5133→0.5667），但一致付出域内**-0.10~-0.15 macroF1**代价；278M学生+~300教师标签训练对规模下，蒸馏能力是**域绑定的**——课程学习（v2把域内代价收窄到-0.10）/过采样控制（v3无过采样域内反而优于v1）只能部分缓解，无一变体同时守住两端。
+
+---
+
+## 双NLI共识门控（消融，负结果）
+
+> 2026-11-09实测（tools/eval_consensus.py，run: eval_consensus_8624d45a_20261109_225618）。设计：distilled_v1判refute（gate≥0.8）**且**零样本Erlangshen-330M也判contradiction（p_contra≥erlang_gate）才保留refute——双模型共识作为refute精确率补丁。数字登记：data/gjb_438c/distillation/e2_paper_summary_v1.json（提取层：tools/paper_data.py get_consensus_ablation()）。
+
+**表7 共识门控 test-46消融（erlang_gate=0.4，dev-best）**
+
+| 系统 | macro-F1 | refute P/R | 说明 |
+|---|---|---|---|
+| distilled_v1（gate=0.8，基线） | 0.8047 | 0.67/1.00 | D1主结果 |
+| +Erlangshen共识门控 | 0.7885 | 0.75/0.75 | **净降-0.0162** |
+
+dev-45扫描erlang_gate∈{0.4, 0.5, 0.6, 0.7}全并列（macroF1 0.7056，dev基线0.6694——dev上的"提升"是假象，四档同值取dev-best=0.4）。test-46诚实结果：refute精确率0.67→0.75但召回1.00→0.75，**误杀1条真refute（S1QA-063，Erlangshen p_contra=0.0045判neutral）**。
+
+根因：零样本Erlangshen与distilled的refute一致率仅**33%（dev 0%）**——门控退化为近全盘否决；两模型分歧由域适配差异主导（distilled域内微调 vs Erlangshen零样本残差premise分布），非distilled的错误。未来方向：域适配异构集成（egt_finetuned_v2+distilled_v1）。
+
+---
+
 ## 三组对照实验（支撑表格的科学论点）
 
 | 对照 | 结论 |

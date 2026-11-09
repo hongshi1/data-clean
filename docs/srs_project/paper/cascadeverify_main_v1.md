@@ -163,6 +163,10 @@ fuse(a) = R   若 ∃通道k: v_k(a) = R
 
 **D1：LLM仲裁蒸馏——训练期LLM教师，推理纯本地。** 上述架构的质量关键在L3远程API，而生产环境禁用外部调用。我们把L3的仲裁能力以一次性离线蒸馏移入本地L2：GLM-5.3教师对dev-45的179条残差claim给出三态判定（重建pre-M66 L3 prompt——开放世界/锚定/值判定规则system prompt，10-claim分块，全缓存可复现），学生egt_finetuned_v2在其真实推理分布上继续微调（premise与残差通道逐字节同源；EGT合成回放2:1防灾难遗忘，refute过采样3×；lr=1e-5/4epochs/batch16/seed42，160.4秒），gate在dev上重校准为0.8（checkpoint注册MODELS["distilled_v1"]）。推理时算法退化为纯本地三层（L0 NER+L1规则+L2 NLI），零API调用。held-out test-46：macro-F1 0.5911→0.8047（EGT-only基线→蒸馏），refute精确率0.33→0.67且召回保持1.00——蒸馏修复的正是§4.2末指出的"迁移召回不迁移校准"失败模式；violations-17检出16/17与含L3的系统持平，crossdoc-150 acc=0.5133为已知弱项（E2 leave-one-doc-out蒸馏待做）。数字登记与提取层见evaluation_tables.md的D1节（tools/paper_data.py get_d1_distillation()）。
 
+**E2：跨文档蒸馏迁移的诚实负结果。** 承接上文crossdoc弱项：crossdoc-150实为平衡构造集（support/refute/NIE各50，sound_label为构造性标签），教师GLM-5.3在156条claim标42个refute、抽查验证正确（如C05QA-011：证据"桌面、平板"vs答案"桌面、平板、手持"）；D1在其上gate扫描（0.5~0.8）acc平坦（0.5200/0.5133/0.5200/0.5133），弱项非门控失配而是premise分布漂移。leave-one-doc-out蒸馏（每fold训练于dev-45+crossdoc教师标签减1文档，评测held-out文档+test-46回归）：三变体held-doc acc 0.5667/0.5600/0.5667（+0.05），但test-46 macroF1 0.6562/0.7014/0.6921（-0.10~-0.15）——278M学生+~300教师标签规模下**蒸馏能力是域绑定的**，课程学习/过采样控制只部分缓解（evaluation_tables.md的E2节，tools/paper_data.py get_e2_loo()）。
+
+**双NLI共识门控（消融，负结果）。** 尝试用零样本Erlangshen-330M共识补refute精确率：distilled_v1判refute（gate≥0.8）且Erlangshen也判contradiction（p_contra≥erlang_gate）才保留。dev扫erlang_gate∈{0.4~0.7}全并列（macroF1 0.7056），test-46诚实结果0.8047→0.7885（**净降-0.0162**）：refute P 0.67→0.75但R 1.00→0.75（误杀真refute S1QA-063）。根因：两模型refute一致率仅33%（dev 0%），门控退化为近全盘否决——分歧由域适配差异主导（distilled域内微调vs Erlangshen零样本残差premise分布），非distilled错误；未来方向为域适配异构集成（egt_finetuned_v2+distilled_v1）（evaluation_tables.md共识门控节，tools/paper_data.py get_consensus_ablation()）。
+
 [待补：方法节各组件的伪代码/算法环境（L1专家判定、融合、升级路由）；图3——EGT三代文法的样本示例对照]
 
 ---

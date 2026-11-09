@@ -170,3 +170,24 @@ LLM arbitration distillation：把L3 LLM仲裁能力（一次性、离线、缓�
 ### 7.3 诚实性声明
 
 （i）**训练只见dev-45**：教师标签全量355条claim（239 NIE/103 support/13 refute），训练只取dev-45的179条；test-46（176条claim）、violations-17、crossdoc-150在训练中不可见；gate=0.8只在dev-45上扫参校准（egt_finetuned_v2沿用其自己的dev校准值0.7——两个checkpoint各用各的dev最优gate，无test泄漏）。（ii）**教师=silver同模型**：GLM-5.3既是教师又是silver标签源，与E类"L3判定器与silver同模型"的自证循环风险同源——蒸馏把该循环从推理期移到训练期（一次性、缓存留痕），但silver边界的系统性偏差会被学生继承，gold人工标注仍是终局校验。（iii）**教师标签质量门**：premise覆盖率0.8448（98/116，support/refute口径）——16条教师引用的语句不在学生premise中，监督信号与推理分布存在错位，如实披露。（iv）**fp16训练波动**（F类）同样适用于D1，本组数字为单次训练结果。（v）**crossdoc-150的0.5133**与既有结论"跨文档×5为构造性sound标签适合LLM直读（GLM-5达0.888）"对照——蒸馏学生未见过跨文档分布，该弱项不隐瞒、列为E2工作。（vi）**旧系统参考数字为全91QA自评口径**（含训练数据），列作参照系而非对比行；test-46口径与全91口径的乐观偏差教训见§3.2。
+
+### 7.4 E2：跨文档蒸馏迁移分析（leave-one-doc-out，负结果，2026-11-10追加）
+
+**前置发现（crossdoc-150的真实性质）**：评测集实为**平衡构造集**——support/refute/NIE各50条实例，"sound_label"是构造性标签（非自然分布）。教师GLM-5.3对156条crossdoc claim标42个refute，人工抽查验证正确（设备/阶段集合值冲突，如C05QA-011：证据"桌面、平板"vs答案"桌面、平板、手持"）——教师能识别跨文档矛盾，弱项在学生侧。**gate扫描排除门控失配**：D1 distilled_v1在crossdoc-150上gate∈{0.5, 0.6, 0.7, 0.8}扫描，acc=0.5200/0.5133/0.5200/0.5133（平坦，极差0.0067）——弱项非门控失配，是premise分布漂移。
+
+**实验设计**：leave-one-doc-out——每fold训练于qa91-dev-45教师标签+crossdoc教师标签**减去1个文档**（tools/train_distilled_nli.py新增--base-dir/--exclude-doc），评测held-out文档（30实例）+test-46（域内回归检查）。
+
+| 训练配方 | held-doc acc（5折均值） | test-46 macro-F1（域内回归） |
+|---|---|---|
+| D1基线（无crossdoc训练） | 0.5133 | 0.8047 |
+| v1 单阶段+refute过采样3× | 0.5667 | 0.6562 |
+| v2 两阶段课程（crossdoc泛化→qa91-dev域内退火） | 0.5600 | 0.7014 |
+| v3 单阶段无过采样 | 0.5667 | 0.6921 |
+
+**域绑定结论的诚实性讨论**：（i）收益与代价同报——LLM蒸馏跨文档迁移收益+0.05 acc（0.5133→0.5667），但三变体一致付出域内-0.10~-0.15 macroF1（0.8047→0.6562/0.7014/0.6921）代价，无一变体同时守住两端；结论是**在278M学生+~300教师标签训练对规模下，蒸馏能力是域绑定的**，不外推至更大模型/更多训练数据。（ii）教师标签用于训练不作评测gold——评测仍用构造sound标签，教师42个refute的"抽查验证正确"是抽样结论非全量gold。（iii）课程学习（v2把域内代价从-0.15收窄到-0.10）与过采样控制（v3无过采样域内反而优于v1）只能部分缓解，缓解手段本身不改变域绑定定性。（iv）fp16训练波动（F类）同样适用：每fold为单次训练结果，fold间方差未测。数字登记：data/gjb_438c/distillation/e2_paper_summary_v1.json（提取层tools/paper_data.py get_e2_loo()；结果文件e2_loo_{,curriculum_,mixed_noos_}results_v1.json）。
+
+### 7.5 双NLI共识门控消融（负结果，2026-11-10追加）
+
+**设计**：distilled_v1判refute（gate≥0.8）且零样本Erlangshen-330M也判contradiction（p_contra≥erlang_gate）才保留refute——双模型共识作为refute精确率补丁（tools/eval_consensus.py，run: eval_consensus_8624d45a_20261109_225618）。dev-45扫描erlang_gate∈{0.4, 0.5, 0.6, 0.7}全并列（macroF1 0.7056，dev基线0.6694——dev上的"提升"是假象，四档同值取dev-best=0.4）。**test-46诚实结果**：macroF1 0.7885 vs 基线0.8047（**净降-0.0162**）；refute精确率0.67→0.75但召回1.00→0.75——误杀1条真refute（S1QA-063-c01，Erlangshen p_contra=0.0045判neutral）。
+
+**根因**：零样本Erlangshen与distilled的refute一致率仅**33%（dev 0%）**——门控退化为近全盘否决；两模型分歧由域适配差异主导（distilled域内微调 vs Erlangshen零样本残差premise分布），非distilled的错误。负结果方法论价值：异构集成的成员需同域适配，否则共识门控以牺牲召回换精确、净效果为负。**未来方向**：域适配异构集成（egt_finetuned_v2+distilled_v1）。数字登记：data/gjb_438c/distillation/e2_paper_summary_v1.json（提取层tools/paper_data.py get_consensus_ablation()）。

@@ -1,0 +1,62 @@
+{
+  "experiment": "E2: 跨文档蒸馏迁移(leave-one-doc-out) + 双NLI共识门控消融(负结果) — D1蒸馏的扩展分析",
+  "recorded": "2026-11-10",
+  "provenance": {
+    "teacher_labels_crossdoc": "data/gjb_438c/distillation/teacher_labels_crossdoc.jsonl (tools/distill_teacher_labels.py, GLM-5.3离线+磁盘缓存; 156条claim: support 54 / not_in_evidence 60 / refute 42, 42个refute抽查验证正确)",
+    "train_tool": "tools/train_distilled_nli.py (新增--base-dir/--exclude-doc实现leave-one-doc-out; 每fold训练于qa91-dev-45教师标签+crossdoc教师标签减去1个文档, 评测held-out文档30实例+test-46域内回归)",
+    "e2_results": {
+      "v1_single_stage_oversample3x": "data/gjb_438c/distillation/e2_loo_results_v1.json",
+      "v2_curriculum_two_stage": "data/gjb_438c/distillation/e2_loo_curriculum_results_v1.json",
+      "v3_single_stage_no_oversample": "data/gjb_438c/distillation/e2_loo_mixed_noos_results_v1.json"
+    },
+    "consensus_run": "data/gjb_438c/runs/eval_consensus_8624d45a_20261109_225618/result.json (tools/eval_consensus.py)",
+    "d1_gate_scan_crossdoc": "2026-11-09 session登记: D1 distilled_v1在crossdoc-150上gate扫描(脚本stdout未落run, 本文件为数字登记)"
+  },
+  "crossdoc150_nature": {
+    "labeling": "平衡构造集: support/refute/not_in_evidence各50条实例, sound_label为构造性标签(非自然分布)",
+    "teacher_refute_labeled": 42,
+    "teacher_spot_check": "教师42个refute抽查验证正确(设备/阶段集合值冲突; 示例C05QA-011: 证据'桌面、平板' vs answer'桌面、平板、手持')"
+  },
+  "d1_gate_scan_crossdoc150": {
+    "gates": [0.5, 0.6, 0.7, 0.8],
+    "accuracy": [0.52, 0.5133, 0.52, 0.5133],
+    "conclusion": "acc平坦(极差0.0067): crossdoc弱项非门控失配, 而是premise分布漂移"
+  },
+  "loo_variants": {
+    "d1_baseline": {
+      "held_doc_acc": 0.5133,
+      "test46_macro_f1": 0.8047
+    },
+    "v1_single_stage_oversample3x": {
+      "held_doc_acc": 0.5667,
+      "test46_macro_f1": 0.6562
+    },
+    "v2_curriculum_two_stage": {
+      "held_doc_acc": 0.56,
+      "test46_macro_f1": 0.7014
+    },
+    "v3_single_stage_no_oversample": {
+      "held_doc_acc": 0.5667,
+      "test46_macro_f1": 0.6921
+    }
+  },
+  "conclusion": {
+    "held_doc_gain": "+0.05 acc (0.5133→0.5667, LLM蒸馏跨文档迁移收益)",
+    "test46_cost": "-0.10~-0.15 macro-F1 (0.8047→0.6562/0.7014/0.6921, 域内一致代价)",
+    "domain_binding": "278M学生+~300教师标签训练对规模下, LLM蒸馏能力是域绑定的; 课程学习/过采样控制只能部分缓解"
+  },
+  "consensus_ablation": {
+    "design": "distilled_v1判refute(gate>=0.8)且零样本Erlangshen-330M也判contradiction(erlang_p_contra>=erlang_gate)才保留refute",
+    "dev_sweep": "erlang_gate∈{0.4,0.5,0.6,0.7}全并列macroF1=0.7056(dev基线0.6694), dev-best取0.4",
+    "test46": {
+      "baseline_macro_f1": 0.8047,
+      "consensus_macro_f1": 0.7885,
+      "delta": -0.0162,
+      "refute_precision": [0.67, 0.75],
+      "refute_recall": [1.0, 0.75],
+      "false_kill": "S1QA-063-c01(真refute被误杀: Erlangshen p_contra=0.0045判neutral)"
+    },
+    "root_cause": "零样本Erlangshen与distilled一致率仅33%(dev 0%): 门控退化为近全盘否决; 两模型分歧由域适配差异主导(distilled域内微调 vs Erlangshen零样本残差premise分布), 非distilled的错误",
+    "future": "域适配异构集成(egt_finetuned_v2+distilled_v1)"
+  }
+}

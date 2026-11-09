@@ -6,6 +6,9 @@ r"""CascadeVerify论文资产的数据提取层: 全部数字从runs的result.js
 
 D1蒸馏(2026-11-09): gate=0.7口径读eval_distilled_v1.json交叉校验,
 gate=0.8(dev校准)读distillation/d1_paper_summary_v1.json(session数字登记).
+E2跨文档蒸馏+共识门控(2026-11-10): get_e2_loo()/get_consensus_ablation()
+读distillation/e2_loo_*_results_v1.json与runs/eval_consensus_*,
+与distillation/e2_paper_summary_v1.json交叉校验(D1数字回链d1_paper_summary).
 """
 from __future__ import annotations
 
@@ -34,9 +37,15 @@ RUN_EGT_NARR_TRAIN = "train_residual_nli_acfead4b_20261027_013647"
 RUN_FP16_MIN = "eval_nli_residual_2996af6b_20261027_003240"
 RUN_FP16_MAX = "eval_nli_residual_2996af6b_20261026_212915"
 RUN_D1_TRAIN = "train_distilled_nli_b3838652_20261109_200219"
+RUN_CONSENSUS = "eval_consensus_8624d45a_20261109_225618"
 
 D1_DIR = BASE / "data/gjb_438c/distillation"
 D1_SUMMARY = D1_DIR / "d1_paper_summary_v1.json"
+E2_LOO_V1 = D1_DIR / "e2_loo_results_v1.json"
+E2_LOO_V2 = D1_DIR / "e2_loo_curriculum_results_v1.json"
+E2_LOO_V3 = D1_DIR / "e2_loo_mixed_noos_results_v1.json"
+E2_SUMMARY = D1_DIR / "e2_paper_summary_v1.json"
+E2_TEACHER_CROSSDOC = D1_DIR / "teacher_labels_crossdoc.jsonl"
 
 
 def load_run(name: str) -> dict[str, Any]:
@@ -244,4 +253,124 @@ def get_d1_distillation() -> dict[str, Any]:
     tr = load_run(RUN_D1_TRAIN)
     assert tr["checkpoint"].endswith("distilled_v1")
     assert d["setup"]["train"]["run"] == RUN_D1_TRAIN
+    return d
+
+
+def get_e2_loo() -> dict[str, Any]:
+    """E2 leave-one-doc-out跨文档蒸馏迁移分析(诚实负结果)全部数字.
+
+    源: data/gjb_438c/distillation/e2_loo_results_v1.json(v1单阶段+3x refute
+    过采样)/e2_loo_curriculum_results_v1.json(v2两阶段课程: crossdoc泛化→
+    qa91-dev域内退火)/e2_loo_mixed_noos_results_v1.json(v3单阶段无过采样);
+    训练工具tools/train_distilled_nli.py(--base-dir/--exclude-doc, 每fold
+    训练于qa91-dev-45教师标签+crossdoc教师标签减去1个文档, 评测held-out
+    文档30实例+test-46域内回归). 登记文件e2_paper_summary_v1.json另含
+    D1在crossdoc-150的gate扫描(session数字, 无run文件, 登记即来源)与
+    crossdoc-150平衡构造集性质; 其变体数字与结果文件全精度值round(4)
+    交叉校验, D1基线回链d1_paper_summary_v1.json.
+    """
+    if not E2_SUMMARY.exists():
+        raise FileNotFoundError(f"E2登记缺失: {E2_SUMMARY}")
+    reg = json.loads(E2_SUMMARY.read_text(encoding="utf-8"))
+    files = {
+        "v1_single_stage_oversample3x": E2_LOO_V1,
+        "v2_curriculum_two_stage": E2_LOO_V2,
+        "v3_single_stage_no_oversample": E2_LOO_V3,
+    }
+    variants: dict[str, Any] = {}
+    for key, path in files.items():
+        if not path.exists():
+            raise FileNotFoundError(f"E2结果缺失: {path}")
+        d = json.loads(path.read_text(encoding="utf-8"))
+        assert set(d["per_fold"]) == {"C05", "C06", "C07", "C08", "C10"}
+        row = {
+            "held_doc_acc": d["held_doc_mean_acc"],
+            "test46_macro_f1": d["test46_mean_mf1"],
+            "per_fold": d["per_fold"],
+        }
+        # 登记文件为4位舍入数字, 与结果文件全精度值交叉校验(防誊抄漂移)
+        assert round(row["held_doc_acc"], 4) == reg["loo_variants"][key]["held_doc_acc"]
+        assert round(row["test46_macro_f1"], 4) == reg["loo_variants"][key]["test46_macro_f1"]
+        variants[key] = row
+    assert (round(variants["v1_single_stage_oversample3x"]["held_doc_acc"], 4),
+            round(variants["v1_single_stage_oversample3x"]["test46_macro_f1"], 4)) == (
+                0.5667, 0.6562)
+    assert (round(variants["v2_curriculum_two_stage"]["held_doc_acc"], 4),
+            round(variants["v2_curriculum_two_stage"]["test46_macro_f1"], 4)) == (
+                0.56, 0.7014)
+    assert (round(variants["v3_single_stage_no_oversample"]["held_doc_acc"], 4),
+            round(variants["v3_single_stage_no_oversample"]["test46_macro_f1"], 4)) == (
+                0.5667, 0.6921)
+    # D1基线(无crossdoc训练)回链D1登记: crossdoc-150整集acc / test-46 macroF1
+    if not D1_SUMMARY.exists():
+        raise FileNotFoundError(f"D1登记缺失: {D1_SUMMARY}")
+    d1 = json.loads(D1_SUMMARY.read_text(encoding="utf-8"))
+    base = reg["loo_variants"]["d1_baseline"]
+    assert base["held_doc_acc"] == d1["crossdoc150"]["distilled_v1"]["accuracy"] == 0.5133
+    assert base["test46_macro_f1"] == d1["test46"]["distilled_v1_gate_dev"]["macro_f1"] == 0.8047
+    # D1在crossdoc-150的gate扫描(session登记): acc平坦→弱项是premise分布漂移
+    scan = reg["d1_gate_scan_crossdoc150"]
+    assert scan["gates"] == [0.5, 0.6, 0.7, 0.8]
+    assert scan["accuracy"] == [0.52, 0.5133, 0.52, 0.5133]
+    # crossdoc-150性质: 教师标签156条claim, 其中refute 42(抽查验证正确)
+    nature = reg["crossdoc150_nature"]
+    claims = [json.loads(line) for line in
+              E2_TEACHER_CROSSDOC.read_text(encoding="utf-8").splitlines() if line.strip()]
+    n_refute = sum(1 for c in claims if c["teacher_verdict"] == "refute")
+    assert (len(claims), n_refute) == (156, 42)
+    assert nature["teacher_refute_labeled"] == n_refute
+    return {
+        "registry": reg,
+        "variants": variants,
+        "d1_baseline": {"held_doc_acc": 0.5133, "test46_macro_f1": 0.8047},
+        "gate_scan": scan,
+        "crossdoc150_nature": nature,
+    }
+
+
+def get_consensus_ablation() -> dict[str, Any]:
+    """双NLI共识门控消融(负结果): eval_consensus_8624d45a_20261109_225618.
+
+    设计: distilled_v1判refute(gate>=0.8)且零样本Erlangshen-330M也判
+    contradiction(erlang_p_contra>=erlang_gate)才保留refute. dev-45扫
+    erlang_gate∈{0.4,0.5,0.6,0.7}全并列(0.7056, 基线0.6694), dev-best=0.4;
+    test-46诚实结果macroF1 0.7885 vs 基线0.8047(净降-0.0162, 误杀S1QA-063).
+    与e2_paper_summary_v1.json的consensus_ablation子结构交叉校验.
+    """
+    d = load_run(RUN_CONSENSUS)
+    assert d["nli_model_path"].endswith("distilled_v1") and d["nli_gate"] == 0.8
+    assert d["erlang_model"] == "erlangshen-330m"
+    sweep = d["dev_sweep"]
+    assert [s["erlang_gate"] for s in sweep] == [0.4, 0.5, 0.6, 0.7]
+    assert all(s["metrics"]["macro_f1"] == 0.7056 for s in sweep)  # 全并列
+    assert d["dev_best_gate"] == 0.4
+    assert d["dev_baseline"]["macro_f1"] == 0.6694
+    base, cons = d["test_baseline"], d["test_consensus"]
+    assert base["macro_f1"] == 0.8047 and cons["macro_f1"] == 0.7885
+    assert round(cons["macro_f1"] - base["macro_f1"], 4) == -0.0162
+    assert (base["per_class"]["refute"]["precision"],
+            base["per_class"]["refute"]["recall"]) == (0.6667, 1.0)
+    assert (cons["per_class"]["refute"]["precision"],
+            cons["per_class"]["refute"]["recall"]) == (0.75, 0.75)
+    # 误杀断言: 被否决的2条claim中唯一gold=refute即S1QA-063-c01(真refute)
+    killed = [v for v in d["test_vetoed_claims"] if v["gold"] == "refute"]
+    assert [v["claim_id"] for v in killed] == ["S1QA-063-c01"]
+    # 根因: 零样本Erlangshen与distilled一致率仅33%(dev 0%)
+    prof = d["refute_profile"]
+    assert prof["dev"]["erlang_contra_agreement"] == 0.0
+    assert round(prof["test"]["erlang_contra_agreement"], 4) == 0.3333
+    # 共识基线与D1登记交叉校验(同一checkpoint+gate的test-46数字)
+    if not D1_SUMMARY.exists():
+        raise FileNotFoundError(f"D1登记缺失: {D1_SUMMARY}")
+    d1 = json.loads(D1_SUMMARY.read_text(encoding="utf-8"))
+    assert base["macro_f1"] == d1["test46"]["distilled_v1_gate_dev"]["macro_f1"]
+    # 与E2登记文件交叉校验(refute P/R为2位舍入)
+    if not E2_SUMMARY.exists():
+        raise FileNotFoundError(f"E2登记缺失: {E2_SUMMARY}")
+    t46 = json.loads(E2_SUMMARY.read_text(encoding="utf-8"))["consensus_ablation"]["test46"]
+    assert (t46["baseline_macro_f1"], t46["consensus_macro_f1"]) == (0.8047, 0.7885)
+    assert [round(base["per_class"]["refute"]["precision"], 2),
+            round(cons["per_class"]["refute"]["precision"], 2)] == t46["refute_precision"]
+    assert [base["per_class"]["refute"]["recall"],
+            cons["per_class"]["refute"]["recall"]] == t46["refute_recall"]
     return d
