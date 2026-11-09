@@ -48,6 +48,13 @@ MODELS: dict[str, dict[str, str]] = {
         "dir": str(BASE / "models" / "nli" / "egt_finetuned_v2"),
         "display": "mDeBERTa-v3-base-xnli + EGT narrative-grammar finetune (S4-v2)",
     },
+    # D1: LLM仲裁蒸馏(GLM-5.3离线教师标签, dev split)在egt_finetuned_v2上
+    # 继续微调的checkpoint(tools/train_distilled_nli.py产出);
+    # 推理纯本地, 教师只在训练期使用
+    "distilled_v1": {
+        "dir": str(BASE / "models" / "nli" / "distilled_v1"),
+        "display": "mDeBERTa + EGT + GLM-5.3 teacher distillation (D1)",
+    },
 }
 
 _BATCH_GPU = 32

@@ -5,8 +5,9 @@ tools/train_residual_nli.py; these tests lock the deterministic kernels:
 premise construction (nli_training), the EGT→NLI example mapping, the
 hash split, statement selection, probability gating, verdict mapping,
 dedup, the unavailable-model degradation, and the QAConsistencyModule
-integration (residual dispatch, NLI-over-LLM precedence, and the S5
-L2→L3 cascade escalation of NLI refute candidates).
+integration (residual dispatch). The L3 LLM channel was removed in M66
+(pure-local inference); the former NLI-over-LLM precedence and S5
+cascade-escalation tests are retired with it.
 """
 from __future__ import annotations
 
@@ -18,7 +19,6 @@ import pytest
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
-from algorithms.consistency import llm_residual  # noqa: E402
 from algorithms.consistency import nli_residual  # noqa: E402
 from algorithms.consistency.evidence_statements import (  # noqa: E402
     EvidenceStatement,
@@ -353,16 +353,9 @@ def test_nli_unavailable_model_degrades_to_nie(monkeypatch) -> None:
     assert "不可用" in results[0].rationale
 
 
-# ── qa_module集成: 残差分派与NLI优先 ──────────────────────
+# ── qa_module集成: 残差分派 ──────────────────────
 
-def test_module_nli_residual_replaces_unresolved_nie(patch_model,
-                                                     monkeypatch) -> None:
-    def llm_must_not_run(*args, **kwargs):
-        raise AssertionError("NLI优先时LLM残差通道不应被调用")
-
-    monkeypatch.setattr(
-        "algorithms.consistency.llm_residual.verify_residual_claims",
-        llm_must_not_run)
+def test_module_nli_residual_replaces_unresolved_nie(patch_model) -> None:
     request = sample_request()
     module = QAConsistencyModule(use_experts=False, use_nli_residual=True,
                                  nli_model_path="fake-path")
@@ -374,10 +367,8 @@ def test_module_nli_residual_replaces_unresolved_nie(patch_model,
     assert "nli_residual_model_unavailable" not in result.diagnostics
 
 
-def test_module_nli_and_llm_mutually_exclusive_by_default() -> None:
-    module = QAConsistencyModule(use_experts=True, use_nli_residual=True)
-    assert module.use_llm_residual is False
-    module = QAConsistencyModule(use_experts=True, use_llm_residual=True)
+def test_module_residual_channels_off_by_default() -> None:
+    module = QAConsistencyModule(use_experts=True)
     assert module.use_nli_residual is False
 
 
@@ -391,116 +382,3 @@ def test_module_unavailable_nli_surfaces_diagnostic(monkeypatch) -> None:
     result = module.verify(request)
     assert "nli_residual_model_unavailable" in result.diagnostics
 
-
-# ── qa_module集成: S5级联升级(L2 refute→L3复核) ─────────────
-
-@pytest.fixture()
-def patch_llm(monkeypatch):
-    """脚本化L3调用: 记录prompt, 消费队列; 空队列时断言不应有额外调用."""
-    state = {"calls": [], "queue": []}
-
-    def fake_call(prompt: str) -> dict:
-        state["calls"].append(prompt)
-        assert state["queue"], "unexpected extra LLM call"
-        item = state["queue"].pop(0)
-        if isinstance(item, Exception):
-            raise item
-        return item if isinstance(item, dict) else {}
-
-    monkeypatch.setattr(llm_residual, "_call_llm", fake_call)
-    return state
-
-
-def cascade_module(**kwargs) -> QAConsistencyModule:
-    return QAConsistencyModule(use_experts=False, use_cascade=True,
-                                nli_model_path="fake-path", **kwargs)
-
-
-def test_module_cascade_implies_both_residual_channels() -> None:
-    module = cascade_module()
-    assert module.use_nli_residual is True
-    assert module.use_llm_residual is True
-
-
-def test_module_cascade_escalates_nli_refute_to_llm(patch_model,
-                                                    patch_llm) -> None:
-    """NLI refute(conf 0.8 < 0.95) → L3复核判NIE → NIE完全替换refute."""
-    patch_llm["queue"] = [{"claims": [{
-        "claim_id": "c1", "verdict": "not_in_evidence",
-        "evidence_refs": [], "rationale": "证据无该设备集合声明",
-        "confidence": 0.7,
-    }]}]
-    request = sample_request()
-    result = cascade_module().verify(request)
-    assert len(patch_llm["calls"]) == 1
-    assert "所有操作均支持在桌面、平版和平板设备上运行" in patch_llm["calls"][0]
-    assert "SQL访问修改数据功能" in patch_llm["calls"][0]
-    assert result.verdict == "not_in_evidence"
-    assert all(claim.verdict != "refute" for claim in result.claim_results)
-    assert "cascade_llm_calls_1" in result.diagnostics
-    assert "cascade_nli_claims_1" in result.diagnostics
-    assert "cascade_high_confidence_kept_1" not in result.diagnostics
-
-
-def test_module_cascade_keeps_llm_confirmed_refute(patch_model,
-                                                   patch_llm) -> None:
-    patch_llm["queue"] = [{"claims": [{
-        "claim_id": "c1", "verdict": "refute",
-        "evidence_refs": ["ev-1"], "rationale": "证据给出平板、桌面、手持，矛盾",
-        "confidence": 0.93,
-    }]}]
-    result = cascade_module().verify(sample_request())
-    assert len(patch_llm["calls"]) == 1
-    assert result.verdict == "refute"
-    assert any(claim.method == "llm_residual" and claim.verdict == "refute"
-               for claim in result.claim_results)
-    assert "cascade_llm_calls_1" in result.diagnostics
-
-
-def test_module_cascade_nli_support_passes_through(patch_model,
-                                                   patch_llm) -> None:
-    """NLI support直接放行, 不进入L3(只有refute候选升级)."""
-    patch_model["probs"] = [{"entailment": 0.9, "neutral": 0.05,
-                             "contradiction": 0.05}]
-    result = cascade_module().verify(sample_request())
-    assert patch_llm["calls"] == []
-    assert result.verdict == "support"
-    assert "cascade_llm_calls_0" in result.diagnostics
-
-
-def test_module_cascade_nli_nie_not_escalated(patch_model, patch_llm) -> None:
-    patch_model["probs"] = [{"entailment": 0.1, "neutral": 0.7,
-                             "contradiction": 0.2}]
-    result = cascade_module().verify(sample_request())
-    assert patch_llm["calls"] == []
-    assert result.verdict == "not_in_evidence"
-    assert "cascade_llm_calls_0" in result.diagnostics
-
-
-def test_module_cascade_high_confidence_refute_skips_llm(
-        patch_model, patch_llm) -> None:
-    """conformal高置信档: NLI refute概率>=0.95直接信任, 不花L3调用."""
-    patch_model["probs"] = [{"entailment": 0.01, "neutral": 0.02,
-                             "contradiction": 0.97}]
-    result = cascade_module(cascade_keep_confidence=0.95).verify(
-        sample_request())
-    assert patch_llm["calls"] == []
-    assert result.verdict == "refute"
-    assert any(claim.method == "nli_residual" and claim.verdict == "refute"
-               for claim in result.claim_results)
-    assert "cascade_high_confidence_kept_1" in result.diagnostics
-    assert "cascade_llm_calls_0" in result.diagnostics
-
-
-def test_module_cascade_llm_failure_keeps_nli_refute(patch_model,
-                                                     patch_llm) -> None:
-    """L3复核失败(重试1次后)保留L2 refute: 升级不比L2-only更不知情."""
-    patch_llm["queue"] = [RuntimeError("LLM调用失败(glm)"),
-                          RuntimeError("LLM调用失败(glm)")]
-    result = cascade_module().verify(sample_request())
-    assert len(patch_llm["calls"]) == 2
-    assert result.verdict == "refute"
-    assert any(claim.method == "nli_residual" and claim.verdict == "refute"
-               for claim in result.claim_results)
-    assert "llm_residual_call_failed" in result.diagnostics
-    assert "cascade_llm_calls_1" in result.diagnostics

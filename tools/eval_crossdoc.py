@@ -33,7 +33,6 @@ for _p in (str(BASE / "tools"), str(BASE)):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-import algorithms.common.llm_client as llm_client  # noqa: E402
 from algorithms.consistency.nli_local import MODELS  # noqa: E402
 from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
 from tools.build_answer_mutation_candidates import request_from_dict  # noqa: E402
@@ -77,52 +76,31 @@ def load_evalset(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-# ── 运行与LLM计数(与eval_cascade.py同法) ──────────────────────
+# ── 运行与LLM计数 ──────────────────────
+# M66后算法纯本地化(llm_client已删除); 计数包装保留接口但恒为零.
 
 
 def run_with_llm_counting(module: QAConsistencyModule, rows: Sequence[dict],
                           ) -> tuple[dict[str, dict], dict]:
-    call_stats = {"invocations": 0, "api_calls": 0}
-    original_llm_json = llm_client.llm_json
-    original_store = llm_client._store
-
-    def counting_llm_json(prompt, *args, **kwargs):
-        call_stats["invocations"] += 1
-        return original_llm_json(prompt, *args, **kwargs)
-
-    def counting_store(ck, content, model):
-        call_stats["api_calls"] += 1
-        return original_store(ck, content, model)
-
-    llm_client.llm_json = counting_llm_json
-    llm_client._store = counting_store
     outcomes: dict[str, dict] = {}
-    try:
-        for row in rows:
-            request = request_from_dict(row)
-            result = module.verify(request)
-            outcomes[request.instance_id] = {
-                "verdict": result.verdict,
-                "status": result.status,
-                "diagnostics": list(result.diagnostics),
-                "claims": [{
-                    "claim_id": claim.claim_id,
-                    "claim_text": claim.claim_text,
-                    "verdict": claim.verdict,
-                    "method": claim.method,
-                    "confidence": claim.confidence,
-                    "evidence_refs": list(claim.evidence_refs),
-                    "rationale": claim.rationale[:200],
-                } for claim in result.claim_results],
-            }
-    finally:
-        llm_client.llm_json = original_llm_json
-        llm_client._store = original_store
-    stats = {
-        "invocations": call_stats["invocations"],
-        "api_calls": call_stats["api_calls"],
-        "cache_hits": call_stats["invocations"] - call_stats["api_calls"],
-    }
+    for row in rows:
+        request = request_from_dict(row)
+        result = module.verify(request)
+        outcomes[request.instance_id] = {
+            "verdict": result.verdict,
+            "status": result.status,
+            "diagnostics": list(result.diagnostics),
+            "claims": [{
+                "claim_id": claim.claim_id,
+                "claim_text": claim.claim_text,
+                "verdict": claim.verdict,
+                "method": claim.method,
+                "confidence": claim.confidence,
+                "evidence_refs": list(claim.evidence_refs),
+                "rationale": claim.rationale[:200],
+            } for claim in result.claim_results],
+        }
+    stats = {"invocations": 0, "api_calls": 0, "cache_hits": 0}
     return outcomes, stats
 
 

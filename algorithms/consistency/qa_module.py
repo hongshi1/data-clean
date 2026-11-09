@@ -420,6 +420,7 @@ class QAConsistencyModule:
                 verification_request, residual, statements,
                 model_path=self.nli_model_path, gate=self.nli_gate)
             if nli_results:
+                claim_results = claim_results + tuple(nli_results)
                 if any(r.method == "nli_residual_unavailable"
                        for r in nli_results):
                     nli_diag.append("nli_residual_model_unavailable")
