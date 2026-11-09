@@ -12,6 +12,7 @@ import csv
 import hashlib
 import json
 import platform
+import sys
 import time
 import zipfile
 from collections import defaultdict
@@ -31,6 +32,9 @@ import yaml
 from transformers import VideoMAEForVideoClassification, VideoMAEImageProcessor
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from tools.run_utils import open_run  # noqa: E402
+
 MOT_ZIP = ROOT / "scenario5" / "data" / "mot" / "MOT17.zip"
 MEVA_ROOT = ROOT / "scenario5" / "data" / "meva"
 UCF_ROOT = ROOT / "scenario5" / "data" / "ucf_crime" / "Anomaly-Videos-Part-1"
@@ -469,9 +473,20 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.videomae_only:
-        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-        run_dir = ROOT / "scenario5" / "runs" / f"ucf_videomae_{stamp}"
-        run_dir.mkdir(parents=True, exist_ok=False)
+        run = open_run(
+            "scenario5_ucf_videomae_probe",
+            {
+                "dataset": "UCF-Crime Abuse001",
+                "model": "VideoMAE Kinetics-400",
+                "model_sha256": sha256(VIDEOMAE_DIR / "model.safetensors"),
+                "clips": 4,
+                "frames_per_clip": 16,
+                "device": args.device,
+                "experiment_script_sha256": sha256(Path(__file__).resolve()),
+            },
+            ROOT / "scenario5" / "runs",
+        )
+        run_dir = run.path
         qualitative = run_videomae_qualitative(run_dir, args.device, clips=4)
         result = {
             "schema_version": "scenario5_ucf_videomae_probe_v1",
@@ -479,7 +494,7 @@ def main() -> int:
             "environment": {"python": platform.python_version(), "torch": torch.__version__, "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None},
             "result": qualitative,
         }
-        (run_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        run.save_result(result)
         print(f"run: {run_dir.relative_to(ROOT)}")
         for prediction in qualitative["predictions"]:
             print(f"frames {prediction['start_frame']}-{prediction['end_frame']}: {prediction['top5']}")
@@ -497,9 +512,26 @@ def main() -> int:
     if missing:
         raise FileNotFoundError("Missing experiment assets: " + ", ".join(missing))
 
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = ROOT / "scenario5" / "runs" / f"cv_mot17_{stamp}"
-    run_dir.mkdir(parents=True, exist_ok=False)
+    config = {
+        "dataset": "MOT17 train / MOT17-04-FRCNN",
+        "first_frame": args.first_frame,
+        "frame_count": args.frames,
+        "detector_weights": str(detector_weights),
+        "detector_sha256": sha256(detector_weights),
+        "experiment_script_sha256": sha256(Path(__file__).resolve()),
+        "tracker_names": args.trackers,
+        "imgsz": args.imgsz,
+        "confidence": args.conf,
+        "gt_iou_threshold": GT_IOU_THRESHOLD,
+        "device": args.device,
+        "meva_pose_frames": None if args.skip_pose else args.pose_frames,
+        "ucf_detector_frames": None if args.skip_ucf else args.ucf_frames,
+        "videomae_clips": None if args.skip_videomae else 4,
+        "pose_weights_sha256": sha256(POSE_WEIGHTS) if POSE_WEIGHTS.exists() else None,
+        "videomae_weights_sha256": sha256(VIDEOMAE_DIR / "model.safetensors") if (VIDEOMAE_DIR / "model.safetensors").exists() else None,
+    }
+    run = open_run("scenario5_cv_benchmark", config, ROOT / "scenario5" / "runs")
+    run_dir = run.path
     frames, gt = extract_segment(args.first_frame, args.frames, run_dir)
     tracker_configs = {name: path for name, path in create_tracker_configs(run_dir).items() if name in args.trackers}
     tracker_results: dict[str, Any] = {}
@@ -557,10 +589,19 @@ def main() -> int:
         "ucf_crime_videomae_qualitative": videomae_result,
         "interpretation": "This small contiguous MOT17 segment is a pipeline smoke benchmark, not a leaderboard result. Detector and tracker errors are coupled; all three tracker runs share the same detector checkpoint/config. MeVA pose result is an annotation-alignment diagnostic, not pose accuracy. UCF-Crime is qualitative due to weak labels.",
     }
-    result_path = run_dir / "result.json"
-    result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    config = {**vars(args), "detector_weights_sha256": sha256(DET_WEIGHTS), "pose_weights_sha256": sha256(POSE_WEIGHTS) if POSE_WEIGHTS.exists() else None}
-    (run_dir / "config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
+    run.save_result(result)
+    run.write_text(
+        "runtime_config.json",
+        json.dumps(
+            {
+                **vars(args),
+                "detector_weights_sha256": sha256(detector_weights),
+                "pose_weights_sha256": sha256(POSE_WEIGHTS) if POSE_WEIGHTS.exists() else None,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+    )
     with (run_dir / "mot17_per_frame.csv").open("w", encoding="utf-8", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=["tracker", "frame", "gt", "pred", "candidate_pairs_iou_valid"])
         writer.writeheader()
@@ -570,7 +611,7 @@ def main() -> int:
     print(f"run: {run_dir.relative_to(ROOT)}")
     for name, row in tracker_results.items():
         print(f"{name}: IDF1={row['idf1']:.4f} MOTA={row['mota']:.4f} IDSW={row['num_switches']} FPS={row['fps_including_decode_and_tracker']:.2f}")
-    print(f"result: {result_path.relative_to(ROOT)}")
+    print(f"result: {(run_dir / 'result.json').relative_to(ROOT)}")
     return 0
 
 

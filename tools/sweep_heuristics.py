@@ -77,7 +77,11 @@ def sweep_nli(records, nli) -> list[dict]:
 
 
 def sweep_shared(tables) -> list[dict]:
-    """扫描2: min_shared → 平行对/findings/doc10真冲突保留."""
+    """扫描2: min_shared → 平行对/findings/doc10真冲突保留.
+
+    打印用ASCII标签(中文+数字在GBK控制台会错位吞数字首位,
+    JSON输出为权威数字).
+    """
     from algorithms.consistency.coverage_detector import (
         compare_tables,
         find_parallel_tables,
@@ -105,8 +109,8 @@ def sweep_shared(tables) -> list[dict]:
             "n_findings": len(findings),
             "doc10_real_kept": real_kept,
         })
-        print(f"  min_shared={ms} → 平行对{len(pairs)} "
-              f"findings{len(findings)} doc10真冲突保留={real_kept}")
+        print(f"  [shared] ms={ms} pairs={len(pairs)} "
+              f"findings={len(findings)} doc10_real={real_kept}")
     return rows
 
 
