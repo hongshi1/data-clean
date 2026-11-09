@@ -67,7 +67,7 @@ BASE = Path(__file__).resolve().parents[2]
 PRESETS: dict[str, dict] = {
     "fast": dict(use_experts=True),
     "standard": dict(use_experts=True, use_nli_residual=True),
-    "full": dict(use_experts=True, use_nli_residual=True, use_cascade=True),
+
 }
 
 #: 场景名→(词典路径, 规则包路径), 相对仓库根

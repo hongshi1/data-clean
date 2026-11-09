@@ -41,7 +41,6 @@ from srs_verify.claim_channels import (
 )
 from srs_verify.evidence_statements import EvidenceStatement
 from srs_verify.evidence_statements import linearize_context
-from srs_verify.llm_residual import REFUTE_CONFIDENCE_GATE
 from srs_verify.qa_models import (
     ClaimResult,
     QAInput,
@@ -253,14 +252,9 @@ class QAConsistencyModule:
                  use_subtractor: bool = False,
                  use_experts: bool = True,
                  use_bge_experts: bool = False,
-                 use_llm_residual: bool = False,
                  use_nli_residual: bool = False,
-                 use_cascade: bool = False,
-                 cascade_keep_confidence: float | None = None,
-                 use_learned_router: str | None = None,
                  nli_model_path: str = "",
                  nli_gate: float = 0.6,
-                 llm_refute_gate: float = REFUTE_CONFIDENCE_GATE,
                  expert_filter: tuple[str, ...] | None = None,
                  fuse_per_claim: bool = True,
                  aggregation: str = "strict") -> None:
@@ -278,52 +272,12 @@ class QAConsistencyModule:
         union-merged with per-claim results before aggregation.
         use_bge_experts: opt-in BGE-based sequence alignment (local model,
         lazy-loaded); off by default for deterministic cheap runs.
-        use_llm_residual: opt-in the L3 LLM residual channel. Claims left
-        unresolved by L0/L1/L2 (semantic_unresolved/conservative_unresolved)
-        are batched into one cached llm_json call per instance (C1 residual
-        principle: decided claims never enter the LLM); the returned
-        support/refute ClaimResults fuse over the unresolved NIE.
-        Default off for backward compatibility with unit-test fixtures.
-        use_nli_residual: opt-in the L2 NLI residual channel (S4): the same
-        residual claims are judged by the locally EGT-fine-tuned mDeBERTa
-        (pure local inference, no LLM). Mutually exclusive with
-        use_llm_residual, NLI takes precedence (cheap channel first).
-        use_cascade: opt-in the S5 L2→L3 escalation routing (paper C4:
-        the FrugalGPT/RouteLLM cost-quality pattern generalized to
-        heterogeneous verifiers). Implies use_nli_residual +
-        use_llm_residual, replacing the mutually-exclusive dispatch: the
-        cheap local NLI (L2) judges every residual claim; only its refute
-        candidates — the one silver-measured failure mode (refute
-        P=0.368) — are re-checked by the L3 LLM channel (refute P=1.0)
-        in one batched cached call, and the L3 verdict fully replaces the
-        L2 one on that claim. NLI support/NIE verdicts pass through
-        untouched, so the LLM only pays for the pseudo-refutes. An L3
-        call failure keeps the L2 refute verdict — escalation never
-        leaves a run less informed than L2-only.
-        cascade_keep_confidence: conformal-style high-confidence tier —
-        an NLI refute whose softmax probability reaches this threshold is
-        trusted directly without an L3 re-check (saves calls); None
-        (default) escalates every NLI refute.
-        use_learned_router: path to a learned router artifact
-        (srs_verify/router.py, trained by
-        tools/build_router_dataset.py). When the artifact loads, the fixed
-        S5 cascade policy is replaced by a per-instance learned decision
-        made after L1 and before L2: "accept_l1" skips the residual
-        channels, "accept_l2" runs L2 and trusts it without escalation,
-        "call_l2" runs L2 with the fixed refute escalation, "escalate_l3"
-        skips L2 and judges the residual claims directly with the L3 LLM
-        channel. The decision is recorded as a "router_decision:<route>"
-        diagnostic. A load failure degrades to the fixed cascade it
-        replaces (never less informed) and surfaces a
-        "router_load_failed_fallback_cascade" diagnostic.
         nli_model_path: fine-tuned checkpoint (default: MODELS registry's
         egt_finetuned entry, the centralized path config).
         nli_gate: softmax max-probability gate for emitting a verdict
         (below it the claim stays NIE).
-        llm_refute_gate: L3 LLM refute confidence gate — an LLM refute
         whose reported confidence is below this stays NIE (see
-        llm_residual.REFUTE_CONFIDENCE_GATE; default 0.8, backward
-        compatible). Exposed as a constructor parameter so held-out
+                compatible). Exposed as a constructor parameter so held-out
         calibration can sweep it without touching the frozen prompt.
         expert_filter: ablation hook — when set, only the named expert
         sub-channel(s) of _expert_channels run (valid names: "entity",
@@ -360,32 +314,11 @@ class QAConsistencyModule:
         self.use_subtractor = use_subtractor
         self.use_experts = use_experts
         self.use_bge_experts = use_bge_experts
-        self.use_llm_residual = use_llm_residual
         self.use_nli_residual = use_nli_residual
-        self.use_cascade = use_cascade
-        self.cascade_keep_confidence = cascade_keep_confidence
-        if use_cascade:
-            # cascade = smart dispatch over both residual channels (S5):
-            # L2 judges everything, L3 re-checks only L2 refute candidates.
-            self.use_nli_residual = True
-            self.use_llm_residual = True
-        self.router = None
-        self._router_load_error = ""
-        if use_learned_router:
-            # learned router subsumes both residual channels; the fixed
-            # cascade stays as the degradation path on load failure.
-            self.use_nli_residual = True
-            self.use_llm_residual = True
-            try:
-                from srs_verify.router import LearnedRouter
-                self.router = LearnedRouter.load(use_learned_router)
-            except (OSError, ValueError, KeyError, AttributeError,
-                    ImportError, RuntimeError) as exc:
-                self._router_load_error = f"{type(exc).__name__}: {exc}"
-                self.use_cascade = True
+        # LLM cascade removed: pure deterministic+local NLI only
+        # learned router removed
         self.nli_model_path = nli_model_path
         self.nli_gate = nli_gate
-        self.llm_refute_gate = llm_refute_gate
         self.expert_filter = expert_filter
         self.fuse_per_claim = fuse_per_claim
         self.aggregation = aggregation
@@ -465,47 +398,19 @@ class QAConsistencyModule:
                 claim_results = claim_results + tuple(expert_results)
         # Residual channels (C1 residual principle): only claims the
         # deterministic channels left unresolved enter a residual judge.
-        # L2 NLI (local fine-tuned model) takes precedence over L3 LLM —
-        # mutually exclusive, cheap channel first — unless use_cascade
-        # routes the L2 refute candidates up to L3 for a re-check (S5
-        # escalation: support/NIE pass through, refutes are re-judged by
-        # the precise LLM), or a learned router (use_learned_router)
-        # decides the route per instance: accept_l1 (skip residual
-        # judges), accept_l2 (L2, no escalation), call_l2 (L2 + the fixed
-        # escalation), escalate_l3 (L3 directly, L2 skipped). Instances
-        # already carrying a refute are skipped — refute wins aggregation,
-        # so a residual judge cannot change them.
+        # (LLM cascade/router removed — pure L1+L2 NLI)
+
+
+
+
         nli_diag: list[str] = []
-        llm_diag: list[str] = []
-        router_diag: list[str] = []
-        if self._router_load_error:
-            router_diag.append("router_load_failed_fallback_cascade")
         residual = ([r for r in claim_results
                      if r.method in ("semantic_unresolved",
                                      "conservative_unresolved")]
                     if statements
                     and not any(r.verdict == "refute" for r in claim_results)
                     else [])
-        route: str | None = None
-        if residual and self.router is not None:
-            route = self._route_instance(verification_request, claim_results,
-                                         claims, check_items)
-            router_diag.append(f"router_decision:{route}")
-        if residual and route == "escalate_l3":
-            from srs_verify.llm_residual import (
-                verify_residual_claims)
-
-            llm_results = verify_residual_claims(
-                verification_request, residual, statements,
-                refute_gate=self.llm_refute_gate)
-            if llm_results:
-                claim_results = claim_results + tuple(llm_results)
-                if any(r.method == "llm_residual_failed" for r in llm_results):
-                    llm_diag.append("llm_residual_call_failed")
-        elif residual and route == "accept_l1":
-            pass  # the learned router trusts the deterministic channels;
-            # residual claims keep their conservative NIE verdicts.
-        elif residual and self.use_nli_residual:
+        if residual and self.use_nli_residual:
             from srs_verify.nli_residual import (
                 verify_residual_claims_nli)
 
@@ -513,32 +418,11 @@ class QAConsistencyModule:
                 verification_request, residual, statements,
                 model_path=self.nli_model_path, gate=self.nli_gate)
             if nli_results:
-                escalate = (route == "call_l2" if route is not None
-                            else self.use_cascade)
-                if escalate:
-                    nli_results, cascade_diag = self._escalate_nli_refutes(
-                        verification_request, nli_results, statements)
-                    llm_diag.extend(cascade_diag)
+                # cascade escalation removed
                 claim_results = claim_results + tuple(nli_results)
                 if any(r.method == "nli_residual_unavailable"
                        for r in nli_results):
                     nli_diag.append("nli_residual_model_unavailable")
-        elif residual and self.use_llm_residual:
-            from srs_verify.llm_residual import (
-                verify_residual_claims)
-
-            llm_results = verify_residual_claims(
-                verification_request, residual, statements,
-                refute_gate=self.llm_refute_gate)
-            if llm_results:
-                claim_results = claim_results + tuple(llm_results)
-                if any(r.method == "llm_residual_failed" for r in llm_results):
-                    llm_diag.append("llm_residual_call_failed")
-        # per-claim channel fusion: when multiple channels judge the SAME
-        # claim text, a structured expert's decisive verdict (support/refute)
-        # outranks a generic channel's "unresolved" NIE — inability to verify
-        # must not veto a verified verdict on the identical claim.
-        # fuse_per_claim=False (ablation) aggregates the raw channels.
         fused_results = (self._fuse_per_claim(claim_results)
                          if self.fuse_per_claim else claim_results)
         verdict, aggregate_diagnostics = self._aggregate(fused_results)
@@ -546,7 +430,7 @@ class QAConsistencyModule:
         evidence_by_id = {ev.evidence_id: ev for ev in request.evidence}
         cited = sorted({ref for result in fused_results for ref in result.evidence_refs})
         diagnostics = (list(aggregate_diagnostics) + deq_diagnostic
-                       + expert_diag + nli_diag + llm_diag + router_diag)
+                       + expert_diag + nli_diag)
         if not check_items:
             diagnostics.append("no_check_item_candidate")
         if not request.evidence:
@@ -586,74 +470,6 @@ class QAConsistencyModule:
             diagnostics=tuple(diagnostics),
         )
 
-    def _route_instance(self, request: QAInput,
-                        claim_results: tuple[ClaimResult, ...],
-                        claims: list[_AnswerClaim],
-                        check_items: tuple[str, ...]) -> str | None:
-        """Query the learned router with phi(instance) at the decision point.
-
-        The features see exactly the pre-fusion L0/L1 state (per-claim plus
-        expert results) that the residual dispatch below acts on — the same
-        distribution tools/build_router_dataset.py records.
-        """
-        if self.router is None:
-            return None
-        from srs_verify.router import extract_route_features
-
-        features = extract_route_features(
-            question=request.question,
-            answer=request.answer,
-            evidence=request.evidence,
-            claim_results=claim_results,
-            claim_kinds=tuple(claim.kind for claim in claims),
-            check_items=check_items,
-        )
-        return self.router.route(features)
-
-    def _escalate_nli_refutes(
-            self, request: QAInput, nli_results: list[ClaimResult],
-            statements: list) -> tuple[list[ClaimResult], list[str]]:
-        """S5 L2→L3 cascade escalation of the NLI refute candidates.
-
-        FrugalGPT/RouteLLM-style routing over heterogeneous verifiers: the
-        local NLI (cheap, refute precision 0.368 on silver) has already
-        judged every residual claim; its refute candidates — the only
-        silver-measured pain point — are re-checked by the L3 LLM channel
-        (expensive, refute precision 1.0) in one batched cached call, and
-        the L3 verdict fully replaces the L2 one on that claim (including
-        a conservative NIE). NLI support/NIE verdicts pass through
-        untouched. An L3 call failure keeps the L2 refute verdict, so
-        escalation never leaves a run less informed than L2-only. A refute
-        whose NLI probability reaches cascade_keep_confidence is trusted
-        directly without an L3 call (conformal-style high-confidence tier).
-        """
-        refutes = [r for r in nli_results if r.verdict == "refute"]
-        kept = ([r for r in refutes
-                 if r.confidence >= self.cascade_keep_confidence]
-                if self.cascade_keep_confidence is not None else [])
-        keep_ids = {r.claim_id for r in kept}
-        diagnostics = [f"cascade_nli_claims_{len(nli_results)}"]
-        if kept:
-            diagnostics.append(f"cascade_high_confidence_kept_{len(kept)}")
-        if not refutes:
-            diagnostics.append("cascade_llm_calls_0")
-            return nli_results, diagnostics
-        # instance-level escalation: a refute signal escalates the
-        # instance's full residual claim set, not only the flagged claim —
-        # NLI's claim-level refute flag can sit on the wrong claim while
-        # the true contradiction was judged NIE (S1QA-068/074 pattern).
-        escalate = [r for r in nli_results if r.claim_id not in keep_ids]
-        diagnostics.append(f"cascade_llm_calls_{len(escalate)}")
-        from srs_verify.llm_residual import verify_residual_claims
-
-        llm_results = verify_residual_claims(request, escalate, statements,
-                                             refute_gate=self.llm_refute_gate)
-        if any(r.method == "llm_residual_failed" for r in llm_results):
-            diagnostics.append("llm_residual_call_failed")
-        replaced = {r.claim_id: r for r in llm_results
-                    if r.method != "llm_residual_failed"}
-        final = [replaced.get(r.claim_id, r) for r in nli_results]
-        return final, diagnostics
 
     @staticmethod
     def _validate(request: QAInput) -> None:
