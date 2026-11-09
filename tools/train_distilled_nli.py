@@ -50,7 +50,8 @@ DISTILL_DATA = BASE / "data/gjb_438c/distillation/teacher_labels_v1.jsonl"
 
 
 def load_distill_pairs(path: Path, splits: set[str], corpora: set[str],
-                       covered_only: bool) -> list[dict]:
+                       covered_only: bool,
+                       exclude_prefixes: tuple[str, ...] = ()) -> list[dict]:
     """教师标签jsonl → (premise, hypothesis, label)训练对."""
     pairs: list[dict] = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -58,6 +59,9 @@ def load_distill_pairs(path: Path, splits: set[str], corpora: set[str],
             continue
         rec = json.loads(line)
         if rec["split"] not in splits or rec["corpus"] not in corpora:
+            continue
+        if exclude_prefixes and str(rec["instance_id"]).startswith(
+                exclude_prefixes):
             continue
         premise = str(rec.get("premise", "")).strip()
         claim = str(rec.get("claim_text", "")).strip()
@@ -98,17 +102,26 @@ def _bucket_split(pairs: list[dict], dev_frac: float,
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="D1 LLM distillation finetune")
-    parser.add_argument("--teacher-data", type=Path, default=DISTILL_DATA)
+    parser.add_argument("--teacher-data", nargs="+", type=Path,
+                        default=[DISTILL_DATA],
+                        help="教师标签jsonl路径(可多个, E2叠加crossdoc)")
     parser.add_argument("--splits", nargs="*", default=["dev"],
                         help="参与训练的教师标签split(dev=诚实契约)")
     parser.add_argument("--corpora", nargs="*", default=["qa91"])
+    parser.add_argument("--exclude-doc", default="",
+                        help="E2 leave-one-doc-out: 剔除该前缀的实例"
+                             "(如C06=06号文档)")
     parser.add_argument("--covered-only", action="store_true",
                         help="剔除教师引用未覆盖premise的support/refute对")
     parser.add_argument("--egt-replay-mult", type=float, default=2.0,
                         help="EGT回放条数=蒸馏train数×mult")
     parser.add_argument("--oversample-refute", type=int, default=3)
     parser.add_argument("--base", default="egt_finetuned_v2")
+    parser.add_argument("--base-dir", type=Path, default=None,
+                        help="直接基座目录(优先于base; 课程学习第二阶段用)")
     parser.add_argument("--out-key", default="distilled_v1")
+    parser.add_argument("--out-dir", type=Path, default=None,
+                        help="直接输出目录(优先于out-key; E2折模型用)")
     parser.add_argument("--epochs", type=int, default=EPOCHS)
     parser.add_argument("--batch", type=int, default=BATCH)
     parser.add_argument("--lr", type=float, default=LEARNING_RATE)
@@ -126,12 +139,18 @@ def main() -> None:
     use_fp16 = (not args.no_fp16) and torch.cuda.is_available()
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    base_dir = MODELS[args.base]["dir"]
-    out_dir = Path(MODELS[args.out_key]["dir"])
+    base_dir = (args.base_dir if args.base_dir is not None
+                else Path(MODELS[args.base]["dir"]))
+    out_dir = (args.out_dir if args.out_dir is not None
+               else Path(MODELS[args.out_key]["dir"]))
 
     # ── 1. 蒸馏对 (dev split only: 诚实评测契约) ──
-    distill = load_distill_pairs(args.teacher_data, set(args.splits),
-                                 set(args.corpora), args.covered_only)
+    exclude = (args.exclude_doc,) if args.exclude_doc else ()
+    distill: list[dict] = []
+    for teacher_path in args.teacher_data:
+        distill += load_distill_pairs(teacher_path, set(args.splits),
+                                      set(args.corpora), args.covered_only,
+                                      exclude)
     if not distill:
         raise SystemExit("no distillation pairs matched the filters")
     distill_train, distill_dev = _bucket_split(distill, 0.15)
@@ -172,7 +191,8 @@ def main() -> None:
         "n_egt_replay": len(replay),
         "n_train_total": len(train_all),
         "train_label_counts": label_counts,
-        "teacher_data": str(args.teacher_data),
+        "teacher_data": [str(p) for p in args.teacher_data],
+        "exclude_doc": args.exclude_doc,
         "splits": args.splits,
         "corpora": args.corpora,
         "covered_only": args.covered_only,
