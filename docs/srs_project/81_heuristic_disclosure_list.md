@@ -62,6 +62,18 @@
 | llm_cache状态依赖 | L3数字依赖缓存内容 | 写明run版本 |
 | 三个门控数字并存 | 代码默认≠部署值≠dev最优 | 已修复对齐，写明终值 |
 
+## H类：非门控性声明（2026-11-10新增，84号审计）
+
+> 审计动机：阶段表中的"问题路由"易被误读为门控启发式。消融+消费者
+> 追踪（docs/srs_project/84_architecture_audit.md）证明其为追溯标注。
+
+| 项目 | 证据 | 披露要求 |
+|---|---|---|
+| route_question非门控 | 空路由消融：91QA acc/mF1逐位不变，0/91预测差异（tools/ablate_routing.py） | 论文架构图不将路由画为流程阶段；表述为"check-item追溯标注（非门控）" |
+| claim类型分派为软提示 | typed通道各有自检守卫（如verify_numeric对不可解析数值→unresolved→落L2残差），错分不产生错误verdict | 方法节声明"通道自选性：守卫兜底" |
+| 专家全量执行 | 9专家注册表不消费路由输出（CHECK_ITEMS仅作结果标签） | 与"路由门控"误读风险对冲 |
+| 路由→分解唯一耦合 | decompose_claims裸数值主语补全查询PARAM-*路由 | 消融证明91QA零依赖；记录待清理 |
+
 ## G类：D1蒸馏训练期超参数（2026-11-09新增）
 
 > D1 = LLM仲裁蒸馏：GLM-5.3教师（训练期一次性、离线、磁盘缓存）→ 本地NLI残差通道（checkpoint distilled_v1）；推理纯本地零API。训练run: train_distilled_nli_b3838652_20261109_200219；数字登记: data/gjb_438c/distillation/d1_paper_summary_v1.json。
