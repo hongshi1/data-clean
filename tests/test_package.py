@@ -66,7 +66,7 @@ def test_package_imports():
     for name in ("CascadeVerifier", "VerdictResult", "PRESETS", "SCENES",
                  "ClaimResult", "QAInput", "RetrievedEvidence", "SourceRef"):
         assert hasattr(srs_verify, name), f"公共API缺失: {name}"
-    assert set(srs_verify.PRESETS) == {"fast", "standard", "full"}
+    assert set(srs_verify.PRESETS) == {"fast", "standard"}  # M88包内LLM/full已移除
 
 
 def test_equivalence_20_sample_fast():

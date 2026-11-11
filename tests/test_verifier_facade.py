@@ -79,5 +79,5 @@ def test_invalid_preset_scene_rejected():
 
 
 def test_presets_scenes_exported():
-    assert set(PRESETS) == {"fast", "standard"}  # full(LLM)已移除
+    assert set(PRESETS) == {"fast", "standard", "crossdoc"}  # v3: crossdoc档(域自适应)
     assert "srs_scene1" in SCENES

@@ -64,10 +64,15 @@ from algorithms.consistency.rulepack import (
 BASE = Path(__file__).resolve().parents[2]
 
 #: preset名→QAConsistencyModule编排参数(成本/质量档位)
+#: v3(M83)域自适应配置面: standard=域内档(typed分解+strict聚合,
+#: 论文配置distilled_v1@gate0.8经nli_residual默认值生效);
+#: crossdoc=跨文档档(句子切分分解+dominant_70聚合,
+#: refactor_matrix_v1.json实测crossdoc150 0.7361 vs 域内档0.5109)
 PRESETS: dict[str, dict] = {
     "fast": dict(use_experts=True),
     "standard": dict(use_experts=True, use_nli_residual=True),
-
+    "crossdoc": dict(use_experts=True, use_nli_residual=True,
+                     decomposer="sentence", aggregation="dominant_70"),
 }
 
 #: 场景名→(词典路径, 规则包路径), 相对仓库根

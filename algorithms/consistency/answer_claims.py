@@ -172,3 +172,53 @@ def decompose_claims(question: str, answer: str) -> list[AnswerClaim]:
     if not claims:
         claims.append(AnswerClaim("semantic", answer.strip()))
     return claims
+
+
+#: 句子边界: 在。！？；后切分
+_SENTENCE_SPLIT = re.compile(r"(?<=[。！？；])")
+#: 编号列表项起点("1. **X**""3）"…); 负向前瞻排除小数("1.5GHz")
+_NUMBERED_ITEM_START = re.compile(
+    r"^\s*(?:[0-9]{1,3}|[一二三四五六七八九十]{1,3})\s*[．.、，）)](?!\d)")
+
+
+def decompose_claims_sentences(question: str,
+                                answer: str) -> list[AnswerClaim]:
+    """SummaC式域中立分解: 句子/列表项切分, 无typed正则.
+
+    v3的crossdoc档分解器(refactor_matrix_v1.json实测: 句子切分+
+    dominant_70聚合在跨文档场景0.7361 vs typed+strict 0.5109).
+    typed正则(identifier/enum通道)在跨域上是负资产(12个假support),
+    域中立档改用纯句子切分. 编号列表项连同其续行保持一条claim;
+    ``question``仅作签名兼容.
+    """
+    del question
+    claims: list[AnswerClaim] = []
+    lines = answer.split("\n")
+    i = 0
+    while i < len(lines):
+        stripped = lines[i].strip()
+        if not stripped:
+            i += 1
+            continue
+        if _NUMBERED_ITEM_START.match(stripped):
+            block = [stripped]
+            i += 1
+            while i < len(lines):
+                follow = lines[i].strip()
+                if not follow or _NUMBERED_ITEM_START.match(follow):
+                    break
+                block.append(follow)
+                i += 1
+            claims.append(AnswerClaim(kind="semantic",
+                                      text=" ".join(block)))
+            continue
+        for sentence in _SENTENCE_SPLIT.split(stripped):
+            text = sentence.strip()
+            if text:
+                claims.append(AnswerClaim(kind="semantic", text=text))
+        i += 1
+    if not claims:
+        text = " ".join(answer.split())
+        if text:
+            claims.append(AnswerClaim(kind="semantic", text=text))
+    return claims

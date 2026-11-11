@@ -41,10 +41,12 @@ RESIDUAL_METHODS = ("semantic_unresolved", "conservative_unresolved")
 VERDICTS = ("support", "refute", "not_in_evidence")
 
 NLI_TO_VERDICT = {"entailment": "support", "contradiction": "refute",
-                  "neutral": "not_in_evidence"}
+                   "neutral": "not_in_evidence"}
 
-DEFAULT_GATE = 0.7
-DEFAULT_MODEL_KEY = "egt_finetuned_v2"
+#: v3(M83)对齐论文部署配置: distilled_v1(D1蒸馏)@gate0.8
+#: (与M64门控对齐同一原则: 代码默认=部署值, 评测脚本显式传参不受影响)
+DEFAULT_GATE = 0.8
+DEFAULT_MODEL_KEY = "distilled_v1"
 _MAX_LENGTH = 512
 _BATCH_GPU = 16
 _BATCH_CPU = 8

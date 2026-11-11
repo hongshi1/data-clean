@@ -24,6 +24,7 @@ from dataclasses import dataclass
 from algorithms.consistency.answer_claims import AnswerClaim as _AnswerClaim
 from algorithms.consistency.answer_claims import (
     decompose_claims,
+    decompose_claims_sentences,
 )
 from algorithms.consistency.answer_claims import (
     extract_numeric_claims as _extract_numeric_claims,
@@ -257,6 +258,7 @@ class QAConsistencyModule:
                  nli_gate: float = 0.7,
                  expert_filter: tuple[str, ...] | None = None,
                  fuse_per_claim: bool = True,
+                 decomposer: str = "typed",
                  aggregation: str = "strict") -> None:
         """semantic_nli: optional callable predict(pairs)->NLI labels for the
         residual semantic channel. Thresholds are calibrated on dev splits.
@@ -304,11 +306,24 @@ class QAConsistencyModule:
         效果性/总结性 fragments (see _MINOR_CLAIM_MARKERS) cannot veto;
         a claim set with no core claims falls back to the strict rule.
         Refute wins in every variant. Default "strict" keeps every
-        existing configuration and paper number untouched."""
+        existing configuration and paper number untouched.
+        decomposer: answer分解器选择 (v3域自适应配置面). "typed"
+        (default, 向后兼容) = answer_claims.decompose_claims的正则
+        typed提取(numeric/enum/identifier/quoted+回退链, GJB域文法
+        前端, 域内有真实增益但typed通道跨域为负资产);
+        "sentence" = decompose_claims_sentences纯句子/列表项切分
+        (SummaC式域中立分解, refactor_matrix_v1.json实测跨文档档
+        配dominant_70聚合最优)."""
         if aggregation not in AGGREGATION_VARIANTS:
             raise ValueError(
                 f"aggregation must be one of {AGGREGATION_VARIANTS}, "
                 f"got {aggregation!r}")
+        if decomposer not in ("typed", "sentence"):
+            raise ValueError(
+                f"decomposer must be 'typed' or 'sentence', "
+                f"got {decomposer!r}")
+        self._decomposer = (decompose_claims if decomposer == "typed"
+                            else decompose_claims_sentences)
         self.semantic_nli = semantic_nli
         self.nli_contra_threshold = nli_contra_threshold
         self.nli_entail_threshold = nli_entail_threshold
@@ -493,8 +508,8 @@ class QAConsistencyModule:
             raise ValueError("every evidence item must carry a document source_ref")
 
     def _decompose(self, question: str, answer: str) -> list[_AnswerClaim]:
-        """Answer decomposition (thin delegate to answer_claims)."""
-        return decompose_claims(question, answer)
+        """Answer decomposition (typed or sentence decomposer)."""
+        return self._decomposer(question, answer)
 
     def _verify_claim(self, request: QAInput, claim: _AnswerClaim,
                       index: int, check_items: tuple[str, ...],
