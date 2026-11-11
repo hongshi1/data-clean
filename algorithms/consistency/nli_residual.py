@@ -58,18 +58,23 @@ _MODEL_CACHE: dict[str, dict[str, Any]] = {}
 
 
 def _load_model(model_path: str) -> dict[str, Any]:
-    """惰性加载微调checkpoint (模块级缓存; 失败显式记录, 不静默)."""
+    """惰性加载微调checkpoint (模块级缓存; 失败显式记录, 不静默).
+
+    GPU上以fp16加载(实测2.10x加速, 91QA 355对claim级verdict漂移
+    0/355, tools/nli_accel_experiments.py); CPU保持fp32.
+    """
+    entry: dict[str, Any] = {"mode": "unavailable", "error": ""}
     if model_path in _MODEL_CACHE:
         return _MODEL_CACHE[model_path]
-    entry: dict[str, Any] = {"mode": "unavailable", "error": ""}
     try:
         import torch
         from transformers import (AutoModelForSequenceClassification,
                                   AutoTokenizer)
         device = "cuda" if torch.cuda.is_available() else "cpu"
+        dtype = (torch.float16 if device == "cuda" else torch.float32)
         tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
         model = AutoModelForSequenceClassification.from_pretrained(
-            model_path, local_files_only=True)
+            model_path, local_files_only=True, torch_dtype=dtype)
         model.to(device)
         model.eval()
         entry = {
@@ -89,9 +94,12 @@ def _load_model(model_path: str) -> dict[str, Any]:
 
 def _infer(entry: dict[str, Any], pairs: list[tuple[str, str]]
            ) -> list[dict[str, float]]:
-    """批量 (premise, hypothesis) → 归一化三标签概率."""
+    """批量 (premise, hypothesis) → 归一化三标签概率.
+
+    fp16模型: logits先cast fp32再softmax(数值稳定, gate=0.8边界敏感).
+    """
     torch = entry["torch"]
-    batch = _BATCH_GPU if entry["mode"] == "gpu" else _BATCH_CPU
+    batch = _BATCH_GPU if entry["mode"] == "cuda" else _BATCH_CPU
     out: list[dict[str, float]] = []
     for start in range(0, len(pairs), batch):
         chunk = pairs[start:start + batch]
@@ -102,7 +110,7 @@ def _infer(entry: dict[str, Any], pairs: list[tuple[str, str]]
         enc = {k: v.to(entry["mode"]) for k, v in enc.items()}
         with torch.no_grad():
             logits = entry["model"](**enc).logits
-            probs = torch.softmax(logits, dim=-1).float().cpu().tolist()
+            probs = torch.softmax(logits.float(), dim=-1).cpu().tolist()
         for row in probs:
             named = {"entailment": 0.0, "neutral": 0.0, "contradiction": 0.0}
             for idx, prob in enumerate(row):
