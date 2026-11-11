@@ -46,6 +46,13 @@ from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
 TIMES: dict[str, float] = defaultdict(float)
 COUNTS: dict[str, int] = defaultdict(int)
 
+#: 四层架构(M73修正版)的阶段→层映射; 5a/5b是③的子项(非独立层)
+LAYERS = (
+    "①输入规约层",
+    "②全量检测层",
+    "③残差裁决层",
+    "④融合聚合层",
+)
 STAGES = (
     "1_路由与claim分解",
     "2_证据线性化",
@@ -57,6 +64,15 @@ STAGES = (
     "6_融合",
     "6_聚合",
 )
+LAYER_OF_STAGE = {
+    "1_路由与claim分解": "①输入规约层",
+    "2_证据线性化": "①输入规约层",
+    "3_per-claim通道": "②全量检测层",
+    "4_L0NER与L1专家": "②全量检测层",
+    "5_L2NLI残差": "③残差裁决层",
+    "6_融合": "④融合聚合层",
+    "6_聚合": "④融合聚合层",
+}
 
 
 def timed(stage: str, fn):
@@ -129,9 +145,10 @@ def profile_corpus(module: QAConsistencyModule,
                 + ms["3_per-claim通道"] + ms["4_L0NER与L1专家"]
                 + ms["5_L2NLI残差"] + ms["6_融合"] + ms["6_聚合"])
     other_ms = max(0.0, total * 1000 - additive)
-    stage_ms = {k: round(v, 1) for k, v in ms.items() if k not in (
-        "5a_NLI_premise构造", "5b_NLI_模型推理")}
-    stage_ms["7_其他开销"] = round(other_ms, 1)
+    layer_ms = {layer: sum(ms[stage] for stage in STAGES
+                           if LAYER_OF_STAGE.get(stage) == layer)
+                for layer in LAYERS}
+    layer_ms["其他开销"] = other_ms
     return {
         "n": len(records),
         "total_s": round(total, 2),
@@ -139,9 +156,11 @@ def profile_corpus(module: QAConsistencyModule,
         "median_ms": round(statistics.median(per_instance) * 1000, 1),
         "p95_ms": round(sorted(per_instance)[
             min(int(len(per_instance) * 0.95), len(per_instance) - 1)] * 1000, 1),
-        "stage_total_ms": stage_ms,
-        "stage_mean_ms": {k: round(v / len(records), 2)
-                          for k, v in stage_ms.items()},
+        "layer_total_ms": {k: round(v, 1) for k, v in layer_ms.items()},
+        "layer_mean_ms": {k: round(v / len(records), 2)
+                          for k, v in layer_ms.items()},
+        "stage_total_ms": {k: round(v, 1) for k, v in ms.items()},
+        "stage_mean_ms": {k: round(v / len(records), 2) for k, v in ms.items()},
         "nli_breakdown_ms": {
             "premise": round(ms["5a_NLI_premise构造"], 1),
             "model_infer": round(ms["5b_NLI_模型推理"], 1),
@@ -184,26 +203,40 @@ def main() -> None:
               f"mean={r['mean_ms_per_instance']}ms/例 "
               f"(median {r['median_ms']} p95 {r['p95_ms']})")
 
-    # ── markdown table: stage × corpus (mean ms/instance) ──
-    stage_keys = ["1_路由与claim分解", "2_证据线性化", "3_per-claim通道",
-                  "4_L0NER与L1专家", "5_L2NLI残差", "6_融合", "6_聚合",
-                  "7_其他开销"]
+    # ── markdown table: layer × corpus (mean ms/instance + total) ──
+    layer_keys = list(LAYERS) + ["其他开销"]
     names = list(corpora)
-    header = "| 阶段 | " + " | ".join(
-        f"{n} (ms/例)" for n in names) + " | 占比* |"
-    sep = "|------|" + "---|" * (len(names) + 1)
+    header = ("| 层 | " + " | ".join(
+        f"{n} (ms/例)" for n in names)
+        + " | " + " | ".join(f"{n} 整集(s)" for n in names) + " | 占比* |")
+    sep = "|------|" + "---|" * (len(names) * 2 + 1)
     print("\n" + header)
     print(sep)
+    for layer in layer_keys:
+        cells = [f"{results[n]['layer_mean_ms'][layer]:.2f}"
+                 for n in names]
+        totals = [f"{results[n]['layer_total_ms'][layer] / 1000:.2f}"
+                  for n in names]
+        share = (results['qa91']['layer_total_ms'][layer]
+                 / max(1e-9, sum(results['qa91']['layer_total_ms'].values()))
+                 * 100)
+        print(f"| {layer} | " + " | ".join(cells) + " | "
+              + " | ".join(totals) + f" | {share:.1f}% |")
+    row_total = [f"**{results[n]['mean_ms_per_instance']:.1f}**"
+                 for n in names]
+    row_seconds = [f"**{results[n]['total_s']:.2f}**" for n in names]
+    print("| **总计/例** | " + " | ".join(row_total) + " | "
+          + " | ".join(row_seconds) + " | 100% |")
+    print("*占比按qa91列计算\n")
+
+    # 子阶段明细(层内部构成)
+    stage_keys = ["1_路由与claim分解", "2_证据线性化", "3_per-claim通道",
+                  "4_L0NER与L1专家", "5_L2NLI残差", "6_融合", "6_聚合"]
+    print("子阶段明细(ms/例):")
     for stage in stage_keys:
         cells = [f"{results[n]['stage_mean_ms'][stage]:.2f}"
                  for n in names]
-        share = (results['qa91']['stage_total_ms'][stage]
-                 / max(1e-9, sum(results['qa91']['stage_total_ms'].values()))
-                 * 100)
-        print(f"| {stage} | " + " | ".join(cells) + f" | {share:.1f}% |")
-    totals = [f"**{results[n]['mean_ms_per_instance']:.1f}**" for n in names]
-    print("| **总计** | " + " | ".join(totals) + " | 100% |")
-    print("*占比按qa91列计算\n")
+        print(f"  {stage:16s} " + " | ".join(cells))
 
     for name in names:
         r = results[name]
