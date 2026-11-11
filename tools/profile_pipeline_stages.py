@@ -46,32 +46,35 @@ from algorithms.consistency.qa_module import QAConsistencyModule  # noqa: E402
 TIMES: dict[str, float] = defaultdict(float)
 COUNTS: dict[str, int] = defaultdict(int)
 
-#: 四层架构(M73修正版)的阶段→层映射; 5a/5b是③的子项(非独立层)
+#: 校验层命名(用户口径): 输入构造→L0 NER→L1规则→L2 NLI→融合聚合
+#: 6a/6b是L2的子项(非独立层)
 LAYERS = (
-    "①输入规约层",
-    "②全量检测层",
-    "③残差裁决层",
-    "④融合聚合层",
+    "L0_NER层校验",
+    "L1_规则层校验",
+    "L2_NLI判定",
+    "融合聚合",
 )
 STAGES = (
     "1_路由与claim分解",
     "2_证据线性化",
     "3_per-claim通道",
-    "4_L0NER与L1专家",
-    "5_L2NLI残差",
-    "5a_NLI_premise构造",
-    "5b_NLI_模型推理",
-    "6_融合",
-    "6_聚合",
+    "4_L0_NER",
+    "5_L1_规则",
+    "6_L2_NLI",
+    "6a_NLI_premise构造",
+    "6b_NLI_模型推理",
+    "7_融合",
+    "7_聚合",
 )
 LAYER_OF_STAGE = {
-    "1_路由与claim分解": "①输入规约层",
-    "2_证据线性化": "①输入规约层",
-    "3_per-claim通道": "②全量检测层",
-    "4_L0NER与L1专家": "②全量检测层",
-    "5_L2NLI残差": "③残差裁决层",
-    "6_融合": "④融合聚合层",
-    "6_聚合": "④融合聚合层",
+    "1_路由与claim分解": "输入构造",
+    "2_证据线性化": "输入构造",
+    "3_per-claim通道": "L1_规则层校验",
+    "4_L0_NER": "L0_NER层校验",
+    "5_L1_规则": "L1_规则层校验",
+    "6_L2_NLI": "L2_NLI判定",
+    "7_融合": "融合聚合",
+    "7_聚合": "融合聚合",
 }
 
 
@@ -97,19 +100,33 @@ def install_probes() -> None:
                                         qa_module.linearize_context)
     QAConsistencyModule._verify_claim = timed(
         "3_per-claim通道", QAConsistencyModule._verify_claim)
-    QAConsistencyModule._expert_channels = timed(
-        "4_L0NER与L1专家", QAConsistencyModule._expert_channels)
+    # 专家注册表按L0(NER)/L1(规则)分组计时: entity→L0, 其余→L1
+    original_registry = qa_module._expert_registry
+
+    def grouped_registry(use_bge: bool):
+        specs = original_registry(use_bge)
+        wrapped = []
+        for spec in specs:
+            layer = "4_L0_NER" if spec.name == "entity" else "5_L1_规则"
+            wrapped.append(qa_module.ExpertSpec(
+                name=spec.name,
+                runner=timed(layer, spec.runner),
+                takes_claims=spec.takes_claims,
+                takes_bge=spec.takes_bge))
+        return tuple(wrapped)
+
+    qa_module._expert_registry = grouped_registry
     nli_residual.verify_residual_claims_nli = timed(
-        "5_L2NLI残差", nli_residual.verify_residual_claims_nli)
+        "6_L2_NLI", nli_residual.verify_residual_claims_nli)
     nli_residual.residual_premise = timed(
-        "5a_NLI_premise构造", nli_residual.residual_premise)
-    nli_residual._infer = timed("5b_NLI_模型推理", nli_residual._infer)
+        "6a_NLI_premise构造", nli_residual.residual_premise)
+    nli_residual._infer = timed("6b_NLI_模型推理", nli_residual._infer)
     # _fuse_per_claim是staticmethod: 包装后须以staticmethod挂回类,
     # 否则实例访问会把self绑定为首参
     QAConsistencyModule._fuse_per_claim = staticmethod(timed(
-        "6_融合", QAConsistencyModule._fuse_per_claim))
+        "7_融合", QAConsistencyModule._fuse_per_claim))
     QAConsistencyModule._aggregate = timed(
-        "6_聚合", QAConsistencyModule._aggregate)
+        "7_聚合", QAConsistencyModule._aggregate)
 
 
 def load_corpora() -> dict[str, list[dict]]:
@@ -142,12 +159,13 @@ def profile_corpus(module: QAConsistencyModule,
     total = sum(per_instance)
     ms = {stage: TIMES.get(stage, 0.0) * 1000 for stage in STAGES}
     additive = (ms["1_路由与claim分解"] + ms["2_证据线性化"]
-                + ms["3_per-claim通道"] + ms["4_L0NER与L1专家"]
-                + ms["5_L2NLI残差"] + ms["6_融合"] + ms["6_聚合"])
+                + ms["3_per-claim通道"] + ms["4_L0_NER"]
+                + ms["5_L1_规则"] + ms["6_L2_NLI"]
+                + ms["7_融合"] + ms["7_聚合"])
     other_ms = max(0.0, total * 1000 - additive)
     layer_ms = {layer: sum(ms[stage] for stage in STAGES
                            if LAYER_OF_STAGE.get(stage) == layer)
-                for layer in LAYERS}
+                for layer in ("输入构造",) + LAYERS}
     layer_ms["其他开销"] = other_ms
     return {
         "n": len(records),
@@ -162,10 +180,10 @@ def profile_corpus(module: QAConsistencyModule,
         "stage_total_ms": {k: round(v, 1) for k, v in ms.items()},
         "stage_mean_ms": {k: round(v / len(records), 2) for k, v in ms.items()},
         "nli_breakdown_ms": {
-            "premise": round(ms["5a_NLI_premise构造"], 1),
-            "model_infer": round(ms["5b_NLI_模型推理"], 1),
+            "premise": round(ms["6a_NLI_premise构造"], 1),
+            "model_infer": round(ms["6b_NLI_模型推理"], 1),
         },
-        "nli_calls": COUNTS.get("5_L2NLI残差", 0),
+        "nli_calls": COUNTS.get("6_L2_NLI", 0),
         "claim_verifies": COUNTS.get("3_per-claim通道", 0),
     }
 
@@ -204,7 +222,7 @@ def main() -> None:
               f"(median {r['median_ms']} p95 {r['p95_ms']})")
 
     # ── markdown table: layer × corpus (mean ms/instance + total) ──
-    layer_keys = list(LAYERS) + ["其他开销"]
+    layer_keys = ["输入构造", *LAYERS, "其他开销"]
     names = list(corpora)
     header = ("| 层 | " + " | ".join(
         f"{n} (ms/例)" for n in names)
@@ -231,7 +249,7 @@ def main() -> None:
 
     # 子阶段明细(层内部构成)
     stage_keys = ["1_路由与claim分解", "2_证据线性化", "3_per-claim通道",
-                  "4_L0NER与L1专家", "5_L2NLI残差", "6_融合", "6_聚合"]
+                  "4_L0_NER", "5_L1_规则", "6_L2_NLI", "7_融合", "7_聚合"]
     print("子阶段明细(ms/例):")
     for stage in stage_keys:
         cells = [f"{results[n]['stage_mean_ms'][stage]:.2f}"
