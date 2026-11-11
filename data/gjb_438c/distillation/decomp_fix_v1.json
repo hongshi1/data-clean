@@ -1,0 +1,791 @@
+{
+ "experiment": "decomp_fix_v1: typed claim decomposition v1 (A) vs v2 colon-split/framework-filter/subject-inheritance/enum-downgrade (C)",
+ "recorded": "2026-11-11T17:33:09",
+ "git_sha": "56fcce7d95a4",
+ "config": {
+  "module": "QAConsistencyModule(use_experts=True, use_nli_residual=True)",
+  "nli_model_path": "models/nli/distilled_v1",
+  "nli_gate": 0.8,
+  "aggregation": "strict"
+ },
+ "fix_rules": {
+  "colon_split": "semantic claim '题名：描述' (title 2-10 chars, description >=8 chars) -> two semantic claims",
+  "framework_filter": "claim matching (以下|如下)(特点|操作|功能|几类|要求|参数|步骤|内容|方面) and len<30 dropped",
+  "subject_inheritance": "verb-initial description claim inherits colon title as attr",
+  "enum_open_list_downgrade": "enum claim containing 如 or 包括但不限于 -> kind=semantic"
+ },
+ "isolation_note": "L0/L1 experts use answer_structure.decompose_answer (unpatched); only the per-claim typed channel is changed; attr (fix 3) is inert under this config (semantic judge path inactive), so C differs from A through fixes 1/2/4 only",
+ "datasets": {
+  "test46": 46,
+  "violations17": 17,
+  "crossdoc150": 150
+ },
+ "device": {
+  "torch_cuda_available": true
+ },
+ "nli_cache_mode": "cuda",
+ "baseline_reproduced": true,
+ "known_a_baseline": {
+  "test46": {
+   "accuracy": 0.913,
+   "macro_f1": 0.8047
+  },
+  "violations17": {
+   "accuracy": 0.9412,
+   "macro_f1": 0.3232
+  },
+  "crossdoc150": {
+   "accuracy": 0.5133,
+   "macro_f1": 0.5109
+  }
+ },
+ "fix_triggers": {
+  "test46": {
+   "answers_touched": 27,
+   "colon_splits": 76,
+   "framework_drops": 8,
+   "enum_open_list_downgrades": 2
+  },
+  "violations17": {
+   "answers_touched": 0,
+   "colon_splits": 0,
+   "framework_drops": 0,
+   "enum_open_list_downgrades": 0
+  },
+  "crossdoc150": {
+   "answers_touched": 0,
+   "colon_splits": 0,
+   "framework_drops": 0,
+   "enum_open_list_downgrades": 0
+  }
+ },
+ "variants": {
+  "A_typed": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.8047,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.6667,
+       "f1": 0.6667
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.973,
+       "recall": 0.9231,
+       "f1": 0.9474
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 1,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 225,
+     "claims_per_instance": 4.89,
+     "claim_len_avg": 31.3,
+     "claim_len_max": 134,
+     "kind_distribution": {
+      "enum": 8,
+      "identifier": 17,
+      "numeric": 2,
+      "semantic": 198
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    }
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 17,
+     "claims_per_instance": 1.0,
+     "claim_len_avg": 25.0,
+     "claim_len_max": 73,
+     "kind_distribution": {
+      "enum": 4,
+      "identifier": 5,
+      "semantic": 8
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.5133,
+     "macro_f1": 0.5109,
+     "per_class": {
+      "support": {
+       "precision": 0.4211,
+       "recall": 0.32,
+       "f1": 0.3636
+      },
+      "refute": {
+       "precision": 0.725,
+       "recall": 0.58,
+       "f1": 0.6444
+      },
+      "not_in_evidence": {
+       "precision": 0.4444,
+       "recall": 0.64,
+       "f1": 0.5246
+      }
+     },
+     "confusion": {
+      "support|support": 16,
+      "support|refute": 12,
+      "support|not_in_evidence": 10,
+      "refute|support": 3,
+      "refute|refute": 29,
+      "refute|not_in_evidence": 8,
+      "not_in_evidence|support": 31,
+      "not_in_evidence|refute": 9,
+      "not_in_evidence|not_in_evidence": 32
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 207,
+     "claims_per_instance": 1.38,
+     "claim_len_avg": 23.6,
+     "claim_len_max": 51,
+     "kind_distribution": {
+      "identifier": 55,
+      "numeric": 6,
+      "semantic": 146
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "refute",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "support",
+     "C05QA-007": "support",
+     "C05QA-008": "support",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "support",
+     "C05QA-017": "support",
+     "C05QA-018": "support",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "refute",
+     "C05QA-026": "support",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "support",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "support",
+     "C06QA-005": "support",
+     "C06QA-006": "support",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "support",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "refute",
+     "C06QA-014": "refute",
+     "C06QA-015": "refute",
+     "C06QA-016": "support",
+     "C06QA-017": "support",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "not_in_evidence",
+     "C06QA-025": "refute",
+     "C06QA-026": "support",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "not_in_evidence",
+     "C06QA-029": "support",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "refute",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "support",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "support",
+     "C07QA-018": "refute",
+     "C07QA-019": "support",
+     "C07QA-020": "support",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "support",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "support",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "support",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "support",
+     "C08QA-007": "support",
+     "C08QA-008": "support",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "support",
+     "C08QA-017": "support",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "refute",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "support",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "not_in_evidence",
+     "C08QA-029": "support",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "support",
+     "C10QA-006": "support",
+     "C10QA-007": "support",
+     "C10QA-008": "support",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "support",
+     "C10QA-018": "support",
+     "C10QA-019": "not_in_evidence",
+     "C10QA-020": "not_in_evidence",
+     "C10QA-021": "not_in_evidence",
+     "C10QA-022": "not_in_evidence",
+     "C10QA-023": "not_in_evidence",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "support",
+     "C10QA-028": "not_in_evidence",
+     "C10QA-029": "support",
+     "C10QA-030": "not_in_evidence"
+    }
+   }
+  },
+  "C_fix": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.8913,
+     "macro_f1": 0.7117,
+     "per_class": {
+      "support": {
+       "precision": 0.5,
+       "recall": 0.3333,
+       "f1": 0.4
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.9474,
+       "recall": 0.9231,
+       "f1": 0.9351
+      }
+     },
+     "confusion": {
+      "support|support": 1,
+      "support|not_in_evidence": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 2,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 293,
+     "claims_per_instance": 6.37,
+     "claim_len_avg": 23.3,
+     "claim_len_max": 125,
+     "kind_distribution": {
+      "enum": 6,
+      "identifier": 17,
+      "numeric": 2,
+      "semantic": 268
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    }
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 17,
+     "claims_per_instance": 1.0,
+     "claim_len_avg": 25.0,
+     "claim_len_max": 73,
+     "kind_distribution": {
+      "enum": 4,
+      "identifier": 5,
+      "semantic": 8
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.5133,
+     "macro_f1": 0.5109,
+     "per_class": {
+      "support": {
+       "precision": 0.4211,
+       "recall": 0.32,
+       "f1": 0.3636
+      },
+      "refute": {
+       "precision": 0.725,
+       "recall": 0.58,
+       "f1": 0.6444
+      },
+      "not_in_evidence": {
+       "precision": 0.4444,
+       "recall": 0.64,
+       "f1": 0.5246
+      }
+     },
+     "confusion": {
+      "support|support": 16,
+      "support|refute": 12,
+      "support|not_in_evidence": 10,
+      "refute|support": 3,
+      "refute|refute": 29,
+      "refute|not_in_evidence": 8,
+      "not_in_evidence|support": 31,
+      "not_in_evidence|refute": 9,
+      "not_in_evidence|not_in_evidence": 32
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 207,
+     "claims_per_instance": 1.38,
+     "claim_len_avg": 23.6,
+     "claim_len_max": 51,
+     "kind_distribution": {
+      "identifier": 55,
+      "numeric": 6,
+      "semantic": 146
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "refute",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "support",
+     "C05QA-007": "support",
+     "C05QA-008": "support",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "support",
+     "C05QA-017": "support",
+     "C05QA-018": "support",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "refute",
+     "C05QA-026": "support",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "support",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "support",
+     "C06QA-005": "support",
+     "C06QA-006": "support",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "support",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "refute",
+     "C06QA-014": "refute",
+     "C06QA-015": "refute",
+     "C06QA-016": "support",
+     "C06QA-017": "support",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "not_in_evidence",
+     "C06QA-025": "refute",
+     "C06QA-026": "support",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "not_in_evidence",
+     "C06QA-029": "support",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "refute",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "support",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "support",
+     "C07QA-018": "refute",
+     "C07QA-019": "support",
+     "C07QA-020": "support",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "support",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "support",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "support",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "support",
+     "C08QA-007": "support",
+     "C08QA-008": "support",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "support",
+     "C08QA-017": "support",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "refute",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "support",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "not_in_evidence",
+     "C08QA-029": "support",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "support",
+     "C10QA-006": "support",
+     "C10QA-007": "support",
+     "C10QA-008": "support",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "support",
+     "C10QA-018": "support",
+     "C10QA-019": "not_in_evidence",
+     "C10QA-020": "not_in_evidence",
+     "C10QA-021": "not_in_evidence",
+     "C10QA-022": "not_in_evidence",
+     "C10QA-023": "not_in_evidence",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "support",
+     "C10QA-028": "not_in_evidence",
+     "C10QA-029": "support",
+     "C10QA-030": "not_in_evidence"
+    }
+   }
+  }
+ },
+ "flips_a_to_c": {
+  "test46": {
+   "n_changed": 1,
+   "corrected_a_wrong_c_right": [],
+   "regressed_a_right_c_wrong": [
+    {
+     "instance_id": "S1QA-006",
+     "a": "support",
+     "c": "not_in_evidence",
+     "gold": "support"
+    }
+   ],
+   "moved_both_wrong": []
+  },
+  "violations17": {
+   "n_changed": 0,
+   "corrected_a_wrong_c_right": [],
+   "regressed_a_right_c_wrong": [],
+   "moved_both_wrong": []
+  },
+  "crossdoc150": {
+   "n_changed": 0,
+   "corrected_a_wrong_c_right": [],
+   "regressed_a_right_c_wrong": [],
+   "moved_both_wrong": []
+  }
+ }
+}
