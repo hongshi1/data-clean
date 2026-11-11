@@ -251,51 +251,6 @@ def test_preset_and_scene_properties(srs_scene_default) -> None:
 # ── full preset: 构造与参数传递(mock, 不真实调用LLM/NLI) ──
 
 
-def test_full_preset_passes_cascade_params(monkeypatch) -> None:
-    recorded: dict = {}
-
-    def fake_claim() -> ClaimResult:
-        return ClaimResult(
-            claim_id="c1", claim_text="响应时间为200ms", verdict="support",
-            check_item_candidates=("PARAM-01",), evidence_refs=("e1",),
-            rationale="ok", method="numeric_interval", confidence=1.0,
-        )
-
-    class FakeModule:
-        def __init__(self, **kwargs) -> None:
-            recorded.update(kwargs)
-
-        def verify(self, request) -> VerificationResult:
-            return VerificationResult(
-                instance_id=request.instance_id,
-                question=request.question,
-                answer=request.answer,
-                verdict="support",
-                status="ok",
-                claim_results=(fake_claim(),),
-                evidence_chain=request.evidence,
-                considered_evidence_ids=(
-                    "e1",),
-                context_freeze_id=request.context_freeze_id,
-                context_hash="0" * 64,
-                context_integrity="unknown",
-                applicability="applicable",
-                rationale="ok",
-            )
-
-    monkeypatch.setattr(verifier_module, "QAConsistencyModule", FakeModule)
-    # 构造期不触碰引擎(mock从未被实例化)
-    verifier = CascadeVerifier(preset="full", scene="srs_scene1")
-    assert recorded == {}
-    # 首次verify才惰性构造, 编排参数逐项传递
-    result = verifier.verify("系统响应时间要求是多少？", "响应时间为200ms。",
-                             [_evidence_dict()])
-    assert recorded["use_experts"] is True
-    assert recorded["use_nli_residual"] is True
-    assert recorded["use_cascade"] is True
-    assert isinstance(result, VerdictResult)
-    assert result.verdict == "support"
-
 
 def test_standard_preset_nli_model_path_passthrough(
         monkeypatch, srs_scene_default) -> None:

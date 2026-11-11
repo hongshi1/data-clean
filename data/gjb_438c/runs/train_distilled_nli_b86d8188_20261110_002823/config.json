@@ -1,0 +1,40 @@
+{
+ "script": "train_distilled_nli",
+ "git_sha": "8bc67a9e",
+ "config": {
+  "n_distill_total": 179,
+  "n_distill_train": 160,
+  "n_distill_dev": 19,
+  "n_oversampled_train": 178,
+  "n_egt_replay": 320,
+  "n_train_total": 498,
+  "train_label_counts": {
+   "neutral": 203,
+   "entailment": 166,
+   "contradiction": 129
+  },
+  "teacher_data": [
+   "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\distillation\\teacher_labels_v1.jsonl"
+  ],
+  "exclude_doc": "",
+  "splits": [
+   "dev"
+  ],
+  "corpora": [
+   "qa91"
+  ],
+  "covered_only": false,
+  "oversample_refute": 3,
+  "egt_replay_mult": 2.0,
+  "base_model": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\distilled_e2a_loo_C10",
+  "epochs": 4,
+  "batch": 16,
+  "lr": 1e-05,
+  "seed": 42,
+  "fp16": true,
+  "device": "cuda",
+  "output": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\distilled_e2b_loo_C10"
+ },
+ "config_hash": "b86d8188",
+ "opened_at": 1794241703.5
+}

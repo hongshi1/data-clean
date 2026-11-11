@@ -1,0 +1,569 @@
+{
+  "schema": "performance_benchmark_v1",
+  "generated_at": "2026-11-10T01:54:22",
+  "git_sha": "98af9fa6",
+  "environment": {
+    "python": "3.12.10",
+    "torch": "2.11.0+cu128",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 4060",
+    "cpu_count": 28,
+    "ram_total_mb": 34031.2,
+    "rss_start_mb": 528.9,
+    "rss_end_mb": 3438.2
+  },
+  "methodology": {
+    "timing": "time.perf_counter (in-process) / subprocess wall + psutil peak-RSS polling @50ms (tools)",
+    "pipeline_runs": "each build tool executed once at full scale with --output redirected to a temp dir (repo assets untouched; outputs deterministic so timing is representative)",
+    "bge_cache": "all BGE measurements use BgeLocal(cache_path=None, use_cache=False) - full model inference, shared disk cache untouched",
+    "recall_corpus": "structured_corpus_v1/tables.jsonl: 1207 tables -> 11539 units (10447 data rows serialized 'cell | cell | ...' + table titles)",
+    "verifier_dataset": "91 frozen QA instances (qa_frozen/scene1_qa_frozen_v1.jsonl)",
+    "components_process": "single process, GPU (RTX 4060 8GB), torch 2.11.0+cu128"
+  },
+  "pipeline_steps": {
+    "srs_mineru_parse_L2": {
+      "script": "tools/srs_mineru_parse.py",
+      "stage": "L2 content_list->structured JSON (L1 MinerU engine ran offline; not re-runnable locally, excluded)",
+      "wall_ms": 614.8,
+      "compute_ms": 534.0,
+      "objects": 16,
+      "content_blocks": 5423,
+      "throughput_docs_per_s": 26.02,
+      "throughput_blocks_per_s": 10155.4
+    },
+    "build_structured_corpus": {
+      "script": "tools/build_structured_corpus.py",
+      "wall_ms": 3281.1,
+      "compute_ms_est": 3259.9,
+      "peak_rss_mb": 106.7,
+      "objects_docs": 16,
+      "output_rows": 38343,
+      "throughput_rows_per_s": 11686.0
+    },
+    "build_feature_matrix_v1": {
+      "script": "tools/build_feature_matrix.py",
+      "wall_ms": 1623.8,
+      "compute_ms_est": 1602.6,
+      "peak_rss_mb": 175.2,
+      "output_rows": 37408,
+      "throughput_rows_per_s": 23037.0
+    },
+    "build_feature_matrix_v2": {
+      "script": "tools/build_feature_matrix_v2.py",
+      "wall_ms": 1063.0,
+      "compute_ms_est": 1041.8,
+      "peak_rss_mb": 111.1,
+      "output_rows": 4648,
+      "throughput_rows_per_s": 4373.0
+    },
+    "build_semantic_features_v2": {
+      "script": "tools/build_semantic_features_v2.py",
+      "wall_ms": 965.9,
+      "compute_ms_est": 944.7,
+      "peak_rss_mb": 159.3,
+      "output_rows": 37593,
+      "throughput_rows_per_s": 38920.0
+    },
+    "build_visio_features_v2": {
+      "script": "tools/build_visio_features_v2.py",
+      "wall_ms": 309.0,
+      "compute_ms_est": 287.8,
+      "peak_rss_mb": 43.7,
+      "output_rows": 7722,
+      "throughput_rows_per_s": 24990.0
+    },
+    "build_feature_snapshot_v1": {
+      "script": "tools/build_feature_snapshot.py (real BGE bge-large-zh-v1.5, BgeLocal patched to cache_path=None/use_cache=False so the shared disk cache is untouched)",
+      "mode": "real BGE bge-large-zh-v1.5 on CUDA (disk cache disabled)",
+      "wall_ms": 128651.3,
+      "compute_ms_est": 128630.1,
+      "peak_rss_mb": 2159.4,
+      "n_encoded": 27473,
+      "bge_embed_ms_pure": 119211.9,
+      "throughput_all_in_per_s": 213.5,
+      "throughput_embed_only_per_s": 230.5,
+      "encoded_by_source": {
+        "claim": 11869,
+        "diagram_node": 2831,
+        "requirement": 2327,
+        "table_row": 10446
+      }
+    }
+  },
+  "python_startup_median_ms": 21.2,
+  "components": {
+    "bge": {
+      "mode": "cuda",
+      "model_load_s": 6.16,
+      "rss_after_load_mb": 903.7,
+      "cuda": true,
+      "max_allocated_mb": 1302.1,
+      "reserved_mb": 1314.9,
+      "single_first_ms": 111.7,
+      "single_ms": {
+        "n": 5,
+        "mean_ms": 9.25,
+        "median_ms": 8.89,
+        "p95_ms": 11.78,
+        "max_ms": 11.78
+      },
+      "batch_100": {
+        "n": 3,
+        "mean_ms": 480.63,
+        "median_ms": 478.18,
+        "p95_ms": 485.8,
+        "max_ms": 485.8
+      },
+      "batch_100_texts_per_s": 208.1,
+      "batch_512_ms": 1302.1,
+      "batch_512_texts_per_s": 393.2,
+      "embed_tokens_per_text_ms": 3.5,
+      "gpu_mem_after": {
+        "cuda": true,
+        "max_allocated_mb": 1353.1,
+        "reserved_mb": 1388.3
+      }
+    },
+    "recall_fake_framework_overhead": {
+      "corpus_chunks": 50,
+      "units_per_chunk": 6,
+      "store_build_ms": 0.22,
+      "first_search_ms": 3.1,
+      "search_ms": {
+        "n": 20,
+        "mean_ms": 0.4,
+        "median_ms": 0.4,
+        "p95_ms": 0.43,
+        "max_ms": 0.43
+      },
+      "note": "FakeEncoder 1-dim vectors, 50 chunks x 6 units: pure framework overhead (IDF, numpy scoring, routing)"
+    },
+    "recall_real": {
+      "corpus": "structured_corpus_v1/tables.jsonl",
+      "n_chunks": 1207,
+      "n_units": 11539,
+      "n_row_units": 10447,
+      "o1_semantic_unit": {
+        "index_build_s": 76.18,
+        "index_build_units_per_s": 151.5,
+        "search_ms": {
+          "n": 10,
+          "mean_ms": 13.86,
+          "median_ms": 13.35,
+          "p95_ms": 18.86,
+          "max_ms": 18.86
+        },
+        "note": "index build = BGE encode all units (GPU, cache off); search = query encode + (U@q)*idf matrix ops"
+      },
+      "gpu_mem_after_build": {
+        "cuda": true,
+        "max_allocated_mb": 1497.4,
+        "reserved_mb": 1686.1
+      },
+      "multihead_pipeline": {
+        "init_s": 0.39,
+        "recall_ms": {
+          "n": 10,
+          "mean_ms": 10.04,
+          "median_ms": 9.64,
+          "p95_ms": 12.07,
+          "max_ms": 12.07
+        }
+      }
+    },
+    "recall_baselines": {
+      "bm25_unit": {
+        "index_build_s": 0.13,
+        "index_build_units_per_s": 90151.5,
+        "search_ms": {
+          "n": 10,
+          "mean_ms": 13.14,
+          "median_ms": 12.95,
+          "p95_ms": 17.78,
+          "max_ms": 17.78
+        }
+      },
+      "token_maxsim": {
+        "index_build_s": 28.72,
+        "search_ms": {
+          "n": 10,
+          "mean_ms": 20.07,
+          "median_ms": 20.12,
+          "p95_ms": 25.19,
+          "max_ms": 25.19
+        }
+      }
+    },
+    "recall_latency_compare_ms": {
+      "o1_semantic_unit_mean": 13.86,
+      "bm25_unit_mean": 13.14,
+      "token_maxsim_mean": 20.07
+    },
+    "atomizer": {
+      "n_claims": 11869,
+      "surface_map_entries": 18,
+      "atomize_all_s": 0.055,
+      "claims_per_s": 217055.4,
+      "n_atoms": 292,
+      "block_by_param_ms": 0.0,
+      "n_groups": 41,
+      "pair_groups_ms": 1.5,
+      "n_pairs": 1175
+    },
+    "pair_scorers": {
+      "score_lexical_jaccard": {
+        "n_calls": 200,
+        "total_ms": 6.7,
+        "per_call_us": 33.7
+      },
+      "score_template_mask": {
+        "n_calls": 200,
+        "total_ms": 8.9,
+        "per_call_us": 44.6
+      },
+      "score_rule_scope": {
+        "n_calls": 200,
+        "total_ms": 0.0,
+        "per_call_us": 0.1
+      },
+      "score_section_proximity": {
+        "n_calls": 200,
+        "total_ms": 0.5,
+        "per_call_us": 2.6
+      },
+      "score_combined": {
+        "n_calls": 200,
+        "total_ms": 0.2,
+        "per_call_us": 0.8
+      },
+      "make_bge_scorer": {
+        "n_calls": 200,
+        "total_ms": 18.6,
+        "per_call_us": 93.0,
+        "note": "pure-python cosine on 1024-dim; pre-embedding of 400 texts cost 285ms total on GPU (already amortized)"
+      },
+      "make_nli_scorer": {
+        "n_calls": 20,
+        "per_call_ms": 32.4,
+        "note": "one score = 2 directional mDeBERTa inferences (max p_contra)",
+        "model_load_s": 1.63,
+        "model_mode": "cuda",
+        "batch_32_pairs_ms": 109.3,
+        "batch_pairs_per_s": 292.6,
+        "gpu_mem": {
+          "cuda": true,
+          "max_allocated_mb": 2354.4,
+          "reserved_mb": 2699.0
+        }
+      }
+    },
+    "purifier": {
+      "n_records": 91,
+      "evidence_per_record_mean": 6.3,
+      "evidence_per_record_max": 8,
+      "statement_mode": {
+        "n": 91,
+        "mean_ms": 0.85,
+        "median_ms": 0.75,
+        "p95_ms": 1.91,
+        "max_ms": 2.43
+      },
+      "evidence_mode": {
+        "n": 91,
+        "mean_ms": 0.46,
+        "median_ms": 0.44,
+        "p95_ms": 0.88,
+        "max_ms": 1.0
+      },
+      "evidence_mode_deq_gate": {
+        "n": 91,
+        "mean_ms": 0.75,
+        "median_ms": 0.69,
+        "p95_ms": 1.52,
+        "max_ms": 2.06
+      },
+      "rss_mb": 3222.6
+    },
+    "verifier_fast": {
+      "preset": "fast",
+      "scene": "srs_scene1",
+      "construct_ms": 17.7,
+      "first_verify_ms": 67.4,
+      "verify_wall": {
+        "n": 90,
+        "mean_ms": 8.37,
+        "median_ms": 8.7,
+        "p95_ms": 13.85,
+        "max_ms": 17.34
+      },
+      "verify_internal_latency": {
+        "n": 90,
+        "mean_ms": 8331.24,
+        "median_ms": 8657.0,
+        "p95_ms": 13810.0,
+        "max_ms": 17295.0
+      },
+      "batch_10_records_ms": 101.7,
+      "batch_10_per_record_ms": 10.2,
+      "records_per_s": 10753.3,
+      "rss_mb": 3225.2
+    },
+    "verifier_standard": {
+      "preset": "standard (fast + L2 NLI residual, mDeBERTa)",
+      "construct_ms": 0.5,
+      "first_verify_ms": 2383.5,
+      "first_verify_note": "includes lazy NLI model load",
+      "verify_wall": {
+        "n": 90,
+        "mean_ms": 117.75,
+        "median_ms": 105.68,
+        "p95_ms": 257.94,
+        "max_ms": 384.92
+      },
+      "verify_internal_latency": {
+        "n": 90,
+        "mean_ms": 117704.24,
+        "median_ms": 105641.0,
+        "p95_ms": 257898.0,
+        "max_ms": 384872.0
+      },
+      "records_per_s": 764.3,
+      "gpu_mem": {
+        "cuda": true,
+        "max_allocated_mb": 3136.0,
+        "reserved_mb": 3422.6
+      },
+      "rss_mb": 3385.2
+    },
+    "coverage_detector": {
+      "n_tables": 1207,
+      "detect_all_ms": 133.0,
+      "tables_per_s": 9077.2,
+      "n_findings": 876,
+      "n_parallel_table_pairs": 3481,
+      "find_parallel_tables_ms": 56.9
+    }
+  },
+  "gpu_vs_cpu": {
+    "bge_large_zh": {
+      "model_load_s": {
+        "gpu": 6.16,
+        "cpu": 4.69
+      },
+      "single_text_ms": {
+        "gpu_median": 8.89,
+        "cpu_median": 60.51,
+        "speedup": 6.8
+      },
+      "batch100_texts_per_s": {
+        "gpu": 208.1,
+        "cpu": 24.7,
+        "speedup": 8.4
+      },
+      "gpu_mem_allocated_mb": 1302.1
+    },
+    "nli_mdeberta_egt_finetuned_v2": {
+      "model_load_s": {
+        "gpu": 1.63,
+        "cpu": 1.52
+      },
+      "batch_32_pairs": {
+        "gpu_ms": 109.3,
+        "cpu_ms": 7004.7,
+        "gpu_pairs_per_s": 292.6,
+        "cpu_pairs_per_s": 4.6,
+        "speedup": 63.6
+      }
+    },
+    "note": "CPU runs used CUDA_VISIBLE_DEVICES=-1 (empty-string value is ignored by CUDA on Windows and silently keeps GPU active)."
+  },
+  "e2e_service": {
+    "launch": "uvicorn service.app:app :8400, cwd=repo root + PYTHONPATH=srs_verify_package (NLI active)",
+    "startup_s": 2.1,
+    "nli_residual_active": true,
+    "peak_rss_mb": 2592.7,
+    "verify_cold_first_standard": {
+      "client_wall_ms": 6820.0,
+      "server_latency_ms": 6817.4,
+      "verdict": "not_in_evidence",
+      "diagnostics": [
+        "semantic_claim_requires_validated_three_way_method"
+      ]
+    },
+    "verify_standard_warm_10_records": {
+      "client": {
+        "n": 10,
+        "mean_ms": 165.3,
+        "median_ms": 156.9,
+        "max_ms": 306.2
+      },
+      "server": {
+        "n": 10,
+        "mean_ms": 159.2,
+        "median_ms": 143.2,
+        "max_ms": 303.4
+      },
+      "http_overhead_ms": 6.1
+    },
+    "verify_standard_batch10_sequential": {
+      "total_ms": 1406.6,
+      "per_record_ms": 140.7,
+      "server_latency": {
+        "n": 10,
+        "mean_ms": 127.0,
+        "median_ms": 114.2,
+        "max_ms": 300.8
+      }
+    },
+    "verify_fast_warm_10_records": {
+      "client": {
+        "n": 10,
+        "mean_ms": 16.8,
+        "median_ms": 12.3,
+        "max_ms": 37.8
+      },
+      "server": {
+        "n": 10,
+        "mean_ms": 10.8,
+        "median_ms": 9.6,
+        "max_ms": 14.8
+      }
+    },
+    "verify_fast_batch10_sequential": {
+      "total_ms": 198.0,
+      "per_record_ms": 19.8
+    },
+    "verify_standard_plus_purify_ms": 209.7,
+    "purify_endpoint": {
+      "statement": {
+        "n": 5,
+        "mean_ms": 16.9,
+        "median_ms": 16.4,
+        "max_ms": 26.9,
+        "ok": true,
+        "stats": {
+          "n_in": 8,
+          "n_kept": 8,
+          "n_removed": 0,
+          "n_statements": 25,
+          "by_reason": {},
+          "fallback": false
+        }
+      },
+      "evidence": {
+        "n": 5,
+        "mean_ms": 14.9,
+        "median_ms": 14.4,
+        "max_ms": 27.0,
+        "ok": true,
+        "stats": {
+          "n_in": 8,
+          "n_kept": 8,
+          "n_removed": 0,
+          "n_statements": 41,
+          "by_reason": {},
+          "fallback": false
+        }
+      }
+    },
+    "degraded_mode_comparison": {
+      "finding": "srs_verify_package/srs_verify/nli_local.py uses BASE=Path.cwd(); launching the service with cwd=srs_verify_package (as tools/serve_local.py does locally) makes models/ unresolvable and the engine silently degrades to deterministic-only mode (nli_residual_model_unavailable diagnostic).",
+      "verify_standard_warm_server_ms_degraded": 10.7,
+      "verify_standard_warm_server_ms_nli_active": 159.2,
+      "peak_rss_mb_degraded": 785.6
+    }
+  },
+  "e2e_latency_breakdown": {
+    "fast": {
+      "n_instances": 20,
+      "recall": {
+        "mean_ms": 17.2,
+        "median_ms": 16.7,
+        "p95_ms": 24.5
+      },
+      "purify": {
+        "mean_ms": 1.1,
+        "median_ms": 0.8,
+        "p95_ms": 2.0
+      },
+      "verify": {
+        "mean_ms": 10.1,
+        "median_ms": 10.3,
+        "p95_ms": 14.5
+      },
+      "total_mean_ms": 28.3,
+      "share_pct": {
+        "recall": 60.6,
+        "purify": 3.8,
+        "verify": 35.6
+      },
+      "note": "recall = O1-unit search over 1207-table corpus (index pre-built); purify = statement mode; verify = full claim decomposition + expert/NLI cascade"
+    },
+    "standard": {
+      "n_instances": 20,
+      "recall": {
+        "mean_ms": 17.2,
+        "median_ms": 16.7,
+        "p95_ms": 24.5
+      },
+      "purify": {
+        "mean_ms": 1.1,
+        "median_ms": 0.8,
+        "p95_ms": 2.0
+      },
+      "verify": {
+        "mean_ms": 122.6,
+        "median_ms": 100.2,
+        "p95_ms": 289.0
+      },
+      "total_mean_ms": 140.8,
+      "share_pct": {
+        "recall": 12.2,
+        "purify": 0.8,
+        "verify": 87.0
+      },
+      "note": "recall = O1-unit search over 1207-table corpus (index pre-built); purify = statement mode; verify = full claim decomposition + expert/NLI cascade"
+    }
+  },
+  "bottleneck_analysis": [
+    {
+      "rank": 1,
+      "bottleneck": "BGE dense encoding (GPU)",
+      "evidence": [
+        "feature_snapshot: 27473 texts in 119s embed-only (230.5/s); whole pipeline corpus build is 129s of which >92% is embedding",
+        "O1-unit index build: 76.18s for 11539 units (151.5/u) vs BM25-unit index 0.13s (585x faster to build)",
+        "CPU fallback collapses throughput 8.4x (24.7 texts/s) - GPU is a hard requirement for offline corpus building"
+      ],
+      "mitigation": "batch texts (512-batch gives 393/s vs 208/s at 100-batch with longer texts); keep disk cache warm; vector reuse across features (single encode pass, many consumers)"
+    },
+    {
+      "rank": 2,
+      "bottleneck": "L2 NLI residual inference (per-instance, standard preset)",
+      "evidence": [
+        "verifier standard 117.75ms/instance mean vs fast 8.37ms -> NLI adds ~110ms/instance (93% of standard latency)",
+        "NLI pair scorer 32.4ms/pair (2 directional inferences); batch amortization 3.4ms/pair (GPU batch32=109.3ms)",
+        "first verify pays lazy model load: 2383ms in-process / 6820ms via HTTP service"
+      ],
+      "mitigation": "fast preset for interactive use (8ms); NLI batch the residual claims (already batched internally); warm the engine at service startup (currently lazy)"
+    },
+    {
+      "rank": 3,
+      "bottleneck": "per-query BGE encode inside recall search",
+      "evidence": [
+        "O1-unit search 13.86ms/query of which ~9ms is query encode (single BGE forward, batch=1) - the matrix scoring itself is ~2-5ms",
+        "recall dominates the fast-preset end-to-end chain (60.6% of 28.3ms total)"
+      ],
+      "mitigation": "query micro-batching, or cache frequent queries; BM25 search latency is comparable (13.1ms) because its pure-Python unit loop is the same order"
+    },
+    {
+      "rank": 4,
+      "non_bottleneck": "deterministic components (atomizer, purifier, coverage, expert channels)",
+      "evidence": [
+        "atomizer 217055.4/s (all 11869 claims in 0.055s)",
+        "purifier statement-mode 0.85ms/instance",
+        "coverage detector 133.0ms for 1207 tables",
+        "fast verifier (L0/L1 experts) 8.37ms/instance"
+      ]
+    }
+  ]
+}

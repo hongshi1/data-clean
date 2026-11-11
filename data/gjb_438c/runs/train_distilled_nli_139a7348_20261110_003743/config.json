@@ -1,0 +1,43 @@
+{
+ "script": "train_distilled_nli",
+ "git_sha": "8bc67a9e",
+ "config": {
+  "n_distill_total": 303,
+  "n_distill_train": 262,
+  "n_distill_dev": 41,
+  "n_oversampled_train": 262,
+  "n_egt_replay": 524,
+  "n_train_total": 786,
+  "train_label_counts": {
+   "neutral": 305,
+   "entailment": 277,
+   "contradiction": 204
+  },
+  "teacher_data": [
+   "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\distillation\\teacher_labels_v1.jsonl",
+   "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\distillation\\teacher_labels_crossdoc.jsonl"
+  ],
+  "exclude_doc": "C06",
+  "splits": [
+   "dev",
+   "train_only"
+  ],
+  "corpora": [
+   "qa91",
+   "crossdoc"
+  ],
+  "covered_only": false,
+  "oversample_refute": 1,
+  "egt_replay_mult": 2.0,
+  "base_model": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\egt_finetuned_v2",
+  "epochs": 4,
+  "batch": 16,
+  "lr": 1e-05,
+  "seed": 42,
+  "fp16": true,
+  "device": "cuda",
+  "output": "C:\\Users\\12488\\Desktop\\data_clean\\models\\nli\\distilled_e2c_loo_C06"
+ },
+ "config_hash": "139a7348",
+ "opened_at": 1794242263.6
+}
