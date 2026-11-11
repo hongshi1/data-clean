@@ -269,7 +269,7 @@ def run_module_corpus(module, records: Iterable[dict]) -> dict[str, dict]:
     """跑module.verify于全部records→{instance_id: outcome}.
 
     outcome含verdict/status/diagnostics与claim明细(rationale截断200,
-    与eval_cascade/eval_nli_residual/eval_llm_residual的既有schema一致).
+    与eval_cascade/eval_nli_residual/eval_removed的既有schema一致).
     """
     outcomes: dict[str, dict] = {}
     for record in records:

@@ -1,6 +1,6 @@
 """L2 NLI residual verification channel (S4: residual domain adaptation).
 
-Mirrors ``llm_residual`` (L3) on the same C1 residual principle: only claims
+Mirrors ``removed`` (L3) on the same C1 residual principle: only claims
 the deterministic channels left unresolved (``semantic_unresolved`` /
 ``conservative_unresolved``) are judged, and every returned ClaimResult reuses
 the residual claim's id so the caller's per-claim fusion can replace the

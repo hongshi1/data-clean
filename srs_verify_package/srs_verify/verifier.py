@@ -67,7 +67,7 @@ BASE = Path(__file__).resolve().parent
 PRESETS: dict[str, dict] = {
     "fast": dict(use_experts=True),
     "standard": dict(use_experts=True, use_nli_residual=True),
-    "full": dict(use_experts=True, use_nli_residual=True, use_cascade=True),
+
 }
 
 #: 场景名→(词典路径, 规则包路径), 相对本包目录(srs_verify/configs/)
@@ -76,7 +76,7 @@ SCENES: dict[str, tuple[str, str]] = {
                    "configs/rulepacks/srs_gjb_v1.json"),
 }
 
-#: standard/full档NLI模型路径: 环境变量SRS_VERIFY_NLI_MODEL优先,
+#: standard/标准档NLI模型路径: 环境变量SRS_VERIFY_NLI_MODEL优先,
 #: 默认相对运行目录的models/nli/egt_finetuned_v2(需自行下载/微调, 见README)
 _NLI_MODEL_ENV = "SRS_VERIFY_NLI_MODEL"
 _DEFAULT_NLI_MODEL = "models/nli/egt_finetuned_v2"
@@ -187,7 +187,7 @@ class CascadeVerifier:
             raise ValueError(
                 f"未知preset: {preset!r}(可用: {sorted(PRESETS)}, "
                 f"含义: fast=纯专家通道, standard=+L2 NLI残差, "
-                f"full=+L3级联仲裁)")
+                f")")
         if scene not in SCENES:
             raise ValueError(
                 f"未知scene: {scene!r}(可用: {sorted(SCENES)}, "
@@ -260,7 +260,7 @@ class CascadeVerifier:
 
     @property
     def preset(self) -> str:
-        """成本/质量档位名(fast/standard/full)."""
+        """成本/质量档位名(fast/standard)."""
         return self._preset
 
     @property
