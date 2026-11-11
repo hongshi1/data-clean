@@ -78,8 +78,6 @@ def bench_infer(entry: dict, pairs: list[tuple[str, str]], tag: str
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    import json as _json
-    split = _json.loads(SPLIT.read_text(encoding="utf-8"))
 
     # ── collect the residual workload once ──
     workload = collect_pairs()
