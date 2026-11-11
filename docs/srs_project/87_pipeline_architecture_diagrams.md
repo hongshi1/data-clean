@@ -63,6 +63,129 @@ flowchart TD
     A["16份GJB SRS (.doc)<br/>GJB 438C格式"] --> B["srs_doc_batch_parse.py<br/>.doc→markdown"]
     B --> C["MinerU解析<br/>content_list.json"]
     C --> D["srs_chunker.py<br/>srs_chunks.json (5231块)<br/>text 3643/table 1207/image 381"]
+    D --> E1["轨A: URE单元<br/>unit_attention→ure_v2→v3(S1-S4)→v4<br/>1586 owner/18032单元/2996查询"]
+    D --> E2["轨B: ID结构硬桥<br/>tools/id_graph.py<br/>id_document_graph<br/>568实体/1613mention/16文档"]
+    D --> E3["轨C: 多模态<br/>vlm_image_analyzer.py<br/>379图×(figure_type/key_elements/summary)"]
+    E1 --> F["索引层(blackboard)<br/>dense BGE→dense_index.pkl<br/>sparse BM25<br/>structural ID→章节→chunk"]
+    E2 --> F
+    E3 --> F
+    F --> G["假想查询补充<br/>gen_hypothetical_queries.py<br/>(docT5query式, 覆盖无ID深层小节)"]
+```
+
+### 1.3 三轨详细链路（每轨的输入→处理→产出→消费方）
+
+#### 轨A：URE单元链路（表格/图片 → 检索单元）
+
+```text
+srs_chunks.json (5231块)
+   │  取 type∈{image, table} 的块 (381图+1207表)
+   ▼
+algorithms/unit_attention.py  (CMS式多头投影, 确定性)
+   image_units_with_feats: 图片chunk → 单元 = 图题(title) + 节点(node)
+     + 图元素(elem)  [4种kind: title/node/elem/row]
+   table_units_with_feats: 表格chunk → 单元 = 表题 + 表行(row)
+   (单元 = 检索粒度: 一张图/一个表被分解为多个可独立命中的小单元)
+   ▼
+tools/build_ure_dataset.py  (V1/V2)
+   corpus = 全部图表chunk(检索候选完整池, 无单元的块也纳入——
+             单元缺失由单向量通道兜底, 与线上行为一致)
+   queries ← doc_queries / doc_queries_v2 / deep_row_queries系列
+   校验: chunk_id唯一/expected引用完整/fold∈[0,4)/每fold每scene可评
+   → gjb_ure_v2.json
+   ▼
+tools/build/build_gjb_v3.py  (S1-S4修复 + 统一262q评测)
+   S1: 262q上统一重跑全部方法(消除跨场景混杂)
+   S2: 深行查询扩展16文档+按表配额(消除43%/4文档聚类效应)
+   S3: image gold改为内容验证(替换共址代理)
+   S4: MAX_ROWS扩到120 + 死图剔除(381→379)
+   → evalsets/V3/gjb_ure_v3.json
+   ▼
+tools/build/build_gjb_v4_expansion.py  (LLM深行扩展)
+   corpus不变 + queries合并V3全部 + table_deep_v4新增~250q(12文档)
+   新增查询校验5道: 按文本去重/多gold全表扫描(种子行值≥60%出现)
+   /gold数上限(>10拒, 6-10为模板近重复文档合法)/全局去重/
+   overlap协变量存档
+   → gjb_ure_v4.json (1586 owner / 18032单元 / 2996查询)
+
+消费方: hybrid_recall的unit通道(单元聚焦) + 召回评测
+        (WTQ/FeTaQA/DuRetrieval外部效度, 86号文档轨1)
+```
+
+#### 轨B：ID结构硬桥链路（ID正则 → 异构文档图）
+
+```text
+stage0_assets.json (8类结构化资产)
+   ▼
+tools/id_graph.py  build_graph()
+   ID正则抽取(修复版: 前缀16字符, 修复字符限制)
+     → 实体节点 E_<ID>  (568个, 如E_ZZSJHQZHFW-GN-SJHQ)
+     → mention节点 M_<ID>_<位置>_<序号>  (1613个)
+        location六种: text(561)/table_capability(465)/
+        table_unknown(193)/table_interface(150)/
+        table_traceability(114)/table_qualification(110)
+     → appearance边 entity→mention  (1613条)
+   跨文档同名消歧: 后缀剥离(功能/服务/模块/接口/管理/系统/
+     软件/需求/控制/处理) + 规则信号(12种: 编辑距离/子串/
+     字符集合/功能词归一)
+   16文档全覆盖
+   → graph/id_document_graph.json (2181节点/1613边)
+
+消费方: ① hybrid_recall的structural通道
+          (查询实体ID → mentions → 全部出现章节 → 章节chunks;
+           命中=存在性证明, 直通top-k)
+        ② id_graph.py自身的图推理: 传递闭包矛盾检测+
+           矛盾子图(一致性校验的图基消费者, L1符号/L2图推/L3 CoVe)
+```
+
+#### 轨C：多模态图片资产链路（图片 → VLM结构化分析）
+
+```text
+srs_chunks.json image类型块 (381图, S4死图剔除后379)
+   ▼
+tools/vlm_image_analyzer.py  (VLM逐图分析, 缓存)
+   每图产出三字段:
+     figure_type  八类: 用例图(158)/流程图(138)/架构图(28)/
+                  数据流图(25)/活动图(17)/状态图(5)/接口图(4)/
+                  模块图(1)
+     key_elements 实体/功能/数据流元素列表
+                  (如[文电处理服务,统一传输服务,密码服务,
+                    文件系统,数据库,用户,发送和接收报文数据,...])
+     summary      图内容摘要
+   → chunks/srs_image_analyses.json (379条: doc/image_path/
+     caption/analysis{figure_type,key_elements,summary})
+
+消费方: ① dense通道富化——图片chunk无正文, 其索引文本 =
+          caption + key_elements(解决图片不可向量检索)
+        ② multimodal通道直查——查询关键词 vs key_elements
+          匹配 → 直接召回image chunk
+```
+
+#### 公共索引层（三轨合流后的在线索引）
+
+```text
+dense:   BGE-large-zh(1024维) × 5231块 → dense_index.pkl
+         (磁盘缓存; 图片块用轨C富化文本; 惰性GPU加载)
+sparse:  BM25(k1=1.5, b=0.75; CJK 2字滑窗, ASCII token)
+假想查询: tools/gen_hypothetical_queries.py (docT5query式,
+         Nogueira & Cho 2019谱系)
+         选块: 文本>30字(排除目录/页眉/[图片]占位) ×
+         文档round-robin × 章节深度降序(深层盲区优先)
+         prompt带章节标题路径("3.2.3 参数配置 > 3.2.3.1 时间
+         配置功能")→假想查询继承父章节实体词
+         → doc_queries.json {chunk_id: [hq1, hq2]}
+         在线: doc_query_index双路打分
+         (词法 + λ·BM25/bm25_max, λ=0.3)
+         攻两个召回瓶颈: 短实体查询bigram噪声 +
+         ID-Graph未登记的深层小节盲区(无ID mention锚)
+```
+
+---
+
+```mermaid
+flowchart TD
+    A["16份GJB SRS (.doc)<br/>GJB 438C格式"] --> B["srs_doc_batch_parse.py<br/>.doc→markdown"]
+    B --> C["MinerU解析<br/>content_list.json"]
+    C --> D["srs_chunker.py<br/>srs_chunks.json (5231块)<br/>text 3643/table 1207/image 381"]
     D --> E1["轨A: URE单元<br/>build_ure_dataset→v3→v4<br/>1586 owner/18032单元"]
     D --> E2["轨B: ID结构硬桥<br/>id_document_graph<br/>568实体/1613mention"]
     D --> E3["轨C: 多模态<br/>srs_image_analyses(379图)<br/>VLM key_elements"]
