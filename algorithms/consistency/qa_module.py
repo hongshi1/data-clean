@@ -44,6 +44,8 @@ from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.evidence_statements import linearize_context
 from algorithms.consistency.qa_models import (
     ClaimResult,
+    EvidenceLocalization,
+    InconsistencyLocalization,
     QAInput,
     VerificationResult,
     Verdict,
@@ -468,6 +470,8 @@ class QAConsistencyModule:
             diagnostics.append("one_or_more_claims_unresolved")
 
         evidence_chain = tuple(evidence_by_id[eid] for eid in cited if eid in evidence_by_id)
+        localizations = self._build_localizations(
+            fused_results, statements, evidence_by_id, request.answer)
         return VerificationResult(
             instance_id=request.instance_id,
             question=request.question,
@@ -489,7 +493,69 @@ class QAConsistencyModule:
             applicability="applicable" if check_items else "uncertain",
             rationale="; ".join(r.rationale for r in fused_results),
             diagnostics=tuple(diagnostics),
+            localizations=localizations,
         )
+
+    @staticmethod
+    def _build_localizations(
+            results: tuple[ClaimResult, ...],
+            statements: list[EvidenceStatement],
+            evidence_by_id: dict,
+            answer: str) -> tuple[InconsistencyLocalization, ...]:
+        """把refute claim的引用升级为结构化定位报告(语句/块/行/字段).
+
+        answer侧: claim_text在answer中的字符区间(best-effort文本搜索,
+        清洗过的claim可能无逐字命中→None); 证据侧: statement_id
+        ({evidence_id}#s{N}) join语句元数据. 非refute不产出定位.
+        """
+        if not any(result.verdict == "refute" for result in results):
+            return ()
+        statements_by_id = {s.statement_id: s for s in statements}
+        out: list[InconsistencyLocalization] = []
+        for result in results:
+            if result.verdict != "refute":
+                continue
+            position = answer.find(result.claim_text)
+            span: tuple[int, int] | None = (
+                (position, position + len(result.claim_text))
+                if position >= 0 else None)
+            evidence_locs: list[EvidenceLocalization] = []
+            for ref in result.evidence_refs:
+                statement = statements_by_id.get(ref)
+                base_id = str(ref).split("#", 1)[0]
+                ev = evidence_by_id.get(base_id)
+                if statement is not None:
+                    block = (ev.source_ref.block_id if ev is not None
+                             else "")
+                    section = (ev.source_ref.section if ev is not None
+                               else "")
+                    evidence_locs.append(EvidenceLocalization(
+                        evidence_id=base_id,
+                        statement_id=ref,
+                        statement_text=statement.text,
+                        field_name=statement.field_name,
+                        row_index=statement.row_index,
+                        block_id=str(block),
+                        section=str(section)))
+                elif ev is not None:
+                    evidence_locs.append(EvidenceLocalization(
+                        evidence_id=base_id,
+                        statement_id=str(ref),
+                        statement_text=str(ev.text)[:200],
+                        field_name="",
+                        row_index=-1,
+                        block_id=str(ev.source_ref.block_id),
+                        section=str(ev.source_ref.section)))
+            out.append(InconsistencyLocalization(
+                claim_id=result.claim_id,
+                claim_text=result.claim_text,
+                answer_span=span,
+                check_item_candidates=result.check_item_candidates,
+                method=result.method,
+                confidence=result.confidence,
+                rationale=result.rationale,
+                evidence=tuple(evidence_locs)))
+        return tuple(out)
 
     @staticmethod
     def _validate(request: QAInput) -> None:

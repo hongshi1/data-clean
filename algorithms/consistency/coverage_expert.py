@@ -687,8 +687,12 @@ def _check_gjb_clause_claim(request: QAInput, claim: CoverageClaim,
             request, claim, order, "support", state.evidence_refs,
             f"{claim.check_id}{check.name}：冻结证据含[{present_labels}]，"
             f"answer提供/覆盖声称（{claim.target}）成立", 0.9, routed)
+    # 缺席型refute无可引用的存在语句: 引用已搜索的证据范围
+    # (定位语义="这些范围内检索不到要求的条款"; 见84号审计§7)
+    searched = state.evidence_refs or tuple(
+        ev.evidence_id for ev in request.evidence)
     return _result(
-        request, claim, order, "refute", state.evidence_refs,
+        request, claim, order, "refute", searched,
         f"{claim.check_id}{check.name}：封闭清单要求[{labels}]，冻结证据无"
         f"该条款内容，answer声称提供（{claim.target}）被反驳", 0.9, routed)
 

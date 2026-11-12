@@ -150,6 +150,7 @@ class VerdictResult:
     rationale: str
     diagnostics: tuple[str, ...]
     latency_ms: float
+    localizations: tuple = ()
 
 
 def _to_verdict_result(result: VerificationResult,
@@ -169,6 +170,7 @@ def _to_verdict_result(result: VerificationResult,
         rationale=rationale,
         diagnostics=result.diagnostics,
         latency_ms=round(latency_ms, 3),
+        localizations=result.localizations,
     )
 
 

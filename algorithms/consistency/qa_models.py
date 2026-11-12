@@ -61,6 +61,38 @@ class ClaimResult:
 
 
 @dataclass(frozen=True)
+class EvidenceLocalization:
+    """一处证据侧定位: 语句级(statement_id) + 块/行/字段元数据."""
+
+    evidence_id: str
+    statement_id: str
+    statement_text: str
+    field_name: str
+    row_index: int
+    block_id: str
+    section: str
+
+
+@dataclass(frozen=True)
+class InconsistencyLocalization:
+    """一条不一致的完整定位报告(输出字段, 非分类).
+
+    answer侧: claim_text + answer_span(best-effort文本定位);
+    证据侧: 语句级evidence定位(块/行/字段);
+    归因: 检测通道method + taxonomy check_item + rationale.
+    """
+
+    claim_id: str
+    claim_text: str
+    answer_span: tuple[int, int] | None
+    check_item_candidates: tuple[str, ...]
+    method: str
+    confidence: float
+    rationale: str
+    evidence: tuple[EvidenceLocalization, ...]
+
+
+@dataclass(frozen=True)
 class VerificationResult:
     instance_id: str
     question: str
@@ -77,3 +109,5 @@ class VerificationResult:
     rationale: str
     verifier_version: str = "qa_verifier_v1"
     diagnostics: tuple[str, ...] = field(default_factory=tuple)
+    localizations: tuple[InconsistencyLocalization, ...] = field(
+        default_factory=tuple)
