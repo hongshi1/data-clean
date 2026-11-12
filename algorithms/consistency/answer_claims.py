@@ -35,6 +35,8 @@ class AnswerClaim:
     value: str = ""
     unit: str = ""
     negative: bool = False
+    #: answer内字符区间(定位用; 组合型claim可能为None→消费方find回退)
+    span: tuple[int, int] | None = None
 
 
 _OPERATOR_PATTERN = (
@@ -144,17 +146,26 @@ def decompose_claims(question: str, answer: str) -> list[AnswerClaim]:
     for attr, operator, value, unit in numeric_claims:
         if not attr:
             attr = question_numeric_subject(question)
-        claims.append(AnswerClaim("numeric", f"{attr} {operator}{value}{unit}",
-                                  attr, operator, value, unit))
+        text = f"{attr} {operator}{value}{unit}"
+        position = answer.find(text)
+        claims.append(AnswerClaim(
+            "numeric", text, attr, operator, value, unit,
+            span=(position, position + len(text)) if position >= 0 else None))
     for match in _QUOTED.finditer(answer):
         prefix = answer[max(0, match.start() - 12):match.start()]
         claims.append(AnswerClaim("quoted", match.group(1),
-                                  negative=bool(_NEGATIVE.search(prefix))))
+                                  negative=bool(_NEGATIVE.search(prefix)),
+                                  span=(match.start(1), match.end(1))))
     for items in extract_enum_claims(answer):
         cleaned = [re.split(r"[，,]", item)[0].strip() for item in items]
         cleaned = [item for item in cleaned if len(item) >= 2]
         if len(cleaned) >= 2:
-            claims.append(AnswerClaim("enum", "、".join(cleaned)))
+            text = "、".join(cleaned)
+            position = answer.find(cleaned[0])
+            claims.append(AnswerClaim(
+                "enum", text,
+                span=(position, position + len(text))
+                if position >= 0 else None))
     for identifier in _IDENTIFIER.findall(answer):
         position = answer.find(identifier)
         prefix = answer[max(0, position - 24):position]
@@ -163,14 +174,23 @@ def decompose_claims(question: str, answer: str) -> list[AnswerClaim]:
         subject_match = re.search(
             r"([\u4e00-\u9fffA-Za-z]{2,16})\s*$", cleaned_prefix)
         subject = subject_match.group(1) if subject_match else ""
-        claims.append(AnswerClaim("identifier", identifier, attr=subject))
+        claims.append(AnswerClaim(
+            "identifier", identifier, attr=subject,
+            span=(position, position + len(identifier))))
     if not claims:
         structured = decompose_answer(answer, question)
         for structural in structured:
+            position = answer.find(structural.text)
             claims.append(AnswerClaim(
-                "semantic", structural.text, attr=structural.scope_hint))
+                "semantic", structural.text, attr=structural.scope_hint,
+                span=(position, position + len(structural.text))
+                if position >= 0 else None))
     if not claims:
-        claims.append(AnswerClaim("semantic", answer.strip()))
+        text = answer.strip()
+        position = answer.find(text)
+        claims.append(AnswerClaim(
+            "semantic", text,
+            span=(position, position + len(text)) if position >= 0 else None))
     return claims
 
 
@@ -193,32 +213,53 @@ def decompose_claims_sentences(question: str,
     """
     del question
     claims: list[AnswerClaim] = []
+
+    def _span_of(text: str, base: int) -> tuple[int, int] | None:
+        """text在answer内的区间(base=当前行/句起点偏移)."""
+        position = answer.find(text, max(0, base - len(text)))
+        return (position, position + len(text)) if position >= 0 else None
+
+    offset = 0
     lines = answer.split("\n")
     i = 0
     while i < len(lines):
         stripped = lines[i].strip()
+        line_start = offset
+        offset += len(lines[i]) + 1
         if not stripped:
             i += 1
             continue
         if _NUMBERED_ITEM_START.match(stripped):
             block = [stripped]
+            block_start = line_start
             i += 1
             while i < len(lines):
                 follow = lines[i].strip()
                 if not follow or _NUMBERED_ITEM_START.match(follow):
                     break
                 block.append(follow)
+                offset += len(lines[i]) + 1
                 i += 1
-            claims.append(AnswerClaim(kind="semantic",
-                                      text=" ".join(block)))
+            text = " ".join(block)
+            claims.append(AnswerClaim(
+                kind="semantic", text=text,
+                span=(block_start, block_start + len(lines[i - 1]))))
             continue
+        cursor = line_start
         for sentence in _SENTENCE_SPLIT.split(stripped):
             text = sentence.strip()
             if text:
-                claims.append(AnswerClaim(kind="semantic", text=text))
+                position = answer.find(text, cursor)
+                span = (position, position + len(text)) \
+                    if position >= 0 else _span_of(text, line_start)
+                claims.append(AnswerClaim(kind="semantic", text=text,
+                                           span=span))
+                if position >= 0:
+                    cursor = position + len(text)
         i += 1
     if not claims:
         text = " ".join(answer.split())
         if text:
-            claims.append(AnswerClaim(kind="semantic", text=text))
+            claims.append(AnswerClaim(kind="semantic", text=text,
+                                       span=(0, len(answer))))
     return claims

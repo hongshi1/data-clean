@@ -515,10 +515,12 @@ class QAConsistencyModule:
         for result in results:
             if result.verdict != "refute":
                 continue
-            position = answer.find(result.claim_text)
-            span: tuple[int, int] | None = (
-                (position, position + len(result.claim_text))
-                if position >= 0 else None)
+            if result.span is not None:
+                span: tuple[int, int] | None = result.span
+            else:
+                position = answer.find(result.claim_text)
+                span = ((position, position + len(result.claim_text))
+                        if position >= 0 else None)
             evidence_locs: list[EvidenceLocalization] = []
             for ref in result.evidence_refs:
                 statement = statements_by_id.get(ref)

@@ -58,6 +58,8 @@ class ClaimResult:
     rationale: str
     method: str
     confidence: float
+    #: answer内字符区间(断言级定位; 来自AnswerClaim.span, 组合claim可为None)
+    span: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True)

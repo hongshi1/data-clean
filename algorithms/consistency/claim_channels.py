@@ -87,6 +87,7 @@ def unresolved(request: QAInput, claim: AnswerClaim, index: int,
         rationale=rationale,
         method="conservative_unresolved",
         confidence=0.0,
+        span=claim.span,
     )
 
 
@@ -189,6 +190,7 @@ def verify_numeric(request: QAInput, claim: AnswerClaim,
             rationale=reason,
             method="numeric_interval",
             confidence=1.0,
+                span=claim.span,
         )
     refs = tuple(sorted({x[0].evidence_id for x in matches}))
     return unresolved(request, claim, index, check_items,
@@ -233,6 +235,7 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
             rationale="answer声明的极性与context中的显式提及一致",
             method="explicit_quote_polarity",
             confidence=1.0,
+                span=claim.span,
         )
     if refuting_refs:
         return ClaimResult(
@@ -244,6 +247,7 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
             rationale="context对answer引用项存在显式相反极性",
             method="explicit_quote_polarity",
             confidence=1.0,
+                span=claim.span,
         )
     closed = [ev for ev in request.evidence
               if ev.completeness == "closed" and ev.completeness_proof.strip()]
@@ -258,6 +262,7 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
             rationale="封闭scope中未出现该条目，与answer极性相符",
             method="closed_scope_exclusion",
             confidence=0.85,
+                span=claim.span,
         )
     return unresolved(request, claim, index, check_items,
                       "引用项未命中冻结context，scope不完整或未证明穷举")
@@ -292,6 +297,7 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
             rationale="answer标识符在冻结context中精确出现",
             method="identifier_exact_match",
             confidence=1.0,
+                span=claim.span,
         )
     if subject_core:
         for ev in request.evidence:
@@ -312,6 +318,7 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
                                    f"（{window_ids[0]}），显式值冲突"),
                         method="identifier_exact_match",
                         confidence=1.0,
+                            span=claim.span,
                     )
                 start = compact.find(subject_core, start + 1)
     return unresolved(request, claim, index, check_items,
@@ -370,6 +377,7 @@ def verify_enum(request: QAInput, claim: AnswerClaim,
             rationale="context对answer枚举成员存在显式排除语句",
             method="explicit_enum_exclusion",
             confidence=1.0,
+                span=claim.span,
         )
     missing = [item for item, refs in found.items() if not refs]
     refs = positive_refs
@@ -402,6 +410,7 @@ def verify_semantic(request: QAInput, claim: AnswerClaim,
             rationale="answer原子声明在冻结context中精确出现",
             method="exact_statement",
             confidence=1.0,
+                span=claim.span,
         )
     for statement in statements:
         if answer_text and answer_text in re.sub(r"\s+", "", statement.text):
@@ -415,6 +424,7 @@ def verify_semantic(request: QAInput, claim: AnswerClaim,
                            f"（{statement.statement_id}）"),
                 method="statement_exact",
                 confidence=1.0,
+                    span=claim.span,
             )
     nli_result = verify_semantic_nli(request, claim, index,
                                      check_items, statements, judge)
@@ -429,6 +439,7 @@ def verify_semantic(request: QAInput, claim: AnswerClaim,
         rationale="当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。",
         method="semantic_unresolved",
         confidence=0.0,
+            span=claim.span,
     )
 
 
@@ -487,6 +498,7 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
             rationale="scope匹配的证据语句与answer声明NLI矛盾",
             method="nli_residual",
             confidence=0.9,
+                span=claim.span,
         )
     if entailment_refs:
         return ClaimResult(
@@ -498,5 +510,6 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
             rationale="scope匹配的证据语句NLI蕴含answer声明",
             method="nli_residual",
             confidence=0.9,
+                span=claim.span,
         )
     return None

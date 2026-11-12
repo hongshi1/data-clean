@@ -1,0 +1,2015 @@
+{
+ "experiment": "D2 eval: distilled claim segmenter vs typed regex decomposer (segmentation + downstream + localization)",
+ "recorded": "2026-11-12T19:56:56",
+ "git_sha": "756846bd64a4",
+ "config": {
+  "module": "QAConsistencyModule(use_experts=True, use_nli_residual=True)",
+  "nli_model_path": "models/nli/distilled_v1",
+  "nli_gate": 0.8,
+  "aggregations": [
+   "strict",
+   "no_minor_block"
+  ],
+  "segmenter_model": "models/segmenter/claim_segmenter_v1",
+  "segmenter_status": {
+   "mode": "cuda",
+   "error": ""
+  },
+  "known_baselines": {
+   "A_typed_strict_test46": {
+    "accuracy": 0.913,
+    "macro_f1": 0.8047
+   },
+   "A_typed_strict_violations17": {
+    "detected": 16,
+    "refute_f1": 0.9697
+   },
+   "A_typed_strict_crossdoc150_accuracy": 0.5133
+  },
+  "baseline_reproduced": true
+ },
+ "datasets": {
+  "test46": 46,
+  "violations17": 17,
+  "crossdoc150": 150
+ },
+ "isolation_note": "L0/L1 experts用answer_structure.decompose_answer(未patch); 只ablate per-claim分解通道",
+ "segmentation_quality": {
+  "aggregate": {
+   "regex": {
+    "n_instances": 46,
+    "n_claims": 225,
+    "claims_per_instance": 4.89,
+    "avg_claim_len": 31.34,
+    "fused_rate": 0.6356,
+    "span_exact_rate": 0.5689,
+    "coverage_mean": 0.3689,
+    "len_p50_mean": 30.0,
+    "len_p90_mean": 42.1
+   },
+   "distilled": {
+    "n_instances": 46,
+    "n_claims": 636,
+    "claims_per_instance": 13.83,
+    "avg_claim_len": 9.03,
+    "fused_rate": 0.0833,
+    "span_exact_rate": 1.0,
+    "coverage_mean": 0.5315,
+    "len_p50_mean": 9.5,
+    "len_p90_mean": 19.8
+   }
+  },
+  "examples": [
+   {
+    "instance_id": "S1QA-001",
+    "reason": "切分器多claim原子化",
+    "answer": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息：\n\n1. **连接检查**：  \n   系统首先验证数据库连接是否正常。如果无法连接到服务端，会直接返回连接错误信息。\n\n2. **JSON解析失败**：  \n   如果应用软件将SQL语句和blob数据组织成的JSON格式无法正确解析，系统返回解析失败的错误信息，并触发异常流E1。\n\n3. **SQL执行失败**：  \n   当从连接池中申请连接句柄并执行SQL语句时，如果出现执行错误（如数据库拒绝插入BLOB数据），系统会捕捉到错误并触发异常流E1，提示相应的错误信息。\n\n4. **资源释放与错误报告**：  \n   在异常处理过程中，系统确保所有资源得到妥善释放，并及时通知相关错误信息以供用户处理。\n\n这些流程确保了在BLOB数据插入过程中的错误被捕获和报告，保证系统的可靠性和用户体验。",
+    "regex_claims": [
+     {
+      "text": "在进行BLOB数据插入过程中，系统通过以下步骤处理异常情况并提示错误信息",
+      "span": [
+       0,
+       36
+      ],
+      "fused": true
+     },
+     {
+      "text": "连接检查： 系统首先验证数据库连接是否正常",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "如果无法连接到服务端，会直接返回连接错误信息",
+      "span": [
+       73,
+       95
+      ],
+      "fused": false
+     },
+     {
+      "text": "JSON解析失败： 如果应用软件将SQL语句和blob数据组织成的JSON格式无法正确解析，系统返回解析失败的错误信息，并触发异常流E1",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "SQL执行失败： 当从连接池中申请连接句柄并执行SQL语句时，如果出现执行错误（如数据库拒绝插入BLOB数据），系统会捕捉到错误并触发异常流E1，提示相应的错误信息",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "资源释放与错误报告： 在异常处理过程中，系统确保所有资源得到妥善释放，并及时通知相关错误信息以供用户处理",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "这些流程确保了在BLOB数据插入过程中的错误被捕获和报告，保证系统的可靠性和用户体验",
+      "span": [
+       345,
+       387
+      ],
+      "fused": false
+     }
+    ],
+    "distilled_claims": [
+     {
+      "text": "系统首先验证数据库连接是否正常",
+      "span": [
+       57,
+       72
+      ],
+      "fused": false,
+      "boundary_conf": 0.9983
+     },
+     {
+      "text": "如果无法连接到服务端，",
+      "span": [
+       73,
+       84
+      ],
+      "fused": false,
+      "boundary_conf": 0.9895
+     },
+     {
+      "text": "会直接返回连接错误信息",
+      "span": [
+       84,
+       95
+      ],
+      "fused": false,
+      "boundary_conf": 0.792
+     },
+     {
+      "text": "如",
+      "span": [
+       120,
+       121
+      ],
+      "fused": false,
+      "boundary_conf": 0.715
+     },
+     {
+      "text": "应用软件将SQL语句和",
+      "span": [
+       122,
+       133
+      ],
+      "fused": false,
+      "boundary_conf": 0.9594
+     },
+     {
+      "text": "b",
+      "span": [
+       133,
+       134
+      ],
+      "fused": false,
+      "boundary_conf": 0.7859
+     },
+     {
+      "text": "lob数据组织成的JSON格式无法正确解析",
+      "span": [
+       134,
+       155
+      ],
+      "fused": false,
+      "boundary_conf": 0.7859
+     },
+     {
+      "text": "系统返回解析失败的错误信息",
+      "span": [
+       156,
+       169
+      ],
+      "fused": false,
+      "boundary_conf": 0.9923
+     },
+     {
+      "text": "并",
+      "span": [
+       170,
+       171
+      ],
+      "fused": false,
+      "boundary_conf": 0.8858
+     },
+     {
+      "text": "触发异常流E1",
+      "span": [
+       171,
+       178
+      ],
+      "fused": false,
+      "boundary_conf": 0.8957
+     },
+     {
+      "text": "S",
+      "span": [
+       186,
+       187
+      ],
+      "fused": false,
+      "boundary_conf": 0.7408
+     },
+     {
+      "text": "Q",
+      "span": [
+       187,
+       188
+      ],
+      "fused": false,
+      "boundary_conf": 0.7408
+     }
+    ]
+   },
+   {
+    "instance_id": "S1QA-007",
+    "reason": "正则融合claim最重",
+    "answer": "为了描述BLOB数据插入操作的详细步骤，请参考表21中的相关用例描述。以下是对BLOB数据插入操作的详细步骤说明：\n\n---\n\n### 步骤 1：调用 BLOB 插入接口\n在应用软件中，调用 BLOB 插入接口，并传递必要的参数：\n- **表单参数**：指定需要插入到BLOB列中的数据（如字符串、数值或其他类型）。\n- **字段名或索引**：根据数据库设计，确定要插入的数据对应的具体字段名或索引。\n\n---\n\n### 步骤 2：系统执行插入操作\n系统按照以下流程执行 BLOB 插入操作：\n1. **逐行读取数据**：将输入的BLOB数据分割成单行或多行，逐行传递给数据库。\n2. **数据转换与验证**：系统对输入的数据进行格式检查和类型转换，确保符合数据库列的定义要求（如长度、数据类型等）。\n\n---\n\n### 步骤 3：执行SQL语句\n系统生成并执行以下 SQL 语句：\n```\nINSE",
+    "regex_claims": [
+     {
+      "text": "为了描述BLOB数据插入操作的详细步骤，请参考表21中的相关用例描述",
+      "span": [
+       0,
+       34
+      ],
+      "fused": false
+     },
+     {
+      "text": "以下是对BLOB数据插入操作的详细步骤说明： --- 步骤 1：调用 BLOB 插入接口 在应用软件中，调用 BLOB 插入接口，并传递必要的参数",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "表单参数：指定需要插入到BLOB列中的数据（如字符串、数值或其他类型）",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "字段名或索引：根据数据库设计，确定要插入的数据对应的具体字段名或索引",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "--- 步骤 2：系统执行插入操作 系统按照以下流程执行 BLOB 插入操作",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "逐行读取数据：将输入的BLOB数据分割成单行或多行，逐行传递给数据库",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "数据转换与验证：系统对输入的数据进行格式检查和类型转换，确保符合数据库列的定义要求（如长度、数据类型等）",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "--- 步骤 3：执行SQL语句 系统生成并执行以下 SQL 语句： ``` INSERT INTO [目标表] ([BLOB字段名]) VALUES ('插入内容'); ``` 其中，`[目标表]` 是指定的数据库表，`[BLOB字段名]` 是待插入的BLOB列名称",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "--- 步骤 4：处理插入结果 系统返回插入结果",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "成功：插入操作完成，生成新的数据行，并将结果反馈给应用软件",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "失败：若插入过程中出现错误（如数据库连接问题、数据不匹配或溢出），系统将返回相应的错误信息，并终止该用例流程",
+      "span": null,
+      "fused": true
+     },
+     {
+      "text": "--- 附加注意事项 为了确保 BLOB 插入操作的顺利进行，可以采取以下措施",
+      "span": null,
+      "fused": true
+     }
+    ],
+    "distilled_claims": [
+     {
+      "text": "调用",
+      "span": [
+       73,
+       75
+      ],
+      "fused": false,
+      "boundary_conf": 0.9953
+     },
+     {
+      "text": "调用",
+      "span": [
+       93,
+       95
+      ],
+      "fused": false,
+      "boundary_conf": 0.9887
+     },
+     {
+      "text": "并",
+      "span": [
+       106,
+       107
+      ],
+      "fused": false,
+      "boundary_conf": 0.5944
+     },
+     {
+      "text": "传递必要的参数",
+      "span": [
+       107,
+       114
+      ],
+      "fused": false,
+      "boundary_conf": 0.9562
+     },
+     {
+      "text": "表",
+      "span": [
+       120,
+       121
+      ],
+      "fused": false,
+      "boundary_conf": 0.4929
+     },
+     {
+      "text": "指定需要插入到BLOB列中的数据",
+      "span": [
+       127,
+       143
+      ],
+      "fused": false,
+      "boundary_conf": 0.996
+     },
+     {
+      "text": "字符串、",
+      "span": [
+       145,
+       149
+      ],
+      "fused": true,
+      "boundary_conf": 0.8992
+     },
+     {
+      "text": "数值或其他类型",
+      "span": [
+       149,
+       156
+      ],
+      "fused": false,
+      "boundary_conf": 0.9036
+     },
+     {
+      "text": "字",
+      "span": [
+       163,
+       164
+      ],
+      "fused": false,
+      "boundary_conf": 0.5896
+     },
+     {
+      "text": "根据数据库设计",
+      "span": [
+       172,
+       179
+      ],
+      "fused": false,
+      "boundary_conf": 0.9658
+     },
+     {
+      "text": "确定要插入的数据对应的具体字段名或索引",
+      "span": [
+       180,
+       199
+      ],
+      "fused": false,
+      "boundary_conf": 0.9915
+     },
+     {
+      "text": "将输入的BLOB数据分割成单行",
+      "span": [
+       261,
+       276
+      ],
+      "fused": false,
+      "boundary_conf": 0.9944
+     }
+    ]
+   }
+  ]
+ },
+ "teacher_reference_dev45": {
+  "n_claims": 464,
+  "claims_per_instance": 10.31,
+  "avg_claim_len": 12.48,
+  "fused_rate": 0.1164,
+  "span_exact_rate": 0.5733,
+  "text_in_answer_rate": 1.0,
+  "coverage_mean": 0.6016,
+  "coverage_verified_mean": 0.3748,
+  "type_dist": {
+   "enum": 115,
+   "identifier": 31,
+   "numeric": 5,
+   "semantic": 313
+  }
+ },
+ "downstream": {
+  "A_typed_strict": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.8047,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.6667,
+       "f1": 0.6667
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.973,
+       "recall": 0.9231,
+       "f1": 0.9474
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 1,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 225,
+     "claims_per_instance": 4.89,
+     "claim_len_avg": 31.3,
+     "claim_len_max": 134,
+     "kind_distribution": {
+      "enum": 8,
+      "identifier": 17,
+      "numeric": 2,
+      "semantic": 198
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 17,
+     "claims_per_instance": 1.0,
+     "claim_len_avg": 25.0,
+     "claim_len_max": 73,
+     "kind_distribution": {
+      "enum": 4,
+      "identifier": 5,
+      "semantic": 8
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    },
+    "nli_residual_unavailable": false,
+    "localization": {
+     "n_detected": 16,
+     "n_localized": 16,
+     "n_block_hit": 16,
+     "n_with_gold": 16,
+     "n_statement_level_refs": 23,
+     "block_hit_rate_of_detected": 1.0
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.5133,
+     "macro_f1": 0.5109,
+     "per_class": {
+      "support": {
+       "precision": 0.4211,
+       "recall": 0.32,
+       "f1": 0.3636
+      },
+      "refute": {
+       "precision": 0.725,
+       "recall": 0.58,
+       "f1": 0.6444
+      },
+      "not_in_evidence": {
+       "precision": 0.4444,
+       "recall": 0.64,
+       "f1": 0.5246
+      }
+     },
+     "confusion": {
+      "support|support": 16,
+      "support|refute": 12,
+      "support|not_in_evidence": 10,
+      "refute|support": 3,
+      "refute|refute": 29,
+      "refute|not_in_evidence": 8,
+      "not_in_evidence|support": 31,
+      "not_in_evidence|refute": 9,
+      "not_in_evidence|not_in_evidence": 32
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 207,
+     "claims_per_instance": 1.38,
+     "claim_len_avg": 23.6,
+     "claim_len_max": 51,
+     "kind_distribution": {
+      "identifier": 55,
+      "numeric": 6,
+      "semantic": 146
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "refute",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "support",
+     "C05QA-007": "support",
+     "C05QA-008": "support",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "support",
+     "C05QA-017": "support",
+     "C05QA-018": "support",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "refute",
+     "C05QA-026": "support",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "support",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "support",
+     "C06QA-005": "support",
+     "C06QA-006": "support",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "support",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "refute",
+     "C06QA-014": "refute",
+     "C06QA-015": "refute",
+     "C06QA-016": "support",
+     "C06QA-017": "support",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "not_in_evidence",
+     "C06QA-025": "refute",
+     "C06QA-026": "support",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "not_in_evidence",
+     "C06QA-029": "support",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "refute",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "support",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "support",
+     "C07QA-018": "refute",
+     "C07QA-019": "support",
+     "C07QA-020": "support",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "support",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "support",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "support",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "support",
+     "C08QA-007": "support",
+     "C08QA-008": "support",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "support",
+     "C08QA-017": "support",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "refute",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "support",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "not_in_evidence",
+     "C08QA-029": "support",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "support",
+     "C10QA-006": "support",
+     "C10QA-007": "support",
+     "C10QA-008": "support",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "support",
+     "C10QA-018": "support",
+     "C10QA-019": "not_in_evidence",
+     "C10QA-020": "not_in_evidence",
+     "C10QA-021": "not_in_evidence",
+     "C10QA-022": "not_in_evidence",
+     "C10QA-023": "not_in_evidence",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "support",
+     "C10QA-028": "not_in_evidence",
+     "C10QA-029": "support",
+     "C10QA-030": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   }
+  },
+  "distilled_strict": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.8696,
+     "macro_f1": 0.5501,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.5714,
+       "recall": 1.0,
+       "f1": 0.7273
+      },
+      "not_in_evidence": {
+       "precision": 0.9231,
+       "recall": 0.9231,
+       "f1": 0.9231
+      }
+     },
+     "confusion": {
+      "refute|refute": 4,
+      "refute|not_in_evidence": 3,
+      "not_in_evidence|support": 3,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 636,
+     "claims_per_instance": 13.83,
+     "claim_len_avg": 9.0,
+     "claim_len_max": 39,
+     "kind_distribution": {
+      "semantic": 636
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "refute",
+     "S1QA-053": "not_in_evidence",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "refute"
+    },
+    "nli_residual_unavailable": false
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 47,
+     "claims_per_instance": 2.76,
+     "claim_len_avg": 10.9,
+     "claim_len_max": 46,
+     "kind_distribution": {
+      "semantic": 47
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    },
+    "nli_residual_unavailable": false,
+    "localization": {
+     "n_detected": 16,
+     "n_localized": 16,
+     "n_block_hit": 16,
+     "n_with_gold": 16,
+     "n_statement_level_refs": 23,
+     "block_hit_rate_of_detected": 1.0
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.48,
+     "macro_f1": 0.3978,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.7,
+       "recall": 0.7,
+       "f1": 0.7
+      },
+      "not_in_evidence": {
+       "precision": 0.37,
+       "recall": 0.74,
+       "f1": 0.4933
+      }
+     },
+     "confusion": {
+      "refute|support": 2,
+      "refute|refute": 35,
+      "refute|not_in_evidence": 13,
+      "not_in_evidence|support": 48,
+      "not_in_evidence|refute": 15,
+      "not_in_evidence|not_in_evidence": 37
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 449,
+     "claims_per_instance": 2.99,
+     "claim_len_avg": 14.5,
+     "claim_len_max": 48,
+     "kind_distribution": {
+      "semantic": 449
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "not_in_evidence",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "not_in_evidence",
+     "C05QA-007": "not_in_evidence",
+     "C05QA-008": "not_in_evidence",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "not_in_evidence",
+     "C05QA-017": "refute",
+     "C05QA-018": "not_in_evidence",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "not_in_evidence",
+     "C05QA-026": "not_in_evidence",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "not_in_evidence",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "not_in_evidence",
+     "C06QA-005": "not_in_evidence",
+     "C06QA-006": "refute",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "not_in_evidence",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "not_in_evidence",
+     "C06QA-014": "refute",
+     "C06QA-015": "not_in_evidence",
+     "C06QA-016": "not_in_evidence",
+     "C06QA-017": "not_in_evidence",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "refute",
+     "C06QA-025": "refute",
+     "C06QA-026": "not_in_evidence",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "refute",
+     "C06QA-029": "not_in_evidence",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "not_in_evidence",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "not_in_evidence",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "not_in_evidence",
+     "C07QA-018": "refute",
+     "C07QA-019": "refute",
+     "C07QA-020": "refute",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "not_in_evidence",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "not_in_evidence",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "not_in_evidence",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "not_in_evidence",
+     "C08QA-007": "not_in_evidence",
+     "C08QA-008": "not_in_evidence",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "refute",
+     "C08QA-017": "refute",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "not_in_evidence",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "not_in_evidence",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "refute",
+     "C08QA-029": "not_in_evidence",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "not_in_evidence",
+     "C10QA-006": "not_in_evidence",
+     "C10QA-007": "not_in_evidence",
+     "C10QA-008": "not_in_evidence",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "refute",
+     "C10QA-018": "not_in_evidence",
+     "C10QA-019": "refute",
+     "C10QA-020": "refute",
+     "C10QA-021": "refute",
+     "C10QA-022": "refute",
+     "C10QA-023": "refute",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "not_in_evidence",
+     "C10QA-028": "refute",
+     "C10QA-029": "not_in_evidence",
+     "C10QA-030": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   }
+  },
+  "A_typed_no_minor_block": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.8913,
+     "macro_f1": 0.7683,
+     "per_class": {
+      "support": {
+       "precision": 0.5,
+       "recall": 0.6667,
+       "f1": 0.5714
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.9722,
+       "recall": 0.8974,
+       "f1": 0.9333
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 2,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 1,
+      "not_in_evidence|not_in_evidence": 35
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 225,
+     "claims_per_instance": 4.89,
+     "claim_len_avg": 31.3,
+     "claim_len_max": 134,
+     "kind_distribution": {
+      "enum": 8,
+      "identifier": 17,
+      "numeric": 2,
+      "semantic": 198
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "support",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 17,
+     "claims_per_instance": 1.0,
+     "claim_len_avg": 25.0,
+     "claim_len_max": 73,
+     "kind_distribution": {
+      "enum": 4,
+      "identifier": 5,
+      "semantic": 8
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    },
+    "nli_residual_unavailable": false,
+    "localization": {
+     "n_detected": 16,
+     "n_localized": 16,
+     "n_block_hit": 16,
+     "n_with_gold": 16,
+     "n_statement_level_refs": 23,
+     "block_hit_rate_of_detected": 1.0
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.5133,
+     "macro_f1": 0.5109,
+     "per_class": {
+      "support": {
+       "precision": 0.4211,
+       "recall": 0.32,
+       "f1": 0.3636
+      },
+      "refute": {
+       "precision": 0.725,
+       "recall": 0.58,
+       "f1": 0.6444
+      },
+      "not_in_evidence": {
+       "precision": 0.4444,
+       "recall": 0.64,
+       "f1": 0.5246
+      }
+     },
+     "confusion": {
+      "support|support": 16,
+      "support|refute": 12,
+      "support|not_in_evidence": 10,
+      "refute|support": 3,
+      "refute|refute": 29,
+      "refute|not_in_evidence": 8,
+      "not_in_evidence|support": 31,
+      "not_in_evidence|refute": 9,
+      "not_in_evidence|not_in_evidence": 32
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 207,
+     "claims_per_instance": 1.38,
+     "claim_len_avg": 23.6,
+     "claim_len_max": 51,
+     "kind_distribution": {
+      "identifier": 55,
+      "numeric": 6,
+      "semantic": 146
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "refute",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "support",
+     "C05QA-007": "support",
+     "C05QA-008": "support",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "support",
+     "C05QA-017": "support",
+     "C05QA-018": "support",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "refute",
+     "C05QA-026": "support",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "support",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "support",
+     "C06QA-005": "support",
+     "C06QA-006": "support",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "support",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "refute",
+     "C06QA-014": "refute",
+     "C06QA-015": "refute",
+     "C06QA-016": "support",
+     "C06QA-017": "support",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "not_in_evidence",
+     "C06QA-025": "refute",
+     "C06QA-026": "support",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "not_in_evidence",
+     "C06QA-029": "support",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "refute",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "support",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "support",
+     "C07QA-018": "refute",
+     "C07QA-019": "support",
+     "C07QA-020": "support",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "support",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "support",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "support",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "support",
+     "C08QA-007": "support",
+     "C08QA-008": "support",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "support",
+     "C08QA-017": "support",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "refute",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "support",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "not_in_evidence",
+     "C08QA-029": "support",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "support",
+     "C10QA-006": "support",
+     "C10QA-007": "support",
+     "C10QA-008": "support",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "support",
+     "C10QA-018": "support",
+     "C10QA-019": "not_in_evidence",
+     "C10QA-020": "not_in_evidence",
+     "C10QA-021": "not_in_evidence",
+     "C10QA-022": "not_in_evidence",
+     "C10QA-023": "not_in_evidence",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "support",
+     "C10QA-028": "not_in_evidence",
+     "C10QA-029": "support",
+     "C10QA-030": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   }
+  },
+  "distilled_no_minor_block": {
+   "test46": {
+    "metrics": {
+     "accuracy": 0.8696,
+     "macro_f1": 0.5501,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.5714,
+       "recall": 1.0,
+       "f1": 0.7273
+      },
+      "not_in_evidence": {
+       "precision": 0.9231,
+       "recall": 0.9231,
+       "f1": 0.9231
+      }
+     },
+     "confusion": {
+      "refute|refute": 4,
+      "refute|not_in_evidence": 3,
+      "not_in_evidence|support": 3,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "claim_stats": {
+     "n_instances": 46,
+     "n_claims": 636,
+     "claims_per_instance": 13.83,
+     "claim_len_avg": 9.0,
+     "claim_len_max": 39,
+     "kind_distribution": {
+      "semantic": 636
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "refute",
+     "S1QA-053": "not_in_evidence",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "refute"
+    },
+    "nli_residual_unavailable": false
+   },
+   "violations17": {
+    "metrics": {
+     "accuracy": 0.9412,
+     "macro_f1": 0.3232,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.9412,
+       "f1": 0.9697
+      },
+      "not_in_evidence": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      }
+     },
+     "confusion": {
+      "support|refute": 1,
+      "refute|refute": 16
+     }
+    },
+    "claim_stats": {
+     "n_instances": 17,
+     "n_claims": 47,
+     "claims_per_instance": 2.76,
+     "claim_len_avg": 10.9,
+     "claim_len_max": 46,
+     "kind_distribution": {
+      "semantic": 47
+     }
+    },
+    "per_instance_verdicts": {
+     "DOC04-VIO-01": "refute",
+     "DOC04-VIO-02": "refute",
+     "DOC04-VIO-03": "refute",
+     "DOC04-VIO-04": "refute",
+     "DOC04-VIO-05": "refute",
+     "DOC04-VIO-06": "refute",
+     "DOC04-VIO-07": "refute",
+     "DOC04-VIO-08": "refute",
+     "DOC04-VIO-09": "refute",
+     "DOC04-VIO-10": "refute",
+     "DOC04-VIO-11": "refute",
+     "DOC04-VIO-12": "refute",
+     "DOC04-VIO-13": "refute",
+     "DOC04-VIO-14": "refute",
+     "DOC04-VIO-15": "support",
+     "DOC04-VIO-16": "refute",
+     "DOC04-VIO-17": "refute"
+    },
+    "nli_residual_unavailable": false,
+    "localization": {
+     "n_detected": 16,
+     "n_localized": 16,
+     "n_block_hit": 16,
+     "n_with_gold": 16,
+     "n_statement_level_refs": 23,
+     "block_hit_rate_of_detected": 1.0
+    }
+   },
+   "crossdoc150": {
+    "metrics": {
+     "accuracy": 0.48,
+     "macro_f1": 0.3978,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.7,
+       "recall": 0.7,
+       "f1": 0.7
+      },
+      "not_in_evidence": {
+       "precision": 0.37,
+       "recall": 0.74,
+       "f1": 0.4933
+      }
+     },
+     "confusion": {
+      "refute|support": 2,
+      "refute|refute": 35,
+      "refute|not_in_evidence": 13,
+      "not_in_evidence|support": 48,
+      "not_in_evidence|refute": 15,
+      "not_in_evidence|not_in_evidence": 37
+     }
+    },
+    "claim_stats": {
+     "n_instances": 150,
+     "n_claims": 449,
+     "claims_per_instance": 2.99,
+     "claim_len_avg": 14.5,
+     "claim_len_max": 48,
+     "kind_distribution": {
+      "semantic": 449
+     }
+    },
+    "per_instance_verdicts": {
+     "C05QA-001": "not_in_evidence",
+     "C05QA-002": "not_in_evidence",
+     "C05QA-003": "not_in_evidence",
+     "C05QA-004": "not_in_evidence",
+     "C05QA-005": "not_in_evidence",
+     "C05QA-006": "not_in_evidence",
+     "C05QA-007": "not_in_evidence",
+     "C05QA-008": "not_in_evidence",
+     "C05QA-009": "not_in_evidence",
+     "C05QA-010": "not_in_evidence",
+     "C05QA-011": "refute",
+     "C05QA-012": "refute",
+     "C05QA-013": "refute",
+     "C05QA-014": "refute",
+     "C05QA-015": "refute",
+     "C05QA-016": "not_in_evidence",
+     "C05QA-017": "refute",
+     "C05QA-018": "not_in_evidence",
+     "C05QA-019": "not_in_evidence",
+     "C05QA-020": "not_in_evidence",
+     "C05QA-021": "refute",
+     "C05QA-022": "not_in_evidence",
+     "C05QA-023": "not_in_evidence",
+     "C05QA-024": "not_in_evidence",
+     "C05QA-025": "not_in_evidence",
+     "C05QA-026": "not_in_evidence",
+     "C05QA-027": "not_in_evidence",
+     "C05QA-028": "refute",
+     "C05QA-029": "not_in_evidence",
+     "C05QA-030": "not_in_evidence",
+     "C06QA-001": "not_in_evidence",
+     "C06QA-002": "not_in_evidence",
+     "C06QA-003": "not_in_evidence",
+     "C06QA-004": "not_in_evidence",
+     "C06QA-005": "not_in_evidence",
+     "C06QA-006": "refute",
+     "C06QA-007": "not_in_evidence",
+     "C06QA-008": "not_in_evidence",
+     "C06QA-009": "not_in_evidence",
+     "C06QA-010": "not_in_evidence",
+     "C06QA-011": "refute",
+     "C06QA-012": "not_in_evidence",
+     "C06QA-013": "not_in_evidence",
+     "C06QA-014": "refute",
+     "C06QA-015": "not_in_evidence",
+     "C06QA-016": "not_in_evidence",
+     "C06QA-017": "not_in_evidence",
+     "C06QA-018": "refute",
+     "C06QA-019": "not_in_evidence",
+     "C06QA-020": "not_in_evidence",
+     "C06QA-021": "not_in_evidence",
+     "C06QA-022": "not_in_evidence",
+     "C06QA-023": "not_in_evidence",
+     "C06QA-024": "refute",
+     "C06QA-025": "refute",
+     "C06QA-026": "not_in_evidence",
+     "C06QA-027": "not_in_evidence",
+     "C06QA-028": "refute",
+     "C06QA-029": "not_in_evidence",
+     "C06QA-030": "not_in_evidence",
+     "C07QA-001": "not_in_evidence",
+     "C07QA-002": "not_in_evidence",
+     "C07QA-003": "not_in_evidence",
+     "C07QA-004": "not_in_evidence",
+     "C07QA-005": "not_in_evidence",
+     "C07QA-006": "not_in_evidence",
+     "C07QA-007": "not_in_evidence",
+     "C07QA-008": "refute",
+     "C07QA-009": "not_in_evidence",
+     "C07QA-010": "not_in_evidence",
+     "C07QA-011": "refute",
+     "C07QA-012": "refute",
+     "C07QA-013": "refute",
+     "C07QA-014": "refute",
+     "C07QA-015": "refute",
+     "C07QA-016": "refute",
+     "C07QA-017": "not_in_evidence",
+     "C07QA-018": "refute",
+     "C07QA-019": "refute",
+     "C07QA-020": "refute",
+     "C07QA-021": "not_in_evidence",
+     "C07QA-022": "not_in_evidence",
+     "C07QA-023": "not_in_evidence",
+     "C07QA-024": "not_in_evidence",
+     "C07QA-025": "not_in_evidence",
+     "C07QA-026": "not_in_evidence",
+     "C07QA-027": "not_in_evidence",
+     "C07QA-028": "not_in_evidence",
+     "C07QA-029": "not_in_evidence",
+     "C07QA-030": "refute",
+     "C08QA-001": "not_in_evidence",
+     "C08QA-002": "not_in_evidence",
+     "C08QA-003": "not_in_evidence",
+     "C08QA-004": "not_in_evidence",
+     "C08QA-005": "not_in_evidence",
+     "C08QA-006": "not_in_evidence",
+     "C08QA-007": "not_in_evidence",
+     "C08QA-008": "not_in_evidence",
+     "C08QA-009": "not_in_evidence",
+     "C08QA-010": "not_in_evidence",
+     "C08QA-011": "refute",
+     "C08QA-012": "refute",
+     "C08QA-013": "refute",
+     "C08QA-014": "refute",
+     "C08QA-015": "refute",
+     "C08QA-016": "refute",
+     "C08QA-017": "refute",
+     "C08QA-018": "refute",
+     "C08QA-019": "not_in_evidence",
+     "C08QA-020": "not_in_evidence",
+     "C08QA-021": "not_in_evidence",
+     "C08QA-022": "not_in_evidence",
+     "C08QA-023": "not_in_evidence",
+     "C08QA-024": "refute",
+     "C08QA-025": "not_in_evidence",
+     "C08QA-026": "not_in_evidence",
+     "C08QA-027": "not_in_evidence",
+     "C08QA-028": "refute",
+     "C08QA-029": "not_in_evidence",
+     "C08QA-030": "not_in_evidence",
+     "C10QA-001": "not_in_evidence",
+     "C10QA-002": "not_in_evidence",
+     "C10QA-003": "not_in_evidence",
+     "C10QA-004": "not_in_evidence",
+     "C10QA-005": "not_in_evidence",
+     "C10QA-006": "not_in_evidence",
+     "C10QA-007": "not_in_evidence",
+     "C10QA-008": "not_in_evidence",
+     "C10QA-009": "not_in_evidence",
+     "C10QA-010": "not_in_evidence",
+     "C10QA-011": "refute",
+     "C10QA-012": "refute",
+     "C10QA-013": "refute",
+     "C10QA-014": "refute",
+     "C10QA-015": "refute",
+     "C10QA-016": "refute",
+     "C10QA-017": "refute",
+     "C10QA-018": "not_in_evidence",
+     "C10QA-019": "refute",
+     "C10QA-020": "refute",
+     "C10QA-021": "refute",
+     "C10QA-022": "refute",
+     "C10QA-023": "refute",
+     "C10QA-024": "not_in_evidence",
+     "C10QA-025": "refute",
+     "C10QA-026": "not_in_evidence",
+     "C10QA-027": "not_in_evidence",
+     "C10QA-028": "refute",
+     "C10QA-029": "not_in_evidence",
+     "C10QA-030": "not_in_evidence"
+    },
+    "nli_residual_unavailable": false
+   }
+  }
+ },
+ "flips_a_to_distilled": {
+  "strict": {
+   "test46": {
+    "n_changed": 6,
+    "corrected_a_wrong_b_right": [
+     "S1QA-030",
+     "S1QA-064"
+    ],
+    "regressed_a_right_b_wrong": [
+     "S1QA-006",
+     "S1QA-050",
+     "S1QA-053",
+     "S1QA-087"
+    ],
+    "moved_both_wrong": []
+   },
+   "violations17": {
+    "n_changed": 0,
+    "corrected_a_wrong_b_right": [],
+    "regressed_a_right_b_wrong": [],
+    "moved_both_wrong": []
+   },
+   "crossdoc150": {
+    "n_changed": 53,
+    "corrected_a_wrong_b_right": [
+     "C05QA-017",
+     "C05QA-025",
+     "C05QA-026",
+     "C05QA-029",
+     "C06QA-026",
+     "C06QA-029",
+     "C07QA-019",
+     "C07QA-020",
+     "C07QA-027",
+     "C07QA-029",
+     "C08QA-016",
+     "C08QA-017",
+     "C08QA-021",
+     "C08QA-026",
+     "C08QA-029",
+     "C10QA-017",
+     "C10QA-019",
+     "C10QA-020",
+     "C10QA-027",
+     "C10QA-029"
+    ],
+    "regressed_a_right_b_wrong": [
+     "C05QA-006",
+     "C05QA-007",
+     "C05QA-008",
+     "C06QA-004",
+     "C06QA-005",
+     "C06QA-006",
+     "C06QA-008",
+     "C06QA-013",
+     "C06QA-015",
+     "C06QA-024",
+     "C06QA-028",
+     "C07QA-007",
+     "C08QA-004",
+     "C08QA-006",
+     "C08QA-007",
+     "C08QA-008",
+     "C08QA-028",
+     "C10QA-005",
+     "C10QA-006",
+     "C10QA-007",
+     "C10QA-008",
+     "C10QA-021",
+     "C10QA-022",
+     "C10QA-023",
+     "C10QA-028"
+    ],
+    "moved_both_wrong": [
+     "C05QA-003",
+     "C05QA-016",
+     "C05QA-018",
+     "C06QA-016",
+     "C06QA-017",
+     "C07QA-002",
+     "C07QA-017",
+     "C10QA-018"
+    ]
+   }
+  },
+  "no_minor_block": {
+   "test46": {
+    "n_changed": 7,
+    "corrected_a_wrong_b_right": [
+     "S1QA-024",
+     "S1QA-030",
+     "S1QA-064"
+    ],
+    "regressed_a_right_b_wrong": [
+     "S1QA-006",
+     "S1QA-050",
+     "S1QA-053",
+     "S1QA-087"
+    ],
+    "moved_both_wrong": []
+   },
+   "violations17": {
+    "n_changed": 0,
+    "corrected_a_wrong_b_right": [],
+    "regressed_a_right_b_wrong": [],
+    "moved_both_wrong": []
+   },
+   "crossdoc150": {
+    "n_changed": 53,
+    "corrected_a_wrong_b_right": [
+     "C05QA-017",
+     "C05QA-025",
+     "C05QA-026",
+     "C05QA-029",
+     "C06QA-026",
+     "C06QA-029",
+     "C07QA-019",
+     "C07QA-020",
+     "C07QA-027",
+     "C07QA-029",
+     "C08QA-016",
+     "C08QA-017",
+     "C08QA-021",
+     "C08QA-026",
+     "C08QA-029",
+     "C10QA-017",
+     "C10QA-019",
+     "C10QA-020",
+     "C10QA-027",
+     "C10QA-029"
+    ],
+    "regressed_a_right_b_wrong": [
+     "C05QA-006",
+     "C05QA-007",
+     "C05QA-008",
+     "C06QA-004",
+     "C06QA-005",
+     "C06QA-006",
+     "C06QA-008",
+     "C06QA-013",
+     "C06QA-015",
+     "C06QA-024",
+     "C06QA-028",
+     "C07QA-007",
+     "C08QA-004",
+     "C08QA-006",
+     "C08QA-007",
+     "C08QA-008",
+     "C08QA-028",
+     "C10QA-005",
+     "C10QA-006",
+     "C10QA-007",
+     "C10QA-008",
+     "C10QA-021",
+     "C10QA-022",
+     "C10QA-023",
+     "C10QA-028"
+    ],
+    "moved_both_wrong": [
+     "C05QA-003",
+     "C05QA-016",
+     "C05QA-018",
+     "C06QA-016",
+     "C06QA-017",
+     "C07QA-002",
+     "C07QA-017",
+     "C10QA-018"
+    ]
+   }
+  }
+ }
+}
