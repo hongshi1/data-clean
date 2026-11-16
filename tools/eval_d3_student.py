@@ -42,27 +42,40 @@ def _load():
     if _MODEL is not None:
         return _MODEL, _TOKENIZER
     import torch
-    from peft import PeftModel
     from transformers import AutoModelForCausalLM, AutoTokenizer
     _TOKENIZER = AutoTokenizer.from_pretrained(
         str(BASE / "models/llm/qwen3-1.7b"))
-    base_model = AutoModelForCausalLM.from_pretrained(
-        str(BASE / "models/llm/qwen3-1.7b"), torch_dtype=torch.float16)
-    _MODEL = PeftModel.from_pretrained(
-        base_model, str(BASE / "models/llm/d3_student_v1"))
-    _MODEL = _MODEL.merge_and_unload()
+    adapter_path = BASE / _ADAPTER
+    if (adapter_path / "adapter_config.json").exists():
+        from peft import PeftModel
+        base_model = AutoModelForCausalLM.from_pretrained(
+            str(BASE / "models/llm/qwen3-1.7b"), torch_dtype=torch.float16)
+        _MODEL = PeftModel.from_pretrained(base_model, str(adapter_path))
+        _MODEL = _MODEL.merge_and_unload()
+    else:
+        # 已合并的完整模型(如OOM抢救产物)
+        _MODEL = AutoModelForCausalLM.from_pretrained(
+            str(adapter_path), torch_dtype=torch.float16)
     if torch.cuda.is_available():
         _MODEL.to("cuda")
     _MODEL.eval()
     return _MODEL, _TOKENIZER
 
 
-def _user_message(question: str, answer: str, evidences) -> str:
+def _user_message(question: str, answer: str, evidences,
+                  evidence_budget: int = 1200) -> str:
     lines = [f"【问题】{question}", "", "【待校验answer】", answer, "",
              "【证据】"]
+    used = 0
     for index, text in enumerate(evidences, 1):
         cleaned = re.sub(r"\s+", " ", str(text)).strip()
-        lines.append(f"ev-{index}: {cleaned[:800]}")
+        if used >= evidence_budget:
+            break
+        remaining = evidence_budget - used
+        if len(cleaned) > remaining:
+            cleaned = cleaned[:remaining]
+        used += len(cleaned)
+        lines.append(f"ev-{index}: {cleaned}")
     lines += ["", _SPEC]
     return "\n".join(lines)
 
@@ -175,7 +188,11 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--adapter", default="models/llm/d3_student_v1")
     args = parser.parse_args()
+
+    global _ADAPTER
+    _ADAPTER = str(BASE / args.adapter)
 
     silver = load_silver_labels(SILVER)
     qa = load_frozen_qa()

@@ -35,12 +35,20 @@ BASE_MODEL = BASE / "models/llm/qwen3-1.7b"
 OUT_DIR = BASE / "models/llm/d3_student_v1"
 
 
-def _user_message(row: dict) -> str:
+def _user_message(row: dict, evidence_budget: int = 0) -> str:
     lines = [f"【问题】{row['question']}", "",
              "【待校验answer】", row["answer"], "", "【证据】"]
+    used = 0
     for index, text in enumerate(row["evidence"], 1):
         import re
         cleaned = re.sub(r"\s+", " ", str(text)).strip()
+        if evidence_budget and used >= evidence_budget:
+            break
+        if evidence_budget:
+            remaining = evidence_budget - used
+            if len(cleaned) > remaining:
+                cleaned = cleaned[:remaining]
+        used += len(cleaned)
         lines.append(f"ev-{index}: {cleaned}")
     lines += ["", _SPEC]
     return "\n".join(lines)
@@ -79,6 +87,11 @@ def main() -> None:
     parser.add_argument("--batch", type=int, default=2)
     parser.add_argument("--grad-accum", type=int, default=8)
     parser.add_argument("--max-len", type=int, default=3072)
+    parser.add_argument("--out-dir", type=Path, default=OUT_DIR,
+                        help="adapter输出目录(v2扩容训练用新目录)")
+    parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--evidence-budget", type=int, default=1200,
+                        help="证据字符预算(user消息内截断, target不截断)")
     args = parser.parse_args()
 
     import torch
@@ -93,7 +106,7 @@ def main() -> None:
     print(f"device={device} fp16={use_fp16}")
 
     rows = [json.loads(line) for line in
-            LABELS.read_text(encoding="utf-8").splitlines() if line.strip()]
+            args.labels.read_text(encoding="utf-8").splitlines() if line.strip()]
     train_rows, dev_rows = _split(rows)
     print(f"训练对: {len(train_rows)} | dev: {len(dev_rows)}")
 
@@ -115,10 +128,13 @@ def main() -> None:
     def encode(row: dict) -> dict:
         messages = [
             {"role": "system", "content": _SYSTEM},
-            {"role": "user", "content": _user_message(row)},
+            {"role": "user", "content": _user_message(
+                row, evidence_budget=args.evidence_budget)},
             {"role": "assistant", "content": _target_message(row)}]
         # 版本稳健路径: 模板渲染成字符串再分词(transformers 5.x的
-        # tokenize=True返回结构不保证是id列表)
+        # tokenize=True返回结构不保证是id列表); 证据在user消息内
+        # 按budget截断——目标JSON永不截断(v2教训: max_len截断会
+        # 把target切成半个JSON, loss虚低但学习被破坏)
         prompt_text = tokenizer.apply_chat_template(
             messages[:2], tokenize=False, add_generation_prompt=True)
         full_text = tokenizer.apply_chat_template(
@@ -130,8 +146,8 @@ def main() -> None:
         labels = list(full_ids)
         for i in range(len(prompt_ids)):
             labels[i] = -100
-        full_ids = full_ids[:args.max_len]
-        labels = labels[:args.max_len]
+        if len(full_ids) > args.max_len:
+            return {"input_ids": [], "labels": [], "attention_mask": []}
         return {"input_ids": full_ids, "labels": labels,
                 "attention_mask": [1] * len(full_ids)}
 
@@ -177,8 +193,9 @@ def main() -> None:
         gradient_checkpointing=True,
         gradient_checkpointing_kwargs={"use_reentrant": False},
         eval_strategy="epoch",
-        save_strategy="epoch",
-        save_total_limit=1,
+        save_strategy="steps",
+        save_steps=30,
+        save_total_limit=2,
         logging_steps=5,
         report_to=[],
         remove_unused_columns=False,
@@ -211,20 +228,20 @@ def main() -> None:
     trainer.train()
     elapsed = round(time.time() - started, 1)
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    model.save_pretrained(str(OUT_DIR))
-    tokenizer.save_pretrained(str(OUT_DIR))
-    (OUT_DIR / "d3_meta.json").write_text(json.dumps({
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+    model.save_pretrained(str(args.out_dir))
+    tokenizer.save_pretrained(str(args.out_dir))
+    (args.out_dir / "d3_meta.json").write_text(json.dumps({
         "base": str(BASE_MODEL), "n_train": len(train_ds),
         "n_dev": len(dev_ds), "epochs": args.epochs,
         "train_seconds": elapsed, "labels": str(LABELS),
         "created_by": f"tools/train_d3_student.py run {run.path.name}",
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     run.save_result({"train_seconds": elapsed,
-                     "adapter": str(OUT_DIR),
+                     "adapter": str(args.out_dir),
                      "history": [dict(h) for h in trainer.state.log_history
                                  if "loss" in h or "eval_loss" in h]})
-    print(json.dumps({"adapter": str(OUT_DIR),
+    print(json.dumps({"adapter": str(args.out_dir),
                       "train_seconds": elapsed}, ensure_ascii=False))
 
 

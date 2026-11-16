@@ -175,6 +175,9 @@ def main() -> None:
         ("qa91-dev", [r for r in load_frozen_qa()
                       if r["instance_id"] in dev_ids]),
         ("violations", read_jsonl(VIO)),
+        ("d3train", read_jsonl(
+            BASE / "data/gjb_438c/distillation"
+            / "d3_train_instances_v1.jsonl")),
     ]
     for doc in ("05", "06", "07", "08", "10"):
         corpora.append(("crossdoc", read_jsonl(
