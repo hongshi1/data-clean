@@ -29,6 +29,7 @@ from algorithms.consistency.answer_claims import (
 from algorithms.consistency.answer_claims import (
     extract_numeric_claims as _extract_numeric_claims,
 )
+from algorithms.consistency.assertion import is_assertive_claim as _is_assertive_claim
 from algorithms.consistency.answer_structure import StructuredClaim
 from algorithms.consistency.answer_structure import decompose_answer
 from algorithms.consistency.claim_channels import (
@@ -58,21 +59,30 @@ __all__ = [
     "ExpertSpec",
     "QAConsistencyModule",
     "_AnswerClaim",
+    "_ASSERTIVE_SUPPORT_RATIO",
     "_extract_numeric_claims",
     "_is_active_nie",
+    "_is_assertive_claim",
     "_is_minor_claim",
 ]
 
 #: cross-claim aggregation variants (P1 support-recall study,
-#: docs/srs_project/50_support_recall_analysis.md)
+#: docs/srs_project/50_support_recall_analysis.md; M88 assertion-aware
+#: variants for the distilled segmenter's bare-noun NIE collapse)
 AGGREGATION_VARIANTS: tuple[str, ...] = (
-    "strict",          # current ∀ semantics: any NIE blocks support
-    "dominant_70",     # decidable-claim support ratio >= 0.70 -> support
-    "no_minor_block",  # core (non effect/summary) claims all support
+    "strict",            # current ∀ semantics: any NIE blocks support
+    "dominant_70",       # decidable-claim support ratio >= 0.70 -> support
+    "no_minor_block",    # core (non effect/summary) claims all support
+    "assertive_strict",  # assertive-claim set ∀: bare fragments cannot veto
+    "assertive_ratio",   # assertive+decidable support ratio >= τ -> support
 )
 
 #: support ratio gate for the dominant_70 aggregation variant
 _DOMINANT_SUPPORT_RATIO = 0.70
+
+#: support ratio gate τ for the assertive_ratio aggregation variant
+#: (M88; swept on dev-45 in tools/eval_agg_codesign.py, default 0.8)
+_ASSERTIVE_SUPPORT_RATIO = 0.80
 
 #: NIE rationales that record an active negative observation from a
 #: structured channel — the channel checked the frozen evidence and the
@@ -307,6 +317,15 @@ class QAConsistencyModule:
         "no_minor_block" only lets substantive core claims block —
         效果性/总结性 fragments (see _MINOR_CLAIM_MARKERS) cannot veto;
         a claim set with no core claims falls back to the strict rule.
+        "assertive_strict" (M88) restricts the ∀ semantics to the
+        assertive-claim subset (see algorithms.consistency.assertion):
+        bare noun/verb fragments the distilled segmenter emits ("添加"
+        style non-propositions that NLI can only judge NIE) cannot veto;
+        a claim set with no assertive claim falls back to the strict
+        rule. "assertive_ratio" (M88) computes the support ratio over
+        the assertive AND decidable claims (support/refute verdict or
+        an active-observation NIE, as in dominant_70) and emits support
+        when it reaches _ASSERTIVE_SUPPORT_RATIO (τ, default 0.80).
         Refute wins in every variant. Default "strict" keeps every
         existing configuration and paper number untouched.
         decomposer: answer分解器选择 (v3域自适应配置面). "typed"
@@ -666,6 +685,14 @@ class QAConsistencyModule:
         no_minor_block: without a refute, support wins when every core
         (non effect/summary) claim is support; minor fragments cannot
         veto. A claim set with no core claims falls back to strict.
+        assertive_strict (M88): the ∀ semantics restricted to the
+        assertive-claim subset (_is_assertive_claim) — non-propositional
+        bare fragments cannot veto support; without an assertive claim
+        the rule falls back to strict.
+        assertive_ratio (M88): support ratio over the assertive and
+        decidable claims (non-NIE or active-observation NIE) must reach
+        _ASSERTIVE_SUPPORT_RATIO (τ) for support; a non-assertive or
+        inability-NIE claim neither votes nor vetoes.
         Refute wins in every variant.
         """
         labels = {r.verdict for r in results}
@@ -690,6 +717,28 @@ class QAConsistencyModule:
             if all(r.verdict == "support" for r in core):
                 return "support", ["agg_no_minor_block_core_all_support"]
             return "not_in_evidence", ["agg_no_minor_block_core_blocked"]
+        if self.aggregation == "assertive_strict":
+            assertive = [r for r in results if _is_assertive_claim(r)]
+            if not assertive:
+                assertive = list(results)  # no assertive claim: strict fallback
+            if all(r.verdict == "support" for r in assertive):
+                return "support", ["agg_assertive_strict_all_support"]
+            return "not_in_evidence", ["agg_assertive_strict_blocked"]
+        if self.aggregation == "assertive_ratio":
+            decidable = [r for r in results
+                         if _is_assertive_claim(r)
+                         and (r.verdict != "not_in_evidence"
+                              or _is_active_nie(r))]
+            if not decidable:
+                return "not_in_evidence", [
+                    "agg_assertive_ratio_no_decidable_claim"]
+            support_count = sum(1 for r in decidable
+                                if r.verdict == "support")
+            ratio = support_count / len(decidable)
+            diagnostic = f"agg_assertive_ratio_{ratio:.2f}"
+            if ratio >= _ASSERTIVE_SUPPORT_RATIO:
+                return "support", [diagnostic]
+            return "not_in_evidence", [diagnostic]
         if "not_in_evidence" in labels:
             return "not_in_evidence", []
         return "support", []
