@@ -82,6 +82,21 @@ def build_agent() -> tuple[HybridRecaller, CascadeVerifier, dict]:
     return recaller, verifier, full
 
 
+def _sentence_of_span(answer: str, span: tuple[int, int] | None) -> str:
+    """span所在的answer句子(定位报告的answer侧上下文)."""
+    if span is None:
+        return answer[:120]
+    mid = (span[0] + span[1]) // 2
+    start = max(answer.rfind("。", 0, mid), answer.rfind("！", 0, mid),
+                answer.rfind("？", 0, mid), answer.rfind("；", 0, mid),
+                answer.rfind("\n", 0, mid)) + 1
+    ends = [pos for pos in (answer.find("。", mid), answer.find("！", mid),
+                            answer.find("？", mid), answer.find("；", mid),
+                            answer.find("\n", mid)) if pos >= 0]
+    end = min(ends) + 1 if ends else min(len(answer), mid + 120)
+    return answer[start:end].strip() or answer[:120]
+
+
 def agent_report(recaller: HybridRecaller, verifier: CascadeVerifier,
                  full: dict, question: str, answer: str, iid: str) -> dict:
     start = time.perf_counter()
@@ -90,25 +105,31 @@ def agent_report(recaller: HybridRecaller, verifier: CascadeVerifier,
     elapsed = (time.perf_counter() - start) * 1000
     return {
         "instance_id": iid,
+        "question": question,
+        "answer": answer,
         "verdict": result.verdict,
+        "verdict_zh": {"support": "一致(证据支持)",
+                       "refute": "不一致(与文档证据冲突)",
+                       "not_in_evidence": "无法判定(证据不足)"
+                       }.get(result.verdict, result.verdict),
         "latency_ms": round(elapsed, 1),
         "n_recalled_evidence": len(request.evidence),
-        "recalled_sections": sorted({str(h.get("section", ""))[:12]
-                                     for h in hits}),
         "inconsistencies": [{
-            "claim": loc.claim_text,
+            "answer_context": _sentence_of_span(answer, loc.answer_span),
             "answer_span": loc.answer_span,
+            "answer_assertion": loc.claim_text,
             "check_items": list(loc.check_item_candidates),
             "detector": loc.method,
             "confidence": loc.confidence,
-            "evidence": [{
+            "evidence_conflicts": [{
+                "doc_location": (f"{ev.section}节"
+                                 + (f" 第{ev.row_index}行"
+                                    if ev.row_index >= 0 else "")),
                 "block": ev.block_id,
-                "section": ev.section,
-                "row": ev.row_index,
+                "doc_statement": ev.statement_text[:120],
                 "field": ev.field_name,
-                "statement": ev.statement_text[:80],
             } for ev in loc.evidence],
-            "rationale": loc.rationale[:160],
+            "explanation": loc.rationale[:200],
         } for loc in result.localizations],
     }
 
@@ -164,7 +185,8 @@ def main() -> None:
                     "block_id", "")).startswith("block-")}
             cited = {_chunk_to_block(e["block"])
                      for r in report["inconsistencies"]
-                     for e in r["evidence"] if r["evidence"]}
+                     for e in r["evidence_conflicts"]
+                     if r["evidence_conflicts"]}
             cited.discard("")
             if report["inconsistencies"]:
                 localized += 1
