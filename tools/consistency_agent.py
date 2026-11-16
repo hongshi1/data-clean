@@ -82,56 +82,71 @@ def build_agent() -> tuple[HybridRecaller, CascadeVerifier, dict]:
     return recaller, verifier, full
 
 
-def _sentence_of_span(answer: str, span: tuple[int, int] | None) -> str:
-    """span所在的answer句子(定位报告的answer侧上下文)."""
-    if span is None:
-        return answer[:120]
-    mid = (span[0] + span[1]) // 2
-    start = max(answer.rfind("。", 0, mid), answer.rfind("！", 0, mid),
-                answer.rfind("？", 0, mid), answer.rfind("；", 0, mid),
-                answer.rfind("\n", 0, mid)) + 1
-    ends = [pos for pos in (answer.find("。", mid), answer.find("！", mid),
-                            answer.find("？", mid), answer.find("；", mid),
-                            answer.find("\n", mid)) if pos >= 0]
-    end = min(ends) + 1 if ends else min(len(answer), mid + 120)
-    return answer[start:end].strip() or answer[:120]
+def _taxonomy_names() -> dict[str, str]:
+    """40项校验条目id→名称(惰性加载, 模块级缓存)."""
+    global _TAX_NAMES
+    if _TAX_NAMES is None:
+        tax = json.loads((BASE / "knowledge/consistency_taxonomy_v3.json")
+                         .read_text(encoding="utf-8"))
+        _TAX_NAMES = {str(it.get("id", "")): str(it.get("name", ""))
+                      for it in tax.get("items", [])}
+    return _TAX_NAMES
+
+
+_TAX_NAMES: dict[str, str] | None = None
+
+
+def _aggregate_check_items(localizations: list) -> list[dict]:
+    """定位报告→按校验条目聚合的总览(总结果视角, 非逐条claim)."""
+    names = _taxonomy_names()
+    failed: dict[str, int] = {}
+    for loc in localizations:
+        for item in loc.check_item_candidates or ("未分类",):
+            failed[item] = failed.get(item, 0) + 1
+    return [{
+        "item": item,
+        "name": names.get(item, ""),
+        "result": "不一致",
+        "count": count,
+    } for item, count in sorted(failed.items())]
 
 
 def agent_report(recaller: HybridRecaller, verifier: CascadeVerifier,
-                 full: dict, question: str, answer: str, iid: str) -> dict:
+                 full: dict, question: str, answer: str, iid: str) -> tuple:
+    """返回 (总报告, 内部明细): 总报告面向输入输出, 明细仅供评测统计."""
     start = time.perf_counter()
     request, hits = recall_evidence(recaller, full, question, answer, iid)
     result = verifier.verify_qa_input(request)
     elapsed = (time.perf_counter() - start) * 1000
-    return {
+    check_results = _aggregate_check_items(result.localizations)
+    if result.verdict == "refute":
+        summary = (f"共发现{len(result.localizations)}处不一致，"
+                   f"涉及{len(check_results)}个校验条目"
+                   + (f"（{'、'.join(c['item'] for c in check_results)}）"
+                      if check_results else ""))
+    elif result.verdict == "support":
+        summary = "全部校验条目通过，answer与文档证据一致"
+    else:
+        summary = "现有证据无法判定answer的一致性（证据不足）"
+    report = {
         "instance_id": iid,
         "question": question,
         "answer": answer,
-        "verdict": result.verdict,
-        "verdict_zh": {"support": "一致(证据支持)",
-                       "refute": "不一致(与文档证据冲突)",
-                       "not_in_evidence": "无法判定(证据不足)"
-                       }.get(result.verdict, result.verdict),
+        "result": {"support": "一致",
+                   "refute": "不一致",
+                   "not_in_evidence": "无法判定"
+                   }.get(result.verdict, result.verdict),
+        "summary": summary,
+        "check_results": check_results,
         "latency_ms": round(elapsed, 1),
-        "n_recalled_evidence": len(request.evidence),
-        "inconsistencies": [{
-            "answer_context": _sentence_of_span(answer, loc.answer_span),
-            "answer_span": loc.answer_span,
-            "answer_assertion": loc.claim_text,
-            "check_items": list(loc.check_item_candidates),
-            "detector": loc.method,
-            "confidence": loc.confidence,
-            "evidence_conflicts": [{
-                "doc_location": (f"{ev.section}节"
-                                 + (f" 第{ev.row_index}行"
-                                    if ev.row_index >= 0 else "")),
-                "block": ev.block_id,
-                "doc_statement": ev.statement_text[:120],
-                "field": ev.field_name,
-            } for ev in loc.evidence],
-            "explanation": loc.rationale[:200],
-        } for loc in result.localizations],
     }
+    internal = {
+        "verdict": result.verdict,
+        "blocks": sorted({ev.block_id for loc in result.localizations
+                          for ev in loc.evidence}),
+        "n_inconsistencies": len(result.localizations),
+    }
+    return report, internal
 
 
 def main() -> None:
@@ -150,15 +165,15 @@ def main() -> None:
 
     if args.demo:
         rec = next((r for r in vio if r["instance_id"] == args.demo), vio[0])
-        report = agent_report(recaller, verifier, full,
-                              str(rec["question"]), str(rec["answer"]),
-                              str(rec["instance_id"]))
+        report, _internal = agent_report(
+            recaller, verifier, full,
+            str(rec["question"]), str(rec["answer"]),
+            str(rec["instance_id"]))
         print(json.dumps(report, ensure_ascii=False, indent=1))
         return
 
     if args.eval == "violations":
         detected = 0
-        localized = 0
         gold_hit = 0
         reports: list[dict] = []
 
@@ -172,37 +187,31 @@ def main() -> None:
             return f"block-{int(tail):06d}"
 
         for rec in vio:
-            report = agent_report(recaller, verifier, full,
-                                  str(rec["question"]),
-                                  str(rec["answer"]),
-                                  str(rec["instance_id"]))
+            report, internal = agent_report(
+                recaller, verifier, full,
+                str(rec["question"]), str(rec["answer"]),
+                str(rec["instance_id"]))
             reports.append(report)
-            if report["verdict"] == "refute":
+            if internal["verdict"] == "refute":
                 detected += 1
             gold_blocks = {str((ev.get("source_ref") or {}).get(
                 "block_id", "")) for ev in rec["evidence"]
                 if str((ev.get("source_ref") or {}).get(
                     "block_id", "")).startswith("block-")}
-            cited = {_chunk_to_block(e["block"])
-                     for r in report["inconsistencies"]
-                     for e in r["evidence_conflicts"]
-                     if r["evidence_conflicts"]}
+            cited = {_chunk_to_block(block)
+                     for block in internal["blocks"]}
             cited.discard("")
-            if report["inconsistencies"]:
-                localized += 1
             if gold_blocks and (cited & gold_blocks):
                 gold_hit += 1
         out = {
-            "protocol": "E3-style: recall→verify→localize (standard preset)",
+            "protocol": "E3-style: recall→verify→summary (standard preset)",
             "n": len(vio),
             "refute_detected": detected,
-            "with_localization": localized,
             "gold_block_hit": gold_hit,
             "reports": reports,
         }
         print(f"一致性agent端到端(violations-17): "
-              f"检出 {detected}/17 | 有定位报告 {localized} | "
-              f"定位命中gold块 {gold_hit}")
+              f"检出 {detected}/17 | 定位命中gold块 {gold_hit}")
         target = (BASE / "data/gjb_438c/distillation"
                   / "agent_scenario_v1.json")
         target.write_text(json.dumps(out, ensure_ascii=False, indent=1),

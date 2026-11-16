@@ -1,979 +1,278 @@
 {
- "protocol": "E3-style: recall→verify→localize (standard preset)",
+ "protocol": "E3-style: recall→verify→summary (standard preset)",
  "n": 17,
  "refute_detected": 15,
- "with_localization": 15,
  "gold_block_hit": 13,
  "reports": [
   {
    "instance_id": "DOC04-VIO-01",
    "question": "连接池配置和连接池初始化用例的项目唯一标识符分别是什么？",
    "answer": "连接池配置用例和连接池初始化用例的项目唯一标识符均为PZXQ-GN-LJCGL-LJCCSH。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 98.9,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现1处不一致，涉及1个校验条目（LOGIC-02）",
+   "check_results": [
     {
-     "answer_context": "连接池配置用例和连接池初始化用例的项目唯一标识符均为PZXQ-GN-LJCGL-LJCCSH。",
-     "answer_span": null,
-     "answer_assertion": "用例连接池配置的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.5.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0222",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：连接池配置</p></td><td colspan=\"2\"><p>Actors：用户、文件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是连",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例连接池配置的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 100.1
   },
   {
    "instance_id": "DOC04-VIO-02",
    "question": "数据库关闭用例的项目唯一标识符是什么？",
    "answer": "数据库关闭能力的项目唯一标识符为PZXQ-GN-SJKCZ-SJKGB。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 36.1,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现2处不一致，涉及1个校验条目（TERM-07）",
+   "check_results": [
     {
-     "answer_context": "数据库关闭能力的项目唯一标识符为PZXQ-GN-SJKCZ-SJKGB。",
-     "answer_span": [
-      16,
-      35
-     ],
-     "answer_assertion": "PZXQ-GN-SJKCZ-SJKGB",
-     "check_items": [
-      "TERM-07"
-     ],
-     "detector": "id_join_registry",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.1节 第5行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0040",
-       "doc_statement": "数据库关闭的项目唯一标识符：PZXQ-GN-SJKCZ-SJKGBGN",
-       "field": "标识符"
-      }
-     ],
-     "explanation": "subject-ID错配：主体「数据库关闭」在注册表中登记为PZXQ-GN-SJKCZ-SJKGBGN（DOC04-VIO-02-rec-01#s18[标识符]），与answer声称的PZXQ-GN-SJKCZ-SJKGB不一致——ID家族错配（TERM-07同主体ID冲突）"
-    },
-    {
-     "answer_context": "数据库关闭能力的项目唯一标识符为PZXQ-GN-SJKCZ-SJKGB。",
-     "answer_span": [
-      0,
-      35
-     ],
-     "answer_assertion": "数据库关闭能力的项目唯一标识符为PZXQ-GN-SJKCZ-SJKGB",
-     "check_items": [
-      "TERM-07"
-     ],
-     "detector": "l0_entity_detector:TERM-07",
-     "confidence": 0.95,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.1节 第5行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0040",
-       "doc_statement": "数据库关闭的项目唯一标识符：PZXQ-GN-SJKCZ-SJKGBGN",
-       "field": "标识符"
-      }
-     ],
-     "explanation": "evidence规定接口标识PZXQ-GN-SJKCZ-SJKGBGN，answer却使用PZXQ-GN-SJKCZ-SJKGB（接口标识冲突）"
+     "item": "TERM-07",
+     "name": "信号、接口命名一致性校验",
+     "result": "不一致",
+     "count": 2
     }
-   ]
+   ],
+   "latency_ms": 35.6
   },
   {
    "instance_id": "DOC04-VIO-03",
    "question": "数据统一访问服务与运行支撑服务接口的接口需求标识是什么？",
    "answer": "数据统一访问服务与运行支撑服务接口的接口需求标识为PZXQ-JK-SJTYFW-YXZCFW。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 36.8,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现1处不一致，涉及1个校验条目（TERM-07）",
+   "check_results": [
     {
-     "answer_context": "数据统一访问服务与运行支撑服务接口的接口需求标识为PZXQ-JK-SJTYFW-YXZCFW。",
-     "answer_span": [
-      25,
-      46
-     ],
-     "answer_assertion": "PZXQ-JK-SJTYFW-YXZCFW",
-     "check_items": [
-      "TERM-07"
-     ],
-     "detector": "id_join_registry",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.3.3节 第1行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0271_0",
-       "doc_statement": "3.3.3 与运行支撑服务接口（PZXQ-JK-SJTYFW-YXZCFW）",
-       "field": "sentence"
-      },
-      {
-       "doc_location": "3.3.1节 第4行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0267",
-       "doc_statement": "数据统一访问服务与运行支撑服务接口的接口需求标识：PZXQ-JK-SJTBGX-YXZCFW",
-       "field": "接口需求标识"
-      }
-     ],
-     "explanation": "subject-ID错配：主体「数据统一访问服务与运行支撑服务接口」在注册表中登记为PZXQ-JK-SJTBGX-YXZCFW（DOC04-VIO-03-rec-02#s6[接口需求标识]），与answer声称的PZXQ-JK-SJTYFW-YXZCFW不一致——ID家族错配（TERM-07同主体ID冲突）"
+     "item": "TERM-07",
+     "name": "信号、接口命名一致性校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 32.5
   },
   {
    "instance_id": "DOC04-VIO-04",
    "question": "代码生成与对象化访问接口的接口需求标识是什么？",
    "answer": "代码生成与对象化访问接口的接口需求标识为PZXQ-NBJK-DMSC-DXHFW。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 31.7,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现1处不一致，涉及1个校验条目（TERM-07）",
+   "check_results": [
     {
-     "answer_context": "代码生成与对象化访问接口的接口需求标识为PZXQ-NBJK-DMSC-DXHFW。",
-     "answer_span": [
-      20,
-      40
-     ],
-     "answer_assertion": "PZXQ-NBJK-DMSC-DXHFW",
-     "check_items": [
-      "TERM-07"
-     ],
-     "detector": "id_join_registry",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.4.1节 第2行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0285",
-       "doc_statement": "代码生成与对象化访问接口的接口需求标识：PZXQ-NBJK-DMSC-DXHFW",
-       "field": "接口需求标识"
-      },
-      {
-       "doc_location": "3.4.2节 第1行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0286_0",
-       "doc_statement": "3.4.2 代码生成与对象化访问接口（PZXQ-NBJK-DXHFW-DMSC）",
-       "field": "sentence"
-      }
-     ],
-     "explanation": "ID绑定冲突：主体「代码生成与对象化访问接口」在注册表中登记为PZXQ-NBJK-DXHFW-DMSC（DOC04-VIO-04-rec-02#s0[sentence]），与answer声称的PZXQ-NBJK-DMSC-DXHFW不一致——组件段序颠倒（TERM-07同主体ID冲突）"
+     "item": "TERM-07",
+     "name": "信号、接口命名一致性校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 29.4
   },
   {
    "instance_id": "DOC04-VIO-05",
    "question": "BLOB数据插入能力的项目唯一标识符是什么？",
    "answer": "BLOB数据插入能力的项目唯一标识符为PZXQ-GN-SQLFW-BLOBSJCR。",
-   "verdict": "support",
-   "verdict_zh": "一致(证据支持)",
-   "latency_ms": 34.5,
-   "n_recalled_evidence": 8,
-   "inconsistencies": []
+   "result": "一致",
+   "summary": "全部校验条目通过，answer与文档证据一致",
+   "check_results": [],
+   "latency_ms": 35.7
   },
   {
    "instance_id": "DOC04-VIO-06",
    "question": "SQL访问功能包括哪些功能？",
    "answer": "SQL访问功能包括数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作五项功能。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 30.8,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现3处不一致，涉及2个校验条目（LOGIC-02、TERM-03）",
+   "check_results": [
     {
-     "answer_context": "SQL访问功能包括数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作五项功能。",
-     "answer_span": [
-      9,
-      44
-     ],
-     "answer_assertion": "数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作五项功能",
-     "check_items": [
-      "TERM-03"
-     ],
-     "detector": "enum_join_registry",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1节 第1行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0032_0",
-       "doc_statement": "SQL访问功能包括：数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作功能，此功能在桌面版、平板版、手持版提供并使用，其功能用例如图3所示。",
-       "field": "sentence"
-      },
-      {
-       "doc_location": "3.2.1节 第2行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0035",
-       "doc_statement": "数据库操作的项目唯一标识符：PZXQ-GN-SQLFW-SJKCZ",
-       "field": "标识符"
-      },
-      {
-       "doc_location": "3.2.1节 第3行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0035",
-       "doc_statement": "修改数据的项目唯一标识符：PZXQ-GN-SQLFW-XGSJ",
-       "field": "标识符"
-      },
-      {
-       "doc_location": "3.2.1节 第4行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0035",
-       "doc_statement": "查询数据的项目唯一标识符：PZXQ-GN-SQLFW-CXSJ",
-       "field": "标识符"
-      },
-      {
-       "doc_location": "3.2.1节 第5行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0035",
-       "doc_statement": "BLOB数据操作的项目唯一标识符：PZXQ-GN-SQLFW-BLOBSJCZ",
-       "field": "标识符"
-      }
-     ],
-     "explanation": "枚举集合冲突（answer成员「逐行获取数据」见于SQL访问的正文枚举{数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作}（DOC04-VIO-06-rec-03#s0）但不在SQL访问的能力表行{数据库操作、修改数据、查询数据、BLOB数据操作}（DOC04-VIO-06-rec-01#s0、DOC04-VIO-06-rec-01#s6、DOC04-VIO-06-rec-01#s1"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 2
     },
     {
-     "answer_context": "SQL访问功能包括数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作五项功能。",
-     "answer_span": null,
-     "answer_assertion": "用例Blob数据修改的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.4.1.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0147",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：Blob数据修改</p></td><td colspan=\"2\"><p>Actors：应用软件、数据库</p></td></tr><tr><td colspan=\"3\"><p>概述",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例Blob数据修改的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "SQL访问功能包括数据库操作、修改数据、查询数据、逐行获取数据、BLOB数据操作五项功能。",
-     "answer_span": null,
-     "answer_assertion": "用例Blob数据查询的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.4.1.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0152",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：Blob数据查询</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例Blob数据查询的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "TERM-03",
+     "name": "枚举集合一致性校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 31.9
   },
   {
    "instance_id": "DOC04-VIO-07",
    "question": "热点数据缓存包括哪些功能？",
    "answer": "热点数据缓存包括缓存添加功能、缓存修改功能、缓存查询功能。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 24.2,
-   "n_recalled_evidence": 7,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现3处不一致，涉及1个校验条目（LOGIC-02）",
+   "check_results": [
     {
-     "answer_context": "热点数据缓存包括缓存添加功能、缓存修改功能、缓存查询功能。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存添加的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0187",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存添加</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存添加的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "热点数据缓存包括缓存添加功能、缓存修改功能、缓存查询功能。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存查询的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0197",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存查询</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存查询的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "热点数据缓存包括缓存添加功能、缓存修改功能、缓存查询功能。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存更新的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0192",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存更新</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存更新的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 3
     }
-   ]
+   ],
+   "latency_ms": 26.5
   },
   {
    "instance_id": "DOC04-VIO-08",
    "question": "数据统一访问服务按功能需求包含哪些功能（3.2节CSCI能力需求）？",
    "answer": "数据统一访问服务的CSCI能力需求包括统一访问功能（对象化访问、原生SQL访问、代码自动生成、数据统一访问）和访问管控功能（数据源切换、连接池管理、数据缓存、访问审计以及日志记录功能）。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 42.3,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现1处不一致，涉及1个校验条目（GJB-04）",
+   "check_results": [
     {
-     "answer_context": "数据统一访问服务的CSCI能力需求包括统一访问功能（对象化访问、原生SQL访问、代码自动生成、数据统一访问）和访问管控功能（数据源切换、连接池管理、数据缓存、访问审计以及日志记录功能）。",
-     "answer_span": [
-      0,
-      93
-     ],
-     "answer_assertion": "数据统一访问服务的CSCI能力需求包括统一访问功能（对象化访问、原生SQL访问、代码自动生成、数据统一访问）和访问管控功能（数据源切换、连接池管理、数据缓存、访问审计以及日志记录功能）。",
-     "check_items": [
-      "GJB-04"
-     ],
-     "detector": "coverage_join",
-     "confidence": 0.9,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0030",
-       "doc_statement": "<table><thead><tr><th><p>序号</p></th><th><p>Use case名称</p></th><th><p>项目唯一标识符</p></th><th><p>需求描述</p></th><th><p>需求重用</p>",
-       "field": ""
-      },
-      {
-       "doc_location": "3.4.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0285",
-       "doc_statement": "<table><tr><td><p>序号</p></td><td><p>接口需求名称</p></td><td><p>接口需求标识</p></td><td><p>接口类型</p></td><td><p>发送方</p></td><td><p>接",
-       "field": ""
-      },
-      {
-       "doc_location": "3.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0267",
-       "doc_statement": "<table><tr><td><p>序号</p></td><td><p>接口需求名称</p></td><td><p>接口需求标识</p></td><td><p>接口类型</p></td><td><p>发送方</p></td><td><p>接",
-       "field": ""
-      },
-      {
-       "doc_location": "3.11节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0368",
-       "doc_statement": "<table><tr><td><p>序号</p></td><td><p>软件质量因素</p></td><td><p>软件质量因素描述</p></td><td><p>要求程度</p></td><td><p>采取的措施</p></td></tr",
-       "field": ""
-      },
-      {
-       "doc_location": "3.2.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0159",
-       "doc_statement": "<table><thead><tr><th><p>序号</p></th><th><p>Use case名称</p></th><th><p>项目唯一标识符</p></th><th><p>需求描述</p></th><th><p>需求重用</p>",
-       "field": ""
-      },
-      {
-       "doc_location": "3.2.6节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0251",
-       "doc_statement": "<table><thead><tr><th><p>序号</p></th><th><p>Use case名称</p></th><th><p>项目唯一标识符</p></th><th><p>需求描述</p></th><th><p>需求重用</p>",
-       "field": ""
-      },
-      {
-       "doc_location": "1.2.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0011_0",
-       "doc_statement": "数据统一访问服务完成信息服务环境功能域数据存储与访问功能，数据统一访问服务部署在各级节点，主要为各类服务和应用提供统一的数据存储和访问接口，屏蔽数据库管理系统的差异以及数据模型的变化，提供统一的数据访问支撑能力，实现数据模型与应用业务逻辑的",
-       "field": ""
-      },
-      {
-       "doc_location": "3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0024_0",
-       "doc_statement": "数据统一访问服务按照其功能需求，包含SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存以及连接池管理功能。",
-       "field": ""
-      }
-     ],
-     "explanation": "GJB-04审计日志合规校验：封闭清单要求[审计日志条款]，冻结证据无该条款内容，answer声称提供（访问审计）被反驳"
+     "item": "GJB-04",
+     "name": "审计日志合规校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 45.1
   },
   {
    "instance_id": "DOC04-VIO-09",
    "question": "修改数据功能以哪些方式名称（终端形态）提供？",
    "answer": "修改数据功能的支持方式包括桌面、平板、手持。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 32.2,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现2处不一致，涉及2个校验条目（LOGIC-02、TERM-03）",
+   "check_results": [
     {
-     "answer_context": "修改数据功能的支持方式包括桌面、平板、手持。",
-     "answer_span": [
-      13,
-      21
-     ],
-     "answer_assertion": "桌面、平板、手持",
-     "check_items": [
-      "TERM-03"
-     ],
-     "detector": "enum_join_registry",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.2节 第4行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0067",
-       "doc_statement": "修改数据记录的方式名称：桌面、平版、手持",
-       "field": "方式名称"
-      },
-      {
-       "doc_location": "3.2.1节 第3行",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0035",
-       "doc_statement": "修改数据的方式名称：平板、桌面、手持",
-       "field": "方式名称"
-      }
-     ],
-     "explanation": "枚举集合冲突（证据侧疑似错别字：平版→平板（answer声明了正确值「平板」，注册值「平版」不在值域{平板、手持、桌面}）；answer成员「平板」见于修改数据的方式名称{平板、桌面、手持}（DOC04-VIO-09-rec-04#s9）但不在修改数据记录的方式名称{桌面、平版、手持}（DOC04-VIO-09-rec-01#s15）的封闭集合中）"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 1
     },
     {
-     "answer_context": "修改数据功能的支持方式包括桌面、平板、手持。",
-     "answer_span": null,
-     "answer_assertion": "用例修改数据记录的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.1.2.1.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0080",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：修改数据记录</p></td><td colspan=\"2\"><p>Actors：应用软件、数据库</p></td></tr><tr><td colspan=\"3\"><p>概述：本",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例修改数据记录的E1为『异常流E1：系统提示提交失败，用例结束。』，提示关键词['提交']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "TERM-03",
+     "name": "枚举集合一致性校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 31.5
   },
   {
    "instance_id": "DOC04-VIO-10",
    "question": "代码生成需求追溯到任务书的哪些章节？",
    "answer": "代码生成（3.2.4）需求追溯至任务书4.1.1 c)。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 42.4,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现3处不一致，涉及1个校验条目（GJB-05）",
+   "check_results": [
     {
-     "answer_context": "代码生成（3.2.4）需求追溯至任务书4.1.1 c)。",
-     "answer_span": [
-      0,
-      27
-     ],
-     "answer_assertion": "代码生成（3.2.4）需求追溯至任务书4.1.1 c)",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      },
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0408",
-       "doc_statement": "<table><thead><tr><th><p><strong>本文档名称/标识</strong></p></th><th><p><strong>本文档的章节号</strong></p></th><th><p><strong>软件研制任务",
-       "field": ""
-      }
-     ],
-     "explanation": "正逆矛盾：本文档3.2.4在表81中追踪至任务书['4.1.1 c)']、在表82中追踪至任务书['4.1.1 a)']；无论answer取哪一侧，另一半证据都反对该追溯关系（GJB-05）"
-    },
-    {
-     "answer_context": "代码生成（3.2.4）需求追溯至任务书4.1.1 c)。",
-     "answer_span": null,
-     "answer_assertion": "表81与表82对本文档章节3.2.4的任务书追踪映射一致",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      },
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0408",
-       "doc_statement": "<table><thead><tr><th><p><strong>本文档名称/标识</strong></p></th><th><p><strong>本文档的章节号</strong></p></th><th><p><strong>软件研制任务",
-       "field": ""
-      }
-     ],
-     "explanation": "正逆矛盾：表81 row11(代码生成@4.1.1 c)→代码生成@3.2.4)；表82 row12(对象化数据访问@4.1.1 a)→代码生成@3.2.4)——同一本文档锚点3.2.4正向指向任务书['4.1.1 c)']、逆向指向任务书['4.1.1 a)']，双向映射不一致（GJB-05）"
-    },
-    {
-     "answer_context": "代码生成（3.2.4）需求追溯至任务书4.1.1 c)。",
-     "answer_span": null,
-     "answer_assertion": "表81 row20的追踪映射与跟踪说明「不追踪」自洽",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      }
-     ],
-     "explanation": "同行矛盾：表81 row20(接口@4.5→CSCI外部接口需求@3.3)；表81 row20(接口@4.5→CSCI内部接口需求@3.4)映射非空，但跟踪说明列写「不追踪」——同一行内映射与声明矛盾（GJB-05）"
+     "item": "GJB-05",
+     "name": "需求可追溯性合规校验",
+     "result": "不一致",
+     "count": 3
     }
-   ]
+   ],
+   "latency_ms": 39.5
   },
   {
    "instance_id": "DOC04-VIO-11",
    "question": "获取错误信息需求位于本文档哪一章节？",
    "answer": "获取错误信息需求位于文档3.2.1.7章节。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 37.6,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现2处不一致，涉及1个校验条目（GJB-05）",
+   "check_results": [
     {
-     "answer_context": "获取错误信息需求位于文档3.2.1.7章节。",
-     "answer_span": null,
-     "answer_assertion": "表81与表82对本文档章节3.2.4的任务书追踪映射一致",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      },
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0408",
-       "doc_statement": "<table><thead><tr><th><p><strong>本文档名称/标识</strong></p></th><th><p><strong>本文档的章节号</strong></p></th><th><p><strong>软件研制任务",
-       "field": ""
-      }
-     ],
-     "explanation": "正逆矛盾：表81 row11(代码生成@4.1.1 c)→代码生成@3.2.4)；表82 row12(对象化数据访问@4.1.1 a)→代码生成@3.2.4)——同一本文档锚点3.2.4正向指向任务书['4.1.1 c)']、逆向指向任务书['4.1.1 a)']，双向映射不一致（GJB-05）"
-    },
-    {
-     "answer_context": "获取错误信息需求位于文档3.2.1.7章节。",
-     "answer_span": null,
-     "answer_assertion": "表81 row20的追踪映射与跟踪说明「不追踪」自洽",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      }
-     ],
-     "explanation": "同行矛盾：表81 row20(接口@4.5→CSCI外部接口需求@3.3)；表81 row20(接口@4.5→CSCI内部接口需求@3.4)映射非空，但跟踪说明列写「不追踪」——同一行内映射与声明矛盾（GJB-05）"
+     "item": "GJB-05",
+     "name": "需求可追溯性合规校验",
+     "result": "不一致",
+     "count": 2
     }
-   ]
+   ],
+   "latency_ms": 36.4
   },
   {
    "instance_id": "DOC04-VIO-12",
    "question": "软件研制任务书接口（4.5）章节的需求追踪至本文档的哪些章节？",
    "answer": "软件研制任务书接口（4.5）章节的需求追踪至本文档3.3和3.4章节。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 45.7,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现2处不一致，涉及1个校验条目（GJB-05）",
+   "check_results": [
     {
-     "answer_context": "软件研制任务书接口（4.5）章节的需求追踪至本文档3.3和3.4章节。",
-     "answer_span": null,
-     "answer_assertion": "表81与表82对本文档章节3.2.4的任务书追踪映射一致",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      },
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0408",
-       "doc_statement": "<table><thead><tr><th><p><strong>本文档名称/标识</strong></p></th><th><p><strong>本文档的章节号</strong></p></th><th><p><strong>软件研制任务",
-       "field": ""
-      }
-     ],
-     "explanation": "正逆矛盾：表81 row11(代码生成@4.1.1 c)→代码生成@3.2.4)；表82 row12(对象化数据访问@4.1.1 a)→代码生成@3.2.4)——同一本文档锚点3.2.4正向指向任务书['4.1.1 c)']、逆向指向任务书['4.1.1 a)']，双向映射不一致（GJB-05）"
-    },
-    {
-     "answer_context": "软件研制任务书接口（4.5）章节的需求追踪至本文档3.3和3.4章节。",
-     "answer_span": null,
-     "answer_assertion": "表81 row20的追踪映射与跟踪说明「不追踪」自洽",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      }
-     ],
-     "explanation": "同行矛盾：表81 row20(接口@4.5→CSCI外部接口需求@3.3)；表81 row20(接口@4.5→CSCI内部接口需求@3.4)映射非空，但跟踪说明列写「不追踪」——同一行内映射与声明矛盾（GJB-05）"
+     "item": "GJB-05",
+     "name": "需求可追溯性合规校验",
+     "result": "不一致",
+     "count": 2
     }
-   ]
+   ],
+   "latency_ms": 40.1
   },
   {
    "instance_id": "DOC04-VIO-13",
    "question": "缓存更新用例发生异常时系统提示什么？",
    "answer": "缓存更新发生异常时，系统提示初始化。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 29.3,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现3处不一致，涉及1个校验条目（LOGIC-02）",
+   "check_results": [
     {
-     "answer_context": "缓存更新发生异常时，系统提示初始化。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存更新的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0192",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存更新</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存更新的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "缓存更新发生异常时，系统提示初始化。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存添加的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0187",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存添加</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存添加的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "缓存更新发生异常时，系统提示初始化。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存查询的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0197",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存查询</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存查询的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 3
     }
-   ]
+   ],
+   "latency_ms": 28.1
   },
   {
    "instance_id": "DOC04-VIO-14",
    "question": "申请句柄和释放句柄用例属于哪个功能的扩展用例？",
    "answer": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 26.8,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现5处不一致，涉及1个校验条目（LOGIC-02）",
+   "check_results": [
     {
-     "answer_context": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-     "answer_span": null,
-     "answer_assertion": "用例申请句柄的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.5.4节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0237",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：申请句柄</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例申请句柄的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-     "answer_span": null,
-     "answer_assertion": "用例释放句柄的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.5.5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0242",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：释放句柄</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例释放句柄的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存添加的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0187",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存添加</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存添加的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存更新的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0192",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存更新</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存更新的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
-    },
-    {
-     "answer_context": "申请句柄和释放句柄是热点数据缓存的扩展用例。",
-     "answer_span": null,
-     "answer_assertion": "用例缓存查询的E1提示内容与该用例主题一致",
-     "check_items": [
-      "LOGIC-02"
-     ],
-     "detector": "e1_template_match",
-     "confidence": 0.8,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.2.3.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0197",
-       "doc_statement": "<table><tr><td><p>Use Case 名称：缓存查询</p></td><td colspan=\"2\"><p>Actors：应用软件</p></td></tr><tr><td colspan=\"3\"><p>概述：本用例是热点数",
-       "field": ""
-      }
-     ],
-     "explanation": "主题错位：用例缓存查询的E1为『异常流E1：系统提示初始化，用例结束。』，提示关键词['初始', '始化']未出现在该用例主题词（用例名+主事件流）中，疑似从其他用例复制（LOGIC-02）"
+     "item": "LOGIC-02",
+     "name": "异常处置策略一致性校验",
+     "result": "不一致",
+     "count": 5
     }
-   ]
+   ],
+   "latency_ms": 28.3
   },
   {
    "instance_id": "DOC04-VIO-15",
    "question": "本软件需求规格说明对应的软件环境需求在哪个表中描述？",
    "answer": "数据同步共享服务软件环境需求见表70。",
-   "verdict": "support",
-   "verdict_zh": "一致(证据支持)",
-   "latency_ms": 29.2,
-   "n_recalled_evidence": 8,
-   "inconsistencies": []
+   "result": "一致",
+   "summary": "全部校验条目通过，answer与文档证据一致",
+   "check_results": [],
+   "latency_ms": 27.5
   },
   {
    "instance_id": "DOC04-VIO-16",
    "question": "数据统一访问服务是否提供访问审计及日志记录功能？",
    "answer": "数据统一访问服务提供访问审计以及日志记录功能。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 26.7,
-   "n_recalled_evidence": 7,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现1处不一致，涉及1个校验条目（GJB-04）",
+   "check_results": [
     {
-     "answer_context": "数据统一访问服务提供访问审计以及日志记录功能。",
-     "answer_span": [
-      0,
-      23
-     ],
-     "answer_assertion": "数据统一访问服务提供访问审计以及日志记录功能。",
-     "check_items": [
-      "GJB-04"
-     ],
-     "detector": "coverage_join",
-     "confidence": 0.9,
-     "evidence_conflicts": [
-      {
-       "doc_location": "3.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0267",
-       "doc_statement": "<table><tr><td><p>序号</p></td><td><p>接口需求名称</p></td><td><p>接口需求标识</p></td><td><p>接口类型</p></td><td><p>发送方</p></td><td><p>接",
-       "field": ""
-      },
-      {
-       "doc_location": "3.10.3节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0363",
-       "doc_statement": "<table><thead><tr><th><p>软件种类</p></th><th><p>软件名称</p></th><th><p>软件版本</p></th></tr></thead><tbody><tr><td><p>操作系统</p></t",
-       "field": ""
-      },
-      {
-       "doc_location": "3.17节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0391",
-       "doc_statement": "<table><tr><td><p>序号</p></td><td><p>软件名称</p></td><td><p>数量</p></td><td><p>包装标记</p></td><td><p>说明</p></td></tr><tr><td><p",
-       "field": ""
-      },
-      {
-       "doc_location": "1.2.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0011_0",
-       "doc_statement": "数据统一访问服务完成信息服务环境功能域数据存储与访问功能，数据统一访问服务部署在各级节点，主要为各类服务和应用提供统一的数据存储和访问接口，屏蔽数据库管理系统的差异以及数据模型的变化，提供统一的数据访问支撑能力，实现数据模型与应用业务逻辑的",
-       "field": ""
-      },
-      {
-       "doc_location": "3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0024_0",
-       "doc_statement": "数据统一访问服务按照其功能需求，包含SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存以及连接池管理功能。",
-       "field": ""
-      },
-      {
-       "doc_location": "3.2节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0030",
-       "doc_statement": "<table><thead><tr><th><p>序号</p></th><th><p>Use case名称</p></th><th><p>项目唯一标识符</p></th><th><p>需求描述</p></th><th><p>需求重用</p>",
-       "field": ""
-      },
-      {
-       "doc_location": "3.3.1节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0266_0",
-       "doc_statement": "数据统一访问服务软件外部接口包括：与数据库接口、与应用软件接口、与运行支撑服务接口、与界面集成框架接口。数据统一访问服务软件外部接口需求表见表48所示。",
-       "field": ""
-      }
-     ],
-     "explanation": "GJB-04审计日志合规校验：封闭清单要求[审计日志条款]，冻结证据无该条款内容，answer声称提供（访问审计）被反驳；question路由命中GJB-04"
+     "item": "GJB-04",
+     "name": "审计日志合规校验",
+     "result": "不一致",
+     "count": 1
     }
-   ]
+   ],
+   "latency_ms": 26.8
   },
   {
    "instance_id": "DOC04-VIO-17",
    "question": "本文档所有章节的需求是否都规定了合格性方法？",
    "answer": "本文档3.1至3.17章节的全部需求均规定了合格性方法。",
-   "verdict": "refute",
-   "verdict_zh": "不一致(与文档证据冲突)",
-   "latency_ms": 34.3,
-   "n_recalled_evidence": 8,
-   "inconsistencies": [
+   "result": "不一致",
+   "summary": "共发现2处不一致，涉及1个校验条目（GJB-05）",
+   "check_results": [
     {
-     "answer_context": "本文档3.1至3.17章节的全部需求均规定了合格性方法。",
-     "answer_span": null,
-     "answer_assertion": "表81与表82对本文档章节3.2.4的任务书追踪映射一致",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0408",
-       "doc_statement": "<table><thead><tr><th><p><strong>本文档名称/标识</strong></p></th><th><p><strong>本文档的章节号</strong></p></th><th><p><strong>软件研制任务",
-       "field": ""
-      },
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      }
-     ],
-     "explanation": "正逆矛盾：表81 row11(代码生成@4.1.1 c)→代码生成@3.2.4)；表82 row12(对象化数据访问@4.1.1 a)→代码生成@3.2.4)——同一本文档锚点3.2.4正向指向任务书['4.1.1 c)']、逆向指向任务书['4.1.1 a)']，双向映射不一致（GJB-05）"
-    },
-    {
-     "answer_context": "本文档3.1至3.17章节的全部需求均规定了合格性方法。",
-     "answer_span": null,
-     "answer_assertion": "表81 row20的追踪映射与跟踪说明「不追踪」自洽",
-     "check_items": [
-      "GJB-05"
-     ],
-     "detector": "trace_bidirectional_join",
-     "confidence": 1.0,
-     "evidence_conflicts": [
-      {
-       "doc_location": "5节",
-       "block": "04数据统一访问服务软件需求规格说明-终稿_T0407",
-       "doc_statement": "<table><thead><tr><th><p><strong>软件研制任务书名称/标识</strong></p></th><th><p><strong>软件研制任务书的章节号</strong></p></th><th><p><stron",
-       "field": ""
-      }
-     ],
-     "explanation": "同行矛盾：表81 row20(接口@4.5→CSCI外部接口需求@3.3)；表81 row20(接口@4.5→CSCI内部接口需求@3.4)映射非空，但跟踪说明列写「不追踪」——同一行内映射与声明矛盾（GJB-05）"
+     "item": "GJB-05",
+     "name": "需求可追溯性合规校验",
+     "result": "不一致",
+     "count": 2
     }
-   ]
+   ],
+   "latency_ms": 36.2
   }
  ]
 }
