@@ -35,6 +35,7 @@ OUT = BASE / "data/gjb_438c/distillation/d3_student_eval_v1.json"
 
 _MODEL = None
 _TOKENIZER = None
+_ADAPTER = str(BASE / "models/llm/d3_student_v1")
 
 
 def _load():
