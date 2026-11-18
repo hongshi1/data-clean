@@ -1,0 +1,152 @@
+{
+  "name": "NLI级一致性校验条目（语义差异类型体系）",
+  "version": "v1.0",
+  "date": "2026-11-17",
+  "source": "场景一可解释性调研(2024-2026)§5.2语义差异维度表+§5.3结构化解释协议",
+  "description": "NLI层拥有的细粒度语义差异校验条目。与40项业务标签(taxonomy_v3)是两层: 差异机制层(NLI条目)→业务标签层(40项)。检测器=NLI/D3学生模型; 硬约束=判CONTRADICTED必须携带证据侧逐字引用(quote), 无quote自动降级UNSUPPORTED。三态细分: CONTRADICTED(有可定位反证)/UNSUPPORTED(证据不能证明该声明)/INCOMPLETE(答案遗漏问题要求的必要信息但无错误事实)。",
+
+  "items": [
+    {
+      "id": "NLI-COND-01",
+      "name": "前置条件弱化",
+      "semantic_dimension": "条件语义",
+      "difference_type": "precondition_weakening",
+      "definition": "answer将文档要求的必要条件弱化为更弱条件(如'须二次认证'弱化为'登录后即可'), 扩大了允许范围",
+      "evidence_requirement": "必须引用文档中声明完整必要条件的证据语句",
+      "typical_pattern": "文档: 仅当X才允许Y / answer: 完成Z(更弱)后即可Y",
+      "business_labels": ["LOGIC-05", "GJB-03", "LOGIC-09"]
+    },
+    {
+      "id": "NLI-COND-02",
+      "name": "前置条件虚构",
+      "semantic_dimension": "条件语义",
+      "difference_type": "precondition_fabrication",
+      "definition": "answer声称存在文档未规定的条件或约束",
+      "evidence_requirement": "需证明文档全文无该条件(证据缺失型, 判定须谨慎)",
+      "typical_pattern": "文档: Y功能直接可用 / answer: Y需先完成X(文档无此要求)",
+      "business_labels": ["GJB-01"]
+    },
+    {
+      "id": "NLI-COND-03",
+      "name": "必要充分条件混淆",
+      "semantic_dimension": "条件语义",
+      "difference_type": "necessity_sufficiency_swap",
+      "definition": "文档的必要条件被answer表述为充分条件(或反之)",
+      "evidence_requirement": "引用文档条件语句, 标注其逻辑方向",
+      "typical_pattern": "文档: 完成X时才允许Y(必要) / answer: 完成X后系统一定允许Y(充分)",
+      "business_labels": ["LOGIC-01", "LOGIC-11"]
+    },
+    {
+      "id": "NLI-QUANT-01",
+      "name": "量词范围扩大",
+      "semantic_dimension": "量词语义",
+      "difference_type": "quantifier_scope_expansion",
+      "definition": "answer将文档的部分/限定断言扩大为全称断言",
+      "evidence_requirement": "引用文档含限定词的语句(仅/部分/特定)",
+      "typical_pattern": "文档: 表数据支持增删改 / answer: 所有数据对象支持增删改",
+      "business_labels": ["TERM-03", "LOGIC-05"]
+    },
+    {
+      "id": "NLI-QUANT-02",
+      "name": "量词范围缩小",
+      "semantic_dimension": "量词语义",
+      "difference_type": "quantifier_scope_reduction",
+      "definition": "answer将文档的全称断言缩小为部分断言",
+      "evidence_requirement": "引用文档的全称语句(所有/全部/均)",
+      "typical_pattern": "文档: 所有设备均支持X / answer: 仅桌面设备支持X",
+      "business_labels": ["TERM-03"]
+    },
+    {
+      "id": "NLI-MODAL-01",
+      "name": "模态冲突",
+      "semantic_dimension": "模态语义",
+      "difference_type": "modal_conflict",
+      "definition": "文档的必须/禁止与answer的允许/声称冲突",
+      "evidence_requirement": "引用文档的模态词句",
+      "typical_pattern": "文档: 禁止X / answer: 系统支持X",
+      "business_labels": ["LOGIC-09", "GJB-02"]
+    },
+    {
+      "id": "NLI-TEMP-01",
+      "name": "时序颠倒",
+      "semantic_dimension": "时间语义",
+      "difference_type": "temporal_reversal",
+      "definition": "answer颠倒文档规定的操作顺序或依赖方向",
+      "evidence_requirement": "引用文档的顺序/依赖语句",
+      "typical_pattern": "文档: 先A后B / answer: 先B后A",
+      "business_labels": ["LOGIC-03", "LOGIC-04"]
+    },
+    {
+      "id": "NLI-NEG-01",
+      "name": "否定错配",
+      "semantic_dimension": "否定语义",
+      "difference_type": "negation_mismatch",
+      "definition": "answer的否定对象或极性与文档相反",
+      "evidence_requirement": "引用文档的否定句",
+      "typical_pattern": "文档: 不支持X / answer: 支持X",
+      "business_labels": ["TERM-04", "LOGIC-06"]
+    },
+    {
+      "id": "NLI-ENT-01",
+      "name": "主体/实体替换",
+      "semantic_dimension": "实体语义",
+      "difference_type": "entity_substitution",
+      "definition": "answer将断言主体换成另一实体(张冠李戴), 值本身在文档中存在但属于别的主体",
+      "evidence_requirement": "引用锚定主体行的语句+值真实归属行的语句(跨行join)",
+      "typical_pattern": "文档: 功能A的设备=桌面 / 功能B的设备=桌面,平板 / answer: 功能A的设备=桌面,平板",
+      "business_labels": ["TERM-01", "TERM-07", "LOGIC-04"]
+    },
+    {
+      "id": "NLI-VAL-01",
+      "name": "值替换/截断",
+      "semantic_dimension": "值语义",
+      "difference_type": "value_substitution",
+      "definition": "answer的参数/标识符/枚举值与锚定行登记值不符(含截断/变形)",
+      "evidence_requirement": "引用锚定行的值字段语句",
+      "typical_pattern": "文档: ID=PZXQ-...-SJKGBGN / answer: ID=PZXQ-...-SJKGB",
+      "business_labels": ["PARAM-01", "PARAM-06", "TERM-07", "TERM-08"]
+    },
+    {
+      "id": "NLI-REL-01",
+      "name": "关系反转",
+      "semantic_dimension": "关系语义",
+      "difference_type": "relation_inversion",
+      "definition": "answer反转文档的方向性关系(发送方/接收方、依赖、包含)",
+      "evidence_requirement": "引用文档的关系语句(接口表/依赖描述)",
+      "typical_pattern": "文档: A发送至B / answer: B发送至A",
+      "business_labels": ["LOGIC-04"]
+    },
+    {
+      "id": "NLI-EXCEPT-01",
+      "name": "异常/例外流程错配",
+      "semantic_dimension": "异常语义",
+      "difference_type": "exception_flow_mismatch",
+      "definition": "answer将约束条件/默认行为错误归属到异常流(或反之)",
+      "evidence_requirement": "引用E1异常流语句与主事件流语句",
+      "typical_pattern": "文档: E1返回错误码X / answer: 约束列的文本是E1的显示信息",
+      "business_labels": ["LOGIC-02"]
+    },
+    {
+      "id": "NLI-COV-01",
+      "name": "功能覆盖虚构",
+      "semantic_dimension": "覆盖语义",
+      "difference_type": "coverage_fabrication",
+      "definition": "answer声称存在文档未规定的子功能/操作/产物",
+      "evidence_requirement": "文档对应功能行完整枚举的引用",
+      "typical_pattern": "文档: 功能含A,B,C / answer: 功能含A,B,C,D",
+      "business_labels": ["TERM-03", "GJB-01"]
+    }
+  ],
+
+  "verdict_protocol": {
+    "CONTRADICTED": "存在可定位反证(必须携带evidence_quote, 否则自动降级UNSUPPORTED)",
+    "UNSUPPORTED": "当前证据不能证明该声明(证据缺失≠矛盾, 开放世界)",
+    "INCOMPLETE": "答案遗漏问题要求的必要信息但无错误事实(仅当question明确要求该信息时)"
+  },
+
+  "explanation_protocol": {
+    "fields": ["claim_span", "evidence_span", "difference_type", "missing_condition", "reason"],
+    "format": "结构化字段使解释可再校验, 而非不可检查的自由文本",
+    "quote_constraint": "evidence_span必须逐字取自证据语句; claim_span必须逐字取自answer"
+  }
+}
