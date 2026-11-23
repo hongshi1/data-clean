@@ -242,13 +242,204 @@ def classify_root_cause(method: str, rationale: str) -> dict[str, str]:
     return dict(UNKNOWN_ROOT_CAUSE)
 
 
+# ═══════════════════════════════════════════════════════════════
+# 详细根因解释生成器(M109): 逐字差异分析+成因推断+修正建议
+# ═══════════════════════════════════════════════════════════════
+
+#: 根因操作→成因推断与解读的模板(声明式; {}占位: claim=答案值, doc=文档值,
+#: diff=逐字差异描述, extra=操作特定线索)
+OPERATION_NARRATIVES: dict[str, dict[str, str]] = {
+    "value_substitution": {
+        "mechanism": "答案引用的值与文档登记值不一致",
+        "likely_cause": "疑为复制不完整（截断）、串用了同表其他行的相似值，或转写时变形",
+        "fix": "以文档登记值为准修正答案的该处断言",
+    },
+    "dual_registration": {
+        "mechanism": "文档内部同一标识符被登记给了两个不同主体",
+        "likely_cause": "文档注册表唯一性缺陷（模板复制或修订时引入），答案如实转述了其中一侧",
+        "fix": "需修订文档：为两个主体分别分配不同的唯一标识符",
+    },
+    "scope_leakage": {
+        "mechanism": "答案枚举的成员不属于锚定行的封闭集合",
+        "likely_cause": "疑为把同表其他行的成员（或正文别处的枚举）误并入本主体的集合",
+        "fix": "以锚定行登记的封闭集合为准修正答案",
+    },
+    "quantifier_scope_expansion": {
+        "mechanism": "答案把文档的限定断言扩大成了无限定断言",
+        "likely_cause": "答案生成时丢失了限定词（仅/部分/特定场景），把限定集合泛化",
+        "fix": "恢复文档原始限定范围",
+    },
+    "quantifier_scope_reduction": {
+        "mechanism": "答案把文档的全称断言缩小成了部分断言",
+        "likely_cause": "答案附加了文档没有的限定",
+        "fix": "去掉答案中多余的限定",
+    },
+    "precondition_weakening": {
+        "mechanism": "答案弱化了文档要求的前置条件",
+        "likely_cause": "答案遗漏了必要的条件（如需二次认证、需审批），扩大了允许范围",
+        "fix": "补全文档要求的前置条件",
+    },
+    "precondition_fabrication": {
+        "mechanism": "答案声称了文档未规定的前置条件",
+        "likely_cause": "答案编造了约束",
+        "fix": "删除虚构条件",
+    },
+    "necessity_sufficiency_swap": {
+        "mechanism": "答案混淆了文档条件的必要性/充分性",
+        "likely_cause": "把'仅当X才允许Y'（必要条件）读成'X后一定Y'（充分条件）",
+        "fix": "按文档条件的逻辑方向重述",
+    },
+    "modal_conflict": {
+        "mechanism": "答案的模态与文档相反（允许/必须/禁止）",
+        "likely_cause": "答案把禁止说成支持，或把必须说成可选",
+        "fix": "按文档模态修正",
+    },
+    "temporal_reversal": {
+        "mechanism": "答案颠倒了文档规定的顺序/依赖方向",
+        "likely_cause": "步骤或依赖被反转",
+        "fix": "按文档规定的顺序修正",
+    },
+    "negation_mismatch": {
+        "mechanism": "答案的极性与文档相反",
+        "likely_cause": "否定被丢失或误加",
+        "fix": "按文档极性修正",
+    },
+    "relation_inversion": {
+        "mechanism": "答案反转了文档的方向性关系",
+        "likely_cause": "发送/接收、依赖方向被对调",
+        "fix": "按文档原始方向修正",
+    },
+    "entity_substitution": {
+        "mechanism": "答案把断言主体换成了另一实体",
+        "likely_cause": "张冠李戴——值真实存在但属于别的主体",
+        "fix": "把值归位到正确的主体",
+    },
+    "exception_flow_mismatch": {
+        "mechanism": "答案对异常流内容的归属错位",
+        "likely_cause": "把约束列/主事件流的内容误归到E1异常流（或反之）",
+        "fix": "按文档流程归属修正",
+    },
+    "coverage_fabrication": {
+        "mechanism": "答案声称了文档未规定的子功能/操作",
+        "likely_cause": "答案过度泛化或引入了外部知识",
+        "fix": "删除文档未规定的声称",
+    },
+    "compliance_gap": {
+        "mechanism": "封闭清单要求的条款在文档中缺失",
+        "likely_cause": "文档编写遗漏了该合规条款的覆盖",
+        "fix": "需修订文档：补充该条款的规定内容",
+    },
+    "semantic_unspecified": {
+        "mechanism": "语义层面的不一致",
+        "likely_cause": "答案与证据存在语义冲突（机制待细分）",
+        "fix": "对照文档证据人工复核该断言",
+    },
+}
+
+_ROOT_CAUSE_SOURCE_ZH = {
+    "answer": "答案侧错误",
+    "document_internal": "文档内部不一致",
+    "document_gap": "文档缺失（合规条款未覆盖）",
+    "recall_insufficient": "证据召回不足",
+}
+ROOT_CAUSE_SOURCE_ZH = _ROOT_CAUSE_SOURCE_ZH
+ROOT_CAUSE_OPERATION_ZH = {op: nar["mechanism"] for op, nar in
+                           OPERATION_NARRATIVES.items()}
+
+
+def _extract_value(text: str) -> str:
+    """从证据语句提取登记值(『：』后的部分; 无冒号取末段)."""
+    text = str(text).strip()
+    if "：" in text:
+        return text.split("：", 1)[1].strip()
+    if ":" in text:
+        return text.split(":", 1)[1].strip()
+    parts = re.split(r"[，。；]", text)
+    return parts[-1].strip() if parts else text
+
+
+def _char_diff(claim_value: str, doc_value: str) -> str:
+    """逐字差异描述(声明式: 前缀/后缀/替换块; 短值直白描述)."""
+    claim_value = str(claim_value).strip()
+    doc_value = str(doc_value).strip()
+    if not claim_value or not doc_value or claim_value == doc_value:
+        return ""
+    import difflib
+    matcher = difflib.SequenceMatcher(None, claim_value, doc_value)
+    ops = [op for op in matcher.get_opcodes() if op[0] != "equal"]
+    parts = []
+    for tag, i1, i2, j1, j2 in ops:
+        if tag == "delete":
+            parts.append(f"答案多出「{claim_value[i1:i2]}」")
+        elif tag == "insert":
+            parts.append(f"答案缺少「{doc_value[j1:j2]}」")
+        else:
+            parts.append(f"「{claim_value[i1:i2]}」应为「{doc_value[j1:j2]}」")
+    return "；".join(parts)
+
+
+def detailed_explanation(loc: dict | object, answer: str) -> str:
+    """一条不一致的详细中文根因分析(多行结构化叙述).
+
+    组成(每行一个【】标签段):
+      【差异分析】  逐字比对答案值与文档登记值的具体差异
+      【成因推断】  该操作机制的成因解释(17条模板)
+      【影响说明】  根因源归属+语义
+      【修正建议】  按文档值/机制给出修正方向
+    loc参数: InconsistencyLocalization实例(取claim_text/evidence/
+    root_cause/rationale)或等价dict.
+    """
+    claim = str(getattr(loc, "claim_text", "") or
+                (loc.get("claim_text", "") if isinstance(loc, dict) else ""))
+    evidence = (getattr(loc, "evidence", None) or
+                (loc.get("evidence") if isinstance(loc, dict) else None)
+                or ())
+    rc = (getattr(loc, "root_cause", None) or
+          (loc.get("root_cause") if isinstance(loc, dict) else None) or {})
+    source = str(rc.get("source", ""))
+    operation = str(rc.get("operation", ""))
+    narrative = OPERATION_NARRATIVES.get(operation,
+                                         OPERATION_NARRATIVES[
+                                             "semantic_unspecified"])
+    lines = []
+    # 差异分析: 有证据语句时逐字比对
+    doc_value = ""
+    if evidence:
+        ev = evidence[0]
+        doc_text = str(getattr(ev, "statement_text", "") or
+                       (ev.get("statement_text", "")
+                        if isinstance(ev, dict) else ""))
+        doc_value = _extract_value(doc_text)
+        diff = _char_diff(claim, doc_value)
+        if diff:
+            lines.append(f"【差异分析】答案值「{claim}」与文档登记值"
+                         f"「{doc_value}」逐字比对：{diff}。")
+    # 成因推断
+    lines.append(f"【成因推断】{narrative['mechanism']}——"
+                 f"{narrative['likely_cause']}。")
+    # 影响说明
+    source_zh = _ROOT_CAUSE_SOURCE_ZH.get(source, "待细分")
+    op_zh = ROOT_CAUSE_OPERATION_ZH.get(operation, "语义差异")
+    lines.append(f"【根因判定】{source_zh}·{op_zh}。")
+    # 修正建议
+    fix = narrative["fix"]
+    if doc_value and source == "answer":
+        fix = f"{fix}（文档登记值：{doc_value}）"
+    lines.append(f"【修正建议】{fix}。")
+    return "\n".join(lines)
+
+
 __all__ = [
     "CHANNEL_ROOT_CAUSE",
     "NLI_DIFFERENCE_OPERATIONS",
     "NLI_OPERATION_KEYWORDS",
+    "OPERATION_NARRATIVES",
     "RATIONALE_REFINEMENTS",
     "ROOT_CAUSE_OPERATION",
     "ROOT_CAUSE_SOURCE",
+    "ROOT_CAUSE_SOURCE_ZH",
+    "ROOT_CAUSE_OPERATION_ZH",
     "STRUCTURAL_OPERATIONS",
     "classify_root_cause",
+    "detailed_explanation",
 ]

@@ -327,7 +327,6 @@ def _build_violations(result: Any, answer: str,
             parts.append(clean)
         if source_zh or op_zh:
             parts.append(f"根因判定：{source_zh}·{op_zh}")
-        description = "\n".join(parts)
         for item_id in item_ids:
             if wanted is not None and item_id not in wanted:
                 continue
@@ -335,12 +334,16 @@ def _build_violations(result: Any, answer: str,
             if key in seen:
                 continue
             seen.add(key)
+            # 详细根因分析(逐字diff+成因推断+修正建议) + 冲突对上下文
+            from algorithms.consistency.root_cause import (
+                detailed_explanation)
+            detail = detailed_explanation(loc, answer)
             out.append({
                 "item_id": item_id,
                 "item_name": names.get(item_id, "未分类"),
                 "answer_context": context,
                 "affected_answer": affected,
-                "description": description,
+                "description": detail,
                 "root_cause": {
                     "根因源": source_zh or "待细分",
                     "根因操作": op_zh,
