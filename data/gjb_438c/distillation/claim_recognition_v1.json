@@ -1,0 +1,872 @@
+{
+ "experiment": "claim recognition eval: teacher claims=gold vs regex decompose_claims & distilled segmenter",
+ "ts": 1795405660.9,
+ "git_sha": "d67b0795",
+ "segmenter_model": "models/segmenter/claim_segmenter_v1",
+ "segmenter_status": {
+  "mode": "cuda",
+  "error": ""
+ },
+ "matching": {
+  "text_ratio": "去空白后difflib SequenceMatcher.ratio()",
+  "text_ratio_hit": 0.8,
+  "span_iou_hit": 0.5,
+  "rule": "text_ratio>=0.8 OR span_iou>=0.5; 贪心1-1匹配",
+  "over_seg": "gold被>=2条pred各覆盖pred自身>=50%(碎片化)",
+  "under_seg": "pred覆盖>=2个gold各>=50%(合并)"
+ },
+ "caveat": "dev45在v1/v2训练集中(训练内评测, v1/v2同口径可对比); d3train600对v1留出、v2训练含; test46见下游评测",
+ "gold_sources": {
+  "dev45": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\distillation\\segmenter_train_v1.json",
+  "d3train600": null
+ },
+ "elapsed_seconds": 1.3,
+ "results": {
+  "dev45": {
+   "regex": {
+    "n_instances": 45,
+    "n_gold_claims": 464,
+    "n_pred_claims": 220,
+    "claims_per_instance_pred": 4.89,
+    "claims_per_instance_gold": 10.31,
+    "claim_precision": 0.3773,
+    "claim_recall": 0.1789,
+    "claim_f1": 0.2427,
+    "over_seg_rate": 0.0086,
+    "under_seg_rate": 0.2273,
+    "over_seg_count": 4,
+    "under_seg_count": 50,
+    "pred_len_avg": 30.11,
+    "per_instance": [
+     {
+      "instance_id": "S1QA-005",
+      "n_gold": 7,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-015",
+      "n_gold": 7,
+      "n_pred": 5,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-016",
+      "n_gold": 1,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-017",
+      "n_gold": 18,
+      "n_pred": 8,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 3
+     },
+     {
+      "instance_id": "S1QA-018",
+      "n_gold": 15,
+      "n_pred": 3,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-021",
+      "n_gold": 2,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-025",
+      "n_gold": 11,
+      "n_pred": 6,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-031",
+      "n_gold": 5,
+      "n_pred": 1,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-032",
+      "n_gold": 2,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-034",
+      "n_gold": 7,
+      "n_pred": 5,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-035",
+      "n_gold": 12,
+      "n_pred": 8,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 4
+     },
+     {
+      "instance_id": "S1QA-037",
+      "n_gold": 9,
+      "n_pred": 6,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-038",
+      "n_gold": 11,
+      "n_pred": 5,
+      "n_hit_gold": 4,
+      "n_hit_pred": 4,
+      "over_seg": 0,
+      "under_seg": 4
+     },
+     {
+      "instance_id": "S1QA-044",
+      "n_gold": 20,
+      "n_pred": 11,
+      "n_hit_gold": 4,
+      "n_hit_pred": 4,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-046",
+      "n_gold": 9,
+      "n_pred": 4,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-047",
+      "n_gold": 11,
+      "n_pred": 6,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-049",
+      "n_gold": 9,
+      "n_pred": 7,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-051",
+      "n_gold": 2,
+      "n_pred": 3,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-052",
+      "n_gold": 19,
+      "n_pred": 6,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-054",
+      "n_gold": 7,
+      "n_pred": 4,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 3
+     },
+     {
+      "instance_id": "S1QA-055",
+      "n_gold": 17,
+      "n_pred": 7,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-057",
+      "n_gold": 11,
+      "n_pred": 8,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-058",
+      "n_gold": 12,
+      "n_pred": 7,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 2
+     },
+     {
+      "instance_id": "S1QA-059",
+      "n_gold": 14,
+      "n_pred": 5,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-060",
+      "n_gold": 11,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-061",
+      "n_gold": 8,
+      "n_pred": 6,
+      "n_hit_gold": 3,
+      "n_hit_pred": 3,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-062",
+      "n_gold": 3,
+      "n_pred": 2,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-068",
+      "n_gold": 11,
+      "n_pred": 6,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-069",
+      "n_gold": 10,
+      "n_pred": 6,
+      "n_hit_gold": 5,
+      "n_hit_pred": 5,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-070",
+      "n_gold": 17,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-071",
+      "n_gold": 34,
+      "n_pred": 16,
+      "n_hit_gold": 8,
+      "n_hit_pred": 8,
+      "over_seg": 0,
+      "under_seg": 9
+     },
+     {
+      "instance_id": "S1QA-073",
+      "n_gold": 7,
+      "n_pred": 5,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-075",
+      "n_gold": 13,
+      "n_pred": 8,
+      "n_hit_gold": 6,
+      "n_hit_pred": 6,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-077",
+      "n_gold": 26,
+      "n_pred": 3,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 2
+     },
+     {
+      "instance_id": "S1QA-078",
+      "n_gold": 8,
+      "n_pred": 7,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-079",
+      "n_gold": 12,
+      "n_pred": 7,
+      "n_hit_gold": 3,
+      "n_hit_pred": 3,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-080",
+      "n_gold": 12,
+      "n_pred": 7,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-081",
+      "n_gold": 9,
+      "n_pred": 5,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-082",
+      "n_gold": 6,
+      "n_pred": 4,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-083",
+      "n_gold": 5,
+      "n_pred": 4,
+      "n_hit_gold": 3,
+      "n_hit_pred": 3,
+      "over_seg": 2,
+      "under_seg": 3
+     },
+     {
+      "instance_id": "S1QA-084",
+      "n_gold": 1,
+      "n_pred": 1,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-088",
+      "n_gold": 2,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-089",
+      "n_gold": 7,
+      "n_pred": 2,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-090",
+      "n_gold": 6,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-091",
+      "n_gold": 18,
+      "n_pred": 8,
+      "n_hit_gold": 3,
+      "n_hit_pred": 3,
+      "over_seg": 0,
+      "under_seg": 2
+     }
+    ]
+   },
+   "segmenter": {
+    "n_instances": 45,
+    "n_gold_claims": 464,
+    "n_pred_claims": 516,
+    "claims_per_instance_pred": 11.47,
+    "claims_per_instance_gold": 10.31,
+    "claim_precision": 0.7984,
+    "claim_recall": 0.8879,
+    "claim_f1": 0.8408,
+    "over_seg_rate": 0.0991,
+    "under_seg_rate": 0.0252,
+    "over_seg_count": 46,
+    "under_seg_count": 13,
+    "pred_len_avg": 10.19,
+    "per_instance": [
+     {
+      "instance_id": "S1QA-005",
+      "n_gold": 7,
+      "n_pred": 7,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-015",
+      "n_gold": 7,
+      "n_pred": 7,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-016",
+      "n_gold": 1,
+      "n_pred": 2,
+      "n_hit_gold": 1,
+      "n_hit_pred": 1,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-017",
+      "n_gold": 18,
+      "n_pred": 19,
+      "n_hit_gold": 18,
+      "n_hit_pred": 18,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-018",
+      "n_gold": 15,
+      "n_pred": 13,
+      "n_hit_gold": 11,
+      "n_hit_pred": 11,
+      "over_seg": 2,
+      "under_seg": 2
+     },
+     {
+      "instance_id": "S1QA-021",
+      "n_gold": 2,
+      "n_pred": 2,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-025",
+      "n_gold": 11,
+      "n_pred": 13,
+      "n_hit_gold": 11,
+      "n_hit_pred": 11,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-031",
+      "n_gold": 5,
+      "n_pred": 5,
+      "n_hit_gold": 5,
+      "n_hit_pred": 5,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-032",
+      "n_gold": 2,
+      "n_pred": 2,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-034",
+      "n_gold": 7,
+      "n_pred": 7,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-035",
+      "n_gold": 12,
+      "n_pred": 10,
+      "n_hit_gold": 8,
+      "n_hit_pred": 8,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-037",
+      "n_gold": 9,
+      "n_pred": 9,
+      "n_hit_gold": 9,
+      "n_hit_pred": 9,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-038",
+      "n_gold": 11,
+      "n_pred": 11,
+      "n_hit_gold": 10,
+      "n_hit_pred": 10,
+      "over_seg": 1,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-044",
+      "n_gold": 20,
+      "n_pred": 25,
+      "n_hit_gold": 18,
+      "n_hit_pred": 18,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-046",
+      "n_gold": 9,
+      "n_pred": 9,
+      "n_hit_gold": 9,
+      "n_hit_pred": 9,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-047",
+      "n_gold": 11,
+      "n_pred": 11,
+      "n_hit_gold": 11,
+      "n_hit_pred": 11,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-049",
+      "n_gold": 9,
+      "n_pred": 9,
+      "n_hit_gold": 9,
+      "n_hit_pred": 9,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-051",
+      "n_gold": 2,
+      "n_pred": 3,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-052",
+      "n_gold": 19,
+      "n_pred": 22,
+      "n_hit_gold": 19,
+      "n_hit_pred": 19,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-054",
+      "n_gold": 7,
+      "n_pred": 7,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-055",
+      "n_gold": 17,
+      "n_pred": 17,
+      "n_hit_gold": 17,
+      "n_hit_pred": 17,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-057",
+      "n_gold": 11,
+      "n_pred": 14,
+      "n_hit_gold": 11,
+      "n_hit_pred": 11,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-058",
+      "n_gold": 12,
+      "n_pred": 12,
+      "n_hit_gold": 12,
+      "n_hit_pred": 12,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-059",
+      "n_gold": 14,
+      "n_pred": 17,
+      "n_hit_gold": 14,
+      "n_hit_pred": 14,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-060",
+      "n_gold": 11,
+      "n_pred": 11,
+      "n_hit_gold": 6,
+      "n_hit_pred": 6,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-061",
+      "n_gold": 8,
+      "n_pred": 8,
+      "n_hit_gold": 8,
+      "n_hit_pred": 8,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-062",
+      "n_gold": 3,
+      "n_pred": 5,
+      "n_hit_gold": 3,
+      "n_hit_pred": 3,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-068",
+      "n_gold": 11,
+      "n_pred": 19,
+      "n_hit_gold": 9,
+      "n_hit_pred": 9,
+      "over_seg": 2,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-069",
+      "n_gold": 10,
+      "n_pred": 6,
+      "n_hit_gold": 6,
+      "n_hit_pred": 6,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-070",
+      "n_gold": 17,
+      "n_pred": 19,
+      "n_hit_gold": 12,
+      "n_hit_pred": 12,
+      "over_seg": 1,
+      "under_seg": 2
+     },
+     {
+      "instance_id": "S1QA-071",
+      "n_gold": 34,
+      "n_pred": 33,
+      "n_hit_gold": 18,
+      "n_hit_pred": 18,
+      "over_seg": 4,
+      "under_seg": 3
+     },
+     {
+      "instance_id": "S1QA-073",
+      "n_gold": 7,
+      "n_pred": 8,
+      "n_hit_gold": 7,
+      "n_hit_pred": 7,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-075",
+      "n_gold": 13,
+      "n_pred": 20,
+      "n_hit_gold": 12,
+      "n_hit_pred": 12,
+      "over_seg": 4,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-077",
+      "n_gold": 26,
+      "n_pred": 40,
+      "n_hit_gold": 24,
+      "n_hit_pred": 24,
+      "over_seg": 7,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-078",
+      "n_gold": 8,
+      "n_pred": 9,
+      "n_hit_gold": 8,
+      "n_hit_pred": 8,
+      "over_seg": 1,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-079",
+      "n_gold": 12,
+      "n_pred": 14,
+      "n_hit_gold": 12,
+      "n_hit_pred": 12,
+      "over_seg": 3,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-080",
+      "n_gold": 12,
+      "n_pred": 12,
+      "n_hit_gold": 12,
+      "n_hit_pred": 12,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-081",
+      "n_gold": 9,
+      "n_pred": 9,
+      "n_hit_gold": 9,
+      "n_hit_pred": 9,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-082",
+      "n_gold": 6,
+      "n_pred": 6,
+      "n_hit_gold": 6,
+      "n_hit_pred": 6,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-083",
+      "n_gold": 5,
+      "n_pred": 5,
+      "n_hit_gold": 4,
+      "n_hit_pred": 4,
+      "over_seg": 1,
+      "under_seg": 1
+     },
+     {
+      "instance_id": "S1QA-084",
+      "n_gold": 1,
+      "n_pred": 1,
+      "n_hit_gold": 0,
+      "n_hit_pred": 0,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-088",
+      "n_gold": 2,
+      "n_pred": 2,
+      "n_hit_gold": 2,
+      "n_hit_pred": 2,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-089",
+      "n_gold": 7,
+      "n_pred": 10,
+      "n_hit_gold": 5,
+      "n_hit_pred": 5,
+      "over_seg": 2,
+      "under_seg": 2
+     },
+     {
+      "instance_id": "S1QA-090",
+      "n_gold": 6,
+      "n_pred": 6,
+      "n_hit_gold": 6,
+      "n_hit_pred": 6,
+      "over_seg": 0,
+      "under_seg": 0
+     },
+     {
+      "instance_id": "S1QA-091",
+      "n_gold": 18,
+      "n_pred": 20,
+      "n_hit_gold": 16,
+      "n_hit_pred": 16,
+      "over_seg": 2,
+      "under_seg": 0
+     }
+    ]
+   }
+  }
+ }
+}

@@ -190,11 +190,15 @@ def _window_char_probs(entry: dict[str, Any],
 
 
 def segment_claims(answer: str,
-                   model_path: str = MODEL_PATH) -> list[dict[str, Any]]:
+                   model_path: str = MODEL_PATH,
+                   boundary_gate: float = 0.0) -> list[dict[str, Any]]:
     """answer → 原子claim列表[{text, span, boundary_conf}].
 
     span=解码边界区间本身(去空白后校准, answer[span[0]:span[1]]==text);
     boundary_conf=起点字符的P(B). 模型不可用时显式抛RuntimeError.
+    boundary_gate>0时弱B降级(argmax为B但P(B)<gate → 视为I, 与前claim
+    合并): 抑制d3train短answer训练带来的过切分(v2, gate=0.75经
+    tools/eval_claim_recognition.py的τ-sweep校准, 非test46标签调参).
     """
     if not answer.strip():
         return []
@@ -203,7 +207,16 @@ def segment_claims(answer: str,
         raise RuntimeError(
             f"claim切分器不可用({model_path}): {entry['error']}")
     char_probs = _window_char_probs(entry, answer)
-    labels = [max(p, key=lambda k: p[k]) for p in char_probs]
+    if boundary_gate > 0.0:
+        labels = []
+        for p in char_probs:
+            top = max(p, key=lambda k: p[k])
+            if top == LABEL_B and p[LABEL_B] < boundary_gate:
+                labels.append(LABEL_I)
+            else:
+                labels.append(top)
+    else:
+        labels = [max(p, key=lambda k: p[k]) for p in char_probs]
     out: list[dict[str, Any]] = []
     for start, end in decode_char_labels(labels):
         raw = answer[start:end]
@@ -222,17 +235,22 @@ def segment_claims(answer: str,
 
 
 def distilled_decompose_claims(question: str,
-                               answer: str) -> list[Any]:
+                               answer: str,
+                               model_path: str = MODEL_PATH,
+                               boundary_gate: float = 0.0) -> list[Any]:
     """qa_module.decompose_claims的蒸馏切分器替换(monkeypatch入口).
 
     question忽略; kind一律"semantic"(M82 C实验: typed通道跨域负资产);
-    AnswerClaim有span字段则携带(M87主线), 无则text形式.
+    AnswerClaim有span字段则携带(M87主线), 无则text形式;
+    model_path可指定v2等其它checkpoint, boundary_gate透传segment_claims
+    (v2建议0.75, 下游评测用).
     """
     del question
     from algorithms.consistency.answer_claims import AnswerClaim
     has_span = "span" in {f.name for f in fields(AnswerClaim)}
     claims: list[Any] = []
-    for item in segment_claims(answer):
+    for item in segment_claims(answer, model_path=model_path,
+                               boundary_gate=boundary_gate):
         if has_span:
             claims.append(AnswerClaim(kind="semantic", text=item["text"],
                                       span=item["span"]))

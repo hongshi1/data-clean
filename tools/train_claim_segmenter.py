@@ -48,13 +48,20 @@ _WEIGHT_CAP = 20.0
 
 
 def load_train_answers(path: Path) -> list[dict]:
-    """segmenter_train_v1.json → 训练answer记录(claims含find_span)."""
+    """segmenter训练JSON → 训练answer记录(claims含find_span)."""
     doc = json.loads(path.read_text(encoding="utf-8"))
     answers = [rec for rec in doc["answers"]
                if rec.get("llm_status") == "ok"]
     if not answers:
         raise ValueError(f"{path}无llm_status=ok的训练answer")
     return answers
+
+
+def load_data_contract(path: Path) -> str:
+    """训练数据meta.honest_contract(v2数据=812条含d3train600)."""
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    return str(doc.get("meta", {}).get(
+        "honest_contract", "unknown(数据文件无meta.honest_contract)"))
 
 
 def _bucket_split(records: list[dict],
@@ -273,8 +280,7 @@ def main() -> None:
         "seed": args.seed,
         "fp16": use_fp16,
         "device": device,
-        "honest_contract": ("train=dev45+violations17+crossdoc150; "
-                            "test-46不可见"),
+        "honest_contract": load_data_contract(args.train_data),
     }
     print(json.dumps(meta, ensure_ascii=False, indent=1))
 
