@@ -7,7 +7,6 @@ Edits (surgical, by function boundaries):
   4. mTotalReport → new-format total report, old path as fallback
 """
 from pathlib import Path
-import re
 
 SRC = Path(r"C:\Users\12488\Desktop\data_clean"
            r"\deploy\nkuDataProject\frontend\js\consist\srs.js")
