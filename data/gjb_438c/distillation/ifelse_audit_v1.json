@@ -1,0 +1,2457 @@
+{
+ "tool": "tools/audit_ifelse_density.py",
+ "generated": "2026-11-23T13:46:46",
+ "git_sha": "7ba6c0bf",
+ "scope": "algorithms/consistency/*.py (49个顶层文件; logic/semantic/syntax子包不在本次范围)",
+ "classification": {
+  "decision": "test/body含verdict三态/NLI标签/通道方法名常量, verdict关键字或引用, verify_*/unresolved调用, 或test中.kind/.method分派守卫",
+  "pipeline": "其余(数据变换/格式校验/空值卫兵)",
+  "cluster": "同一语句序列中连续If语句的run; if-elif链算1个语句, 链内elif/else计入分支数; 同时覆盖阶梯(早返回if块序列)与链(单条if-elif)两种形态; 保留run≥2语句或分支数≥3",
+  "note": "三元表达式与推导式if子句单独计数, 不入n_if"
+ },
+ "totals": {
+  "n_files": 49,
+  "n_if": 1653,
+  "n_decision_if": 203,
+  "n_pipeline_if": 1450,
+  "n_ternary": 215,
+  "n_comprehension_if": 300,
+  "max_if_depth": 4
+ },
+ "focus_files": {
+  "claim_channels.py": {
+   "n_lines": 516,
+   "n_if": 43,
+   "n_elif": 2,
+   "n_else": 2,
+   "n_decision_if": 22,
+   "n_pipeline_if": 21,
+   "decision_ratio": 0.512,
+   "max_if_depth": 2,
+   "n_clusters": 9,
+   "top_clusters": [
+    {
+     "function": "verify_numeric",
+     "lines": [
+      166,
+      175
+     ],
+     "n_stmts": 2,
+     "n_branches": 4,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "verify_numeric",
+     "lines": [
+      178,
+      194
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_ref"
+     ]
+    },
+    {
+     "function": "verify_quoted",
+     "lines": [
+      222,
+      251
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 11,
+   "n_comprehension_if": 8
+  },
+  "qa_module.py": {
+   "n_lines": 744,
+   "n_if": 56,
+   "n_elif": 2,
+   "n_else": 2,
+   "n_decision_if": 29,
+   "n_pipeline_if": 27,
+   "decision_ratio": 0.518,
+   "max_if_depth": 3,
+   "n_clusters": 14,
+   "top_clusters": [
+    {
+     "function": "QAConsistencyModule._aggregate",
+     "lines": [
+      699,
+      743
+     ],
+     "n_stmts": 6,
+     "n_branches": 6,
+     "n_decision": 6,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "QAConsistencyModule._verify_claim",
+     "lines": [
+      604,
+      614
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 5,
+     "decision_markers": [
+      "channel_call",
+      "dispatch"
+     ]
+    },
+    {
+     "function": "QAConsistencyModule.verify",
+     "lines": [
+      476,
+      489
+     ],
+     "n_stmts": 6,
+     "n_branches": 6,
+     "n_decision": 3,
+     "decision_markers": [
+      "dispatch",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 10,
+   "n_comprehension_if": 11
+  },
+  "qa_router.py": {
+   "n_lines": 60,
+   "n_if": 0,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 0,
+   "decision_ratio": 0.0,
+   "max_if_depth": 0,
+   "n_clusters": 0,
+   "top_clusters": [],
+   "n_ternary": 0,
+   "n_comprehension_if": 1,
+   "keyword_rules": 40,
+   "keyword_terms": 80
+  },
+  "answer_claims.py": {
+   "n_lines": 266,
+   "n_if": 17,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 17,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "decompose_claims",
+     "lines": [
+      180,
+      193
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "decompose_claims_sentences",
+     "lines": [
+      229,
+      247
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 10,
+   "n_comprehension_if": 3
+  },
+  "coverage_expert.py": {
+   "n_lines": 746,
+   "n_if": 61,
+   "n_elif": 1,
+   "n_else": 1,
+   "n_decision_if": 11,
+   "n_pipeline_if": 50,
+   "decision_ratio": 0.18,
+   "max_if_depth": 2,
+   "n_clusters": 7,
+   "top_clusters": [
+    {
+     "function": "verify_coverage",
+     "lines": [
+      721,
+      729
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 2,
+     "decision_markers": [
+      "dispatch"
+     ]
+    },
+    {
+     "function": "_check_gjb_clause_claim",
+     "lines": [
+      679,
+      689
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 1,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_collect_section_text",
+     "lines": [
+      341,
+      344
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 9,
+   "n_comprehension_if": 13
+  }
+ },
+ "files": {
+  "egt_synthesis.py": {
+   "n_lines": 3249,
+   "n_if": 278,
+   "n_elif": 15,
+   "n_else": 21,
+   "n_decision_if": 52,
+   "n_pipeline_if": 226,
+   "decision_ratio": 0.187,
+   "max_if_depth": 4,
+   "n_clusters": 39,
+   "top_clusters": [
+    {
+     "function": "synthesize_nie_samples",
+     "lines": [
+      1208,
+      1239
+     ],
+     "n_stmts": 2,
+     "n_branches": 5,
+     "n_decision": 4,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "synthesize_nie_samples",
+     "lines": [
+      1252,
+      1280
+     ],
+     "n_stmts": 2,
+     "n_branches": 5,
+     "n_decision": 4,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "synthesize_nie_samples",
+     "lines": [
+      1244,
+      1314
+     ],
+     "n_stmts": 2,
+     "n_branches": 3,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 19,
+   "n_comprehension_if": 52
+  },
+  "evidence_compiler.py": {
+   "n_lines": 841,
+   "n_if": 73,
+   "n_elif": 2,
+   "n_else": 5,
+   "n_decision_if": 1,
+   "n_pipeline_if": 72,
+   "decision_ratio": 0.014,
+   "max_if_depth": 3,
+   "n_clusters": 9,
+   "top_clusters": [
+    {
+     "function": "_focus_table",
+     "lines": [
+      690,
+      708
+     ],
+     "n_stmts": 2,
+     "n_branches": 3,
+     "n_decision": 1,
+     "decision_markers": [
+      "dispatch"
+     ]
+    },
+    {
+     "function": "claim_type",
+     "lines": [
+      203,
+      212
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_compile_use_case",
+     "lines": [
+      394,
+      416
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 9,
+   "n_comprehension_if": 23
+  },
+  "gjb_rule_engine.py": {
+   "n_lines": 909,
+   "n_if": 70,
+   "n_elif": 5,
+   "n_else": 7,
+   "n_decision_if": 10,
+   "n_pipeline_if": 60,
+   "decision_ratio": 0.143,
+   "max_if_depth": 4,
+   "n_clusters": 11,
+   "top_clusters": [
+    {
+     "function": "aggregate_clusters",
+     "lines": [
+      703,
+      710
+     ],
+     "n_stmts": 1,
+     "n_branches": 4,
+     "n_decision": 4,
+     "decision_markers": [
+      "verdict_ref"
+     ]
+    },
+    {
+     "function": "verify_gjb_rules",
+     "lines": [
+      834,
+      880
+     ],
+     "n_stmts": 1,
+     "n_branches": 4,
+     "n_decision": 4,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "audit_document",
+     "lines": [
+      637,
+      657
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref"
+     ]
+    }
+   ],
+   "n_ternary": 8,
+   "n_comprehension_if": 12
+  },
+  "numeric_z3_expert.py": {
+   "n_lines": 751,
+   "n_if": 62,
+   "n_elif": 9,
+   "n_else": 5,
+   "n_decision_if": 16,
+   "n_pipeline_if": 46,
+   "decision_ratio": 0.258,
+   "max_if_depth": 3,
+   "n_clusters": 13,
+   "top_clusters": [
+    {
+     "function": "_verify_aggregate_claim",
+     "lines": [
+      673,
+      683
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_verify_aggregate_claim",
+     "lines": [
+      664,
+      683
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_verify_aggregate_claim",
+     "lines": [
+      656,
+      683
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 2,
+   "n_comprehension_if": 1
+  },
+  "coverage_expert.py": {
+   "n_lines": 746,
+   "n_if": 61,
+   "n_elif": 1,
+   "n_else": 1,
+   "n_decision_if": 11,
+   "n_pipeline_if": 50,
+   "decision_ratio": 0.18,
+   "max_if_depth": 2,
+   "n_clusters": 7,
+   "top_clusters": [
+    {
+     "function": "verify_coverage",
+     "lines": [
+      721,
+      729
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 2,
+     "decision_markers": [
+      "dispatch"
+     ]
+    },
+    {
+     "function": "_check_gjb_clause_claim",
+     "lines": [
+      679,
+      689
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 1,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_collect_section_text",
+     "lines": [
+      341,
+      344
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 9,
+   "n_comprehension_if": 13
+  },
+  "enum_join_expert.py": {
+   "n_lines": 656,
+   "n_if": 61,
+   "n_elif": 0,
+   "n_else": 2,
+   "n_decision_if": 0,
+   "n_pipeline_if": 61,
+   "decision_ratio": 0.0,
+   "max_if_depth": 3,
+   "n_clusters": 9,
+   "top_clusters": [
+    {
+     "function": "levenshtein",
+     "lines": [
+      136,
+      141
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_classify_members",
+     "lines": [
+      364,
+      372
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_norm_terminal",
+     "lines": [
+      157,
+      160
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 5,
+   "n_comprehension_if": 11
+  },
+  "entity_detector.py": {
+   "n_lines": 666,
+   "n_if": 58,
+   "n_elif": 3,
+   "n_else": 3,
+   "n_decision_if": 8,
+   "n_pipeline_if": 50,
+   "decision_ratio": 0.138,
+   "max_if_depth": 2,
+   "n_clusters": 11,
+   "top_clusters": [
+    {
+     "function": "_check_interface_ids",
+     "lines": [
+      434,
+      447
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_check_usecase_mentions",
+     "lines": [
+      575,
+      591
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "link_entities",
+     "lines": [
+      341,
+      352
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 1,
+     "decision_markers": [
+      "dispatch"
+     ]
+    }
+   ],
+   "n_ternary": 5,
+   "n_comprehension_if": 16
+  },
+  "e1_expert.py": {
+   "n_lines": 703,
+   "n_if": 57,
+   "n_elif": 1,
+   "n_else": 2,
+   "n_decision_if": 14,
+   "n_pipeline_if": 43,
+   "decision_ratio": 0.246,
+   "max_if_depth": 3,
+   "n_clusters": 9,
+   "top_clusters": [
+    {
+     "function": "_judge_claim",
+     "lines": [
+      632,
+      637
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_judge_prompt",
+     "lines": [
+      443,
+      463
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_judge_ending",
+     "lines": [
+      488,
+      500
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 9,
+   "n_comprehension_if": 12
+  },
+  "qa_module.py": {
+   "n_lines": 744,
+   "n_if": 56,
+   "n_elif": 2,
+   "n_else": 2,
+   "n_decision_if": 29,
+   "n_pipeline_if": 27,
+   "decision_ratio": 0.518,
+   "max_if_depth": 3,
+   "n_clusters": 14,
+   "top_clusters": [
+    {
+     "function": "QAConsistencyModule._aggregate",
+     "lines": [
+      699,
+      743
+     ],
+     "n_stmts": 6,
+     "n_branches": 6,
+     "n_decision": 6,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "QAConsistencyModule._verify_claim",
+     "lines": [
+      604,
+      614
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 5,
+     "decision_markers": [
+      "channel_call",
+      "dispatch"
+     ]
+    },
+    {
+     "function": "QAConsistencyModule.verify",
+     "lines": [
+      476,
+      489
+     ],
+     "n_stmts": 6,
+     "n_branches": 6,
+     "n_decision": 3,
+     "decision_markers": [
+      "dispatch",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 10,
+   "n_comprehension_if": 11
+  },
+  "checker.py": {
+   "n_lines": 526,
+   "n_if": 53,
+   "n_elif": 2,
+   "n_else": 2,
+   "n_decision_if": 0,
+   "n_pipeline_if": 53,
+   "decision_ratio": 0.0,
+   "max_if_depth": 3,
+   "n_clusters": 10,
+   "top_clusters": [
+    {
+     "function": "ConsistencyChecker._check_term",
+     "lines": [
+      270,
+      289
+     ],
+     "n_stmts": 3,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "ConsistencyChecker._check_numbered",
+     "lines": [
+      411,
+      422
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "ConsistencyChecker._attr_from_context",
+     "lines": [
+      200,
+      204
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 10,
+   "n_comprehension_if": 2
+  },
+  "nli_pair_claims.py": {
+   "n_lines": 478,
+   "n_if": 52,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 52,
+   "decision_ratio": 0.0,
+   "max_if_depth": 4,
+   "n_clusters": 10,
+   "top_clusters": [
+    {
+     "function": "render_enum",
+     "lines": [
+      83,
+      93
+     ],
+     "n_stmts": 3,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "table_groups",
+     "lines": [
+      166,
+      172
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "table_flat_items",
+     "lines": [
+      186,
+      201
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 5,
+   "n_comprehension_if": 8
+  },
+  "onboarding.py": {
+   "n_lines": 991,
+   "n_if": 50,
+   "n_elif": 2,
+   "n_else": 4,
+   "n_decision_if": 0,
+   "n_pipeline_if": 50,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "induce_trace_direction",
+     "lines": [
+      693,
+      698
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_trace_marker",
+     "lines": [
+      645,
+      648
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "induce_trace_direction",
+     "lines": [
+      683,
+      686
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 11,
+   "n_comprehension_if": 16
+  },
+  "sequence_expert.py": {
+   "n_lines": 699,
+   "n_if": 49,
+   "n_elif": 1,
+   "n_else": 2,
+   "n_decision_if": 5,
+   "n_pipeline_if": 44,
+   "decision_ratio": 0.102,
+   "max_if_depth": 3,
+   "n_clusters": 4,
+   "top_clusters": [
+    {
+     "function": "aggregate_sequence_verdict",
+     "lines": [
+      677,
+      680
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "needleman_wunsch",
+     "lines": [
+      423,
+      430
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "is_sequence_applicable",
+     "lines": [
+      378,
+      381
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 8,
+   "n_comprehension_if": 9
+  },
+  "claim_channels.py": {
+   "n_lines": 516,
+   "n_if": 43,
+   "n_elif": 2,
+   "n_else": 2,
+   "n_decision_if": 22,
+   "n_pipeline_if": 21,
+   "decision_ratio": 0.512,
+   "max_if_depth": 2,
+   "n_clusters": 9,
+   "top_clusters": [
+    {
+     "function": "verify_numeric",
+     "lines": [
+      166,
+      175
+     ],
+     "n_stmts": 2,
+     "n_branches": 4,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "verify_numeric",
+     "lines": [
+      178,
+      194
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_ref"
+     ]
+    },
+    {
+     "function": "verify_quoted",
+     "lines": [
+      222,
+      251
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 11,
+   "n_comprehension_if": 8
+  },
+  "trace_expert.py": {
+   "n_lines": 526,
+   "n_if": 40,
+   "n_elif": 1,
+   "n_else": 4,
+   "n_decision_if": 3,
+   "n_pipeline_if": 37,
+   "decision_ratio": 0.075,
+   "max_if_depth": 2,
+   "n_clusters": 6,
+   "top_clusters": [
+    {
+     "function": "_check_answer_claims",
+     "lines": [
+      450,
+      475
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_classify_row",
+     "lines": [
+      156,
+      169
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_answer_trace_pairs",
+     "lines": [
+      423,
+      429
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 9
+  },
+  "id_join_expert.py": {
+   "n_lines": 505,
+   "n_if": 39,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 3,
+   "n_pipeline_if": 36,
+   "decision_ratio": 0.077,
+   "max_if_depth": 2,
+   "n_clusters": 6,
+   "top_clusters": [
+    {
+     "function": "verify_id_joins",
+     "lines": [
+      469,
+      475
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 1,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_subject_match",
+     "lines": [
+      137,
+      140
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_segment_diff",
+     "lines": [
+      285,
+      288
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 2
+  },
+  "answer_mutations.py": {
+   "n_lines": 469,
+   "n_if": 38,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 38,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 4,
+   "top_clusters": [
+    {
+     "function": "propose_equivalent_numeric_surface",
+     "lines": [
+      236,
+      241
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_out_of_range_conflict",
+     "lines": [
+      419,
+      424
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_numeric_equality",
+     "lines": [
+      73,
+      76
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 8
+  },
+  "gjb_mutations.py": {
+   "n_lines": 444,
+   "n_if": 35,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 35,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 8,
+   "top_clusters": [
+    {
+     "function": "_closed_list_exclusion_conflict",
+     "lines": [
+      137,
+      146
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_gjb01_quantifier_fabrication",
+     "lines": [
+      178,
+      185
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_gjb10_rollback_fabrication",
+     "lines": [
+      379,
+      386
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 2
+  },
+  "deq_pipeline.py": {
+   "n_lines": 710,
+   "n_if": 34,
+   "n_elif": 2,
+   "n_else": 3,
+   "n_decision_if": 0,
+   "n_pipeline_if": 34,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 4,
+   "top_clusters": [
+    {
+     "function": "_detect_table_type",
+     "lines": [
+      450,
+      465
+     ],
+     "n_stmts": 8,
+     "n_branches": 8,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "scope_gate",
+     "lines": [
+      405,
+      422
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_extract_block_scope",
+     "lines": [
+      334,
+      339
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 7
+  },
+  "router.py": {
+   "n_lines": 505,
+   "n_if": 29,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 3,
+   "n_pipeline_if": 26,
+   "decision_ratio": 0.103,
+   "max_if_depth": 2,
+   "n_clusters": 5,
+   "top_clusters": [
+    {
+     "function": "router_metrics",
+     "lines": [
+      461,
+      468
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 1,
+     "decision_markers": [
+      "verdict_ref"
+     ]
+    },
+    {
+     "function": "oracle_route",
+     "lines": [
+      174,
+      186
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "LearnedRouter.__init__",
+     "lines": [
+      209,
+      214
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 8,
+   "n_comprehension_if": 5
+  },
+  "evidence_statements.py": {
+   "n_lines": 250,
+   "n_if": 28,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 28,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 5,
+   "top_clusters": [
+    {
+     "function": "linearize_evidence",
+     "lines": [
+      220,
+      237
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_linearize_usecase_table",
+     "lines": [
+      90,
+      111
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_linearize_capability_table",
+     "lines": [
+      146,
+      151
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 4,
+   "n_comprehension_if": 4
+  },
+  "structural_mutations.py": {
+   "n_lines": 349,
+   "n_if": 28,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 28,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 5,
+   "top_clusters": [
+    {
+     "function": "_evidence",
+     "lines": [
+      40,
+      45
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_mutate_list",
+     "lines": [
+      166,
+      172
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_mutate_list",
+     "lines": [
+      162,
+      183
+     ],
+     "n_stmts": 2,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 4,
+   "n_comprehension_if": 4
+  },
+  "baselines.py": {
+   "n_lines": 297,
+   "n_if": 26,
+   "n_elif": 1,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 26,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 4,
+   "top_clusters": [
+    {
+     "function": "baseline_z3",
+     "lines": [
+      77,
+      82
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "baseline_lcs",
+     "lines": [
+      103,
+      107
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "baseline_set",
+     "lines": [
+      122,
+      126
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 11,
+   "n_comprehension_if": 5
+  },
+  "logic_mutations.py": {
+   "n_lines": 267,
+   "n_if": 23,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 23,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "propose_atomicity_conflict",
+     "lines": [
+      136,
+      139
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_redundancy_arbitration_swap",
+     "lines": [
+      160,
+      164
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_recovery_mode_conflict",
+     "lines": [
+      208,
+      212
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 1
+  },
+  "ner_lexicon.py": {
+   "n_lines": 509,
+   "n_if": 22,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 22,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 4,
+   "top_clusters": [
+    {
+     "function": "_validate",
+     "lines": [
+      257,
+      265
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "compile_patterns",
+     "lines": [
+      185,
+      190
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_validate",
+     "lines": [
+      281,
+      288
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 4,
+   "n_comprehension_if": 1
+  },
+  "gjb_presence_expert.py": {
+   "n_lines": 571,
+   "n_if": 21,
+   "n_elif": 1,
+   "n_else": 5,
+   "n_decision_if": 4,
+   "n_pipeline_if": 17,
+   "decision_ratio": 0.19,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "verify_gjb_presence",
+     "lines": [
+      501,
+      546
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "_component_refs",
+     "lines": [
+      352,
+      358
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 3
+  },
+  "term_mutations.py": {
+   "n_lines": 186,
+   "n_if": 21,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 21,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 5,
+   "top_clusters": [
+    {
+     "function": "propose_status_term_conflict",
+     "lines": [
+      91,
+      96
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_definition_swap",
+     "lines": [
+      67,
+      70
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "propose_status_term_conflict",
+     "lines": [
+      99,
+      102
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 5
+  },
+  "verify.py": {
+   "n_lines": 252,
+   "n_if": 21,
+   "n_elif": 1,
+   "n_else": 2,
+   "n_decision_if": 10,
+   "n_pipeline_if": 11,
+   "decision_ratio": 0.476,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "Verifier.verify_multi",
+     "lines": [
+      98,
+      103
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "Verifier._ground",
+     "lines": [
+      133,
+      138
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 7
+  },
+  "nli_discrepancy_review.py": {
+   "n_lines": 211,
+   "n_if": 19,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 19,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "build_review_claim",
+     "lines": [
+      95,
+      142
+     ],
+     "n_stmts": 5,
+     "n_branches": 5,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 5,
+   "n_comprehension_if": 2
+  },
+  "param_mutations.py": {
+   "n_lines": 239,
+   "n_if": 19,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 19,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "_interval",
+     "lines": [
+      35,
+      42
+     ],
+     "n_stmts": 4,
+     "n_branches": 4,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "_aligned_claims",
+     "lines": [
+      82,
+      89
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 1
+  },
+  "eval_lib.py": {
+   "n_lines": 383,
+   "n_if": 18,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 2,
+   "n_pipeline_if": 16,
+   "decision_ratio": 0.111,
+   "max_if_depth": 1,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "_check_frozen_row",
+     "lines": [
+      82,
+      88
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "load_silver_labels",
+     "lines": [
+      125,
+      128
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "load_label_rows",
+     "lines": [
+      138,
+      141
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 9
+  },
+  "rulepack.py": {
+   "n_lines": 557,
+   "n_if": 18,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 18,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "SignatureSpec.match",
+     "lines": [
+      102,
+      110
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "RulePack.classify_table",
+     "lines": [
+      212,
+      216
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "load_rulepack",
+     "lines": [
+      518,
+      521
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 1
+  },
+  "answer_claims.py": {
+   "n_lines": 266,
+   "n_if": 17,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 17,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "decompose_claims",
+     "lines": [
+      180,
+      193
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "decompose_claims_sentences",
+     "lines": [
+      229,
+      247
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 10,
+   "n_comprehension_if": 3
+  },
+  "coverage_detector.py": {
+   "n_lines": 162,
+   "n_if": 16,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 16,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "find_parallel_tables",
+     "lines": [
+      81,
+      86
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "table_scope_rows",
+     "lines": [
+      55,
+      58
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "compare_tables",
+     "lines": [
+      124,
+      127
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 2
+  },
+  "public_baselines.py": {
+   "n_lines": 366,
+   "n_if": 15,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 2,
+   "n_pipeline_if": 13,
+   "decision_ratio": 0.133,
+   "max_if_depth": 2,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "fit_centroids",
+     "lines": [
+      91,
+      96
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 2
+  },
+  "nli_training.py": {
+   "n_lines": 340,
+   "n_if": 13,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 13,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "example_from_row",
+     "lines": [
+      243,
+      250
+     ],
+     "n_stmts": 2,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 1,
+   "n_comprehension_if": 6
+  },
+  "srs_calib.py": {
+   "n_lines": 149,
+   "n_if": 13,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 13,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "angle_route",
+     "lines": [
+      66,
+      78
+     ],
+     "n_stmts": 6,
+     "n_branches": 6,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "predict",
+     "lines": [
+      96,
+      118
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 9,
+   "n_comprehension_if": 2
+  },
+  "entities.py": {
+   "n_lines": 109,
+   "n_if": 12,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 12,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "EntityLexer.align",
+     "lines": [
+      61,
+      64
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "EntityLexer.recognize",
+     "lines": [
+      75,
+      84
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 0
+  },
+  "evidence_subtractor.py": {
+   "n_lines": 204,
+   "n_if": 11,
+   "n_elif": 0,
+   "n_else": 2,
+   "n_decision_if": 0,
+   "n_pipeline_if": 11,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "normalize_granularity",
+     "lines": [
+      94,
+      97
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 5,
+   "n_comprehension_if": 6
+  },
+  "answer_structure.py": {
+   "n_lines": 113,
+   "n_if": 9,
+   "n_elif": 1,
+   "n_else": 1,
+   "n_decision_if": 0,
+   "n_pipeline_if": 9,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 0,
+   "top_clusters": [],
+   "n_ternary": 1,
+   "n_comprehension_if": 1
+  },
+  "nli_residual.py": {
+   "n_lines": 233,
+   "n_if": 9,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 4,
+   "n_pipeline_if": 5,
+   "decision_ratio": 0.444,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "verify_residual_claims_nli",
+     "lines": [
+      202,
+      207
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_ref",
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 3,
+   "n_comprehension_if": 1
+  },
+  "verifier.py": {
+   "n_lines": 303,
+   "n_if": 8,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 8,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 3,
+   "top_clusters": [
+    {
+     "function": "_normalize_evidence",
+     "lines": [
+      110,
+      117
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "CascadeVerifier.__init__",
+     "lines": [
+      192,
+      201
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    },
+    {
+     "function": "CascadeVerifier._engine_instance",
+     "lines": [
+      290,
+      293
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 0
+  },
+  "answer_claims_v2.py": {
+   "n_lines": 179,
+   "n_if": 7,
+   "n_elif": 0,
+   "n_else": 1,
+   "n_decision_if": 2,
+   "n_pipeline_if": 5,
+   "decision_ratio": 0.286,
+   "max_if_depth": 1,
+   "n_clusters": 2,
+   "top_clusters": [
+    {
+     "function": "_apply_fixes",
+     "lines": [
+      130,
+      138
+     ],
+     "n_stmts": 2,
+     "n_branches": 3,
+     "n_decision": 2,
+     "decision_markers": [
+      "dispatch"
+     ]
+    },
+    {
+     "function": "_colon_split",
+     "lines": [
+      93,
+      96
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 2,
+   "n_comprehension_if": 1
+  },
+  "evidence_purifier.py": {
+   "n_lines": 197,
+   "n_if": 7,
+   "n_elif": 1,
+   "n_else": 2,
+   "n_decision_if": 0,
+   "n_pipeline_if": 7,
+   "decision_ratio": 0.0,
+   "max_if_depth": 2,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "_scope_and_pointer_filter",
+     "lines": [
+      83,
+      97
+     ],
+     "n_stmts": 1,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 4
+  },
+  "nli_local.py": {
+   "n_lines": 211,
+   "n_if": 6,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 2,
+   "n_pipeline_if": 4,
+   "decision_ratio": 0.333,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "normalize_label",
+     "lines": [
+      74,
+      77
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    }
+   ],
+   "n_ternary": 2,
+   "n_comprehension_if": 1
+  },
+  "assertion.py": {
+   "n_lines": 99,
+   "n_if": 4,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 4,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "is_assertive_text",
+     "lines": [
+      69,
+      74
+     ],
+     "n_stmts": 3,
+     "n_branches": 3,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 0
+  },
+  "templates.py": {
+   "n_lines": 173,
+   "n_if": 4,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 4,
+   "decision_ratio": 0.0,
+   "max_if_depth": 1,
+   "n_clusters": 1,
+   "top_clusters": [
+    {
+     "function": "normalize_unit",
+     "lines": [
+      167,
+      171
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 0,
+     "decision_markers": []
+    }
+   ],
+   "n_ternary": 0,
+   "n_comprehension_if": 0
+  },
+  "qa_models.py": {
+   "n_lines": 116,
+   "n_if": 0,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 0,
+   "decision_ratio": 0.0,
+   "max_if_depth": 0,
+   "n_clusters": 0,
+   "top_clusters": [],
+   "n_ternary": 0,
+   "n_comprehension_if": 0
+  },
+  "qa_router.py": {
+   "n_lines": 60,
+   "n_if": 0,
+   "n_elif": 0,
+   "n_else": 0,
+   "n_decision_if": 0,
+   "n_pipeline_if": 0,
+   "decision_ratio": 0.0,
+   "max_if_depth": 0,
+   "n_clusters": 0,
+   "top_clusters": [],
+   "n_ternary": 0,
+   "n_comprehension_if": 1,
+   "keyword_rules": 40,
+   "keyword_terms": 80
+  }
+ },
+ "top_decision_clusters_global": [
+  {
+   "file": "qa_module.py",
+   "function": "QAConsistencyModule._aggregate",
+   "lines": [
+    699,
+    743
+   ],
+   "n_stmts": 6,
+   "n_branches": 6,
+   "n_decision": 6,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "qa_module.py",
+   "function": "QAConsistencyModule._verify_claim",
+   "lines": [
+    604,
+    614
+   ],
+   "n_stmts": 5,
+   "n_branches": 5,
+   "n_decision": 5,
+   "decision_markers": [
+    "channel_call",
+    "dispatch"
+   ]
+  },
+  {
+   "file": "egt_synthesis.py",
+   "function": "synthesize_nie_samples",
+   "lines": [
+    1208,
+    1239
+   ],
+   "n_stmts": 2,
+   "n_branches": 5,
+   "n_decision": 4,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "egt_synthesis.py",
+   "function": "synthesize_nie_samples",
+   "lines": [
+    1252,
+    1280
+   ],
+   "n_stmts": 2,
+   "n_branches": 5,
+   "n_decision": 4,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "gjb_rule_engine.py",
+   "function": "aggregate_clusters",
+   "lines": [
+    703,
+    710
+   ],
+   "n_stmts": 1,
+   "n_branches": 4,
+   "n_decision": 4,
+   "decision_markers": [
+    "verdict_ref"
+   ]
+  },
+  {
+   "file": "gjb_rule_engine.py",
+   "function": "verify_gjb_rules",
+   "lines": [
+    834,
+    880
+   ],
+   "n_stmts": 1,
+   "n_branches": 4,
+   "n_decision": 4,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "qa_module.py",
+   "function": "QAConsistencyModule.verify",
+   "lines": [
+    476,
+    489
+   ],
+   "n_stmts": 6,
+   "n_branches": 6,
+   "n_decision": 3,
+   "decision_markers": [
+    "dispatch",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "claim_channels.py",
+   "function": "verify_numeric",
+   "lines": [
+    166,
+    175
+   ],
+   "n_stmts": 2,
+   "n_branches": 4,
+   "n_decision": 3,
+   "decision_markers": [
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "e1_expert.py",
+   "function": "_judge_claim",
+   "lines": [
+    632,
+    637
+   ],
+   "n_stmts": 1,
+   "n_branches": 3,
+   "n_decision": 3,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  },
+  {
+   "file": "gjb_presence_expert.py",
+   "function": "verify_gjb_presence",
+   "lines": [
+    501,
+    546
+   ],
+   "n_stmts": 1,
+   "n_branches": 3,
+   "n_decision": 3,
+   "decision_markers": [
+    "verdict_ref",
+    "verdict_str"
+   ]
+  }
+ ]
+}

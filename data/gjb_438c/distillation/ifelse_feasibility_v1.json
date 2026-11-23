@@ -1,0 +1,253 @@
+{
+ "tool": "tools/exp_model_replace.py(Step3判定登记)",
+ "generated": "2026-11-23T14:01:11",
+ "git_sha": "1652e906",
+ "evidence": {
+  "audit": "data/gjb_438c/distillation/ifelse_audit_v1.json",
+  "experiment": "data/gjb_438c/distillation/model_replace_v1.json",
+  "baseline_test46": {
+   "acc": 0.913,
+   "mF1": 0.8047,
+   "rF1": 0.8,
+   "reproduced": true
+  },
+  "totals": {
+   "n_files": 49,
+   "n_if": 1653,
+   "n_decision_if": 203,
+   "n_pipeline_if": 1450,
+   "n_ternary": 215,
+   "n_comprehension_if": 300,
+   "max_if_depth": 4
+  }
+ },
+ "judgment_rules": {
+  "可换": "模型替换后test46 acc/mF1不降(≤0.005)",
+  "保留": "模型替换后掉点(登记delta); 或簇为管道型路由",
+  "删除": "消融后逐实例verdict零翻转(惰性/纯注记)"
+ },
+ "table": [
+  {
+   "cluster": "qa_module._verify_claim typed分派 (L604-614)",
+   "if_else": 5,
+   "audit": {
+    "function": "QAConsistencyModule._verify_claim",
+    "lines": [
+     604,
+     614
+    ],
+    "n_stmts": 5,
+    "n_branches": 5,
+    "n_decision": 5,
+    "decision_markers": [
+     "channel_call",
+     "dispatch"
+    ]
+   },
+   "model_replace": "A1: verify_numeric/quoted/enum/identifier→distilled_v1 NLI(residual_premise+_infer,gate0.8)",
+   "test46": {
+    "acc": 0.8913,
+    "mF1": 0.7117,
+    "rF1": 0.8,
+    "delta_acc": -0.0217,
+    "delta_mF1": -0.093
+   },
+   "verdict": "保留",
+   "reason": "mF1 -0.0930(support F1 0.667→0.400, 1实例退化); typed通道仅承接25/294 claim(8.5%)但都是高精度support(identifier精确匹配/数值区间), NLI@gate0.8给不出同级精度的support; 安全侧不受影响(violations17 rF1不变)"
+  },
+  {
+   "cluster": "claim_channels.verify_* 正则守卫 (subset/disjoint/极性/穷举, 43 if/11三元)",
+   "if_else": 43,
+   "audit": [
+    {
+     "function": "verify_numeric",
+     "lines": [
+      166,
+      175
+     ],
+     "n_stmts": 2,
+     "n_branches": 4,
+     "n_decision": 3,
+     "decision_markers": [
+      "verdict_str"
+     ]
+    },
+    {
+     "function": "verify_numeric",
+     "lines": [
+      178,
+      194
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_ref"
+     ]
+    },
+    {
+     "function": "verify_quoted",
+     "lines": [
+      222,
+      251
+     ],
+     "n_stmts": 2,
+     "n_branches": 2,
+     "n_decision": 2,
+     "decision_markers": [
+      "channel_call",
+      "verdict_kw",
+      "verdict_str"
+     ]
+    }
+   ],
+   "model_replace": "A1同上(四个verify整体换NLI, 无typed分派)",
+   "test46": "见上行(同一实验)",
+   "verdict": "保留",
+   "reason": "同A1: 区间包含/互斥与显式极性判定是可解释的确定性代数, NLI在门控下保守化后丢掉精确support; 跨域也未获益(crossdoc acc 0.5133→0.5000)"
+  },
+  {
+   "cluster": "claim_segmenter替换正则decompose + 全claim NLI (answer_claims.decompose_claims, 17 if全管道型)",
+   "if_else": 17,
+   "audit": {
+    "n_lines": 266,
+    "n_if": 17,
+    "n_elif": 0,
+    "n_else": 0,
+    "n_decision_if": 0,
+    "n_pipeline_if": 17,
+    "decision_ratio": 0.0,
+    "max_if_depth": 2,
+    "n_clusters": 2,
+    "top_clusters": [
+     {
+      "function": "decompose_claims",
+      "lines": [
+       180,
+       193
+      ],
+      "n_stmts": 2,
+      "n_branches": 2,
+      "n_decision": 0,
+      "decision_markers": []
+     },
+     {
+      "function": "decompose_claims_sentences",
+      "lines": [
+       229,
+       247
+      ],
+      "n_stmts": 2,
+      "n_branches": 2,
+      "n_decision": 0,
+      "decision_markers": []
+     }
+    ],
+    "n_ternary": 10,
+    "n_comprehension_if": 3
+   },
+   "model_replace": "A2: segmenter_v2切分+distilled_v1 NLI",
+   "test46": {
+    "acc": 0.8913,
+    "mF1": 0.5789,
+    "rF1": 0.8,
+    "delta_acc": -0.0217,
+    "delta_mF1": -0.2258
+   },
+   "verdict": "保留",
+   "reason": "mF1 0.5789(-0.2258), support预测0条(467条短碎片claim在strict∀下被NIE一票否决, M87/M88现象复现); 且test46推理316s vs 正则8s(40x延迟, 无批处理); 模型切分需要配套assertive聚合才能用"
+  },
+  {
+   "cluster": "qa_module._aggregate 聚合阶梯 (L699-743, strict/dominant_70/no_minor_block/assertive_*)",
+   "if_else": 6,
+   "audit": {
+    "function": "QAConsistencyModule._aggregate",
+    "lines": [
+     699,
+     743
+    ],
+    "n_stmts": 6,
+    "n_branches": 6,
+    "n_decision": 6,
+    "decision_markers": [
+     "verdict_ref",
+     "verdict_str"
+    ]
+   },
+   "model_replace": "B: 置信度加权投票(w=confidence×is_assertive, refute×2安全序)",
+   "test46": {
+    "acc": 0.3913,
+    "mF1": 0.4758,
+    "rF1": 0.8,
+    "delta_acc": -0.5217,
+    "delta_mF1": -0.3289
+   },
+   "crossdoc150": {
+    "acc": 0.68,
+    "delta_acc": -0.233,
+    "delta_mF1": -0.1268
+   },
+   "verdict": "保留(域内) / 可换(跨域)",
+   "reason": "test46灾难性退化(acc 0.3913, mF1 0.4758=-0.3289; 26实例NIE→support误翻, support P=0.103)——91QA标签分布NIE重(39/46), strict的'任一NIE阻断'正是域先验; 但crossdoc150大涨(acc 0.5133→0.6800, mF1 +0.167, 30纠正/5退化)——软聚合在标签均衡的跨域场景更优(与M82 dominant_70结论一致). refute安全序在两种场景都稳(violations17不变)"
+  },
+  {
+   "cluster": "qa_router.route_question 关键词路由 (40规则/80词, 0个if语句——纯数据表)",
+   "if_else": 0,
+   "audit": {
+    "n_lines": 60,
+    "n_if": 0,
+    "n_elif": 0,
+    "n_else": 0,
+    "n_decision_if": 0,
+    "n_pipeline_if": 0,
+    "decision_ratio": 0.0,
+    "max_if_depth": 0,
+    "n_clusters": 0,
+    "top_clusters": [],
+    "n_ternary": 0,
+    "n_comprehension_if": 1,
+    "keyword_rules": 40,
+    "keyword_terms": 80
+   },
+   "model_replace": "C: route_question返回() (规则删除, 非模型化)",
+   "test46": {
+    "acc": 0.913,
+    "mF1": 0.8047,
+    "rF1": 0.8,
+    "delta_acc": 0.0,
+    "delta_mF1": 0.0
+   },
+   "verdict": "删除",
+   "reason": "三数据集verdict零翻转(test46/violations17/crossdoc150逐实例一致, M73在NLI残差配置下复验通过): 路由只产check_item候选标签(纯注记), 不参与verdict决策; 40规则表+3处消费点是可删的惰性代码"
+  },
+  {
+   "cluster": "coverage_expert.verify_coverage claim.kind分派 (L721-729)",
+   "if_else": 3,
+   "audit": {
+    "function": "verify_coverage",
+    "lines": [
+     721,
+     729
+    ],
+    "n_stmts": 1,
+    "n_branches": 3,
+    "n_decision": 2,
+    "decision_markers": [
+     "dispatch"
+    ]
+   },
+   "model_replace": "未实验(静态判定)",
+   "test46": null,
+   "verdict": "保留",
+   "reason": "3分支kind分派只是选择确定性子检查器(scope/precise/gjb_clause), 子检查器各自产verdict; 属管道型路由(61 if中仅11决策型), 模型化收益低且会失去覆盖完备性检查的可解释性"
+  }
+ ],
+ "headline": {
+  "decision_if_share": "203/1653 ifs(12.3%)为决策型——可模型化的面很窄, 87.7%是管道型",
+  "deletable": "qa_router 40规则/80关键词(纯注记, 零verdict影响)",
+  "model_replaced_already": "语义决策已由distilled_v1 NLI承担(nli_residual, 29/294 claim)",
+  "safe_to_keep": "typed正则verify(高精度support)+strict聚合(域先验)"
+ }
+}
