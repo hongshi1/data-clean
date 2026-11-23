@@ -1,0 +1,70 @@
+{
+ "schema_version": "scenario5_qa_consistency_v1",
+ "created_utc": "2026-11-16T11:09:04.937253+00:00",
+ "n_qa_records": 672,
+ "n_frozen_images": 32,
+ "d1_enum_check": {
+  "verdict_counts": {
+   "support": 477,
+   "NIE": 195
+  },
+  "total": 672
+ },
+ "c3_cross_condition_conflicts": {
+  "n_conflict_images": 1,
+  "conflicts": [
+   {
+    "image": "shuigang_0615_strong_light_01.jpg",
+    "answers_by_condition": {
+     "after|4bit|simple": 0,
+     "after|4bit|default": 1,
+     "after|all|default": 1,
+     "before|4bit|default": 1,
+     "before|all|default": 1
+    },
+    "conflicting_answers": [
+     0,
+     1
+    ],
+    "verdict": "suspicious",
+    "reason": "same image, 2 different answers across conditions"
+   }
+  ]
+ },
+ "b3_static_grounding": {
+  "verdict_counts": {
+   "NIE": 321,
+   "support": 214,
+   "suspicious": 137
+  },
+  "total": 672,
+  "method": "keyword-v1"
+ },
+ "answer_distribution_by_condition": {
+  "after-4bit-simple": {
+   "0": 48,
+   "1": 48
+  },
+  "after-4bit-default": {
+   "0": 45,
+   "1": 51
+  },
+  "after-all-default": {
+   "0": 45,
+   "1": 51
+  },
+  "before-4bit-default": {
+   "0": 42,
+   "1": 53
+  },
+  "before-all-default": {
+   "0": 45,
+   "1": 49
+  }
+ },
+ "parse_status": {
+  "parsed": 477,
+  "unparsed": 195
+ },
+ "interpretation": "D1 checks closed-set membership. C3 flags same-image cross-condition answer conflicts as suspicious (not refute). B3 is keyword-level grounding v1; NLP grounding comes later. Static images cannot prove 'prolonged stillness' for sleep."
+}

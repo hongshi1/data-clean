@@ -514,6 +514,67 @@ def get_asset(doc_num: str, file_path: str):
 # ---------------------------------------------------------------------------
 from fastapi.staticfiles import StaticFiles  # noqa: E402
 
+# ---------------------------------------------------------------------------
+# 场景5: 安全帽佩戴场景一致性校验 API
+# ---------------------------------------------------------------------------
+try:
+    from scenario5.cv_stack.helmet_pipeline import run_helmet_pipeline  # noqa: E402
+    HAS_S5 = True
+except ImportError:
+    HAS_S5 = False
+
+if HAS_S5:
+    class Scenario5Request(BaseModel):
+        image_path: str  # absolute or relative path to image
+        user_text: str = "判断图片中是否有人员未佩戴安全帽"
+        gpt_text: str = '{"task":"安全帽检测","answer":1,"evidence":["有人员未佩戴安全帽"]}'
+        answer: int | None = None
+
+    @app.post("/api/scenario5/analyze")
+    def scenario5_analyze(req: Scenario5Request):
+        """运行安全帽场景完整管线：Chunk→图内关系→QA解析→跨模态→校验."""
+        img_path = Path(req.image_path)
+        if not img_path.is_absolute():
+            img_path = BASE / req.image_path
+        if not img_path.is_file():
+            raise HTTPException(status=404, detail=f"Image not found: {img_path}")
+        try:
+            result = run_helmet_pipeline(img_path, req.user_text, req.gpt_text, req.answer)
+            return result
+        except Exception as e:
+            raise HTTPException(status=500, detail=str(e)) from e
+
+    @app.get("/api/scenario5/sample_images")
+    def scenario5_samples():
+        """List sample images from PPE dataset."""
+        ppe_dir = BASE / "scenario5" / "data" / "ppe_hardhat" / "extracted"
+        if not ppe_dir.exists():
+            return {"images": []}
+        images = sorted(ppe_dir.glob("*.jpg"))[:20]
+        return {
+            "images": [
+                {"path": str(img.relative_to(BASE)), "name": img.name}
+                for img in images
+            ],
+        }
+
+    @app.get("/api/scenario5/sleep_images")
+    def scenario5_sleep_samples():
+        """List sample images from sleep dataset."""
+        sleep_dir = Path(
+            r"C:\baidunetdiskdownload\5个场景数据集"
+            r"\20260924-场景5样例数据及需求说明文档\test"
+        )
+        if not sleep_dir.exists():
+            return {"images": []}
+        images = sorted(sleep_dir.glob("*.jpg"))[:32]
+        return {
+            "images": [
+                {"path": str(img), "name": img.name}
+                for img in images
+            ],
+        }
+
 DIST = BASE / "frontend" / "dist"
 if DIST.exists():
     app.mount("/assets", StaticFiles(directory=str(DIST / "assets")), name="fe-assets")

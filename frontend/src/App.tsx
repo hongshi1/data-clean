@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Tabs } from "antd";
 import {
   DatabaseOutlined, ApartmentOutlined, FileSearchOutlined,
-  SafetyCertificateOutlined,
+  SafetyCertificateOutlined, VideoCameraOutlined,
 } from "@ant-design/icons";
 import DatasetManager from "./pages/DatasetManager";
 import Workbench from "./pages/Workbench";
 import QaManager from "./pages/QaManager";
 import VerifyPanel from "./pages/VerifyPanel";
+import Scenario5Panel from "./pages/Scenario5Panel";
 
-type View = "datasets" | "workbench" | "qa" | "check";
+type View = "datasets" | "workbench" | "qa" | "check" | "scenario5";
 
 export default function App() {
   const [view, setView] = useState<View>("datasets");
@@ -44,6 +45,7 @@ export default function App() {
             { key: "workbench", label: <span><ApartmentOutlined /> 图谱工作台</span> },
             { key: "qa", label: <span><FileSearchOutlined /> QA数据管理</span> },
             { key: "check", label: <span><SafetyCertificateOutlined /> 一致性校验</span> },
+            { key: "scenario5", label: <span><VideoCameraOutlined /> 场景5安全帽</span> },
           ]}
         />
       </header>
@@ -58,6 +60,7 @@ export default function App() {
           />
         )}
         {view === "check" && <VerifyPanel />}
+        {view === "scenario5" && <Scenario5Panel />}
         {view === "workbench" && (
           <Workbench
             pendingQuestion={pendingQuestion}
