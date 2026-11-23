@@ -1,0 +1,53 @@
+{
+  "per_document": true,
+  "steps": [
+    {
+      "name": "Part 1  MinerU解析",
+      "gpu_s": 60.0,
+      "cpu_s": 180.0,
+      "type": "外部",
+      "output": ".doc→md+content_list+24图"
+    },
+    {
+      "name": "Part 2  Visio图翻译",
+      "gpu_s": 1.2,
+      "cpu_s": 1.2,
+      "type": "我们的",
+      "output": "23图→节点text/type/坐标"
+    },
+    {
+      "name": "Part 3  VLM图片理解",
+      "gpu_s": 72.0,
+      "cpu_s": 72.0,
+      "type": "我们的",
+      "output": "24张→caption+key_elements"
+    },
+    {
+      "name": "Part 4a 证据池构建",
+      "gpu_s": 0.1,
+      "cpu_s": 0.1,
+      "type": "我们的",
+      "output": "75表+24图→1127单元"
+    },
+    {
+      "name": "Part 4b BGE编码",
+      "gpu_s": 3.4,
+      "cpu_s": 28.6,
+      "type": "我们的",
+      "output": "1127单元×1024维(333条/s)"
+    },
+    {
+      "name": "Part 4c 索引构建",
+      "gpu_s": 0.01,
+      "cpu_s": 0.01,
+      "type": "我们的",
+      "output": "冻结矩阵+IDF"
+    }
+  ],
+  "totals": {
+    "gpu_local_vlm": 136.7,
+    "gpu_vlm_offline": 64.7,
+    "cpu": 281.9,
+    "our_code": 76.7
+  }
+}
