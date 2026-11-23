@@ -59,6 +59,8 @@ SILVER_LABELS_PATH = (
 app = FastAPI(title="SRS上下文关联图谱平台", version="0.2.0")
 from server.check_service import router as _check_router  # noqa: E402
 app.include_router(_check_router)
+from server.recall_analysis import router as _recall_router  # noqa: E402
+app.include_router(_recall_router)
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
