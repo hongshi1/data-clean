@@ -234,39 +234,117 @@ def _taxonomy_names() -> dict[str, str]:
     return _TAXONOMY_NAMES
 
 
+def _sentence_of_span(answer: str, span: tuple[int, int] | None) -> str:
+    """span所在的answer原句(报告的answer侧上下文)."""
+    if span is None:
+        return answer[:120]
+    mid = (span[0] + span[1]) // 2
+    starts = [pos + 1 for pos in (answer.rfind("。", 0, mid),
+                                  answer.rfind("！", 0, mid),
+                                  answer.rfind("？", 0, mid),
+                                  answer.rfind("；", 0, mid),
+                                  answer.rfind("\n", 0, mid)) if pos >= 0]
+    ends = [pos + 1 for pos in (answer.find("。", mid),
+                                answer.find("！", mid),
+                                answer.find("？", mid),
+                                answer.find("；", mid),
+                                answer.find("\n", mid)) if pos >= 0]
+    start = max(starts) if starts else 0
+    end = min(ends) if ends else min(len(answer), mid + 120)
+    return answer[start:end].strip() or answer[:120]
+
+
+def _clean_rationale(rationale: str) -> str:
+    """rationale去内部引用噪音(语句id括号), 保留冲突说明正文."""
+    text = str(rationale)
+    text = re.sub(r"（[^（）]*#\S+[^（）]*）", "", text)
+    return text.strip()
+
+
+#: 根因源/操作的中文对照(报告可读性; 英文枚举仅供程序消费)
+ROOT_CAUSE_SOURCE_ZH = {
+    "answer": "答案侧错误",
+    "document_internal": "文档内部不一致",
+    "document_gap": "文档缺失（合规条款未覆盖）",
+    "recall_insufficient": "证据召回不足",
+}
+ROOT_CAUSE_OPERATION_ZH = {
+    "value_substitution": "值替换/截断",
+    "dual_registration": "同一标识符双登记",
+    "scope_leakage": "跨行取值（集合污染）",
+    "quantifier_scope_expansion": "范围过度概括",
+    "quantifier_scope_reduction": "范围不当缩小",
+    "precondition_weakening": "前置条件弱化",
+    "precondition_fabrication": "虚构前置条件",
+    "necessity_sufficiency_swap": "必要/充分条件混淆",
+    "modal_conflict": "模态冲突（必须/允许/禁止）",
+    "temporal_reversal": "时序颠倒",
+    "negation_mismatch": "极性/否定相反",
+    "relation_inversion": "方向/依赖颠倒",
+    "entity_substitution": "主体错绑（张冠李戴）",
+    "exception_flow_mismatch": "异常流错配",
+    "coverage_fabrication": "覆盖虚构（多报功能）",
+    "semantic_unspecified": "语义差异（待细分）",
+    "compliance_gap": "合规条款缺失",
+}
+
+
 def _build_violations(result: Any, answer: str,
                       wanted: set[str] | None) -> list[dict[str, str]]:
-    """localizations按check_item聚合 → violations[].
+    """localizations按check_item聚合 → violations[](可读中文根因报告).
 
-    item_id=taxonomy条目编号, item_name查consistency_taxonomy_v3,
-    description=rationale前120字, affected_answer=answer中claim span
-    切片(无span回退claim_text); 按knowledge_refs过滤, 去重.
+    每条: item_id/item_name(契约) + answer_context(answer原句) +
+    affected_answer(断言值) + description(冲突对中文说明: answer声称什么/
+    文档记载什么/根因判定) + root_cause{根因源,根因操作}(中文).
     """
     names = _taxonomy_names()
     out: list[dict[str, str]] = []
-    seen: set[tuple[str, str, str]] = set()
+    seen: set[tuple[str, str]] = set()
     for loc in result.localizations:
         item_ids = list(loc.check_item_candidates) or ["未分类"]
+        context = _sentence_of_span(answer, loc.answer_span)
+        affected = str(loc.claim_text)
+        if loc.answer_span is not None:
+            start, end = loc.answer_span
+            if 0 <= start < end <= len(answer):
+                affected = answer[start:end]
+        rc = loc.root_cause or {}
+        source_zh = ROOT_CAUSE_SOURCE_ZH.get(str(rc.get("source", "")), "")
+        op_zh = ROOT_CAUSE_OPERATION_ZH.get(str(rc.get("operation", "")),
+                                            "语义差异")
+        # 冲突对说明: answer声称 vs 文档记载 + 通道判定说明
+        parts = [f"answer断言：「{affected}」"]
+        if loc.evidence:
+            ev = loc.evidence[0]
+            loc_txt = ev.section if ev.section else ""
+            if ev.row_index >= 0:
+                loc_txt += f" 第{ev.row_index}行"
+            if ev.field_name:
+                loc_txt += f" {ev.field_name}"
+            parts.append(f"文档{loc_txt}记载：「{str(ev.statement_text)[:90]}」")
+        clean = _clean_rationale(loc.rationale)
+        if clean and clean not in parts:
+            parts.append(clean)
+        if source_zh or op_zh:
+            parts.append(f"根因判定：{source_zh}·{op_zh}")
+        description = "\n".join(parts)
         for item_id in item_ids:
             if wanted is not None and item_id not in wanted:
                 continue
-            affected = str(loc.claim_text)
-            if loc.answer_span is not None:
-                start, end = loc.answer_span
-                if 0 <= start < end <= len(answer):
-                    affected = answer[start:end]
-            description = str(loc.rationale)[:120]
-            key = (item_id, affected, description)
+            key = (item_id, affected)
             if key in seen:
                 continue
             seen.add(key)
             out.append({
                 "item_id": item_id,
                 "item_name": names.get(item_id, "未分类"),
-                "description": description,
+                "answer_context": context,
                 "affected_answer": affected,
-                "root_cause": dict(loc.root_cause) if loc.root_cause
-                else None,
+                "description": description,
+                "root_cause": {
+                    "根因源": source_zh or "待细分",
+                    "根因操作": op_zh,
+                },
             })
     return out
 

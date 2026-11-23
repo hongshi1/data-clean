@@ -17,12 +17,14 @@ req = urllib.request.Request(BASE + "/api/check", data=body,
 resp = json.loads(urllib.request.urlopen(req, timeout=60).read())
 print("受理:", resp["ok"], resp["data"]["check_id"], resp["data"]["status"])
 cid = resp["data"]["check_id"]
-for _ in range(60):
+for _ in range(120):
     time.sleep(2)
     st = json.loads(urllib.request.urlopen(
         BASE + "/api/check-status/" + cid, timeout=30).read())
     if st["data"]["status"] in ("done", "error"):
         break
+if st["data"]["status"] != "done":
+    raise RuntimeError(f"check未完成: {st['data']['status']}")
 print("终态:", json.dumps(st["data"], ensure_ascii=False)[:180])
 rep = json.loads(urllib.request.urlopen(
     BASE + "/api/check-reports/" + cid, timeout=30).read())["data"]["report"]
