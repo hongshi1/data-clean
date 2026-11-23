@@ -21,7 +21,6 @@ import re
 from dataclasses import dataclass
 
 from algorithms.consistency.answer_structure import decompose_answer
-from algorithms.consistency.qa_router import route_question
 
 
 @dataclass(frozen=True)
@@ -125,7 +124,13 @@ def decompose_claims(question: str, answer: str) -> list[AnswerClaim]:
     """Split an answer into atomic AnswerClaims (former ``_decompose``)."""
     claims: list[AnswerClaim] = []
     numeric_claims = extract_numeric_claims(answer)
-    numeric_question = any(item.startswith("PARAM-") for item in route_question(question))
+    # 数值问句门控(本地声明式: 替代旧路由表, 仅服务于裸数值主语补全;
+    # M103审计: 全量路由表惰性0/213翻转, 此门为唯一活跃消费点)
+    numeric_question = any(
+        term in re.sub(r"\s+", "", question)
+        for term in ("多少", "时延", "延迟", "周期", "频率", "间隔",
+                     "阈值", "门限", "上限", "下限", "容量", "时长",
+                     "精度", "误差", "内存", "带宽", "占用"))
     if numeric_question:
         values = list(_ANSWER_NUMBER.finditer(answer))
         subject = question_numeric_subject(question)

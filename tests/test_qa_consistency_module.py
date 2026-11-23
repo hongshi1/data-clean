@@ -43,7 +43,8 @@ def sample_request() -> QAInput:
 
 
 def test_question_router_returns_candidate_not_verdict() -> None:
-    assert "PARAM-01" in route_question("系统响应时间要求是多少？")
+    # M103: 路由已废弃(0/213翻转实证, model_replace_v1.json), 恒空
+    assert route_question("系统响应时间要求是多少？") == ()
     assert route_question("完全陌生的问题") == ()
 
 
@@ -57,10 +58,11 @@ def test_module_consumes_frozen_context_without_retrieval() -> None:
     assert result.considered_evidence_ids == ("e1",)
     assert result.context_freeze_id == request.context_freeze_id
     assert len(result.context_hash) == 64
-    assert "PARAM-01" in result.claim_results[0].check_item_candidates
+    # M103: 路由废弃后check_item_candidates恒空(数值判定不依赖路由)
+    assert result.claim_results[0].check_item_candidates == ()
     assert result.claim_results[0].evidence_refs == ("e1",)
     assert result.context_integrity == "unknown"
-    assert result.applicability == "applicable"
+    assert result.applicability == "uncertain"
 
 
 def test_real_verifier_checks_qa_answer_against_frozen_context() -> None:

@@ -45,9 +45,15 @@ def _question_mentions_subject(question: str, subject: str) -> bool:
 def _numeric_check_item(request: QAInput) -> str:
     candidates = route_question(request.question)
     numeric = [item for item in candidates if item.startswith("PARAM-")]
-    if not numeric:
-        raise ValueError("question does not route to a numeric check item")
-    return numeric[0]
+    if numeric:
+        return numeric[0]
+    # 路由已废弃(M103, 恒空): 数值型问句按本地声明式检测回退
+    question = re.sub(r"\s+", "", request.question)
+    if any(term in question for term in
+           ("多少", "时延", "延迟", "周期", "频率", "间隔", "阈值",
+            "门限", "上限", "下限", "容量", "时长", "精度", "误差")):
+        return "PARAM-01"
+    raise ValueError("question is not a numeric question")
 
 
 def _numeric_equality(request: QAInput, evidence_id: str):
