@@ -82,6 +82,10 @@ class InconsistencyLocalization:
     answer侧: claim_text + answer_span(best-effort文本定位);
     证据侧: 语句级evidence定位(块/行/字段);
     归因: 检测通道method + taxonomy check_item + rationale.
+    根因(M92): root_cause两层分类(根因源×根因操作, 形如
+    {"source": "answer", "operation": "value_substitution"}), 由
+    algorithms.consistency.root_cause.classify_root_cause按
+    method+rationale表驱动填充; 默认None保持向后兼容.
     """
 
     claim_id: str
@@ -92,6 +96,7 @@ class InconsistencyLocalization:
     confidence: float
     rationale: str
     evidence: tuple[EvidenceLocalization, ...]
+    root_cause: dict[str, str] | None = None
 
 
 @dataclass(frozen=True)

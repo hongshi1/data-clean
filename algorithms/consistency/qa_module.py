@@ -526,7 +526,11 @@ class QAConsistencyModule:
         answer侧: claim_text在answer中的字符区间(best-effort文本搜索,
         清洗过的claim可能无逐字命中→None); 证据侧: statement_id
         ({evidence_id}#s{N}) join语句元数据. 非refute不产出定位.
+        根因(M92): 每条定位附带root_cause两层分类(根因源×根因操作),
+        由classify_root_cause(method, rationale)表驱动填充.
         """
+        from algorithms.consistency.root_cause import classify_root_cause
+
         if not any(result.verdict == "refute" for result in results):
             return ()
         statements_by_id = {s.statement_id: s for s in statements}
@@ -575,7 +579,9 @@ class QAConsistencyModule:
                 method=result.method,
                 confidence=result.confidence,
                 rationale=result.rationale,
-                evidence=tuple(evidence_locs)))
+                evidence=tuple(evidence_locs),
+                root_cause=classify_root_cause(
+                    result.method, result.rationale)))
         return tuple(out)
 
     @staticmethod

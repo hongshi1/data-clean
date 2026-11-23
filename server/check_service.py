@@ -265,6 +265,8 @@ def _build_violations(result: Any, answer: str,
                 "item_name": names.get(item_id, "未分类"),
                 "description": description,
                 "affected_answer": affected,
+                "root_cause": dict(loc.root_cause) if loc.root_cause
+                else None,
             })
     return out
 
