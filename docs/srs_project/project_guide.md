@@ -156,6 +156,7 @@ TERM-07 接口标识 → 5条QA
 |---|---|
 | `docs/srs_project/49_cascadeverify_v2_results.md` | **M26-M28结果总览（论文数字唯一权威来源）**：架构/主表/消融/bootstrap/EGT演化/科研发现/审计响应与诚实评测（§10）/runs清单 |
 | `docs/srs_project/50_support_recall_analysis.md` | support召回失败分析+P1三项修复落地结果（§7） |
+| `docs/srs_project/93_scenario5_recall_paradigm_and_algorithm_design.md` | **场景五召回范式与算法设计**：question↔image↔chunk三层关联本质；方向A约束解析召回+方向B分解-接地-校验；P1/P2/P3路线 |
 | `knowledge/consistency_taxonomy_v3.json` | **当前taxonomy**（40项原始定义+04号证据+QA映射+17违例） |
 | `docs/srs_project/45_official_reference_dataset.md` | 官方参考数据集规范 |
 | `docs/srs_project/42_mutation_coverage_diagnosis.md` | 变异覆盖诊断（历史参考） |
@@ -300,6 +301,47 @@ Layer 2: Residual NLI (残差NLI层)
 **文档**：`docs/srs_project/67_rule_layer_architecture.md`（管线四阶段/注册表思想/六检查族真实走查/GJB引擎编译链55+32诚实覆盖率/配置引擎边界/代价账含双登记定律/演进路径）；64号§7完成度表同步回填。
 
 **测试**：rulepack/coverage/numeric_z3/gjb_rule_engine/e1/qa_consistency_module 154 passed+相关面152 passed；ruff零报错。
+
+### M130（2026-11-24）：多agent调研-验证-执行闭环（M116-M129综合条目）
+
+> 注：M37-M121的逐里程碑记录散见于各commit message与docs/srs_project/95-108号
+> 文档，本条目只收口本轮（三文献调研+代码库审计+七agent并行执行）。
+
+**范围**：回答"如何提升可解释性/性能/减少嵌入正则"——三份文献调研
+（95 claim算法/96可解释NLI/97正则替代）+代码库侧正则审计（98号：401个
+调用点四类分级）+统一行动方案（99号四阶段）+七agent并行实施与逐一验收。
+
+**验收结论（全部独立复核：测试亲自跑+数字从runs核对+预先存在失败经
+干净HEAD worktree取证）**：
+- **A·测量基建（M122）**：E1 citation P/R（expert macroP 0.8021/R 0.8792，
+  字面忠实0.5652损失集中于两通道合成claim_text；学生copy精度0/4）+
+  E2消融四条件（b翻转0.8125、c定位稳定0.647最弱、d=1.0）——Phase 2
+  验收基线锁定，六系统弱点入册
+- **B·P1桥接（M123）**：**0.8047未达标**（0.7496，桥接仅3条typed claim
+  可对齐）→**两层粒度契约发现**（字段层：识别胜利区域与typed字段区域
+  不相交，ID span覆盖0.0；命题层：NLI能entail整句不能entail原子）——
+  Alignment Bottleneck定律的域内精确化，可发表；修复在训练目标→P1-v2
+  重定向（103号：蒸馏A_regex分解行为，G已产标签identifier覆盖1.0）
+- **C·Eiter回路（M128）**：**"归纳规则≥人工规则"达标**——教师pack
+  0.407 vs 人工0.1481（vs generic 0.2619），91QA零回退逐位；三迭代
+  反馈通道消融（v1幻觉/v2诊断对旋钮错/v3超oracle）；6条方法学负面
+  发现（lru_cache pack污染/doc06_v1陈旧性/反馈保真度第一/诊断≠旋钮/
+  L1协议禁support输出=R2根源/并发编辑中断）
+- **D·E5数据（M126+M127）**：质量闸门（505条union，14机械拦截，教师
+  评分区分度弱如实报告）+286最小变更对+合并v4训练集（1622行，
+  support 20.5%→34.5%）——Step 3重训数据就绪
+- **M129 pack身份缓存修复**：_unit_table/极性正则的身份追踪（单pack
+  行为逐位一致45测试，路由失败经worktree取证为M104族预先存在）
+
+**执行中的下一格**：X1约束解码（E，parse_fail基线+trie LogitsProcessor
+102号规格）、E7表驱动外置（F，29契约测试+行为等价双证）、P1-v2标签
+（G，812实例，字段覆盖0.0→1.0）。GPU释放后：D3重训（M127数据）+
+切分器v3重训（103号）；F完成后：R2接地概率化。
+
+**文档**：95/96/97调研+98审计+99方案+100(E5)/102(X1)/103(P1v2)规格+
+101实验效度发现+104 Eiter报告（原100号重命名）。
+
+**测试**：本轮新增26+19+49+20+3+4=121个测试全绿；ruff零报错。
 
 ## 11. 场景5确立架构（受控内容）
 
