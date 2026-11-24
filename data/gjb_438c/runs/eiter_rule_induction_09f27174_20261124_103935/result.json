@@ -1,0 +1,2615 @@
+{
+ "benchmark": "eiter_rule_induction_p3",
+ "baselines": {
+  "generic_srs_gjb_v1": {
+   "crossdoc06": {
+    "metrics": {
+     "accuracy": 0.3333,
+     "macro_f1": 0.2619,
+     "per_class": {
+      "support": {
+       "precision": 0.2,
+       "recall": 0.1,
+       "f1": 0.1333
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.1,
+       "f1": 0.1818
+      },
+      "not_in_evidence": {
+       "precision": 0.3333,
+       "recall": 0.8,
+       "f1": 0.4706
+      }
+     },
+     "confusion": {
+      "support|support": 1,
+      "support|refute": 2,
+      "support|not_in_evidence": 2,
+      "refute|refute": 1,
+      "not_in_evidence|support": 9,
+      "not_in_evidence|refute": 7,
+      "not_in_evidence|not_in_evidence": 8
+     }
+    },
+    "wrong": [
+     "C06QA-001",
+     "C06QA-002",
+     "C06QA-003",
+     "C06QA-004",
+     "C06QA-005",
+     "C06QA-006",
+     "C06QA-007",
+     "C06QA-009",
+     "C06QA-010",
+     "C06QA-011",
+     "C06QA-012",
+     "C06QA-013",
+     "C06QA-014",
+     "C06QA-015",
+     "C06QA-016",
+     "C06QA-017",
+     "C06QA-019",
+     "C06QA-020",
+     "C06QA-026",
+     "C06QA-029"
+    ],
+    "n": 30
+   },
+   "qa91": {
+    "metrics": {
+     "accuracy": 0.9121,
+     "macro_f1": 0.7212,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.3333,
+       "f1": 0.4444
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.625,
+       "f1": 0.7692
+      },
+      "not_in_evidence": {
+       "precision": 0.9157,
+       "recall": 0.987,
+       "f1": 0.95
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 5,
+      "not_in_evidence|support": 4,
+      "not_in_evidence|refute": 3,
+      "not_in_evidence|not_in_evidence": 76
+     }
+    },
+    "wrong": [
+     "S1QA-006",
+     "S1QA-063",
+     "S1QA-064",
+     "S1QA-066",
+     "S1QA-068",
+     "S1QA-069",
+     "S1QA-077",
+     "S1QA-079"
+    ],
+    "n": 91
+   }
+  },
+  "manual_doc06_v1": {
+   "crossdoc06": {
+    "metrics": {
+     "accuracy": 0.2667,
+     "macro_f1": 0.1481,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "not_in_evidence": {
+       "precision": 0.3077,
+       "recall": 0.8,
+       "f1": 0.4444
+      }
+     },
+     "confusion": {
+      "support|refute": 2,
+      "support|not_in_evidence": 2,
+      "not_in_evidence|support": 10,
+      "not_in_evidence|refute": 8,
+      "not_in_evidence|not_in_evidence": 8
+     }
+    },
+    "wrong": [
+     "C06QA-001",
+     "C06QA-002",
+     "C06QA-003",
+     "C06QA-004",
+     "C06QA-005",
+     "C06QA-006",
+     "C06QA-007",
+     "C06QA-008",
+     "C06QA-009",
+     "C06QA-010",
+     "C06QA-011",
+     "C06QA-012",
+     "C06QA-013",
+     "C06QA-014",
+     "C06QA-015",
+     "C06QA-016",
+     "C06QA-017",
+     "C06QA-018",
+     "C06QA-019",
+     "C06QA-020",
+     "C06QA-026",
+     "C06QA-029"
+    ],
+    "n": 30
+   },
+   "qa91": {
+    "metrics": {
+     "accuracy": 0.9121,
+     "macro_f1": 0.7212,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.3333,
+       "f1": 0.4444
+      },
+      "refute": {
+       "precision": 1.0,
+       "recall": 0.625,
+       "f1": 0.7692
+      },
+      "not_in_evidence": {
+       "precision": 0.9157,
+       "recall": 0.987,
+       "f1": 0.95
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 5,
+      "not_in_evidence|support": 4,
+      "not_in_evidence|refute": 3,
+      "not_in_evidence|not_in_evidence": 76
+     }
+    },
+    "wrong": [
+     "S1QA-006",
+     "S1QA-063",
+     "S1QA-064",
+     "S1QA-066",
+     "S1QA-068",
+     "S1QA-069",
+     "S1QA-077",
+     "S1QA-079"
+    ],
+    "n": 91
+   }
+  }
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "n_failures": 20,
+   "failure_families": {
+    "capability_device": 6,
+    "capability_state": 4,
+    "interface_flow": 5,
+    "trace_binding": 5
+   },
+   "teacher_calls": [
+    {
+     "family": "capability_device",
+     "n_failures": 5,
+     "diagnosis": "根因是enum_device模板items捕获组最小长度6: 06号answer形态『在平板、手持设备上使用』/『在桌面、平板设备上使用』中, 去掉尾缀『设备』后items仅5字符, 懒惰回溯被迫把『设备』吞入items, 成员变为『手持设备』/『平板设备』, 不在enum_terminal_bases值域→kind=functional, join不发生, refute实例(011/012)无法检出集合冲突。将最小长度降到4后, 尾缀组可正确剥离『设备/终端』, 成员归一为值域成员, kind=terminal, 与注册表封闭集合比较即产生refute。至于001/002/003三个support实例: 声明已正确提取且与注册表完全一致, 按引擎契约enum_join输出空、交回旧通道, 而旧通道无三态判定能力——此部分超出L1规则层能力, 规则层无法将其变为support。",
+     "n_changes": 1,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "replace_extraction_template",
+       "name": "enum_device",
+       "pattern": "在(?P<items>[\\u4e00-\\u9fffA-Za-z0-9、和]{4,60}?)(?:等)?(?:种版本|版本|设备|终端|平台)?上(?:运行|使用|提供|均可|实施)",
+       "flags": 32,
+       "reason": "items最小长度6迫使『在平板、手持设备上使用』把尾缀『设备』吞入成员(剥离尾缀后仅5字符), 降到4使可选尾缀组正常剥离设备/终端, 成员归一入terminal值域; 04号长items形态因懒惰回溯仍匹配原值, 兼容",
+       "source_failures": [
+        "C06QA-001",
+        "C06QA-002",
+        "C06QA-003",
+        "C06QA-011",
+        "C06QA-012"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "capability_device",
+     "n_failures": 1,
+     "diagnosis": "失败机理: answer侧enum_device成功提取了声明, 但成员'手持设备'/'手持终端'带设备/终端尾缀, 引擎只自动剥'版'尾, 这些尾缀形态不在enum_terminal_bases值域内, 导致answer侧kind被判为functional; 而证据侧'方式名称'字段注册表kind=terminal, kind不匹配使enum_join根本不发生, 声明退回旧通道判not_in_evidence。修复只需让带尾缀的终端形态成员归入terminal值域, 使kind一致后join即可检测出answer多出的'手持'成员与注册表{桌面}的集合冲突。",
+     "n_changes": 1,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "add_vocabulary_words",
+       "vocab": "enum_terminal_bases",
+       "words": [
+        "手持设备",
+        "手持终端",
+        "桌面设备",
+        "桌面终端",
+        "平板设备",
+        "平板终端"
+       ],
+       "reason": "answer侧设备枚举成员带'设备/终端'尾缀(引擎不剥此类尾缀), 不在值域导致kind=functional与证据侧terminal注册表kind不匹配, join不发生; 将尾缀形态纳入值域使分类一致, join后多出的手持成员即触发refute, 且不影响04号裸词形态",
+       "source_failures": [
+        "C06QA-013"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "capability_state",
+     "n_failures": 4,
+     "diagnosis": "06号文档能力表的『运行状态』列出现『集成阶段』, 而enum_phase_bases值域与enum_phase_words词模式均只含开发/运行阶段: 证据侧注册表构建时『集成阶段』成员被丢弃(如重要信息提示/运行状态只剩{开发阶段,运行阶段}), answer侧含『集成阶段』的阶段枚举声明也无法被识别为phase形态, 导致enum_join不发生集合比对, 全部claim落入semantic_unresolved。补齐『集成阶段』后, refute类(r_state_member_drop/swap)的answer声明成员集与注册表穷举绑定即可产生集合冲突被refute。gold=support的两例按引擎契约(注册表与声明一致时enum_join输出空、交回旧通道)在L1规则层无修复手段。",
+     "n_changes": 2,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "add_vocabulary_words",
+       "vocab": "enum_phase_bases",
+       "words": [
+        "集成阶段"
+       ],
+       "reason": "06号文档运行状态列含『集成阶段』, 不在阶段值域导致证据侧成员被丢弃、kind=phase分类失败",
+       "source_failures": [
+        "C06QA-004",
+        "C06QA-005",
+        "C06QA-014",
+        "C06QA-015"
+       ]
+      },
+      {
+       "op": "replace_extraction_template",
+       "name": "enum_phase_words",
+       "pattern": "开发阶段|集成阶段|运行阶段",
+       "flags": 32,
+       "reason": "answer侧阶段枚举声明识别词模式缺『集成阶段』, 补齐后含三阶段的声明可被提取并与注册表join",
+       "source_failures": [
+        "C06QA-004",
+        "C06QA-005",
+        "C06QA-014",
+        "C06QA-015"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "interface_flow",
+     "n_failures": 5,
+     "diagnosis": "五例均出在接口流向族。006/007的根因是answer侧ID声明主体提取带垃圾尾缀：claimed subject为『系统运行监控与日志服务接口通过接口』/『消息服务与日志服务接口通过接口』，而ID注册表主体为纯接口名——『通过接口』不在id_subject_stopwords中，主体归一失败导致id_join无法确认绑定，conservative通道回退为not_in_evidence。016/017是发送方换值refute：answer的(主体,ID)绑定与注册表完全一致，冲突值在『由X发送至Y』的发送方字段，而现有模板没有任何answer侧发送方声明提取通道，id_join只做(主体,ID)绑定比对，无法产生绑定冲突refute。026是效果性断言(加密传输/高并发)无证据，support来自旧通道identifier_exact_match的ID字面命中，L1专家无法压制旧通道的support判定。后三类超出L1规则层能力。",
+     "n_changes": 1,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "add_vocabulary_words",
+       "vocab": "id_subject_stopwords",
+       "words": [
+        "通过接口"
+       ],
+       "reason": "answer侧『X通过接口PZXQ-…』形态中『通过接口』被并入claimed subject，加停用词使主体归一为纯接口名，与ID注册表主体一致以完成绑定确认",
+       "source_failures": [
+        "C06QA-006",
+        "C06QA-007",
+        "C06QA-016",
+        "C06QA-017",
+        "C06QA-026"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "trace_binding",
+     "n_failures": 5,
+     "diagnosis": "本批4个trace_binding失败的共同机理: 06号文档中任务书章节号均以行内形态出现——证据侧为能力表字段语句『X的对应的任务书功能性能：4.1.2a）』(章节号跟在冒号后), answer侧为『追溯至任务书4.1.2 c）』(章节号跟在『任务书』后)。基线模板trace_taskbook_section使用^行首锚, 在这两种形态下均无法提取任何任务书章节token, 导致trace双向join通道完全静默, 判定退化为旧通道(identifier_exact_match只证ID在场/sequence_alignment不适用)。修复只需放宽该模板的锚定条件(行首或『任务书』/冒号后)并纳入可选字母尾缀, 使a)/b)/c)级行级区分成为可能(这是C06QA-019/020跨行污染refute的判定前提)。C06QA-029(gold=not_in_evidence)的support误判来自旧通道identifier_exact_match对ID在场的过度触发, 与L1规则包无关, 规则层无法修复。",
+     "n_changes": 1,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "replace_extraction_template",
+       "name": "trace_taskbook_section",
+       "pattern": "(?:(?<=任务书)|(?<=：)|(?<=:)|^)4(?:\\.\\d+)+\\s*[a-hA-H]?[)）]?",
+       "flags": 32,
+       "reason": "06号文档任务书章节号以『任务书4.1.2c）』(answer侧)与『…功能性能：4.1.2a）』(证据侧字段语句)行内形态出现, ^行首锚提取不到任何token; 改为行首/任务书后/冒号后三种锚定并纳入可选字母尾缀以支持行级a/b/c区分, 无字母形态与04号兼容",
+       "source_failures": [
+        "C06QA-009",
+        "C06QA-010",
+        "C06QA-019",
+        "C06QA-020",
+        "C06QA-029"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    }
+   ],
+   "teacher_parse_errors": [],
+   "n_proposed_merged": 6,
+   "accepted": [
+    {
+     "op": "replace_extraction_template",
+     "name": "enum_device",
+     "pattern": "在(?P<items>[\\u4e00-\\u9fffA-Za-z0-9、和]{4,60}?)(?:等)?(?:种版本|版本|设备|终端|平台)?上(?:运行|使用|提供|均可|实施)",
+     "flags": 32,
+     "reason": "items最小长度6迫使『在平板、手持设备上使用』把尾缀『设备』吞入成员(剥离尾缀后仅5字符), 降到4使可选尾缀组正常剥离设备/终端, 成员归一入terminal值域; 04号长items形态因懒惰回溯仍匹配原值, 兼容",
+     "source_failures": [
+      "C06QA-001",
+      "C06QA-002",
+      "C06QA-003",
+      "C06QA-011",
+      "C06QA-012"
+     ]
+    },
+    {
+     "op": "replace_extraction_template",
+     "name": "trace_taskbook_section",
+     "pattern": "(?:(?<=任务书)|(?<=：)|(?<=:)|^)4(?:\\.\\d+)+\\s*[a-hA-H]?[)）]?",
+     "flags": 32,
+     "reason": "06号文档任务书章节号以『任务书4.1.2c）』(answer侧)与『…功能性能：4.1.2a）』(证据侧字段语句)行内形态出现, ^行首锚提取不到任何token; 改为行首/任务书后/冒号后三种锚定并纳入可选字母尾缀以支持行级a/b/c区分, 无字母形态与04号兼容",
+     "source_failures": [
+      "C06QA-009",
+      "C06QA-010",
+      "C06QA-019",
+      "C06QA-020",
+      "C06QA-029"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "id_subject_stopwords",
+     "words": [
+      "通过接口"
+     ],
+     "reason": "answer侧『X通过接口PZXQ-…』形态中『通过接口』被并入claimed subject，加停用词使主体归一为纯接口名，与ID注册表主体一致以完成绑定确认",
+     "source_failures": [
+      "C06QA-006",
+      "C06QA-007",
+      "C06QA-016",
+      "C06QA-017",
+      "C06QA-026"
+     ]
+    },
+    {
+     "op": "replace_extraction_template",
+     "name": "enum_phase_words",
+     "pattern": "开发阶段|集成阶段|运行阶段",
+     "flags": 32,
+     "reason": "answer侧阶段枚举声明识别词模式缺『集成阶段』, 补齐后含三阶段的声明可被提取并与注册表join",
+     "source_failures": [
+      "C06QA-004",
+      "C06QA-005",
+      "C06QA-014",
+      "C06QA-015"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_phase_bases",
+     "words": [
+      "集成阶段"
+     ],
+     "reason": "06号文档运行状态列含『集成阶段』, 不在阶段值域导致证据侧成员被丢弃、kind=phase分类失败",
+     "source_failures": [
+      "C06QA-004",
+      "C06QA-005",
+      "C06QA-014",
+      "C06QA-015"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_terminal_bases",
+     "words": [
+      "手持设备",
+      "手持终端",
+      "桌面设备",
+      "桌面终端",
+      "平板设备",
+      "平板终端"
+     ],
+     "reason": "answer侧设备枚举成员带'设备/终端'尾缀(引擎不剥此类尾缀), 不在值域导致kind=functional与证据侧terminal注册表kind不匹配, join不发生; 将尾缀形态纳入值域使分类一致, join后多出的手持成员即触发refute, 且不影响04号裸词形态",
+     "source_failures": [
+      "C06QA-013"
+     ]
+    }
+   ],
+   "pruned": 5,
+   "rejected": [],
+   "crossdoc06_after": {
+    "accuracy": 0.4333,
+    "macro_f1": 0.407,
+    "per_class": {
+     "support": {
+      "precision": 0.2,
+      "recall": 0.1,
+      "f1": 0.1333
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714
+     },
+     "not_in_evidence": {
+      "precision": 0.381,
+      "recall": 0.8,
+      "f1": 0.5161
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "support|refute": 2,
+     "support|not_in_evidence": 2,
+     "refute|refute": 4,
+     "not_in_evidence|support": 9,
+     "not_in_evidence|refute": 4,
+     "not_in_evidence|not_in_evidence": 8
+    }
+   }
+  },
+  {
+   "round": 2,
+   "n_failures": 17,
+   "failure_families": {
+    "capability_device": 3,
+    "capability_state": 4,
+    "interface_flow": 5,
+    "trace_binding": 5
+   },
+   "teacher_calls": [
+    {
+     "family": "capability_device",
+     "n_failures": 3,
+     "diagnosis": "三例均为gold=support且错判来自semantic_unresolved旧通道。引擎实际视图显示answer侧枚举声明已被正确提取(成员归一为桌面/平板/手持, kind=terminal, 与上一轮接受的enum_device修复一致)。C06QA-001中证据注册表已含『应用界面集成/方式名称={桌面、平板、手持}』, 声明与注册表完全一致——按引擎输出契约, enum_join在集合一致时输出空并将claim交回旧通道, 不产生support判定, 故not_in_evidence来自旧通道无三态判定能力, 规则层无法修复。C06QA-002/003中目标主体(日志清理、数据库连接状态提示)的ID注册表条目存在但方式名称枚举注册表条目缺失(仅需求重用被注册), 然而即便补齐该注册表条目使join发生并确认一致, 输出契约仍为空而非support, 同样无法改变判定。此为L1规则层能力边界之外的失败。",
+     "n_changes": 0,
+     "n_invalid": 0,
+     "changes": [],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "capability_state",
+     "n_failures": 4,
+     "diagnosis": "四个失败同根：06号文档运行状态列与answer均含『集成阶段』，但它不在enum_phase_bases值域且enum_phase_words不识别，导致证据侧成员被丢弃、answer侧阶段声明提取/分类失败，join不发生。上一轮直接补词被剪枝，推断04号回退源于answer侧散文中孤立出现的『集成阶段』被误识别为阶段枚举声明；本轮改为仅在顿号列表上下文锚定识别『集成阶段』，并同步补值域与主体窗口垃圾词（『在/仅在』连接词污染主体候选）。C06QA-004/005为support标签：即使提取与join完全一致，enum_join契约只输出空、claim交回无三态判定能力的旧通道，规则层无法产出support，此两例在L1层无解；变更仅修复014/015两例refute。",
+     "n_changes": 3,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "add_vocabulary_words",
+       "vocab": "enum_phase_bases",
+       "words": [
+        "集成阶段"
+       ],
+       "reason": "06号运行状态列与answer成员含集成阶段，不在阶段值域导致证据侧成员丢弃、answer侧kind分类失败，join不发生；04号证据无该词故值域扩展无回退风险",
+       "source_failures": [
+        "C06QA-004",
+        "C06QA-005",
+        "C06QA-014",
+        "C06QA-015"
+       ]
+      },
+      {
+       "op": "replace_extraction_template",
+       "name": "enum_phase_words",
+       "pattern": "开发阶段|运行阶段|(?<=[、，,])集成阶段|集成阶段(?=[、，,])",
+       "flags": 32,
+       "reason": "补识别集成阶段但仅限顿号列表上下文（前后邻分隔符），避免04号answer散文中孤立『集成阶段』被误提取为阶段枚举声明造成回退",
+       "source_failures": [
+        "C06QA-004",
+        "C06QA-005",
+        "C06QA-014",
+        "C06QA-015"
+       ]
+      },
+      {
+       "op": "add_vocabulary_words",
+       "vocab": "enum_subject_garbage_infixes",
+       "words": [
+        "在",
+        "仅在"
+       ],
+       "reason": "answer侧『X功能(仅)在开发阶段…』的主体候选窗口把连接词『在/仅在』吞入主体，与注册表主体（如重要信息提示）不一致导致join失败，加停用词使主体归一",
+       "source_failures": [
+        "C06QA-004",
+        "C06QA-005",
+        "C06QA-014",
+        "C06QA-015"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "interface_flow",
+     "n_failures": 5,
+     "diagnosis": "本批5例均超出L1规则层能力。C06QA-006/007(gold=support): ID注册表已正确建立(如PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK→系统运行监控与日志服务接口), answer侧声明也已提取且claimed subject经包含关系与注册表主体一致, id_join按契约输出空交回旧通道; 最终not_in_evidence来自conservative_unresolved旧通道聚合, 规则层无法产出support。C06QA-016/017(gold=refute): 错判support来自identifier_exact_match旧通道; answer侧可提取的(主体,ID)绑定(人机交互接口,RJJHJK)与注册表完全一致, 冲突在于发送方字段值(用户vs界面集成框架), 而id_join只建模(主体,ID)绑定, answer侧『由X发送至Y』形态无任何id_*/enum_*模板可提取为可join的声明, 无法构造绑定冲突。C06QA-026(gold=not_in_evidence): answer为效果性断言(加密传输/高并发), claimed subject=None, id_join无绑定可检, support同样来自identifier_exact_match旧通道。三类的判定来源与所需判定语义均在L1契约之外。",
+     "n_changes": 0,
+     "n_invalid": 0,
+     "changes": [],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    },
+    {
+     "family": "trace_binding",
+     "n_failures": 5,
+     "diagnosis": "本批trace_binding失败的核心是追溯join从未发生：证据侧章节信息以能力表字段语句『<主体>的对应的任务书功能性能：4.1.2a）』形态存在，answer侧以『…追溯至任务书4.1.2 c）』形态存在，基线trace_taskbook_section的^行首锚两者都匹配不到。上一轮仅放宽锚定提取裸章节token被剪枝（零修复），重新诊断发现真正缺口是token缺少主体绑定——裸token无法与ID注册表的(主体,ID)绑定关联，join无从发生；因此本轮在模板中增加subj命名组，使证据侧提取(主体,章节)对、answer侧经『任务书』锚提取章节并与同句ID配对，再经ID注册表完成三方绑定，refute类(019/020)的跨行章节冲突即可被检出。gold=support的009/010按引擎契约trace专家一致时输出空、交回旧通道，规则层无能为力；029的support误判来自identifier_exact_match旧通道对效果性断言的过触发，不在L1旋钮范围内。",
+     "n_changes": 1,
+     "n_invalid": 0,
+     "changes": [
+      {
+       "op": "replace_extraction_template",
+       "name": "trace_taskbook_section",
+       "pattern": "(?:(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,24})的对应的任务书功能性能[：:])|(?:^|任务书)(?P<sec>4(?:\\.\\d+)+[a-hA-H]?[)）]?)",
+       "flags": 0,
+       "reason": "证据侧字段语句需带主体绑定提取(主体,章节)对以关联ID注册表，answer侧经『任务书』锚提取章节，保留^行首分支兼容04号裸章节号形态",
+       "source_failures": [
+        "C06QA-009",
+        "C06QA-010",
+        "C06QA-019",
+        "C06QA-020",
+        "C06QA-029"
+       ]
+      }
+     ],
+     "llm": {
+      "invocations": 1,
+      "cache_hits": 1,
+      "api_calls": 0
+     }
+    }
+   ],
+   "teacher_parse_errors": [],
+   "n_proposed_merged": 4,
+   "accepted": [
+    {
+     "op": "replace_extraction_template",
+     "name": "trace_taskbook_section",
+     "pattern": "(?:(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,24})的对应的任务书功能性能[：:])|(?:^|任务书)(?P<sec>4(?:\\.\\d+)+[a-hA-H]?[)）]?)",
+     "flags": 0,
+     "reason": "证据侧字段语句需带主体绑定提取(主体,章节)对以关联ID注册表，answer侧经『任务书』锚提取章节，保留^行首分支兼容04号裸章节号形态",
+     "source_failures": [
+      "C06QA-009",
+      "C06QA-010",
+      "C06QA-019",
+      "C06QA-020",
+      "C06QA-029"
+     ]
+    },
+    {
+     "op": "replace_extraction_template",
+     "name": "enum_phase_words",
+     "pattern": "开发阶段|运行阶段|(?<=[、，,])集成阶段|集成阶段(?=[、，,])",
+     "flags": 32,
+     "reason": "补识别集成阶段但仅限顿号列表上下文（前后邻分隔符），避免04号answer散文中孤立『集成阶段』被误提取为阶段枚举声明造成回退",
+     "source_failures": [
+      "C06QA-004",
+      "C06QA-005",
+      "C06QA-014",
+      "C06QA-015"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_phase_bases",
+     "words": [
+      "集成阶段"
+     ],
+     "reason": "06号运行状态列与answer成员含集成阶段，不在阶段值域导致证据侧成员丢弃、answer侧kind分类失败，join不发生；04号证据无该词故值域扩展无回退风险",
+     "source_failures": [
+      "C06QA-004",
+      "C06QA-005",
+      "C06QA-014",
+      "C06QA-015"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_subject_garbage_infixes",
+     "words": [
+      "在",
+      "仅在"
+     ],
+     "reason": "answer侧『X功能(仅)在开发阶段…』的主体候选窗口把连接词『在/仅在』吞入主体，与注册表主体（如重要信息提示）不一致导致join失败，加停用词使主体归一",
+     "source_failures": [
+      "C06QA-004",
+      "C06QA-005",
+      "C06QA-014",
+      "C06QA-015"
+     ]
+    }
+   ],
+   "pruned": 4,
+   "rejected": [],
+   "crossdoc06_after": {
+    "accuracy": 0.4333,
+    "macro_f1": 0.407,
+    "per_class": {
+     "support": {
+      "precision": 0.2,
+      "recall": 0.1,
+      "f1": 0.1333
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714
+     },
+     "not_in_evidence": {
+      "precision": 0.381,
+      "recall": 0.8,
+      "f1": 0.5161
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "support|refute": 2,
+     "support|not_in_evidence": 2,
+     "refute|refute": 4,
+     "not_in_evidence|support": 9,
+     "not_in_evidence|refute": 4,
+     "not_in_evidence|not_in_evidence": 8
+    }
+   }
+  }
+ ],
+ "final": {
+  "pack_path": "C:\\Users\\12488\\Desktop\\data_clean\\data\\gjb_438c\\runs\\eiter_rule_induction_09f27174_20261124_103935\\packs\\doc06_eiter_v1.json",
+  "written_to": "config\\rulepacks\\doc06_eiter_v1.json",
+  "n_changes": 1,
+  "changes": [
+   {
+    "op": "replace_extraction_template",
+    "name": "enum_device",
+    "pattern": "在(?P<items>[\\u4e00-\\u9fffA-Za-z0-9、和]{4,60}?)(?:等)?(?:种版本|版本|设备|终端|平台)?上(?:运行|使用|提供|均可|实施)",
+    "flags": 32,
+    "reason": "items最小长度6迫使『在平板、手持设备上使用』把尾缀『设备』吞入成员(剥离尾缀后仅5字符), 降到4使可选尾缀组正常剥离设备/终端, 成员归一入terminal值域; 04号长items形态因懒惰回溯仍匹配原值, 兼容",
+    "source_failures": [
+     "C06QA-001",
+     "C06QA-002",
+     "C06QA-003",
+     "C06QA-011",
+     "C06QA-012"
+    ]
+   }
+  ],
+  "gate_final": "ok",
+  "crossdoc06": {
+   "metrics": {
+    "accuracy": 0.4333,
+    "macro_f1": 0.407,
+    "per_class": {
+     "support": {
+      "precision": 0.2,
+      "recall": 0.1,
+      "f1": 0.1333
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714
+     },
+     "not_in_evidence": {
+      "precision": 0.381,
+      "recall": 0.8,
+      "f1": 0.5161
+     }
+    },
+    "confusion": {
+     "support|support": 1,
+     "support|refute": 2,
+     "support|not_in_evidence": 2,
+     "refute|refute": 4,
+     "not_in_evidence|support": 9,
+     "not_in_evidence|refute": 4,
+     "not_in_evidence|not_in_evidence": 8
+    }
+   },
+   "verdicts": {
+    "C06QA-001": "not_in_evidence",
+    "C06QA-002": "not_in_evidence",
+    "C06QA-003": "not_in_evidence",
+    "C06QA-004": "not_in_evidence",
+    "C06QA-005": "not_in_evidence",
+    "C06QA-006": "not_in_evidence",
+    "C06QA-007": "not_in_evidence",
+    "C06QA-008": "support",
+    "C06QA-009": "not_in_evidence",
+    "C06QA-010": "not_in_evidence",
+    "C06QA-011": "refute",
+    "C06QA-012": "refute",
+    "C06QA-013": "refute",
+    "C06QA-014": "not_in_evidence",
+    "C06QA-015": "not_in_evidence",
+    "C06QA-016": "support",
+    "C06QA-017": "support",
+    "C06QA-018": "refute",
+    "C06QA-019": "not_in_evidence",
+    "C06QA-020": "not_in_evidence",
+    "C06QA-021": "not_in_evidence",
+    "C06QA-022": "not_in_evidence",
+    "C06QA-023": "not_in_evidence",
+    "C06QA-024": "not_in_evidence",
+    "C06QA-025": "not_in_evidence",
+    "C06QA-026": "support",
+    "C06QA-027": "not_in_evidence",
+    "C06QA-028": "not_in_evidence",
+    "C06QA-029": "support",
+    "C06QA-030": "not_in_evidence"
+   },
+   "wrong": [
+    "C06QA-001",
+    "C06QA-002",
+    "C06QA-003",
+    "C06QA-004",
+    "C06QA-005",
+    "C06QA-006",
+    "C06QA-007",
+    "C06QA-009",
+    "C06QA-010",
+    "C06QA-014",
+    "C06QA-015",
+    "C06QA-016",
+    "C06QA-017",
+    "C06QA-019",
+    "C06QA-020",
+    "C06QA-026",
+    "C06QA-029"
+   ],
+   "failure_claims": {
+    "C06QA-001": {
+     "claims": [
+      {
+       "claim_text": "应用界面集成功能支持在桌面、平板、手持设备上使用",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "也就是说，用户在桌面、平板、手持终端上均可以使用该功能",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-001-ev-000252#s0] 参数配置管理所有能力标识表，见表58所示。",
+       "[C06QA-001-ev-000253#s0] 界面集成框架参数配置的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH-JMJCKJCSPZ",
+       "[C06QA-001-ev-000253#s1] 界面集成框架参数配置的需求描述：能够对界面集成框架的分屏、字体大小、背景颜色、弹窗切换、设备切换、布局切换参数进行配置",
+       "[C06QA-001-ev-000253#s2] 界面集成框架参数配置的需求重用：改进",
+       "[C06QA-001-ev-000253#s3] 界面集成框架参数配置的方式名称：桌面、平板、手持",
+       "[C06QA-001-ev-000253#s4] 界面集成框架参数配置的运行状态：开发阶段、运行阶段",
+       "[C06QA-001-ev-000253#s5] 界面集成框架参数配置的对应的任务书功能性能：4.1.4a)",
+       "[C06QA-001-ev-000253#s6] 应用界面集成的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH-YYJMJC",
+       "[C06QA-001-ev-000253#s7] 应用界面集成的需求描述：提供参数配置界面二次开发接口，依据《界面开发规范》开发的配置界面，能够集成到界面集成框架的参数设置界面",
+       "[C06QA-001-ev-000253#s8] 应用界面集成的需求重用：改进",
+       "[C06QA-001-ev-000253#s9] 应用界面集成的方式名称：桌面、平板、手持",
+       "[C06QA-001-ev-000253#s10] 应用界面集成的运行状态：开发阶段、运行阶段",
+       "[C06QA-001-ev-000253#s11] 应用界面集成的对应的任务书功能性能：4.1.4b)",
+       "[C06QA-001-ev-000253#s12] 参数配置接口的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH-CSPZJK"
+      ],
+      "n_statements": 22,
+      "enum_registry": [
+       "界面集成框架参数配置/需求重用={改进}",
+       "界面集成框架参数配置/方式名称={桌面、平板、手持}",
+       "界面集成框架参数配置/运行状态={开发阶段、运行阶段}",
+       "应用界面集成/需求重用={改进}",
+       "应用界面集成/方式名称={桌面、平板、手持}",
+       "应用界面集成/运行状态={开发阶段、运行阶段}",
+       "参数配置接口/需求重用={新增}",
+       "参数配置接口/方式名称={桌面、平板、手持}",
+       "参数配置接口/运行状态={开发阶段、运行阶段}"
+      ],
+      "enum_assertions": [
+       "subjects=['应用界面集成', '应用界面集成功能支持在'], members=['桌面', '平板', '手持'], kind=terminal, closed=True",
+       "subjects=['用户', '应用界面集成功能支持在'], members=['桌面', '平板', '手持'], kind=terminal, closed=True"
+      ],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTJCXXWH-JMJCKJCSPZ -> ['界面集成框架参数配置']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH-YYJMJC -> ['应用界面集成']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH-CSPZJK -> ['参数配置接口']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-002": {
+     "claims": [
+      {
+       "claim_text": "日志清理功能支持在桌面、平板设备上使用",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "也就是说，用户在桌面、平板终端上均可以使用该功能",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-002-ev-000285#s0] 日志采集与管理所有能力标识表，见表66所示。",
+       "[C06QA-002-ev-000286#s0] 软件日志采集的项目唯一标识符：PZXQ-YXZCFW-GN-RZCJYGL-RJRZCJ",
+       "[C06QA-002-ev-000286#s1] 软件日志采集的需求描述：提供软件日志记录接口，支持应用软件记录日志信息。支持日志文件的拆分，当单个日志文件超过50MB时，自动拆分为两个日志文件",
+       "[C06QA-002-ev-000286#s2] 软件日志采集的需求重用：新增",
+       "[C06QA-002-ev-000286#s3] 软件日志采集的方式名称：桌面、平板、手持",
+       "[C06QA-002-ev-000286#s4] 软件日志采集的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-002-ev-000286#s5] 软件日志采集的对应的任务书功能性能：4.1.6a)",
+       "[C06QA-002-ev-000286#s6] 软件日志查询的项目唯一标识符：PZXQ-YXZCFW-GN-RZCJYGL-YHRZCJ",
+       "[C06QA-002-ev-000286#s7] 软件日志查询的需求描述：提供对软件日志文件的查询接口，支持对软件日志文件的查询，包括按照软件名称、日志时间等条件查询日志",
+       "[C06QA-002-ev-000286#s8] 软件日志查询的需求重用：新增",
+       "[C06QA-002-ev-000286#s9] 软件日志查询的方式名称：桌面、平板",
+       "[C06QA-002-ev-000286#s10] 软件日志查询的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-002-ev-000286#s11] 软件日志查询的对应的任务书功能性能：4.1.6b)",
+       "[C06QA-002-ev-000286#s12] 日志删除的项目唯一标识符：PZXQ-YXZCFW-GN-RZCJYGL-RZCX"
+      ],
+      "n_statements": 27,
+      "enum_registry": [
+       "软件日志采集/需求重用={新增}",
+       "软件日志采集/方式名称={桌面、平板、手持}",
+       "软件日志采集/运行状态={开发阶段、运行阶段}",
+       "软件日志查询/需求重用={新增}",
+       "软件日志查询/方式名称={桌面、平板}",
+       "软件日志查询/运行状态={开发阶段、运行阶段}",
+       "日志删除/需求重用={新增}",
+       "日志删除/方式名称={桌面、平板}",
+       "日志删除/运行状态={开发阶段、运行阶段}",
+       "日志清理/需求重用={新增}"
+      ],
+      "enum_assertions": [
+       "subjects=['日志清理', '日志清理功能支持在'], members=['桌面', '平板'], kind=terminal, closed=True",
+       "subjects=['用户', '日志清理功能支持在'], members=['桌面', '平板'], kind=terminal, closed=True"
+      ],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-RZCJYGL-RJRZCJ -> ['软件日志采集']",
+       "PZXQ-YXZCFW-GN-RZCJYGL-YHRZCJ -> ['软件日志查询']",
+       "PZXQ-YXZCFW-GN-RZCJYGL-RZCX -> ['日志删除']",
+       "PZXQ-YXZCFW-GN-RZCJYGL-RZQL -> ['日志清理']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-003": {
+     "claims": [
+      {
+       "claim_text": "数据库连接状态提示功能支持在桌面、平板、手持设备上使用",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "也就是说，用户在桌面、平板、手持终端上均可以使用该功能",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-003-ev-000047#s0] 重要信息提示所有能力标识表，见表4所示。",
+       "[C06QA-003-ev-000048#s0] CPU占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS",
+       "[C06QA-003-ev-000048#s1] CPU占用信息提示的需求描述：能够显示计算机CPU占用状态信息",
+       "[C06QA-003-ev-000048#s2] CPU占用信息提示的需求重用：新增",
+       "[C06QA-003-ev-000048#s3] CPU占用信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-003-ev-000048#s4] CPU占用信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-003-ev-000048#s5] CPU占用信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-003-ev-000048#s6] 内存占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-NCZYXXTS",
+       "[C06QA-003-ev-000048#s7] 内存占用信息提示的需求描述：能够显示计算机内存占用状态信息",
+       "[C06QA-003-ev-000048#s8] 内存占用信息提示的需求重用：新增",
+       "[C06QA-003-ev-000048#s9] 内存占用信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-003-ev-000048#s10] 内存占用信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-003-ev-000048#s11] 内存占用信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-003-ev-000048#s12] 磁盘占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPZYXXTS"
+      ],
+      "n_statements": 39,
+      "enum_registry": [
+       "CPU占用信息提示/需求重用={新增}",
+       "CPU占用信息提示/方式名称={桌面、平板、手持}",
+       "CPU占用信息提示/运行状态={开发阶段、运行阶段}",
+       "内存占用信息提示/需求重用={新增}",
+       "内存占用信息提示/方式名称={桌面、平板、手持}",
+       "内存占用信息提示/运行状态={开发阶段、运行阶段}",
+       "磁盘占用信息提示/需求重用={新增}",
+       "磁盘占用信息提示/方式名称={桌面、平板、手持}",
+       "磁盘占用信息提示/运行状态={开发阶段、运行阶段}",
+       "服务启动数量提示/需求重用={新增}"
+      ],
+      "enum_assertions": [
+       "subjects=['数据库连接状态提示', '数据库连接状态提示功能支持在'], members=['桌面', '平板', '手持'], kind=terminal, closed=True",
+       "subjects=['用户', '数据库连接状态提示功能支持在'], members=['桌面', '平板', '手持'], kind=terminal, closed=True"
+      ],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS -> ['CPU占用信息提示', 'CPU占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-NCZYXXTS -> ['内存占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPZYXXTS -> ['磁盘占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-FWQDSLTS -> ['服务启动数量提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-SJKLJZTTS -> ['数据库连接状态提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-FWQWLLJZTTS -> ['服务器网络连接状态提示']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-004": {
+     "claims": [
+      {
+       "claim_text": "前端组件集成功能在运行阶段提供",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "该功能的运行状态绑定为运行阶段，覆盖上述阶段",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-004-ev-000309#s0] 运维管理所有能力标识表，见表71所示。",
+       "[C06QA-004-ev-000310#s0] 运维管理框架入口功能的项目唯一标识符：PZXQ-YXZCFW-GN-YWGL-YWGLKJRK",
+       "[C06QA-004-ev-000310#s1] 运维管理框架入口功能的需求描述：提供运维管理统一集成框架",
+       "[C06QA-004-ev-000310#s2] 运维管理框架入口功能的需求重用：新增",
+       "[C06QA-004-ev-000310#s3] 运维管理框架入口功能的方式名称：桌面",
+       "[C06QA-004-ev-000310#s4] 运维管理框架入口功能的运行状态：运行阶段",
+       "[C06QA-004-ev-000310#s5] 运维管理框架入口功能的对应的任务书功能性能：4.1.7a)",
+       "[C06QA-004-ev-000310#s6] 前端组件集成功能的项目唯一标识符：PZXQ-YXZCFW-GN-YWGL-QDZJJC",
+       "[C06QA-004-ev-000310#s7] 前端组件集成功能的需求描述：能够对用户管理、基础数据维护、地图数据维护、任务数据包管理、任务数据包开设、任务系统配置的界面进行显示和切换",
+       "[C06QA-004-ev-000310#s8] 前端组件集成功能的需求重用：新增",
+       "[C06QA-004-ev-000310#s9] 前端组件集成功能的方式名称：桌面",
+       "[C06QA-004-ev-000310#s10] 前端组件集成功能的运行状态：运行阶段",
+       "[C06QA-004-ev-000310#s11] 前端组件集成功能的对应的任务书功能性能：4.1.7b)",
+       "[C06QA-004-ev-000311#s0] 3.2.6.1运维管理框架入口（PZXQ-YXZCFW-GN-YWGL-YWGLKJRK）"
+      ],
+      "n_statements": 15,
+      "enum_registry": [
+       "运维管理框架入口/需求重用={新增}",
+       "运维管理框架入口/方式名称={桌面}",
+       "运维管理框架入口/运行状态={运行阶段}",
+       "前端组件集成/需求重用={新增}",
+       "前端组件集成/方式名称={桌面}",
+       "前端组件集成/运行状态={运行阶段}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-YWGL-YWGLKJRK -> ['运维管理框架入口', '运维管理框架入口']",
+       "PZXQ-YXZCFW-GN-YWGL-QDZJJC -> ['前端组件集成']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-005": {
+     "claims": [
+      {
+       "claim_text": "系统基础信息维护功能在开发阶段、集成阶段、运行阶段提供",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "该功能的运行状态绑定为开发阶段、集成阶段、运行阶段，覆盖上述阶段",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-005-ev-000034#s0] 运行支撑服务软件所有能力标识表，见表2所示。",
+       "[C06QA-005-ev-000035#s0] 系统运行状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK",
+       "[C06QA-005-ev-000035#s1] 系统运行状态监控的需求描述：a)能够对系统运行过程中的重要信息包括计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示；b)能够读取计算机中正在运行软件的CPU状态详细信息、内存占",
+       "[C06QA-005-ev-000035#s2] 系统运行状态监控的需求重用：改进",
+       "[C06QA-005-ev-000035#s3] 系统运行状态监控的方式名称：桌面、平板、手持",
+       "[C06QA-005-ev-000035#s4] 系统运行状态监控的运行状态：运行阶段",
+       "[C06QA-005-ev-000035#s5] 系统运行状态监控的对应的任务书功能性能：4.1.1",
+       "[C06QA-005-ev-000035#s6] 故障预警修复的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF",
+       "[C06QA-005-ev-000035#s7] 故障预警修复的需求描述：a)提供故障策略库管理功能，支持用户录入故障信息、故障原因和故障修复策略信息，支持故障修复策略信息的查询、增加、删除和修改等；b)能够对系统运行过程中的服务崩溃信息进行代码跟踪，通过界面显示跟踪结果信息；c)提供开机",
+       "[C06QA-005-ev-000035#s8] 故障预警修复的需求重用：改进",
+       "[C06QA-005-ev-000035#s9] 故障预警修复的方式名称：桌面",
+       "[C06QA-005-ev-000035#s10] 故障预警修复的运行状态：开发阶段、运行阶段",
+       "[C06QA-005-ev-000035#s11] 故障预警修复的对应的任务书功能性能：4.1.2",
+       "[C06QA-005-ev-000035#s12] 系统基础信息维护的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH"
+      ],
+      "n_statements": 45,
+      "enum_registry": [
+       "能够对系统运行过程中的重要信息/prose={计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示}",
+       "能够读取本机与服务器网络连通信息/prose={上行速度、下行速度}",
+       "系统运行状态监控/需求重用={改进}",
+       "系统运行状态监控/方式名称={桌面、平板、手持}",
+       "系统运行状态监控/运行状态={运行阶段}",
+       "检测系统基础/prose={服务集成框架、数据统一访问服务、检测与服务器网络连接状态}",
+       "故障预警修复/需求重用={改进}",
+       "故障预警修复/方式名称={桌面}",
+       "故障预警修复/运行状态={开发阶段、运行阶段}",
+       "系统基础信息维护/需求重用={改进}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK -> ['系统运行状态监控', '系统运行状态监控']",
+       "PZXQ-YXZCFW-GN-GZYJXF -> ['故障预警修复']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH -> ['系统基础信息维护']",
+       "PZXQ-YXZCFW-GN-CSPZGL -> ['参数配置管理']",
+       "PZXQ-YXZCFW-GN-RZCJYGL -> ['日志采集与管理']",
+       "PZXQ-YXZCFW-GN-YWGL -> ['运维管理']",
+       "PZXQ-YXZCFW-GN-XXTSYGL -> ['消息提示与管理']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-006": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "标识符未在冻结context命中，且无同subject的显式不同值"
+      },
+      {
+       "claim_text": "系统运行监控与日志服务接口通过接口PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK实现，由日志服务发送至系统运行监控，用于日志服务与系统运行监控之间的信息交互",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-006-ev-000370#s0] 运行支撑服务软件内部接口需求表见表86。",
+       "[C06QA-006-ev-000371#s0] 基础信息服务与日志服务接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWRZFWJK",
+       "[C06QA-006-ev-000371#s1] 基础信息服务与日志服务接口的接口类型：API接口",
+       "[C06QA-006-ev-000371#s2] 基础信息服务与日志服务接口的发送方：日志服务",
+       "[C06QA-006-ev-000371#s3] 基础信息服务与日志服务接口的接收方：基础信息服务",
+       "[C06QA-006-ev-000371#s4] 基础信息服务与日志服务接口的接口内容：记录的日志信息",
+       "[C06QA-006-ev-000371#s5] 基础信息服务与日志服务接口的接口优先级：中",
+       "[C06QA-006-ev-000371#s6] 基础信息服务与系统运行监控接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWXTYXJKJK",
+       "[C06QA-006-ev-000371#s7] 基础信息服务与系统运行监控接口的接口类型：API接口",
+       "[C06QA-006-ev-000371#s8] 基础信息服务与系统运行监控接口的发送方：基础信息服务",
+       "[C06QA-006-ev-000371#s9] 基础信息服务与系统运行监控接口的接收方：系统运行监控",
+       "[C06QA-006-ev-000371#s10] 基础信息服务与系统运行监控接口的接口内容：本机IP地址、服务器IP地址、备份服务器IP地址、工作模式、本机身份、操作系统",
+       "[C06QA-006-ev-000371#s11] 基础信息服务与系统运行监控接口的接口优先级：中",
+       "[C06QA-006-ev-000371#s12] 基础信息服务与环境运行保障接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWHJYXBZJK"
+      ],
+      "n_statements": 45,
+      "enum_registry": [],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-NBJK-YXZCFW-JCXXFWRZFWJK -> ['基础信息服务与日志服务接口', '基础信息服务与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-JCXXFWXTYXJKJK -> ['基础信息服务与系统运行监控接口']",
+       "PZXQ-NBJK-YXZCFW-JCXXFWHJYXBZJK -> ['基础信息服务与环境运行保障接口']",
+       "PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK -> ['系统运行监控与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-HJYXBZRZFWJK -> ['环境运行保障与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-XXFWRZFWJK -> ['消息服务与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-XTPZGLRZFWJK -> ['系统配置管理与日志服务接口']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK, subject=系统运行监控与日志服务接口通过接口)"
+      ]
+     }
+    },
+    "C06QA-007": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-NBJK-YXZCFW-XXFWRZFWJK",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "标识符未在冻结context命中，且无同subject的显式不同值"
+      },
+      {
+       "claim_text": "消息服务与日志服务接口通过接口PZXQ-NBJK-YXZCFW-XXFWRZFWJK实现，由日志服务发送至消息服务，用于日志服务与消息服务之间的信息交互",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-NBJK-YXZCFW-XXFWRZFWJK与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-007-ev-000370#s0] 运行支撑服务软件内部接口需求表见表86。",
+       "[C06QA-007-ev-000371#s0] 基础信息服务与日志服务接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWRZFWJK",
+       "[C06QA-007-ev-000371#s1] 基础信息服务与日志服务接口的接口类型：API接口",
+       "[C06QA-007-ev-000371#s2] 基础信息服务与日志服务接口的发送方：日志服务",
+       "[C06QA-007-ev-000371#s3] 基础信息服务与日志服务接口的接收方：基础信息服务",
+       "[C06QA-007-ev-000371#s4] 基础信息服务与日志服务接口的接口内容：记录的日志信息",
+       "[C06QA-007-ev-000371#s5] 基础信息服务与日志服务接口的接口优先级：中",
+       "[C06QA-007-ev-000371#s6] 基础信息服务与系统运行监控接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWXTYXJKJK",
+       "[C06QA-007-ev-000371#s7] 基础信息服务与系统运行监控接口的接口类型：API接口",
+       "[C06QA-007-ev-000371#s8] 基础信息服务与系统运行监控接口的发送方：基础信息服务",
+       "[C06QA-007-ev-000371#s9] 基础信息服务与系统运行监控接口的接收方：系统运行监控",
+       "[C06QA-007-ev-000371#s10] 基础信息服务与系统运行监控接口的接口内容：本机IP地址、服务器IP地址、备份服务器IP地址、工作模式、本机身份、操作系统",
+       "[C06QA-007-ev-000371#s11] 基础信息服务与系统运行监控接口的接口优先级：中",
+       "[C06QA-007-ev-000371#s12] 基础信息服务与环境运行保障接口的接口需求标识：PZXQ-NBJK-YXZCFW-JCXXFWHJYXBZJK"
+      ],
+      "n_statements": 45,
+      "enum_registry": [],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-NBJK-YXZCFW-JCXXFWRZFWJK -> ['基础信息服务与日志服务接口', '基础信息服务与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-JCXXFWXTYXJKJK -> ['基础信息服务与系统运行监控接口']",
+       "PZXQ-NBJK-YXZCFW-JCXXFWHJYXBZJK -> ['基础信息服务与环境运行保障接口']",
+       "PZXQ-NBJK-YXZCFW-XTYXJKRZFWJK -> ['系统运行监控与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-HJYXBZRZFWJK -> ['环境运行保障与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-XXFWRZFWJK -> ['消息服务与日志服务接口']",
+       "PZXQ-NBJK-YXZCFW-XTPZGLRZFWJK -> ['系统配置管理与日志服务接口']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-NBJK-YXZCFW-XXFWRZFWJK, subject=消息服务与日志服务接口通过接口)"
+      ]
+     }
+    },
+    "C06QA-009": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "需求PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC追溯至任务书4.1.2 c），对应任务书4.1.2 c）的功能/性能要求",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC与evidence一致"
+      },
+      {
+       "claim_text": "4．1.2 c），对应任务书4.1.2 c）的功能/性能要求",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-009-ev-000141#s0] 故障预警修复所有能力标识表，见表30所示。",
+       "[C06QA-009-ev-000142#s0] 故障库维护管理的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF-GZKWHGL",
+       "[C06QA-009-ev-000142#s1] 故障库维护管理的需求描述：提供故障策略库管理功能，支持用户录入故障信息、故障原因和故障修复策略信息，支持故障修复策略信息的查询、增加、删除和修改等",
+       "[C06QA-009-ev-000142#s2] 故障库维护管理的需求重用：新增",
+       "[C06QA-009-ev-000142#s3] 故障库维护管理的方式名称：桌面",
+       "[C06QA-009-ev-000142#s4] 故障库维护管理的运行状态：开发阶段、运行阶段",
+       "[C06QA-009-ev-000142#s5] 故障库维护管理的对应的任务书功能性能：4.1.2a）",
+       "[C06QA-009-ev-000142#s6] 服务故障预警的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF-FWGZYJXF",
+       "[C06QA-009-ev-000142#s7] 服务故障预警的需求描述：能够对系统运行过程中的服务崩溃信息进行代码跟踪，通过界面显示跟踪结果信息",
+       "[C06QA-009-ev-000142#s8] 服务故障预警的需求重用：新增",
+       "[C06QA-009-ev-000142#s9] 服务故障预警的方式名称：桌面",
+       "[C06QA-009-ev-000142#s10] 服务故障预警的运行状态：开发阶段",
+       "[C06QA-009-ev-000142#s11] 服务故障预警的对应的任务书功能性能：4.1.2b）",
+       "[C06QA-009-ev-000142#s12] 开机基础环境检测的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC"
+      ],
+      "n_statements": 21,
+      "enum_registry": [
+       "故障库维护管理/需求重用={新增}",
+       "故障库维护管理/方式名称={桌面}",
+       "故障库维护管理/运行状态={开发阶段、运行阶段}",
+       "服务故障预警/需求重用={新增}",
+       "服务故障预警/方式名称={桌面}",
+       "服务故障预警/运行状态={开发阶段}",
+       "检测系统基础/prose={服务集成框架、数据统一访问服务、检测与服务器网络连接状态}",
+       "开机基础环境检测/需求重用={新增}",
+       "开机基础环境检测/方式名称={桌面}",
+       "开机基础环境检测/运行状态={开发阶段、运行阶段}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-GZYJXF-GZKWHGL -> ['故障库维护管理']",
+       "PZXQ-YXZCFW-GN-GZYJXF-FWGZYJXF -> ['服务故障预警']",
+       "PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC -> ['开机基础环境检测']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-YXZCFW-GN-GZYJXF-KJJCHJJC, subject=None)"
+      ]
+     }
+    },
+    "C06QA-010": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-YXZCFW-GN-YWGL",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "标识符未在冻结context命中，且无同subject的显式不同值"
+      },
+      {
+       "claim_text": "需求PZXQ-YXZCFW-GN-YWGL追溯至任务书4.1.7，对应任务书4.1.7的功能/性能要求",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-YXZCFW-GN-YWGL与evidence一致"
+      },
+      {
+       "claim_text": "4．1.7，对应任务书4.1.7的功能/性能要求",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-010-ev-000034#s0] 运行支撑服务软件所有能力标识表，见表2所示。",
+       "[C06QA-010-ev-000035#s0] 系统运行状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK",
+       "[C06QA-010-ev-000035#s1] 系统运行状态监控的需求描述：a)能够对系统运行过程中的重要信息包括计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示；b)能够读取计算机中正在运行软件的CPU状态详细信息、内存占",
+       "[C06QA-010-ev-000035#s2] 系统运行状态监控的需求重用：改进",
+       "[C06QA-010-ev-000035#s3] 系统运行状态监控的方式名称：桌面、平板、手持",
+       "[C06QA-010-ev-000035#s4] 系统运行状态监控的运行状态：运行阶段",
+       "[C06QA-010-ev-000035#s5] 系统运行状态监控的对应的任务书功能性能：4.1.1",
+       "[C06QA-010-ev-000035#s6] 故障预警修复的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF",
+       "[C06QA-010-ev-000035#s7] 故障预警修复的需求描述：a)提供故障策略库管理功能，支持用户录入故障信息、故障原因和故障修复策略信息，支持故障修复策略信息的查询、增加、删除和修改等；b)能够对系统运行过程中的服务崩溃信息进行代码跟踪，通过界面显示跟踪结果信息；c)提供开机",
+       "[C06QA-010-ev-000035#s8] 故障预警修复的需求重用：改进",
+       "[C06QA-010-ev-000035#s9] 故障预警修复的方式名称：桌面",
+       "[C06QA-010-ev-000035#s10] 故障预警修复的运行状态：开发阶段、运行阶段",
+       "[C06QA-010-ev-000035#s11] 故障预警修复的对应的任务书功能性能：4.1.2",
+       "[C06QA-010-ev-000035#s12] 系统基础信息维护的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH"
+      ],
+      "n_statements": 45,
+      "enum_registry": [
+       "能够对系统运行过程中的重要信息/prose={计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示}",
+       "能够读取本机与服务器网络连通信息/prose={上行速度、下行速度}",
+       "系统运行状态监控/需求重用={改进}",
+       "系统运行状态监控/方式名称={桌面、平板、手持}",
+       "系统运行状态监控/运行状态={运行阶段}",
+       "检测系统基础/prose={服务集成框架、数据统一访问服务、检测与服务器网络连接状态}",
+       "故障预警修复/需求重用={改进}",
+       "故障预警修复/方式名称={桌面}",
+       "故障预警修复/运行状态={开发阶段、运行阶段}",
+       "系统基础信息维护/需求重用={改进}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK -> ['系统运行状态监控', '系统运行状态监控']",
+       "PZXQ-YXZCFW-GN-GZYJXF -> ['故障预警修复']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH -> ['系统基础信息维护']",
+       "PZXQ-YXZCFW-GN-CSPZGL -> ['参数配置管理']",
+       "PZXQ-YXZCFW-GN-RZCJYGL -> ['日志采集与管理']",
+       "PZXQ-YXZCFW-GN-YWGL -> ['运维管理']",
+       "PZXQ-YXZCFW-GN-XXTSYGL -> ['消息提示与管理']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-YXZCFW-GN-YWGL, subject=None)"
+      ]
+     }
+    },
+    "C06QA-014": {
+     "claims": [
+      {
+       "claim_text": "重要信息提示功能仅在开发阶段、集成阶段提供，不在运行阶段提供",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-014-ev-000039#s0] 系统运行监控所有能力标识表，见表3所示。",
+       "[C06QA-014-ev-000040#s0] 重要信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS",
+       "[C06QA-014-ev-000040#s1] 重要信息提示的需求描述：能够对系统运行过程中的重要信息包括计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示",
+       "[C06QA-014-ev-000040#s2] 重要信息提示的需求重用：新增",
+       "[C06QA-014-ev-000040#s3] 重要信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-014-ev-000040#s4] 重要信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-014-ev-000040#s5] 重要信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-014-ev-000040#s6] 计算机状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-JSJZTJK",
+       "[C06QA-014-ev-000040#s7] 计算机状态监控的需求描述：能够读取计算机中正在运行软件的CPU状态详细信息、内存占用详细信息、磁盘占用详细信息，能够读取本机与服务器网络连通信息包括上行速度和下行速度，对以上数据进行汇总并进行显示",
+       "[C06QA-014-ev-000040#s8] 计算机状态监控的需求重用：新增",
+       "[C06QA-014-ev-000040#s9] 计算机状态监控的方式名称：桌面、平板、手持",
+       "[C06QA-014-ev-000040#s10] 计算机状态监控的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-014-ev-000040#s11] 计算机状态监控的对应的任务书功能性能：4.1.1b)",
+       "[C06QA-014-ev-000040#s12] 数据状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-SJZTJK"
+      ],
+      "n_statements": 39,
+      "enum_registry": [
+       "能够对系统运行过程中的重要信息/prose={计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示}",
+       "重要信息提示/需求重用={新增}",
+       "重要信息提示/方式名称={桌面、平板、手持}",
+       "重要信息提示/运行状态={开发阶段、运行阶段}",
+       "能够读取本机与服务器网络连通信息/prose={上行速度、下行速度}",
+       "计算机状态监控/需求重用={新增}",
+       "计算机状态监控/方式名称={桌面、平板、手持}",
+       "计算机状态监控/运行状态={开发阶段、运行阶段}",
+       "数据状态监控/需求重用={新增}",
+       "数据状态监控/方式名称={桌面、平板、手持}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS -> ['重要信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-JSJZTJK -> ['计算机状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-SJZTJK -> ['数据状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-FWZTJK -> ['服务状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-RJZTJK -> ['软件状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-SBZTJK -> ['设备状态监控']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-015": {
+     "claims": [
+      {
+       "claim_text": "参数配置管理功能在开发阶段、集成阶段提供",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "该功能的运行状态绑定为开发阶段、集成阶段，覆盖上述阶段",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-015-ev-000034#s0] 运行支撑服务软件所有能力标识表，见表2所示。",
+       "[C06QA-015-ev-000035#s0] 系统运行状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK",
+       "[C06QA-015-ev-000035#s1] 系统运行状态监控的需求描述：a)能够对系统运行过程中的重要信息包括计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示；b)能够读取计算机中正在运行软件的CPU状态详细信息、内存占",
+       "[C06QA-015-ev-000035#s2] 系统运行状态监控的需求重用：改进",
+       "[C06QA-015-ev-000035#s3] 系统运行状态监控的方式名称：桌面、平板、手持",
+       "[C06QA-015-ev-000035#s4] 系统运行状态监控的运行状态：运行阶段",
+       "[C06QA-015-ev-000035#s5] 系统运行状态监控的对应的任务书功能性能：4.1.1",
+       "[C06QA-015-ev-000035#s6] 故障预警修复的项目唯一标识符：PZXQ-YXZCFW-GN-GZYJXF",
+       "[C06QA-015-ev-000035#s7] 故障预警修复的需求描述：a)提供故障策略库管理功能，支持用户录入故障信息、故障原因和故障修复策略信息，支持故障修复策略信息的查询、增加、删除和修改等；b)能够对系统运行过程中的服务崩溃信息进行代码跟踪，通过界面显示跟踪结果信息；c)提供开机",
+       "[C06QA-015-ev-000035#s8] 故障预警修复的需求重用：改进",
+       "[C06QA-015-ev-000035#s9] 故障预警修复的方式名称：桌面",
+       "[C06QA-015-ev-000035#s10] 故障预警修复的运行状态：开发阶段、运行阶段",
+       "[C06QA-015-ev-000035#s11] 故障预警修复的对应的任务书功能性能：4.1.2",
+       "[C06QA-015-ev-000035#s12] 系统基础信息维护的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH"
+      ],
+      "n_statements": 45,
+      "enum_registry": [
+       "能够对系统运行过程中的重要信息/prose={计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示}",
+       "能够读取本机与服务器网络连通信息/prose={上行速度、下行速度}",
+       "系统运行状态监控/需求重用={改进}",
+       "系统运行状态监控/方式名称={桌面、平板、手持}",
+       "系统运行状态监控/运行状态={运行阶段}",
+       "检测系统基础/prose={服务集成框架、数据统一访问服务、检测与服务器网络连接状态}",
+       "故障预警修复/需求重用={改进}",
+       "故障预警修复/方式名称={桌面}",
+       "故障预警修复/运行状态={开发阶段、运行阶段}",
+       "系统基础信息维护/需求重用={改进}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK -> ['系统运行状态监控', '系统运行状态监控']",
+       "PZXQ-YXZCFW-GN-GZYJXF -> ['故障预警修复']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH -> ['系统基础信息维护']",
+       "PZXQ-YXZCFW-GN-CSPZGL -> ['参数配置管理']",
+       "PZXQ-YXZCFW-GN-RZCJYGL -> ['日志采集与管理']",
+       "PZXQ-YXZCFW-GN-YWGL -> ['运维管理']",
+       "PZXQ-YXZCFW-GN-XXTSYGL -> ['消息提示与管理']"
+      ],
+      "id_claims": []
+     }
+    },
+    "C06QA-016": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-WBJK-YXZCFW-RJJHJK",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "人机交互接口通过接口PZXQ-WBJK-YXZCFW-RJJHJK实现，由界面集成框架发送至本软件，用于界面集成框架与本软件之间的信息交互",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-WBJK-YXZCFW-RJJHJK与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-016-ev-000340#s0] 运行支撑服务软件外部接口需求表见表77所示。",
+       "[C06QA-016-ev-000341#s0] 人机交互接口的接口需求标识：PZXQ-WBJK-YXZCFW-RJJHJK",
+       "[C06QA-016-ev-000341#s1] 人机交互接口的接口类型：人机接口",
+       "[C06QA-016-ev-000341#s2] 人机交互接口的发送方：用户",
+       "[C06QA-016-ev-000341#s3] 人机交互接口的接收方：本软件",
+       "[C06QA-016-ev-000341#s4] 人机交互接口的接口内容：模式切换、键盘输入",
+       "[C06QA-016-ev-000341#s5] 人机交互接口的接口优先级：低",
+       "[C06QA-016-ev-000341#s6] 与数据运行管理工具接口的接口需求标识：PZXQ-WBJK-YXZCFW-SJYXGLGJ",
+       "[C06QA-016-ev-000341#s7] 与数据运行管理工具接口的接口类型：API接口",
+       "[C06QA-016-ev-000341#s8] 与数据运行管理工具接口的发送方：数据运行管理工具",
+       "[C06QA-016-ev-000341#s9] 与数据运行管理工具接口的接收方：本软件",
+       "[C06QA-016-ev-000341#s10] 与数据运行管理工具接口的接口内容：数据访问监控信息",
+       "[C06QA-016-ev-000341#s11] 与数据运行管理工具接口的接口优先级：高",
+       "[C06QA-016-ev-000341#s12] 与界面集成框架接口的接口需求标识：PZXQ-WBJK-YXZCFW-JMJCKJ"
+      ],
+      "n_statements": 57,
+      "enum_registry": [],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-WBJK-YXZCFW-RJJHJK -> ['人机交互接口', '人机交互接口']",
+       "PZXQ-WBJK-YXZCFW-SJYXGLGJ -> ['与数据运行管理工具接口']",
+       "PZXQ-WBJK-YXZCFW-JMJCKJ -> ['与界面集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-TYCSFW -> ['与统一传输服务接口']",
+       "PZXQ-WBJK-YXZCFW-TXGL -> ['与通信管理接口']",
+       "PZXQ-WBJK-YXZCFW-SBGL -> ['与设备管理接口']",
+       "PZXQ-WBJK-YXZCFW-SJTYFWFW -> ['与数据统一访问服务接口']",
+       "PZXQ-WBJK-YXZCFW-FWJCKJ -> ['与服务集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-YYRJ -> ['与应用软件接口']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-WBJK-YXZCFW-RJJHJK, subject=人机交互接口通过接口)"
+      ]
+     }
+    },
+    "C06QA-017": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-WBJK-YXZCFW-YYRJ",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "与应用软件接口通过接口PZXQ-WBJK-YXZCFW-YYRJ实现，由统一传输服务发送至应用软件，用于统一传输服务与应用软件之间的信息交互",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-WBJK-YXZCFW-YYRJ与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-017-ev-000340#s0] 运行支撑服务软件外部接口需求表见表77所示。",
+       "[C06QA-017-ev-000341#s0] 人机交互接口的接口需求标识：PZXQ-WBJK-YXZCFW-RJJHJK",
+       "[C06QA-017-ev-000341#s1] 人机交互接口的接口类型：人机接口",
+       "[C06QA-017-ev-000341#s2] 人机交互接口的发送方：用户",
+       "[C06QA-017-ev-000341#s3] 人机交互接口的接收方：本软件",
+       "[C06QA-017-ev-000341#s4] 人机交互接口的接口内容：模式切换、键盘输入",
+       "[C06QA-017-ev-000341#s5] 人机交互接口的接口优先级：低",
+       "[C06QA-017-ev-000341#s6] 与数据运行管理工具接口的接口需求标识：PZXQ-WBJK-YXZCFW-SJYXGLGJ",
+       "[C06QA-017-ev-000341#s7] 与数据运行管理工具接口的接口类型：API接口",
+       "[C06QA-017-ev-000341#s8] 与数据运行管理工具接口的发送方：数据运行管理工具",
+       "[C06QA-017-ev-000341#s9] 与数据运行管理工具接口的接收方：本软件",
+       "[C06QA-017-ev-000341#s10] 与数据运行管理工具接口的接口内容：数据访问监控信息",
+       "[C06QA-017-ev-000341#s11] 与数据运行管理工具接口的接口优先级：高",
+       "[C06QA-017-ev-000341#s12] 与界面集成框架接口的接口需求标识：PZXQ-WBJK-YXZCFW-JMJCKJ"
+      ],
+      "n_statements": 57,
+      "enum_registry": [],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-WBJK-YXZCFW-RJJHJK -> ['人机交互接口', '人机交互接口']",
+       "PZXQ-WBJK-YXZCFW-SJYXGLGJ -> ['与数据运行管理工具接口']",
+       "PZXQ-WBJK-YXZCFW-JMJCKJ -> ['与界面集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-TYCSFW -> ['与统一传输服务接口']",
+       "PZXQ-WBJK-YXZCFW-TXGL -> ['与通信管理接口']",
+       "PZXQ-WBJK-YXZCFW-SBGL -> ['与设备管理接口']",
+       "PZXQ-WBJK-YXZCFW-SJTYFWFW -> ['与数据统一访问服务接口']",
+       "PZXQ-WBJK-YXZCFW-FWJCKJ -> ['与服务集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-YYRJ -> ['与应用软件接口']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-WBJK-YXZCFW-YYRJ, subject=与应用软件接口通过接口)"
+      ]
+     }
+    },
+    "C06QA-019": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS追溯至任务书4.1.1 c)，对应任务书4.1.1 c)的功能/性能要求",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS与evidence一致"
+      },
+      {
+       "claim_text": "4．1.1 c)，对应任务书4.1.1 c)的功能/性能要求",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-019-ev-000039#s0] 系统运行监控所有能力标识表，见表3所示。",
+       "[C06QA-019-ev-000040#s0] 重要信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS",
+       "[C06QA-019-ev-000040#s1] 重要信息提示的需求描述：能够对系统运行过程中的重要信息包括计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示",
+       "[C06QA-019-ev-000040#s2] 重要信息提示的需求重用：新增",
+       "[C06QA-019-ev-000040#s3] 重要信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-019-ev-000040#s4] 重要信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-019-ev-000040#s5] 重要信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-019-ev-000040#s6] 计算机状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-JSJZTJK",
+       "[C06QA-019-ev-000040#s7] 计算机状态监控的需求描述：能够读取计算机中正在运行软件的CPU状态详细信息、内存占用详细信息、磁盘占用详细信息，能够读取本机与服务器网络连通信息包括上行速度和下行速度，对以上数据进行汇总并进行显示",
+       "[C06QA-019-ev-000040#s8] 计算机状态监控的需求重用：新增",
+       "[C06QA-019-ev-000040#s9] 计算机状态监控的方式名称：桌面、平板、手持",
+       "[C06QA-019-ev-000040#s10] 计算机状态监控的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-019-ev-000040#s11] 计算机状态监控的对应的任务书功能性能：4.1.1b)",
+       "[C06QA-019-ev-000040#s12] 数据状态监控的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-SJZTJK"
+      ],
+      "n_statements": 39,
+      "enum_registry": [
+       "能够对系统运行过程中的重要信息/prose={计算机CPU占用信息、内存占用信息、磁盘占用信息、服务启动数量、数据库连接状态、本机与服务器网络连通状态进行显示}",
+       "重要信息提示/需求重用={新增}",
+       "重要信息提示/方式名称={桌面、平板、手持}",
+       "重要信息提示/运行状态={开发阶段、运行阶段}",
+       "能够读取本机与服务器网络连通信息/prose={上行速度、下行速度}",
+       "计算机状态监控/需求重用={新增}",
+       "计算机状态监控/方式名称={桌面、平板、手持}",
+       "计算机状态监控/运行状态={开发阶段、运行阶段}",
+       "数据状态监控/需求重用={新增}",
+       "数据状态监控/方式名称={桌面、平板、手持}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS -> ['重要信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-JSJZTJK -> ['计算机状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-SJZTJK -> ['数据状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-FWZTJK -> ['服务状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-RJZTJK -> ['软件状态监控']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-SBZTJK -> ['设备状态监控']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS, subject=None)"
+      ]
+     }
+    },
+    "C06QA-020": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "需求PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX追溯至任务书4.1.3 a)，对应任务书4.1.3 a)的功能/性能要求",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX与evidence一致"
+      },
+      {
+       "claim_text": "4．1.3 a)，对应任务书4.1.3 a)的功能/性能要求",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-020-ev-000197#s0] -图17系统基础信息维护用例图",
+       "[C06QA-020-ev-000198#s0] 系统基础信息维护所有能力标识表，见表45所示。",
+       "[C06QA-020-ev-000199#s0] 用户基础信息查询设置的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH-YHJCXXCX",
+       "[C06QA-020-ev-000199#s1] 用户基础信息查询设置的需求描述：提供接口支持对当前登录的用户名、用户ID、所属编组、部署车辆等信息进行查询和设置",
+       "[C06QA-020-ev-000199#s2] 用户基础信息查询设置的需求重用：新增",
+       "[C06QA-020-ev-000199#s3] 用户基础信息查询设置的方式名称：桌面、平板、手持",
+       "[C06QA-020-ev-000199#s4] 用户基础信息查询设置的运行状态：运行阶段",
+       "[C06QA-020-ev-000199#s5] 用户基础信息查询设置的对应的任务书功能性能：4.1.3a)",
+       "[C06QA-020-ev-000199#s6] 系统基础信息查询设置的项目唯一标识符：PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX",
+       "[C06QA-020-ev-000199#s7] 系统基础信息查询设置的需求描述：提供接口支持对指挥所内服务器、备份服务器的IP信息，本机的IP信息，本机客户端/服务器标识、操作系统的超级用户密码信息进行查询和设置",
+       "[C06QA-020-ev-000199#s8] 系统基础信息查询设置的需求重用：新增",
+       "[C06QA-020-ev-000199#s9] 系统基础信息查询设置的方式名称：桌面、平板、手持",
+       "[C06QA-020-ev-000199#s10] 系统基础信息查询设置的运行状态：运行阶段",
+       "[C06QA-020-ev-000199#s11] 系统基础信息查询设置的对应的任务书功能性能：4.1.3b)"
+      ],
+      "n_statements": 27,
+      "enum_registry": [
+       "用户基础信息查询设置/需求重用={新增}",
+       "用户基础信息查询设置/方式名称={桌面、平板、手持}",
+       "用户基础信息查询设置/运行状态={运行阶段}",
+       "系统基础信息查询设置/需求重用={新增}",
+       "系统基础信息查询设置/方式名称={桌面、平板、手持}",
+       "系统基础信息查询设置/运行状态={运行阶段}",
+       "任务基础信息查询设置/需求重用={新增}",
+       "任务基础信息查询设置/方式名称={桌面、平板、手持}",
+       "任务基础信息查询设置/运行状态={运行阶段}",
+       "网卡基础信息查询设置/需求重用={新增}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTJCXXWH-YHJCXXCX -> ['用户基础信息查询设置']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX -> ['系统基础信息查询设置']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH-RWJCXXCX -> ['任务基础信息查询设置']",
+       "PZXQ-YXZCFW-GN-XTJCXXWH-WKJCXXCX -> ['网卡基础信息查询设置']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-YXZCFW-GN-XTJCXXWH-XTJCXXCX, subject=None)"
+      ]
+     }
+    },
+    "C06QA-026": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-WBJK-YXZCFW-TYCSFW",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "接口PZXQ-WBJK-YXZCFW-TYCSFW采用加密传输保障数据安全，并支持高并发批量调用",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-WBJK-YXZCFW-TYCSFW与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-026-ev-000340#s0] 运行支撑服务软件外部接口需求表见表77所示。",
+       "[C06QA-026-ev-000341#s0] 人机交互接口的接口需求标识：PZXQ-WBJK-YXZCFW-RJJHJK",
+       "[C06QA-026-ev-000341#s1] 人机交互接口的接口类型：人机接口",
+       "[C06QA-026-ev-000341#s2] 人机交互接口的发送方：用户",
+       "[C06QA-026-ev-000341#s3] 人机交互接口的接收方：本软件",
+       "[C06QA-026-ev-000341#s4] 人机交互接口的接口内容：模式切换、键盘输入",
+       "[C06QA-026-ev-000341#s5] 人机交互接口的接口优先级：低",
+       "[C06QA-026-ev-000341#s6] 与数据运行管理工具接口的接口需求标识：PZXQ-WBJK-YXZCFW-SJYXGLGJ",
+       "[C06QA-026-ev-000341#s7] 与数据运行管理工具接口的接口类型：API接口",
+       "[C06QA-026-ev-000341#s8] 与数据运行管理工具接口的发送方：数据运行管理工具",
+       "[C06QA-026-ev-000341#s9] 与数据运行管理工具接口的接收方：本软件",
+       "[C06QA-026-ev-000341#s10] 与数据运行管理工具接口的接口内容：数据访问监控信息",
+       "[C06QA-026-ev-000341#s11] 与数据运行管理工具接口的接口优先级：高",
+       "[C06QA-026-ev-000341#s12] 与界面集成框架接口的接口需求标识：PZXQ-WBJK-YXZCFW-JMJCKJ"
+      ],
+      "n_statements": 57,
+      "enum_registry": [],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-WBJK-YXZCFW-RJJHJK -> ['人机交互接口', '人机交互接口']",
+       "PZXQ-WBJK-YXZCFW-SJYXGLGJ -> ['与数据运行管理工具接口']",
+       "PZXQ-WBJK-YXZCFW-JMJCKJ -> ['与界面集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-TYCSFW -> ['与统一传输服务接口']",
+       "PZXQ-WBJK-YXZCFW-TXGL -> ['与通信管理接口']",
+       "PZXQ-WBJK-YXZCFW-SBGL -> ['与设备管理接口']",
+       "PZXQ-WBJK-YXZCFW-SJTYFWFW -> ['与数据统一访问服务接口']",
+       "PZXQ-WBJK-YXZCFW-FWJCKJ -> ['与服务集成框架接口']",
+       "PZXQ-WBJK-YXZCFW-YYRJ -> ['与应用软件接口']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-WBJK-YXZCFW-TYCSFW, subject=None)"
+      ]
+     }
+    },
+    "C06QA-029": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "需求PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS已通过评审确认，其实现完整性经过了验证",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[C06QA-029-ev-000047#s0] 重要信息提示所有能力标识表，见表4所示。",
+       "[C06QA-029-ev-000048#s0] CPU占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS",
+       "[C06QA-029-ev-000048#s1] CPU占用信息提示的需求描述：能够显示计算机CPU占用状态信息",
+       "[C06QA-029-ev-000048#s2] CPU占用信息提示的需求重用：新增",
+       "[C06QA-029-ev-000048#s3] CPU占用信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-029-ev-000048#s4] CPU占用信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-029-ev-000048#s5] CPU占用信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-029-ev-000048#s6] 内存占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-NCZYXXTS",
+       "[C06QA-029-ev-000048#s7] 内存占用信息提示的需求描述：能够显示计算机内存占用状态信息",
+       "[C06QA-029-ev-000048#s8] 内存占用信息提示的需求重用：新增",
+       "[C06QA-029-ev-000048#s9] 内存占用信息提示的方式名称：桌面、平板、手持",
+       "[C06QA-029-ev-000048#s10] 内存占用信息提示的运行状态：开发阶段、集成阶段、运行阶段",
+       "[C06QA-029-ev-000048#s11] 内存占用信息提示的对应的任务书功能性能：4.1.1a)",
+       "[C06QA-029-ev-000048#s12] 磁盘占用信息提示的项目唯一标识符：PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPZYXXTS"
+      ],
+      "n_statements": 39,
+      "enum_registry": [
+       "CPU占用信息提示/需求重用={新增}",
+       "CPU占用信息提示/方式名称={桌面、平板、手持}",
+       "CPU占用信息提示/运行状态={开发阶段、运行阶段}",
+       "内存占用信息提示/需求重用={新增}",
+       "内存占用信息提示/方式名称={桌面、平板、手持}",
+       "内存占用信息提示/运行状态={开发阶段、运行阶段}",
+       "磁盘占用信息提示/需求重用={新增}",
+       "磁盘占用信息提示/方式名称={桌面、平板、手持}",
+       "磁盘占用信息提示/运行状态={开发阶段、运行阶段}",
+       "服务启动数量提示/需求重用={新增}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS -> ['CPU占用信息提示', 'CPU占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-NCZYXXTS -> ['内存占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPZYXXTS -> ['磁盘占用信息提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-FWQDSLTS -> ['服务启动数量提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-SJKLJZTTS -> ['数据库连接状态提示']",
+       "PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-FWQWLLJZTTS -> ['服务器网络连接状态提示']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-YXZCFW-GN-XTYXZTJK-ZYXXTS-CPUZYXXTS, subject=None)"
+      ]
+     }
+    }
+   },
+   "expert_failures": {}
+  },
+  "qa91": {
+   "metrics": {
+    "accuracy": 0.9121,
+    "macro_f1": 0.7212,
+    "per_class": {
+     "support": {
+      "precision": 0.6667,
+      "recall": 0.3333,
+      "f1": 0.4444
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.625,
+      "f1": 0.7692
+     },
+     "not_in_evidence": {
+      "precision": 0.9157,
+      "recall": 0.987,
+      "f1": 0.95
+     }
+    },
+    "confusion": {
+     "support|support": 2,
+     "support|not_in_evidence": 1,
+     "refute|refute": 5,
+     "not_in_evidence|support": 4,
+     "not_in_evidence|refute": 3,
+     "not_in_evidence|not_in_evidence": 76
+    }
+   },
+   "verdicts": {
+    "S1QA-001": "not_in_evidence",
+    "S1QA-002": "not_in_evidence",
+    "S1QA-003": "not_in_evidence",
+    "S1QA-004": "not_in_evidence",
+    "S1QA-005": "not_in_evidence",
+    "S1QA-006": "not_in_evidence",
+    "S1QA-007": "not_in_evidence",
+    "S1QA-008": "not_in_evidence",
+    "S1QA-009": "not_in_evidence",
+    "S1QA-010": "not_in_evidence",
+    "S1QA-011": "not_in_evidence",
+    "S1QA-012": "not_in_evidence",
+    "S1QA-013": "not_in_evidence",
+    "S1QA-014": "not_in_evidence",
+    "S1QA-015": "not_in_evidence",
+    "S1QA-016": "refute",
+    "S1QA-017": "not_in_evidence",
+    "S1QA-018": "not_in_evidence",
+    "S1QA-019": "not_in_evidence",
+    "S1QA-020": "not_in_evidence",
+    "S1QA-021": "support",
+    "S1QA-022": "not_in_evidence",
+    "S1QA-023": "not_in_evidence",
+    "S1QA-024": "not_in_evidence",
+    "S1QA-025": "not_in_evidence",
+    "S1QA-026": "not_in_evidence",
+    "S1QA-027": "not_in_evidence",
+    "S1QA-028": "refute",
+    "S1QA-029": "not_in_evidence",
+    "S1QA-030": "not_in_evidence",
+    "S1QA-031": "not_in_evidence",
+    "S1QA-032": "not_in_evidence",
+    "S1QA-033": "not_in_evidence",
+    "S1QA-034": "not_in_evidence",
+    "S1QA-035": "not_in_evidence",
+    "S1QA-036": "not_in_evidence",
+    "S1QA-037": "not_in_evidence",
+    "S1QA-038": "not_in_evidence",
+    "S1QA-039": "not_in_evidence",
+    "S1QA-040": "not_in_evidence",
+    "S1QA-041": "not_in_evidence",
+    "S1QA-042": "not_in_evidence",
+    "S1QA-043": "not_in_evidence",
+    "S1QA-044": "not_in_evidence",
+    "S1QA-045": "not_in_evidence",
+    "S1QA-046": "not_in_evidence",
+    "S1QA-047": "not_in_evidence",
+    "S1QA-048": "not_in_evidence",
+    "S1QA-049": "not_in_evidence",
+    "S1QA-050": "not_in_evidence",
+    "S1QA-051": "not_in_evidence",
+    "S1QA-052": "not_in_evidence",
+    "S1QA-053": "support",
+    "S1QA-054": "not_in_evidence",
+    "S1QA-055": "not_in_evidence",
+    "S1QA-056": "refute",
+    "S1QA-057": "not_in_evidence",
+    "S1QA-058": "not_in_evidence",
+    "S1QA-059": "not_in_evidence",
+    "S1QA-060": "not_in_evidence",
+    "S1QA-061": "not_in_evidence",
+    "S1QA-062": "not_in_evidence",
+    "S1QA-063": "not_in_evidence",
+    "S1QA-064": "support",
+    "S1QA-065": "not_in_evidence",
+    "S1QA-066": "not_in_evidence",
+    "S1QA-067": "not_in_evidence",
+    "S1QA-068": "not_in_evidence",
+    "S1QA-069": "not_in_evidence",
+    "S1QA-070": "not_in_evidence",
+    "S1QA-071": "not_in_evidence",
+    "S1QA-072": "not_in_evidence",
+    "S1QA-073": "not_in_evidence",
+    "S1QA-074": "refute",
+    "S1QA-075": "not_in_evidence",
+    "S1QA-076": "not_in_evidence",
+    "S1QA-077": "not_in_evidence",
+    "S1QA-078": "not_in_evidence",
+    "S1QA-079": "not_in_evidence",
+    "S1QA-080": "not_in_evidence",
+    "S1QA-081": "not_in_evidence",
+    "S1QA-082": "not_in_evidence",
+    "S1QA-083": "not_in_evidence",
+    "S1QA-084": "refute",
+    "S1QA-085": "not_in_evidence",
+    "S1QA-086": "not_in_evidence",
+    "S1QA-087": "not_in_evidence",
+    "S1QA-088": "not_in_evidence",
+    "S1QA-089": "not_in_evidence",
+    "S1QA-090": "not_in_evidence",
+    "S1QA-091": "not_in_evidence"
+   },
+   "wrong": [
+    "S1QA-006",
+    "S1QA-063",
+    "S1QA-064",
+    "S1QA-066",
+    "S1QA-068",
+    "S1QA-069",
+    "S1QA-077",
+    "S1QA-079"
+   ],
+   "failure_claims": {
+    "S1QA-006": {
+     "claims": [
+      {
+       "claim_text": "项目中对BLOB数据进行修改、查询和插入的功能均沿用“桌面”和“平板”设备，并且在开发阶段和运行阶段均进行了支持",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "BLOB数据修改：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "BLOB数据查询：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "BLOB数据插入：沿用“桌面、平板”，在“开发阶段、运行阶段”提供支持",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-006-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-006-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-006-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-006-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-006-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-006-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2",
+       "[S1QA-006-ev-000030#s6] 对象化访问功能的项目唯一标识符：PZXQ-GN-DXHFW",
+       "[S1QA-006-ev-000030#s7] 对象化访问功能的需求描述：提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；",
+       "[S1QA-006-ev-000030#s8] 对象化访问功能的需求重用：沿用",
+       "[S1QA-006-ev-000030#s9] 对象化访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-006-ev-000030#s10] 对象化访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-006-ev-000030#s11] 对象化访问功能的对应的任务书功能性能：4.1.1",
+       "[S1QA-006-ev-000030#s12] 代码生成的项目唯一标识符：PZXQ-GN-DMSC",
+       "[S1QA-006-ev-000030#s13] 代码生成的需求描述：提供代码自动生成功能，支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载；"
+      ],
+      "n_statements": 124,
+      "enum_registry": [
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}",
+       "代码生成/运行状态={开发阶段}",
+       "数据源适配/需求重用={新研}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']",
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']",
+       "PZXQ-GN-SQLFW-CXSJ-SJCX -> ['数据查询']",
+       "PZXQ-GN-SQLFW-CXSJ-HQCWXX -> ['获取错误信息']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-063": {
+     "claims": [
+      {
+       "claim_text": "平板、桌面和手持）中都支持相同的连接方式名称",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "枚举成员未全部命中(1项)；未证明context穷举"
+      },
+      {
+       "claim_text": "初始化数据库、读取配置文件连接、数据库连接和关闭数据库",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "枚举成员未全部命中(2项)；未证明context穷举"
+      },
+      {
+       "claim_text": "1．设备类型：所有记录中的设备类型均为平板、桌面或手持，没有出现不同设备类型的情况",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      },
+      {
+       "claim_text": "2．需求描述：所有的Use case都与数据库操作相关，包括初始化数据库、读取配置文件连接、数据库连接和关闭数据库。这些操作在各设备上使用相同的连接方式名称",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-063-ev-000011#s0] 数据统一访问服务完成信息服务环境功能域数据存储与访问功能，数据统一访问服务部署在各级节点，主要为各类服务和应用提供统一的数据存储和访问接口，屏蔽数据库管理系统的差异以及数据模型的变化，提供统一的数据访问支撑能力，实现数据模型与应用业务逻辑的",
+       "[S1QA-063-ev-000011#s1] 统一访问功能包括对象化访问、原生SQL访问、代码自动生成和数据统一访问。",
+       "[S1QA-063-ev-000011#s2] 其中对象化访问、数据统一访问和原生SQL访问提供桌面版、平板版、手持版三种版本；",
+       "[S1QA-063-ev-000011#s3] 代码自动生成仅提供桌面版。",
+       "[S1QA-063-ev-000011#s4] 访问管控功能包括数据源切换、连接池管理、数据缓存和访问审计以及日志记录功能。",
+       "[S1QA-063-ev-000011#s5] 其中，数据源切换提供平板版，连接池管理、数据缓存仅提供桌面版；",
+       "[S1QA-063-ev-000011#s6] 访问审计以及日志记录功能提供桌面版、平板版、手持版三种版本。",
+       "[S1QA-063-ev-000011#s7] 在开发运行阶段提供统一访问功能和访问管控功能。",
+       "[S1QA-063-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-063-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-063-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-063-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-063-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-063-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2"
+      ],
+      "n_statements": 70,
+      "enum_registry": [
+       "统一访问/prose={对象化访问、原生SQL访问、代码自动生成、数据统一访问}",
+       "访问管控/prose={数据源切换、连接池管理、数据缓存、访问审计、日志记录}",
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']",
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-064": {
+     "claims": [
+      {
+       "claim_text": "PZXQ-GN-SJKCZ-SJKCSH",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "PZXQ-GN-SJKCZ-DQPZWJLJ",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "PZXQ-GN-SJKCZ-SJKLJ",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "PZXQ-GN-SJKCZ-SJKGBGN",
+       "verdict": "support",
+       "method": "identifier_exact_match",
+       "rationale": "answer标识符在冻结context中精确出现"
+      },
+      {
+       "claim_text": "序号1：PZXQ-GN-SJKCZ-SJKCSH",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-GN-SJKCZ-SJKCSH与evidence一致"
+      },
+      {
+       "claim_text": "序号2：PZXQ-GN-SJKCZ-DQPZWJLJ",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-GN-SJKCZ-DQPZWJLJ与evidence一致"
+      },
+      {
+       "claim_text": "序号3：PZXQ-GN-SJKCZ-SJKLJ",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-GN-SJKCZ-SJKLJ与evidence一致"
+      },
+      {
+       "claim_text": "序号4：PZXQ-GN-SJKCZ-SJKGBGN 这些项目唯一标识符的Use case都沿用相同的重用方式",
+       "verdict": "support",
+       "method": "l0_entity_detector:TERM-07",
+       "rationale": "answer的接口标识PZXQ-GN-SJKCZ-SJKGBGN与evidence一致"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-064-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-064-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-064-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-064-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-064-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-064-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2",
+       "[S1QA-064-ev-000030#s6] 对象化访问功能的项目唯一标识符：PZXQ-GN-DXHFW",
+       "[S1QA-064-ev-000030#s7] 对象化访问功能的需求描述：提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；",
+       "[S1QA-064-ev-000030#s8] 对象化访问功能的需求重用：沿用",
+       "[S1QA-064-ev-000030#s9] 对象化访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-064-ev-000030#s10] 对象化访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-064-ev-000030#s11] 对象化访问功能的对应的任务书功能性能：4.1.1",
+       "[S1QA-064-ev-000030#s12] 代码生成的项目唯一标识符：PZXQ-GN-DMSC",
+       "[S1QA-064-ev-000030#s13] 代码生成的需求描述：提供代码自动生成功能，支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载；"
+      ],
+      "n_statements": 84,
+      "enum_registry": [
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}",
+       "代码生成/运行状态={开发阶段}",
+       "数据源适配/需求重用={新研}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']",
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']",
+       "PZXQ-GN-SJKCZ-SJKCSH -> ['数据库初始化']",
+       "PZXQ-GN-SJKCZ-DQPZWJLJ -> ['读取配置文件连接']"
+      ],
+      "id_claims": [
+       "(id=PZXQ-GN-SJKCZ-SJKCSH, subject=None)",
+       "(id=PZXQ-GN-SJKCZ-DQPZWJLJ, subject=None)",
+       "(id=PZXQ-GN-SJKCZ-SJKLJ, subject=None)",
+       "(id=PZXQ-GN-SJKCZ-SJKGBGN, subject=None)"
+      ]
+     }
+    },
+    "S1QA-066": {
+     "claims": [
+      {
+       "claim_text": "热点数据缓存功能有以下特点",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "查询结果缓存：提供对查询结果的数据缓存功能，支持将数据库返回的结果集中缓存在内存中",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "可配置的缓存大小：允许用户根据需求自行配置缓存容量，以调节内存使用和性能表现",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "动态刷新机制：在发生数据修改操作后，后续进行查询时，系统会自动从数据库中获取最新数据并更新缓存内容，确保缓存始终反映最新的信息",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-066-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-066-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-066-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-066-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-066-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-066-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2",
+       "[S1QA-066-ev-000030#s6] 对象化访问功能的项目唯一标识符：PZXQ-GN-DXHFW",
+       "[S1QA-066-ev-000030#s7] 对象化访问功能的需求描述：提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；",
+       "[S1QA-066-ev-000030#s8] 对象化访问功能的需求重用：沿用",
+       "[S1QA-066-ev-000030#s9] 对象化访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-066-ev-000030#s10] 对象化访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-066-ev-000030#s11] 对象化访问功能的对应的任务书功能性能：4.1.1",
+       "[S1QA-066-ev-000030#s12] 代码生成的项目唯一标识符：PZXQ-GN-DMSC",
+       "[S1QA-066-ev-000030#s13] 代码生成的需求描述：提供代码自动生成功能，支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载；"
+      ],
+      "n_statements": 84,
+      "enum_registry": [
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}",
+       "代码生成/运行状态={开发阶段}",
+       "数据源适配/需求重用={新研}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']",
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']",
+       "PZXQ-GN-SJKCZ-SJKCSH -> ['数据库初始化']",
+       "PZXQ-GN-SJKCZ-DQPZWJLJ -> ['读取配置文件连接']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-068": {
+     "claims": [
+      {
+       "claim_text": "代码生成功能是通过以下步骤实现的",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "用户或应用程序提供配置：用户定义需要处理的表和视图，并指定目标语言（如Java、Python）",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "系统转换数据结构：基于提供的配置，系统将关系型数据库中的表和视图转化为对应的目标语言代码",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "生成接口文件：自动生成与外部系统集成所需的接口文件，简化了与数据库的交互",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "下载功能：提供下载选项，方便用户直接获取生成的代码和接口文件",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "该功能适用于需要将数据库数据结构转换为目标语言的应用场景，特别在构建API或业务逻辑时非常有用",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-068-ev-000024#s0] 数据统一访问服务按照其功能需求，包含SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存以及连接池管理功能。",
+       "[S1QA-068-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-068-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-068-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-068-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-068-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-068-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2",
+       "[S1QA-068-ev-000030#s6] 对象化访问功能的项目唯一标识符：PZXQ-GN-DXHFW",
+       "[S1QA-068-ev-000030#s7] 对象化访问功能的需求描述：提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；",
+       "[S1QA-068-ev-000030#s8] 对象化访问功能的需求重用：沿用",
+       "[S1QA-068-ev-000030#s9] 对象化访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-068-ev-000030#s10] 对象化访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-068-ev-000030#s11] 对象化访问功能的对应的任务书功能性能：4.1.1",
+       "[S1QA-068-ev-000030#s12] 代码生成的项目唯一标识符：PZXQ-GN-DMSC"
+      ],
+      "n_statements": 38,
+      "enum_registry": [
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}",
+       "代码生成/运行状态={开发阶段}",
+       "数据源适配/需求重用={新研}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成', '代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-069": {
+     "claims": [
+      {
+       "claim_text": "对象化访问功能支持以下操作",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "添加：向数据库中插入数据",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "删除：从数据库中删除已存在的数据",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "修改：对数据库中的数据进行更新或修改",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "查询：根据特定条件检索数据库中的数据",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "这些操作通过数据对象方式实现，支持在应用软件中进行相应的操作",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-069-ev-000011#s0] 数据统一访问服务完成信息服务环境功能域数据存储与访问功能，数据统一访问服务部署在各级节点，主要为各类服务和应用提供统一的数据存储和访问接口，屏蔽数据库管理系统的差异以及数据模型的变化，提供统一的数据访问支撑能力，实现数据模型与应用业务逻辑的",
+       "[S1QA-069-ev-000011#s1] 统一访问功能包括对象化访问、原生SQL访问、代码自动生成和数据统一访问。",
+       "[S1QA-069-ev-000011#s2] 其中对象化访问、数据统一访问和原生SQL访问提供桌面版、平板版、手持版三种版本；",
+       "[S1QA-069-ev-000011#s3] 代码自动生成仅提供桌面版。",
+       "[S1QA-069-ev-000011#s4] 访问管控功能包括数据源切换、连接池管理、数据缓存和访问审计以及日志记录功能。",
+       "[S1QA-069-ev-000011#s5] 其中，数据源切换提供平板版，连接池管理、数据缓存仅提供桌面版；",
+       "[S1QA-069-ev-000011#s6] 访问审计以及日志记录功能提供桌面版、平板版、手持版三种版本。",
+       "[S1QA-069-ev-000011#s7] 在开发运行阶段提供统一访问功能和访问管控功能。",
+       "[S1QA-069-ev-000024#s0] 数据统一访问服务按照其功能需求，包含SQL访问、对象化访问、代码生成、数据源适配、热点数据缓存以及连接池管理功能。",
+       "[S1QA-069-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-069-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-069-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-069-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-069-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段"
+      ],
+      "n_statements": 47,
+      "enum_registry": [
+       "统一访问/prose={对象化访问、原生SQL访问、代码自动生成、数据统一访问}",
+       "访问管控/prose={数据源切换、连接池管理、数据缓存、访问审计、日志记录}",
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-077": {
+     "claims": [
+      {
+       "claim_text": "初始化、读取配置文件连接、数据库连接和关闭功能",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "枚举成员未全部命中(1项)；未证明context穷举"
+      },
+      {
+       "claim_text": "错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能、如逐行拷贝、获取INT、STRING和FLOAT等",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "枚举成员未全部命中(5项)；未证明context穷举"
+      },
+      {
+       "claim_text": "插入、删除和查询BLOB（大型对象块）数据记录",
+       "verdict": "not_in_evidence",
+       "method": "conservative_unresolved",
+       "rationale": "枚举成员未全部命中(1项)；未证明context穷举"
+      },
+      {
+       "claim_text": "1．数据库操作：包括初始化、读取配置文件连接、数据库连接和关闭功能",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      },
+      {
+       "claim_text": "2．修改数据：涉及删除、增加或修改数据库中的记录",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      },
+      {
+       "claim_text": "3．查询数据：不仅限于常规查询，还包括错误信息获取、二维输出、JSON输出、DML输出以及逐行获取的数据功能，如逐行拷贝、获取INT、STRING和FLOAT等",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      },
+      {
+       "claim_text": "4．BLOB数据操作：包括插入、删除和查询BLOB（大型对象块）数据记录",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-077-ev-000030#s0] SQL访问功能的项目唯一标识符：PZXQ-GN-SQLFW",
+       "[S1QA-077-ev-000030#s1] SQL访问功能的需求描述：提供原生SQL访问功能，提供数据库连接、关闭功能；通过SQL语句的方式进行表数据的添加、删除、修改；提供表、视图的查询功能，查询结果能够以逐行获取、二维数据组、json格式、sql文件四种形式返回；提供大字段（BL",
+       "[S1QA-077-ev-000030#s2] SQL访问功能的需求重用：沿用",
+       "[S1QA-077-ev-000030#s3] SQL访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-077-ev-000030#s4] SQL访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-077-ev-000030#s5] SQL访问功能的对应的任务书功能性能：4.1.1；4.2",
+       "[S1QA-077-ev-000030#s6] 对象化访问功能的项目唯一标识符：PZXQ-GN-DXHFW",
+       "[S1QA-077-ev-000030#s7] 对象化访问功能的需求描述：提供对象化数据访问功能，支持应用软件通过数据对象方式对数据库中的数据进行添加、删除、修改、查询；",
+       "[S1QA-077-ev-000030#s8] 对象化访问功能的需求重用：沿用",
+       "[S1QA-077-ev-000030#s9] 对象化访问功能的方式名称：平板、桌面、手持",
+       "[S1QA-077-ev-000030#s10] 对象化访问功能的运行状态：运行阶段开发阶段",
+       "[S1QA-077-ev-000030#s11] 对象化访问功能的对应的任务书功能性能：4.1.1",
+       "[S1QA-077-ev-000030#s12] 代码生成的项目唯一标识符：PZXQ-GN-DMSC",
+       "[S1QA-077-ev-000030#s13] 代码生成的需求描述：提供代码自动生成功能，支持将关系型数据库中的表和视图通过配置转换生成数据对象，支持自动生成接口文件并提供下载；"
+      ],
+      "n_statements": 134,
+      "enum_registry": [
+       "SQL访问/需求重用={沿用}",
+       "SQL访问/方式名称={平板、桌面、手持}",
+       "SQL访问/运行状态={运行阶段、开发阶段}",
+       "对象化访问/需求重用={沿用}",
+       "对象化访问/方式名称={平板、桌面、手持}",
+       "对象化访问/运行状态={运行阶段、开发阶段}",
+       "代码生成/需求重用={沿用}",
+       "代码生成/方式名称={桌面}",
+       "代码生成/运行状态={开发阶段}",
+       "数据源适配/需求重用={新研}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW -> ['SQL访问']",
+       "PZXQ-GN-DXHFW -> ['对象化访问']",
+       "PZXQ-GN-DMSC -> ['代码生成']",
+       "PZXQ-GN-SJYSP -> ['数据源适配']",
+       "PZXQ-GN-RDSJHC -> ['热点数据缓存']",
+       "PZXQ-GN-LJCGL -> ['连接池管理']",
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']",
+       "PZXQ-GN-SQLFW-CXSJ-SJCX -> ['数据查询']",
+       "PZXQ-GN-SQLFW-CXSJ-HQCWXX -> ['获取错误信息']"
+      ],
+      "id_claims": []
+     }
+    },
+    "S1QA-079": {
+     "claims": [
+      {
+       "claim_text": "在读取配置文件连接时，系统会返回以下参数",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "用户输入的配置文件路径等必要参数：这包括用户调用接口时提供的配置文件路径和相关参数",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "连接结果的状态信息：系统会根据连接是否成功返回状态",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "如果连接成功，则保存连接句柄",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "如果失败，将通过异常流E1返回具体的错误信息",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "具体连接错误信息（异常流E1）：在连接失败时，系统会提供关于连接错误的详细信息，指导用户进行故障排查或重新尝试",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "这些参数确保了系统的稳定运行和用户的操作反馈的有效性",
+       "verdict": "not_in_evidence",
+       "method": "semantic_unresolved",
+       "rationale": "当前语义声明没有经过验证的三态判定器；不将旧pair二分类结果映射为三态。"
+      },
+      {
+       "claim_text": "2．连接结果的状态信息：系统会根据连接是否成功返回状态。如果连接成功，则保存连接句柄",
+       "verdict": "not_in_evidence",
+       "method": "sequence_alignment",
+       "rationale": "answer编号项为并列枚举(非事件流), 时序通道不适用; 该项内容未被本通道验证"
+      }
+     ],
+     "trace": {
+      "statements": [
+       "[S1QA-079-ev-000043#s0] UseCase名称：数据库初始化",
+       "[S1QA-079-ev-000043#s1] 概述：本用例是SQL访问的扩展用例，描述数据库初始化的过程；",
+       "[S1QA-079-ev-000043#s2] 前置条件：无。",
+       "[S1QA-079-ev-000043#s3] 主事件流",
+       "[S1QA-079-ev-000043#s4] 数据库初始化Actor的动作：1.应用软件调用数据库初始化接口输入相关参数，如软件实体号参数；3.应用软件输出数据库初始化状态。",
+       "[S1QA-079-ev-000043#s5] 数据库初始化系统的动作：2．与数据统一访问服务服务端进行交互，如果连接失败，则执行异常流E1，服务端根据软件实体号计算对应软件ID，如果软件实体号之前在服务端注册过则直接将对应的软件ID返回，不存在则生成软件ID并将软件实体号进行注册，返回",
+       "[S1QA-079-ev-000043#s6] 数据库初始化动作约束：如果无法连接到服务端，提示连接错误。",
+       "[S1QA-079-ev-000043#s7] 异常流E1：系统提示初始化失败，用例结束。",
+       "[S1QA-079-ev-000043#s8] 后置条件：无。",
+       "[S1QA-079-ev-000049#s0] UseCase名称：读取配置文件连接",
+       "[S1QA-079-ev-000049#s1] 概述：本用例是SQL访问的扩展用例，描述读取配置文件连接的过程；",
+       "[S1QA-079-ev-000049#s2] 前置条件：数据库初始化成功。",
+       "[S1QA-079-ev-000049#s3] 主事件流",
+       "[S1QA-079-ev-000049#s4] 读取配置文件连接Actor的动作：1.应用软件调用读取配置文件连接接口输入相关参数，如配置文件路径等参数；3.应用软件输出连接状态，如果返回的连接失败，通过获取错误信息接口，输出具体的连接错误信息。"
+      ],
+      "n_statements": 51,
+      "enum_registry": [
+       "数据库操作/prose={数据库初始化、读取配置文件连接、数据库连接、数据库关闭}",
+       "数据库操作/需求重用={沿用}",
+       "数据库操作/方式名称={平板、桌面、手持}",
+       "数据库操作/运行状态={运行阶段、开发阶段}",
+       "修改数据/prose={删除数据记录、增加数据记录、修改数据记录}",
+       "修改数据/需求重用={沿用}",
+       "修改数据/方式名称={平板、桌面、手持}",
+       "修改数据/运行状态={运行阶段、开发阶段}",
+       "查询数据/prose={数据查询、获取错误信息、二维数据输出、JSON输出、DML输出}",
+       "逐行获取数据/prose={逐行拷贝、获取INT、获取STRING、获取FLOAT、获取LOB}"
+      ],
+      "enum_assertions": [],
+      "id_registry": [
+       "PZXQ-GN-SQLFW-SJKCZ -> ['数据库操作']",
+       "PZXQ-GN-SQLFW-XGSJ -> ['修改数据']",
+       "PZXQ-GN-SQLFW-CXSJ -> ['查询数据']",
+       "PZXQ-GN-SQLFW-BLOBSJCZ -> ['BLOB数据操作']"
+      ],
+      "id_claims": []
+     }
+    }
+   },
+   "expert_failures": {}
+  }
+ },
+ "rule_quality": {
+  "manual_diff_targets": [
+   "$.join_params.id_join.id_family_prefixes+",
+   "$.table_schemas.trace_table.canon_map.任务书名称/标识+",
+   "$.table_schemas.trace_table.canon_map.任务书章节号+",
+   "$.table_schemas.trace_table.canon_map.本文档名称/标识+",
+   "$.table_schemas.trace_table.canon_map.本文档章节号+"
+  ],
+  "teacher_change_targets": [
+   "extraction_templates.enum_device"
+  ],
+  "overlapping_targets": [],
+  "n_teacher_changes": 1,
+  "n_manual_diff_entries": 5
+ },
+ "cost": {
+  "teacher": {
+   "invocations": 9,
+   "cache_hits": 9,
+   "api_calls": 0
+  },
+  "eval": {
+   "subprocess_evals": 50,
+   "crossdoc_only_evals": 0
+  },
+  "wall_seconds": 179.1
+ },
+ "methodology_notes": [
+  "每个pack评测都在全新子进程中执行: numeric_z3_expert._unit_table是@lru_cache(maxsize=1)无pack身份键, gjb_presence_expert的词表正则缓存同样身份盲——进程内切换pack会继承首个pack的派生配置(历史eval_crossdoc5_onboard的in-process切换受此污染), 子进程隔离是唯一可靠口径",
+  "人工doc06_v1是M33时代的fork, 缺srs_gjb_v1后续新增的numeric_z3/coverage/gjb段——standalone子进程口径下crossdoc06回退(macro_f1低于generic), 历史'无差异'结论部分是缓存污染假象",
+  "deterministic配置(QAConsistencyModule(use_experts=True))是L1规则包效应的隔离口径; 91QA主评测当前数字0.7212/0.9121"
+ ]
+}

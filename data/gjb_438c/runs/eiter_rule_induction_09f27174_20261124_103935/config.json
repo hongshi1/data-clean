@@ -1,0 +1,19 @@
+{
+ "script": "eiter_rule_induction",
+ "git_sha": "398128e9",
+ "config": {
+  "rounds": 2,
+  "skip_teacher": false,
+  "evalsets": {
+   "crossdoc06": "data\\gjb_438c\\qa_frozen\\crossdoc06_evalset_v1.jsonl",
+   "qa91": "data\\gjb_438c\\qa_frozen\\scene1_qa_frozen_v1.jsonl"
+  },
+  "base_pack": "config\\rulepacks\\srs_gjb_v1.json",
+  "manual_pack": "config\\rulepacks\\doc06_v1.json",
+  "teacher": "llm_json_teacher(glm-5.3, cache=True)",
+  "eval_config": "QAConsistencyModule(use_experts=True) deterministic",
+  "gate": "CLIPR no-regression: qa91 instance+aggregate, crossdoc06 no-new-wrong + count-monotone, expert-failure veto"
+ },
+ "config_hash": "09f27174",
+ "opened_at": 1795487975.2
+}

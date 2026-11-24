@@ -1,0 +1,1146 @@
+{
+ "pack_id": "r2_p3",
+ "description": "prune trial",
+ "gjb_rule_library_path": "knowledge/gjb_438c_rules_full.json",
+ "table_schemas": {
+  "capability_table": {
+   "signatures": [
+    {
+     "all_headers": [
+      "项目唯一标识符",
+      "需求描述"
+     ]
+    }
+   ],
+   "canon_map": {
+    "Usecase名称": "Use case名称",
+    "UseCase名称": "Use case名称",
+    "USECASE名称": "Use case名称",
+    "对应的任务书功能/性能": "对应任务书",
+    "对应的任务书功能性能": "对应任务书"
+   },
+   "key_columns": [
+    "Use case名称",
+    "项目唯一标识符"
+   ],
+   "column_profiles": {
+    "identifier": [
+     "Use case名称",
+     "项目唯一标识符"
+    ],
+    "enumeration": [
+     "Use case名称",
+     "方式名称",
+     "运行状态"
+    ],
+    "default": [
+     "Use case名称",
+     "项目唯一标识符",
+     "需求描述"
+    ]
+   }
+  },
+  "use_case_table": {
+   "signatures": [
+    {
+     "raw_regex": "Use\\s*[Cc]ase\\s*名称\\s*[：:]"
+    },
+    {
+     "raw_contains_any": [
+      "主事件流",
+      "后置条件"
+     ]
+    }
+   ],
+   "columns": [
+    "Use Case名称",
+    "Actors",
+    "概述",
+    "前置条件",
+    "主事件流",
+    "异常流E1",
+    "后置条件"
+   ],
+   "flow_subcolumns": [
+    "Actor动作",
+    "系统动作",
+    "动作约束"
+   ],
+   "use_case_fields": {
+    "name_pattern": "^Use\\s*[Cc]ase\\s*名称\\s*[：:]\\s*(?P<name>.+)$",
+    "actors_pattern": "^Actors?\\s*[：:]\\s*(?P<actors>.+)$",
+    "field_pattern": "^(?P<field>Use\\s*[Cc]ase\\s*名称|Actors?|简要说明|概述|前置条件|后置条件|异常流E\\d+)\\s*[：:]\\s*(?P<value>.*)$",
+    "flow_header_pattern": "^主事件流",
+    "subheader_pattern": "^Actor\\s*的动作",
+    "field_canon": {
+     "简要说明": "概述"
+    }
+   }
+  },
+  "interface_table": {
+   "signatures": [
+    {
+     "any_header_groups": [
+      [
+       "接口需求标识"
+      ]
+     ]
+    },
+    {
+     "all_headers": [
+      "发送方",
+      "接收方"
+     ]
+    }
+   ],
+   "key_columns": [
+    "接口需求名称",
+    "接口需求标识"
+   ],
+   "column_profiles": {
+    "identifier": [
+     "接口需求名称",
+     "接口需求标识"
+    ],
+    "enumeration": [
+     "接口需求名称",
+     "接口内容"
+    ],
+    "default": [
+     "接口需求名称",
+     "接口需求标识",
+     "接口内容",
+     "发送方",
+     "接收方"
+    ]
+   }
+  },
+  "value_domain_table": {
+   "signatures": [
+    {
+     "all_headers": [
+      "数据项"
+     ],
+     "any_header_groups": [
+      [
+       "最大值",
+       "最大差",
+       "最小值",
+       "最小差"
+      ],
+      [
+       "精度",
+       "单位"
+      ]
+     ]
+    }
+   ],
+   "canon_map": {
+    "最大差": "最大值",
+    "最小差": "最小值"
+   },
+   "key_columns": [
+    "数据项"
+   ],
+   "column_profiles": {
+    "default": [
+     "数据项",
+     "最大值",
+     "最小值",
+     "精度",
+     "单位"
+    ]
+   }
+  },
+  "qualification_table": {
+   "signatures": [
+    {
+     "any_header_groups": [
+      [
+       "合格性方法",
+       "合格性级别"
+      ]
+     ]
+    }
+   ],
+   "canon_map": {
+    "需求名称/标识": "需求名称标识",
+    "本文档的章节号": "章节号",
+    "合格性方法": "合格性方法",
+    "合格性级别": "合格性级别"
+   },
+   "key_columns": [
+    "需求名称标识"
+   ],
+   "column_profiles": {
+    "default": [
+     "需求名称标识",
+     "章节号",
+     "合格性方法",
+     "合格性级别"
+    ]
+   }
+  },
+  "trace_table": {
+   "signatures": [
+    {
+     "caption_contains_any": [
+      "追踪性"
+     ]
+    },
+    {
+     "any_header_substring_groups": [
+      [
+       "章节号"
+      ],
+      [
+       "名称/标识",
+       "名称标识"
+      ]
+     ]
+    }
+   ],
+   "canon_map": {
+    "软件研制任务书名称/标识": "任务书名称标识",
+    "软件研制任务书的章节号": "任务书章节号",
+    "本文档的名称/标识": "本文档名称标识",
+    "本文档的章节号": "本文档章节号",
+    "跟踪说明": "跟踪说明"
+   },
+   "column_profiles": {
+    "default": [
+     "任务书名称标识",
+     "任务书章节号",
+     "本文档名称标识",
+     "本文档章节号",
+     "跟踪说明"
+    ]
+   },
+   "direction_first_column_prefix": "任务书",
+   "direction_markers": [
+    "任务书",
+    "本文档"
+   ],
+   "trace_key_columns": {
+    "forward": [
+     "任务书名称标识",
+     "本文档名称标识"
+    ],
+    "reverse": [
+     "本文档名称标识",
+     "任务书名称标识"
+    ]
+   }
+  },
+  "generic_table": {
+   "signatures": []
+  }
+ },
+ "classify_order": [
+  "capability_table",
+  "interface_table",
+  "value_domain_table",
+  "qualification_table",
+  "trace_table",
+  "use_case_table",
+  "generic_table"
+ ],
+ "extraction_templates": {
+  "e1_entry_head": {
+   "pattern": "(?:异常流)?E\\d?\\s*[：:]",
+   "flags": 32
+  },
+  "e1_entry_parse": {
+   "pattern": "(?:异常流)?(?P<id>E\\d?)\\s*[：:]\\s*(?:系统提示)?(?P<prompt>[^，,。；;\\n]*)(?:[，,]\\s*(?P<ending>.*))?",
+   "flags": 32
+  },
+  "e1_exception_claim": {
+   "pattern": "异常|E\\d|触发|提示|失败|错误|终止|结束|恢复|故障",
+   "flags": 32
+  },
+  "e1_claimed_e_id": {
+   "pattern": "(?<![A-Za-z0-9])(E\\d)(?![A-Za-z0-9])",
+   "flags": 32
+  },
+  "e1_answer_prompt_quoted": {
+   "pattern": "(?:提示|显示|给出|返回|弹出)(?:信息|内容)?\\s*[：:]?\\s*[“\\\"](?P<quoted>[^”\\\"]{1,60})(?:[”\\\"]|$)",
+   "flags": 32
+  },
+  "e1_answer_prompt_plain": {
+   "pattern": "(?:提示|显示|给出|弹出|返回)(?P<plain>[^，,。；;”\\\"「」“]{1,30})",
+   "flags": 32
+  },
+  "e1_prompt_connective": {
+   "pattern": "(?:并且|并|且|同时|然后|随后|之后)(?=继续|终止|结束|返回|恢复|提示|显示|退出|执行).*$",
+   "flags": 32
+  },
+  "e1_generic_prompt_text": {
+   "pattern": "^(?:相应|相关|对应|适当|合适|具体|详细)?的?(?:错误|警告|失败|成功|提示|异常)*(?:信息|内容|消息|文本)?$",
+   "flags": 32
+  },
+  "e1_prompt_q": {
+   "pattern": "提示信息|什么提示|哪些提示|返回什么|显示什么|提示什么|提示内容",
+   "flags": 32
+  },
+  "e1_evidence_prompt_verb": {
+   "pattern": "(?:提示|显示|给出)(?:信息|内容)?[：:]?(?P<span>[^，,。；;”\\\"「」“\\n]{1,40})",
+   "flags": 32
+  },
+  "e1_evidence_trigger": {
+   "pattern": "(?:如果|若|当|在)(?P<span>[^，,。；;\\n]{2,40}?)(?:时|情况下|条件下)?[，,]",
+   "flags": 32
+  },
+  "e1_continue_claim": {
+   "pattern": "(?:继续|恢复|重试|重新(?:执行|开始|处理|输入|配置|尝试))(?=[^，,。；;]{0,8}(?:用例|流程|事件流|过程|步骤))|(?:用例|流程|事件流|过程|步骤)(?:继续|恢复)",
+   "flags": 32
+  },
+  "e1_end_claim": {
+   "pattern": "(?:结束|终止|中止)(?=[^，,。；;]{0,8}(?:用例|流程|事件流|过程|步骤))|(?:用例|流程|事件流|过程|步骤)(?:结束|终止|中止)",
+   "flags": 32
+  },
+  "e1_ending_only": {
+   "pattern": "^\\s*(?:用例|流程|步骤)?\\s*(?:结束|终止|中止|继续|恢复)\\s*[。.；;]?\\s*$",
+   "flags": 32
+  },
+  "e1_continue_words": {
+   "pattern": "继续|恢复|重试|重新(?:执行|开始|处理)",
+   "flags": 32
+  },
+  "e1_e1_assertion": {
+   "pattern": "异常流\\s*E\\d?\\s*[：:]",
+   "flags": 32
+  },
+  "e1_exception_q": {
+   "pattern": "异常处理|异常流|异常情况|触发.{0,6}异常|发生错误|出现异常",
+   "flags": 32
+  },
+  "e1_punct": {
+   "pattern": "[\\s，,。；;、：:！？“”\\\"'（）()\\[\\]【】·-]",
+   "flags": 32
+  },
+  "id_pattern": {
+   "pattern": "PZXQ-[A-Z0-9-]+",
+   "flags": 32
+  },
+  "id_binding": {
+   "pattern": "(?P<name>[A-Za-z0-9\\u4e00-\\u9fff][A-Za-z0-9\\u4e00-\\u9fff-]{0,40}?)的(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识|标识符|标识|编号|代号)(?:(?:分别|均|都|也|是|为)[：:]?)*[：:]?(?P<id>PZXQ-[A-Z0-9-]+)",
+   "flags": 32
+  },
+  "id_section_title": {
+   "pattern": "(?P<sec>\\d+(?:\\.\\d+)+)(?P<name>[\\u4e00-\\u9fffA-Za-z][\\u4e00-\\u9fffA-Za-z0-9-]{0,40}?)[（(](?P<id>PZXQ-[A-Z0-9-]+)[）)]",
+   "flags": 32
+  },
+  "id_role_tail": {
+   "pattern": "的?(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识|标识符|标识|编号|代号|名称|序号)(?:(?:分别|均|都|也|是|为)[：:]?)*[：:]?$",
+   "flags": 32
+  },
+  "id_bracket_subject": {
+   "pattern": "(?P<subj>[A-Za-z0-9\\u4e00-\\u9fff]{2,24})[（(]\\s*[「\\\"]?\\s*$",
+   "flags": 32
+  },
+  "id_segment_split": {
+   "pattern": "[：:\\n|，,。；;]",
+   "flags": 32
+  },
+  "id_noun_run": {
+   "pattern": "[A-Za-z0-9\\u4e00-\\u9fff]{2,24}",
+   "flags": 32
+  },
+  "id_window_tail_strip": {
+   "pattern": "[\\s*_`#>|·]+$",
+   "flags": 32
+  },
+  "id_leading_table_ref": {
+   "pattern": "^表\\d+中",
+   "flags": 32
+  },
+  "id_subject_role_trim": {
+   "pattern": "(?:用例|能力|功能)$",
+   "flags": 32
+  },
+  "enum_field_value": {
+   "pattern": "(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,20})的(?P<field>需求重用|方式名称|运行状态|对应的任务书功能性能)[：:](?P<value>.+)",
+   "flags": 32
+  },
+  "enum_sentence": {
+   "pattern": "(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,20}?)(?:功能|操作|服务|内容)?(?:包括|包含|分为|划分为)[：:]?(?P<items>[^，,。；;\\n]{4,120})",
+   "flags": 32
+  },
+  "enum_id_binding": {
+   "pattern": "(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,20}?)的(?:项目唯一标识符|唯一标识符|接口需求标识|接口标识|功能标识)[：:](?P<id>PZXQ-[A-Z0-9-]+)",
+   "flags": 32
+  },
+  "enum_section_title": {
+   "pattern": "\\d+(?:\\.\\d+)+(?P<name>[\\u4e00-\\u9fffA-Za-z0-9-]{2,40}?)[（(](?P<id>PZXQ-[A-Z0-9-]+)[）)]",
+   "flags": 32
+  },
+  "enum_device": {
+   "pattern": "在(?P<items>[\\u4e00-\\u9fffA-Za-z0-9、和]{6,60}?)(?:等)?(?:种版本|版本|设备|终端|平台)?(?:上(?:运行|使用|提供|均可|实施)|阶段(?:之)?(?:提供|运行|使用|实施))",
+   "flags": 32
+  },
+  "enum_question_subject": {
+   "pattern": "(?P<subj>[\\u4e00-\\u9fffA-Za-z0-9]{2,24}?)(?:包括|包含|涉及|以哪些|有哪些|哪些)",
+   "flags": 32
+  },
+  "enum_member_valid": {
+   "pattern": "[\\u4e00-\\u9fffA-Za-z0-9]{2,16}",
+   "flags": 32
+  },
+  "enum_member_split": {
+   "pattern": "[、，,]|以及|和",
+   "flags": 32
+  },
+  "enum_count_function_suffix": {
+   "pattern": "(?:[一二三四五六七八九十两\\d]+)?项功能$",
+   "flags": 32
+  },
+  "enum_subject_role_suffix": {
+   "pattern": "(?:的支持方式|的方式名称|的运行状态|的功能标识表|的具体操作|的主要功能|的核心操作|的子功能)$",
+   "flags": 32
+  },
+  "enum_leading_table": {
+   "pattern": "^表\\d+",
+   "flags": 32
+  },
+  "enum_generic_subject": {
+   "pattern": "^(?:所有|这些|上述|全部|该|其|每|各)?(?:操作|功能|用例|设备|版本|步骤|内容|方面|模块|场景|参数)$",
+   "flags": 32
+  },
+  "enum_phase_words": {
+   "pattern": "开发阶段|运行阶段",
+   "flags": 32
+  },
+  "enum_member_split_device": {
+   "pattern": "[、和]",
+   "flags": 32
+  },
+  "enum_device_subject_run": {
+   "pattern": "[\\u4e00-\\u9fffA-Za-z0-9]{2,16}$",
+   "flags": 32
+  },
+  "seq_step": {
+   "pattern": "(\\d+)[.．、]\\s*([^；;\\n]+)",
+   "flags": 32
+  },
+  "seq_exception_field": {
+   "pattern": "^异常流E?\\d*$",
+   "flags": 32
+  },
+  "seq_question_scope": {
+   "pattern": "(?P<name>[\\u4e00-\\u9fffA-Za-z0-9-]{2,24}?)(?:的)?(?:主事件流|事件流|用例描述)",
+   "flags": 32
+  },
+  "seq_preamble": {
+   "pattern": "包括以下|如下|这些操作|确保",
+   "flags": 32
+  },
+  "seq_punct": {
+   "pattern": "[\\s：:，,。；;、（）()「」\\[\\]【】*·]",
+   "flags": 32
+  },
+  "seq_flow_question": {
+   "pattern": "主事件流|事件流|步骤|流程|时序|顺序|依次|先后",
+   "flags": 32
+  },
+  "seq_substantive_step": {
+   "pattern": "[\\u4e00-\\u9fff]{2,}",
+   "flags": 32
+  },
+  "trace_section_split": {
+   "pattern": "[、，,]",
+   "flags": 32
+  },
+  "trace_segment_split": {
+   "pattern": "[。；;\\n]",
+   "flags": 32
+  },
+  "trace_relation_words": {
+   "pattern": "对应|追溯|映射|追踪|关联|引用|来自|源于|依据",
+   "flags": 32
+  },
+  "trace_trace_relation_words": {
+   "pattern": "(?P<id>PZXQ-[A-Z0-9-]+)[^，,。；;]{0,24}?(?:追溯|追踪|映射)(?:至|到)?任务书(?P<sec>\\d+(?:\\.\\d+)+\\s*[a-hA-H]?[)）]?)",
+   "flags": 32
+  },
+  "trace_section_token": {
+   "pattern": "\\d+(?:\\.\\d+)+\\s*[a-hA-H]?[)）]?",
+   "flags": 32
+  },
+  "trace_taskbook_section": {
+   "pattern": "^4(?:\\.\\d+)+",
+   "flags": 32
+  },
+  "trace_heading_number": {
+   "pattern": "^\\s*(\\d+(?:\\.\\d+)*)\\s",
+   "flags": 32
+  }
+ },
+ "term_vocabularies": {
+  "e1_generic_words": [
+   "系统",
+   "用户",
+   "提示",
+   "失败",
+   "错误",
+   "信息",
+   "无法",
+   "不能",
+   "异常",
+   "用例",
+   "结束",
+   "终止",
+   "中止",
+   "流程",
+   "操作",
+   "并且"
+  ],
+  "e1_invalid_prompt_words": [
+   "可能",
+   "包括",
+   "会",
+   "将",
+   "可以",
+   "确保",
+   "通过",
+   "以及",
+   "或者",
+   "并且",
+   "然后",
+   "触发",
+   "执行",
+   "处理",
+   "终止",
+   "继续",
+   "结束",
+   "重启",
+   "重新",
+   "检测",
+   "尝试",
+   "输出",
+   "提供",
+   "返回",
+   "状态",
+   "断开",
+   "拒绝"
+  ],
+  "e1_end_words": [
+   "结束",
+   "终止",
+   "中止"
+  ],
+  "e1_flow_fields": [
+   "Actor的动作",
+   "系统的动作",
+   "动作约束"
+  ],
+  "id_subject_stopwords": [
+   "代号",
+   "使用",
+   "其他",
+   "其他接口",
+   "内容",
+   "功能",
+   "包含",
+   "包括",
+   "名称",
+   "序号",
+   "接口",
+   "描述",
+   "提供",
+   "支持",
+   "文档",
+   "服务",
+   "标识",
+   "标识符",
+   "用例",
+   "答案",
+   "类似",
+   "系统",
+   "编号",
+   "能力",
+   "软件",
+   "部分",
+   "采用",
+   "需求",
+   "项目",
+   "通过",
+   "通过接口"
+  ],
+  "enum_terminal_bases": [
+   "平板",
+   "手持",
+   "桌面"
+  ],
+  "enum_phase_bases": [
+   "开发阶段",
+   "运行阶段"
+  ],
+  "enum_subject_garbage_infixes": [
+   "按照",
+   "如下",
+   "以下",
+   "上述",
+   "其中",
+   "以及",
+   "并且",
+   "还是",
+   "通常",
+   "主要",
+   "常见",
+   "需要",
+   "但不限于"
+  ],
+  "enum_generic_subjects": [
+   "上述操作",
+   "以上内容",
+   "以下内容",
+   "全部操作",
+   "其功能",
+   "具体",
+   "内容",
+   "功能",
+   "参数",
+   "场景",
+   "所有功能",
+   "所有操作",
+   "所有设备",
+   "操作",
+   "数据",
+   "方面",
+   "服务",
+   "模块",
+   "步骤",
+   "类型",
+   "系统",
+   "能力",
+   "该功能",
+   "该操作",
+   "该用例",
+   "软件",
+   "这些功能",
+   "这些操作",
+   "这些设备",
+   "需求"
+  ],
+  "enum_dev_tail_strip": [
+   "并且在",
+   "并且",
+   "支持",
+   "提供",
+   "使用",
+   "运行",
+   "实施",
+   "基于",
+   "实现",
+   "在",
+   "均",
+   "都",
+   "也",
+   "和",
+   "，",
+   "。",
+   "；",
+   "、",
+   "设备",
+   "终端"
+  ],
+  "seq_flow_fields": [
+   "Actor的动作",
+   "系统的动作"
+  ],
+  "seq_failure_keywords": [
+   "失败",
+   "错误",
+   "异常"
+  ],
+  "seq_temporal_connectors": [
+   "然后",
+   "随后",
+   "之后",
+   "接着",
+   "下一步",
+   "紧接着",
+   "依次",
+   "重新"
+  ],
+  "trace_non_track_notes": [
+   "不跟踪",
+   "不追溯",
+   "不追踪"
+  ],
+  "gjb_absence_words": [
+   "缺少",
+   "缺失",
+   "没有",
+   "未包含",
+   "未提供",
+   "未规定",
+   "未定义",
+   "未涉及",
+   "未设置",
+   "未明确",
+   "未给出",
+   "未描述",
+   "未注明",
+   "未覆盖",
+   "不包含",
+   "不存在",
+   "不满足",
+   "不符合",
+   "不支持",
+   "不具备",
+   "不提供",
+   "不含",
+   "不应"
+  ],
+  "gjb_presence_words": [
+   "包含",
+   "包括",
+   "提供",
+   "具备",
+   "满足",
+   "符合",
+   "支持",
+   "规定",
+   "定义",
+   "设置",
+   "存在",
+   "具有",
+   "实现",
+   "已有",
+   "覆盖",
+   "列出",
+   "注明",
+   "标注",
+   "标明",
+   "指定",
+   "应",
+   "自动保存",
+   "自动恢复",
+   "自动回滚",
+   "自动重连"
+  ],
+  "gjb_rule_presence_words": [
+   "包含",
+   "包括",
+   "提供",
+   "具备",
+   "满足",
+   "符合",
+   "支持",
+   "规定",
+   "定义",
+   "设置",
+   "存在",
+   "具有",
+   "实现",
+   "已有",
+   "覆盖",
+   "列出",
+   "注明",
+   "标注",
+   "标明",
+   "指定"
+  ],
+  "coverage_qualification_targets": [
+   "合格性方法",
+   "合格性规定",
+   "合格性检验方法",
+   "合格性级别",
+   "测试方法",
+   "合格性"
+  ],
+  "coverage_generic_subjects": [
+   "全部",
+   "其",
+   "功能",
+   "各",
+   "它们",
+   "所有",
+   "文档",
+   "服务",
+   "本",
+   "本文档",
+   "本系统",
+   "每个",
+   "系统",
+   "能力",
+   "能力需求",
+   "该",
+   "该系统",
+   "软件",
+   "需求"
+  ]
+ },
+ "join_params": {
+  "e1": {
+   "trim_edges": " \n\t。，,；;：:“”\"'"
+  },
+  "id_join": {
+   "id_window": 32,
+   "family_segments": 2,
+   "subject_contain_min_chars": 3,
+   "segment_edge_strip": " -—-*_`#>|·"
+  },
+  "enum_join": {
+   "typo_distance": 1,
+   "field_kinds": {
+    "方式名称": "terminal",
+    "运行状态": "phase",
+    "prose": "functional",
+    "row_enum": "functional"
+   },
+   "field_labels": {
+    "方式名称": "方式名称",
+    "运行状态": "运行状态",
+    "prose": "正文枚举",
+    "row_enum": "能力表行"
+   },
+   "device_subject_window": 24,
+   "row_enum_block_isolated": true
+  },
+  "sequence": {
+   "min_step_chars": 8,
+   "parallel_item_avg_len": 40,
+   "strip_chars": " \n。；;，,：:"
+  },
+  "trace": {
+   "note_column_count": 5,
+   "max_answer_pairs": 4
+  },
+  "numeric_z3": {
+   "cn_unit_aliases": {
+    "毫秒": "ms",
+    "微秒": "us",
+    "纳秒": "ns",
+    "秒": "s",
+    "分钟": "min",
+    "小时": "hour",
+    "字节": "byte"
+   },
+   "extra_unit_factors": {
+    "天": [
+     "time",
+     86400.0
+    ],
+    "日": [
+     "time",
+     86400.0
+    ],
+    "条": [
+     "count",
+     1.0
+    ],
+    "个": [
+     "count",
+     1.0
+    ],
+    "次": [
+     "count",
+     1.0
+    ],
+    "种": [
+     "count",
+     1.0
+    ],
+    "路": [
+     "count",
+     1.0
+    ],
+    "项": [
+     "count",
+     1.0
+    ],
+    "类": [
+     "count",
+     1.0
+    ],
+    "台": [
+     "count",
+     1.0
+    ],
+    "用户": [
+     "count",
+     1.0
+    ],
+    "节点": [
+     "count",
+     1.0
+    ],
+    "核": [
+     "count",
+     1.0
+    ]
+   },
+   "field_name_ops": {
+    "最大差": "le",
+    "上限": "le",
+    "最大值": "le",
+    "最小差": "ge",
+    "下限": "ge",
+    "最小值": "ge",
+    "精度": "eq"
+   },
+   "aggregate_markers": [
+    "总",
+    "之和",
+    "合计",
+    "总计",
+    "总共"
+   ]
+  },
+  "coverage": {
+   "alarm_elements": [
+    [
+     "时间戳",
+     [
+      "时间戳",
+      "时间"
+     ]
+    ],
+    [
+     "位置",
+     [
+      "位置"
+     ]
+    ],
+    [
+     "等级",
+     [
+      "等级",
+      "级别"
+     ]
+    ],
+    [
+     "原因",
+     [
+      "原因"
+     ]
+    ],
+    [
+     "处置建议",
+     [
+      "处置",
+      "建议"
+     ]
+    ]
+   ]
+  }
+ },
+ "thresholds": {
+  "e1_conf_exact": 1.0,
+  "e1_conf_substring": 0.9,
+  "e1_conf_keyword": 0.75,
+  "e1_conf_ending": 0.8,
+  "e1_conf_refute_prompt": 0.85,
+  "e1_conf_refute_ending": 0.9,
+  "e1_conf_topic": 0.8,
+  "id_join_support_conf": 0.9,
+  "id_join_nie_conf": 0.5,
+  "seq_pair_det": 0.28,
+  "seq_pair_bge": 0.6,
+  "seq_failure_keyword_ratio": 0.5,
+  "seq_conf_det": 0.9,
+  "seq_conf_bge": 0.8
+ },
+ "gjb": {
+  "rule_clusters": [
+   {
+    "cluster": "GJB-01",
+    "rule_ids": [
+     "GJB-RULE-037",
+     "GJB-RULE-065",
+     "GJB-RULE-077",
+     "GJB-RULE-117"
+    ],
+    "reason": "taxonomy GJB-01=合格性方法+质量因素：037每条需求应注明合格性方法，065质量特性含可靠性/测试性/维护性，077/117第4章合格性规定与跨规格说明一致——两要素分别由037/077与065承载"
+   },
+   {
+    "cluster": "GJB-02",
+    "rule_ids": [
+     "GJB-RULE-041",
+     "GJB-RULE-063"
+    ],
+    "reason": "taxonomy GJB-02=故障容错处置：041异常/非许可/超限条件下的行为与错误处理=容错行为，063安全措施=故障防护——容错条款由两规则承载"
+   },
+   {
+    "cluster": "GJB-03",
+    "rule_ids": [
+     "GJB-RULE-062"
+    ],
+    "reason": "taxonomy GJB-03=保密性及访问控制：062保密性需求(类型级别/安全措施)即访问控制类保密条款的规则来源"
+   },
+   {
+    "cluster": "GJB-04",
+    "rule_ids": [
+     "GJB-RULE-034",
+     "GJB-RULE-062"
+    ],
+    "reason": "taxonomy GJB-04=审计日志：GJB 438C无审计日志专项规则，以安全保密簇承载——034要求1.3描述使用相关安全保密要求，062要求保密性细化要素(责任/认证认可=可审计性)"
+   },
+   {
+    "cluster": "GJB-05",
+    "rule_ids": [
+     "GJB-RULE-037",
+     "GJB-RULE-078",
+     "GJB-RULE-079",
+     "GJB-RULE-118"
+    ],
+    "reason": "taxonomy GJB-05=需求可追溯：037注明与系统需求可追踪性，078正向追踪，079逆向追踪，118双向追踪章通用规则"
+   },
+   {
+    "cluster": "GJB-06",
+    "rule_ids": [
+     "GJB-RULE-041"
+    ],
+    "reason": "taxonomy GJB-06=报警要素：异常条件下所需的行为(041)涵盖异常处置时的报警内容要素；规则库无报警专项规则"
+   },
+   {
+    "cluster": "GJB-07",
+    "rule_ids": [
+     "GJB-RULE-063"
+    ],
+    "reason": "taxonomy GJB-07=软件自检：063安全性需求的安全措施(防止意外动作与无动作)涵盖故障检测/自检类条款"
+   },
+   {
+    "cluster": "GJB-08",
+    "rule_ids": [
+     "GJB-RULE-041"
+    ],
+    "reason": "taxonomy GJB-08=掉电数据保护：041为保证在紧急时刻运行的连续性而引入的规定是规则库中与掉电状态保存恢复语义最近的条款；GJB 438C无掉电专项规则"
+   },
+   {
+    "cluster": "GJB-09",
+    "rule_ids": [
+     "GJB-RULE-041"
+    ],
+    "reason": "taxonomy GJB-09=输入数据防护：041的非许可条件或超限条件下所需的行为即非法/越界输入处置；057合法性检查属接口协议特征故不映射"
+   },
+   {
+    "cluster": "GJB-10",
+    "rule_ids": [
+     "GJB-RULE-073"
+    ],
+    "reason": "taxonomy GJB-10=版本升级安全：073软件保障需求(系统维护/保障内容)是升级安全条款的规则来源"
+   },
+   {
+    "cluster": "GJB-11",
+    "rule_ids": [
+     "GJB-RULE-038",
+     "GJB-RULE-097"
+    ],
+    "reason": "taxonomy GJB-11=降级运行：038要求标识和定义每一状态和方式(枚举含降级)，097为SSS侧同文规则(跨文档校验用)"
+   }
+  ]
+ },
+ "_eiter": {
+  "provenance": {},
+  "changes": [
+   {
+    "op": "add_vocabulary_words",
+    "target": "term_vocabularies.enum_dev_tail_strip",
+    "params": {
+     "vocab": "enum_dev_tail_strip",
+     "words": [
+      "设备",
+      "终端"
+     ]
+    },
+    "reason": "answer侧设备枚举成员'平板设备/手持设备/平板终端'尾部后缀未剥离，归一化到terminal_bases后refute案例的成员集合冲突(缺桌面/多平板)才能被enum_join检出",
+    "source_failures": [
+     "C06QA-001",
+     "C06QA-002",
+     "C06QA-003",
+     "C06QA-011",
+     "C06QA-012",
+     "C06QA-013"
+    ],
+    "apply_logs": [
+     "term_vocabularies.enum_dev_tail_strip: +2词"
+    ]
+   },
+   {
+    "op": "replace_extraction_template",
+    "target": "extraction_templates.trace_trace_relation_words",
+    "params": {
+     "name": "trace_trace_relation_words",
+     "pattern": "(?P<id>PZXQ-[A-Z0-9-]+)[^，,。；;]{0,24}?(?:追溯|追踪|映射)(?:至|到)?任务书(?P<sec>\\d+(?:\\.\\d+)+\\s*[a-hA-H]?[)）]?)",
+     "flags": 32
+    },
+    "reason": "原模板是无命名组的词表正则, answer侧『ID追溯至任务书4.1.x』声明从未被提取为(id,sec)对; 补命名组后trace专家可与证据侧(主体→ID)+(主体→任务书章节)链式注册表比对, 修复019/020的跨行绑定冲突refute及009/010的映射核验",
+    "source_failures": [
+     "C06QA-009",
+     "C06QA-010",
+     "C06QA-019",
+     "C06QA-020",
+     "C06QA-029"
+    ],
+    "apply_logs": [
+     "extraction_templates.trace_trace_relation_words: pattern替换(命名组['id', 'sec'])"
+    ]
+   },
+   {
+    "op": "add_canon_map",
+    "target": "table_schemas.capability_table.canon_map",
+    "params": {
+     "kind": "capability_table",
+     "entries": {
+      "对应的任务书功能性能": "对应任务书"
+     }
+    },
+    "reason": "06号文档线性化将表头『对应的任务书功能/性能』折叠为无斜杠形态, 现有canon_map键不命中, 补别名使该列归一化为规范追溯列供trace通道识别",
+    "source_failures": [
+     "C06QA-009",
+     "C06QA-010",
+     "C06QA-019",
+     "C06QA-020",
+     "C06QA-029"
+    ],
+    "apply_logs": [
+     "table_schemas.capability_table.canon_map: +1项"
+    ]
+   },
+   {
+    "op": "add_vocabulary_words",
+    "target": "term_vocabularies.id_subject_stopwords",
+    "params": {
+     "vocab": "id_subject_stopwords",
+     "words": [
+      "通过",
+      "通过接口"
+     ]
+    },
+    "reason": "answer侧叙述句『X接口通过接口<ID>实现』的ID前窗口把连接词『通过接口』并入主体, 增补停用词使主体归一化后与注册表接口名一致, 消解绑定",
+    "source_failures": [
+     "C06QA-006",
+     "C06QA-007",
+     "C06QA-016",
+     "C06QA-017",
+     "C06QA-026"
+    ],
+    "apply_logs": [
+     "term_vocabularies.id_subject_stopwords: +2词"
+    ]
+   },
+   {
+    "op": "replace_extraction_template",
+    "target": "extraction_templates.enum_device",
+    "params": {
+     "name": "enum_device",
+     "pattern": "在(?P<items>[\\u4e00-\\u9fffA-Za-z0-9、和]{6,60}?)(?:等)?(?:种版本|版本|设备|终端|平台)?(?:上(?:运行|使用|提供|均可|实施)|阶段(?:之)?(?:提供|运行|使用|实施))",
+     "flags": 32
+    },
+    "reason": "answer句式『在开发阶段、集成阶段、运行阶段提供』无『上』字锚点，新增『阶段+提供』分支；原『上+动词』04号形态完整保留，items命名组不变",
+    "source_failures": [
+     "C06QA-004",
+     "C06QA-005",
+     "C06QA-014",
+     "C06QA-015"
+    ],
+    "apply_logs": [
+     "extraction_templates.enum_device: pattern替换(命名组['items'])"
+    ]
+   }
+  ]
+ }
+}

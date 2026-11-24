@@ -1,0 +1,137 @@
+{
+ "purpose": "oracle ceiling: pack-level fixes a code-knowledgeable engineer would make (same gates as the Eiter loop), quantifying the addressable upper bound the teacher failed to reach",
+ "protocol": "build pack with oracle changes -> load_rulepack validation -> fresh-subprocess eval (crossdoc06 + 91QA), identical to the loop's eval_trial",
+ "baseline": {
+  "crossdoc06_macro_f1": 0.2619,
+  "wrong": 20,
+  "qa91_macro_f1": 0.7212,
+  "qa91_accuracy": 0.9121,
+  "qa91_wrong": 8
+ },
+ "trials": {
+  "O1_terminal_suffix_words": {
+   "changes": [
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_terminal_bases",
+     "words": [
+      "手持设备"
+     ]
+    }
+   ],
+   "crossdoc06": {
+    "wrong": 18,
+    "macro_f1": 0.365,
+    "fixed": [
+     "C06QA-011",
+     "C06QA-013"
+    ],
+    "new_wrong": []
+   },
+   "qa91": {
+    "macro_f1": 0.7212,
+    "accuracy": 0.9121,
+    "wrong": 8
+   },
+   "gate": "pass (zero regression)"
+  },
+  "O2_phase_jicheng": {
+   "changes": [
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_phase_bases",
+     "words": [
+      "集成阶段"
+     ]
+    }
+   ],
+   "crossdoc06": {
+    "wrong": 20,
+    "macro_f1": 0.2619,
+    "fixed": [],
+    "new_wrong": []
+   },
+   "qa91": {
+    "macro_f1": 0.7212,
+    "accuracy": 0.9121,
+    "wrong": 8
+   },
+   "gate": "pass (inert)"
+  },
+  "O3_id_stopwords_tongguo": {
+   "changes": [
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "id_subject_stopwords",
+     "words": [
+      "通过",
+      "通过接口"
+     ]
+    }
+   ],
+   "crossdoc06": {
+    "wrong": 20,
+    "macro_f1": 0.2619,
+    "fixed": [],
+    "new_wrong": []
+   },
+   "qa91": {
+    "macro_f1": 0.7212,
+    "accuracy": 0.9121,
+    "wrong": 8
+   },
+   "gate": "pass (inert)"
+  },
+  "O4_combined": {
+   "changes": [
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_terminal_bases",
+     "words": [
+      "手持设备",
+      "平板终端",
+      "桌面设备"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "enum_phase_bases",
+     "words": [
+      "集成阶段"
+     ]
+    },
+    {
+     "op": "add_vocabulary_words",
+     "vocab": "id_subject_stopwords",
+     "words": [
+      "通过",
+      "通过接口"
+     ]
+    }
+   ],
+   "crossdoc06": {
+    "wrong": 17,
+    "macro_f1": 0.4,
+    "fixed": [
+     "C06QA-011",
+     "C06QA-012",
+     "C06QA-013"
+    ],
+    "new_wrong": []
+   },
+   "qa91": {
+    "macro_f1": 0.7212,
+    "accuracy": 0.9121,
+    "wrong": 8
+   },
+   "gate": "pass (zero regression, +3 fixes, macro-F1 +0.1381)"
+  }
+ },
+ "pack_files": {
+  "O1_terminal_suffix_words": "packs/oracle_O1_terminal_suffix_words.json",
+  "O2_phase_jicheng": "packs/oracle_O2_phase_jicheng.json",
+  "O3_id_stopwords_tongguo": "packs/oracle_O3_id_stopwords_tongguo.json",
+  "O4_combined": "packs/oracle_O4_combined.json"
+ },
+ "conclusion": "3/20 failures are pack-addressable via pure vocabulary additions (0.2619->0.4000 macro-F1, CLIPR gates hold); the GLM-5.3 teacher reached 0/3 across v1/v2 feedback designs — the gap is knob-level mapping (member normalization is hardcoded; enum_dev_tail_strip is subject-side), not diagnosis"
+}
