@@ -157,6 +157,7 @@ TERM-07 接口标识 → 5条QA
 | `docs/srs_project/49_cascadeverify_v2_results.md` | **M26-M28结果总览（论文数字唯一权威来源）**：架构/主表/消融/bootstrap/EGT演化/科研发现/审计响应与诚实评测（§10）/runs清单 |
 | `docs/srs_project/50_support_recall_analysis.md` | support召回失败分析+P1三项修复落地结果（§7） |
 | `docs/srs_project/93_scenario5_recall_paradigm_and_algorithm_design.md` | **场景五召回范式与算法设计**：question↔image↔chunk三层关联本质；方向A约束解析召回+方向B分解-接地-校验；P1/P2/P3路线 |
+| `docs/srs_project/94_scenario5_dev_progress_template.md` | **场景五开发进度模板**：5阶段跟踪（数据集/QA生成/格式对齐/方向A开发/方向B调研），陈同学(上下文关联)+胡同学(一致性校验)填写区 |
 | `knowledge/consistency_taxonomy_v3.json` | **当前taxonomy**（40项原始定义+04号证据+QA映射+17违例） |
 | `docs/srs_project/45_official_reference_dataset.md` | 官方参考数据集规范 |
 | `docs/srs_project/42_mutation_coverage_diagnosis.md` | 变异覆盖诊断（历史参考） |

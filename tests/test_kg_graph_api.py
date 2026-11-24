@@ -2,6 +2,10 @@
 
 确定性内核快照: body数据通路完全自包含(不依赖内置数据集文件);
 内置数据集通路覆盖C-3同图异判跨模态冲突(数据集受MANIFEST保护).
+
+cross_modal自2026-11-24走claim_verify per-fact核验(93号文档§4.4):
+真实CV可接地图用verify_qa结论(verdict/nie_reason/facts证据链),
+body自带Chunk的图回退v0答案极性×观测聚合.
 """
 from __future__ import annotations
 
@@ -102,7 +106,12 @@ def test_activate_returns_browser_contract() -> None:
 
 
 def test_cross_modal_conflict_detection() -> None:
-    """C-3式同图异判: 同图两条clean/violation断言, 冻结观测只能支持其一."""
+    """C-3式同图异判: 同图两条clean/violation断言, 冻结观测只能支持其一.
+
+    body图(mask_a/mask_b)不在真实CV库(visual_chunks_real.json) →
+    claim_verify不可per-fact接地, 走v0回退(答案极性×观测聚合),
+    行为与升级前一致.
+    """
     d, status = graph_api.handle_node_detail({"node_id": "ent_口罩",
                                               "node_type": "entity", **_BODY})
     assert status == 200 and d["ok"]
@@ -113,6 +122,36 @@ def test_cross_modal_conflict_detection() -> None:
     assert by_qa["m1"]["observation_status"] == "NIE"        # mask_b无Chunk
     assert by_qa["m0"]["linked_chunks"] == ["mA#ppe1"]
     assert "PPE检测: 未佩戴×1 @mask_a.jpg" == by_qa["m0"]["observation"]
+
+
+def test_cross_modal_claim_verify_fields() -> None:
+    """2026-11-24升级: cross_modal每条目带claim_verify per-fact三件套.
+
+    verdict(support/refute/NIE)与observation_status(supported/refuted/NIE)
+    为同义词对; facts证据链非空且逐条含{claim, grounded_chunk, observation,
+    fact_verdict, reason}. body图无真实CV记录 → v0回退路径:
+    m2的refute证据链为单事实聚合, m1的NIE带原因标签.
+    """
+    d, _ = graph_api.handle_node_detail({"node_id": "ent_口罩",
+                                         "node_type": "entity", **_BODY})
+    cm = d["structured"]["cross_modal"]
+    by_qa = {x["qa_id"]: x for x in cm}
+    synonym = {"support": "supported", "refute": "refuted", "NIE": "NIE"}
+    for x in cm:
+        assert x["verdict"] in synonym
+        assert x["observation_status"] == synonym[x["verdict"]]  # API兼容同义词
+        assert isinstance(x["facts"], list) and x["facts"]
+        for f in x["facts"]:
+            assert {"claim", "grounded_chunk", "observation", "fact_verdict",
+                    "reason"} <= set(f)
+            assert f["fact_verdict"] in ("support", "refute", "nie")
+    # refute条目: facts非空且fact_verdict含refute
+    assert by_qa["m2"]["verdict"] == "refute"
+    assert by_qa["m2"]["nie_reason"] is None
+    assert any(f["fact_verdict"] == "refute" for f in by_qa["m2"]["facts"])
+    # NIE条目: v0回退的原因标签对齐claim_verify词表
+    assert by_qa["m1"]["verdict"] == "NIE"
+    assert by_qa["m1"]["nie_reason"] == "missing_observation"
 
 
 def test_node_detail_entity_contract() -> None:
@@ -192,6 +231,7 @@ def test_error_and_edge_cases() -> None:
 
 
 _BUILTIN_DATASET = (_BACKEND.parent / "data" / "kg_supervision" / "qa_dataset.jsonl")
+_REAL_CHUNKS = (_BACKEND.parent / "data" / "kg_supervision" / "visual_chunks_real.json")
 
 
 def test_builtin_dataset_snapshot() -> None:
@@ -200,6 +240,11 @@ def test_builtin_dataset_snapshot() -> None:
     2026-11-23: 视觉观测源从demo模拟切换为真实CV检测
     (visual_chunks_real.json, YOLO人员+安全帽) — QA声明与真实观测的
     矛盾被真实检出(refuted 1→6), 数字为有意变更.
+    2026-11-24: cross_modal从_STATUS_MAP v0(答案极性×观测状态聚合)
+    升级为claim_verify per-fact(声明分解→图内接地→逐事实比对→聚合,
+    93号文档§4.4) — supported 4→2, NIE 1→3, refuted qa列表2/43移出
+    (NIE: 空间指代无法接地/该图0人员)、4移入(声明无人员而观测7人),
+    数字为有意变更.
     """
     if not _BUILTIN_DATASET.exists():
         pytest.skip("内置数据集缺失")
@@ -214,14 +259,42 @@ def test_builtin_dataset_snapshot() -> None:
     s = d["structured"]
     assert len(s["qa_mentions"]) == 11
     statuses = [x["observation_status"] for x in s["cross_modal"]]
-    # 真实CV观测: 6条QA声明被YOLO观测驳回(如QA称"有人员未佩戴"而实际全员
-    # 佩戴Hardhat); ppe_005无人员观测→NIE
-    assert statuses.count("supported") == 4
-    assert statuses.count("NIE") == 1
+    # claim_verify per-fact结论: qa2"左侧"指代无法接地/qa43该图0人员→NIE;
+    # qa4声明"无人员"而YOLO观测7人→refute(v0误判supported)
+    assert statuses.count("supported") == 2
+    assert statuses.count("NIE") == 3
     refuted = [x for x in s["cross_modal"] if x["observation_status"] == "refuted"]
-    assert [x["qa_id"] for x in refuted] == ["0", "2", "3", "6", "8", "42"]
+    assert [x["qa_id"] for x in refuted] == ["0", "3", "4", "6", "8", "42"]
+    # per-fact证据链: refute条目facts非空且含refute事实(逐事实矛盾可追溯)
+    assert all(x["verdict"] == "refute" and x["nie_reason"] is None
+               for x in refuted)
+    assert all(any(f["fact_verdict"] == "refute" for f in x["facts"])
+               for x in refuted)
+    # NIE条目带claim_verify原因标签(NIE原因学)
+    nies = {x["qa_id"]: x["nie_reason"] for x in s["cross_modal"]
+            if x["observation_status"] == "NIE"}
+    assert nies == {"2": "ambiguous", "5": "answer_unverifiable",
+                    "43": "missing_observation"}
     assert d["features"]["modality_links"] == {"QA": 11, "PERSON": 32,
                                                "PPE": 31, "RELATION": 3}
     # 中文别名id解析(ent_安全帽 == ent_helmet)
     d2, _ = graph_api.handle_node_detail({"node_id": "ent_安全帽"})
     assert d2 == d
+
+
+def test_cross_modal_facts_truncated() -> None:
+    """facts证据链截断到前5条(防payload过大, _MAX_CROSS_MODAL_FACTS).
+
+    真实CV可接地图(ppe_002)上6个原子声明 → verify_qa产出6条fact → 截断为5.
+    """
+    if not _REAL_CHUNKS.exists():
+        pytest.skip("真实CV观测数据缺失")
+    ev = "，".join(["画面中所有人员均佩戴安全帽"] * 6)
+    body = {"qa_records": [{"qa_id": "t5", "question": "判断人员安全帽佩戴",
+                            "answer": 0, "evidence": ev, "task": "安全帽佩戴检测",
+                            "image_id": "ppe_002.jpg"}]}
+    d, _ = graph_api.handle_node_detail({"node_id": "ent_安全帽", **body})
+    cm = d["structured"]["cross_modal"]
+    assert len(cm) == 1
+    assert len(cm[0]["facts"]) == 5  # 6条claim→6条fact, 截断到前5
+    assert all(f["fact_verdict"] == "support" for f in cm[0]["facts"])

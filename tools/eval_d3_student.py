@@ -36,6 +36,8 @@ OUT = BASE / "data/gjb_438c/distillation/d3_student_eval_v1.json"
 _MODEL = None
 _TOKENIZER = None
 _ADAPTER = str(BASE / "models/llm/d3_student_v1")
+#: X1约束解码总开关(main的--constrained置True; judge缺省走False)
+_CONSTRAINED = False
 
 
 def _load():
@@ -81,13 +83,27 @@ def _user_message(question: str, answer: str, evidences,
     return "\n".join(lines)
 
 
-def _parse(content: str) -> dict:
+def _parse(content: str, trace: dict | None = None) -> dict:
+    """三级JSON抢救(direct→fenced→raw_decode扫描), 失败返回{}.
+
+    trace非None时记录实际走到的抢救层级(X1 Step A的parse_fail计量,
+    不改变任何返回值): direct/think_stripped(取决于think剥离)/
+    fenced/raw_scan/parsed_non_dict/fail.
+    """
+    stage = "direct"
     think = re.search(r"<think>.*?</think>", content, re.S)
     if think:
         content = content.replace(think.group(0), "")
+        stage = "think_stripped"
     try:
         value = json.loads(content.strip())
-        return value if isinstance(value, dict) else {}
+        if isinstance(value, dict):
+            if trace is not None:
+                trace["stage"] = stage
+            return value
+        if trace is not None:
+            trace["stage"] = "parsed_non_dict"
+        return {}
     except json.JSONDecodeError:
         fenced = re.search(r"```(?:json)?\s*(.*?)\s*```", content, re.S)
         candidate = fenced.group(1) if fenced else content
@@ -98,14 +114,33 @@ def _parse(content: str) -> dict:
             try:
                 value, _end = decoder.raw_decode(candidate[index:])
                 if isinstance(value, dict):
+                    if trace is not None:
+                        trace["stage"] = "fenced" if fenced else "raw_scan"
                     return value
             except json.JSONDecodeError:
                 pass
+    if trace is not None:
+        trace["stage"] = "fail"
     return {}
 
 
-def judge(question: str, answer: str, evidences) -> tuple[str, list[dict]]:
+#: judge逐调用trace(X1 Step A/C的parse_fail计量; 与instance按序配对)
+JUDGE_TRACE: list[dict] = []
+
+
+def judge(question: str, answer: str, evidences,
+          constrained: bool | None = None,
+          ) -> tuple[str, list[dict], float]:
+    """贪心解码judge. 返回(verdict, issues, elapsed).
+
+    constrained=True走X1约束解码(algorithms/consistency/
+    d3_constrained.constrained_generate); 默认None取全局_CONSTRAINED
+    (缺省False=既有无约束路径, 行为与返回值逐位不变).
+    结构未完成时constrained路径返回空串verdict(显式无效,
+    不默认NIE)——由X1评测按parse_fail行单独计量.
+    """
     import torch
+    use_constrained = _CONSTRAINED if constrained is None else constrained
     model, tokenizer = _load()
     messages = [
         {"role": "system", "content": _SYSTEM},
@@ -114,6 +149,22 @@ def judge(question: str, answer: str, evidences) -> tuple[str, list[dict]]:
     prompt = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True,
         enable_thinking=False)
+    trace: dict = {"constrained": bool(use_constrained)}
+    if use_constrained:
+        from algorithms.consistency.d3_constrained import (  # noqa: PLC0415
+            constrained_generate)
+        result = constrained_generate(
+            model, tokenizer, prompt, str(answer), list(evidences))
+        trace.update(
+            stage="constrained",
+            parse_fail=result["parse_fail"],
+            constraint_log=result["constraint_log"],
+            content_chars=len(result["content"]),
+            content_head=result["content"][:80],
+            verdict=result["verdict"] or "",
+            n_issues=len(result["issues"]))
+        JUDGE_TRACE.append(trace)
+        return result["verdict"] or "", result["issues"], result["elapsed_s"]
     inputs = tokenizer(prompt, return_tensors="pt",
                        add_special_tokens=False)
     if torch.cuda.is_available():
@@ -127,14 +178,25 @@ def judge(question: str, answer: str, evidences) -> tuple[str, list[dict]]:
     elapsed = time.perf_counter() - start
     new_ids = output[0][inputs["input_ids"].shape[1]:]
     content = tokenizer.decode(new_ids, skip_special_tokens=True)
-    payload = _parse(content)
+    payload = _parse(content, trace)
     verdict = re.sub(r"\s+", "_",
                      str(payload.get("verdict", ""))).strip().lower()
-    if verdict not in ("support", "refute", "not_in_evidence"):
+    defaulted = verdict not in ("support", "refute", "not_in_evidence")
+    if defaulted:
         verdict = "not_in_evidence"
     issues = payload.get("issues")
-    if not isinstance(issues, list):
+    issues_missing = not isinstance(issues, list)
+    if issues_missing:
         issues = []
+    trace.update(
+        verdict_raw=str(payload.get("verdict", "")),
+        verdict=verdict,
+        verdict_defaulted=defaulted,
+        issues_missing=issues_missing,
+        n_issues=len(issues),
+        content_chars=len(content),
+        content_head=content[:80])
+    JUDGE_TRACE.append(trace)
     return verdict, [i for i in issues if isinstance(i, dict)], elapsed
 
 
@@ -145,6 +207,7 @@ def _eval_corpus(records: list[dict], labels: dict[str, str],
     n_issues = 0
     n_span_ok = 0
     n_instances = 0
+    n_parse_fail = 0
     latencies: list[float] = []
     sample_details: list[dict] = []
     for rec in records:
@@ -153,6 +216,14 @@ def _eval_corpus(records: list[dict], labels: dict[str, str],
         verdict, issues, elapsed = judge(
             str(rec["question"]), answer, evidences)
         latencies.append(elapsed)
+        if verdict == "":
+            # X1约束路径结构未完成(空串=显式无效, 不默认NIE):
+            # 不进分类指标, 单独计数
+            n_parse_fail += 1
+            sample_details.append({
+                "instance_id": str(rec["instance_id"]),
+                "verdict": "", "n_issues": 0, "parse_fail": True})
+            continue
         y_true.append(labels.get(str(rec["instance_id"]),
                                  "not_in_evidence"))
         y_pred.append(verdict)
@@ -170,19 +241,51 @@ def _eval_corpus(records: list[dict], labels: dict[str, str],
                 ok = answer.find(quote) >= 0
             n_issues += 1
             n_span_ok += bool(ok)
-        sample_details.append({
+        sample = {
             "instance_id": str(rec["instance_id"]),
-            "verdict": verdict, "n_issues": len(issues)})
+            "verdict": verdict, "n_issues": len(issues)}
+        if _CONSTRAINED:
+            sample["parse_fail"] = False
+        sample_details.append(sample)
     m = classification_metrics(y_true, y_pred)
+    parse_note = f" parse_fail {n_parse_fail}/{len(records)}" \
+        if n_parse_fail else ""
     print(f"[{tag}] acc={m['accuracy']:.4f} mF1={m['macro_f1']:.4f} "
           f"refuteF1={m['per_class'].get('refute', {}).get('f1', 0):.3f} "
           f"| issues实例 {n_instances}/{len(records)} "
           f"span忠实 {n_span_ok}/{n_issues} "
-          f"| 延迟{sum(latencies) / max(1, len(latencies)):.1f}s/例")
-    return {"metrics": m, "n_issues": n_issues,
-            "span_faithful": n_span_ok, "samples": sample_details,
-            "mean_latency_s": round(
-                sum(latencies) / max(1, len(latencies)), 2)}
+          f"| 延迟{sum(latencies) / max(1, len(latencies)):.1f}s/例"
+          f"{parse_note}")
+    out = {"metrics": m, "n_issues": n_issues,
+           "span_faithful": n_span_ok, "samples": sample_details,
+           "mean_latency_s": round(
+               sum(latencies) / max(1, len(latencies)), 2)}
+    if _CONSTRAINED:
+        out["n_parse_fail"] = n_parse_fail
+    return out
+
+
+def _trace_summary() -> dict:
+    """JUDGE_TRACE聚合(X1的parse_fail/约束干预统计; 供constrained模式)."""
+    from collections import Counter
+    stages = Counter(t.get("stage", "?") for t in JUDGE_TRACE)
+    return {
+        "n": len(JUDGE_TRACE),
+        "stage_counts": dict(stages),
+        "parse_fail": sum(bool(t.get("parse_fail")) for t in JUDGE_TRACE),
+        "verdict_defaulted": sum(
+            bool(t.get("verdict_defaulted")) for t in JUDGE_TRACE),
+        "issues_missing": sum(
+            bool(t.get("issues_missing")) for t in JUDGE_TRACE),
+        "interventions": sum(
+            (t.get("constraint_log") or {}).get("interventions", 0)
+            for t in JUDGE_TRACE),
+        "steps": sum((t.get("constraint_log") or {}).get("steps", 0)
+                     for t in JUDGE_TRACE),
+        "n_new_tokens": sum(
+            (t.get("constraint_log") or {}).get("n_new_tokens", 0)
+            for t in JUDGE_TRACE),
+    }
 
 
 def main() -> None:
@@ -190,10 +293,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--adapter", default="models/llm/d3_student_v1")
+    parser.add_argument("--constrained", action="store_true",
+                        help="X1约束解码(algorithms/consistency/"
+                             "d3_constrained); 输出改写"
+                             "d3_student_eval_x1_constrained.json, "
+                             "既有论文数字文件不动")
     args = parser.parse_args()
 
-    global _ADAPTER
+    global _ADAPTER, _CONSTRAINED
     _ADAPTER = str(BASE / args.adapter)
+    _CONSTRAINED = bool(args.constrained)
+    JUDGE_TRACE.clear()
 
     silver = load_silver_labels(SILVER)
     qa = load_frozen_qa()
@@ -207,7 +317,8 @@ def main() -> None:
     if args.limit:
         vio = vio[:args.limit]
 
-    print("student: Qwen3-1.7B + LoRA(models/llm/d3_student_v1)")
+    mode = "X1约束解码" if args.constrained else "无约束(既有路径)"
+    print(f"student: Qwen3-1.7B + LoRA({args.adapter}) [{mode}]")
     result = {
         "test46": _eval_corpus(
             test, silver, "test46(诚实, 训练未见)"),
@@ -218,9 +329,15 @@ def main() -> None:
                       "qwen3_8b_zeroshot": 0.2874,
                       "glm53_api_reference": 0.8747},
     }
-    OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1),
-                   encoding="utf-8")
-    print(f"→ {OUT}")
+    out_path = OUT
+    if args.constrained:
+        result["constrained"] = True
+        result["parse_trace"] = _trace_summary()
+        out_path = (BASE / "data/gjb_438c/distillation"
+                    / "d3_student_eval_x1_constrained.json")
+    out_path.write_text(json.dumps(result, ensure_ascii=False, indent=1),
+                        encoding="utf-8")
+    print(f"→ {out_path}")
 
 
 if __name__ == "__main__":
