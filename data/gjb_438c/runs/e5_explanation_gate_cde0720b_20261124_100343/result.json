@@ -1,0 +1,109 @@
+{
+ "task": "e5_step1_explanation_gate",
+ "inputs": {
+  "v3f": "data\\gjb_438c\\distillation\\d3_train_v3f.jsonl",
+  "teacher_labels": "data\\gjb_438c\\distillation\\d3_teacher_labels_v1.jsonl"
+ },
+ "union": {
+  "entries_with_issues": 505,
+  "from_v3f": 199,
+  "from_teacher_labels_only": 306,
+  "issues_total": 685,
+  "issues_teacher_scored": 671
+ },
+ "mechanical_gate": {
+  "fail_issues": 14,
+  "entries_all_mechanical_fail": 1
+ },
+ "teacher": {
+  "model": "glm-5.3",
+  "interface": "tools/llm_teacher.llm_json_teacher(cache=True)",
+  "extra_payload": {
+   "response_contract": "json_final_content_v2",
+   "reasoning_effort": "low"
+  },
+  "entries_sent_to_teacher": 171,
+  "llm_requests": 172,
+  "cache_hits": 35,
+  "cache_hit_rate": 0.065,
+  "retry_calls": null,
+  "parse_fail_entries": 0,
+  "network_errors": 1,
+  "entries_network_failed_pending": 0,
+  "llm_requests_cumulative_measured": 502,
+  "llm_requests_note": "缓存文件本次任务期间(09:49-10:32)新增502行=502次真实API调用; 单进程计数分别为 smoke=2 / run1≈328(含崩溃前) / run2=172, 超出(504-35)的部分为解析/网络重试(重试后缀生成新缓存键)",
+  "retry_calls_note": "跨进程解析重试合计≈2次(精确计数随run1崩溃丢失)",
+  "network_errors_note": "run1在~entry328遭SSL握手超时崩溃(当时无退避重试), 加退避重试后续跑恢复, 0条目永久丢失"
+ },
+ "score_distribution_all_union_issues": {
+  "faithful": {
+   "1": 14,
+   "3": 671
+  },
+  "truthful": {
+   "2": 3,
+   "3": 668,
+   "null": 14
+  },
+  "useful": {
+   "2": 5,
+   "3": 666,
+   "null": 14
+  }
+ },
+ "score_distribution_teacher_scored": {
+  "faithful": {
+   "3": 671
+  },
+  "truthful": {
+   "2": 3,
+   "3": 668
+  },
+  "useful": {
+   "2": 5,
+   "3": 666
+  }
+ },
+ "gated_file": {
+  "path": "data\\gjb_438c\\distillation\\d3_train_v3f_gated.jsonl",
+  "rows": 1336,
+  "rows_with_issue_quality": 219,
+  "refute_rows": 219,
+  "downweighted_rows": 14,
+  "sample_weight_distribution": {
+   "1.0": 1322,
+   "0.3": 14
+  },
+  "low_quality_weight": 0.3,
+  "verdict_base_weights": {
+   "support": 1.0,
+   "refute": 1.0,
+   "not_in_evidence": 1.0
+  }
+ },
+ "data_quality_findings": [
+  {
+   "problem": "mechanical_fail:quote_not_in_answer",
+   "n_issues": 14,
+   "example_instance_ids": [
+    "NARR-D3TR-02-124a2e",
+    "NARR-D3TR-02-127e3a",
+    "NARR-D3TR-02-8954a6"
+   ]
+  }
+ ],
+ "data_quality_findings_extra": [
+  {
+   "problem": "v3f含62组重复instance_id(1336行→1212个唯一id)",
+   "note": "经逐字节比对62组内容完全一致, 按id去重安全; 唯一id口径下带issues refute行为199(行口径219)"
+  },
+  {
+   "problem": "两文件512个重叠id逐字节一致(issues/answer均相同)",
+   "note": "v3f优先合并无信息损失"
+  },
+  {
+   "problem": "14条issue的quote不在answer中(教师生成时改写/截断)",
+   "note": "机械检查拦截, faithful=1不送教师, 对应13行refute降权0.3"
+  }
+ ]
+}

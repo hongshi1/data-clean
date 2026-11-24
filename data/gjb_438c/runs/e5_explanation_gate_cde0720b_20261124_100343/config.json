@@ -1,0 +1,27 @@
+{
+ "script": "e5_explanation_gate",
+ "git_sha": "99571b72",
+ "config": {
+  "task": "e5_step1_explanation_gate",
+  "inputs": {
+   "v3f": "d3_train_v3f.jsonl",
+   "teacher": "d3_teacher_labels_v1.jsonl"
+  },
+  "model": "glm-5.3",
+  "max_tokens": 6000,
+  "temperature": 0.1,
+  "extra_payload": {
+   "response_contract": "json_final_content_v2",
+   "reasoning_effort": "low"
+  },
+  "verdict_base_weights": {
+   "support": 1.0,
+   "refute": 1.0,
+   "not_in_evidence": 1.0
+  },
+  "low_quality_weight": 0.3,
+  "limit": 2
+ },
+ "config_hash": "cde0720b",
+ "opened_at": 1795485823.5
+}

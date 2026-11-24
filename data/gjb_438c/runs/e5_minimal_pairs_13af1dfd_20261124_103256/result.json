@@ -1,0 +1,72 @@
+{
+ "task": "e5_step2_minimal_pairs",
+ "candidates": {
+  "rows_faithful_ge2_refute": 491,
+  "rows_faithful_lt2_excluded": 14
+ },
+ "pairs_written": 286,
+ "repair_type_distribution": {
+  "enum_member": 115,
+  "numeric_value": 71,
+  "chapter_number": 58,
+  "party_binding": 41,
+  "id_binding": 1
+ },
+ "pair_corpus_distribution": {
+  "d3train": 219,
+  "d3narrative": 42,
+  "crossdoc": 24,
+  "qa91-dev": 1
+ },
+ "skip_reasons": {
+  "issue0": 168,
+  "no_change": 20,
+  "issue1": 17
+ },
+ "skip_reasons_detail": {
+  "issue0:subject_row_not_found": 57,
+  "issue0:no_operator_for_rule:LOGIC-02": 42,
+  "issue1:no_party_claim_in_quote": 16,
+  "issue0:evidence_chapter_ambiguous": 15,
+  "issue0:no_value_difference": 10,
+  "issue0:chapter_ambiguous_or_absent": 8,
+  "issue0:excess_member_remains": 7,
+  "issue0:evidence_members_empty": 5,
+  "issue0:no_enum_violation_pattern": 5,
+  "issue0:no_enum_subject": 4,
+  "issue0:no_operator_for_rule:TERM-04": 3,
+  "issue0:party_residual_mismatch": 3,
+  "issue0:evidence_not_table": 2,
+  "issue0:no_chapter_subject": 2,
+  "issue0:no_party_claim_in_quote": 2,
+  "issue0:no_id_subject": 2,
+  "issue1:no_operator_for_rule:TERM-02": 1,
+  "issue0:no_operator_for_rule:LOGIC-03": 1
+ },
+ "out": "data\\gjb_438c\\distillation\\e5_minimal_pairs_v1.jsonl",
+ "example_pair": {
+  "pair_id": "E5MP-0001",
+  "instance_id": "C05QA-011",
+  "question": "用户基本信息维护功能支持在哪些设备上使用？",
+  "original_answer": "用户基本信息维护功能支持在桌面、平板、手持设备上使用。也就是说，用户在桌面、平板、手持终端上均可以使用该功能。",
+  "fixed_answer": "用户基本信息维护功能支持在桌面、平板设备上使用。也就是说，用户在桌面、平板终端上均可以使用该功能。",
+  "expected_flip": "refute→support",
+  "repair_type": "enum_member",
+  "repairs": [
+   {
+    "issue_idx": 0,
+    "rule_id": "TERM-03",
+    "old": "桌面、平板、手持",
+    "new": "桌面、平板",
+    "note": "枚举成员段对齐证据集合"
+   },
+   {
+    "issue_idx": 0,
+    "rule_id": "TERM-03",
+    "old": "桌面、平板、手持",
+    "new": "桌面、平板",
+    "note": "枚举成员段对齐证据集合"
+   }
+  ]
+ }
+}
