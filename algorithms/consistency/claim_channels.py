@@ -16,12 +16,30 @@ Shared helpers (``interval`` / ``subset`` / ``disjoint`` /
 ``same_subject`` / ``unresolved``) are also module-level pure functions
 here. This layer is deterministic: no model calls except the explicitly
 injected NLI judge.
+
+E7 (96号§8 / 99号Phase 3): the channel rule assets are table-driven —
+the explicit-negation lexicon, the NLI slot-field mapping, the
+identifier/enum patterns, the window/threshold knobs and the calibrated
+channel confidences live in ``config/claim_channels_rules_v1.json`` and
+are consumed through the lazy ``default_rules()`` accessor (same
+config/engine split as ``config/ner_lexicons`` + ``ner_lexicon``).
+Behavior is unchanged by construction: the JSON content equals the
+built-in fallback constants below (double insurance — a missing or
+corrupt JSON falls back to the constants with a visible warning, so
+every environment behaves identically), and the equivalence is locked
+by ``tests/test_claim_channels_rules.py``. Interval algebra, closed
+scope logic and the channel control flow stay in code (98号 B类判定:
+数学逻辑不外置).
 """
 from __future__ import annotations
 
+import json
 import re
+import warnings
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 from algorithms.consistency.answer_claims import (
     _IDENTIFIER,
@@ -40,14 +58,25 @@ from algorithms.consistency.qa_models import (
 )
 from algorithms.consistency.templates import normalize_op, normalize_unit
 
-#: explicit negation markers preceding a matched item (former
-#: ``QAConsistencyModule._EXPLICIT_NEGATION`` class attribute)
-_EXPLICIT_NEGATION = re.compile(
-    r"(?:不包括|不包含|不支持|不存在|不允许|禁止|不得|不能|未定义|不具备|不含)"
-)
+# ── E7规则外置: 配置文件 + 内置回退常量(双层保险) ──────────────────────
+#
+# 约定: 下面每个 ``_*`` 模块常量与 config/claim_channels_rules_v1.json
+# 中对应字段逐值相同(JSON是第一真源; 常量是JSON缺失/损坏时的回退).
+# 修改任一侧必须同步另一侧, tests/test_claim_channels_rules.py 锁定
+# 二者的等价性(行为保持的验收标准).
 
-#: claim-text keyword -> statement field slots for the residual NLI
-#: channel (former ``QAConsistencyModule._SLOT_FIELDS`` class attribute)
+#: 规则配置文件路径(模块顶层只存路径不读文件; 加载在 default_rules()
+#: 惰性发生, 首次通道调用才触发)
+CLAIM_CHANNELS_RULES_FILE = (
+    Path(__file__).resolve().parents[2] / "config/claim_channels_rules_v1.json")
+
+#: 内置回退: 显式否定标记正则(原 ``_EXPLICIT_NEGATION``, quoted/enum
+#: 通道的否定前缀判定)
+_EXPLICIT_NEGATION_PATTERN: str = (
+    r"(?:不包括|不包含|不支持|不存在|不允许|禁止|不得|不能|未定义|不具备|不含)")
+
+#: 内置回退: claim文本关键词→statement字段槽位映射(原 ``_SLOT_FIELDS``,
+#: 残余NLI通道的pair过滤)
 _SLOT_FIELDS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("前置条件", ("前置条件",)),
     ("后置条件", ("后置条件",)),
@@ -56,9 +85,383 @@ _SLOT_FIELDS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("Actor", ("Actors", "参与者")),
 )
 
-#: residual NLI predictor contract: list of (statement, hypothesis)
+#: 内置回退: identifier通道的subject后缀剥离正则(用例/的/唯一/标识符/…)
+_IDENTIFIER_SUBJECT_SUFFIX: str = (
+    r"(?:用例)?(?:的)?(?:唯一)?(?:标识符?|编号|代号|名称|项目名)?$")
+
+#: 内置回退: enum通道的成员切分正则(顿号/全半角逗号/分号)
+_ENUM_SEPARATOR: str = r"[、，,；]"
+
+#: 内置回退: quoted/enum命中项前的否定检查窗口(字符数)
+_NEGATION_PREFIX_WINDOW: int = 14
+
+#: 内置回退: identifier同subject局部窗口——subject核心前字符数
+_IDENTIFIER_WINDOW_BEFORE: int = 30
+
+#: 内置回退: identifier同subject局部窗口——subject核心后字符数
+_IDENTIFIER_WINDOW_AFTER: int = 100
+
+#: 内置回退: subject核心短于该长度时放弃后缀剥离(防过度剥离成空)
+_IDENTIFIER_SUBJECT_MIN_LEN: int = 2
+
+#: 内置回退: enum成员最短长度(更短的切分碎片按噪声丢弃)
+_ENUM_MEMBER_MIN_LEN: int = 2
+
+#: 内置回退: closed_scope_exclusion(封闭scope未出现条目)的置信度
+_CLOSED_SCOPE_EXCLUSION_CONFIDENCE: float = 0.85
+
+#: 内置回退: nli_residual(残余NLI矛盾/蕴含)的置信度
+_NLI_RESIDUAL_CONFIDENCE: float = 0.9
+
+#: 残余NLI predictor contract: list of (statement, hypothesis)
 #: pairs -> NLI labels (dict with label/p_contra/p_entail or bare label)
 NliPredictor = Callable[[list[tuple[str, str]]], list]
+
+_REQUIRED_SECTIONS: tuple[str, ...] = (
+    "explicit_negation", "slot_fields", "channel_patterns",
+    "channel_thresholds", "channel_confidences",
+)
+_PATTERN_KEYS: tuple[str, ...] = ("identifier_subject_suffix", "enum_separator")
+_THRESHOLD_KEYS: tuple[str, ...] = (
+    "negation_prefix_window", "identifier_window_before",
+    "identifier_window_after", "identifier_subject_min_len",
+    "enum_member_min_len",
+)
+_CONFIDENCE_KEYS: tuple[str, ...] = ("closed_scope_exclusion", "nli_residual")
+
+
+@dataclass(frozen=True)
+class ClaimChannelRules:
+    """通道规则资产的数据形态(JSON往返无损, 字段全为可比较的纯数据).
+
+    与 :class:`CompiledChannelRules` 分离沿用 ner_lexicon 的
+    NerLexicon/NerPatterns 约定: 数据层可比较/可序列化(等价性测试与
+    场景编写), 编译层持有预编译正则供通道直接消费. 字段语义即
+    ``config/claim_channels_rules_v1.json`` 的字段语义(逐一同名).
+    """
+
+    explicit_negation_pattern: str
+    """显式否定标记正则: quoted/enum通道在命中项前缀窗口内搜索, 命中即判否定/排除."""
+
+    slot_fields: tuple[tuple[str, tuple[str, ...]], ...]
+    """claim文本关键词→statement字段槽位: 残余NLI通道只保留field_name命中的pair."""
+
+    identifier_subject_suffix: str
+    """identifier通道subject后缀剥离正则(如"数据查询接口的标识"→"数据查询接口")."""
+
+    enum_separator: str
+    """enum通道成员切分正则(顿号/全半角逗号/分号)."""
+
+    negation_prefix_window: int
+    """quoted/enum命中项前检查否定标记的窗口字符数(原硬编码14)."""
+
+    identifier_window_before: int
+    """identifier同subject局部窗口: subject核心之前的字符数(原硬编码30)."""
+
+    identifier_window_after: int
+    """identifier同subject局部窗口: subject核心之后的字符数(原硬编码100)."""
+
+    identifier_subject_min_len: int
+    """subject核心短于该长度时放弃后缀剥离, 退回原subject(原硬编码2)."""
+
+    enum_member_min_len: int
+    """enum成员短于该长度时按碎片噪声丢弃(原硬编码2)."""
+
+    closed_scope_exclusion_confidence: float
+    """closed_scope_exclusion方法(封闭scope未出现条目)的置信度(原硬编码0.85)."""
+
+    nli_residual_confidence: float
+    """nli_residual方法(残余NLI矛盾/蕴含)的置信度(原硬编码0.9)."""
+
+    description: str = field(default="", compare=False)
+    """配置说明(仅文档用途, 不参与通道行为; 不参与等价比较)."""
+
+    def to_dict(self) -> dict[str, Any]:
+        """与配置文件同形状的dict(json.dumps写回后load_rules可无损读出)."""
+        return {
+            "schema_version": 1,
+            "description": self.description,
+            "explicit_negation": {
+                "pattern": self.explicit_negation_pattern,
+            },
+            "slot_fields": [[keyword, list(fields)]
+                            for keyword, fields in self.slot_fields],
+            "channel_patterns": {
+                "identifier_subject_suffix": self.identifier_subject_suffix,
+                "enum_separator": self.enum_separator,
+            },
+            "channel_thresholds": {
+                "negation_prefix_window": self.negation_prefix_window,
+                "identifier_window_before": self.identifier_window_before,
+                "identifier_window_after": self.identifier_window_after,
+                "identifier_subject_min_len": self.identifier_subject_min_len,
+                "enum_member_min_len": self.enum_member_min_len,
+            },
+            "channel_confidences": {
+                "closed_scope_exclusion":
+                    self.closed_scope_exclusion_confidence,
+                "nli_residual": self.nli_residual_confidence,
+            },
+        }
+
+
+@dataclass(frozen=True)
+class CompiledChannelRules:
+    """``ClaimChannelRules`` 的编译形态(通道直接消费的执行层)."""
+
+    explicit_negation: re.Pattern[str]
+    identifier_subject_suffix: re.Pattern[str]
+    enum_separator: re.Pattern[str]
+    slot_fields: tuple[tuple[str, tuple[str, ...]], ...]
+    negation_prefix_window: int
+    identifier_window_before: int
+    identifier_window_after: int
+    identifier_subject_min_len: int
+    enum_member_min_len: int
+    closed_scope_exclusion_confidence: float
+    nli_residual_confidence: float
+
+
+def _rules_error(path: Path, message: str) -> ValueError:
+    return ValueError(f"claim通道规则配置错误 {path}: {message}")
+
+
+def _check_pattern(path: Path, name: str, value: Any) -> None:
+    """字段必须是可编译的非空正则(坏正则→可读ValueError, 不静默)."""
+    if not isinstance(value, str) or not value.strip():
+        raise _rules_error(path, f"{name}期望非空字符串, 实际{value!r}")
+    try:
+        re.compile(value)
+    except re.error as exc:
+        raise _rules_error(
+            path, f"{name}的正则{value!r}无法编译: {exc}") from exc
+
+
+def _check_description(path: Path, section_name: str, section: Any) -> None:
+    if not isinstance(section.get("description", ""), str):
+        raise _rules_error(path, f"{section_name}.description期望字符串")
+
+
+def _validate_negation_section(path: Path, section: Any) -> None:
+    if not isinstance(section, dict):
+        raise _rules_error(
+            path, f"'explicit_negation'期望对象, 实际{type(section).__name__}")
+    unknown = sorted(set(section) - {"pattern", "description"})
+    if unknown:
+        raise _rules_error(path, f"'explicit_negation'未知字段 {unknown}")
+    if "pattern" not in section:
+        raise _rules_error(path, "'explicit_negation.pattern'缺失")
+    _check_pattern(path, "explicit_negation.pattern", section["pattern"])
+    _check_description(path, "explicit_negation", section)
+
+
+def _validate_slot_fields(path: Path, section: Any) -> None:
+    if not isinstance(section, list):
+        raise _rules_error(
+            path, f"'slot_fields'期望数组, 实际{type(section).__name__}")
+    keywords: list[str] = []
+    for index, entry in enumerate(section):
+        if (not isinstance(entry, list) or len(entry) != 2
+                or not isinstance(entry[0], str) or not entry[0].strip()):
+            raise _rules_error(
+                path, f"slot_fields[{index}]期望[关键词, [字段...]]二元组, "
+                f"实际{entry!r}")
+        keyword, fields = entry
+        if (not isinstance(fields, list) or not fields
+                or any(not isinstance(f, str) or not f.strip()
+                       for f in fields)):
+            raise _rules_error(
+                path, f"slot_fields[{index}]{keyword!r}的字段表"
+                f"期望非空字符串数组")
+        keywords.append(keyword)
+    duplicates = sorted({k for k in keywords if keywords.count(k) > 1})
+    if duplicates:
+        raise _rules_error(
+            path, f"slot_fields关键词重复 {duplicates}"
+            f"(重复条目会重复注入同名字段)")
+
+
+def _validate_pattern_section(path: Path, section: Any) -> None:
+    if not isinstance(section, dict):
+        raise _rules_error(
+            path, f"'channel_patterns'期望对象, 实际{type(section).__name__}")
+    unknown = sorted(set(section) - set(_PATTERN_KEYS) - {"description"})
+    if unknown:
+        raise _rules_error(path, f"'channel_patterns'未知字段 {unknown}")
+    missing = [key for key in _PATTERN_KEYS if key not in section]
+    if missing:
+        raise _rules_error(path, f"'channel_patterns'缺失字段 {missing}")
+    for key in _PATTERN_KEYS:
+        _check_pattern(path, f"channel_patterns.{key}", section[key])
+    _check_description(path, "channel_patterns", section)
+
+
+def _validate_threshold_section(path: Path, section: Any) -> None:
+    if not isinstance(section, dict):
+        raise _rules_error(
+            path, f"'channel_thresholds'期望对象, 实际{type(section).__name__}")
+    unknown = sorted(set(section) - set(_THRESHOLD_KEYS) - {"description"})
+    if unknown:
+        raise _rules_error(path, f"'channel_thresholds'未知字段 {unknown}")
+    missing = [key for key in _THRESHOLD_KEYS if key not in section]
+    if missing:
+        raise _rules_error(path, f"'channel_thresholds'缺失字段 {missing}")
+    for key in _THRESHOLD_KEYS:
+        value = section[key]
+        if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+            raise _rules_error(
+                path, f"channel_thresholds.{key}期望>=1的整数, 实际{value!r}")
+    _check_description(path, "channel_thresholds", section)
+
+
+def _validate_confidence_section(path: Path, section: Any) -> None:
+    if not isinstance(section, dict):
+        raise _rules_error(
+            path, f"'channel_confidences'期望对象, 实际{type(section).__name__}")
+    unknown = sorted(set(section) - set(_CONFIDENCE_KEYS) - {"description"})
+    if unknown:
+        raise _rules_error(path, f"'channel_confidences'未知字段 {unknown}")
+    missing = [key for key in _CONFIDENCE_KEYS if key not in section]
+    if missing:
+        raise _rules_error(path, f"'channel_confidences'缺失字段 {missing}")
+    for key in _CONFIDENCE_KEYS:
+        value = section[key]
+        if (isinstance(value, bool) or not isinstance(value, (int, float))
+                or not 0.0 <= value <= 1.0):
+            raise _rules_error(
+                path, f"channel_confidences.{key}期望[0,1]内数值, 实际{value!r}")
+    _check_description(path, "channel_confidences", section)
+
+
+def _validate(path: Path, raw: Any) -> dict[str, Any]:
+    """schema校验: 缺节/未知键/类型错/坏正则 → 可读ValueError(不静默)."""
+    if not isinstance(raw, dict):
+        raise _rules_error(
+            path, f"顶层期望JSON对象, 实际{type(raw).__name__}")
+    missing = [section for section in _REQUIRED_SECTIONS if section not in raw]
+    if missing:
+        raise _rules_error(path, f"缺失字段 {missing}")
+    unknown = sorted(set(raw) - set(_REQUIRED_SECTIONS)
+                     - {"schema_version", "description"})
+    if unknown:
+        raise _rules_error(path, f"未知字段 {unknown}")
+    if raw.get("schema_version", 1) != 1:
+        raise _rules_error(
+            path, f"不支持的schema_version {raw.get('schema_version')!r}(期望1)")
+    if not isinstance(raw.get("description", ""), str):
+        raise _rules_error(path, "'description'期望字符串")
+    _validate_negation_section(path, raw["explicit_negation"])
+    _validate_slot_fields(path, raw["slot_fields"])
+    _validate_pattern_section(path, raw["channel_patterns"])
+    _validate_threshold_section(path, raw["channel_thresholds"])
+    _validate_confidence_section(path, raw["channel_confidences"])
+    return raw
+
+
+def load_rules(path: str | Path) -> ClaimChannelRules:
+    """加载并校验一份通道规则JSON(非法配置抛可读ValueError, 不静默降级)."""
+    config_path = Path(path)
+    try:
+        raw = json.loads(config_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValueError(f"claim通道规则文件不存在: {config_path}") from exc
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise _rules_error(config_path, f"JSON解析失败: {exc}") from exc
+    validated = _validate(config_path, raw)
+    patterns = validated["channel_patterns"]
+    thresholds = validated["channel_thresholds"]
+    confidences = validated["channel_confidences"]
+    return ClaimChannelRules(
+        explicit_negation_pattern=validated["explicit_negation"]["pattern"],
+        slot_fields=tuple((entry[0], tuple(entry[1]))
+                          for entry in validated["slot_fields"]),
+        identifier_subject_suffix=patterns["identifier_subject_suffix"],
+        enum_separator=patterns["enum_separator"],
+        negation_prefix_window=thresholds["negation_prefix_window"],
+        identifier_window_before=thresholds["identifier_window_before"],
+        identifier_window_after=thresholds["identifier_window_after"],
+        identifier_subject_min_len=thresholds["identifier_subject_min_len"],
+        enum_member_min_len=thresholds["enum_member_min_len"],
+        closed_scope_exclusion_confidence=float(
+            confidences["closed_scope_exclusion"]),
+        nli_residual_confidence=float(confidences["nli_residual"]),
+        description=str(validated.get("description", "")),
+    )
+
+
+def compile_rules(rules: ClaimChannelRules) -> CompiledChannelRules:
+    """把数据形态规则编译为执行形态(正则预编译, 通道直接消费)."""
+    return CompiledChannelRules(
+        explicit_negation=re.compile(rules.explicit_negation_pattern),
+        identifier_subject_suffix=re.compile(rules.identifier_subject_suffix),
+        enum_separator=re.compile(rules.enum_separator),
+        slot_fields=rules.slot_fields,
+        negation_prefix_window=rules.negation_prefix_window,
+        identifier_window_before=rules.identifier_window_before,
+        identifier_window_after=rules.identifier_window_after,
+        identifier_subject_min_len=rules.identifier_subject_min_len,
+        enum_member_min_len=rules.enum_member_min_len,
+        closed_scope_exclusion_confidence=(
+            rules.closed_scope_exclusion_confidence),
+        nli_residual_confidence=rules.nli_residual_confidence,
+    )
+
+
+_BUILTIN_RULES: ClaimChannelRules | None = None
+
+
+def builtin_rules() -> ClaimChannelRules:
+    """内置默认规则(与 config/claim_channels_rules_v1.json 逐值相同).
+
+    双层保险的Python侧: JSON缺失/损坏时 default_rules() 回退到这里,
+    任何环境下行为一致. 修改任一侧须同步另一侧并跑
+    tests/test_claim_channels_rules.py 的等价性锁定.
+    """
+    global _BUILTIN_RULES
+    if _BUILTIN_RULES is None:
+        _BUILTIN_RULES = ClaimChannelRules(
+            explicit_negation_pattern=_EXPLICIT_NEGATION_PATTERN,
+            slot_fields=_SLOT_FIELDS,
+            identifier_subject_suffix=_IDENTIFIER_SUBJECT_SUFFIX,
+            enum_separator=_ENUM_SEPARATOR,
+            negation_prefix_window=_NEGATION_PREFIX_WINDOW,
+            identifier_window_before=_IDENTIFIER_WINDOW_BEFORE,
+            identifier_window_after=_IDENTIFIER_WINDOW_AFTER,
+            identifier_subject_min_len=_IDENTIFIER_SUBJECT_MIN_LEN,
+            enum_member_min_len=_ENUM_MEMBER_MIN_LEN,
+            closed_scope_exclusion_confidence=(
+                _CLOSED_SCOPE_EXCLUSION_CONFIDENCE),
+            nli_residual_confidence=_NLI_RESIDUAL_CONFIDENCE,
+        )
+    return _BUILTIN_RULES
+
+
+def _load_or_default(path: str | Path) -> ClaimChannelRules:
+    """读一份规则文件; 失败回退内置默认(可见RuntimeWarning, 行为不变)."""
+    try:
+        return load_rules(path)
+    except (ValueError, OSError) as exc:
+        warnings.warn(
+            f"claim通道规则配置加载失败({exc}); 回退内置默认规则"
+            f"(与{CLAIM_CHANNELS_RULES_FILE.name}同内容, 通道行为不变)",
+            RuntimeWarning, stacklevel=2)
+        return builtin_rules()
+
+
+_DEFAULT_COMPILED_RULES: CompiledChannelRules | None = None
+
+
+def default_rules() -> CompiledChannelRules:
+    """通道消费的默认编译规则(惰性加载 + 模块级缓存, 模块顶层零I/O).
+
+    优先读 config/claim_channels_rules_v1.json; 文件缺失/损坏时回退
+    内置常量并发出可见警告——两个来源内容相同, 行为完全一致.
+    """
+    global _DEFAULT_COMPILED_RULES
+    if _DEFAULT_COMPILED_RULES is None:
+        _DEFAULT_COMPILED_RULES = compile_rules(
+            _load_or_default(CLAIM_CHANNELS_RULES_FILE))
+    return _DEFAULT_COMPILED_RULES
 
 
 @dataclass(frozen=True)
@@ -200,6 +603,7 @@ def verify_numeric(request: QAInput, claim: AnswerClaim,
 
 def verify_quoted(request: QAInput, claim: AnswerClaim,
                   index: int, check_items: tuple[str, ...]) -> ClaimResult:
+    rules = default_rules()
     target = re.sub(r"\s+", "", claim.text)
     positive_refs: list[str] = []
     negative_refs: list[str] = []
@@ -210,8 +614,9 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
             pos = normalized.find(target, start)
             if pos < 0:
                 break
-            prefix = normalized[max(0, pos - 14):pos]
-            if _EXPLICIT_NEGATION.search(prefix):
+            prefix = normalized[
+                max(0, pos - rules.negation_prefix_window):pos]
+            if rules.explicit_negation.search(prefix):
                 negative_refs.append(ev.evidence_id)
             else:
                 positive_refs.append(ev.evidence_id)
@@ -261,7 +666,7 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
             evidence_refs=tuple(ev.evidence_id for ev in closed),
             rationale="封闭scope中未出现该条目，与answer极性相符",
             method="closed_scope_exclusion",
-            confidence=0.85,
+            confidence=rules.closed_scope_exclusion_confidence,
                 span=claim.span,
         )
     return unresolved(request, claim, index, check_items,
@@ -276,12 +681,11 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
     refute: the evidence states a different identifier for the same
     subject statement. Everything else stays NIE.
     """
+    rules = default_rules()
     target = claim.text
     subject = re.sub(r"\s+", "", claim.attr or "")
-    subject_core = re.sub(
-        r"(?:用例)?(?:的)?(?:唯一)?(?:标识符?|编号|代号|名称|项目名)?$",
-        "", subject)
-    if len(subject_core) < 2:
+    subject_core = re.sub(rules.identifier_subject_suffix, "", subject)
+    if len(subject_core) < rules.identifier_subject_min_len:
         subject_core = subject
     hit_refs = tuple(
         ev.evidence_id for ev in request.evidence
@@ -304,8 +708,10 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
             compact = re.sub(r"\s+", "", ev.text)
             start = compact.find(subject_core)
             while start >= 0:
-                window = compact[max(0, start - 30):
-                                  min(len(compact), start + len(subject_core) + 100)]
+                window = compact[max(0, start - rules.identifier_window_before):
+                                  min(len(compact),
+                                      start + len(subject_core)
+                                      + rules.identifier_window_after)]
                 window_ids = _IDENTIFIER.findall(window)
                 if len(window_ids) == 1 and window_ids[0] != target:
                     return ClaimResult(
@@ -338,8 +744,10 @@ def verify_enum(request: QAInput, claim: AnswerClaim,
     NIE to avoid false supports when the evidence set is not proven
     exhaustive.
     """
-    items = [part.strip() for part in re.split(r"[、，,；]", claim.text)
-             if len(part.strip()) >= 2]
+    rules = default_rules()
+    items = [part.strip()
+             for part in rules.enum_separator.split(claim.text)
+             if len(part.strip()) >= rules.enum_member_min_len]
     found: dict[str, list[str]] = {}
     excluded: dict[str, list[str]] = {}
     for item in items:
@@ -353,8 +761,10 @@ def verify_enum(request: QAInput, claim: AnswerClaim,
                 pos = text.find(needle, start)
                 if pos < 0:
                     break
-                prefix = text[max(0, pos - 14):pos]
-                target = excluded if _EXPLICIT_NEGATION.search(prefix) else found
+                prefix = text[
+                    max(0, pos - rules.negation_prefix_window):pos]
+                target = (excluded if rules.explicit_negation.search(prefix)
+                          else found)
                 target[item].append(ev.evidence_id)
                 start = pos + len(needle)
     explicit_exclusions = tuple(sorted({
@@ -448,6 +858,7 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
                         statements: tuple,
                         judge: SemanticNliJudge | None) -> ClaimResult | None:
     """Residual NLI channel on scope- and slot-matched statement pairs."""
+    rules = default_rules()
     if judge is None or not statements:
         return None
     structured = decompose_answer(claim.text, request.question)
@@ -457,7 +868,7 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
     if not pairs:
         return None
     claim_slots = tuple(
-        field for keyword, fields in _SLOT_FIELDS
+        field for keyword, fields in rules.slot_fields
         if keyword in claim.text for field in fields)
     if claim_slots:
         pairs = [(structural, statement) for structural, statement in pairs
@@ -497,7 +908,7 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
             evidence_refs=tuple(sorted(set(contradiction_refs))),
             rationale="scope匹配的证据语句与answer声明NLI矛盾",
             method="nli_residual",
-            confidence=0.9,
+            confidence=rules.nli_residual_confidence,
                 span=claim.span,
         )
     if entailment_refs:
@@ -509,7 +920,7 @@ def verify_semantic_nli(request: QAInput, claim: AnswerClaim,
             evidence_refs=tuple(sorted(set(entailment_refs))),
             rationale="scope匹配的证据语句NLI蕴含answer声明",
             method="nli_residual",
-            confidence=0.9,
+            confidence=rules.nli_residual_confidence,
                 span=claim.span,
         )
     return None

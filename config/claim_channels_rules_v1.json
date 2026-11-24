@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "description": "claim_channels.py typed-claim验证通道的规则资产(E7表驱动外置v1, 96号§8/98号A类通道工程化). 本文件内容与algorithms/consistency/claim_channels.py的内置回退常量逐值相同(等价性由tests/test_claim_channels_rules.py锁定); JSON是第一真源, 常量是JSON缺失/损坏时的回退(双层保险, 任何环境行为一致). 修改本文件=修改quoted/enum/identifier/残余NLI通道的判定行为, 指纹受data/gjb_438c/MANIFEST.json的root_assets保护. 各字段语义: explicit_negation=显式否定标记词表(quoted/enum通道); slot_fields=claim文本关键词到statement字段槽位的映射(残余NLI通道pair过滤); channel_patterns=identifier的subject后缀剥离与enum成员切分正则; channel_thresholds=否定前缀窗口/identifier局部窗口/最小长度等数值knob; channel_confidences=封闭scope排除与残余NLI两个校准置信度. 区间代数(verify_numeric)与通道控制流不外置(98号B类判定: 数学逻辑留在代码).",
+  "explicit_negation": {
+    "description": "显式否定标记正则(原_EXPLICIT_NEGATION): verify_quoted/verify_enum在命中项前缀窗口(见channel_thresholds.negation_prefix_window)内搜索, 命中即判为显式否定/排除证据(极性翻转). 换域改词表即可, 不改代码.",
+    "pattern": "(?:不包括|不包含|不支持|不存在|不允许|禁止|不得|不能|未定义|不具备|不含)"
+  },
+  "slot_fields": [
+    ["前置条件", ["前置条件"]],
+    ["后置条件", ["后置条件"]],
+    ["异常流", ["异常流"]],
+    ["参与者", ["Actors", "参与者"]],
+    ["Actor", ["Actors", "参与者"]]
+  ],
+  "channel_patterns": {
+    "description": "通道内小型正则资产. identifier_subject_suffix: verify_identifier把claim的subject剥离域后缀(用例/的/唯一/标识符/编号/代号/名称/项目名)得到subject核心; enum_separator: verify_enum按顿号/全半角逗号/分号切分claim文本为枚举成员.",
+    "identifier_subject_suffix": "(?:用例)?(?:的)?(?:唯一)?(?:标识符?|编号|代号|名称|项目名)?$",
+    "enum_separator": "[、，,；]"
+  },
+  "channel_thresholds": {
+    "description": "通道数值knob(原硬编码字面量). 换场景可调窗口与最小长度, 不改代码.",
+    "negation_prefix_window": 14,
+    "identifier_window_before": 30,
+    "identifier_window_after": 100,
+    "identifier_subject_min_len": 2,
+    "enum_member_min_len": 2
+  },
+  "channel_confidences": {
+    "description": "通道校准置信度(原硬编码字面量). closed_scope_exclusion=封闭scope未出现条目的极性相符判定; nli_residual=残余NLI矛盾/蕴含判定. 确定性精确匹配通道的confidence=1.0是语义常量, 不在此调.",
+    "closed_scope_exclusion": 0.85,
+    "nli_residual": 0.9
+  }
+}

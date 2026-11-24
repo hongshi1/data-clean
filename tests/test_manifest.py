@@ -57,3 +57,23 @@ def test_pair_dataset_structure():
     got = {"n_pairs": n, "meta_sha256": h.hexdigest()}
     assert got["n_pairs"] == manifest["pair_dataset"]["n_pairs"]
     assert got["meta_sha256"] == manifest["pair_dataset"]["meta_sha256"]
+
+
+def test_root_assets_intact():
+    """仓库根规则资产(E7 claim_channels外置JSON等)与MANIFEST一致.
+
+    键为仓库根相对路径(区别于data/gjb_438c相对的assets).
+    """
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    problems = []
+    for rel, rec in manifest.get("root_assets", {}).items():
+        p = BASE / rel
+        if not p.exists():
+            problems.append(f"缺失: {rel}")
+            continue
+        digest = _sha256(p)
+        if digest != rec["sha256"]:
+            problems.append(f"内容变动: {rel}")
+    assert not problems, (
+        "仓库根规则资产与MANIFEST不一致(有意修改请重跑 "
+        f"tools/build_data_manifest.py 并同步快照测试): {problems}")

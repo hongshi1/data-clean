@@ -123,6 +123,13 @@ ASSETS = [
     "qa_frozen/crossdoc5_evalset_v1_report.json",
 ]
 
+# v6.0新增: 仓库根规则资产(路径相对仓库根, 非data/gjb_438c).
+# E7(96号§8) claim_channels规则表驱动外置: 修改该JSON=修改通道判定
+# 行为, 与金标数据同级保护. 存入manifest["root_assets"].
+ROOT_ASSETS = [
+    "config/claim_channels_rules_v1.json",
+]
+
 
 def _sha256(path: Path) -> str:
     h = hashlib.sha256()
@@ -153,7 +160,8 @@ def _pair_dataset_digest() -> dict:
 
 
 def build() -> dict:
-    run = open_run("build_data_manifest", {"n_assets": len(ASSETS)})
+    run = open_run("build_data_manifest",
+                   {"n_assets": len(ASSETS), "n_root_assets": len(ROOT_ASSETS)})
     assets: dict[str, dict] = {}
     for rel in ASSETS:
         p = DATA / rel
@@ -161,17 +169,27 @@ def build() -> dict:
             print(f"  !! 缺失: {rel}")
             continue
         assets[rel] = {"bytes": p.stat().st_size, "sha256": _sha256(p)}
+    root_assets: dict[str, dict] = {}
+    for rel in ROOT_ASSETS:
+        p = BASE / rel
+        if not p.exists():
+            print(f"  !! 缺失(root): {rel}")
+            continue
+        root_assets[rel] = {"bytes": p.stat().st_size, "sha256": _sha256(p)}
     manifest = {
         "version": 1,
         "git_sha": run.meta["git_sha"],
         "built_at": run.meta["opened_at"],
         "assets": assets,
+        "root_assets": root_assets,
         "pair_dataset": _pair_dataset_digest(),
     }
     OUT.write_text(json.dumps(manifest, ensure_ascii=False, indent=1),
                    encoding="utf-8")
-    run.save_result({"n_assets": len(assets), "out": str(OUT)})
+    run.save_result({"n_assets": len(assets), "out": str(OUT),
+                     "n_root_assets": len(root_assets)})
     run.log(action="manifest_built", n_assets=len(assets),
+             n_root_assets=len(root_assets),
              n_pairs=manifest["pair_dataset"]["n_pairs"])
     return manifest
 
