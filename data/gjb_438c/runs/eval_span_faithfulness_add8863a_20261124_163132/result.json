@@ -1,0 +1,1749 @@
+{
+ "schema": "span_faithfulness_eval_v1",
+ "evalset": "data\\gjb_438c\\localization_gold\\violation_evalset_v1.jsonl",
+ "alce_reference": "arXiv 2305.14627 (citation precision/recall)",
+ "design_refs": [
+  "99号Phase0-E1",
+  "96号§5/§7.3"
+ ],
+ "gold_anchor_fields": [
+  "gold_evidence_refs(block级人工定位)",
+  "target_keywords(violation_desc锚点)",
+  "GOLD_ROOT_CAUSE(eval_root_cause根因gold)"
+ ],
+ "engine": {
+  "expert": "QAConsistencyModule(use_experts=True)",
+  "d3_student": null
+ },
+ "configs": {
+  "expert": {
+   "details": [
+    {
+     "instance_id": "DOC04-VIO-01",
+     "path": "expert",
+     "violation_category": "identifier",
+     "item_id": "TERM-07",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 2,
+     "literal": {
+      "n_localizations": 2,
+      "n_answer_faithful": 2,
+      "n_span_exact": 2,
+      "n_refs_ok": 2,
+      "n_literal_faithful": 2,
+      "answer_side_states": [
+       "span_exact",
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-01-idjoin01",
+        "method": "id_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-01-ev-000219#s6",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-01-ev-000225#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-01-ev-000220#s0",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "DOC04-VIO-01-e1d01",
+        "method": "e1_template_match",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-01-ev-000222",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 4,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 0.5,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-01-ev-000219",
+       "DOC04-VIO-01-ev-000220",
+       "DOC04-VIO-01-ev-000222",
+       "DOC04-VIO-01-ev-000225"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-01-ev-000220",
+       "DOC04-VIO-01-ev-000225"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 4,
+      "n_cited_with_keyword": 3,
+      "cited_with_keyword": [
+       "DOC04-VIO-01-ev-000219",
+       "DOC04-VIO-01-ev-000220",
+       "DOC04-VIO-01-ev-000225"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "dual_registration"
+      },
+      "predicted_operations": [
+       "dual_registration",
+       "exception_flow_mismatch"
+      ],
+      "predicted_sources": [
+       "document_internal",
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 0.5
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-02",
+     "path": "expert",
+     "violation_category": "identifier",
+     "item_id": "TERM-07",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 2,
+     "literal": {
+      "n_localizations": 2,
+      "n_answer_faithful": 2,
+      "n_span_exact": 2,
+      "n_refs_ok": 2,
+      "n_literal_faithful": 2,
+      "answer_side_states": [
+       "span_exact",
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-02-idjoin01",
+        "method": "id_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-02-ev-000040#s18",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-02-ev-000057#s0",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "ac01",
+        "method": "l0_entity_detector:TERM-07",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-02-ev-000040#s18",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-02-ev-000040",
+       "DOC04-VIO-02-ev-000057"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-02-ev-000040",
+       "DOC04-VIO-02-ev-000057"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-02-ev-000040",
+       "DOC04-VIO-02-ev-000057"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "value_substitution",
+       "value_substitution"
+      ],
+      "predicted_sources": [
+       "answer",
+       "answer"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": false,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-03",
+     "path": "expert",
+     "violation_category": "identifier",
+     "item_id": "TERM-07",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-03-idjoin01",
+        "method": "id_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-03-ev-000271#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-03-ev-000267#s6",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 5,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 0.4,
+      "cited_blocks": [
+       "DOC04-VIO-03-ev-000267",
+       "DOC04-VIO-03-ev-000271"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-03-ev-000267",
+       "DOC04-VIO-03-ev-000271"
+      ],
+      "missed_gold_blocks": [
+       "DOC04-VIO-03-ev-000268",
+       "DOC04-VIO-03-ev-000274",
+       "DOC04-VIO-03-ev-000277"
+      ]
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-03-ev-000267",
+       "DOC04-VIO-03-ev-000271"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "value_substitution"
+      ],
+      "predicted_sources": [
+       "answer"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": false,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-04",
+     "path": "expert",
+     "violation_category": "identifier",
+     "item_id": "TERM-07",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-04-idjoin01",
+        "method": "id_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-04-ev-000285#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-04-ev-000286#s0",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-04-ev-000285",
+       "DOC04-VIO-04-ev-000286"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-04-ev-000285",
+       "DOC04-VIO-04-ev-000286"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-04-ev-000285",
+       "DOC04-VIO-04-ev-000286"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "value_substitution"
+      ],
+      "predicted_sources": [
+       "answer"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": false,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-05",
+     "path": "expert",
+     "violation_category": "identifier",
+     "item_id": "TERM-07",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-05-idjoin01",
+        "method": "id_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-05-ev-000139#s12",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-05-ev-000140#s0",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 4,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 0.5,
+      "cited_blocks": [
+       "DOC04-VIO-05-ev-000139",
+       "DOC04-VIO-05-ev-000140"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-05-ev-000139",
+       "DOC04-VIO-05-ev-000140"
+      ],
+      "missed_gold_blocks": [
+       "DOC04-VIO-05-ev-000145",
+       "DOC04-VIO-05-ev-000150"
+      ]
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-05-ev-000139",
+       "DOC04-VIO-05-ev-000140"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "value_substitution"
+      ],
+      "predicted_sources": [
+       "answer"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": false,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-06",
+     "path": "expert",
+     "violation_category": "enumeration",
+     "item_id": "TERM-03",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-06-enumjoin01",
+        "method": "enum_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-06-ev-000032#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-06-ev-000035#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-06-ev-000035#s6",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-06-ev-000035#s12",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-06-ev-000035#s18",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-06-ev-000032",
+       "DOC04-VIO-06-ev-000035"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-06-ev-000032",
+       "DOC04-VIO-06-ev-000035"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-06-ev-000032",
+       "DOC04-VIO-06-ev-000035"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "scope_leakage"
+      },
+      "predicted_operations": [
+       "scope_leakage"
+      ],
+      "predicted_sources": [
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-07",
+     "path": "expert",
+     "violation_category": "enumeration",
+     "item_id": "TERM-03",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-07-enumjoin01",
+        "method": "enum_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-07-ev-000181#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-07-ev-000184#s0",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-07-ev-000184#s6",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-07-ev-000184#s12",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-07-ev-000181",
+       "DOC04-VIO-07-ev-000184"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-07-ev-000181",
+       "DOC04-VIO-07-ev-000184"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-07-ev-000181",
+       "DOC04-VIO-07-ev-000184"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "scope_leakage"
+      ],
+      "predicted_sources": [
+       "document_internal"
+      ],
+      "operation_any_hit": false,
+      "source_any_hit": true,
+      "operation_per_localization": 0.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-08",
+     "path": "expert",
+     "violation_category": "enumeration",
+     "item_id": "TERM-03",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-08-cov01",
+        "method": "coverage_join",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-08-ev-000011",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-08-ev-000024",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-08-ev-000030",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-08-ev-000032",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 4,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 0.5,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-08-ev-000011",
+       "DOC04-VIO-08-ev-000024",
+       "DOC04-VIO-08-ev-000030",
+       "DOC04-VIO-08-ev-000032"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-08-ev-000011",
+       "DOC04-VIO-08-ev-000024"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 4,
+      "n_cited_with_keyword": 1,
+      "cited_with_keyword": [
+       "DOC04-VIO-08-ev-000011"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "scope_leakage"
+      },
+      "predicted_operations": [
+       "compliance_gap"
+      ],
+      "predicted_sources": [
+       "document_gap"
+      ],
+      "operation_any_hit": false,
+      "source_any_hit": false,
+      "operation_per_localization": 0.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-09",
+     "path": "expert",
+     "violation_category": "enumeration",
+     "item_id": "LOGIC-05",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-09-enumjoin01",
+        "method": "enum_join_registry",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-09-ev-000067#s15",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 1,
+      "n_gold": 2,
+      "n_hit": 1,
+      "precision": 1.0,
+      "recall": 0.5,
+      "cited_blocks": [
+       "DOC04-VIO-09-ev-000067"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-09-ev-000067"
+      ],
+      "missed_gold_blocks": [
+       "DOC04-VIO-09-ev-000087"
+      ]
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 1,
+      "n_cited_with_keyword": 1,
+      "cited_with_keyword": [
+       "DOC04-VIO-09-ev-000067"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "value_substitution"
+      ],
+      "predicted_sources": [
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-10",
+     "path": "expert",
+     "violation_category": "traceability",
+     "item_id": "GJB-05",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 3,
+     "literal": {
+      "n_localizations": 3,
+      "n_answer_faithful": 2,
+      "n_span_exact": 2,
+      "n_refs_ok": 3,
+      "n_literal_faithful": 2,
+      "answer_side_states": [
+       "span_exact",
+       "span_exact",
+       "text_absent"
+      ],
+      "localizations": [
+       {
+        "claim_id": "ac01",
+        "method": "l0_entity_detector:TERM-02",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-10-ev-000198#s0",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "DOC04-VIO-10-trace01",
+        "method": "trace_bidirectional_join",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-10-ev-000407",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-10-ev-000408",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "DOC04-VIO-10-trace02",
+        "method": "trace_bidirectional_join",
+        "answer_side": "text_absent",
+        "quote_in_answer": false,
+        "span_exact": false,
+        "answer_faithful": false,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-10-ev-000407",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": false
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 3,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 0.6667,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-10-ev-000198",
+       "DOC04-VIO-10-ev-000407",
+       "DOC04-VIO-10-ev-000408"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-10-ev-000407",
+       "DOC04-VIO-10-ev-000408"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 3,
+      "n_cited_with_keyword": 3,
+      "cited_with_keyword": [
+       "DOC04-VIO-10-ev-000198",
+       "DOC04-VIO-10-ev-000407",
+       "DOC04-VIO-10-ev-000408"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "relation_inversion"
+      },
+      "predicted_operations": [
+       "entity_substitution",
+       "relation_inversion",
+       "negation_mismatch"
+      ],
+      "predicted_sources": [
+       "answer",
+       "document_internal",
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 0.3333
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-11",
+     "path": "expert",
+     "violation_category": "traceability",
+     "item_id": "GJB-05",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 0,
+      "n_span_exact": 0,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 0,
+      "answer_side_states": [
+       "text_absent"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-11-trace01",
+        "method": "trace_bidirectional_join",
+        "answer_side": "text_absent",
+        "quote_in_answer": false,
+        "span_exact": false,
+        "answer_faithful": false,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-11-ev-000407",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": false
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 1,
+      "n_gold": 1,
+      "n_hit": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-11-ev-000407"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-11-ev-000407"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 1,
+      "n_cited_with_keyword": 1,
+      "cited_with_keyword": [
+       "DOC04-VIO-11-ev-000407"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [
+       "negation_mismatch"
+      ],
+      "predicted_sources": [
+       "document_internal"
+      ],
+      "operation_any_hit": false,
+      "source_any_hit": true,
+      "operation_per_localization": 0.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-12",
+     "path": "expert",
+     "violation_category": "traceability",
+     "item_id": "GJB-05",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 2,
+     "literal": {
+      "n_localizations": 2,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 2,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "text_absent",
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-12-trace01",
+        "method": "trace_bidirectional_join",
+        "answer_side": "text_absent",
+        "quote_in_answer": false,
+        "span_exact": false,
+        "answer_faithful": false,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-12-ev-000407",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-12-ev-000408",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": false
+       },
+       {
+        "claim_id": "DOC04-VIO-12-trace02",
+        "method": "trace_bidirectional_join",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-12-ev-000407",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 1,
+      "n_hit": 1,
+      "precision": 0.5,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-12-ev-000407",
+       "DOC04-VIO-12-ev-000408"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-12-ev-000407"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-12-ev-000407",
+       "DOC04-VIO-12-ev-000408"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "negation_mismatch"
+      },
+      "predicted_operations": [
+       "relation_inversion",
+       "negation_mismatch"
+      ],
+      "predicted_sources": [
+       "document_internal",
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 0.5
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-13",
+     "path": "expert",
+     "violation_category": "exception_template",
+     "item_id": "LOGIC-02",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 2,
+     "literal": {
+      "n_localizations": 2,
+      "n_answer_faithful": 2,
+      "n_span_exact": 2,
+      "n_refs_ok": 2,
+      "n_literal_faithful": 2,
+      "answer_side_states": [
+       "span_exact",
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-13-e1d01",
+        "method": "e1_template_match",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-13-ev-000192",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "DOC04-VIO-13-e1d02",
+        "method": "e1_template_match",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-13-ev-000222",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 3,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 0.6667,
+      "cited_blocks": [
+       "DOC04-VIO-13-ev-000192",
+       "DOC04-VIO-13-ev-000222"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-13-ev-000192",
+       "DOC04-VIO-13-ev-000222"
+      ],
+      "missed_gold_blocks": [
+       "DOC04-VIO-13-ev-000227"
+      ]
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-13-ev-000192",
+       "DOC04-VIO-13-ev-000222"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "exception_flow_mismatch"
+      },
+      "predicted_operations": [
+       "exception_flow_mismatch",
+       "exception_flow_mismatch"
+      ],
+      "predicted_sources": [
+       "document_internal",
+       "document_internal"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-14",
+     "path": "expert",
+     "violation_category": "exception_template",
+     "item_id": "LOGIC-02",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 2,
+     "literal": {
+      "n_localizations": 2,
+      "n_answer_faithful": 2,
+      "n_span_exact": 2,
+      "n_refs_ok": 2,
+      "n_literal_faithful": 2,
+      "answer_side_states": [
+       "span_exact",
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-14-e1d01",
+        "method": "e1_template_match",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-14-ev-000237",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       },
+       {
+        "claim_id": "DOC04-VIO-14-e1d02",
+        "method": "e1_template_match",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-14-ev-000242",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 2,
+      "n_gold": 2,
+      "n_hit": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-14-ev-000237",
+       "DOC04-VIO-14-ev-000242"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-14-ev-000237",
+       "DOC04-VIO-14-ev-000242"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 2,
+      "n_cited_with_keyword": 2,
+      "cited_with_keyword": [
+       "DOC04-VIO-14-ev-000237",
+       "DOC04-VIO-14-ev-000242"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "entity_substitution"
+      },
+      "predicted_operations": [
+       "exception_flow_mismatch",
+       "exception_flow_mismatch"
+      ],
+      "predicted_sources": [
+       "document_internal",
+       "document_internal"
+      ],
+      "operation_any_hit": false,
+      "source_any_hit": true,
+      "operation_per_localization": 0.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-15",
+     "path": "expert",
+     "violation_category": "document_name",
+     "item_id": "TERM-05",
+     "expected_verdict": "refute",
+     "predicted_verdict": "support",
+     "detected": false,
+     "n_localizations": 0,
+     "literal": {
+      "n_localizations": 0,
+      "n_answer_faithful": 0,
+      "n_span_exact": 0,
+      "n_refs_ok": 0,
+      "n_literal_faithful": 0,
+      "answer_side_states": [],
+      "localizations": []
+     },
+     "citation": {
+      "n_cited": 0,
+      "n_gold": 1,
+      "n_hit": 0,
+      "precision": null,
+      "recall": 0.0,
+      "cited_blocks": [],
+      "hit_blocks": [],
+      "missed_gold_blocks": [
+       "DOC04-VIO-15-ev-000348"
+      ]
+     },
+     "anchor_overlap": {
+      "n_keywords": 2,
+      "n_cited": 0,
+      "n_cited_with_keyword": 0,
+      "cited_with_keyword": []
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_internal",
+       "operation": "value_substitution"
+      },
+      "predicted_operations": [],
+      "predicted_sources": [],
+      "operation_any_hit": false,
+      "source_any_hit": false,
+      "operation_per_localization": null
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-16",
+     "path": "expert",
+     "violation_category": "function_coverage",
+     "item_id": "GJB-04",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-16-cov01",
+        "method": "coverage_join",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-16-ev-000011",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-16-ev-000024",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-16-ev-000030",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 3,
+      "n_gold": 1,
+      "n_hit": 1,
+      "precision": 0.3333,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-16-ev-000011",
+       "DOC04-VIO-16-ev-000024",
+       "DOC04-VIO-16-ev-000030"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-16-ev-000011"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 3,
+      "n_cited_with_keyword": 1,
+      "cited_with_keyword": [
+       "DOC04-VIO-16-ev-000011"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_gap",
+       "operation": "compliance_gap"
+      },
+      "predicted_operations": [
+       "compliance_gap"
+      ],
+      "predicted_sources": [
+       "document_gap"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 1.0
+     }
+    },
+    {
+     "instance_id": "DOC04-VIO-17",
+     "path": "expert",
+     "violation_category": "qualification_coverage",
+     "item_id": "GJB-01",
+     "expected_verdict": "refute",
+     "predicted_verdict": "refute",
+     "detected": true,
+     "n_localizations": 1,
+     "literal": {
+      "n_localizations": 1,
+      "n_answer_faithful": 1,
+      "n_span_exact": 1,
+      "n_refs_ok": 1,
+      "n_literal_faithful": 1,
+      "answer_side_states": [
+       "span_exact"
+      ],
+      "localizations": [
+       {
+        "claim_id": "DOC04-VIO-17-cov01",
+        "method": "coverage_join",
+        "answer_side": "span_exact",
+        "quote_in_answer": true,
+        "span_exact": true,
+        "answer_faithful": true,
+        "evidence_refs": [
+         {
+          "statement_id": "DOC04-VIO-17-ev-000262",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-17-ev-000280",
+          "block_exists": true,
+          "statement_exists": true
+         },
+         {
+          "statement_id": "DOC04-VIO-17-ev-000404",
+          "block_exists": true,
+          "statement_exists": true
+         }
+        ],
+        "evidence_refs_ok": true,
+        "literal_faithful": true
+       }
+      ]
+     },
+     "citation": {
+      "n_cited": 3,
+      "n_gold": 1,
+      "n_hit": 1,
+      "precision": 0.3333,
+      "recall": 1.0,
+      "cited_blocks": [
+       "DOC04-VIO-17-ev-000262",
+       "DOC04-VIO-17-ev-000280",
+       "DOC04-VIO-17-ev-000404"
+      ],
+      "hit_blocks": [
+       "DOC04-VIO-17-ev-000404"
+      ],
+      "missed_gold_blocks": []
+     },
+     "anchor_overlap": {
+      "n_keywords": 1,
+      "n_cited": 3,
+      "n_cited_with_keyword": 1,
+      "cited_with_keyword": [
+       "DOC04-VIO-17-ev-000404"
+      ]
+     },
+     "root_cause": {
+      "gold": {
+       "source": "document_gap",
+       "operation": "compliance_gap"
+      },
+      "predicted_operations": [
+       "compliance_gap"
+      ],
+      "predicted_sources": [
+       "document_gap"
+      ],
+      "operation_any_hit": true,
+      "source_any_hit": true,
+      "operation_per_localization": 1.0
+     }
+    }
+   ],
+   "summary": {
+    "n_instances": 17,
+    "n_detected": 16,
+    "citation": {
+     "macro_precision": 0.8021,
+     "macro_recall_detected": 0.8792,
+     "macro_recall_all": 0.8275,
+     "micro_precision": 0.7297,
+     "micro_recall": 0.7941,
+     "micro_counts": {
+      "cited_blocks": 37,
+      "gold_blocks": 34,
+      "hit_blocks": 27
+     },
+     "denominators": {
+      "macro_precision": "16实例(有cited的refute)",
+      "macro_recall_detected": "16detected",
+      "macro_recall_all": "17全部",
+      "micro": "detected实例块计数池化(与eval_violations同口径)"
+     }
+    },
+    "anchor_overlap": {
+     "n_cited_blocks": 37,
+     "n_cited_with_keyword": 29,
+     "rate": 0.7838
+    },
+    "literal": {
+     "unit": "localization",
+     "n_units": 23,
+     "n_literal_faithful": 20,
+     "literal_faithful_rate": 0.8696,
+     "n_answer_faithful": 20,
+     "answer_faithful_rate": 0.8696,
+     "n_span_exact": 20,
+     "span_exact_rate": 0.8696,
+     "n_evidence_refs_ok": 23,
+     "evidence_refs_ok_rate": 1.0,
+     "answer_side_states": [
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "text_absent",
+      "text_absent",
+      "text_absent",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact",
+      "span_exact"
+     ]
+    },
+    "root_cause": {
+     "operation_any_hit": 0.75,
+     "operation_any_hit_fraction": "12/16",
+     "rule_id_any_hit": null,
+     "rule_id_any_hit_fraction": null
+    },
+    "by_category": {
+     "document_name": {
+      "n": 1,
+      "n_detected": 0,
+      "macro_recall_detected": null,
+      "n_operation_any_hit": 0,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-15"
+      ]
+     },
+     "enumeration": {
+      "n": 4,
+      "n_detected": 4,
+      "macro_recall_detected": 0.875,
+      "n_operation_any_hit": 2,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-06",
+       "DOC04-VIO-07",
+       "DOC04-VIO-08",
+       "DOC04-VIO-09"
+      ]
+     },
+     "exception_template": {
+      "n": 2,
+      "n_detected": 2,
+      "macro_recall_detected": 0.8334,
+      "n_operation_any_hit": 1,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-13",
+       "DOC04-VIO-14"
+      ]
+     },
+     "function_coverage": {
+      "n": 1,
+      "n_detected": 1,
+      "macro_recall_detected": 1.0,
+      "n_operation_any_hit": 1,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-16"
+      ]
+     },
+     "identifier": {
+      "n": 5,
+      "n_detected": 5,
+      "macro_recall_detected": 0.78,
+      "n_operation_any_hit": 5,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-01",
+       "DOC04-VIO-02",
+       "DOC04-VIO-03",
+       "DOC04-VIO-04",
+       "DOC04-VIO-05"
+      ]
+     },
+     "qualification_coverage": {
+      "n": 1,
+      "n_detected": 1,
+      "macro_recall_detected": 1.0,
+      "n_operation_any_hit": 1,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-17"
+      ]
+     },
+     "traceability": {
+      "n": 3,
+      "n_detected": 3,
+      "macro_recall_detected": 1.0,
+      "n_operation_any_hit": 2,
+      "n_rule_id_any_hit": null,
+      "ids": [
+       "DOC04-VIO-10",
+       "DOC04-VIO-11",
+       "DOC04-VIO-12"
+      ]
+     }
+    },
+    "undetected_ids": [
+     "DOC04-VIO-15"
+    ]
+   }
+  }
+ }
+}

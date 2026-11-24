@@ -215,6 +215,60 @@ def test_answer_without_trace_relation_adds_no_claims() -> None:
     assert len({r.claim_id for r in results}) == 3
 
 
+def test_doc_side_claims_anchored_to_answer_verbatim() -> None:
+    """字面忠实修复(E1弱点#1): 文档侧检查的claim锚定answer逐字引用.
+
+    answer提及违例章节号(3.2.4/4.1.1 c))→正逆矛盾claim_text=
+    answer[start:end](最小覆盖span, 字面契约); answer无关联文本的
+    检查(同行矛盾row5/锚点失效row4)保持合成断言——如实计字面残余.
+    """
+    answer = "代码生成（3.2.4）对应任务书4.1.1 c)。"
+    results = verify_trace(trace_request(answer), DOC_SECTIONS)
+    bidirectional = [r for r in results
+                     if "双向映射不一致" in r.rationale]
+    assert len(bidirectional) == 1
+    claim = bidirectional[0]
+    assert claim.span == (5, 24)
+    assert answer[5:24] == claim.claim_text  # 字面契约
+    assert claim.claim_text == "3.2.4）对应任务书4.1.1 c)"
+    assert "表81与表82对本文档章节3.2.4的任务书追踪映射一致" \
+        in claim.rationale  # 合成断言移入rationale
+    same_row = [r for r in results if "同行矛盾" in r.rationale]
+    assert len(same_row) == 1
+    assert same_row[0].span is None
+    assert "自洽" in same_row[0].claim_text
+    anchors = [r for r in results if "锚点失效" in r.rationale]
+    assert len(anchors) == 1
+    assert anchors[0].span is None
+    assert "存在" in anchors[0].claim_text
+
+
+def test_same_row_anchor_covers_row_sections() -> None:
+    """answer提及同行矛盾row全部章节号(4.5/3.3/3.4)→最小覆盖span."""
+    answer = "接口（4.5）的需求追踪至本文档3.3和3.4章节。"
+    results = verify_trace(trace_request(answer), DOC_SECTIONS)
+    same_row = [r for r in results if "同行矛盾" in r.rationale]
+    assert len(same_row) == 1
+    claim = same_row[0]
+    assert claim.span == (3, 23)
+    assert answer[3:23] == claim.claim_text  # 字面契约
+    assert claim.claim_text == "4.5）的需求追踪至本文档3.3和3.4"
+    assert "表81 row5的追踪映射与跟踪说明「不追踪」自洽" \
+        in claim.rationale  # 合成断言移入rationale
+
+
+def test_anchor_validity_claim_anchored_when_answer_mentions_section() -> None:
+    """answer提及失效章节号(3.2.1.7)→锚点失效claim锚定answer逐字引用."""
+    answer = "获取错误信息需求位于文档3.2.1.7章节。"
+    results = verify_trace(trace_request(answer), DOC_SECTIONS)
+    anchors = [r for r in results if "锚点失效" in r.rationale]
+    assert len(anchors) == 1
+    claim = anchors[0]
+    assert claim.span == (12, 19)
+    assert answer[12:19] == claim.claim_text  # 字面契约
+    assert claim.claim_text == "3.2.1.7"
+
+
 def test_single_table_evidence_degrades_gracefully() -> None:
     request = trace_request("该问题与追踪无关。", reverse="")
     results = verify_trace(request, DOC_SECTIONS)
@@ -283,13 +337,24 @@ def test_real_doc04_sections_extracted_from_content_list() -> None:
 def test_real_doc04_trace_tables_yield_three_known_violations() -> None:
     request, sections = real_trace_fixture()
     results = verify_trace(request, sections)
-    contradictions = by_claim_prefix(results, "表81与表82对本文档章节")
+    # 字面忠实修复(E1弱点#1): answer提及违例章节号(3.2.4/4.1.1 c))时,
+    # 正逆矛盾claim_text锚定answer逐字引用(最小覆盖span), 不再是
+    # 合成断言前缀『表81与表82对本文档章节…』——按rationale标记选取
+    # (『双向映射不一致』=文档侧检查; answer侧检查为『无论answer取哪
+    # 一侧』)
+    contradictions = [r for r in results
+                      if "双向映射不一致" in r.rationale]
     assert len(contradictions) == 1
     claim = contradictions[0]
-    assert "3.2.4" in claim.claim_text
+    assert claim.span == (7, 26)
+    assert claim.claim_text == "3.2.4）对应任务书4.1.1 c)"
+    assert request.answer[7:26] == claim.claim_text  # 字面契约
     assert "row11" in claim.rationale and "row12" in claim.rationale
     assert "4.1.1 c)" in claim.rationale and "4.1.1 a)" in claim.rationale
     assert claim.evidence_refs == ("ev-item407", "ev-item408")
+    # 合成断言移入rationale(信息不丢弃)
+    assert "表81与表82对本文档章节3.2.4的任务书追踪映射一致" \
+        in claim.rationale
 
     anchors = [r for r in results if "存在" in r.claim_text
                and r.claim_text.startswith("表81")]

@@ -348,5 +348,7 @@ def test_cited_blocks_and_signature_on_real_result() -> None:
     signature = result_signature(result)
     assert signature["cited_blocks"] == sorted(cited_blocks(result))
     assert signature["n_localizations"] == 2
-    # id_join定位的answer span=(26,46)在签名内(e1定位span缺失不入)
-    assert signature["answer_spans"] == [[26, 46]]
+    # 字面忠实修复(E1弱点#1): e1d01主题错位定位的claim_text锚定answer
+    # 逐字引用(用例名/提示文本最小覆盖span=(0,14)『连接池配置用例和
+    # 连接池初始化』)→入签名; 修复前e1定位span缺失不入(仅[[26,46]])
+    assert signature["answer_spans"] == [[0, 14], [26, 46]]

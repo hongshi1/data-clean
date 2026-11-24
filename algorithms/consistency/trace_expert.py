@@ -28,6 +28,7 @@ from itertools import product
 from pathlib import Path
 from typing import Iterable
 
+from algorithms.consistency.answer_anchor import anchor_claim
 from algorithms.consistency.evidence_statements import _strip_tags, _table_rows
 from algorithms.consistency.qa_models import (
     ClaimResult,
@@ -281,7 +282,12 @@ def _rows_at(rows: tuple[TraceMapping, ...],
                  and not _is_non_track(m.note))
 
 
-def _check_bidirectional(tables: TraceTables) -> list[ClaimResult]:
+def _check_bidirectional(tables: TraceTables,
+                         answer: str = "") -> list[ClaimResult]:
+    """正逆矛盾检查(answer参数=字面忠实锚定, 见answer_anchor).
+
+    keys=违例章节号+正逆两侧任务书章节(最小覆盖span=answer的追踪断言).
+    """
     forward = _tracked_targets(tables.forward)
     reverse = _tracked_targets(tables.reverse)
     if not forward or not reverse:
@@ -296,7 +302,9 @@ def _check_bidirectional(tables: TraceTables) -> list[ClaimResult]:
                              for m in fwd_rows + rev_rows}))
         fwd_desc = "；".join(_row_desc(m) for m in fwd_rows)
         rev_desc = "；".join(_row_desc(m) for m in rev_rows)
-        claims.append(ClaimResult(
+        keys = (doc_section,
+                *sorted(forward[doc_section] | reverse[doc_section]))
+        claim = ClaimResult(
             claim_id="",
             claim_text=(f"表81与表82对本文档章节{doc_section}的任务书"
                         f"追踪映射一致"),
@@ -310,12 +318,15 @@ def _check_bidirectional(tables: TraceTables) -> list[ClaimResult]:
                        f"（GJB-05）"),
             method=METHOD,
             confidence=1.0,
-        ))
+        )
+        claims.append(anchor_claim(claim, answer, keys))
     return claims
 
 
 def _check_anchors(mappings: tuple[TraceMapping, ...],
-                   doc_sections: frozenset[str]) -> list[ClaimResult]:
+                   doc_sections: frozenset[str],
+                   answer: str = "") -> list[ClaimResult]:
+    """锚点有效性检查(answer参数=字面忠实锚定, 见answer_anchor)."""
     claims: list[ClaimResult] = []
     seen: set[tuple[str, int, str]] = set()
     for mapping in sorted(mappings, key=lambda m: (m.evidence_id,
@@ -327,7 +338,7 @@ def _check_anchors(mappings: tuple[TraceMapping, ...],
         if key in seen:
             continue
         seen.add(key)
-        claims.append(ClaimResult(
+        claim = ClaimResult(
             claim_id="",
             claim_text=(f"{_row_desc(mapping).split('(')[0]}指向的本文档"
                         f"章节{mapping.doc_section}存在"),
@@ -339,11 +350,19 @@ def _check_anchors(mappings: tuple[TraceMapping, ...],
                        f"（GJB-05追踪锚点无效）"),
             method=METHOD,
             confidence=0.95,
-        ))
+        )
+        claims.append(anchor_claim(
+            claim, answer, (mapping.doc_section, mapping.tb_section)))
     return claims
 
 
-def _check_same_row(mappings: tuple[TraceMapping, ...]) -> list[ClaimResult]:
+def _check_same_row(mappings: tuple[TraceMapping, ...],
+                    answer: str = "") -> list[ClaimResult]:
+    """同行矛盾检查(answer参数=字面忠实锚定, 见answer_anchor).
+
+    keys=该行全部追踪章节号(任务书侧+本文档侧)——最小覆盖span即answer
+    对该行映射关系的断言片段.
+    """
     rows: dict[tuple[str, str, int], list[TraceMapping]] = {}
     for mapping in mappings:
         if not _is_non_track(mapping.note):
@@ -355,7 +374,9 @@ def _check_same_row(mappings: tuple[TraceMapping, ...]) -> list[ClaimResult]:
         group = rows[key]
         note = group[0].note
         desc = "；".join(_row_desc(mapping) for mapping in group)
-        claims.append(ClaimResult(
+        keys = tuple(sorted(
+            {m.tb_section for m in group} | {m.doc_section for m in group}))
+        claim = ClaimResult(
             claim_id="",
             claim_text=(f"{_row_desc(group[0]).split('(')[0]}的追踪映射与"
                         f"跟踪说明「{note}」自洽"),
@@ -367,7 +388,8 @@ def _check_same_row(mappings: tuple[TraceMapping, ...]) -> list[ClaimResult]:
                        f"——同一行内映射与声明矛盾（GJB-05）"),
             method=METHOD,
             confidence=1.0,
-        ))
+        )
+        claims.append(anchor_claim(claim, answer, keys))
     return claims
 
 
@@ -496,16 +518,23 @@ def verify_trace(request: QAInput,
     skipped. Returns deterministic ClaimResults with
     method="trace_bidirectional_join"; returns [] when the evidence holds
     no recognizable trace table.
+
+    字面忠实修复(E1弱点#1): 三项文档侧检查(正逆矛盾/锚点失效/同行矛盾)
+    的claim_text锚定到answer逐字引用——违例章节号(任务书侧+本文档侧)在
+    answer中的最小覆盖span, answer[start:end]==claim_text; 原合成断言移
+    入rationale(answer_anchor.anchor_claim). answer无关联文本时保持合成
+    断言(如实计入字面不忠实残余). 判定verdict/检出逻辑不动.
     """
     tables = parse_trace_tables(request.evidence)
     if not tables.all_mappings:
         return []
     claims: list[ClaimResult] = []
-    claims.extend(_check_bidirectional(tables))
+    claims.extend(_check_bidirectional(tables, request.answer))
     if doc_sections is not None:
         claims.extend(_check_anchors(tables.all_mappings,
-                                     frozenset(doc_sections)))
-    claims.extend(_check_same_row(tables.all_mappings))
+                                      frozenset(doc_sections),
+                                      request.answer))
+    claims.extend(_check_same_row(tables.all_mappings, request.answer))
     claims.extend(_check_answer_claims(request.answer, tables))
     return [
         replace(claim, claim_id=f"{request.instance_id}-trace{index:02d}")

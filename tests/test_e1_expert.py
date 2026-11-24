@@ -396,6 +396,45 @@ def test_topic_mismatch_constructed_case_is_refute() -> None:
     assert result.check_item_candidates == ("LOGIC-02",)
 
 
+def test_topic_mismatch_claim_anchored_to_answer_verbatim() -> None:
+    """字面忠实修复(E1弱点#1): 主题错位refute锚定answer逐字引用+span.
+
+    answer提及用例名与E1提示文本时, claim_text=answer[start:end](用例名/
+    提示文本的最小覆盖span, 字面契约answer[span]==text); 原合成断言移入
+    rationale; 判定字段(verdict/method/confidence/refs)与无answer调用
+    完全一致——锚定只改定位文本, 不动判定逻辑.
+    """
+    statements = _statements(CACHE_UPDATE_TABLE_HTML, "ev-topic")
+    answer = "缓存更新发生异常时，系统会提示初始化并结束用例。"
+    results = check_e1_topic_mismatch(statements, answer=answer)
+    assert len(results) == 1
+    result = results[0]
+    assert result.verdict == "refute"
+    assert result.span == (0, 18)
+    assert answer[0:18] == result.claim_text  # 字面契约
+    assert result.claim_text == "缓存更新发生异常时，系统会提示初始化"
+    bare = check_e1_topic_mismatch(statements)[0]
+    assert (result.verdict, result.method, result.confidence,
+            result.evidence_refs, result.check_item_candidates) == \
+        (bare.verdict, bare.method, bare.confidence,
+         bare.evidence_refs, bare.check_item_candidates)
+    # 合成断言移入rationale(信息不丢弃)+原主题错位描述保留
+    assert "主题错位" in result.rationale
+    assert "疑似从其他用例复制" in result.rationale
+    assert bare.claim_text in result.rationale
+
+
+def test_topic_mismatch_answer_without_relation_keeps_synthesis() -> None:
+    """answer无关联文本(用例名/提示文本均不在answer中)→保持合成断言."""
+    statements = _statements(CACHE_UPDATE_TABLE_HTML, "ev-topic")
+    results = check_e1_topic_mismatch(
+        statements, answer="数据库连接的端口号是多少。")
+    assert len(results) == 1
+    assert results[0].span is None
+    assert results[0].claim_text == \
+        "用例缓存更新的E1提示内容与该用例主题一致"
+
+
 def test_topic_mismatch_real_frozen_evidence_clean() -> None:
     """真实S1QA-021/028证据的主题检查零误报(提示词均命中用例主题)."""
     for instance_id in ("S1QA-021", "S1QA-028"):

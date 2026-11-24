@@ -17,8 +17,11 @@
   not_in_evidence  scope用例无证据用例表, 或用例表无异常流行, 或E1行未声明
                    提示内容/处置使声称无法核对
 
-证据侧文档违例检测(与answer无关): E1提示内容关键词与所在用例主题(用例名+
-主事件流/动作约束文本)无重合 → 主题错位(疑似跨用例复制), refute.
+证据侧文档违例检测(与answer判定无关): E1提示内容关键词与所在用例主题(用例名+
+主事件流/动作约束文本)无重合 → 主题错位(疑似跨用例复制), refute. 字面忠实
+修复(E1弱点#1): 该文档侧refute的claim_text锚定到answer逐字引用(用例名/
+提示文本在answer中的最小覆盖span, answer_anchor.anchor_claim), 原合成断言
+移入rationale——判定verdict/检出逻辑不动.
 
 关键词宽容匹配: 双边去掉通用词(系统/用户/提示/失败/错误等)后取字符二元组
 求交集——"连接错误"与"连接失败"经"连接"重合 → keyword匹配(S1QA-021锚点,
@@ -38,6 +41,7 @@ import re
 from dataclasses import dataclass, replace
 from typing import Literal
 
+from algorithms.consistency.answer_anchor import anchor_claim
 from algorithms.consistency.answer_structure import (
     StructuredClaim,
     decompose_answer,
@@ -344,13 +348,20 @@ def _topic_pool(statements: list[EvidenceStatement],
 
 def check_e1_topic_mismatch(
         statements: list[EvidenceStatement],
-        templates: list[E1Template] | None = None) -> list[ClaimResult]:
+        templates: list[E1Template] | None = None,
+        answer: str = "") -> list[ClaimResult]:
     """证据侧检查: E1提示关键词与所在用例主题词无重合 → 主题错位refute.
 
     主题词池 = 用例名 + 该scope的主事件流(Actor的动作/系统的动作/动作
     约束)文本; 真实锚点: 二维数组输出E1"获取失败"命中其主事件流"如果
     获取失败"→不误报, 构造锚点: 缓存更新用例的E1"系统提示初始化"→
     主题错位可检测.
+
+    answer非空时(字面忠实修复, E1弱点#1): 每条主题错位refute的claim_text
+    改为answer逐字引用——违例标识词元(用例名+E1提示文本)在answer中的
+    最小覆盖span, answer[start:end]==claim_text; 原合成断言移入rationale
+    (判定锚点变逐字, verdict/检出逻辑不动). answer无关联文本(用例名与
+    提示文本均不在answer中)时保持合成断言, 由E1评测如实计为字面残余.
     """
     if templates is None:
         templates = extract_e1_templates(statements)
@@ -361,7 +372,7 @@ def check_e1_topic_mismatch(
         pool = _keywords(_topic_pool(statements, template.use_case_name))
         prompt_kw = _keywords(template.prompt)
         if prompt_kw and pool and not prompt_kw & pool:
-            results.append(ClaimResult(
+            claim = ClaimResult(
                 claim_id="",
                 claim_text=(f"用例{template.use_case_name}的{template.e1_id}"
                             f"提示内容与该用例主题一致"),
@@ -375,7 +386,10 @@ def check_e1_topic_mismatch(
                            f"（LOGIC-02）"),
                 method=METHOD,
                 confidence=_cfg().conf_topic,
-            ))
+            )
+            results.append(anchor_claim(
+                claim, answer,
+                (template.use_case_name, template.prompt or "")))
     return results
 
 
@@ -657,7 +671,8 @@ def verify_e1_consistency(
     structured = (claims if claims is not None
                   else decompose_answer(request.answer, request.question))
     templates = extract_e1_templates(statements)
-    doc_results = check_e1_topic_mismatch(statements, templates)
+    doc_results = check_e1_topic_mismatch(
+        statements, templates, request.answer)
     results: list[ClaimResult] = [
         replace(claim, claim_id=f"{request.instance_id}-e1d{index:02d}")
         for index, claim in enumerate(doc_results, start=1)]

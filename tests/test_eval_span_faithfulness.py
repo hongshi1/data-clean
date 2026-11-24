@@ -306,7 +306,9 @@ def test_gold_root_cause_covers_all_instances() -> None:
 
 def test_expert_eval_on_vio01_deterministic_snapshot() -> None:
     """DOC04-VIO-01: refute, 4 cited块(2命中gold), P=0.5 R=1.0,
-    根因any-hit; e1通道claim_text为合成断言→answer侧span缺失(absent)."""
+    根因any-hit; 字面忠实修复(E1弱点#1)后e1d01定位claim_text锚定
+    answer逐字引用(用例名/提示文本最小覆盖span)→两条定位均span_exact
+    (修复前e1定位为合成断言text_absent, 13/23=0.5652的损失成分)."""
     row = ROWS[0]
     assert row["instance_id"] == "DOC04-VIO-01"
     module = QAConsistencyModule(use_experts=True)
@@ -327,14 +329,14 @@ def test_expert_eval_on_vio01_deterministic_snapshot() -> None:
     assert "dual_registration" in detail["root_cause"][
         "predicted_operations"]
     assert detail["root_cause"]["operation_any_hit"] is True
-    # 字面忠实: id_join定位span精确; e1定位claim_text为合成断言
-    # (非answer逐字) → text_absent(quote不在answer)
+    # 字面忠实(修复后): id_join定位span精确; e1d01定位claim_text=
+    # answer[0:14]『连接池配置用例和连接池初始化』逐字引用→span_exact
     assert detail["literal"]["n_localizations"] == 2
     assert detail["literal"]["answer_side_states"] == \
-        ["span_exact", "text_absent"]
-    assert detail["literal"]["n_answer_faithful"] == 1
-    assert detail["literal"]["n_span_exact"] == 1
-    assert detail["literal"]["n_literal_faithful"] == 1
+        ["span_exact", "span_exact"]
+    assert detail["literal"]["n_answer_faithful"] == 2
+    assert detail["literal"]["n_span_exact"] == 2
+    assert detail["literal"]["n_literal_faithful"] == 2
     assert detail["literal"]["n_refs_ok"] == 2
     # 锚点重叠: 4个cited块中3个含target_keywords(LJCCSH/LJCPZ)
     assert detail["anchor_overlap"]["n_cited_with_keyword"] == 3
