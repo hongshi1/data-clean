@@ -334,17 +334,35 @@ class QAConsistencyModule:
         前端, 域内有真实增益但typed通道跨域为负资产);
         "sentence" = decompose_claims_sentences纯句子/列表项切分
         (SummaC式域中立分解, refactor_matrix_v1.json实测跨文档档
-        配dominant_70聚合最优)."""
+        配dominant_70聚合最优);
+        "distilled_typed" (M119/99号P1) = claim→typed通道桥接
+        (claim_typed_bridge.bridge_decompose_claims): 切分器v2做粗
+        分解(SRE), 每个claim span上运行typed字段抽取使typed通道拿到
+        子claim级证据对齐(SAE, Alignment Bottleneck 2602.10380的修复
+        形态), 未命中typed字段的claim回退verify_semantic. 模型不可用
+        时显式抛RuntimeError(不静默降级). M119实证(test46): 下游=
+        裸切分器(strict 0.5789/assertive 0.7496, 未超typed基线
+        0.8047——typed字段在切分器O区+叙事原子非NLI可判, 见
+        claim_typed_bridge模块docstring), claim识别F1
+        0.6975@dev45/0.7880@d3train600(≥0.60达标)."""
         if aggregation not in AGGREGATION_VARIANTS:
             raise ValueError(
                 f"aggregation must be one of {AGGREGATION_VARIANTS}, "
                 f"got {aggregation!r}")
-        if decomposer not in ("typed", "sentence"):
+        if decomposer not in ("typed", "sentence", "distilled_typed"):
             raise ValueError(
-                f"decomposer must be 'typed' or 'sentence', "
-                f"got {decomposer!r}")
-        self._decomposer = (decompose_claims if decomposer == "typed"
-                            else decompose_claims_sentences)
+                f"decomposer must be 'typed', 'sentence' or "
+                f"'distilled_typed', got {decomposer!r}")
+        if decomposer == "typed":
+            self._decomposer = decompose_claims
+        elif decomposer == "sentence":
+            self._decomposer = decompose_claims_sentences
+        else:  # distilled_typed: claim→typed通道桥接(M119/99号P1)
+            # 惰性import: 默认import图零变化(claim_typed_bridge顶层
+            # 零I/O, 切分器模型加载在首条verify时才发生)
+            from algorithms.consistency.claim_typed_bridge import (
+                bridge_decompose_claims)
+            self._decomposer = bridge_decompose_claims
         self.semantic_nli = semantic_nli
         self.nli_contra_threshold = nli_contra_threshold
         self.nli_entail_threshold = nli_entail_threshold

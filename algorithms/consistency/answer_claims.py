@@ -61,6 +61,13 @@ _QUOTED = re.compile(r"[「\"]([^「」\"]{2,80})[」\"]")
 #: ``QAConsistencyModule._NEGATIVE`` class attribute)
 _NEGATIVE = re.compile(r"(?:不包括|不包含|不支持|没有|不存在|未定义|不允许)")
 
+#: 数值问句门控词表(模块级常量: claim_typed_bridge的span级抽取复用同一
+#: 门控, 保证桥接claim与整答案typed抽取的问句语义一致; M119 P1)
+_NUMERIC_QUESTION_TERMS: tuple[str, ...] = (
+    "多少", "时延", "延迟", "周期", "频率", "间隔",
+    "阈值", "门限", "上限", "下限", "容量", "时长",
+    "精度", "误差", "内存", "带宽", "占用")
+
 
 def _attribute_before(text: str, start: int) -> str:
     before = text[max(0, start - 48):start].rstrip()
@@ -128,9 +135,7 @@ def decompose_claims(question: str, answer: str) -> list[AnswerClaim]:
     # M103审计: 全量路由表惰性0/213翻转, 此门为唯一活跃消费点)
     numeric_question = any(
         term in re.sub(r"\s+", "", question)
-        for term in ("多少", "时延", "延迟", "周期", "频率", "间隔",
-                     "阈值", "门限", "上限", "下限", "容量", "时长",
-                     "精度", "误差", "内存", "带宽", "占用"))
+        for term in _NUMERIC_QUESTION_TERMS)
     if numeric_question:
         values = list(_ANSWER_NUMBER.finditer(answer))
         subject = question_numeric_subject(question)
