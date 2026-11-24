@@ -22,7 +22,6 @@ BASE = Path(__file__).resolve().parents[2]
 # ═══ 共享: 声明解析(常识层, 非领域等价约定) ═══
 OP_LE = ("不大于", "不超过", "不高于", "小于等于", "≤", "以下", "最多", "至多")
 OP_GE = ("不小于", "不少于", "不低于", "大于等于", "≥", "以上", "至少", "最低")
-OP_EQ = ("为", "等于", "=", "是")
 UNIT_TO_BASE = {
     "ms": ("time", 1.0), "毫秒": ("time", 1.0), "s": ("time", 1000.0), "秒": ("time", 1000.0),
     "min": ("time", 60000.0), "分钟": ("time", 60000.0), "h": ("time", 3600000.0), "小时": ("time", 3600000.0),
@@ -188,12 +187,6 @@ def baseline_gjb_engine(premise: str, hypothesis: str) -> str:
     return "consistent"
 
 
-# ═══ F族: 语义残差的词面兜底(NLI零样本另列) ═══
-def baseline_lexical(premise: str, hypothesis: str) -> str:
-    ratio = difflib.SequenceMatcher(None, premise, hypothesis).ratio()
-    return "inconsistent" if ratio < 0.9 else "consistent"
-
-
 # ═══ QG-QA round-trip (DROP式, 无领域等价约定) ═══
 _QG_NUM = re.compile(r"([\u4e00-\u9fa5A-Za-z]{2,10})\s*(?:的)?\s*"
                      r"(不大于|不超过|不高于|不小于|不少于|不低于|为|等于|至少|最多|≤|≥|=)\s*"
@@ -234,63 +227,3 @@ def cascade_rules_nli(premise: str, hypothesis: str, nli_fn: Callable[[str, str]
     if baseline_gjb_engine(premise, hypothesis) == "inconsistent":
         return "inconsistent"
     return nli_fn(premise, hypothesis)
-
-
-# ═══ B族: 序列环检测(TL;QR式神经符号前端, 无κ3豁免) ═══
-_NUM_ANCHOR = re.compile(r"(?<![\d.表图节章第页卷])(\d{1,2})、")
-
-
-def _extract_seq(text: str) -> list[str]:
-    """有序序列提取: 编号条目优先, 退回顿号列表(取首token)."""
-    anchors = list(_NUM_ANCHOR.finditer(text))
-    if len(anchors) >= 2:
-        seq = []
-        for k, m in enumerate(anchors):
-            end = anchors[k + 1].start() if k + 1 < len(anchors) else min(len(text), m.end() + 200)
-            token = text[m.end():end].split("、")[0].strip("。：，； ")[:20]
-            if token:
-                seq.append(token)
-        return seq
-    seq = []
-    for raw in _LIST.findall(text):
-        seq.extend(x.strip()[:20] for x in raw.split("、") if len(x.strip()) >= 2)
-    return seq
-
-
-def baseline_order_cycle(premise: str, hypothesis: str) -> str:
-    """公共项相对顺序反转检测(合并偏序图环检测的等价简化).
-
-    无κ3无序豁免: 任何公共项顺序差都判矛盾(区别于我方通道的语境判定).
-    弃权(无序列可提取) → consistent.
-    """
-    ps, hs = _extract_seq(premise), _extract_seq(hypothesis)
-    if len(ps) < 2 or len(hs) < 2:
-        return "consistent"
-    # 编号标签序列比对(编号随条目走的对调)
-    p_anchors = [m.group(1) for m in _NUM_ANCHOR.finditer(premise)]
-    h_anchors = [m.group(1) for m in _NUM_ANCHOR.finditer(hypothesis)]
-    if (len(p_anchors) >= 2 and len(h_anchors) >= 2
-            and len(set(p_anchors)) == len(p_anchors)
-            and len(set(h_anchors)) == len(h_anchors)
-            and set(p_anchors) == set(h_anchors) and p_anchors != h_anchors):
-        return "inconsistent"
-    # 公共项相对顺序反转(合并图有环)
-    common = [x for x in ps if x in hs]
-    if len(common) >= 2:
-        pos_in_h = [hs.index(x) for x in common]
-        if pos_in_h != sorted(pos_in_h):
-            return "inconsistent"
-    return "consistent"
-
-
-# ═══ 注册表: 分派模式(每族用其专家) ═══
-# B族分派保持LCS(0.657): B金标异构(顺序对调+同表位内容差),
-# LCS的集合差检测覆盖后者; order_cycle(0.433)只覆盖顺序形态, 作矩阵补充行
-FAMILY_BASELINES: dict[str, Callable[[str, str], str]] = {
-    "A": baseline_z3,
-    "B": baseline_lcs,
-    "C": baseline_set,
-    "D": baseline_editdist_lex,
-    "E": baseline_gjb_engine,
-    "F": baseline_lexical,
-}

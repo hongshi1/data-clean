@@ -22,8 +22,6 @@ import os
 import re
 import sys
 
-import numpy as np
-
 BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 sys.path.insert(0, BASE)
 
@@ -169,39 +167,6 @@ class KGContextMatcher:
                     "doc": a.get("doc", ""),
                 })
         return results[:10]
-
-    # ── 通道④: 向量检索 ───────────────────────────────────
-    def channel_vector(self, name, top_k=10):
-        """实体名 → 语义相似chunks (用chunk的embedding)"""
-        try:
-            from sentence_transformers import SentenceTransformer
-            model = SentenceTransformer("BAAI/bge-small-zh-v1.5")
-            q_emb = model.encode([name], normalize_embeddings=True)[0]
-
-            # 加载vdb_chunks
-            vdb = json.loads(open(os.path.join(self.lightrag_store, "vdb_chunks.json")).read())
-            data = vdb.get("data", [])
-            results = []
-            for item in data:
-                cid = item.get("id", item.get("chunk_id", ""))
-                vec_b64 = item.get("vector", "")
-                if not vec_b64:
-                    continue
-                import base64
-                import zlib
-                vec = np.frombuffer(zlib.decompress(base64.b64decode(vec_b64)), dtype=np.float16).astype(np.float32)
-                sim = float(np.dot(q_emb, vec))
-                if sim > 0.3:
-                    c = self.lr_text_chunks.get(cid, {})
-                    results.append({
-                        "chunk_id": cid,
-                        "score": round(sim, 3),
-                        "content": c.get("content", "")[:120],
-                    })
-            results.sort(key=lambda x: x["score"], reverse=True)
-            return results[:top_k]
-        except Exception as e:
-            return [{"error": str(e)}]
 
     # ── 融合: 聚合条目 ────────────────────────────────────
     def aggregate(self, query, entity_id=None):

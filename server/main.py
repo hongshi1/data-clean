@@ -4,15 +4,17 @@
 
 端点:
   GET  /api/docs                     文档列表
-  GET  /api/graph/{doc_num}          完整文档图谱(浏览模式)
   POST /api/activate                 question → 径向激活子图(召回模式)
   GET  /api/qa                       QA列表(分页+筛选)
-  GET  /api/qa/{qa_id}               QA详情
   GET  /api/assets/{doc_num}/{path}  静态资源(图片等)
-  GET  /api/knw                      知识规则registry
+  GET  /api/section/{doc_num}/{section}   章节正文
+  GET  /api/table/{doc_num}          表格HTML
+  GET  /api/mermaid/{doc_num}/{fig_num}  Mermaid导出
+  GET  /api/datasets / POST /api/upload  上传数据集(轻量TXT图谱)
   GET  /api/verify/qa_list           91条冻结QA轻量列表(scene1)
   POST /api/verify_qa/{instance_id}  按id校验冻结QA(preset/scene可选)
   POST /api/verify                   请求级QA校验(证据由调用方提供)
+  (check三接口见 server/check_service.py; 场景5见 /api/scenario5/*)
 
 启动: python server/main.py  (或 uvicorn server.main:app --port 8300)
 """
@@ -59,8 +61,6 @@ SILVER_LABELS_PATH = (
 app = FastAPI(title="SRS上下文关联图谱平台", version="0.2.0")
 from server.check_service import router as _check_router  # noqa: E402
 app.include_router(_check_router)
-from server.recall_analysis import router as _recall_router  # noqa: E402
-app.include_router(_recall_router)
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
@@ -439,22 +439,6 @@ def list_docs():
     }
 
 
-@app.get("/api/graph/{doc_num}")
-def get_graph(doc_num: str, node_types: str | None = Query(None)):
-    g = CG.docs.get(doc_num)
-    if not g:
-        raise HTTPException(404, f"文档{doc_num}不存在")
-    out = dict(g)
-    if node_types:
-        keep = set(node_types.split(","))
-        nodes = [n for n in g["nodes"] if n["type"] in keep]
-        ids = {n["id"] for n in nodes}
-        out["nodes"] = nodes
-        out["edges"] = [e for e in g["edges"] if e["s"] in ids and e["t"] in ids]
-        out["meta"] = dict(g["meta"], n_nodes=len(nodes))
-    return out
-
-
 @app.post("/api/activate")
 def activate(req: ActivateReq):
     r = CG.activate(req.question, doc_num=req.doc, k=req.k,
@@ -483,21 +467,6 @@ def list_qa(q: str | None = None, scenario: str | None = None,
     start = (page - 1) * page_size
     return {"total": total, "page": page, "page_size": page_size,
             "items": items[start:start + page_size]}
-
-
-@app.get("/api/qa/{qa_id}")
-def get_qa(qa_id: str):
-    for x in QA_ALL:
-        if x.get("id") == qa_id:
-            return x
-    raise HTTPException(404, f"QA {qa_id} 不存在")
-
-
-@app.get("/api/knw")
-def list_knw():
-    if CG.global_g:
-        return {"registry": CG.global_g.get("knw_registry", [])}
-    return {"registry": []}
 
 
 @app.get("/api/assets/{doc_num}/{file_path:path}")

@@ -120,10 +120,6 @@ class GroundingFeatures:
     #: 诊断字段(不进评分): ID在场的证据绑定段数
     n_hit_segments: int = 0
 
-    def as_vector(self) -> tuple[float, float, float, float]:
-        return (self.subject_bind_ratio, self.predicate_hit_ratio,
-                self.id_block_ratio, self.subject_id_proximity)
-
     def as_dict(self) -> dict[str, float | int]:
         return {
             "subject_bind_ratio": self.subject_bind_ratio,

@@ -614,48 +614,6 @@ def _new_check(scene: str, qa_pairs: list[QaPair],
 router = APIRouter()
 
 
-@router.post("/api/ner")
-def extract_ner(body: dict) -> dict:
-    """POST /api/ner: 查询文本→NER实体列表(用于召回前的实体可视化).
-
-    轻量端点(正则+词典匹配, 零模型, 毫秒级):
-    返回 [{text, kind, kind_zh, recall_channel, color, start, end}]
-    kind: pzxq_id(项目唯一标识符→ID-Graph硬桥) / domain_term(领域
-    术语→Lexical/BM25) / chinese(中文实体→BM25/Dense) / mixed(混合).
-    """
-    from fastapi import Body as _Body  # noqa: F401
-    text = str(body.get("text", "")).strip()
-    if not text:
-        return {"ok": True, "data": {"entities": []}}
-    from algorithms.consistency.entity_detector import extract_entities
-    from algorithms.consistency.ner_lexicon import load_lexicon
-    directory = KNOWLEDGE_DIR / "scene1"
-    lexicon_path = (directory / "lexicon.json"
-                    if (directory / "lexicon.json").exists()
-                    else BASE / "config/ner_lexicons/srs_scene1.json")
-    lexicon = load_lexicon(lexicon_path)
-    entities = extract_entities(text, lexicon)
-    kind_meta = {
-        "pzxq_id": ("项目唯一标识符", "ID-Graph硬桥", "#6366f1"),
-        "domain_term": ("领域术语", "Lexical/BM25", "#059669"),
-        "chinese": ("中文实体", "BM25/Dense", "#d97706"),
-        "mixed": ("混合实体", "BM25/Dense", "#0891b2"),
-    }
-    out = []
-    for e in entities:
-        meta = kind_meta.get(e.kind, ("其他", "多通道", "#64748b"))
-        out.append({
-            "text": e.surface,
-            "kind": e.kind,
-            "kind_zh": meta[0],
-            "recall_channel": meta[1],
-            "color": meta[2],
-            "start": e.start,
-            "end": e.end,
-        })
-    return {"ok": True, "data": {"entities": out}}
-
-
 def _validate_qa_pairs(qa_pairs: list[QaPair]) -> None:
     if not qa_pairs:
         raise HTTPException(400, "qa_pairs缺失或为空")
