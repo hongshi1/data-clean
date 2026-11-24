@@ -98,9 +98,38 @@ Phase 3 范式升级（各半天-一周, 可并行）
 
 E1/E2基线全部锁定（详见runs/eval_span_faithfulness_61449821与
 eval_ablation_flip_de9cd555）。六项系统弱点入册，最重要的是：
-- 两通道claim_text合成断言→43%字面不忠实损失
+- ~~两通道claim_text合成断言→43%字面不忠实损失~~（已修复，见下方
+  "E1字面忠实修复"条目——**基线刷新至0.8696**）
 - D3学生copy精度0/4（quote逐字但区间全错）
 - 引用欠覆盖（enum判定依赖未引用块）
+
+### E1字面忠实修复（E1弱点#1，2026-11-24）：✅ 完成——基线刷新
+
+e1_template_match/trace_bidirectional_join两通道的文档侧违例（主题
+错位/正逆矛盾/锚点失效/同行矛盾）claim_text原为合成断言（拼接文本），
+answer侧完全不可定位。修复（algorithms/consistency/answer_anchor.py）：
+claim_text锚定answer逐字引用——违例标识词元（用例名/E1提示文本/追踪
+章节号）在answer中的最小覆盖span，字面契约answer[span]==text；原合成
+断言移入rationale（解释信息不丢弃）；verdict/method/confidence/
+evidence_refs全部不动（判定逻辑零变更）。
+
+**验收（三步，tools/verify_e1_fix_acceptance.py对照两个run）**：
+- 修复前基线复现：字面忠实 **13/23=0.5652**
+- 修复后（**基线刷新**，Phase 2 Step 4验收以此为准）：
+  **20/23=0.8696**（runs/eval_span_faithfulness_add8863a_20261124_163132）
+  citation P/R（macro 0.8021/0.8792/0.8275, micro 0.7297/0.7941）、
+  根因any-hit 12/16、锚点重叠29/37全部逐位不变
+- 判定无回归：violations-17检出16/17逐位不变
+  （runs/eval_violations_664fe616_20261124_163147，summary全字段
+  一致）；91QA deterministic 0.9121/0.7212逐位不变
+  （result.json全字段+per_row全行一致；91QA集零文档侧e1/trace触发）
+
+**残余3/23字面损失（诚实口径）**：VIO-10-trace02/VIO-11-trace01/
+VIO-12-trace01——文档内违例（表81 row20同行矛盾/3.2.4正逆矛盾）的
+违例章节号在answer中零提及，answer侧无关联文本可锚定。根因=这三项
+文档侧检查本身不依赖answer（纯文档内缺陷检测），answer只覆盖查询的
+目标行；除非强行把定位锚到无关answer片段（造假），不可逐字锚定。
+
 
 ### P1桥接（Agent B，M123）：❌ 未达标 + 重大科学发现
 
