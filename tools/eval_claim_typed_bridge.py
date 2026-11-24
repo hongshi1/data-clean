@@ -65,6 +65,8 @@ NLI_MODEL_PATH = "models/nli/distilled_v1"
 NLI_GATE = 0.8
 SEG_V2 = "models/segmenter/claim_segmenter_v2"
 BOUNDARY_GATE = 0.75
+#: 当前评测的切分器(默认v2向后兼容; --segmenter覆盖, 103号P1-v2用v3)
+SEG_ACTIVE = SEG_V2
 #: 已知基线(claim_downstream_v2.json, 复现校验)
 KNOWN = {
     "A_regex": {"accuracy": 0.913, "macro_f1": 0.8047},
@@ -191,7 +193,8 @@ def bridge_predict(question: str, answer: str) -> list[dict[str, Any]]:
     """桥接claim全集 → 识别评测预测格式({text, span})."""
     return [{"text": claim.text,
              "span": list(claim.span) if claim.span else None}
-            for claim in bridge_decompose_claims(question, answer)]
+            for claim in bridge_decompose_claims(
+                question, answer, model_path=SEG_ACTIVE)]
 
 
 def seg_predict(question: str, answer: str) -> list[dict[str, Any]]:
@@ -199,7 +202,7 @@ def seg_predict(question: str, answer: str) -> list[dict[str, Any]]:
     return [{"text": claim.text,
              "span": list(claim.span) if claim.span else None}
             for claim in distilled_decompose_claims(
-                question, answer, model_path=SEG_V2,
+                question, answer, model_path=SEG_ACTIVE,
                 boundary_gate=BOUNDARY_GATE)]
 
 
@@ -224,11 +227,20 @@ def recognition_eval() -> dict[str, Any]:
 
 
 def main() -> None:
+    global SEG_ACTIVE
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skip-recognition", action="store_true",
                         help="跳过claim识别F1(仅下游三臂)")
+    parser.add_argument("--segmenter", type=str, default=SEG_V2,
+                        help="切分器模型路径(默认v2; 103号P1-v2实验用"
+                             " models/segmenter/claim_segmenter_v3)")
     args = parser.parse_args()
+    SEG_ACTIVE = args.segmenter
+    # arm标签从模型路径派生(claim_segmenter_v3/v4/...), 兜底v2
+    seg_tag = (SEG_ACTIVE.rstrip("/\\").rsplit("_", 1)[-1]
+               if SEG_ACTIVE != SEG_V2 else "v2")
+    is_v3 = seg_tag != "v2"
 
     records = load_test46()
     labels = load_silver_labels(SILVER)
@@ -237,16 +249,22 @@ def main() -> None:
     if missing:
         raise ValueError(f"test46缺标签实例: {missing[:5]}")
     print(f"test46: {len(records)}条; labels: {len(labels)}")
-    print("segmenter_v2 status:", load_status(SEG_V2))
+    print(f"segmenter[{seg_tag}] status:", load_status(SEG_ACTIVE))
 
-    def seg_v2_decompose(question: str, answer: str) -> list[Any]:
-        return distilled_decompose_claims(question, answer, model_path=SEG_V2,
+    def seg_decompose(question: str, answer: str) -> list[Any]:
+        return distilled_decompose_claims(question, answer,
+                                          model_path=SEG_ACTIVE,
                                           boundary_gate=BOUNDARY_GATE)
+
+    def bridge_v_decompose(question: str, answer: str) -> list[Any]:
+        return bridge_decompose_claims(question, answer,
+                                       model_path=SEG_ACTIVE)
 
     arms: list[tuple[str, DecomposeFn, bool, str]] = [
         ("A_regex", qa_module.decompose_claims, False, "typed"),
-        ("B_seg_v2_bare", seg_v2_decompose, True, "typed"),
-        ("C_bridge", bridge_decompose_claims, False, "distilled_typed"),
+        (f"B_seg_{seg_tag}_bare", seg_decompose, True, "typed"),
+        (f"C_bridge_{seg_tag}", bridge_v_decompose, False,
+         "distilled_typed"),
     ]
     results: dict[str, Any] = {}
     for name, decompose, patch, mode in arms:
@@ -258,31 +276,34 @@ def main() -> None:
                     == KNOWN["A_regex"]["accuracy"]
                     and results["A_regex"]["strict"]["metrics"]["macro_f1"]
                     == KNOWN["A_regex"]["macro_f1"]),
-        "B_seg_v2_strict": (
+    }
+    if not is_v3:
+        repro["B_seg_v2_strict"] = (
             results["B_seg_v2_bare"]["strict"]["metrics"]["accuracy"]
             == KNOWN["B_seg_v2_strict"]["accuracy"]
             and results["B_seg_v2_bare"]["strict"]["metrics"]["macro_f1"]
-            == KNOWN["B_seg_v2_strict"]["macro_f1"]),
-        "B_seg_v2_assertive_strict": (
+            == KNOWN["B_seg_v2_strict"]["macro_f1"])
+        repro["B_seg_v2_assertive_strict"] = (
             results["B_seg_v2_bare"]["assertive_strict"]["metrics"][
                 "accuracy"]
             == KNOWN["B_seg_v2_assertive_strict"]["accuracy"]
             and results["B_seg_v2_bare"]["assertive_strict"]["metrics"][
                 "macro_f1"]
-            == KNOWN["B_seg_v2_assertive_strict"]["macro_f1"]),
-    }
+            == KNOWN["B_seg_v2_assertive_strict"]["macro_f1"])
 
     recognition: dict[str, Any] = {}
     if not args.skip_recognition:
         recognition = recognition_eval()
-        for name, expect in KNOWN_RECOG.items():
-            if name in recognition:
-                got = recognition[name]["segmenter_bare"]["claim_f1"]
-                repro[f"recog_segmenter_{name}"] = got == expect
+        if not is_v3:
+            # v2复现校验; v3的识别F1是新口径(混合标签训练)只记录不校验
+            for name, expect in KNOWN_RECOG.items():
+                if name in recognition:
+                    got = recognition[name]["segmenter_bare"]["claim_f1"]
+                    repro[f"recog_segmenter_{name}"] = got == expect
 
     report = {
-        "experiment": ("claim→typed通道桥接下游评测(99号P1): regex vs "
-                       "seg_v2_bare vs bridge on test46 (D3 pipeline)"),
+        "experiment": ("claim→typed通道桥接下游评测(99号P1/103号P1-v2): "
+                       "regex vs seg_bare vs bridge on test46 (D3 pipeline)"),
         "recorded": datetime.now().isoformat(timespec="seconds"),
         "git_sha": git_sha(),
         "config": {
@@ -291,15 +312,16 @@ def main() -> None:
             "nli_model_path": NLI_MODEL_PATH,
             "nli_gate": NLI_GATE,
             "aggregations": list(AGGREGATIONS),
-            "segmenter_v2": SEG_V2,
+            "segmenter": SEG_ACTIVE,
             "boundary_gate": BOUNDARY_GATE,
             "bridge": ("claim_typed_bridge.bridge_decompose_claims "
-                       f"(model={SEG_V2}, gate={BOUNDARY_GATE})"),
+                       f"(model={SEG_ACTIVE}, gate={BOUNDARY_GATE})"),
             "arms": {
                 "A_regex": "decomposer=typed(正则基线)",
-                "B_seg_v2_bare": "monkeypatch distilled_decompose_claims"
-                                 "(裸切分器, sanity)",
-                "C_bridge": "decomposer=distilled_typed(桥接)",
+                f"B_seg_{seg_tag}_bare": "monkeypatch "
+                                         "distilled_decompose_claims"
+                                         "(裸切分器, sanity)",
+                f"C_bridge_{seg_tag}": "decomposer=distilled_typed(桥接)",
             },
         },
         "isolation_note": ("L0/L1专家用answer_structure.decompose_answer"
@@ -315,7 +337,7 @@ def main() -> None:
         "n_test46": len(records),
         "arms": list(results),
         "aggregations": list(AGGREGATIONS),
-        "segmenter": SEG_V2,
+        "segmenter": SEG_ACTIVE,
         "boundary_gate": BOUNDARY_GATE,
         "skip_recognition": bool(args.skip_recognition),
     })
@@ -326,7 +348,8 @@ def main() -> None:
         print(f"-- aggregation={aggregation}")
         print(f"{'arm':<16s} {'acc':>7s} {'mF1':>7s} {'supF1':>6s} "
               f"{'refF1':>6s} {'nieF1':>6s} {'cl/inst':>8s} {'sec':>6s}")
-        for name in ("A_regex", "B_seg_v2_bare", "C_bridge"):
+        for name in ("A_regex", f"B_seg_{seg_tag}_bare",
+                     f"C_bridge_{seg_tag}"):
             m = results[name][aggregation]["metrics"]
             pc = m["per_class"]
             st = results[name]["claim_stats"]

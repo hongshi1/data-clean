@@ -330,14 +330,64 @@ def field_label_claims(question: str, answer: str) -> list[dict]:
 # ── 实例路由 + 混合标签构造 ──────────────────────────────────────────────────
 
 
-def convert_instance(record: dict) -> dict:
+def sentence_label_claims(question: str,
+                          answer: str) -> list[dict]:
+    """(question, answer) -> 全量A_regex claim标签(v4实验, 103号原始设计).
+
+    行为=蒸馏decompose_claims的完整输出: typed claim走field_label_claims
+    的主语归位流程, 句级semantic claim按span逐字恢复(不可恢复find回退,
+    都失败则in_answer=False由trainer跳过). 命题层修复: 叙事实例获得
+    句级claim(教师原子→A_regex句级), NLI可entail的完整命题.
+    """
+    out = list(field_label_claims(question, answer))
+    seen: set[tuple[str, tuple[int, int]]] = {
+        (c["text"], tuple(c["find_span"]))
+        for c in out if c.get("find_span")}
+    for claim in decompose_claims(question, answer):
+        if claim.kind in TYPED_KINDS:
+            continue  # typed已由field_label_claims归位处理
+        span: list[int] | None = None
+        if claim.span is not None and (
+                answer[claim.span[0]:claim.span[1]] == claim.text):
+            span = [claim.span[0], claim.span[1]]
+        else:
+            idx = answer.find(claim.text)
+            if idx >= 0:
+                span = [idx, idx + len(claim.text)]
+        key = (claim.text, tuple(span)) if span else (claim.text, ())
+        if span and key in seen:
+            continue
+        if span:
+            seen.add(key)
+        out.append({"text": claim.text, "type": claim.kind,
+                    "in_answer": span is not None,
+                    "find_span": span, "fused": False})
+    return out
+
+
+def convert_instance(record: dict,
+                     narrative_source: str = "teacher_atom") -> dict:
     """v2训练answer记录 -> 混合标签记录(field_distill | teacher_atom).
 
     typed命中且>=1条claim的span可用 -> field_distill(新标签);
-    否则(纯叙事/typed全不可定位) -> teacher_atom(教师claims原样).
+    否则(纯叙事/typed全不可定位) -> teacher_atom(教师claims原样)或
+    sentence(A_regex句级claim, v4实验的命题层修复).
     """
     question = str(record["question"])
     answer = str(record["answer"])
+    if narrative_source == "sentence":
+        claims = sentence_label_claims(question, answer)
+        return {
+            "instance_id": record["instance_id"],
+            "question": question,
+            "answer": answer,
+            "source": record.get("source", ""),
+            "label_source": "a_regex_full",
+            "claims": claims,
+            "llm_status": "ok",
+            "llm_model": "deterministic:answer_claims.decompose_claims",
+            "llm_calls": 0,
+        }
     field_claims = field_label_claims(question, answer)
     if field_claims and any(c["in_answer"] for c in field_claims):
         return {
@@ -358,9 +408,11 @@ def convert_instance(record: dict) -> dict:
     return label_record
 
 
-def build_mixed_labels(records: list[dict]) -> list[dict]:
+def build_mixed_labels(records: list[dict],
+                       narrative_source: str = "teacher_atom"
+                       ) -> list[dict]:
     """全部训练answer记录 -> 混合标签记录列表(确定性)."""
-    return [convert_instance(rec) for rec in records]
+    return [convert_instance(rec, narrative_source) for rec in records]
 
 
 # ── 统计与自检 ───────────────────────────────────────────────────────────────
@@ -569,6 +621,11 @@ def main() -> None:
     parser.add_argument("--out-json", type=Path, default=OUT_JSON)
     parser.add_argument("--samples", type=int, default=5,
                         help="字面契约抽检的field_distill实例数")
+    parser.add_argument("--narrative", choices=("teacher_atom", "sentence"),
+                        default="teacher_atom",
+                        help="叙事实例标签来源: teacher_atom(v1混合, "
+                             "默认) | sentence(v4实验——A_regex句级claim, "
+                             "103号原始设计的命题层修复)")
     parser.add_argument("--force", action="store_true",
                         help="输出文件已存在时强制覆盖(默认不覆盖写)")
     args = parser.parse_args()
@@ -580,7 +637,8 @@ def main() -> None:
     if not train_records:
         raise SystemExit(f"{args.train_data}无llm_status=ok训练answer")
 
-    label_records = build_mixed_labels(train_records)
+    label_records = build_mixed_labels(train_records,
+                                       narrative_source=args.narrative)
     stats = compute_stats(train_records, label_records)
     samples = _self_check_samples(label_records, args.samples)
     if samples and not all(s["all_verbatim"] for s in samples):

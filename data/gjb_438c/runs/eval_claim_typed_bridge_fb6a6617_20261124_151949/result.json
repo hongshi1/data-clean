@@ -1,0 +1,565 @@
+{
+ "experiment": "claim→typed通道桥接下游评测(99号P1/103号P1-v2): regex vs seg_bare vs bridge on test46 (D3 pipeline)",
+ "recorded": "2026-11-24T15:19:49",
+ "git_sha": "06d21cd7",
+ "config": {
+  "module": "QAConsistencyModule(use_experts=True, use_nli_residual=True)",
+  "nli_model_path": "models/nli/distilled_v1",
+  "nli_gate": 0.8,
+  "aggregations": [
+   "strict",
+   "assertive_strict"
+  ],
+  "segmenter": "models\\segmenter\\claim_segmenter_v4",
+  "boundary_gate": 0.75,
+  "bridge": "claim_typed_bridge.bridge_decompose_claims (model=models\\segmenter\\claim_segmenter_v4, gate=0.75)",
+  "arms": {
+   "A_regex": "decomposer=typed(正则基线)",
+   "B_seg_v3_bare": "monkeypatch distilled_decompose_claims(裸切分器, sanity)",
+   "C_bridge_v3": "decomposer=distilled_typed(桥接)"
+  }
+ },
+ "isolation_note": "L0/L1专家用answer_structure.decompose_answer(未patch); 只ablate per-claim分解通道",
+ "n": 46,
+ "known_baselines": {
+  "A_regex": {
+   "accuracy": 0.913,
+   "macro_f1": 0.8047
+  },
+  "B_seg_v2_strict": {
+   "accuracy": 0.8913,
+   "macro_f1": 0.5789
+  },
+  "B_seg_v2_assertive_strict": {
+   "accuracy": 0.913,
+   "macro_f1": 0.7496
+  }
+ },
+ "known_recognition": {
+  "dev45": 0.7041,
+  "d3train600": 0.7955
+ },
+ "reproduced": {
+  "A_regex": true
+ },
+ "results": {
+  "A_regex": {
+   "claim_stats": {
+    "n_instances": 46,
+    "n_claims": 225,
+    "claims_per_instance": 4.89,
+    "claim_len_avg": 31.3,
+    "claim_len_max": 134,
+    "claims_by_kind": {
+     "enum": 8,
+     "identifier": 17,
+     "numeric": 2,
+     "semantic": 198
+    }
+   },
+   "strict": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.8047,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.6667,
+       "f1": 0.6667
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.973,
+       "recall": 0.9231,
+       "f1": 0.9474
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 1,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_unavailable": false
+   },
+   "assertive_strict": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.8047,
+     "per_class": {
+      "support": {
+       "precision": 0.6667,
+       "recall": 0.6667,
+       "f1": 0.6667
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.973,
+       "recall": 0.9231,
+       "f1": 0.9474
+      }
+     },
+     "confusion": {
+      "support|support": 2,
+      "support|not_in_evidence": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 1,
+      "not_in_evidence|not_in_evidence": 36
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "refute",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "support",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_unavailable": false
+   },
+   "wall_seconds": 16.6
+  },
+  "B_seg_v3_bare": {
+   "claim_stats": {
+    "n_instances": 46,
+    "n_claims": 156,
+    "claims_per_instance": 3.39,
+    "claim_len_avg": 12.6,
+    "claim_len_max": 60,
+    "claims_by_kind": {
+     "semantic": 156
+    }
+   },
+   "strict": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.613,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.8,
+       "recall": 1.0,
+       "f1": 0.8889
+      },
+      "not_in_evidence": {
+       "precision": 0.9268,
+       "recall": 0.9744,
+       "f1": 0.95
+      }
+     },
+     "confusion": {
+      "refute|refute": 4,
+      "refute|not_in_evidence": 1,
+      "not_in_evidence|support": 3,
+      "not_in_evidence|not_in_evidence": 38
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "not_in_evidence",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_unavailable": false
+   },
+   "assertive_strict": {
+    "metrics": {
+     "accuracy": 0.9348,
+     "macro_f1": 0.7836,
+     "per_class": {
+      "support": {
+       "precision": 1.0,
+       "recall": 0.3333,
+       "f1": 0.5
+      },
+      "refute": {
+       "precision": 0.8,
+       "recall": 1.0,
+       "f1": 0.8889
+      },
+      "not_in_evidence": {
+       "precision": 0.95,
+       "recall": 0.9744,
+       "f1": 0.962
+      }
+     },
+     "confusion": {
+      "support|support": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 1,
+      "not_in_evidence|support": 2,
+      "not_in_evidence|not_in_evidence": 38
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "support",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "not_in_evidence",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "not_in_evidence"
+    },
+    "nli_unavailable": false
+   },
+   "wall_seconds": 4.9
+  },
+  "C_bridge_v3": {
+   "claim_stats": {
+    "n_instances": 46,
+    "n_claims": 156,
+    "claims_per_instance": 3.39,
+    "claim_len_avg": 12.5,
+    "claim_len_max": 60,
+    "claims_by_kind": {
+     "identifier": 1,
+     "semantic": 155
+    }
+   },
+   "strict": {
+    "metrics": {
+     "accuracy": 0.8913,
+     "macro_f1": 0.5789,
+     "per_class": {
+      "support": {
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.925,
+       "recall": 0.9487,
+       "f1": 0.9367
+      }
+     },
+     "confusion": {
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 3,
+      "not_in_evidence|not_in_evidence": 37
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "not_in_evidence",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "refute"
+    },
+    "nli_unavailable": false
+   },
+   "assertive_strict": {
+    "metrics": {
+     "accuracy": 0.913,
+     "macro_f1": 0.7496,
+     "per_class": {
+      "support": {
+       "precision": 1.0,
+       "recall": 0.3333,
+       "f1": 0.5
+      },
+      "refute": {
+       "precision": 0.6667,
+       "recall": 1.0,
+       "f1": 0.8
+      },
+      "not_in_evidence": {
+       "precision": 0.9487,
+       "recall": 0.9487,
+       "f1": 0.9487
+      }
+     },
+     "confusion": {
+      "support|support": 1,
+      "refute|refute": 4,
+      "refute|not_in_evidence": 2,
+      "not_in_evidence|support": 2,
+      "not_in_evidence|not_in_evidence": 37
+     }
+    },
+    "per_instance_verdicts": {
+     "S1QA-001": "not_in_evidence",
+     "S1QA-002": "not_in_evidence",
+     "S1QA-003": "not_in_evidence",
+     "S1QA-004": "not_in_evidence",
+     "S1QA-006": "not_in_evidence",
+     "S1QA-007": "not_in_evidence",
+     "S1QA-008": "not_in_evidence",
+     "S1QA-009": "not_in_evidence",
+     "S1QA-010": "not_in_evidence",
+     "S1QA-011": "not_in_evidence",
+     "S1QA-012": "not_in_evidence",
+     "S1QA-013": "not_in_evidence",
+     "S1QA-014": "not_in_evidence",
+     "S1QA-019": "not_in_evidence",
+     "S1QA-020": "refute",
+     "S1QA-022": "not_in_evidence",
+     "S1QA-023": "not_in_evidence",
+     "S1QA-024": "not_in_evidence",
+     "S1QA-026": "not_in_evidence",
+     "S1QA-027": "not_in_evidence",
+     "S1QA-028": "refute",
+     "S1QA-029": "not_in_evidence",
+     "S1QA-030": "not_in_evidence",
+     "S1QA-033": "not_in_evidence",
+     "S1QA-036": "not_in_evidence",
+     "S1QA-039": "not_in_evidence",
+     "S1QA-040": "not_in_evidence",
+     "S1QA-041": "not_in_evidence",
+     "S1QA-042": "not_in_evidence",
+     "S1QA-043": "not_in_evidence",
+     "S1QA-045": "not_in_evidence",
+     "S1QA-048": "not_in_evidence",
+     "S1QA-050": "not_in_evidence",
+     "S1QA-053": "support",
+     "S1QA-056": "refute",
+     "S1QA-063": "refute",
+     "S1QA-064": "not_in_evidence",
+     "S1QA-065": "not_in_evidence",
+     "S1QA-066": "not_in_evidence",
+     "S1QA-067": "not_in_evidence",
+     "S1QA-072": "not_in_evidence",
+     "S1QA-074": "refute",
+     "S1QA-076": "not_in_evidence",
+     "S1QA-085": "not_in_evidence",
+     "S1QA-086": "not_in_evidence",
+     "S1QA-087": "refute"
+    },
+    "nli_unavailable": false
+   },
+   "wall_seconds": 10.1
+  }
+ },
+ "recognition": {}
+}
