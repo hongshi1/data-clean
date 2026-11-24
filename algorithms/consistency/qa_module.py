@@ -43,6 +43,9 @@ from algorithms.consistency.claim_channels import (
 )
 from algorithms.consistency.evidence_statements import EvidenceStatement
 from algorithms.consistency.evidence_statements import linearize_context
+from algorithms.consistency.identifier_grounding import (
+    IdentifierGroundingJudge,
+)
 from algorithms.consistency.qa_models import (
     ClaimResult,
     EvidenceLocalization,
@@ -271,7 +274,9 @@ class QAConsistencyModule:
                  expert_filter: tuple[str, ...] | None = None,
                  fuse_per_claim: bool = True,
                  decomposer: str = "typed",
-                 aggregation: str = "strict") -> None:
+                 aggregation: str = "strict",
+                 identifier_grounding: IdentifierGroundingJudge | None = None,
+                 ) -> None:
         """semantic_nli: optional callable predict(pairs)->NLI labels for the
         residual semantic channel. Thresholds are calibrated on dev splits.
         use_deq: opt-in the detection-item-aware evidence quality pipeline
@@ -292,6 +297,16 @@ class QAConsistencyModule:
         egt_finetuned entry, the centralized path config).
         nli_gate: softmax max-probability gate for emitting a verdict
         (below it the claim stays NIE).
+        identifier_grounding: R2(99号Phase 3)——identifier通道的接地
+        校准器实例(IdentifierGroundingJudge, "predictor+阈值"的
+        SemanticNliJudge同模式)。注入后verify_identifier的support
+        置信度从恒定1.0变为校准的P(绑定|在场, context), 低于阈值降级
+        为保守NIE("在场但绑定不确定")。None(默认)=不注入=R2前行为
+        逐位一致(论文数字不动)。构造:
+        ``IdentifierGroundingJudge.from_config(default_rules().identifier_grounding)``
+        (校准产物在config/claim_channels_rules_v1.json的
+        channel_confidences.identifier_grounding节, 与内置回退逐值
+        相同)。
         whose reported confidence is below this stays NIE (see
         compatible). Exposed as a constructor parameter so held-out
         calibration can sweep it without touching the frozen prompt.
@@ -377,6 +392,7 @@ class QAConsistencyModule:
         self.fuse_per_claim = fuse_per_claim
         self.expert_filter = expert_filter
         self.aggregation = aggregation
+        self.identifier_grounding = identifier_grounding
 
     def verify(self, request: QAInput) -> VerificationResult:
         self._validate(request)
@@ -635,7 +651,8 @@ class QAConsistencyModule:
         if claim.kind == "enum":
             return verify_enum(request, claim, index, check_items)
         if claim.kind == "identifier":
-            return verify_identifier(request, claim, index, check_items)
+            return verify_identifier(request, claim, index, check_items,
+                                     grounding=self.identifier_grounding)
         judge = (SemanticNliJudge(self.semantic_nli,
                                   self.nli_contra_threshold,
                                   self.nli_entail_threshold)

@@ -12,6 +12,14 @@ frozen request plus one ``AnswerClaim`` and returns a ``ClaimResult``:
   NLI judge (``SemanticNliJudge`` carries the former instance state:
   the predictor callable and its two calibrated thresholds).
 
+R2 (99号Phase 3): ``verify_identifier`` accepts an optional injected
+:class:`~algorithms.consistency.identifier_grounding.IdentifierGroundingJudge`
+— the support path's confidence becomes the calibrated binding
+probability P(绑定|在场, context) and below-threshold cases downgrade to
+a conservative NIE. The scoring function itself lives outside this
+module (通道层保持确定性); the judge defaults to None = pre-R2 behavior
+bit-identical.
+
 Shared helpers (``interval`` / ``subset`` / ``disjoint`` /
 ``same_subject`` / ``unresolved``) are also module-level pure functions
 here. This layer is deterministic: no model calls except the explicitly
@@ -39,7 +47,7 @@ import warnings
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from algorithms.consistency.answer_claims import (
     _IDENTIFIER,
@@ -50,6 +58,9 @@ from algorithms.consistency.answer_structure import (
     decompose_answer,
     pair_statements,
 )
+from algorithms.consistency.identifier_grounding import (
+    IdentifierGroundingConfig,
+)
 from algorithms.consistency.qa_models import (
     ClaimResult,
     QAInput,
@@ -57,6 +68,11 @@ from algorithms.consistency.qa_models import (
     Verdict,
 )
 from algorithms.consistency.templates import normalize_op, normalize_unit
+
+if TYPE_CHECKING:  # R2: judge类型仅作签名契约(评分函数不进通道层)
+    from algorithms.consistency.identifier_grounding import (
+        IdentifierGroundingJudge,
+    )
 
 # ── E7规则外置: 配置文件 + 内置回退常量(双层保险) ──────────────────────
 #
@@ -113,9 +129,50 @@ _CLOSED_SCOPE_EXCLUSION_CONFIDENCE: float = 0.85
 #: 内置回退: nli_residual(残余NLI矛盾/蕴含)的置信度
 _NLI_RESIDUAL_CONFIDENCE: float = 0.9
 
+#: 内置回退: identifier接地概率化的校准配置(R2, 99号Phase 3/98号B类
+#: 切口①). 权重与阈值由 tools/calibrate_identifier_grounding.py 在误判
+#: 案例库(296例: d3_train interface_flow 257 + refute路径最小对孪生39,
+#: 排除评测文档04/06)上确定性校准(IRLS无随机源, 训练F1最大化阈值
+#: 0.4571@F1=0.8762); 与JSON的channel_confidences.identifier_grounding
+#: 逐值相同(双层保险, 等价性由tests/test_claim_channels_rules.py锁定).
+#: 通道默认不消费此配置——只有调用方显式注入 IdentifierGroundingJudge
+#: (qa_module的identifier_grounding参数)时生效(向后兼容, 论文数字不动).
+_IDENTIFIER_GROUNDING_THRESHOLD: float = 0.4571
+_IDENTIFIER_GROUNDING_W_SUBJECT_BIND: float = 0.5620
+_IDENTIFIER_GROUNDING_W_PREDICATE_HIT: float = 5.4590
+_IDENTIFIER_GROUNDING_W_ID_BLOCK: float = -0.6191
+_IDENTIFIER_GROUNDING_W_PROXIMITY: float = 1.2717
+_IDENTIFIER_GROUNDING_INTERCEPT: float = -5.7383
+
+#: 内置回退: predicate_glue词表(answer局部断言上下文的模板功能词,
+#: 命中不计入谓词一致性). 单独成常量便于测试逐值钉住.
+_IDENTIFIER_GROUNDING_GLUE: tuple[str, ...] = (
+    "通过接口", "通过", "实现", "由", "发送至", "发送", "用于",
+    "之间的", "之间", "信息交互", "采用", "保障", "并支持", "支持",
+    "提供", "的", "与", "并", "且", "将", "向", "至", "追溯至", "追溯",
+    "对应", "任务书", "目前", "处于", "已通过", "经过了", "经过", "已",
+    "经", "其", "中", "序号", "什么", "哪些", "是什么",
+)
+
+_IDENTIFIER_GROUNDING: IdentifierGroundingConfig = IdentifierGroundingConfig(
+    threshold=_IDENTIFIER_GROUNDING_THRESHOLD,
+    subject_bind_weight=_IDENTIFIER_GROUNDING_W_SUBJECT_BIND,
+    predicate_hit_weight=_IDENTIFIER_GROUNDING_W_PREDICATE_HIT,
+    id_block_weight=_IDENTIFIER_GROUNDING_W_ID_BLOCK,
+    proximity_weight=_IDENTIFIER_GROUNDING_W_PROXIMITY,
+    intercept=_IDENTIFIER_GROUNDING_INTERCEPT,
+    predicate_glue=_IDENTIFIER_GROUNDING_GLUE,
+)
+
 #: 残余NLI predictor contract: list of (statement, hypothesis)
 #: pairs -> NLI labels (dict with label/p_contra/p_entail or bare label)
 NliPredictor = Callable[[list[tuple[str, str]]], list]
+
+#: identifier接地配置的必填键(阈值/特征权重/胶水词表)
+_GROUNDING_WEIGHT_KEYS: tuple[str, ...] = (
+    "subject_bind_ratio", "predicate_hit_ratio",
+    "id_block_ratio", "subject_id_proximity", "intercept",
+)
 
 _REQUIRED_SECTIONS: tuple[str, ...] = (
     "explicit_negation", "slot_fields", "channel_patterns",
@@ -173,6 +230,10 @@ class ClaimChannelRules:
     nli_residual_confidence: float
     """nli_residual方法(残余NLI矛盾/蕴含)的置信度(原硬编码0.9)."""
 
+    identifier_grounding: IdentifierGroundingConfig
+    """identifier接地概率化配置(R2挂点, 通道默认不消费; 校准器经
+    IdentifierGroundingJudge.from_config构建后由调用方注入)."""
+
     description: str = field(default="", compare=False)
     """配置说明(仅文档用途, 不参与通道行为; 不参与等价比较)."""
 
@@ -201,6 +262,13 @@ class ClaimChannelRules:
                 "closed_scope_exclusion":
                     self.closed_scope_exclusion_confidence,
                 "nli_residual": self.nli_residual_confidence,
+                "identifier_grounding": {
+                    "threshold": self.identifier_grounding.threshold,
+                    "feature_weights":
+                        self.identifier_grounding.feature_weights(),
+                    "predicate_glue":
+                        list(self.identifier_grounding.predicate_glue),
+                },
             },
         }
 
@@ -220,6 +288,7 @@ class CompiledChannelRules:
     enum_member_min_len: int
     closed_scope_exclusion_confidence: float
     nli_residual_confidence: float
+    identifier_grounding: IdentifierGroundingConfig
 
 
 def _rules_error(path: Path, message: str) -> ValueError:
@@ -314,11 +383,54 @@ def _validate_threshold_section(path: Path, section: Any) -> None:
     _check_description(path, "channel_thresholds", section)
 
 
+def _validate_grounding_section(path: Path, section: Any) -> None:
+    """identifier_grounding配置节校验(阈值范围/权重键/胶水词表)."""
+    if not isinstance(section, dict):
+        raise _rules_error(
+            path, f"channel_confidences.identifier_grounding期望对象, "
+            f"实际{type(section).__name__}")
+    unknown = sorted(set(section)
+                     - {"threshold", "feature_weights", "predicate_glue",
+                        "description"})
+    if unknown:
+        raise _rules_error(
+            path, f"identifier_grounding未知字段 {unknown}")
+    threshold = section.get("threshold")
+    if (isinstance(threshold, bool) or not isinstance(threshold, (int, float))
+            or not 0.0 < float(threshold) < 1.0):
+        raise _rules_error(
+            path, f"identifier_grounding.threshold期望(0,1)内数值, "
+            f"实际{threshold!r}")
+    weights = section.get("feature_weights")
+    if not isinstance(weights, dict):
+        raise _rules_error(
+            path, "identifier_grounding.feature_weights期望对象")
+    missing_weights = [key for key in _GROUNDING_WEIGHT_KEYS
+                       if key not in weights]
+    if missing_weights:
+        raise _rules_error(
+            path, f"identifier_grounding.feature_weights缺失键 "
+            f"{missing_weights}")
+    for key in _GROUNDING_WEIGHT_KEYS:
+        value = weights[key]
+        if (isinstance(value, bool) or not isinstance(value, (int, float))):
+            raise _rules_error(
+                path, f"feature_weights.{key}期望数值, 实际{value!r}")
+    glue = section.get("predicate_glue")
+    if (not isinstance(glue, list) or not glue
+            or any(not isinstance(word, str) or not word.strip()
+                   for word in glue)):
+        raise _rules_error(
+            path, "identifier_grounding.predicate_glue期望非空字符串数组")
+    _check_description(path, "identifier_grounding", section)
+
+
 def _validate_confidence_section(path: Path, section: Any) -> None:
     if not isinstance(section, dict):
         raise _rules_error(
             path, f"'channel_confidences'期望对象, 实际{type(section).__name__}")
-    unknown = sorted(set(section) - set(_CONFIDENCE_KEYS) - {"description"})
+    unknown = sorted(set(section) - set(_CONFIDENCE_KEYS)
+                     - {"identifier_grounding", "description"})
     if unknown:
         raise _rules_error(path, f"'channel_confidences'未知字段 {unknown}")
     missing = [key for key in _CONFIDENCE_KEYS if key not in section]
@@ -330,6 +442,11 @@ def _validate_confidence_section(path: Path, section: Any) -> None:
                 or not 0.0 <= value <= 1.0):
             raise _rules_error(
                 path, f"channel_confidences.{key}期望[0,1]内数值, 实际{value!r}")
+    if "identifier_grounding" not in section:
+        raise _rules_error(
+            path, "channel_confidences.identifier_grounding缺失"
+            "(R2挂点; 校准配置, 通道默认不消费)")
+    _validate_grounding_section(path, section["identifier_grounding"])
     _check_description(path, "channel_confidences", section)
 
 
@@ -356,6 +473,20 @@ def _validate(path: Path, raw: Any) -> dict[str, Any]:
     _validate_threshold_section(path, raw["channel_thresholds"])
     _validate_confidence_section(path, raw["channel_confidences"])
     return raw
+
+
+def _grounding_from_section(
+        section: dict[str, Any]) -> IdentifierGroundingConfig:
+    weights = section["feature_weights"]
+    return IdentifierGroundingConfig(
+        threshold=float(section["threshold"]),
+        subject_bind_weight=float(weights["subject_bind_ratio"]),
+        predicate_hit_weight=float(weights["predicate_hit_ratio"]),
+        id_block_weight=float(weights["id_block_ratio"]),
+        proximity_weight=float(weights["subject_id_proximity"]),
+        intercept=float(weights["intercept"]),
+        predicate_glue=tuple(str(word) for word in section["predicate_glue"]),
+    )
 
 
 def load_rules(path: str | Path) -> ClaimChannelRules:
@@ -385,6 +516,8 @@ def load_rules(path: str | Path) -> ClaimChannelRules:
         closed_scope_exclusion_confidence=float(
             confidences["closed_scope_exclusion"]),
         nli_residual_confidence=float(confidences["nli_residual"]),
+        identifier_grounding=_grounding_from_section(
+            confidences["identifier_grounding"]),
         description=str(validated.get("description", "")),
     )
 
@@ -404,6 +537,7 @@ def compile_rules(rules: ClaimChannelRules) -> CompiledChannelRules:
         closed_scope_exclusion_confidence=(
             rules.closed_scope_exclusion_confidence),
         nli_residual_confidence=rules.nli_residual_confidence,
+        identifier_grounding=rules.identifier_grounding,
     )
 
 
@@ -432,6 +566,7 @@ def builtin_rules() -> ClaimChannelRules:
             closed_scope_exclusion_confidence=(
                 _CLOSED_SCOPE_EXCLUSION_CONFIDENCE),
             nli_residual_confidence=_NLI_RESIDUAL_CONFIDENCE,
+            identifier_grounding=_IDENTIFIER_GROUNDING,
         )
     return _BUILTIN_RULES
 
@@ -674,12 +809,29 @@ def verify_quoted(request: QAInput, claim: AnswerClaim,
 
 
 def verify_identifier(request: QAInput, claim: AnswerClaim,
-                      index: int, check_items: tuple[str, ...]) -> ClaimResult:
+                      index: int, check_items: tuple[str, ...],
+                      grounding: IdentifierGroundingJudge | None = None,
+                      ) -> ClaimResult:
     """Exact identifier matching against the frozen evidence (TERM-07).
 
     support: the answer identifier appears verbatim in the evidence.
     refute: the evidence states a different identifier for the same
     subject statement. Everything else stays NIE.
+
+    R2 (99号Phase 3, 98号B类切口①): when a grounding judge is injected,
+    the support path's confidence becomes the calibrated
+    P(binding | presence, context) instead of the constant 1.0 — the
+    "ID present ⇒ support@1.0" trust assumption is exactly what
+    C06QA-016/017 falsified (right detail, wrong entity). Contract:
+
+    - ``grounding=None`` (default): bit-identical to the pre-R2 channel;
+    - presence stays a necessary condition (absent → refute/NIE paths
+      unchanged);
+    - the same-subject-mismatch refute path stays deterministic 1.0
+      (B类代数本体不动);
+    - P < judge threshold → conservative NIE downgrade ("在场但绑定
+      不确定"——not a refute: failure to corroborate the binding is
+      uncertainty, not contradiction).
     """
     rules = default_rules()
     target = claim.text
@@ -692,16 +844,49 @@ def verify_identifier(request: QAInput, claim: AnswerClaim,
         if target in ev.text
     )
     if hit_refs:
+        if grounding is None:
+            return ClaimResult(
+                claim_id=f"{request.instance_id}-c{index:02d}",
+                claim_text=claim.text,
+                verdict="support",
+                check_item_candidates=check_items,
+                evidence_refs=hit_refs,
+                rationale="answer标识符在冻结context中精确出现",
+                method="identifier_exact_match",
+                confidence=1.0,
+                span=claim.span,
+            )
+        probability, features = grounding.grounding_probability(
+            request, claim, rules.identifier_subject_suffix)
+        if probability >= grounding.threshold:
+            return ClaimResult(
+                claim_id=f"{request.instance_id}-c{index:02d}",
+                claim_text=claim.text,
+                verdict="support",
+                check_item_candidates=check_items,
+                evidence_refs=hit_refs,
+                rationale=(f"answer标识符在冻结context中精确出现, "
+                           f"绑定接地概率{probability:.3f}"
+                           f"(谓词一致性{features.predicate_hit_ratio:.2f})"),
+                method="identifier_exact_match",
+                confidence=probability,
+                span=claim.span,
+            )
         return ClaimResult(
             claim_id=f"{request.instance_id}-c{index:02d}",
             claim_text=claim.text,
-            verdict="support",
+            verdict="not_in_evidence",
             check_item_candidates=check_items,
             evidence_refs=hit_refs,
-            rationale="answer标识符在冻结context中精确出现",
-            method="identifier_exact_match",
-            confidence=1.0,
-                span=claim.span,
+            rationale=(f"标识符在冻结context在场, 但answer局部断言与证据"
+                       f"ID绑定段的接地概率{probability:.3f}低于阈值"
+                       f"{grounding.threshold:.3f}(谓词一致性"
+                       f"{features.predicate_hit_ratio:.2f}, "
+                       f"内容词{features.n_predicate_terms}个)——在场但"
+                       f"绑定不确定, 保守降级"),
+            method="identifier_grounding",
+            confidence=probability,
+            span=claim.span,
         )
     if subject_core:
         for ev in request.evidence:

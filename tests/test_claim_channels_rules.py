@@ -98,6 +98,26 @@ def test_builtin_fallback_pins_pre_e7_values() -> None:
     assert rules.nli_residual_confidence == 0.9
 
 
+def test_builtin_fallback_pins_r2_grounding_values() -> None:
+    """R2挂点(显式断言, 不许静默漂移): identifier_grounding校准配置=
+    tools/calibrate_identifier_grounding.py --write 的冻结产物
+    (IRLS确定性: 296例案例库, 训练F1最大化阈值; 复现命令见
+    tools/calibrate_identifier_grounding.py模块docstring)."""
+    config = builtin_rules().identifier_grounding
+    assert config.threshold == 0.4571
+    assert config.subject_bind_weight == 0.562
+    assert config.predicate_hit_weight == 5.459
+    assert config.id_block_weight == -0.6191
+    assert config.proximity_weight == 1.2717
+    assert config.intercept == -5.7383
+    # 胶水词表钉住关键成员(模板功能词; 数据安全/高并发等内容词不在)
+    assert "通过接口" in config.predicate_glue
+    assert "信息交互" in config.predicate_glue
+    assert "发送至" in config.predicate_glue
+    assert "数据安全" not in config.predicate_glue
+    assert "加密传输" not in config.predicate_glue
+
+
 # ── 2. 编译层等价与默认规则的JSON优先 ──────────────────────────────
 
 
@@ -116,6 +136,15 @@ def _assert_compiled_equal(left: CompiledChannelRules,
     assert (left.closed_scope_exclusion_confidence
             == right.closed_scope_exclusion_confidence)
     assert left.nli_residual_confidence == right.nli_residual_confidence
+    # R2挂点: 接地概率化校准配置同样逐值等价(JSON=内置回退)
+    assert (left.identifier_grounding.threshold
+            == right.identifier_grounding.threshold)
+    assert (left.identifier_grounding.predicate_glue
+            == right.identifier_grounding.predicate_glue)
+    for field in ("subject_bind_weight", "predicate_hit_weight",
+                  "id_block_weight", "proximity_weight", "intercept"):
+        assert (getattr(left.identifier_grounding, field)
+                == getattr(right.identifier_grounding, field))
 
 
 def test_default_rules_compiles_repo_json() -> None:
@@ -203,6 +232,26 @@ def test_channels_identical_when_config_missing(tmp_path: Path) -> None:
      "期望>=1的整数"),
     (lambda d: d["channel_confidences"].update({"closed_scope_exclusion": 1.5}),
      r"期望\[0,1\]内数值"),
+    (lambda d: d["channel_confidences"].pop("identifier_grounding"),
+     "identifier_grounding缺失"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"].update(
+        {"threshold": 1.5}),
+     r"threshold期望\(0,1\)内数值"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"].update(
+        {"threshold": True}),
+     r"threshold期望\(0,1\)内数值"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"][
+        "feature_weights"].pop("intercept"),
+     "feature_weights缺失键"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"].update(
+        {"feature_weights": [0.1, 0.2]}),
+     "feature_weights期望对象"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"].update(
+        {"predicate_glue": ["通过", ""]}),
+     "predicate_glue期望非空字符串数组"),
+    (lambda d: d["channel_confidences"]["identifier_grounding"].update(
+        {"unknown_key": 1}),
+     "identifier_grounding未知字段"),
     (lambda d: d["slot_fields"].append(["前置条件", ["前置条件"]]),
      "关键词重复"),
     (lambda d: d["slot_fields"].append(["前置条件", "前置条件"]),

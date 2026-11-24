@@ -6,11 +6,38 @@
     "pattern": "(?:不包括|不包含|不支持|不存在|不允许|禁止|不得|不能|未定义|不具备|不含)"
   },
   "slot_fields": [
-    ["前置条件", ["前置条件"]],
-    ["后置条件", ["后置条件"]],
-    ["异常流", ["异常流"]],
-    ["参与者", ["Actors", "参与者"]],
-    ["Actor", ["Actors", "参与者"]]
+    [
+      "前置条件",
+      [
+        "前置条件"
+      ]
+    ],
+    [
+      "后置条件",
+      [
+        "后置条件"
+      ]
+    ],
+    [
+      "异常流",
+      [
+        "异常流"
+      ]
+    ],
+    [
+      "参与者",
+      [
+        "Actors",
+        "参与者"
+      ]
+    ],
+    [
+      "Actor",
+      [
+        "Actors",
+        "参与者"
+      ]
+    ]
   ],
   "channel_patterns": {
     "description": "通道内小型正则资产. identifier_subject_suffix: verify_identifier把claim的subject剥离域后缀(用例/的/唯一/标识符/编号/代号/名称/项目名)得到subject核心; enum_separator: verify_enum按顿号/全半角逗号/分号切分claim文本为枚举成员.",
@@ -26,8 +53,60 @@
     "enum_member_min_len": 2
   },
   "channel_confidences": {
-    "description": "通道校准置信度(原硬编码字面量). closed_scope_exclusion=封闭scope未出现条目的极性相符判定; nli_residual=残余NLI矛盾/蕴含判定. 确定性精确匹配通道的confidence=1.0是语义常量, 不在此调.",
+    "description": "通道校准置信度(原硬编码字面量). closed_scope_exclusion=封闭scope未出现条目的极性相符判定; nli_residual=残余NLI矛盾/蕴含判定. 确定性精确匹配通道的confidence=1.0是语义常量, 不在此调. identifier_grounding=R2(99号Phase 3/98号B类切口①)的接地概率化挂点: 校准产物由tools/calibrate_identifier_grounding.py在误判案例库上确定性训练(IRLS无随机源)写入——threshold为support降级阈值(P(绑定)<threshold→保守NIE), feature_weights为逻辑回归系数(subject_bind_ratio=subject核心前缀在ID绑定段的最长命中占比; predicate_hit_ratio=answer局部断言内容词在证据ID绑定段的命中率/上下文谓词一致性; id_block_ratio=ID跨块在场广度; subject_id_proximity=subject前缀到ID的邻近距离软特征; intercept=截距), predicate_glue=answer局部断言的模板功能词表(命中不计入谓词一致性). 通道默认不消费此节——只有调用方显式注入IdentifierGroundingJudge(qa_module的identifier_grounding参数)时生效, 注入与否的对照由tests/test_identifier_grounding.py锁定.",
     "closed_scope_exclusion": 0.85,
-    "nli_residual": 0.9
+    "nli_residual": 0.9,
+    "identifier_grounding": {
+      "description": "identifier接地概率化校准配置(R2). 校准数据: d3_train interface_flow族(排除评测文档04/06)+refute路径最小对; 复现: python tools/calibrate_identifier_grounding.py --report.",
+      "threshold": 0.4571,
+      "feature_weights": {
+        "subject_bind_ratio": 0.562,
+        "predicate_hit_ratio": 5.459,
+        "id_block_ratio": -0.6191,
+        "subject_id_proximity": 1.2717,
+        "intercept": -5.7383
+      },
+      "predicate_glue": [
+        "通过接口",
+        "通过",
+        "实现",
+        "由",
+        "发送至",
+        "发送",
+        "用于",
+        "之间的",
+        "之间",
+        "信息交互",
+        "采用",
+        "保障",
+        "并支持",
+        "支持",
+        "提供",
+        "的",
+        "与",
+        "并",
+        "且",
+        "将",
+        "向",
+        "至",
+        "追溯至",
+        "追溯",
+        "对应",
+        "任务书",
+        "目前",
+        "处于",
+        "已通过",
+        "经过了",
+        "经过",
+        "已",
+        "经",
+        "其",
+        "中",
+        "序号",
+        "什么",
+        "哪些",
+        "是什么"
+      ]
+    }
   }
 }
