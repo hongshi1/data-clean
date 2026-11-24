@@ -56,7 +56,6 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
-from functools import lru_cache
 from pathlib import Path
 
 from z3 import (
@@ -210,13 +209,30 @@ def _cfg() -> _NumericConfig:
     return _NUMERIC_CONFIG
 
 
-@lru_cache(maxsize=1)
+#: pack身份追踪的单位表缓存——`@lru_cache`无pack键会被set_default_rulepack
+#: 的进程内切换污染（历史in-process pack对比继承首个pack的单位表，见
+#: docs/srs_project/101_experiment_validity_findings.md）；改为与_cfg()
+#: 同构的身份追踪模式，pack切换时失效重建（rulepack.py契约）。
+_UNIT_TABLE_CACHE: dict[str, tuple[str, float]] | None = None
+_UNIT_TABLE_PACK: RulePack | None = None
+
+
 def _unit_table() -> dict[str, tuple[str, float]]:
     """单位token→(族名, 到族基准的乘法因子)。srs_kb单位族资产+补充表。
 
-    读取失败立即抛RuntimeError（不静默降级——单位族错误会污染所有数值
-    判定），由_expert_channels的per-expert异常诊断上报。
+    按pack身份缓存（切换默认pack时重建）；读取失败立即抛RuntimeError
+    （不静默降级——单位族错误会污染所有数值判定），由_expert_channels
+    的per-expert异常诊断上报。
     """
+    global _UNIT_TABLE_CACHE, _UNIT_TABLE_PACK
+    pack = default_rulepack()
+    if _UNIT_TABLE_CACHE is None or _UNIT_TABLE_PACK is not pack:
+        _UNIT_TABLE_PACK = pack
+        _UNIT_TABLE_CACHE = _build_unit_table()
+    return _UNIT_TABLE_CACHE
+
+
+def _build_unit_table() -> dict[str, tuple[str, float]]:
     table: dict[str, tuple[str, float]] = dict(_cfg().extra_unit_factors)
     try:
         kb = json.loads(_SRS_KB_PATH.read_text(encoding="utf-8"))

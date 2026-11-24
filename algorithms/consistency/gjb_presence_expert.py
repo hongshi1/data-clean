@@ -59,7 +59,7 @@ from algorithms.consistency.qa_models import (
     Verdict,
 )
 from algorithms.consistency.qa_router import route_question
-from algorithms.consistency.rulepack import default_rulepack
+from algorithms.consistency.rulepack import RulePack, default_rulepack
 
 METHOD = "gjb_presence_check"
 CHECK_ITEMS: tuple[str, ...] = tuple(
@@ -400,25 +400,32 @@ def audit_gjb_presence(
 
 #: 存在/缺失极性词表取自rule pack（平铺交替正则，成员与迁移前源码
 #: 逐字一致）；模块级缓存避免逐segment重建，import期零I/O。
+#: pack身份追踪——`set_default_rulepack`进程内切换后按rulepack.py契约
+#: 失效重建（历史None-only缓存会继承首个pack的词表正则，见
+#: docs/srs_project/101_experiment_validity_findings.md）。
 _ABSENCE_RE_CACHE: re.Pattern[str] | None = None
+_ABSENCE_RE_PACK: RulePack | None = None
 _PRESENCE_RE_CACHE: re.Pattern[str] | None = None
+_PRESENCE_RE_PACK: RulePack | None = None
 
 
 def _absence_re() -> re.Pattern[str]:
     """缺失语义标记词表（规则包gjb_absence_words）。"""
-    global _ABSENCE_RE_CACHE
-    if _ABSENCE_RE_CACHE is None:
-        _ABSENCE_RE_CACHE = default_rulepack().vocabulary_regex(
-            "gjb_absence_words")
+    global _ABSENCE_RE_CACHE, _ABSENCE_RE_PACK
+    pack = default_rulepack()
+    if _ABSENCE_RE_CACHE is None or _ABSENCE_RE_PACK is not pack:
+        _ABSENCE_RE_PACK = pack
+        _ABSENCE_RE_CACHE = pack.vocabulary_regex("gjb_absence_words")
     return _ABSENCE_RE_CACHE
 
 
 def _presence_re() -> re.Pattern[str]:
     """存在语义标记词表（规则包gjb_presence_words）。"""
-    global _PRESENCE_RE_CACHE
-    if _PRESENCE_RE_CACHE is None:
-        _PRESENCE_RE_CACHE = default_rulepack().vocabulary_regex(
-            "gjb_presence_words")
+    global _PRESENCE_RE_CACHE, _PRESENCE_RE_PACK
+    pack = default_rulepack()
+    if _PRESENCE_RE_CACHE is None or _PRESENCE_RE_PACK is not pack:
+        _PRESENCE_RE_PACK = pack
+        _PRESENCE_RE_CACHE = pack.vocabulary_regex("gjb_presence_words")
     return _PRESENCE_RE_CACHE
 
 
