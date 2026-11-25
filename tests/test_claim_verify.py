@@ -91,7 +91,7 @@ def test_decompose_claim_negation_edges() -> None:
 # ══════════ ② ground_claims ══════════
 
 def test_ground_claims_right_zone_ppe_001() -> None:
-    """空间接地成功: ppe_001"右侧人员"→右区最外侧人员(x=90%>67%)及其关联PPE."""
+    """空间接地成功: ppe_001"右侧人员"→右区最外侧人员(横向90%>67%)及其关联PPE."""
     g = claim_verify.ground_claims(
         [_claim(subject="person", spatial="right", object="helmet",
                 state="not_wearing")], "ppe_001.jpg")
@@ -101,7 +101,7 @@ def test_ground_claims_right_zone_ppe_001() -> None:
     assert r["chunk"]["chunk_id"] == "ppe_001#p3"
     assert r["chunk"]["x_pct"] == pytest.approx(90.0, abs=0.5)
     assert r["chunk"]["zone"] == "right"  # 中心x/图宽 > 0.67
-    assert r["ground_reason"].startswith("空间约束:右侧→人员#3(x=90%")
+    assert r["ground_reason"].startswith("空间约束:右侧→人员#3(横向90%")
     # person+helmet → matched_person下标关联的PPE切片
     assert len(r["ppe_chunks"]) == 1
     assert r["ppe_chunks"][0]["ppe_class"] == "Hardhat"
@@ -119,7 +119,7 @@ def test_ground_claims_zone_empty_is_ambiguous() -> None:
     r = claim_verify.ground_claims([claim], "ppe_002.jpg")[0]
     assert r["chunk"] is None and r["chunks"] == []
     assert r["ground_reason"].startswith("ambiguous:右侧无人员")
-    assert "x=61%" in r["ground_reason"]  # 最右人员分位随行(可解释)
+    assert "横向61%" in r["ground_reason"]  # 最右人员分位随行(可解释)
     claim = _claim(subject="person", spatial="left", object="helmet",
                    state="not_wearing")
     r = claim_verify.ground_claims([claim], "ppe_003.jpg")[0]
@@ -173,8 +173,8 @@ def test_verify_qa_real_records() -> None:
     r = claim_verify.verify_qa(records[0])
     assert r["verdict"] == "refute"
     f = r["facts"][0]
-    assert f["grounded_chunk"] == "人员#3(x=90%)"
-    assert f["observation"] == "人员#3佩戴Hardhat(conf 0.66)"
+    assert f["grounded_chunk"] == "人员#3(横向90%处)"
+    assert f["observation"] == "人员#3佩戴安全帽(置信度0.66)"
     assert f["fact_verdict"] == "refute"
     # #1 ppe_002: "所有人员均佩戴" vs 5条PPE全worn → support
     r = claim_verify.verify_qa(records[1])
