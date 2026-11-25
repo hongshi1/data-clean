@@ -101,7 +101,7 @@ def test_ground_claims_right_zone_ppe_001() -> None:
     assert r["chunk"]["chunk_id"] == "ppe_001#p3"
     assert r["chunk"]["x_pct"] == pytest.approx(90.0, abs=0.5)
     assert r["chunk"]["zone"] == "right"  # 中心x/图宽 > 0.67
-    assert r["ground_reason"].startswith("空间约束:右侧→人员#3(横向90%")
+    assert r["ground_reason"].startswith("空间约束:右侧→人员#3(画面右侧")
     # person+helmet → matched_person下标关联的PPE切片
     assert len(r["ppe_chunks"]) == 1
     assert r["ppe_chunks"][0]["ppe_class"] == "Hardhat"
@@ -131,7 +131,7 @@ def test_ground_claims_missing_and_no_ppe_channel() -> None:
     claim = _claim(subject="person", object="helmet", state="not_wearing")
     r = claim_verify.ground_claims([claim], "ppe_c1_002.jpg")[0]  # 真实检测0人
     assert r["chunk"] is None
-    assert r["ground_reason"] == "missing:该图0人员"
+    assert r["ground_reason"] == "missing_target:该图0人员"
     # 主体存在但该PPE族无检测记录(真实chunks仅Hardhat类)
     r = claim_verify.ground_claims(
         [_claim(subject="person", object="mask", state="not_wearing")],
@@ -139,9 +139,9 @@ def test_ground_claims_missing_and_no_ppe_channel() -> None:
     assert len(r["chunks"]) == 8  # mask_001检测到8人
     assert r["ppe_chunks"] == []
     assert r["ground_reason"].startswith("无空间约束→全图人员")
-    # 非人员主题(通道) → 无检测记录
+    # 非人员主题(通道) → 无检测通道(细化标签)
     r = claim_verify.ground_claims([_claim(subject="corridor")], "corridor_001.jpg")[0]
-    assert r["ground_reason"] == "missing:通道无检测记录"
+    assert r["ground_reason"] == "missing_channel:通道无检测通道"
 
 
 # ══════════ ③ verify_qa(单条) ══════════
@@ -159,7 +159,7 @@ def test_verify_qa_absent_claim_matches_zero_persons() -> None:
     assert r["nie_reason"] is None
     f = r["facts"][0]
     assert f["fact_verdict"] == "support"
-    assert f["observation"] == "人员检测: 0人 @ppe_c1_002.jpg"
+    assert f["observation"] == "人员观测: 0人 @ppe_c1_002.jpg"
     assert "一致" in f["reason"]
 
 
@@ -173,7 +173,7 @@ def test_verify_qa_real_records() -> None:
     r = claim_verify.verify_qa(records[0])
     assert r["verdict"] == "refute"
     f = r["facts"][0]
-    assert f["grounded_chunk"] == "人员#3(横向90%处)"
+    assert f["grounded_chunk"] == "人员#3(画面右侧, 横向90%处)"
     assert f["observation"] == "人员#3佩戴安全帽(置信度0.66)"
     assert f["fact_verdict"] == "refute"
     # #1 ppe_002: "所有人员均佩戴" vs 5条PPE全worn → support
@@ -187,10 +187,10 @@ def test_verify_qa_real_records() -> None:
     r = claim_verify.verify_qa(records[4])
     assert r["verdict"] == "refute"
     assert "观测检测到7人" in r["facts"][0]["reason"]
-    # #43 ppe_c1_002: "GJB438C区域人员未佩戴安全帽" vs 0人员 → NIE(missing_observation)
+    # #43 ppe_c1_002: "GJB438C区域人员未佩戴安全帽" vs 0人员 → NIE(no_person_target)
     r = claim_verify.verify_qa(records[43])
     assert r["verdict"] == "NIE"
-    assert r["nie_reason"] == "missing_observation"
+    assert r["nie_reason"] == "no_person_target"
     assert r["facts"][0]["reason"].startswith("该图0人员")
 
 
@@ -227,13 +227,13 @@ def test_dataset_snapshot() -> None:
 
     2026-11-24基线(声明分解-接地-校验P2管线首轮冻结):
       support×3  refute×12  NIE×29
-      NIE原因分布: temporal×7 / missing_observation×17 / answer_unverifiable×4 / ambiguous×1
+      NIE原因分布(细化): no_object_channel×9 / no_ppe_detection×7 / temporal×7 / answer_unverifiable×4 / no_person_target×1 / ambiguous×1
 
     与C-3 v0(答案极性×全图聚合, refuted=6)的差异来源(均为per-claim接地的有意升级):
       - 新发现矛盾: 无人员声明vs真实检测7人(#4)、倒地vs全员站立(#9/#12)、
         计数声明vs观测8人(#38-41);
       - 空间指代失败显NIE(ambiguous): #2"左侧人员"而唯一人员x=71.5%位于右区;
-      - 口罩/防静电/香烟/手机/通道类无真实检测通道 → NIE(missing_observation)
+      - 口罩/防静电(PPE族无该图记录)→no_ppe_detection; 香烟/手机/通道(无检测通道)→no_object_channel
         (v0的demo模拟Chunk按answer自证supported, 已被真实观测替代);
       - 时序门(睡岗/通话时长)优先于answer=2: 睡岗类QA统一NIE(temporal).
     """
@@ -246,18 +246,24 @@ def test_dataset_snapshot() -> None:
         assert r["image"].endswith(".jpg")
         assert r["verdict"] in ("support", "refute", "NIE")
         if r["verdict"] == "NIE":
-            assert r["nie_reason"] in ("temporal", "missing_observation",
-                                       "ambiguous", "answer_unverifiable")
+            assert r["nie_reason"] in (
+                "temporal", "missing_observation", "no_ppe_detection",
+                "no_object_channel", "no_person_target", "ambiguous",
+                "answer_unverifiable")
         else:
             assert r["nie_reason"] is None
         assert r["facts"], "每条结果须携带per-fact证据链"
+        # 细化契约: 每条结果携带可核验统计(部分可证性显式化)
+        st = r.get("stats") or {}
+        assert 0 <= st.get("n_verifiable", 0) <= st.get("n_facts", 0)
 
     counts = Counter(r["verdict"] for r in results)
     assert dict(counts) == {"support": 3, "refute": 12, "NIE": 29}
 
     nie = Counter(r["nie_reason"] for r in results if r["verdict"] == "NIE")
-    assert dict(nie) == {"missing_observation": 17, "temporal": 7,
-                         "answer_unverifiable": 4, "ambiguous": 1}
+    assert dict(nie) == {"no_object_channel": 9, "no_ppe_detection": 7,
+                         "temporal": 7, "answer_unverifiable": 4,
+                         "no_person_target": 1, "ambiguous": 1}
 
     # 冻结逐条verdict(qa_id=数据集行号, 按数值序)
     by_id = {r["qa_id"]: r["verdict"] for r in results}

@@ -274,7 +274,7 @@ def test_builtin_dataset_snapshot() -> None:
     nies = {x["qa_id"]: x["nie_reason"] for x in s["cross_modal"]
             if x["observation_status"] == "NIE"}
     assert nies == {"2": "ambiguous", "5": "answer_unverifiable",
-                    "43": "missing_observation"}
+                    "43": "no_person_target"}
     assert d["features"]["modality_links"] == {"QA": 11, "PERSON": 32,
                                                "PPE": 31, "RELATION": 3}
     # 中文别名id解析(ent_安全帽 == ent_helmet)

@@ -5,7 +5,7 @@
 
 冻结数字(2026-11-24基线, 与tests/test_claim_verify.py同源):
   counts: support×3 / refute×12 / NIE×29
-  reasons: temporal×7 / missing_observation×17 / answer_unverifiable×4 / ambiguous×1
+  reasons(细化): no_object_channel×9 / no_ppe_detection×7 / temporal×7 / answer_unverifiable×4 / no_person_target×1 / ambiguous×1
   数字变更须有意为之(数据集qa_dataset.jsonl受MANIFEST保护;
   裁决口径变更须同步tests/test_claim_verify.py的快照).
 """
@@ -37,7 +37,7 @@ def test_verify_by_id_refute_with_facts() -> None:
     f = r["facts"][0]
     assert {"claim", "grounded_chunk", "observation", "fact_verdict", "reason"} <= set(f)
     assert f["claim"] == "画面中右侧人员未佩戴安全帽"
-    assert f["grounded_chunk"] == "人员#3(x=90%)"
+    assert f["grounded_chunk"] == "人员#3(画面右侧, 横向90%处)"
     assert f["fact_verdict"] == "refute"
 
 
@@ -72,8 +72,9 @@ def test_verify_dataset_summary_frozen() -> None:
     d = app._kg_verify_summary()
     assert len(d["items"]) == 44
     assert d["counts"] == {"support": 3, "refute": 12, "NIE": 29}
-    assert d["reasons"] == {"temporal": 7, "missing_observation": 17,
-                            "answer_unverifiable": 4, "ambiguous": 1}
+    assert d["reasons"] == {"no_object_channel": 9, "no_ppe_detection": 7,
+                            "temporal": 7, "answer_unverifiable": 4,
+                            "no_person_target": 1, "ambiguous": 1}
     assert [x["qa_id"] for x in d["items"]] == list(range(44))
     assert d["items"][0] == {"qa_id": 0, "verdict": "refute", "nie_reason": None}
     # items与逐条核验同源(同一模块级缓存): 抽查两条口径一致
