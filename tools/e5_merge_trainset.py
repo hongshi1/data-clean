@@ -53,10 +53,16 @@ def main() -> None:
     parser.add_argument("--gated", type=Path, default=GATED)
     parser.add_argument("--pairs", type=Path, default=PAIRS)
     parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("--paired-only", action="store_true",
+                        help="只保留原始refute侧在gated集内的配对(89对): "
+                             "确保每条fixed(support)行都有其对照original("
+                             "refute)行在训练集内。v3塌因: 197对只有"
+                             "support侧, 模型学到'→support'表面模式")
     args = parser.parse_args()
 
     gated = load_jsonl(args.gated)
     pairs = load_jsonl(args.pairs)
+    gated_ids = {r["instance_id"] for r in gated}
 
     existing_ids = {r["instance_id"] for r in gated}
     added, skipped = [], []
@@ -66,6 +72,9 @@ def main() -> None:
             skipped.append(row["instance_id"])
             continue
         if not row.get("evidence") or not row.get("answer"):
+            skipped.append(row["instance_id"])
+            continue
+        if args.paired_only and pair["instance_id"] not in gated_ids:
             skipped.append(row["instance_id"])
             continue
         added.append(row)
