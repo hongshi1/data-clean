@@ -1,0 +1,459 @@
+{
+ "schema": "d3_x1_eval_v1",
+ "mode": "constrained",
+ "adapter": "models/llm/d3_student_v2b",
+ "spec": "docs/srs_project/102_x1_constrained_decoding_spec.md",
+ "violations17": {
+  "summary": {
+   "n_records": 17,
+   "n_valid_verdicts": 17,
+   "structural_failure": {
+    "parse_fail": 0,
+    "verdict_defaulted_to_nie": 0,
+    "issues_missing": 0,
+    "composite_any": 0,
+    "rate_composite": 0.0
+   },
+   "verdict_distribution": {
+    "refute": 4,
+    "support": 5,
+    "not_in_evidence": 8
+   },
+   "refute_recall_on_gold_refute": {
+    "gold_refute": 17,
+    "refute_correct": 4
+   },
+   "n_issues_total": 4,
+   "instances_with_issues": 4,
+   "span_alignment": {
+    "n_issues": 4,
+    "span_exact": 0,
+    "span_find": 4,
+    "rate_exact": 0.0,
+    "rate_find": 1.0,
+    "evidence_ref_ok": 4
+   },
+   "stage_counts": {
+    "constrained": 17
+   },
+   "latency": {
+    "mean_s": 2.311,
+    "median_s": 1.176,
+    "total_s": 39.3
+   },
+   "classification_on_valid": {
+    "accuracy": 0.2353,
+    "macro_f1": 0.127,
+    "per_class": {
+     "support": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "refute": {
+      "precision": 1.0,
+      "recall": 0.2353,
+      "f1": 0.381
+     },
+     "not_in_evidence": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     }
+    },
+    "confusion": {
+     "support|refute": 5,
+     "refute|refute": 4,
+     "not_in_evidence|refute": 8
+    }
+   },
+   "constraint": {
+    "completed": 17,
+    "steps_total": 663,
+    "interventions_total": 0,
+    "intervention_rate": 0.0
+   }
+  },
+  "details": [
+   {
+    "instance_id": "DOC04-VIO-01",
+    "gold": "refute",
+    "verdict": "refute",
+    "elapsed_s": 7.874,
+    "n_issues": 1,
+    "span_exact": 0,
+    "span_find": 1,
+    "evidence_ref_ok": 1,
+    "n_flagged": 1,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"refute\", \"issues\": [{\"quote\": \"连接池配置用例和连接池初始化用例的项目唯一标识符均为PZXQ-GN-LJ",
+    "constraint_log": {
+     "steps": 133,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 133
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-02",
+    "gold": "refute",
+    "verdict": "refute",
+    "elapsed_s": 5.204,
+    "n_issues": 1,
+    "span_exact": 0,
+    "span_find": 1,
+    "evidence_ref_ok": 1,
+    "n_flagged": 1,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"refute\", \"issues\": [{\"quote\": \"PZXQ-GN-SJKCZ-SJKGB\", \"span\": [24, 4",
+    "constraint_log": {
+     "steps": 114,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 114
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-03",
+    "gold": "refute",
+    "verdict": "support",
+    "elapsed_s": 0.985,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"support\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 13,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 13
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-04",
+    "gold": "refute",
+    "verdict": "support",
+    "elapsed_s": 1.05,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"support\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 13,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 13
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-05",
+    "gold": "refute",
+    "verdict": "support",
+    "elapsed_s": 1.048,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"support\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 13,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 13
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-06",
+    "gold": "refute",
+    "verdict": "refute",
+    "elapsed_s": 7.545,
+    "n_issues": 1,
+    "span_exact": 0,
+    "span_find": 1,
+    "evidence_ref_ok": 1,
+    "n_flagged": 1,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"refute\", \"issues\": [{\"quote\": \"SQL访问功能包括数据库操作、修改数据、查询数据、逐行获取数据、BLOB",
+    "constraint_log": {
+     "steps": 142,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 142
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-07",
+    "gold": "refute",
+    "verdict": "support",
+    "elapsed_s": 1.003,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"support\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 13,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 13
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-08",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.208,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-09",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.149,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-10",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.143,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-11",
+    "gold": "refute",
+    "verdict": "support",
+    "elapsed_s": 1.004,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"support\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 13,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 13
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-12",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.176,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-13",
+    "gold": "refute",
+    "verdict": "refute",
+    "elapsed_s": 3.994,
+    "n_issues": 1,
+    "span_exact": 0,
+    "span_find": 1,
+    "evidence_ref_ok": 1,
+    "n_flagged": 1,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"refute\", \"issues\": [{\"quote\": \"系统提示初始化\", \"span\": [14, 21], \"rule_id",
+    "constraint_log": {
+     "steps": 81,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 81
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-14",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.164,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-15",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.332,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-16",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.195,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   },
+   {
+    "instance_id": "DOC04-VIO-17",
+    "gold": "refute",
+    "verdict": "not_in_evidence",
+    "elapsed_s": 1.214,
+    "n_issues": 0,
+    "span_exact": 0,
+    "span_find": 0,
+    "evidence_ref_ok": 0,
+    "n_flagged": 0,
+    "stage": "constrained",
+    "parse_fail": false,
+    "verdict_defaulted": false,
+    "issues_missing": false,
+    "content_head": "{\"verdict\": \"not_in_evidence\", \"issues\": []}",
+    "constraint_log": {
+     "steps": 16,
+     "interventions": 0,
+     "completed": true,
+     "n_new_tokens": 16
+    }
+   }
+  ]
+ },
+ "determinism_check": {
+  "identical": true,
+  "corpus": "violations17"
+ },
+ "elapsed_s": 182.6
+}
