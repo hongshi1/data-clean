@@ -151,19 +151,23 @@ def collect_texts(scene: str, n: int) -> list[dict]:
             return [{"id": "rd_{}".format(i), "text": r[0][:500]}
                     for i, r in enumerate(rows_rd)]
 
-    # quality_defect: manifest.json
+    # quality_defect: via API (documents endpoint has text metadata)
     if scene == "quality_defect":
-        qd_path = (BASE / "deploy/nkuDataProject/data/quality_defect"
-                   "/manifest.json")
-        if qd_path.exists():
-            manifest = json.loads(qd_path.read_text(encoding="utf-8"))
-            docs = manifest.get("documents", [])
+        try:
+            import urllib.request as _ur
+            r = _ur.urlopen(
+                "http://127.0.0.1:8300/api/quality-defect/documents",
+                timeout=15)
+            j = json.loads(r.read())
+            docs = j.get("data", j).get("items", [])
             return [{"id": "qd_{}".format(d.get("source_id", i)),
                      "text": "{} {} {}".format(
                          d.get("product_name", ""),
-                         d.get("source_path", ""),
-                         d.get("category", ""))}
+                         d.get("category", ""),
+                         d.get("source_path", ""))}
                     for i, d in enumerate(docs[:n])]
+        except Exception:
+            pass
 
     # srs + default: elements table
     con = sqlite3.connect(str(db_path))
